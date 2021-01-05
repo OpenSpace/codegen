@@ -261,7 +261,7 @@ std::string verifier(std::string_view type, State& state) {
         std::fill(Buf.begin(), Buf.end(), '\0');
         int n = sprintf(
             Buf.data(),
-            "new TableVerifier({{\"*\",%s,Optional::Yes, %s}})",
+            "new TableVerifier({{\"*\",%s,Optional::Yes, %s}})\n",
             ver.c_str(),
             comments.c_str()
         );
@@ -278,7 +278,7 @@ void handleStructStart(State& state) {
         std::string name = "codegen_" + join(state.structs, "_");
         int n = sprintf(
             state.resultVerifier,
-            "TableVerifier* %s=new TableVerifier;", name.c_str()
+            "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
         );
         state.resultVerifier += n;
     }
@@ -286,15 +286,33 @@ void handleStructStart(State& state) {
 
 void handleStructEnd(State& state) {
     std::string name = join(state.structs, "::");
-    int n = sprintf(
-        state.resultConverter,
-        "template<> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {"
-        "%s res;",
-        name.c_str(),
-        name.c_str(),
-        name.c_str()
-    );
-    state.resultConverter += n;
+    if (state.structs.size() > 1) {
+        int n = sprintf(
+            state.resultConverter,
+            "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
+            "    %s res;\n"
+            "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
+            name.c_str(), name.c_str(), name.c_str()
+        );
+        state.resultConverter += n;
+    }
+    else {
+        // This is the last struct to be closed, so it is the struct that the user will
+        // ask for
+        int n = sprintf(
+            state.resultConverter,
+            R"(
+template <typename T> T bake(const ghoul::Dictionary& dict) { static_assert(sizeof(T) == 0); };
+template <> %s bake<%s>(const ghoul::Dictionary& dict) {
+    documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
+    %s res;
+)",
+            name.c_str(), name.c_str(),
+            state.rootStruct.second.c_str(), state.rootStruct.second.c_str(),
+            name.c_str()
+        );
+        state.resultConverter += n;
+    }
 
 
     auto it = state.structConverters.find(name);
@@ -305,11 +323,20 @@ void handleStructEnd(State& state) {
     std::memcpy(state.resultConverter, it->second.data(), it->second.size());
     state.resultConverter += it->second.size();
 
-    n = sprintf(
-        state.resultConverter,
-        "*val = res;}"
-    );
-    state.resultConverter += n;
+    if (state.structs.size() > 1) {
+        int n = sprintf(
+            state.resultConverter,
+            "    *val = res;\n}\n"
+        );
+        state.resultConverter += n;
+    }
+    else {
+        int n = sprintf(
+            state.resultConverter,
+            "    return res;\n}\n"
+        );
+        state.resultConverter += n;
+    }
 }
 
 void handleVariable(Variable var, State& state) {
@@ -336,7 +363,7 @@ void handleVariable(Variable var, State& state) {
     std::string v = verifier(var.type, state);
     int n = sprintf(
         state.resultVerifier,
-        "%s->documentations.push_back({\"%s\",%s,%s,%s});",
+        "    %s->documentations.push_back({\"%s\",%s,%s,%s});\n",
         ver.c_str(), variableName.c_str(), v.c_str(),
         isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer.c_str()
     );
@@ -351,17 +378,9 @@ void handleVariable(Variable var, State& state) {
         converter = it->second;
     }
 
-    //std::vector<std::string_view> structs = state.structs;
-    //structs.pop_back();
-    //structs.push_back(var.type);
-    //std::string fqType = join(structs, "::");
-
-
-
     n = sprintf(
         state.scratchSpace,
-        "bakeTo(d, \"%s\", &res.%s);",
-        //std::string(var.type).c_str(),
+        "    bakeTo(dict, \"%s\", &res.%s);\n",
         variableName.c_str(),
         std::string(var.name).c_str()
     );
@@ -376,9 +395,14 @@ std::string finalizeVerifier(State& state) {
     std::fill(Buf.begin(), Buf.end(), '\0');
     int n = sprintf(
         Buf.data(),
-        "namespace codegen { template<typename T>documentation::Documentation doc();"
-        "template<>documentation::Documentation doc<%s>(){"
-        "using namespace documentation;",
+        R"(
+namespace codegen {
+template <typename T> documentation::Documentation doc() {
+    static_assert(sizeof(T) == 0); // This should never be called
+}
+template <> documentation::Documentation doc<%s>() {
+    using namespace documentation;
+)",
         state.rootStruct.second.c_str()
     );
 
@@ -393,8 +417,17 @@ std::string finalizeVerifier(State& state) {
     std::string rootStruct = std::string("codegen_") + state.rootStruct.first;
     n = sprintf(
         state.resultVerifier,
-        "documentation::Documentation d;d.name=\"%s\";d.id=\"%s\";"
-        "d.entries=std::move(%s->documentations);delete %s;return d;}}",
+        R"(
+    documentation::Documentation d;
+    d.name="%s";
+    d.id="%s";
+    d.entries=std::move(%s->documentations);
+    delete %s;
+    return d;
+}
+} // namespace codegen
+
+)",
         state.rootStruct.second.c_str(),
         state.rootStruct.second.c_str(),
         rootStruct.c_str(),
@@ -405,69 +438,45 @@ std::string finalizeVerifier(State& state) {
 }
 
 std::string finalizeConverter(State& state) {
-    constexpr const char Preamble[] =
-        "namespace codegen { using D = ghoul::Dictionary;"
-        "template<typename T> void bakeTo(const D&, std::string_view, T*);"
-        "template<> void bakeTo(const D& d, std::string_view key, bool* val) {"
-            "*val = d.value<bool>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, int* val) {"
-            "*val = static_cast<int>(d.value<double>(key));"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, double* val) {"
-            "*val = d.value<double>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, std::string* val) {"
-            "*val = d.value<std::string>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec2* val) {"
-            "*val = d.value<glm::dvec2>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec3* val) {"
-            "*val = d.value<glm::dvec3>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec4* val) {"
-            "*val = d.value<glm::dvec4>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec2* val) {"
-            "*val = d.value<glm::dvec2>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec3* val) {"
-            "*val = d.value<glm::dvec3>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec4* val) {"
-            "*val = d.value<glm::dvec4>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x2* val) {"
-            "*val = d.value<glm::dmat2x2>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x3* val) {"
-            "*val = d.value<glm::dmat2x3>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x4* val) {"
-            "*val = d.value<glm::dmat2x4>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x2* val) {"
-            "*val = d.value<glm::dmat3x2>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x3* val) {"
-            "*val = d.value<glm::dmat3x3>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x4* val) {"
-            "*val = d.value<glm::dmat3x4>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x2* val) {"
-            "*val = d.value<glm::dmat4x2>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x3* val) {"
-            "*val = d.value<glm::dmat4x3>(key);"
-        "}"
-        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x4* val) {"
-            "*val = d.value<glm::dmat4x4>(key);"
-        "}"
-        "template<typename T> void bakeTo("
-            "const D& d, std::string_view key, std::optional<T>* val) {"
-        "if (d.hasKey(key)) *val = d.value<T>(key); else *val = std::nullopt;}";
+    constexpr const char Preamble[] = R"(
+namespace codegen {
+template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
+template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
+    if (d.hasKey(key)) {
+        T v;
+        bakeTo(d, key, &v);
+        *val = std::move(v);
+    }
+    else *val = std::nullopt;
+}
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+    std::vector<std::string_view> keys = dict.keys();
+    val->reserve(keys.size());
+    for (size_t i=0;i<dict.size();++i) {
+        T v; bakeTo(dict, keys[i], &v); val->push_back(std::move(v));
+    }
+}
+)";
 
     //specialization for optional and vector
     
@@ -484,7 +493,7 @@ std::string finalizeConverter(State& state) {
 
     int n = sprintf(
         state.resultConverter,
-        "}"
+        "} // namespace codegen\n"
     );
     state.resultConverter += n;
     return std::string(state.resultConverterBase, state.resultConverter);
@@ -523,8 +532,11 @@ void handleFile(std::string_view path) {
         Fail("Could not open file %s", std::string(path).c_str());
     }
 
-    std::ifstream f(path);
-    std::string str(std::istreambuf_iterator<char>{f}, {});
+    std::string str;
+    {
+        std::ifstream f(path);
+        str = std::string(std::istreambuf_iterator<char>{f}, {});
+    }
     std::string_view content = strip(validCode(str));
     if (content.empty()) {
         return;
@@ -605,8 +617,33 @@ void handleFile(std::string_view path) {
     if (state.rootStruct.first.empty() || state.rootStruct.second.empty()) {
         Fail("Root struct tag [[codegen::Dictionary]] is missing the renderable name");
     }
+
+    std::filesystem::path destination = path;
+    destination.replace_extension();
+    destination.replace_filename(destination.filename().string() + "_codegen.cpp");
+
+    std::ofstream output(destination);
+    int n = sprintf(
+        state.scratchSpace,
+        R"(
+// This file has been auto-generated by the codegen tool by running
+// codegen.exe -file %s
+// Do not change this file manually
+//
+// If a compiler error brought you here, a struct tagged with [[codegen::Dictionary]]
+// has been changed without the codegen tool being run again
+)",
+        std::string(path).c_str()
+    );
+
+    output.write(state.scratchSpace, n);
+    state.scratchSpace += n;
+
     std::string resultVerifier = finalizeVerifier(state);
+    output.write(resultVerifier.c_str(), resultVerifier.size());
     std::string resultConverter = finalizeConverter(state);
+    output.write(resultConverter.c_str(), resultConverter.size());
+
 
 #ifdef PRINT_MEMORY_USAGE
     printf("Memory usage (Buffer: %zi)\n", bufferSize);
@@ -625,10 +662,5 @@ int main(int argc, char** argv) {
     std::string_view src = argv[2];
 
 
-    //auto before = std::chrono::high_resolution_clock::now();
     handleFile(src);
-    //auto after = std::chrono::high_resolution_clock::now();
-    //std::cout <<
-    //    std::chrono::duration_cast<std::chrono::microseconds>(after - before).count() << 
-    //    '\n';
 }
