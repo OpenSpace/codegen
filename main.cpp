@@ -37,6 +37,8 @@ struct State {
 
     char* resultVerifierBase = nullptr;
     char* resultVerifier = nullptr;
+
+    std::map<std::string, std::string, std::less<>> structConverters;
     char* resultConverterBase = nullptr;
     char* resultConverter = nullptr;
 
@@ -75,20 +77,21 @@ bool startsWith(std::string_view lhs, std::string_view rhs) {
     return lhs.size() >= rhs.size() && lhs.substr(0, rhs.size()) == rhs;
 }
 
-std::string join(const std::vector<std::string_view>& list) {
-    size_t size = list.size();
+std::string join(const std::vector<std::string_view>& list, std::string sep) {
+    size_t size = 0;
     for (std::string_view l : list) {
         size += l.size();
     }
+    // this allocates space for one sep more than needed, but it simplifies the for loop
+    size += sep.size() * list.size();
 
     std::string res;
     res.reserve(size + 1);
     for (std::string_view l : list) {
         res.append(l.data(), l.size());
-        res.append("_");
+        res.append(sep);
     }
-    res.pop_back();
-    return res;
+    return res.substr(0, res.size() - sep.size());
 }
 
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
@@ -143,7 +146,12 @@ Struct parseStruct(std::string_view line) {
             );
         }
 
-        const size_t beginName = line.find('(', beginAttribute) + 1;
+        size_t beginName = line.find('(', beginAttribute);
+        if (beginName == std::string_view::npos) {
+            Fail("No name specified for root struct:\n%s", std::string(line).c_str());
+        }
+
+        beginName++;
         const size_t endName = line.find(')', beginName);
         if (beginName == endName) {
             Fail("No name specified for root struct:\n%s", std::string(line).c_str());
@@ -260,25 +268,52 @@ std::string verifier(std::string_view type, State& state) {
         return std::string(Buf.data(), Buf.data() + n);
     }
     else {
-        return std::string("codegen_") + join(state.structs) + "_" + std::string(type);
+        return std::string("codegen_") + join(state.structs, "_") + "_" + std::string(type);
     }
 }
 
 void handleStructStart(State& state) {
-    std::string name = "codegen_" + join(state.structs);
-    int n = sprintf(
-        state.resultVerifier,
-        "TableVerifier* %s=new TableVerifier;", name.c_str()
-    );
-    state.resultVerifier += n;
+    // Verifier
+    {
+        std::string name = "codegen_" + join(state.structs, "_");
+        int n = sprintf(
+            state.resultVerifier,
+            "TableVerifier* %s=new TableVerifier;", name.c_str()
+        );
+        state.resultVerifier += n;
+    }
 }
 
 void handleStructEnd(State& state) {
+    std::string name = join(state.structs, "::");
+    int n = sprintf(
+        state.resultConverter,
+        "template<> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {"
+        "%s res;",
+        name.c_str(),
+        name.c_str(),
+        name.c_str()
+    );
+    state.resultConverter += n;
 
+
+    auto it = state.structConverters.find(name);
+    if (it == state.structConverters.end()) {
+        Fail("Empty structs are not allowed:\n%s", name.c_str());
+    }
+
+    std::memcpy(state.resultConverter, it->second.data(), it->second.size());
+    state.resultConverter += it->second.size();
+
+    n = sprintf(
+        state.resultConverter,
+        "*val = res;}"
+    );
+    state.resultConverter += n;
 }
 
 void handleVariable(Variable var, State& state) {
-    std::string ver = std::string("codegen_") + join(state.structs);
+    std::string ver = std::string("codegen_") + join(state.structs, "_");
     std::string variableName;
 
     if (var.attributeKey.empty()) {
@@ -307,6 +342,33 @@ void handleVariable(Variable var, State& state) {
     );
     state.resultVerifier += n;
     state.commentBuffer.clear();
+
+
+    // Converter
+    std::string converter;
+    std::string name = join(state.structs, "::");
+    if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
+        converter = it->second;
+    }
+
+    //std::vector<std::string_view> structs = state.structs;
+    //structs.pop_back();
+    //structs.push_back(var.type);
+    //std::string fqType = join(structs, "::");
+
+
+
+    n = sprintf(
+        state.scratchSpace,
+        "bakeTo(d, \"%s\", &res.%s);",
+        //std::string(var.type).c_str(),
+        variableName.c_str(),
+        std::string(var.name).c_str()
+    );
+    
+    converter += std::string(state.scratchSpace, state.scratchSpace + n);
+    state.scratchSpace += n;
+    state.structConverters[name] = converter;
 }
 
 std::string finalizeVerifier(State& state) {
@@ -343,23 +405,84 @@ std::string finalizeVerifier(State& state) {
 }
 
 std::string finalizeConverter(State& state) {
-    std::array<char, 512> Buf;
-    std::fill(Buf.begin(), Buf.end(), '\0');
-    int n = sprintf(
-        Buf.data(),
-        "namespace codegen { template<typename T> T bake(const ghoul::Dictionary&);"
-    );
+    constexpr const char Preamble[] =
+        "namespace codegen { using D = ghoul::Dictionary;"
+        "template<typename T> void bakeTo(const D&, std::string_view, T*);"
+        "template<> void bakeTo(const D& d, std::string_view key, bool* val) {"
+            "*val = d.value<bool>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, int* val) {"
+            "*val = static_cast<int>(d.value<double>(key));"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, double* val) {"
+            "*val = d.value<double>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, std::string* val) {"
+            "*val = d.value<std::string>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec2* val) {"
+            "*val = d.value<glm::dvec2>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec3* val) {"
+            "*val = d.value<glm::dvec3>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::ivec4* val) {"
+            "*val = d.value<glm::dvec4>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec2* val) {"
+            "*val = d.value<glm::dvec2>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec3* val) {"
+            "*val = d.value<glm::dvec3>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dvec4* val) {"
+            "*val = d.value<glm::dvec4>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x2* val) {"
+            "*val = d.value<glm::dmat2x2>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x3* val) {"
+            "*val = d.value<glm::dmat2x3>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat2x4* val) {"
+            "*val = d.value<glm::dmat2x4>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x2* val) {"
+            "*val = d.value<glm::dmat3x2>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x3* val) {"
+            "*val = d.value<glm::dmat3x3>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat3x4* val) {"
+            "*val = d.value<glm::dmat3x4>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x2* val) {"
+            "*val = d.value<glm::dmat4x2>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x3* val) {"
+            "*val = d.value<glm::dmat4x3>(key);"
+        "}"
+        "template<> void bakeTo(const D& d, std::string_view key, glm::dmat4x4* val) {"
+            "*val = d.value<glm::dmat4x4>(key);"
+        "}"
+        "template<typename T> void bakeTo("
+            "const D& d, std::string_view key, std::optional<T>* val) {"
+        "if (d.hasKey(key)) *val = d.value<T>(key); else *val = std::nullopt;}";
 
+    //specialization for optional and vector
+    
+    // preamble contains \0 at the end
     std::memmove(
-        state.resultConverterBase + n,
+        state.resultConverterBase + sizeof(Preamble) - 1,
         state.resultConverterBase,
         state.resultConverter - state.resultConverterBase
     );
-    std::memcpy(state.resultConverterBase, Buf.data(), n);
-    state.resultConverter += n;
+    std::memcpy(state.resultConverterBase, Preamble, sizeof(Preamble) - 1);
+    state.resultConverter += sizeof(Preamble) - 1;
 
+    std::string s(state.resultConverterBase, state.resultConverter);
 
-    n = sprintf(
+    int n = sprintf(
         state.resultConverter,
         "}"
     );
@@ -469,7 +592,6 @@ void handleFile(std::string_view path) {
                 Fail("Unaccounted for comments at the end of a struct definition");
             }
 
-            std::string_view structName = state.structs.back();
             handleStructEnd(state);
             state.structs.pop_back();
             continue;
