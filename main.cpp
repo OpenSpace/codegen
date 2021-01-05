@@ -5,18 +5,19 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include <map>
 #include <optional>
 #include <string_view>
 #include <unordered_map>
 
 #ifdef WIN32
-#pragma warning (disable:4996)
+#pragma warning (disable : 4996)
 #endif // WIN32
 
 //#define PRINT_MEMORY_USAGE
 
 namespace {
-    constexpr const char AttributeDictionary[] = "[[codegen::Dictionary]]";
+    constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
     constexpr const int ErrorContext = 50;
 
     template <typename... Ts>
@@ -31,12 +32,21 @@ struct State {
     std::string commentBuffer;
     std::vector<std::string_view> structs;
 
-    std::unordered_map<std::string_view, std::string_view> structComments;
+    std::map<std::string, std::string, std::less<>> structComments;
+    std::pair<std::string, std::string> rootStruct;
 
+    char* resultVerifierBase = nullptr;
     char* resultVerifier = nullptr;
+    char* resultConverterBase = nullptr;
     char* resultConverter = nullptr;
 
     char* scratchSpace = nullptr;
+};
+
+struct Struct {
+    std::string_view name;
+
+    std::string_view attributeRenderable;
 };
 
 struct Variable {
@@ -103,17 +113,55 @@ void handleCommentLine(State& state) {
     state.commentBuffer.append(comment);
 }
 
-std::string_view parseStructName(std::string_view line) {
-    const size_t p1 = line.rfind(' ');
-    const size_t p2 = line.rfind(' ', p1 - 1);
-    if (p2 == std::string_view::npos) {
+std::string_view parseAttribute(std::string_view block, std::string_view name) {
+    std::string key = std::string("codegen::" + std::string(name));
+    const size_t p = block.find(key);
+    if (p == std::string_view::npos) {
+        return std::string_view();
+    }
+    const size_t beg = block.find('(', p) + 1;
+    const size_t end = block.find(')', beg);
+
+    std::string_view content = block.substr(beg, end - beg);
+    return content;
+}
+
+Struct parseStruct(std::string_view line) {
+    Struct s;
+
+    size_t cursor = line.find(' ');
+    assert(line.substr(0, cursor) == "struct");
+    cursor++;
+
+    const size_t beginAttribute = line.find("[[", cursor);
+    if (beginAttribute != std::string_view::npos) {
+        const size_t endAttribute = line.find("]]", beginAttribute) + 2;
+        if (endAttribute == std::string_view::npos) {
+            Fail(
+                "Could not find closing bracket for attribute in struct:\n%s",
+                std::string(line).c_str()
+            );
+        }
+
+        const size_t beginName = line.find('(', beginAttribute) + 1;
+        const size_t endName = line.find(')', beginName);
+        if (beginName == endName) {
+            Fail("No name specified for root struct:\n%s", std::string(line).c_str());
+        }
+
+        s.attributeRenderable = line.substr(beginName, endName - beginName);
+        cursor = endAttribute + 1;
+    }
+
+    const size_t endStruct = line.find(' ', cursor);
+    if (endStruct == std::string_view::npos) {
         Fail(
             "Missing space before the closing { of a struct:\n%s",
             std::string(line).c_str()
         );
     }
-    std::string_view structName = line.substr(p2 + 1, p1 - p2 - 1);
-    return structName;
+    s.name = line.substr(cursor, endStruct - cursor);
+    return s;
 }
 
 Variable parseVariable(std::string_view line) {
@@ -134,13 +182,35 @@ Variable parseVariable(std::string_view line) {
 
     Variable res;
     res.type = line.substr(0, p1);
-    res.name = line.substr(p1 + 1, p2);
-    std::string_view attributes;
+    res.name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
-        attributes = line.substr(p2 + 1);
+        std::string_view attributes = line.substr(p2 + 1);
+        res.attributeInRange = parseAttribute(attributes, "inrange");
+        res.attributeKey = parseAttribute(attributes, "key");
     }
 
     return res;
+}
+
+std::string resolveComment(std::string comment) {
+    if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
+        const size_t l = std::string_view("codegen::description").size();
+        it += l;
+        if (comment[it] != '(') {
+            Fail(
+                "Malformed codegen::description. Expected ( after token:\n%s",
+                comment.c_str()
+            );
+        }
+        it++;
+        size_t end = comment.find(')', it);
+        std::string identifier = comment.substr(it, end - it);
+        comment = identifier + ".description";
+    }
+    else {
+        comment = std::string("\"") + comment + "\"";
+    }
+    return comment;
 }
 
 std::string verifier(std::string_view type, State& state) {
@@ -173,13 +243,19 @@ std::string verifier(std::string_view type, State& state) {
         std::string_view subtype = type.substr(12);
         subtype.remove_suffix(1);
 
+        std::string comments;
+        if (auto it = state.structComments.find(subtype); it != state.structComments.end()) {
+            comments = resolveComment(it->second);
+        }
+
         std::string ver = verifier(subtype, state);
         std::array<char, 256> Buf;
         std::fill(Buf.begin(), Buf.end(), '\0');
         int n = sprintf(
             Buf.data(),
-            "new TableVerifier({{\"*\",%s,Optional::Yes, \"@TODO\"}})",
-            ver.c_str()
+            "new TableVerifier({{\"*\",%s,Optional::Yes, %s}})",
+            ver.c_str(),
+            comments.c_str()
         );
         return std::string(Buf.data(), Buf.data() + n);
     }
@@ -188,37 +264,32 @@ std::string verifier(std::string_view type, State& state) {
     }
 }
 
-void handleStruct(State& state) {
+void handleStructStart(State& state) {
     std::string name = "codegen_" + join(state.structs);
     int n = sprintf(
         state.resultVerifier,
-        "TableVerifier* %s = new TableVerifier;", name.c_str()
+        "TableVerifier* %s=new TableVerifier;", name.c_str()
     );
     state.resultVerifier += n;
 }
 
+void handleStructEnd(State& state) {
+
+}
+
 void handleVariable(Variable var, State& state) {
     std::string ver = std::string("codegen_") + join(state.structs);
-    std::string variableName = std::string(var.name);
-    variableName[0] = static_cast<char>(::toupper(variableName[0]));
+    std::string variableName;
 
-    if (size_t it = state.commentBuffer.find("codegen::description"); it != std::string::npos) {
-        const size_t l = std::string_view("codegen::description").size();
-        it += l;
-        if (state.commentBuffer[it] != '(') {
-            Fail(
-                "Malformed codegen::description. Expected ( after token:\n%s", 
-                state.commentBuffer.c_str()
-            );
-        }
-        it++;
-        size_t end = state.commentBuffer.find(')', it);
-        std::string identifier = state.commentBuffer.substr(it, end - it);
-        state.commentBuffer = identifier + ".description";
+    if (var.attributeKey.empty()) {
+        variableName = std::string(var.name);
+        variableName[0] = static_cast<char>(::toupper(variableName[0]));
     }
     else {
-        state.commentBuffer = std::string("\"") + state.commentBuffer + "\"";
+        variableName = std::string(var.attributeKey);
     }
+
+    state.commentBuffer = resolveComment(state.commentBuffer);
 
     bool isOptional = false;
     if (startsWith(var.type, "std::optional<")) {
@@ -230,7 +301,7 @@ void handleVariable(Variable var, State& state) {
     std::string v = verifier(var.type, state);
     int n = sprintf(
         state.resultVerifier,
-        "%s->documentations.push_back({\"%s\", %s, %s, %s});",
+        "%s->documentations.push_back({\"%s\",%s,%s,%s});",
         ver.c_str(), variableName.c_str(), v.c_str(),
         isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer.c_str()
     );
@@ -238,8 +309,71 @@ void handleVariable(Variable var, State& state) {
     state.commentBuffer.clear();
 }
 
+std::string finalizeVerifier(State& state) {
+    std::array<char, 512> Buf;
+    std::fill(Buf.begin(), Buf.end(), '\0');
+    int n = sprintf(
+        Buf.data(),
+        "namespace codegen { template<typename T>documentation::Documentation doc();"
+        "template<>documentation::Documentation doc<%s>(){"
+        "using namespace documentation;",
+        state.rootStruct.second.c_str()
+    );
+
+    std::memmove(
+        state.resultVerifierBase + n,
+        state.resultVerifierBase,
+        state.resultVerifier - state.resultVerifierBase
+    );
+    std::memcpy(state.resultVerifierBase, Buf.data(), n);
+    state.resultVerifier += n;
+
+    std::string rootStruct = std::string("codegen_") + state.rootStruct.first;
+    n = sprintf(
+        state.resultVerifier,
+        "documentation::Documentation d;d.name=\"%s\";d.id=\"%s\";"
+        "d.entries=std::move(%s->documentations);delete %s;return d;}}",
+        state.rootStruct.second.c_str(),
+        state.rootStruct.second.c_str(),
+        rootStruct.c_str(),
+        rootStruct.c_str()
+    );
+    state.resultVerifier += n;
+    return std::string(state.resultVerifierBase, state.resultVerifier);
+}
+
+std::string finalizeConverter(State& state) {
+    std::array<char, 512> Buf;
+    std::fill(Buf.begin(), Buf.end(), '\0');
+    int n = sprintf(
+        Buf.data(),
+        "namespace codegen { template<typename T> T bake(const ghoul::Dictionary&);"
+    );
+
+    std::memmove(
+        state.resultConverterBase + n,
+        state.resultConverterBase,
+        state.resultConverter - state.resultConverterBase
+    );
+    std::memcpy(state.resultConverterBase, Buf.data(), n);
+    state.resultConverter += n;
+
+
+    n = sprintf(
+        state.resultConverter,
+        "}"
+    );
+    state.resultConverter += n;
+    return std::string(state.resultConverterBase, state.resultConverter);
+}
+
 std::string_view validCode(std::string_view code) {
     const size_t mainLocation = code.find(AttributeDictionary);
+    if (mainLocation == std::string_view::npos) {
+        // We did't find the attrbute
+        return std::string_view();
+    }
+
     if (code.find(AttributeDictionary, mainLocation + 1) != std::string_view::npos) {
         Fail("We currently only support one struct per file annotated with %s, "
             "including commented out ones", AttributeDictionary
@@ -247,7 +381,6 @@ std::string_view validCode(std::string_view code) {
     }
 
     const size_t lastNewLine = code.rfind('\n', mainLocation) + 1;
-
     size_t cursor = code.find('{', lastNewLine) + 1;
     
     for (int counter = 1; counter > 0; cursor++) {
@@ -270,16 +403,19 @@ void handleFile(std::string_view path) {
     std::ifstream f(path);
     std::string str(std::istreambuf_iterator<char>{f}, {});
     std::string_view content = strip(validCode(str));
+    if (content.empty()) {
+        return;
+    }
 
     State state;
     // The fivefold increase is a tunable parameter
     const size_t bufferSize = content.size() * 5;
-    char* resultVerifierBase = new char[bufferSize];
-    state.resultVerifier = resultVerifierBase;
+    state.resultVerifierBase = new char[bufferSize];
+    state.resultVerifier = state.resultVerifierBase;
     std::fill(state.resultVerifier, state.resultVerifier + bufferSize, '\0');
 
-    char* resultConverterBase = new char[bufferSize];
-    state.resultConverter = resultConverterBase;
+    state.resultConverterBase = new char[bufferSize];
+    state.resultConverter = state.resultConverterBase;
     std::fill(state.resultConverter, state.resultConverter + bufferSize, '\0');
 
     char* scratchSpaceBase = new char[bufferSize];
@@ -313,10 +449,18 @@ void handleFile(std::string_view path) {
         }
 
         if (startsWith(state.line, "struct")) {
-            std::string_view structName = parseStructName(state.line);
-            state.structs.push_back(structName);
+            Struct s = parseStruct(state.line);
+            state.structs.push_back(s.name);
+            state.structComments[std::string(s.name)] = state.commentBuffer;
+            state.commentBuffer.clear();
             
-            handleStruct(state);
+            if (!s.attributeRenderable.empty()) {
+                assert(state.rootStruct.first.empty() && state.rootStruct.second.empty());
+                state.rootStruct.first = s.name;
+                state.rootStruct.second = s.attributeRenderable;
+            }
+
+            handleStructStart(state);
             continue;
         }
 
@@ -326,6 +470,7 @@ void handleFile(std::string_view path) {
             }
 
             std::string_view structName = state.structs.back();
+            handleStructEnd(state);
             state.structs.pop_back();
             continue;
         }
@@ -335,8 +480,11 @@ void handleFile(std::string_view path) {
         handleVariable(var, state);
     }
 
-    std::string resultConverter(resultConverterBase, state.resultConverter);
-    std::string resultVerifier(resultVerifierBase, state.resultVerifier);
+    if (state.rootStruct.first.empty() || state.rootStruct.second.empty()) {
+        Fail("Root struct tag [[codegen::Dictionary]] is missing the renderable name");
+    }
+    std::string resultVerifier = finalizeVerifier(state);
+    std::string resultConverter = finalizeConverter(state);
 
 #ifdef PRINT_MEMORY_USAGE
     printf("Memory usage (Buffer: %zi)\n", bufferSize);
