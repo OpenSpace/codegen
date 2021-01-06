@@ -226,6 +226,7 @@ std::string verifier(std::string_view type, State& state) {
         { "bool", "BoolVerifier" },
         { "int", "IntVerifier" },
         { "double", "DoubleVerifier" },
+        { "float", "DoubleVerifier" },
         { "std::string", "StringVerifier" },
         { "glm::ivec2", "IntVector2Verifier" },
         { "glm::ivec3", "IntVector3Verifier" },
@@ -233,6 +234,9 @@ std::string verifier(std::string_view type, State& state) {
         { "glm::dvec2", "DoubleVector2Verifier" },
         { "glm::dvec3", "DoubleVector3Verifier" },
         { "glm::dvec4", "DoubleVector4Verifier" },
+        { "glm::vec2", "DoubleVector2Verifier" },
+        { "glm::vec3", "DoubleVector3Verifier" },
+        { "glm::vec4", "DoubleVector4Verifier" },
         { "glm::dmat2x2", "DoubleMatrix2x2Verifier" },
         { "glm::dmat2x3", "DoubleMatrix2x3Verifier" },
         { "glm::dmat2x4", "DoubleMatrix2x4Verifier" },
@@ -241,7 +245,17 @@ std::string verifier(std::string_view type, State& state) {
         { "glm::dmat3x4", "DoubleMatrix3x4Verifier" },
         { "glm::dmat4x2", "DoubleMatrix4x2Verifier" },
         { "glm::dmat4x3", "DoubleMatrix4x3Verifier" },
-        { "glm::dmat4x4", "DoubleMatrix4x4Verifier" }
+        { "glm::dmat4x4", "DoubleMatrix4x4Verifier" },
+        { "glm::mat2x2", "DoubleMatrix2x2Verifier" },
+        { "glm::mat2x3", "DoubleMatrix2x3Verifier" },
+        { "glm::mat2x4", "DoubleMatrix2x4Verifier" },
+        { "glm::mat3x2", "DoubleMatrix3x2Verifier" },
+        { "glm::mat3x3", "DoubleMatrix3x3Verifier" },
+        { "glm::mat3x4", "DoubleMatrix3x4Verifier" },
+        { "glm::mat4x2", "DoubleMatrix4x2Verifier" },
+        { "glm::mat4x3", "DoubleMatrix4x3Verifier" },
+        { "glm::mat4x4", "DoubleMatrix4x4Verifier" }
+
     };
 
     if (auto it = VerifierMapping.find(type); it != VerifierMapping.end()) {
@@ -290,7 +304,7 @@ void handleStructEnd(State& state) {
         int n = sprintf(
             state.resultConverter,
             "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
-            "    %s res;\n"
+            "    %s& res = *val;\n"
             "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
             name.c_str(), name.c_str(), name.c_str()
         );
@@ -326,7 +340,7 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     if (state.structs.size() > 1) {
         int n = sprintf(
             state.resultConverter,
-            "    *val = res;\n}\n"
+            "}\n"
         );
         state.resultConverter += n;
     }
@@ -441,30 +455,43 @@ std::string finalizeConverter(State& state) {
     constexpr const char Preamble[] = R"(
 namespace codegen {
 template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
-template<> void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
         T v;
         bakeTo(d, key, &v);
-        *val = std::move(v);
+        *val = v;
     }
     else *val = std::nullopt;
 }
@@ -473,13 +500,13 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     std::vector<std::string_view> keys = dict.keys();
     val->reserve(keys.size());
     for (size_t i=0;i<dict.size();++i) {
-        T v; bakeTo(dict, keys[i], &v); val->push_back(std::move(v));
+        T v;
+        bakeTo(dict, keys[i], &v);
+        val->push_back(std::move(v));
     }
 }
 )";
 
-    //specialization for optional and vector
-    
     // preamble contains \0 at the end
     std::memmove(
         state.resultConverterBase + sizeof(Preamble) - 1,
