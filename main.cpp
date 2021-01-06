@@ -80,8 +80,11 @@ struct Variable {
     std::string_view type;
     std::string_view name;
 
-    std::string_view attributeKey;
-    std::string_view attributeInRange;
+    struct Attributes {
+        std::string_view key;
+        std::string_view inRange;
+    };
+    Attributes attributes;
 };
 
 //
@@ -223,8 +226,8 @@ Variable parseVariable(std::string_view line) {
     res.name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
-        res.attributeInRange = parseAttribute(attributes, "inrange");
-        res.attributeKey = parseAttribute(attributes, "key");
+        res.attributes.inRange = parseAttribute(attributes, "inrange");
+        res.attributes.key = parseAttribute(attributes, "key");
     }
 
     return res;
@@ -251,110 +254,162 @@ std::string resolveComment(std::string comment) {
     return comment;
 }
 
-std::string_view verifierForType(std::string_view type) {
-    if (type == "bool") {
-        return "BoolVerifier";
-    }
-    else if (type == "int") {
-        return "IntVerifier";
-    }
-    else if (type == "double") {
-        return "DoubleVerifier";
-    }
-    else if (type == "float") {
-        return "DoubleVerifier";
-    }
-    else if (type == "std::string") {
-        return "StringVerifier";
-    }
-    else if (type == "glm::ivec2") {
-        return "IntVector2Verifier";
-    }
-    else if (type == "glm::ivec3") {
-        return "IntVector3Verifier";
-    }
-    else if (type == "glm::ivec4") {
-        return "IntVector4Verifier";
-    }
-    else if (type == "glm::dvec2") {
-        return "DoubleVector2Verifier";
-    }
-    else if (type == "glm::dvec3") {
-        return "DoubleVector3Verifier";
-    }
-    else if (type == "glm::dvec4") {
-        return "DoubleVector4Verifier";
-    }
-    else if (type == "glm::vec2") {
-        return "DoubleVector2Verifier";
-    }
-    else if (type == "glm::vec3") {
-        return "DoubleVector3Verifier";
-    }
-    else if (type == "glm::vec4") {
-        return "DoubleVector4Verifier";
-    }
-    else if (type == "glm::dmat2x2") {
-        return "DoubleMatrix2x2Verifier";
-    }
-    else if (type == "glm::dmat2x3") {
-        return "DoubleMatrix2x3Verifier";
-    }
-    else if (type == "glm::dmat2x4") {
-        return "DoubleMatrix2x4Verifier";
-    }
-    else if (type == "glm::dmat3x2") {
-        return "DoubleMatrix3x2Verifier";
-    }
-    else if (type == "glm::dmat3x3") {
-        return "DoubleMatrix3x3Verifier";
-    }
-    else if (type == "glm::dmat3x4") {
-        return "DoubleMatrix3x4Verifier";
-    }
-    else if (type == "glm::dmat4x2") {
-        return "DoubleMatrix4x2Verifier";
-    }
-    else if (type == "glm::dmat4x3") {
-        return "DoubleMatrix4x3Verifier";
-    }
-    else if (type == "glm::dmat4x4") {
-        return "DoubleMatrix4x4Verifier";
-    }
-    else if (type == "glm::mat2x2") {
-        return "DoubleMatrix2x2Verifier";
-    }
-    else if (type == "glm::mat2x3") {
-        return "DoubleMatrix2x3Verifier";
-    }
-    else if (type == "glm::mat2x4") {
-        return "DoubleMatrix2x4Verifier";
-    }
-    else if (type == "glm::mat3x2") {
-        return "DoubleMatrix3x2Verifier";
-    }
-    else if (type == "glm::mat3x3") {
-        return "DoubleMatrix3x3Verifier";
-    }
-    else if (type == "glm::mat3x4") {
-        return "DoubleMatrix3x4Verifier";
-    }
-    else if (type == "glm::mat4x2") {
-        return "DoubleMatrix4x2Verifier";
-    }
-    else if (type == "glm::mat4x3") {
-        return "DoubleMatrix4x3Verifier";
-    }
-    else if (type == "glm::mat4x4") {
-        return "DoubleMatrix4x4Verifier";
-    }
-    else {
-        return std::string_view();
+void reportUnsupportedAttribute(std::string_view type, std::string_view name,
+                                std::string_view value)
+{
+    if (!value.empty()) {
+        Fail(
+            "Attribute '%s' not supported for type '%s'",
+            std::string(name).c_str(), std::string(type).c_str()
+        );
     }
 }
 
-std::string verifier(std::string_view type, State& state) {
-    std::string_view v = verifierForType(type);
+std::string addQualifier(std::string verifier, std::string qualifier,
+                                 std::string parameters)
+{
+    return qualifier + "<" + verifier + ">(" + parameters + ")";
+}
+
+std::string verifierForType(std::string_view type, Variable::Attributes attributes) {
+    if (type == "bool") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "BoolVerifier";
+    }
+    else if (type == "int") {
+        std::string res = "IntVerifier";
+        if (!attributes.inRange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
+        }
+        return res;
+    }
+    else if (type == "double" || type == "float") {
+        std::string res = "DoubleVerifier";
+        if (!attributes.inRange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
+        }
+        return res;
+    }
+    else if (type == "std::string") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "StringVerifier";
+    }
+    else if (type == "glm::ivec2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "IntVector2Verifier";
+    }
+    else if (type == "glm::ivec3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "IntVector3Verifier";
+    }
+    else if (type == "glm::ivec4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "IntVector4Verifier";
+    }
+    else if (type == "glm::dvec2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector2Verifier";
+    }
+    else if (type == "glm::dvec3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector3Verifier";
+    }
+    else if (type == "glm::dvec4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector4Verifier";
+    }
+    else if (type == "glm::vec2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector2Verifier";
+    }
+    else if (type == "glm::vec3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector3Verifier";
+    }
+    else if (type == "glm::vec4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleVector4Verifier";
+    }
+    else if (type == "glm::dmat2x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x2Verifier";
+    }
+    else if (type == "glm::dmat2x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x3Verifier";
+    }
+    else if (type == "glm::dmat2x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x4Verifier";
+    }
+    else if (type == "glm::dmat3x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x2Verifier";
+    }
+    else if (type == "glm::dmat3x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x3Verifier";
+    }
+    else if (type == "glm::dmat3x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x4Verifier";
+    }
+    else if (type == "glm::dmat4x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x2Verifier";
+    }
+    else if (type == "glm::dmat4x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x3Verifier";
+    }
+    else if (type == "glm::dmat4x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x4Verifier";
+    }
+    else if (type == "glm::mat2x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x2Verifier";
+    }
+    else if (type == "glm::mat2x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x3Verifier";
+    }
+    else if (type == "glm::mat2x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix2x4Verifier";
+    }
+    else if (type == "glm::mat3x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x2Verifier";
+    }
+    else if (type == "glm::mat3x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x3Verifier";
+    }
+    else if (type == "glm::mat3x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix3x4Verifier";
+    }
+    else if (type == "glm::mat4x2") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x2Verifier";
+    }
+    else if (type == "glm::mat4x3") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x3Verifier";
+    }
+    else if (type == "glm::mat4x4") {
+        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        return "DoubleMatrix4x4Verifier";
+    }
+    else {
+        return std::string();
+    }
+}
+
+std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
+{
+    std::string_view v = verifierForType(type, attributes);
     
     if (!v.empty()) {
         return std::string("new ") + std::string(v);
@@ -368,7 +423,7 @@ std::string verifier(std::string_view type, State& state) {
             comments = resolveComment(it->second);
         }
 
-        std::string ver = verifier(subtype, state);
+        std::string ver = verifier(subtype, attributes, state);
         std::array<char, 256> Buf;
         std::fill(Buf.begin(), Buf.end(), '\0');
         int n = sprintf(
@@ -403,6 +458,8 @@ void handleStructEnd(State& state) {
         int n = sprintf(
             state.resultConverter,
             R"(
+} // namespace internal
+
 template <typename T> T bake(const ghoul::Dictionary& dict) { static_assert(sizeof(T) == 0); };
 template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
@@ -448,12 +505,12 @@ void handleVariable(Variable var, State& state) {
     std::string ver = std::string("codegen_") + join(state.structs, "_");
     std::string variableName;
 
-    if (var.attributeKey.empty()) {
+    if (var.attributes.key.empty()) {
         variableName = std::string(var.name);
         variableName[0] = static_cast<char>(::toupper(variableName[0]));
     }
     else {
-        variableName = std::string(var.attributeKey);
+        variableName = std::string(var.attributes.key);
     }
 
     state.commentBuffer = resolveComment(state.commentBuffer);
@@ -465,7 +522,7 @@ void handleVariable(Variable var, State& state) {
         var.type.remove_suffix(1);
     }
 
-    std::string v = verifier(var.type, state);
+    std::string v = verifier(var.type, var.attributes, state);
     int n = sprintf(
         state.resultVerifier,
         "    %s->documentations.push_back({\"%s\",%s,%s,%s});\n",
@@ -485,7 +542,7 @@ void handleVariable(Variable var, State& state) {
 
     n = sprintf(
         state.scratchSpace,
-        "    bakeTo(dict, \"%s\", &res.%s);\n",
+        "    internal::bakeTo(dict, \"%s\", &res.%s);\n",
         variableName.c_str(),
         std::string(var.name).c_str()
     );
@@ -546,6 +603,7 @@ template <> documentation::Documentation doc<%s>() {
 std::string finalizeConverter(State& state) {
     constexpr const char Preamble[] = R"(
 namespace codegen {
+namespace internal {
 template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
@@ -608,12 +666,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     std::memcpy(state.resultConverterBase, Preamble, sizeof(Preamble) - 1);
     state.resultConverter += sizeof(Preamble) - 1;
 
-    std::string s(state.resultConverterBase, state.resultConverter);
-
-    int n = sprintf(
-        state.resultConverter,
-        "} // namespace codegen\n"
-    );
+    int n = sprintf(state.resultConverter, "} // namespace codegen\n");
     state.resultConverter += n;
     return std::string(state.resultConverterBase, state.resultConverter);
 }
