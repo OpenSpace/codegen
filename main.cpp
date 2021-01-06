@@ -1,8 +1,8 @@
 /*****************************************************************************************
  *                                                                                       *
- * OpenSpace                                                                             *
+ * OpenSpace Codegen                                                                     *
  *                                                                                       *
- * Copyright (c) 2014-2021                                                               *
+ * Copyright (c) 2021                                                                    *
  *                                                                                       *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this  *
  * software and associated documentation files (the "Software"), to deal in the Software *
@@ -22,6 +22,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
+#include <fmt/format.h>
 #include <array>
 #include <cassert>
 #include <chrono>
@@ -45,12 +46,6 @@ namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
     constexpr const int ErrorContext = 50;
 
-    template <typename... Ts>
-    [[noreturn]] void Fail(const char buf[], Ts... params) {
-        printf(buf, params...);
-        exit(EXIT_FAILURE);
-    }
-
 
     constexpr int BufferSize = 32768;
     char* VerifierResultBase = nullptr;
@@ -62,6 +57,7 @@ namespace {
     char* ScratchSpaceBase = nullptr;
     char* ScratchSpace = nullptr;
 } // namespace
+
 
 struct State {
     std::string_view line;
@@ -94,204 +90,144 @@ struct Variable {
     Attributes attributes;
 };
 
-//
-// Helper functions
-//
-std::string_view strip(std::string_view sv) {
-    const size_t strBegin = sv.find_first_not_of(' ');
-    if (strBegin == std::string::npos) {
-        return sv;
-    }
 
-    const size_t strEnd = sv.find_last_not_of(' ');
-    const size_t strRange = strEnd - strBegin + 1;
-    return sv.substr(strBegin, strRange);
+namespace {
+    constexpr const char BakeFunctionBool[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n";
+    constexpr const char BakeFunctionInt[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }\n";
+    constexpr const char BakeFunctionDouble[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }\n";
+    constexpr const char BakeFunctionFloat[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }\n";
+    constexpr const char BakeFunctionString[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }\n";
+    constexpr const char BakeFunctionIVec2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }\n";
+    constexpr const char BakeFunctionIVec3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }\n";
+    constexpr const char BakeFunctionIVec4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }\n";
+    constexpr const char BakeFunctionDVec2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }\n";
+    constexpr const char BakeFunctionDVec3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }\n";
+    constexpr const char BakeFunctionDVec4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }\n";
+    constexpr const char BakeFunctionVec2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }\n";
+    constexpr const char BakeFunctionVec3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }\n";
+    constexpr const char BakeFunctionVec4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }\n";
+    constexpr const char BakeFunctionMat2x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n";
+    constexpr const char BakeFunctionMat2x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n";
+    constexpr const char BakeFunctionMat2x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n";
+    constexpr const char BakeFunctionMat3x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n";
+    constexpr const char BakeFunctionMat3x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n";
+    constexpr const char BakeFunctionMat3x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n";
+    constexpr const char BakeFunctionMat4x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n";
+    constexpr const char BakeFunctionMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
+    constexpr const char BakeFunctionMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
+    constexpr const char BakeFunctionDMat2x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n";
+    constexpr const char BakeFunctionDMat2x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n";
+    constexpr const char BakeFunctionDMat2x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n";
+    constexpr const char BakeFunctionDMat3x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n";
+    constexpr const char BakeFunctionDMat3x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n";
+    constexpr const char BakeFunctionDMat3x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n";
+    constexpr const char BakeFunctionDMat4x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n";
+    constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
+    constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
+    constexpr const char BakeFunctionOptional[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
+    if (d.hasKey(key)) {
+        T v;
+        bakeTo(d, key, &v);
+        *val = v;
+    }
+    else *val = std::nullopt;
 }
-
-bool startsWith(std::string_view lhs, std::string_view rhs) {
-    return lhs.size() >= rhs.size() && lhs.substr(0, rhs.size()) == rhs;
-}
-
-std::string join(const std::vector<std::string_view>& list, std::string_view sep) {
-    size_t size = 0;
-    for (std::string_view l : list) {
-        size += l.size();
-    }
-    // this allocates space for one sep more than needed, but it simplifies the for loop
-    size += sep.size() * (list.size() - 1);
-
-    std::string res;
-    res.reserve(size);
-    for (std::string_view l : list) {
-        res.append(l.data(), l.size());
-        res.append(sep.data(), sep.size());
-    }
-    // Remove the last separator
-    for (size_t i = 0; i < sep.size(); ++i) {
-        res.pop_back();
-    }
-    return res;
-}
-
-std::string_view extractLine(std::string_view sv, size_t* cursor) {
-    assert(cursor);
-    assert(*cursor == 0 || sv[*cursor - 1] == '\n');
-    const size_t p = sv.find('\n', *cursor);
-
-    if (p != std::string_view::npos) {
-        std::string_view line = sv.substr(*cursor, p - *cursor);
-        *cursor = p + 1;
-        return strip(line);
-    }
-    else {
-        std::string_view line = sv.substr(*cursor);
-        *cursor = std::string_view::npos;
-        return strip(line);
+)";
+    constexpr const char BakeFunctionVector[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+    std::vector<std::string_view> keys = dict.keys();
+    val->reserve(keys.size());
+    for (size_t i = 0; i < dict.size(); ++i) {
+        T v;
+        bakeTo(dict, keys[i], &v);
+        val->push_back(std::move(v));
     }
 }
+)";
 
-void handleCommentLine(State& state) {
-    // Remove the starting // characters
-    std::string_view comment = strip(state.line.substr(2));
-    state.commentBuffer.append(comment);
-    state.commentBuffer.append(" ");
-}
-
-std::string_view parseAttribute(std::string_view block, std::string_view name) {
-    std::string key = std::string("codegen::" + std::string(name));
-    const size_t p = block.find(key);
-    if (p == std::string_view::npos) {
-        return std::string_view();
-    }
-    const size_t beg = block.find('(', p) + 1;
-    const size_t end = block.find(')', beg);
-
-    std::string_view content = block.substr(beg, end - beg);
-    return content;
-}
-
-Struct parseStruct(std::string_view line) {
-    Struct s;
-
-    size_t cursor = line.find(' ');
-    assert(line.substr(0, cursor) == "struct");
-    cursor++;
-
-    const size_t beginAttribute = line.find("[[", cursor);
-    if (beginAttribute != std::string_view::npos) {
-        const size_t endAttribute = line.find("]]", beginAttribute) + 2;
-        if (endAttribute == std::string_view::npos) {
-            Fail(
-                "Could not find closing bracket for attribute in struct:\n%s",
-                std::string(line).c_str()
+    void reportUnsupportedAttribute(std::string_view type, std::string_view name,
+        std::string_view value)
+    {
+        if (!value.empty()) {
+            throw std::runtime_error(
+                "Attribute '" + std::string(name) +
+                "' not supported for type '" + std::string(type) + "'"
             );
         }
-
-        size_t beginName = line.find('(', beginAttribute);
-        if (beginName == std::string_view::npos) {
-            Fail("No name specified for root struct:\n%s", std::string(line).c_str());
-        }
-
-        beginName++;
-        const size_t endName = line.find(')', beginName);
-        if (beginName == endName) {
-            Fail("No name specified for root struct:\n%s", std::string(line).c_str());
-        }
-
-        s.attributeRenderable = line.substr(beginName, endName - beginName);
-        cursor = endAttribute + 1;
     }
 
-    const size_t endStruct = line.find(' ', cursor);
-    if (endStruct == std::string_view::npos) {
-        Fail(
-            "Missing space before the closing { of a struct:\n%s",
-            std::string(line).c_str()
-        );
+    std::string addQualifier(std::string verifier, std::string qualifier,
+        std::string parameters)
+    {
+        return qualifier + "<" + verifier + ">(" + parameters + ")";
     }
-    s.name = line.substr(cursor, endStruct - cursor);
-    return s;
+
+} // namespace
+
+std::string_view fileHeader() {
+    return R"(
+// This file has been auto-generated by the codegen tool by running codegen either
+// directly or indirectly on:  %s
+//
+// Do not change this file manually as any change will be automatically overwritten,
+// instead change the struct tagged with "codegen::Dictionary" in the main file from which
+// the code in this file was generated.
+//
+// If a compiler error brought you here, a struct tagged with "codegen::Dictionary"
+// was changed without the codegen tool being run again.
+)";
 }
 
-Variable parseVariable(std::string_view line) {
-    if (line.back() != ';') {
-        Fail(
-            "Variable definitions over multiple lines not supported:\n%s",
-            std::string(line).c_str()
-        );
-    }
-    // Remove the trailing ;
-    line.remove_suffix(1);
-
-    const size_t p1 = line.find(' ');
-    const size_t p2 = line.find(' ', p1 + 1);
-    if (p1 == std::string_view::npos) {
-        Fail("Too few spaces in variable definition:\n%s", std::string(line).c_str());
-    }
-
-    Variable res;
-    res.type = line.substr(0, p1);
-    res.name = line.substr(p1 + 1, p2 - p1 - 1);
-    if (p2 != std::string_view::npos) {
-        std::string_view attributes = line.substr(p2 + 1);
-        res.attributes.inRange = parseAttribute(attributes, "inrange");
-        res.attributes.inList = parseAttribute(attributes, "inlist");
-        res.attributes.key = parseAttribute(attributes, "key");
-    }
-
-    return res;
+std::string_view bakeFunctionPreamble() {
+    return R"(
+namespace codegen {
+namespace internal {
+template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
+)";
 }
 
-std::string resolveComment(std::string comment) {
-    if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
-        const size_t l = std::string_view("codegen::description").size();
-        it += l;
-        if (comment[it] != '(') {
-            Fail(
-                "Malformed codegen::description. Expected ( after token:\n%s",
-                comment.c_str()
-            );
-        }
-        it++;
-        size_t end = comment.find(')', it);
-        std::string identifier = comment.substr(it, end - it);
-        comment = identifier + ".description";
-    }
-    else {
-        if (size_t it = comment.find('"'); it != std::string::npos) {
-            if (comment[it - 1] != '\\') {
-                Fail(
-                    "Discovered unescaped \" in comment line, which is not allowed:\n%s",
-                    comment.c_str()
-                );
-            }
-        }
+std::string_view bakeFunctionForType(std::string_view type) {
+    static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
+        { "bool",          BakeFunctionBool },
+        { "int",           BakeFunctionInt },
+        { "double",        BakeFunctionDouble },
+        { "float",         BakeFunctionFloat },
+        { "std::string",   BakeFunctionString },
+        { "glm::ivec2",    BakeFunctionIVec2 },
+        { "glm::ivec3",    BakeFunctionIVec3 },
+        { "glm::ivec4",    BakeFunctionIVec4 },
+        { "glm::dvec2",    BakeFunctionDVec2 },
+        { "glm::dvec3",    BakeFunctionDVec3 },
+        { "glm::dvec4",    BakeFunctionDVec4 },
+        { "glm::vec2",     BakeFunctionVec2 },
+        { "glm::vec3",     BakeFunctionVec3 },
+        { "glm::vec4",     BakeFunctionVec4 },
+        { "glm::mat2x2",   BakeFunctionMat2x2 },
+        { "glm::mat2x3",   BakeFunctionMat2x3 },
+        { "glm::mat2x4",   BakeFunctionMat2x4 },
+        { "glm::mat3x2",   BakeFunctionMat3x2 },
+        { "glm::mat3x3",   BakeFunctionMat3x3 },
+        { "glm::mat3x4",   BakeFunctionMat3x4 },
+        { "glm::mat4x2",   BakeFunctionMat4x2 },
+        { "glm::mat4x3",   BakeFunctionMat4x3 },
+        { "glm::mat4x4",   BakeFunctionMat4x4 },
+        { "glm::dmat2x2",  BakeFunctionDMat2x2 },
+        { "glm::dmat2x3",  BakeFunctionDMat2x3 },
+        { "glm::dmat2x4",  BakeFunctionDMat2x4 },
+        { "glm::dmat3x2",  BakeFunctionDMat3x2 },
+        { "glm::dmat3x3",  BakeFunctionDMat3x3 },
+        { "glm::dmat3x4",  BakeFunctionDMat3x4 },
+        { "glm::dmat4x2",  BakeFunctionDMat4x2 },
+        { "glm::dmat4x3",  BakeFunctionDMat4x3 },
+        { "glm::dmat4x4",  BakeFunctionDMat4x4 },
+        { "std::optional", BakeFunctionOptional },
+        { "std::vector",   BakeFunctionVector }
+    };
 
-        // We add artificial spaces between the multiline comments, which causes there to
-        // be a stray space at the end
-        if (!comment.empty()) {
-            comment.pop_back();
-        }
-        comment = std::string("\"") + comment + "\"";
-    }
-    return comment;
-}
-
-void reportUnsupportedAttribute(std::string_view type, std::string_view name,
-                                std::string_view value)
-{
-    if (!value.empty()) {
-        Fail(
-            "Attribute '%s' not supported for type '%s'",
-            std::string(name).c_str(), std::string(type).c_str()
-        );
-    }
-}
-
-std::string addQualifier(std::string verifier, std::string qualifier,
-                                 std::string parameters)
-{
-    return qualifier + "<" + verifier + ">(" + parameters + ")";
+    const auto it = BakeFunctions.find(type);
+    return it != BakeFunctions.end() ? it->second : std::string_view();
 }
 
 std::string verifierForType(std::string_view type, Variable::Attributes attributes) {
@@ -302,7 +238,7 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
     }
     else if (type == "int") {
         reportUnsupportedAttribute(type, "inline", attributes.inList);
-        
+
         std::string res = "IntVerifier";
         if (!attributes.inRange.empty()) {
             res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
@@ -311,7 +247,7 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
     }
     else if (type == "double" || type == "float") {
         reportUnsupportedAttribute(type, "inline", attributes.inList);
-        
+
         std::string res = "DoubleVerifier";
         if (!attributes.inRange.empty()) {
             res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
@@ -468,6 +404,195 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
     }
 }
 
+
+
+//
+// Helper functions
+//
+std::string_view strip(std::string_view sv) {
+    const size_t strBegin = sv.find_first_not_of(' ');
+    if (strBegin == std::string::npos) {
+        return sv;
+    }
+
+    const size_t strEnd = sv.find_last_not_of(' ');
+    const size_t strRange = strEnd - strBegin + 1;
+    return sv.substr(strBegin, strRange);
+}
+
+bool startsWith(std::string_view lhs, std::string_view rhs) {
+    return lhs.size() >= rhs.size() && lhs.substr(0, rhs.size()) == rhs;
+}
+
+std::string join(const std::vector<std::string_view>& list, std::string_view sep) {
+    size_t size = 0;
+    for (std::string_view l : list) {
+        size += l.size();
+    }
+    // this allocates space for one sep more than needed, but it simplifies the for loop
+    size += sep.size() * (list.size() - 1);
+
+    std::string res;
+    res.reserve(size);
+    for (std::string_view l : list) {
+        res.append(l.data(), l.size());
+        res.append(sep.data(), sep.size());
+    }
+    // Remove the last separator
+    for (size_t i = 0; i < sep.size(); ++i) {
+        res.pop_back();
+    }
+    return res;
+}
+
+std::string_view extractLine(std::string_view sv, size_t* cursor) {
+    assert(cursor);
+    assert(*cursor == 0 || sv[*cursor - 1] == '\n');
+    const size_t p = sv.find('\n', *cursor);
+
+    if (p != std::string_view::npos) {
+        std::string_view line = sv.substr(*cursor, p - *cursor);
+        *cursor = p + 1;
+        return strip(line);
+    }
+    else {
+        std::string_view line = sv.substr(*cursor);
+        *cursor = std::string_view::npos;
+        return strip(line);
+    }
+}
+
+void handleCommentLine(State& state) {
+    // Remove the starting // characters
+    std::string_view comment = strip(state.line.substr(2));
+    state.commentBuffer.append(comment);
+    state.commentBuffer.append(" ");
+}
+
+std::string_view parseAttribute(std::string_view block, std::string_view name) {
+    std::string key = std::string("codegen::" + std::string(name));
+    const size_t p = block.find(key);
+    if (p == std::string_view::npos) {
+        return std::string_view();
+    }
+    const size_t beg = block.find('(', p) + 1;
+    const size_t end = block.find(')', beg);
+
+    std::string_view content = block.substr(beg, end - beg);
+    return content;
+}
+
+Struct parseStruct(std::string_view line) {
+    Struct s;
+
+    size_t cursor = line.find(' ');
+    assert(line.substr(0, cursor) == "struct");
+    cursor++;
+
+    const size_t beginAttribute = line.find("[[", cursor);
+    if (beginAttribute != std::string_view::npos) {
+        const size_t endAttribute = line.find("]]", beginAttribute) + 2;
+        if (endAttribute == std::string_view::npos) {
+            throw std::runtime_error(
+                fmt::format(
+                    "Could not find closing bracket for attribute in struct:\n{}", line
+                )
+            );
+        }
+
+        size_t beginName = line.find('(', beginAttribute);
+        if (beginName == std::string_view::npos) {
+            throw std::runtime_error(
+                fmt::format("No name specified for root struct:\n{}", line)
+            );
+        }
+
+        beginName++;
+        const size_t endName = line.find(')', beginName);
+        if (beginName == endName) {
+            throw std::runtime_error(
+                fmt::format("No name specified for root struct:\n{}", line)
+            );
+        }
+
+        s.attributeRenderable = line.substr(beginName, endName - beginName);
+        cursor = endAttribute + 1;
+    }
+
+    const size_t endStruct = line.find(' ', cursor);
+    if (endStruct == std::string_view::npos) {
+        throw std::runtime_error(
+            fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
+        );
+    }
+    s.name = line.substr(cursor, endStruct - cursor);
+    return s;
+}
+
+Variable parseVariable(std::string_view line) {
+    // Remove the trailing ;
+    line.remove_suffix(1);
+
+    const size_t p1 = line.find(' ');
+    const size_t p2 = line.find(' ', p1 + 1);
+    if (p1 == std::string_view::npos) {
+        throw std::runtime_error(
+            fmt::format("Too few spaces in variable definition:\n{}", line)
+        );
+    }
+
+    Variable res;
+    res.type = line.substr(0, p1);
+    res.name = line.substr(p1 + 1, p2 - p1 - 1);
+    if (p2 != std::string_view::npos) {
+        std::string_view attributes = line.substr(p2 + 1);
+        res.attributes.inRange = parseAttribute(attributes, "inrange");
+        res.attributes.inList = parseAttribute(attributes, "inlist");
+        res.attributes.key = parseAttribute(attributes, "key");
+    }
+
+    return res;
+}
+
+std::string resolveComment(std::string comment) {
+    if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
+        const size_t l = std::string_view("codegen::description").size();
+        it += l;
+        if (comment[it] != '(') {
+            throw std::runtime_error(
+                fmt::format(
+                    "Malformed codegen::description. Expected ( after token:\n{}", comment
+                )
+            );
+        }
+        it++;
+        size_t end = comment.find(')', it);
+        std::string identifier = comment.substr(it, end - it);
+        comment = identifier + ".description";
+    }
+    else {
+        if (size_t it = comment.find('"');
+            it != std::string::npos && comment[it - 1] != '\\')
+        {
+            throw std::runtime_error(
+                fmt::format(
+                    "Discovered unallowed unescaped \" in comment line:\n{}", comment
+                )
+            );
+        }
+
+        // We add artificial spaces between the multiline comments, which causes there to
+        // be a stray space at the end
+        if (!comment.empty()) {
+            comment.pop_back();
+        }
+        comment = std::string("\"") + comment + "\"";
+    }
+    return comment;
+}
+
+
+
 std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
 {
     std::string v = verifierForType(type, attributes);
@@ -546,7 +671,7 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
 
     auto it = state.structConverters.find(name);
     if (it == state.structConverters.end()) {
-        Fail("Empty structs are not allowed:\n%s", name.c_str());
+        throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
     }
 
     std::memcpy(ConverterResult, it->second.data(), it->second.size());
@@ -666,183 +791,21 @@ template <> openspace::documentation::Documentation doc<openspace::%s>() {
 }
 
 void finalizeConverter(State& state) {
-    constexpr const char Preamble[] = R"(
-namespace codegen {
-namespace internal {
-template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
-)";
-    
-    std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
-        {
-            "bool",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n"
-        },
-        {
-            "int",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }\n"
-        },
-        {
-            "double",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }\n"
-        },
-        {
-            "float",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }\n"
-        },
-        {
-            "std::string",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }\n"
-        },
-        {
-            "glm::ivec2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }\n"
-        },
-        {
-            "glm::ivec3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }\n"
-        },
-        {
-            "glm::ivec4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }\n"
-        },
-        {
-            "glm::dvec2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }\n"
-        },
-        {
-            "glm::dvec3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }\n"
-        },
-        {
-            "glm::dvec4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }\n"
-        },
-        {
-            "glm::vec2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }\n"
-        },
-        {
-            "glm::vec3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }\n"
-        },
-        {
-            "glm::vec4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }\n"
-        },
-        {
-            "glm::mat2x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n"
-        },
-        {
-            "glm::mat2x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n"
-        },
-        {
-            "glm::mat2x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n"
-        },
-        {
-            "glm::mat3x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n"
-        },
-        {
-            "glm::mat3x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n"
-        },
-        {
-            "glm::mat3x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n"
-        },
-        {
-            "glm::mat4x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n"
-        },
-        {
-            "glm::mat4x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n"
-        },
-        {
-            "glm::mat4x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n"
-        },
-        {
-            "glm::dmat2x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n"
-        },
-        {
-            "glm::dmat2x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n"
-        },
-        {
-            "glm::dmat2x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n"
-        },
-        {
-            "glm::dmat3x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n"
-        },
-        {
-            "glm::dmat3x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n"
-        },
-        {
-            "glm::dmat3x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n"
-        },
-        {
-            "glm::dmat4x2",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n"
-        },
-        {
-            "glm::dmat4x3",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n"
-        },
-        {
-            "glm::dmat4x4",
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n"
-        },
-        {
-            "std::optional",
-            R"(
-template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
-    if (d.hasKey(key)) {
-        T v;
-        bakeTo(d, key, &v);
-        *val = v;
-    }
-    else *val = std::nullopt;
-}
-)"
-        },
-        {
-            "std::vector",
-            R"(
-template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
-    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
-    std::vector<std::string_view> keys = dict.keys();
-    val->reserve(keys.size());
-    for (size_t i = 0; i < dict.size(); ++i) {
-        T v;
-        bakeTo(dict, keys[i], &v);
-        val->push_back(std::move(v));
-    }
-}
-)"
-        }
-    };
-
     char* base = ScratchSpace;
-    int n = sprintf(ScratchSpace, "%s", Preamble);
-    ScratchSpace += n;
+    std::string_view preamble = bakeFunctionPreamble();
+    std::memcpy(ScratchSpace, preamble.data(), preamble.size());
+    ScratchSpace += preamble.size();
+
+
     for (const std::pair<const std::string, bool>& kv : state.typeUsage) {
         assert(kv.second);
         if (kv.second) {
-            auto it = BakeFunctions.find(kv.first);
-            // The iterator is invalid for types that don't have a preamble-defined bake
-            // functions, like all custom structs
-            if (it != BakeFunctions.end()) {
-                n = sprintf(ScratchSpace, "%s", std::string(it->second).c_str());
-                ScratchSpace += n;
+            std::string_view bake = bakeFunctionForType(kv.first);
+            if (!bake.empty()) {
+                // The return value is empty for types that don't have a
+                // preamble-defined bake functions, like all custom structs
+                std::memcpy(ScratchSpace, bake.data(), bake.size());
+                ScratchSpace += bake.size();
             }
         }
     }
@@ -856,7 +819,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     std::memcpy(ConverterResultBase, base, preambleSize);
     ConverterResult += preambleSize;
 
-    n = sprintf(ConverterResult, "} // namespace codegen\n");
+    int n = sprintf(ConverterResult, "} // namespace codegen\n");
     ConverterResult += n;
 }
 
@@ -868,9 +831,11 @@ std::string_view validCode(std::string_view code) {
     }
 
     if (code.find(AttributeDictionary, mainLocation + 1) != std::string_view::npos) {
-        Fail("We currently only support one struct per file annotated with %s, "
-            "including commented out ones", AttributeDictionary
-        );
+        throw std::runtime_error(fmt::format(
+            "We currently only support one struct per file annotated with {}, "
+            "including commented out ones",
+            AttributeDictionary
+        ));
     }
 
     const size_t lastNewLine = code.rfind('\n', mainLocation) + 1;
@@ -907,23 +872,24 @@ void handleFile(std::filesystem::path path) {
 
     // Some initial sanity checks
     if (std::string_view s = content.substr(0, 6); s != "struct") {
-        Fail(
+        throw std::runtime_error(fmt::format(
             "[[codegen::Dictionary]] needs a 'struct' declaration immediately before on "
-            "the same line. Found %s", std::string(s).c_str()
-        );
+            "the same line. Found {}", s
+        ));
     }
 
     if (size_t p = content.find("/*"); p != std::string_view::npos) {
-        Fail(
-            "Block comments are not allowed:\n%s",
-            std::string(content.substr(p, ErrorContext)).c_str()
-        );
+        throw std::runtime_error(fmt::format(
+            "Block comments are not allowed:\n{}", content.substr(p, ErrorContext)
+        ));
     }
 
     if (size_t p = str.find(destination.filename().string());
         p == std::string_view::npos)
     {
-        Fail("File does not include the generated file. This was probably a mistake");
+        throw std::runtime_error(
+            "File does not include the generated file. This was probably a mistake"
+        );
     }
 
 
@@ -969,7 +935,9 @@ void handleFile(std::filesystem::path path) {
 
             if (startsWith(state.line, "};")) {
                 if (!state.commentBuffer.empty()) {
-                    Fail("Unaccounted for comments at the end of a struct definition");
+                    throw std::runtime_error(
+                        "Unaccounted for comments at the end of a struct definition"
+                    );
                 }
 
                 handleStructEnd(state);
@@ -998,7 +966,9 @@ void handleFile(std::filesystem::path path) {
     }
 
     if (state.rootStruct.first.empty() || state.rootStruct.second.empty()) {
-        Fail("Root struct tag [[codegen::Dictionary]] is missing the renderable name");
+        throw std::runtime_error(
+            "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
+        );
     }
 
 
@@ -1038,7 +1008,7 @@ void handleFile(std::filesystem::path path) {
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-        Fail(
+        throw std::runtime_error(
             "Wrong number of parameters. Expected 3.\n"
             "Usage: codegen --file <file>\n"
             "       codegen --folder <folder>"
@@ -1057,7 +1027,9 @@ int main(int argc, char** argv) {
     else if (type == "--folder") {
         namespace fs = std::filesystem;
         if (!fs::is_directory(src)) {
-            Fail("When using --folder, the second parameter has to name a folder");
+            throw std::runtime_error(
+                "When using --folder, the second parameter has to name a folder"
+            );
         }
 
         auto beg = std::chrono::high_resolution_clock::now();
@@ -1070,9 +1042,8 @@ int main(int argc, char** argv) {
         printf("Time: %i\n", static_cast<int>((end - beg).count()/ 1000));
     }
     else {
-        Fail(
-            "Unrecognized argument '%s'. Expected '--file' or '--folder'\n",
-            std::string(type).c_str()
-        );
+        throw std::runtime_error(fmt::format(
+            "Unrecognized argument '{}'. Expected '--file' or '--folder'\n", type
+        ));
     }
 }
