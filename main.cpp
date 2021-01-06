@@ -39,7 +39,7 @@
 #pragma warning (disable : 4996)
 #endif // WIN32
 
-//#define PRINT_MEMORY_USAGE
+#define PRINT_MEMORY_USAGE
 
 namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
@@ -50,24 +50,30 @@ namespace {
         printf(buf, params...);
         exit(EXIT_FAILURE);
     }
+
+
+    constexpr int BufferSize = 32768;
+    char* VerifierResultBase = nullptr;
+    char* VerifierResult = nullptr;
+
+    char* ConverterResultBase = nullptr;
+    char* ConverterResult = nullptr;
+
+    char* ScratchSpaceBase = nullptr;
+    char* ScratchSpace = nullptr;
 } // namespace
 
 struct State {
     std::string_view line;
     std::string commentBuffer;
+    std::string variableBuffer;
     std::vector<std::string_view> structs;
 
     std::map<std::string, std::string, std::less<>> structComments;
     std::pair<std::string, std::string> rootStruct;
-
-    char* resultVerifierBase = nullptr;
-    char* resultVerifier = nullptr;
-
     std::map<std::string, std::string, std::less<>> structConverters;
-    char* resultConverterBase = nullptr;
-    char* resultConverter = nullptr;
 
-    char* scratchSpace = nullptr;
+    std::map<std::string, bool, std::less<>> typeUsage;
 };
 
 struct Struct {
@@ -83,6 +89,7 @@ struct Variable {
     struct Attributes {
         std::string_view key;
         std::string_view inRange;
+        std::string_view inList;
     };
     Attributes attributes;
 };
@@ -147,6 +154,7 @@ void handleCommentLine(State& state) {
     // Remove the starting // characters
     std::string_view comment = strip(state.line.substr(2));
     state.commentBuffer.append(comment);
+    state.commentBuffer.append(" ");
 }
 
 std::string_view parseAttribute(std::string_view block, std::string_view name) {
@@ -227,6 +235,7 @@ Variable parseVariable(std::string_view line) {
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
         res.attributes.inRange = parseAttribute(attributes, "inrange");
+        res.attributes.inList = parseAttribute(attributes, "inlist");
         res.attributes.key = parseAttribute(attributes, "key");
     }
 
@@ -249,6 +258,20 @@ std::string resolveComment(std::string comment) {
         comment = identifier + ".description";
     }
     else {
+        if (size_t it = comment.find('"'); it != std::string::npos) {
+            if (comment[it - 1] != '\\') {
+                Fail(
+                    "Discovered unescaped \" in comment line, which is not allowed:\n%s",
+                    comment.c_str()
+                );
+            }
+        }
+
+        // We add artificial spaces between the multiline comments, which causes there to
+        // be a stray space at the end
+        if (!comment.empty()) {
+            comment.pop_back();
+        }
         comment = std::string("\"") + comment + "\"";
     }
     return comment;
@@ -274,9 +297,12 @@ std::string addQualifier(std::string verifier, std::string qualifier,
 std::string verifierForType(std::string_view type, Variable::Attributes attributes) {
     if (type == "bool") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "BoolVerifier";
     }
     else if (type == "int") {
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
+        
         std::string res = "IntVerifier";
         if (!attributes.inRange.empty()) {
             res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
@@ -284,6 +310,8 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
         return res;
     }
     else if (type == "double" || type == "float") {
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
+        
         std::string res = "DoubleVerifier";
         if (!attributes.inRange.empty()) {
             res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
@@ -292,114 +320,147 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
     }
     else if (type == "std::string") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        return "StringVerifier";
+
+        if (attributes.inList.empty()) {
+            return "StringVerifier";
+        }
+        else {
+            return "StringInListVerifier({" + std::string(attributes.inList) + "})";
+        }
     }
     else if (type == "glm::ivec2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "IntVector2Verifier";
     }
     else if (type == "glm::ivec3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "IntVector3Verifier";
     }
     else if (type == "glm::ivec4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "IntVector4Verifier";
     }
     else if (type == "glm::dvec2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector2Verifier";
     }
     else if (type == "glm::dvec3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector3Verifier";
     }
     else if (type == "glm::dvec4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector4Verifier";
     }
     else if (type == "glm::vec2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector2Verifier";
     }
     else if (type == "glm::vec3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector3Verifier";
     }
     else if (type == "glm::vec4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleVector4Verifier";
     }
     else if (type == "glm::dmat2x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x2Verifier";
     }
     else if (type == "glm::dmat2x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x3Verifier";
     }
     else if (type == "glm::dmat2x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x4Verifier";
     }
     else if (type == "glm::dmat3x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x2Verifier";
     }
     else if (type == "glm::dmat3x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x3Verifier";
     }
     else if (type == "glm::dmat3x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x4Verifier";
     }
     else if (type == "glm::dmat4x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x2Verifier";
     }
     else if (type == "glm::dmat4x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x3Verifier";
     }
     else if (type == "glm::dmat4x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x4Verifier";
     }
     else if (type == "glm::mat2x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x2Verifier";
     }
     else if (type == "glm::mat2x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x3Verifier";
     }
     else if (type == "glm::mat2x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix2x4Verifier";
     }
     else if (type == "glm::mat3x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x2Verifier";
     }
     else if (type == "glm::mat3x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x3Verifier";
     }
     else if (type == "glm::mat3x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix3x4Verifier";
     }
     else if (type == "glm::mat4x2") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x2Verifier";
     }
     else if (type == "glm::mat4x3") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x3Verifier";
     }
     else if (type == "glm::mat4x4") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
+        reportUnsupportedAttribute(type, "inline", attributes.inList);
         return "DoubleMatrix4x4Verifier";
     }
     else {
@@ -409,10 +470,10 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
 
 std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
 {
-    std::string_view v = verifierForType(type, attributes);
+    std::string v = verifierForType(type, attributes);
     
     if (!v.empty()) {
-        return std::string("new ") + std::string(v);
+        return std::string("new ") + v;
     }
     else if (startsWith(type, "std::vector<")) {
         std::string_view subtype = type.substr(12);
@@ -442,10 +503,10 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
 void handleStructStart(State& state) {
     std::string name = "codegen_" + join(state.structs, "_");
     int n = sprintf(
-        state.resultVerifier,
+        VerifierResult,
         "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
     );
-    state.resultVerifier += n;
+    VerifierResult += n;
 }
 
 void handleStructEnd(State& state) {
@@ -456,30 +517,30 @@ void handleStructEnd(State& state) {
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
         int n = sprintf(
-            state.resultConverter,
+            ConverterResult,
             R"(
 } // namespace internal
 
 template <typename T> T bake(const ghoul::Dictionary& dict) { static_assert(sizeof(T) == 0); };
 template <> %s bake<%s>(const ghoul::Dictionary& dict) {
-    documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<openspace::%s>(), dict, "%s");
     %s res;
 )",
             name.c_str(), name.c_str(),
             state.rootStruct.second.c_str(), state.rootStruct.second.c_str(),
             name.c_str()
         );
-        state.resultConverter += n;
+        ConverterResult += n;
     }
     else {
         int n = sprintf(
-            state.resultConverter,
+            ConverterResult,
             "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
             "    %s& res = *val;\n"
             "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
             name.c_str(), name.c_str(), name.c_str()
         );
-        state.resultConverter += n;
+        ConverterResult += n;
     }
 
 
@@ -488,16 +549,16 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
         Fail("Empty structs are not allowed:\n%s", name.c_str());
     }
 
-    std::memcpy(state.resultConverter, it->second.data(), it->second.size());
-    state.resultConverter += it->second.size();
+    std::memcpy(ConverterResult, it->second.data(), it->second.size());
+    ConverterResult += it->second.size();
 
     if (isRootStruct) {
-        int n = sprintf(state.resultConverter, "    return res;\n}\n");
-        state.resultConverter += n;
+        int n = sprintf(ConverterResult, "    return res;\n}\n");
+        ConverterResult += n;
     }
     else {
-        int n = sprintf(state.resultConverter, "}\n");
-        state.resultConverter += n;
+        int n = sprintf(ConverterResult, "}\n");
+        ConverterResult += n;
     }
 }
 
@@ -518,18 +579,23 @@ void handleVariable(Variable var, State& state) {
     bool isOptional = false;
     if (startsWith(var.type, "std::optional<")) {
         isOptional = true;
+        state.typeUsage["std::optional"] = true;
         var.type.remove_prefix(std::string_view("std::optional<").size());
         var.type.remove_suffix(1);
     }
+    if (startsWith(var.type, "std::vector<")) {
+        state.typeUsage["std::vector"] = true;
+    }
 
+    state.typeUsage[std::string(var.type)] = true;
     std::string v = verifier(var.type, var.attributes, state);
     int n = sprintf(
-        state.resultVerifier,
+        VerifierResult,
         "    %s->documentations.push_back({\"%s\",%s,%s,%s});\n",
         ver.c_str(), variableName.c_str(), v.c_str(),
         isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer.c_str()
     );
-    state.resultVerifier += n;
+    VerifierResult += n;
     state.commentBuffer.clear();
 
 
@@ -541,46 +607,46 @@ void handleVariable(Variable var, State& state) {
     }
 
     n = sprintf(
-        state.scratchSpace,
+        ScratchSpace,
         "    internal::bakeTo(dict, \"%s\", &res.%s);\n",
         variableName.c_str(),
         std::string(var.name).c_str()
     );
     
-    converter += std::string(state.scratchSpace, state.scratchSpace + n);
-    state.scratchSpace += n;
+    converter += std::string(ScratchSpace, ScratchSpace + n);
+    ScratchSpace += n;
     state.structConverters[name] = converter;
 }
 
-std::string finalizeVerifier(State& state) {
+void finalizeVerifier(State& state) {
     std::array<char, 512> Buf;
     std::fill(Buf.begin(), Buf.end(), '\0');
     int n = sprintf(
         Buf.data(),
         R"(
 namespace codegen {
-template <typename T> documentation::Documentation doc() {
+template <typename T> openspace::documentation::Documentation doc() {
     static_assert(sizeof(T) == 0); // This should never be called
 }
-template <> documentation::Documentation doc<%s>() {
-    using namespace documentation;
+template <> openspace::documentation::Documentation doc<openspace::%s>() {
+    using namespace openspace::documentation;
 )",
         state.rootStruct.second.c_str()
     );
 
     std::memmove(
-        state.resultVerifierBase + n,
-        state.resultVerifierBase,
-        state.resultVerifier - state.resultVerifierBase
+        VerifierResultBase + n,
+        VerifierResultBase,
+        VerifierResult - VerifierResultBase
     );
-    std::memcpy(state.resultVerifierBase, Buf.data(), n);
-    state.resultVerifier += n;
+    std::memcpy(VerifierResultBase, Buf.data(), n);
+    VerifierResult += n;
 
     std::string rootStruct = std::string("codegen_") + state.rootStruct.first;
     n = sprintf(
-        state.resultVerifier,
+        VerifierResult,
         R"(
-    documentation::Documentation d = {
+    openspace::documentation::Documentation d = {
         "%s",
         "%s",
         std::move(%s->documentations)
@@ -596,47 +662,148 @@ template <> documentation::Documentation doc<%s>() {
         rootStruct.c_str(),
         rootStruct.c_str()
     );
-    state.resultVerifier += n;
-    return std::string(state.resultVerifierBase, state.resultVerifier);
+    VerifierResult += n;
 }
 
-std::string finalizeConverter(State& state) {
+void finalizeConverter(State& state) {
     constexpr const char Preamble[] = R"(
 namespace codegen {
 namespace internal {
 template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x2* val) { *val = d.value<glm::dmat2x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x3* val) { *val = d.value<glm::dmat2x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x4* val) { *val = d.value<glm::dmat2x4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x2* val) { *val = d.value<glm::dmat3x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x3* val) { *val = d.value<glm::dmat3x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x4* val) { *val = d.value<glm::dmat3x4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x2* val) { *val = d.value<glm::dmat4x2>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x3* val) { *val = d.value<glm::dmat4x3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x4* val) { *val = d.value<glm::dmat4x4>(key); }
+)";
+    
+    std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
+        {
+            "bool",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n"
+        },
+        {
+            "int",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }\n"
+        },
+        {
+            "double",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }\n"
+        },
+        {
+            "float",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }\n"
+        },
+        {
+            "std::string",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }\n"
+        },
+        {
+            "glm::ivec2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }\n"
+        },
+        {
+            "glm::ivec3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }\n"
+        },
+        {
+            "glm::ivec4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }\n"
+        },
+        {
+            "glm::dvec2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec2* val) { *val = d.value<glm::dvec2>(key); }\n"
+        },
+        {
+            "glm::dvec3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }\n"
+        },
+        {
+            "glm::dvec4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }\n"
+        },
+        {
+            "glm::vec2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }\n"
+        },
+        {
+            "glm::vec3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }\n"
+        },
+        {
+            "glm::vec4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }\n"
+        },
+        {
+            "glm::mat2x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n"
+        },
+        {
+            "glm::mat2x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n"
+        },
+        {
+            "glm::mat2x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n"
+        },
+        {
+            "glm::mat3x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n"
+        },
+        {
+            "glm::mat3x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n"
+        },
+        {
+            "glm::mat3x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n"
+        },
+        {
+            "glm::mat4x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n"
+        },
+        {
+            "glm::mat4x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n"
+        },
+        {
+            "glm::mat4x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::mat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n"
+        },
+        {
+            "glm::dmat2x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x2* val) { *val = d.value<glm::dmat2x2>(key); }\n"
+        },
+        {
+            "glm::dmat2x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x3* val) { *val = d.value<glm::dmat2x3>(key); }\n"
+        },
+        {
+            "glm::dmat2x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat2x4* val) { *val = d.value<glm::dmat2x4>(key); }\n"
+        },
+        {
+            "glm::dmat3x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x2* val) { *val = d.value<glm::dmat3x2>(key); }\n"
+        },
+        {
+            "glm::dmat3x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x3* val) { *val = d.value<glm::dmat3x3>(key); }\n"
+        },
+        {
+            "glm::dmat3x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat3x4* val) { *val = d.value<glm::dmat3x4>(key); }\n"
+        },
+        {
+            "glm::dmat4x2",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n"
+        },
+        {
+            "glm::dmat4x3",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n"
+        },
+        {
+            "glm::dmat4x4",
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n"
+        },
+        {
+            "std::optional",
+            R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
         T v;
@@ -645,6 +812,11 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     }
     else *val = std::nullopt;
 }
+)"
+        },
+        {
+            "std::vector",
+            R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
     std::vector<std::string_view> keys = dict.keys();
@@ -655,20 +827,37 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
         val->push_back(std::move(v));
     }
 }
-)";
+)"
+        }
+    };
 
-    // preamble contains \0 at the end
+    char* base = ScratchSpace;
+    int n = sprintf(ScratchSpace, "%s", Preamble);
+    ScratchSpace += n;
+    for (const std::pair<const std::string, bool>& kv : state.typeUsage) {
+        assert(kv.second);
+        if (kv.second) {
+            auto it = BakeFunctions.find(kv.first);
+            // The iterator is invalid for types that don't have a preamble-defined bake
+            // functions, like all custom structs
+            if (it != BakeFunctions.end()) {
+                n = sprintf(ScratchSpace, "%s", std::string(it->second).c_str());
+                ScratchSpace += n;
+            }
+        }
+    }
+    long long preambleSize = ScratchSpace - base;
+
     std::memmove(
-        state.resultConverterBase + sizeof(Preamble) - 1,
-        state.resultConverterBase,
-        state.resultConverter - state.resultConverterBase
+        ConverterResultBase + preambleSize,
+        ConverterResultBase,
+        ConverterResult - ConverterResultBase
     );
-    std::memcpy(state.resultConverterBase, Preamble, sizeof(Preamble) - 1);
-    state.resultConverter += sizeof(Preamble) - 1;
+    std::memcpy(ConverterResultBase, base, preambleSize);
+    ConverterResult += preambleSize;
 
-    int n = sprintf(state.resultConverter, "} // namespace codegen\n");
-    state.resultConverter += n;
-    return std::string(state.resultConverterBase, state.resultConverter);
+    n = sprintf(ConverterResult, "} // namespace codegen\n");
+    ConverterResult += n;
 }
 
 std::string_view validCode(std::string_view code) {
@@ -739,19 +928,13 @@ void handleFile(std::filesystem::path path) {
 
 
     State state;
-    // The fivefold increase is a tunable parameter
-    const size_t bufferSize = content.size() * 5;
-    state.resultVerifierBase = new char[bufferSize];
-    state.resultVerifier = state.resultVerifierBase;
-    std::fill(state.resultVerifier, state.resultVerifier + bufferSize, '\0');
+    VerifierResult = VerifierResultBase;
+    ConverterResult = ConverterResultBase;
+    ScratchSpace = ScratchSpaceBase;
+    std::fill(VerifierResultBase, VerifierResultBase + BufferSize - 1, '\0');
+    std::fill(ConverterResultBase, ConverterResultBase + BufferSize - 1, '\0');
+    std::fill(ScratchSpaceBase, ScratchSpaceBase + BufferSize - 1, '\0');
 
-    state.resultConverterBase = new char[bufferSize];
-    state.resultConverter = state.resultConverterBase;
-    std::fill(state.resultConverter, state.resultConverter + bufferSize, '\0');
-
-    char* scratchSpaceBase = new char[bufferSize];
-    state.scratchSpace = scratchSpaceBase;
-    std::fill(state.scratchSpace, state.scratchSpace + bufferSize, '\0');
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
@@ -760,40 +943,58 @@ void handleFile(std::filesystem::path path) {
             continue;
         }
 
-        if (startsWith(state.line, "//")) {
-            handleCommentLine(state);
-            continue;
-        }
-
-        if (startsWith(state.line, "struct")) {
-            Struct s = parseStruct(state.line);
-            state.structs.push_back(s.name);
-            state.structComments[std::string(s.name)] = state.commentBuffer;
-            state.commentBuffer.clear();
-            
-            if (!s.attributeRenderable.empty()) {
-                assert(state.rootStruct.first.empty() && state.rootStruct.second.empty());
-                state.rootStruct.first = s.name;
-                state.rootStruct.second = s.attributeRenderable;
+        // If the variable buffer is filled, then we are in a continuation of a variable
+        // definition
+        if (state.variableBuffer.empty()) {
+            if (startsWith(state.line, "//")) {
+                handleCommentLine(state);
+                continue;
             }
 
-            handleStructStart(state);
-            continue;
-        }
+            if (startsWith(state.line, "struct")) {
+                Struct s = parseStruct(state.line);
+                state.structs.push_back(s.name);
+                state.structComments[std::string(s.name)] = state.commentBuffer;
+                state.commentBuffer.clear();
 
-        if (startsWith(state.line, "};")) {
-            if (!state.commentBuffer.empty()) {
-                Fail("Unaccounted for comments at the end of a struct definition");
+                if (!s.attributeRenderable.empty()) {
+                    assert(state.rootStruct.first.empty() && state.rootStruct.second.empty());
+                    state.rootStruct.first = s.name;
+                    state.rootStruct.second = s.attributeRenderable;
+                }
+
+                handleStructStart(state);
+                continue;
             }
 
-            handleStructEnd(state);
-            state.structs.pop_back();
-            continue;
+            if (startsWith(state.line, "};")) {
+                if (!state.commentBuffer.empty()) {
+                    Fail("Unaccounted for comments at the end of a struct definition");
+                }
+
+                handleStructEnd(state);
+                state.structs.pop_back();
+                continue;
+            }
         }
 
         // If we got this far, we must be in a variable definition
-        Variable var = parseVariable(state.line);
-        handleVariable(var, state);
+        if (state.line.find(';') == std::string_view::npos) {
+            // No semicolon on this line but we are looking for a variable, so we are in
+            // a definition line that spans multiple lines
+            state.variableBuffer += std::string(state.line) + " ";
+            continue;
+        }
+        if (state.variableBuffer.empty()) {
+            Variable var = parseVariable(state.line);
+            handleVariable(var, state);
+        }
+        else {
+            state.variableBuffer += std::string(state.line); 
+            Variable var = parseVariable(state.variableBuffer);
+            handleVariable(var, state);
+            state.variableBuffer.clear();
+        }
     }
 
     if (state.rootStruct.first.empty() || state.rootStruct.second.empty()) {
@@ -803,11 +1004,14 @@ void handleFile(std::filesystem::path path) {
 
     std::ofstream output(destination);
     int n = sprintf(
-        state.scratchSpace,
+        ScratchSpace,
         R"(
-// This file has been auto-generated by the codegen tool by running
-// codegen either directly or indirectly on:  %s
-// Do not change this file manually
+// This file has been auto-generated by the codegen tool by running codegen either
+// directly or indirectly on:  %s
+//
+// Do not change this file manually as any change will be automatically overwritten,
+// instead change the struct tagged with "codegen::Dictionary" in the main file from which
+// the code in this file was generated.
 //
 // If a compiler error brought you here, a struct tagged with "codegen::Dictionary"
 // was changed without the codegen tool being run again.
@@ -815,20 +1019,20 @@ void handleFile(std::filesystem::path path) {
         path.string().c_str()
     );
 
-    output.write(state.scratchSpace, n);
-    state.scratchSpace += n;
+    output.write(ScratchSpace, n);
+    ScratchSpace += n;
 
-    std::string resultVerifier = finalizeVerifier(state);
-    output.write(resultVerifier.c_str(), resultVerifier.size());
-    std::string resultConverter = finalizeConverter(state);
-    output.write(resultConverter.c_str(), resultConverter.size());
+    finalizeVerifier(state);
+    output.write(VerifierResultBase, VerifierResult - VerifierResultBase);
 
+    finalizeConverter(state);
+    output.write(ConverterResultBase, ConverterResult - ConverterResultBase);
 
 #ifdef PRINT_MEMORY_USAGE
-    printf("Memory usage (Buffer: %zi)\n", bufferSize);
-    printf("Converter: %lli\n", state.resultConverter - resultConverterBase);
-    printf("Verifier: %lli\n", state.resultVerifier - resultVerifierBase);
-    printf("Scratch: %lli\n", state.scratchSpace - scratchSpaceBase);
+    printf("Memory usage (Buffer: %i)\n", BufferSize);
+    printf("Converter: %lli\n", ConverterResult - ConverterResultBase);
+    printf("Verifier: %lli\n", VerifierResult - VerifierResultBase);
+    printf("Scratch: %lli\n", ScratchSpace - ScratchSpaceBase);
 #endif // PRINT_MEMORY_USAGE
 }
 
@@ -840,6 +1044,10 @@ int main(int argc, char** argv) {
             "       codegen --folder <folder>"
         );
     }
+
+    VerifierResultBase = new char[BufferSize];
+    ConverterResultBase = new char[BufferSize];
+    ScratchSpaceBase = new char[BufferSize];
 
     std::string_view type = argv[1];
     std::string_view src = argv[2];
