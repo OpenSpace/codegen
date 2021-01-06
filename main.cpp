@@ -1,3 +1,27 @@
+/*****************************************************************************************
+ *                                                                                       *
+ * OpenSpace                                                                             *
+ *                                                                                       *
+ * Copyright (c) 2014-2021                                                               *
+ *                                                                                       *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this  *
+ * software and associated documentation files (the "Software"), to deal in the Software *
+ * without restriction, including without limitation the rights to use, copy, modify,    *
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to    *
+ * permit persons to whom the Software is furnished to do so, subject to the following   *
+ * conditions:                                                                           *
+ *                                                                                       *
+ * The above copyright notice and this permission notice shall be included in all copies *
+ * or substantial portions of the Software.                                              *
+ *                                                                                       *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,   *
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A         *
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT    *
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF  *
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE  *
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
+ ****************************************************************************************/
+
 #include <array>
 #include <cassert>
 #include <chrono>
@@ -6,6 +30,7 @@
 #include <iterator>
 #include <iostream>
 #include <map>
+#include <numeric>
 #include <optional>
 #include <string_view>
 #include <unordered_map>
@@ -77,21 +102,25 @@ bool startsWith(std::string_view lhs, std::string_view rhs) {
     return lhs.size() >= rhs.size() && lhs.substr(0, rhs.size()) == rhs;
 }
 
-std::string join(const std::vector<std::string_view>& list, std::string sep) {
+std::string join(const std::vector<std::string_view>& list, std::string_view sep) {
     size_t size = 0;
     for (std::string_view l : list) {
         size += l.size();
     }
     // this allocates space for one sep more than needed, but it simplifies the for loop
-    size += sep.size() * list.size();
+    size += sep.size() * (list.size() - 1);
 
     std::string res;
-    res.reserve(size + 1);
+    res.reserve(size);
     for (std::string_view l : list) {
         res.append(l.data(), l.size());
-        res.append(sep);
+        res.append(sep.data(), sep.size());
     }
-    return res.substr(0, res.size() - sep.size());
+    // Remove the last separator
+    for (size_t i = 0; i < sep.size(); ++i) {
+        res.pop_back();
+    }
+    return res;
 }
 
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
@@ -112,6 +141,7 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
 }
 
 void handleCommentLine(State& state) {
+    // Remove the starting // characters
     std::string_view comment = strip(state.line.substr(2));
     state.commentBuffer.append(comment);
 }
@@ -221,45 +251,113 @@ std::string resolveComment(std::string comment) {
     return comment;
 }
 
+std::string_view verifierForType(std::string_view type) {
+    if (type == "bool") {
+        return "BoolVerifier";
+    }
+    else if (type == "int") {
+        return "IntVerifier";
+    }
+    else if (type == "double") {
+        return "DoubleVerifier";
+    }
+    else if (type == "float") {
+        return "DoubleVerifier";
+    }
+    else if (type == "std::string") {
+        return "StringVerifier";
+    }
+    else if (type == "glm::ivec2") {
+        return "IntVector2Verifier";
+    }
+    else if (type == "glm::ivec3") {
+        return "IntVector3Verifier";
+    }
+    else if (type == "glm::ivec4") {
+        return "IntVector4Verifier";
+    }
+    else if (type == "glm::dvec2") {
+        return "DoubleVector2Verifier";
+    }
+    else if (type == "glm::dvec3") {
+        return "DoubleVector3Verifier";
+    }
+    else if (type == "glm::dvec4") {
+        return "DoubleVector4Verifier";
+    }
+    else if (type == "glm::vec2") {
+        return "DoubleVector2Verifier";
+    }
+    else if (type == "glm::vec3") {
+        return "DoubleVector3Verifier";
+    }
+    else if (type == "glm::vec4") {
+        return "DoubleVector4Verifier";
+    }
+    else if (type == "glm::dmat2x2") {
+        return "DoubleMatrix2x2Verifier";
+    }
+    else if (type == "glm::dmat2x3") {
+        return "DoubleMatrix2x3Verifier";
+    }
+    else if (type == "glm::dmat2x4") {
+        return "DoubleMatrix2x4Verifier";
+    }
+    else if (type == "glm::dmat3x2") {
+        return "DoubleMatrix3x2Verifier";
+    }
+    else if (type == "glm::dmat3x3") {
+        return "DoubleMatrix3x3Verifier";
+    }
+    else if (type == "glm::dmat3x4") {
+        return "DoubleMatrix3x4Verifier";
+    }
+    else if (type == "glm::dmat4x2") {
+        return "DoubleMatrix4x2Verifier";
+    }
+    else if (type == "glm::dmat4x3") {
+        return "DoubleMatrix4x3Verifier";
+    }
+    else if (type == "glm::dmat4x4") {
+        return "DoubleMatrix4x4Verifier";
+    }
+    else if (type == "glm::mat2x2") {
+        return "DoubleMatrix2x2Verifier";
+    }
+    else if (type == "glm::mat2x3") {
+        return "DoubleMatrix2x3Verifier";
+    }
+    else if (type == "glm::mat2x4") {
+        return "DoubleMatrix2x4Verifier";
+    }
+    else if (type == "glm::mat3x2") {
+        return "DoubleMatrix3x2Verifier";
+    }
+    else if (type == "glm::mat3x3") {
+        return "DoubleMatrix3x3Verifier";
+    }
+    else if (type == "glm::mat3x4") {
+        return "DoubleMatrix3x4Verifier";
+    }
+    else if (type == "glm::mat4x2") {
+        return "DoubleMatrix4x2Verifier";
+    }
+    else if (type == "glm::mat4x3") {
+        return "DoubleMatrix4x3Verifier";
+    }
+    else if (type == "glm::mat4x4") {
+        return "DoubleMatrix4x4Verifier";
+    }
+    else {
+        return std::string_view();
+    }
+}
+
 std::string verifier(std::string_view type, State& state) {
-    static std::unordered_map<std::string_view, std::string_view> VerifierMapping = {
-        { "bool", "BoolVerifier" },
-        { "int", "IntVerifier" },
-        { "double", "DoubleVerifier" },
-        { "float", "DoubleVerifier" },
-        { "std::string", "StringVerifier" },
-        { "glm::ivec2", "IntVector2Verifier" },
-        { "glm::ivec3", "IntVector3Verifier" },
-        { "glm::ivec4", "IntVector4Verifier" },
-        { "glm::dvec2", "DoubleVector2Verifier" },
-        { "glm::dvec3", "DoubleVector3Verifier" },
-        { "glm::dvec4", "DoubleVector4Verifier" },
-        { "glm::vec2", "DoubleVector2Verifier" },
-        { "glm::vec3", "DoubleVector3Verifier" },
-        { "glm::vec4", "DoubleVector4Verifier" },
-        { "glm::dmat2x2", "DoubleMatrix2x2Verifier" },
-        { "glm::dmat2x3", "DoubleMatrix2x3Verifier" },
-        { "glm::dmat2x4", "DoubleMatrix2x4Verifier" },
-        { "glm::dmat3x2", "DoubleMatrix3x2Verifier" },
-        { "glm::dmat3x3", "DoubleMatrix3x3Verifier" },
-        { "glm::dmat3x4", "DoubleMatrix3x4Verifier" },
-        { "glm::dmat4x2", "DoubleMatrix4x2Verifier" },
-        { "glm::dmat4x3", "DoubleMatrix4x3Verifier" },
-        { "glm::dmat4x4", "DoubleMatrix4x4Verifier" },
-        { "glm::mat2x2", "DoubleMatrix2x2Verifier" },
-        { "glm::mat2x3", "DoubleMatrix2x3Verifier" },
-        { "glm::mat2x4", "DoubleMatrix2x4Verifier" },
-        { "glm::mat3x2", "DoubleMatrix3x2Verifier" },
-        { "glm::mat3x3", "DoubleMatrix3x3Verifier" },
-        { "glm::mat3x4", "DoubleMatrix3x4Verifier" },
-        { "glm::mat4x2", "DoubleMatrix4x2Verifier" },
-        { "glm::mat4x3", "DoubleMatrix4x3Verifier" },
-        { "glm::mat4x4", "DoubleMatrix4x4Verifier" }
-
-    };
-
-    if (auto it = VerifierMapping.find(type); it != VerifierMapping.end()) {
-        return std::string("new ") + std::string(it->second);
+    std::string_view v = verifierForType(type);
+    
+    if (!v.empty()) {
+        return std::string("new ") + std::string(v);
     }
     else if (startsWith(type, "std::vector<")) {
         std::string_view subtype = type.substr(12);
@@ -287,30 +385,19 @@ std::string verifier(std::string_view type, State& state) {
 }
 
 void handleStructStart(State& state) {
-    // Verifier
-    {
-        std::string name = "codegen_" + join(state.structs, "_");
-        int n = sprintf(
-            state.resultVerifier,
-            "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
-        );
-        state.resultVerifier += n;
-    }
+    std::string name = "codegen_" + join(state.structs, "_");
+    int n = sprintf(
+        state.resultVerifier,
+        "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
+    );
+    state.resultVerifier += n;
 }
 
 void handleStructEnd(State& state) {
+    const bool isRootStruct = state.structs.size() == 1;
+
     std::string name = join(state.structs, "::");
-    if (state.structs.size() > 1) {
-        int n = sprintf(
-            state.resultConverter,
-            "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
-            "    %s& res = *val;\n"
-            "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
-            name.c_str(), name.c_str(), name.c_str()
-        );
-        state.resultConverter += n;
-    }
-    else {
+    if (isRootStruct) {
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
         int n = sprintf(
@@ -327,6 +414,16 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
         );
         state.resultConverter += n;
     }
+    else {
+        int n = sprintf(
+            state.resultConverter,
+            "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
+            "    %s& res = *val;\n"
+            "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
+            name.c_str(), name.c_str(), name.c_str()
+        );
+        state.resultConverter += n;
+    }
 
 
     auto it = state.structConverters.find(name);
@@ -337,18 +434,12 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     std::memcpy(state.resultConverter, it->second.data(), it->second.size());
     state.resultConverter += it->second.size();
 
-    if (state.structs.size() > 1) {
-        int n = sprintf(
-            state.resultConverter,
-            "}\n"
-        );
+    if (isRootStruct) {
+        int n = sprintf(state.resultConverter, "    return res;\n}\n");
         state.resultConverter += n;
     }
     else {
-        int n = sprintf(
-            state.resultConverter,
-            "    return res;\n}\n"
-        );
+        int n = sprintf(state.resultConverter, "}\n");
         state.resultConverter += n;
     }
 }
@@ -432,10 +523,11 @@ template <> documentation::Documentation doc<%s>() {
     n = sprintf(
         state.resultVerifier,
         R"(
-    documentation::Documentation d;
-    d.name="%s";
-    d.id="%s";
-    d.entries=std::move(%s->documentations);
+    documentation::Documentation d = {
+        "%s",
+        "%s",
+        std::move(%s->documentations)
+    };
     delete %s;
     return d;
 }
@@ -499,7 +591,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
     std::vector<std::string_view> keys = dict.keys();
     val->reserve(keys.size());
-    for (size_t i=0;i<dict.size();++i) {
+    for (size_t i = 0; i < dict.size(); ++i) {
         T v;
         bakeTo(dict, keys[i], &v);
         val->push_back(std::move(v));
@@ -554,11 +646,7 @@ std::string_view validCode(std::string_view code) {
     return code.substr(lastNewLine, cursor - lastNewLine + 1);
 }
 
-void handleFile(std::string_view path) {
-    if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path)) {
-        Fail("Could not open file %s", std::string(path).c_str());
-    }
-
+void handleFile(std::filesystem::path path) {
     std::string str;
     {
         std::ifstream f(path);
@@ -568,6 +656,34 @@ void handleFile(std::string_view path) {
     if (content.empty()) {
         return;
     }
+
+    printf("Processing file '%s'\n", path.filename().string().c_str());
+
+    std::filesystem::path destination = path;
+    destination.replace_extension();
+    destination.replace_filename(destination.filename().string() + "_codegen.cpp");
+
+    // Some initial sanity checks
+    if (std::string_view s = content.substr(0, 6); s != "struct") {
+        Fail(
+            "[[codegen::Dictionary]] needs a 'struct' declaration immediately before on "
+            "the same line. Found %s", std::string(s).c_str()
+        );
+    }
+
+    if (size_t p = content.find("/*"); p != std::string_view::npos) {
+        Fail(
+            "Block comments are not allowed:\n%s",
+            std::string(content.substr(p, ErrorContext)).c_str()
+        );
+    }
+
+    if (size_t p = str.find(destination.filename().string());
+        p == std::string_view::npos)
+    {
+        Fail("File does not include the generated file. This was probably a mistake");
+    }
+
 
     State state;
     // The fivefold increase is a tunable parameter
@@ -583,20 +699,6 @@ void handleFile(std::string_view path) {
     char* scratchSpaceBase = new char[bufferSize];
     state.scratchSpace = scratchSpaceBase;
     std::fill(state.scratchSpace, state.scratchSpace + bufferSize, '\0');
-
-    if (std::string_view s = content.substr(0, 6); s != "struct") {
-        Fail(
-            "[[codegen::Dictionary]] needs a 'struct' declaration immediately before on "
-            "the same line. Found %s", std::string(s).c_str()
-        );
-    }
-
-    if (size_t p = content.find("/*"); p != std::string_view::npos) {
-        Fail(
-            "Block comments are not allowed:\n%s",
-            std::string(content.substr(p, ErrorContext)).c_str()
-        );
-    }
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
@@ -645,22 +747,19 @@ void handleFile(std::string_view path) {
         Fail("Root struct tag [[codegen::Dictionary]] is missing the renderable name");
     }
 
-    std::filesystem::path destination = path;
-    destination.replace_extension();
-    destination.replace_filename(destination.filename().string() + "_codegen.cpp");
 
     std::ofstream output(destination);
     int n = sprintf(
         state.scratchSpace,
         R"(
 // This file has been auto-generated by the codegen tool by running
-// codegen.exe -file %s
+// codegen either directly or indirectly on:  %s
 // Do not change this file manually
 //
-// If a compiler error brought you here, a struct tagged with [[codegen::Dictionary]]
-// has been changed without the codegen tool being run again
+// If a compiler error brought you here, a struct tagged with "codegen::Dictionary"
+// was changed without the codegen tool being run again.
 )",
-        std::string(path).c_str()
+        path.string().c_str()
     );
 
     output.write(state.scratchSpace, n);
@@ -682,12 +781,37 @@ void handleFile(std::string_view path) {
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-        Fail("Wrong number of parameters. Expected %i got %i", 3, argc);
+        Fail(
+            "Wrong number of parameters. Expected 3.\n"
+            "Usage: codegen --file <file>\n"
+            "       codegen --folder <folder>"
+        );
     }
 
     std::string_view type = argv[1];
     std::string_view src = argv[2];
+    if (type == "--file") {
+        handleFile(src);
+    }
+    else if (type == "--folder") {
+        namespace fs = std::filesystem;
+        if (!fs::is_directory(src)) {
+            Fail("When using --folder, the second parameter has to name a folder");
+        }
 
-
-    handleFile(src);
+        auto beg = std::chrono::high_resolution_clock::now();
+        for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
+            if (p.path().extension() == ".cpp") {
+                handleFile(p.path());
+            }
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        printf("Time: %i\n", static_cast<int>((end - beg).count()/ 1000));
+    }
+    else {
+        Fail(
+            "Unrecognized argument '%s'. Expected '--file' or '--folder'\n",
+            std::string(type).c_str()
+        );
+    }
 }
