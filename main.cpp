@@ -40,6 +40,7 @@
  - Check for extra keys in the bake function to protect against misspellings
  - Check for unknown codegen::attributes and throw error
  - Check for mixing of different attributes (inrange + greater, for example)
+ - Need support for a std::map?
 */
 
 #ifdef WIN32
@@ -342,7 +343,8 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
         
         std::string res = "StringVerifier";
         if (!attributes.inList.empty()) {
-            res = addQualifier(res, "InListVerifier", std::string(attributes.inList));
+            std::string attr = std::string(attributes.inList);
+            res = addQualifier(res, "InListVerifier", "{" + attr + "}");
         }
         if (!attributes.unequal.empty()) {
             res = addQualifier(res, "UnequalVerifier", std::string(attributes.unequal));
@@ -759,9 +761,28 @@ std::string_view parseAttribute(std::string_view block, std::string_view name) {
         return std::string_view();
     }
     const size_t beg = block.find('(', p) + 1;
-    const size_t end = block.find(')', beg);
+    
+    if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
+        throw std::runtime_error(fmt::format(
+            "Attribute parameter has unterminated parameter list:\n{}", block
+        ));
+    }
 
-    std::string_view content = block.substr(beg, end - beg);
+    size_t cursor = beg;
+    int paranthesisCount = 1;
+    while (cursor < block.size() && paranthesisCount > 0) {
+        if (block[cursor] == '(') {
+            paranthesisCount++;
+        }
+        if (block[cursor] == ')') {
+            paranthesisCount--;
+        }
+
+        cursor++;
+    }
+    cursor--;
+
+    std::string_view content = block.substr(beg, cursor - beg);
     return content;
 }
 
