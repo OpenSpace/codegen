@@ -42,6 +42,7 @@
  - Check for mixing of different attributes (inrange + greater, for example)
  - Need support for a std::map?
  - Add ability to include an external parameter (in replacement for the ReferencingVerifier
+ - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
 */
 
 #ifdef WIN32
@@ -102,6 +103,8 @@ struct Variable {
 
     struct Attributes {
         std::string_view key;
+        std::string_view reference;
+
         std::string_view inRange;
         std::string_view notInRange;
         std::string_view less;
@@ -184,6 +187,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     }
 }
 )";
+    constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
 
     void reportUnsupportedAttribute(std::string_view type, std::string_view name,
         std::string_view value)
@@ -229,47 +233,48 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 
 std::string_view bakeFunctionForType(std::string_view type) {
     static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
-        { "bool",          BakeFunctionBool },
-        { "int",           BakeFunctionInt },
-        { "double",        BakeFunctionDouble },
-        { "float",         BakeFunctionFloat },
-        { "std::string",   BakeFunctionString },
-        { "glm::ivec2",    BakeFunctionIVec2 },
-        { "glm::ivec3",    BakeFunctionIVec3 },
-        { "glm::ivec4",    BakeFunctionIVec4 },
-        { "glm::dvec2",    BakeFunctionDVec2 },
-        { "glm::dvec3",    BakeFunctionDVec3 },
-        { "glm::dvec4",    BakeFunctionDVec4 },
-        { "glm::vec2",     BakeFunctionVec2 },
-        { "glm::vec3",     BakeFunctionVec3 },
-        { "glm::vec4",     BakeFunctionVec4 },
-        { "glm::mat2x2",   BakeFunctionMat2x2 },
-        { "glm::mat2x3",   BakeFunctionMat2x3 },
-        { "glm::mat2x4",   BakeFunctionMat2x4 },
-        { "glm::mat3x2",   BakeFunctionMat3x2 },
-        { "glm::mat3x3",   BakeFunctionMat3x3 },
-        { "glm::mat3x4",   BakeFunctionMat3x4 },
-        { "glm::mat4x2",   BakeFunctionMat4x2 },
-        { "glm::mat4x3",   BakeFunctionMat4x3 },
-        { "glm::mat4x4",   BakeFunctionMat4x4 },
-        { "glm::dmat2x2",  BakeFunctionDMat2x2 },
-        { "glm::dmat2x3",  BakeFunctionDMat2x3 },
-        { "glm::dmat2x4",  BakeFunctionDMat2x4 },
-        { "glm::dmat3x2",  BakeFunctionDMat3x2 },
-        { "glm::dmat3x3",  BakeFunctionDMat3x3 },
-        { "glm::dmat3x4",  BakeFunctionDMat3x4 },
-        { "glm::dmat4x2",  BakeFunctionDMat4x2 },
-        { "glm::dmat4x3",  BakeFunctionDMat4x3 },
-        { "glm::dmat4x4",  BakeFunctionDMat4x4 },
-        { "std::optional", BakeFunctionOptional },
-        { "std::vector",   BakeFunctionVector }
+        { "bool",           BakeFunctionBool },
+        { "int",            BakeFunctionInt },
+        { "double",         BakeFunctionDouble },
+        { "float",          BakeFunctionFloat },
+        { "std::string",    BakeFunctionString },
+        { "glm::ivec2",     BakeFunctionIVec2 },
+        { "glm::ivec3",     BakeFunctionIVec3 },
+        { "glm::ivec4",     BakeFunctionIVec4 },
+        { "glm::dvec2",     BakeFunctionDVec2 },
+        { "glm::dvec3",     BakeFunctionDVec3 },
+        { "glm::dvec4",     BakeFunctionDVec4 },
+        { "glm::vec2",      BakeFunctionVec2 },
+        { "glm::vec3",      BakeFunctionVec3 },
+        { "glm::vec4",      BakeFunctionVec4 },
+        { "glm::mat2x2",    BakeFunctionMat2x2 },
+        { "glm::mat2x3",    BakeFunctionMat2x3 },
+        { "glm::mat2x4",    BakeFunctionMat2x4 },
+        { "glm::mat3x2",    BakeFunctionMat3x2 },
+        { "glm::mat3x3",    BakeFunctionMat3x3 },
+        { "glm::mat3x4",    BakeFunctionMat3x4 },
+        { "glm::mat4x2",    BakeFunctionMat4x2 },
+        { "glm::mat4x3",    BakeFunctionMat4x3 },
+        { "glm::mat4x4",    BakeFunctionMat4x4 },
+        { "glm::dmat2x2",   BakeFunctionDMat2x2 },
+        { "glm::dmat2x3",   BakeFunctionDMat2x3 },
+        { "glm::dmat2x4",   BakeFunctionDMat2x4 },
+        { "glm::dmat3x2",   BakeFunctionDMat3x2 },
+        { "glm::dmat3x3",   BakeFunctionDMat3x3 },
+        { "glm::dmat3x4",   BakeFunctionDMat3x4 },
+        { "glm::dmat4x2",   BakeFunctionDMat4x2 },
+        { "glm::dmat4x3",   BakeFunctionDMat4x3 },
+        { "glm::dmat4x4",   BakeFunctionDMat4x4 },
+        { "std::optional",  BakeFunctionOptional },
+        { "std::vector",    BakeFunctionVector },
+        { "std::monostate", BakeFunctionMonostate }
     };
 
     const auto it = BakeFunctions.find(type);
     return it != BakeFunctions.end() ? it->second : std::string_view();
 }
 
-std::string verifierForType(std::string_view type, Variable::Attributes attributes) {
+std::string verifierForType(std::string_view type, Variable::Attributes attributes, const State& state) {
     if (type == "bool") {
         reportUnsupportedAttribute(type, "inrange", attributes.inRange);
         reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
@@ -680,6 +685,20 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
         reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
         return "DoubleMatrix4x4Verifier";
     }
+    else if (type == "std::monostate") {
+        if (attributes.reference.empty()) {
+            throw std::runtime_error(
+                "Using a monostate needs to have an attribute 'reference'"
+            );
+        }
+
+        return fmt::format(
+            "ReferencingVerifier({})",
+            attributes.reference == "this" ?
+                fmt::format("\"{}\"", state.rootStruct.attributes.dictionary) :
+                std::string(attributes.reference)
+        );
+    }
     else {
         return std::string();
     }
@@ -875,6 +894,9 @@ Variable parseVariable(std::string_view line) {
     res.name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
+        res.attributes.key = parseAttribute(attributes, "key");
+        res.attributes.reference = parseAttribute(attributes, "reference");
+
         res.attributes.inRange = parseAttribute(attributes, "inrange");
         res.attributes.notInRange = parseAttribute(attributes, "notinrange");
         res.attributes.less = parseAttribute(attributes, "less");
@@ -884,7 +906,6 @@ Variable parseVariable(std::string_view line) {
         res.attributes.unequal = parseAttribute(attributes, "unequal");
         res.attributes.inList = parseAttribute(attributes, "inlist");
         res.attributes.notInList = parseAttribute(attributes, "notinlist");
-        res.attributes.key = parseAttribute(attributes, "key");
     }
 
     return res;
@@ -931,7 +952,7 @@ std::string resolveComment(std::string comment) {
 
 std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
 {
-    std::string v = verifierForType(type, attributes);
+    std::string v = verifierForType(type, attributes, state);
     
     if (!v.empty()) {
         return std::string("new ") + v;
@@ -1139,7 +1160,7 @@ void handleVariable(Variable var, State& state) {
         variableName.c_str(),
         std::string(var.name).c_str()
     );
-    
+
     converter += std::string(ScratchSpace, ScratchSpace + n);
     ScratchSpace += n;
     state.structConverters[name] = converter;
