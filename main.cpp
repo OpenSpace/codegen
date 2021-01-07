@@ -59,11 +59,16 @@ namespace {
 } // namespace
 
 
+struct StackElement {
+    enum class Type { Struct, Enum };
+    Type type;
+    std::string_view name;
+};
+
 struct State {
-    std::string_view line;
     std::string commentBuffer;
     std::string variableBuffer;
-    std::vector<std::string_view> structs;
+    std::vector<StackElement> stack;
 
     std::map<std::string, std::string, std::less<>> structComments;
     std::pair<std::string, std::string> rootStruct;
@@ -75,7 +80,21 @@ struct State {
 struct Struct {
     std::string_view name;
 
+    //struct Attributes {
     std::string_view attributeRenderable;
+};
+
+struct Enum {
+    std::string_view name;
+};
+
+struct EnumElement {
+    std::string_view name;
+    
+    struct Attributes {
+        std::string_view key;
+    };
+    Attributes attributes;
 };
 
 struct Variable {
@@ -445,6 +464,15 @@ std::string join(const std::vector<std::string_view>& list, std::string_view sep
     return res;
 }
 
+std::string join(const std::vector<StackElement>& list, std::string_view sep) {
+    std::vector<std::string_view> names;
+    names.reserve(list.size());
+    for (const StackElement& e : list) {
+        names.push_back(e.name);
+    }
+    return join(names, sep);
+}
+
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
     assert(cursor);
     assert(*cursor == 0 || sv[*cursor - 1] == '\n');
@@ -462,9 +490,9 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
     }
 }
 
-void handleCommentLine(State& state) {
+void handleCommentLine(std::string_view line, State& state) {
     // Remove the starting // characters
-    std::string_view comment = strip(state.line.substr(2));
+    std::string_view comment = strip(line.substr(2));
     state.commentBuffer.append(comment);
     state.commentBuffer.append(" ");
 }
@@ -527,6 +555,68 @@ Struct parseStruct(std::string_view line) {
     }
     s.name = line.substr(cursor, endStruct - cursor);
     return s;
+}
+
+Enum parseEnum(std::string_view line) {
+    Enum e;
+
+    size_t cursor = line.find(' ', line.find(' ') + 1);
+    assert(line.substr(0, cursor) == "enum class");
+    cursor++;
+
+    //const size_t beginAttribute = line.find("[[", cursor);
+    //if (beginAttribute != std::string_view::npos) {
+    //    const size_t endAttribute = line.find("]]", beginAttribute) + 2;
+    //    if (endAttribute == std::string_view::npos) {
+    //        throw std::runtime_error(
+    //            fmt::format(
+    //                "Could not find closing bracket for attribute in struct:\n{}", line
+    //            )
+    //        );
+    //    }
+
+    //    size_t beginName = line.find('(', beginAttribute);
+    //    if (beginName == std::string_view::npos) {
+    //        throw std::runtime_error(
+    //            fmt::format("No name specified for root struct:\n{}", line)
+    //        );
+    //    }
+
+    //    beginName++;
+    //    const size_t endName = line.find(')', beginName);
+    //    if (beginName == endName) {
+    //        throw std::runtime_error(
+    //            fmt::format("No name specified for root struct:\n{}", line)
+    //        );
+    //    }
+
+    //    s.attributeRenderable = line.substr(beginName, endName - beginName);
+    //    cursor = endAttribute + 1;
+    //}
+
+    const size_t endStruct = line.find(' ', cursor);
+    if (endStruct == std::string_view::npos) {
+        throw std::runtime_error(
+            fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
+        );
+    }
+    e.name = line.substr(cursor, endStruct - cursor);
+    return e;
+}
+
+EnumElement parseEnumElement(std::string_view line) {
+    if (line.back() == ',') {
+        line.remove_suffix(1);
+    }
+
+    size_t i = line.find(' ');
+    EnumElement e;
+    e.name = line.substr(0, i);
+    if (i != std::string_view::npos) {
+        std::string_view attributes = line.substr(i + 1);
+        e.attributes.key = parseAttribute(attributes, "key");
+    }
+    return e;
 }
 
 Variable parseVariable(std::string_view line) {
@@ -621,12 +711,12 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
         return std::string(Buf.data(), Buf.data() + n);
     }
     else {
-        return std::string("codegen_") + join(state.structs, "_") + "_" + std::string(type);
+        return std::string("codegen_") + join(state.stack, "_") + "_" + std::string(type);
     }
 }
 
 void handleStructStart(State& state) {
-    std::string name = "codegen_" + join(state.structs, "_");
+    std::string name = "codegen_" + join(state.stack, "_");
     int n = sprintf(
         VerifierResult,
         "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
@@ -635,9 +725,9 @@ void handleStructStart(State& state) {
 }
 
 void handleStructEnd(State& state) {
-    const bool isRootStruct = state.structs.size() == 1;
+    const bool isRootStruct = state.stack.size() == 1;
 
-    std::string name = join(state.structs, "::");
+    std::string name = join(state.stack, "::");
     if (isRootStruct) {
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
@@ -687,8 +777,59 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     }
 }
 
+void handleEnumStart(State& state) {
+    std::string name = "codegen_" + join(state.stack, "_");
+
+    int n = sprintf(
+        VerifierResult,
+        "    StringInListVerifier* %s = new StringInListVerifier({", name.c_str()
+    );
+    VerifierResult += n;
+
+
+    std::string type = join(state.stack, "::");
+    n = sprintf(
+        ConverterResult,
+        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
+        "    std::string v = d.value<std::string>(key);\n",
+        std::string(type).c_str()
+    );
+    ConverterResult += n;
+}
+
+void handleEnumEnd(State& state) {
+    // The last element has a , at the end that we can overwrite
+    VerifierResult -= 1;
+
+    int n = sprintf(VerifierResult, "});\n");
+    VerifierResult += n;
+
+
+    n = sprintf(ConverterResult, "}\n");
+    ConverterResult += n;
+}
+
+void handleEnumValue(EnumElement element, State& state) {
+    // If no key attribute is specified, we use the name instead
+    if (element.attributes.key.empty()) {
+        element.attributes.key = element.name;
+    }
+
+    int n = sprintf(VerifierResult, "\"%s\",", std::string(element.attributes.key).c_str());
+    VerifierResult += n;
+
+    std::string type = join(state.stack, "::");
+    n = sprintf(
+        ConverterResult,
+        "    if (v == \"%s\") { *val = %s::%s; }\n",
+        std::string(element.attributes.key).c_str(), type.c_str(),
+        std::string(element.name).c_str()
+    );
+    ConverterResult += n;
+}
+
 void handleVariable(Variable var, State& state) {
-    std::string ver = std::string("codegen_") + join(state.structs, "_");
+    std::string ver = std::string("codegen_") + join(state.stack, "_");
     std::string variableName;
 
     if (var.attributes.key.empty()) {
@@ -726,7 +867,7 @@ void handleVariable(Variable var, State& state) {
 
     // Converter
     std::string converter;
-    std::string name = join(state.structs, "::");
+    std::string name = join(state.stack, "::");
     if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
         converter = it->second;
     }
@@ -904,27 +1045,35 @@ void handleFile(std::filesystem::path path) {
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        state.line = extractLine(content, &cursor);
-        if (state.line.empty()) {
+        std::string_view line = extractLine(content, &cursor);
+        if (line.empty()) {
             continue;
         }
 
         // If the variable buffer is filled, then we are in a continuation of a variable
         // definition
         if (state.variableBuffer.empty()) {
-            if (startsWith(state.line, "//")) {
-                handleCommentLine(state);
+            if (startsWith(line, "//")) {
+                handleCommentLine(line, state);
                 continue;
             }
 
-            if (startsWith(state.line, "struct")) {
-                Struct s = parseStruct(state.line);
-                state.structs.push_back(s.name);
+            if (startsWith(line, "struct")) {
+                Struct s = parseStruct(line);
+                state.stack.push_back({ StackElement::Type::Struct, s.name });
                 state.structComments[std::string(s.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
                 if (!s.attributeRenderable.empty()) {
-                    assert(state.rootStruct.first.empty() && state.rootStruct.second.empty());
+                    if (!state.rootStruct.first.empty() ||
+                        !state.rootStruct.second.empty())
+                    {
+                        throw std::runtime_error(fmt::format(
+                            "Only the root struct can have a [[codegen::Dictionary()]] "
+                            "attribute, found a second one here:\n{}",
+                            s.name
+                        ));
+                    }
                     state.rootStruct.first = s.name;
                     state.rootStruct.second = s.attributeRenderable;
                 }
@@ -933,35 +1082,70 @@ void handleFile(std::filesystem::path path) {
                 continue;
             }
 
-            if (startsWith(state.line, "};")) {
+            if (startsWith(line, "enum class")) {
+                Enum e = parseEnum(line);
+                state.stack.push_back({ StackElement::Type::Enum, e.name });
+                state.structComments[std::string(e.name)] = state.commentBuffer;
+                state.commentBuffer.clear();
+
+                handleEnumStart(state);
+                continue;
+            }
+            
+            if (startsWith(line, "enum")) {
+                throw std::runtime_error(
+                    "Old-style 'enum' not supported. Use 'enum class' instead"
+                );
+            }
+
+            if (startsWith(line, "};")) {
                 if (!state.commentBuffer.empty()) {
                     throw std::runtime_error(
                         "Unaccounted for comments at the end of a struct definition"
                     );
                 }
+                StackElement e = state.stack.back();
+                switch (e.type) {
+                    case StackElement::Type::Struct:
+                        handleStructEnd(state);
+                        break;
+                    case StackElement::Type::Enum:
+                        handleEnumEnd(state);
+                        break;
+                    default: throw std::logic_error("Unhandled case label");
+                }
 
-                handleStructEnd(state);
-                state.structs.pop_back();
+                state.stack.pop_back();
                 continue;
             }
         }
 
-        // If we got this far, we must be in a variable definition
-        if (state.line.find(';') == std::string_view::npos) {
-            // No semicolon on this line but we are looking for a variable, so we are in
-            // a definition line that spans multiple lines
-            state.variableBuffer += std::string(state.line) + " ";
-            continue;
-        }
-        if (state.variableBuffer.empty()) {
-            Variable var = parseVariable(state.line);
-            handleVariable(var, state);
-        }
-        else {
-            state.variableBuffer += std::string(state.line); 
-            Variable var = parseVariable(state.variableBuffer);
-            handleVariable(var, state);
-            state.variableBuffer.clear();
+        // If we got this far, we must be in a variable definition or an enum defintion
+        // if the highest stack element is a struct, we are in a variable definition, if
+        // the highest stack element is an enum, we are in an enum definition
+        const StackElement& e = state.stack.back();
+        switch (e.type) {
+            case StackElement::Type::Struct:
+                if (line.find(';') == std::string_view::npos) {
+                    // No semicolon on this line but we are looking for a variable, so we
+                    // are in a definition line that spans multiple lines
+                    state.variableBuffer += std::string(line) + " ";
+                    continue;
+                }
+                if (state.variableBuffer.empty()) {
+                    Variable var = parseVariable(line);
+                    handleVariable(var, state);
+                }
+                else {
+                    state.variableBuffer += std::string(line);
+                    Variable var = parseVariable(state.variableBuffer);
+                    handleVariable(var, state);
+                    state.variableBuffer.clear();
+                }
+                break;
+            case StackElement::Type::Enum:
+                handleEnumValue(parseEnumElement(line), state);
+                break;
         }
     }
 
