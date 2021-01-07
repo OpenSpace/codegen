@@ -41,6 +41,7 @@
  - Check for unknown codegen::attributes and throw error
  - Check for mixing of different attributes (inrange + greater, for example)
  - Need support for a std::map?
+ - Add ability to include an external parameter (in replacement for the ReferencingVerifier
 */
 
 #ifdef WIN32
@@ -72,23 +73,14 @@ struct StackElement {
     std::string_view name;
 };
 
-struct State {
-    std::string commentBuffer;
-    std::string variableBuffer;
-    std::vector<StackElement> stack;
-
-    std::map<std::string, std::string, std::less<>> structComments;
-    std::pair<std::string, std::string> rootStruct;
-    std::map<std::string, std::string, std::less<>> structConverters;
-
-    std::map<std::string, bool, std::less<>> typeUsage;
-};
-
 struct Struct {
     std::string_view name;
 
-    //struct Attributes {
-    std::string_view attributeRenderable;
+    struct Attributes {
+        std::string_view dictionary;
+        std::string_view namespaceSpecifier;
+    };
+    Attributes attributes;
 };
 
 struct Enum {
@@ -121,6 +113,19 @@ struct Variable {
         std::string_view notInList;
     };
     Attributes attributes;
+};
+
+
+struct State {
+    std::string commentBuffer;
+    std::string variableBuffer;
+    std::vector<StackElement> stack;
+
+    std::map<std::string, std::string, std::less<>> structComments;
+    Struct rootStruct;
+    std::map<std::string, std::string, std::less<>> structConverters;
+
+    std::map<std::string, bool, std::less<>> typeUsage;
 };
 
 
@@ -796,30 +801,18 @@ Struct parseStruct(std::string_view line) {
     const size_t beginAttribute = line.find("[[", cursor);
     if (beginAttribute != std::string_view::npos) {
         const size_t endAttribute = line.find("]]", beginAttribute) + 2;
-        if (endAttribute == std::string_view::npos) {
-            throw std::runtime_error(
-                fmt::format(
-                    "Could not find closing bracket for attribute in struct:\n{}", line
-                )
-            );
-        }
-
-        size_t beginName = line.find('(', beginAttribute);
-        if (beginName == std::string_view::npos) {
+        std::string_view block = line.substr(
+            beginAttribute,
+            endAttribute - beginAttribute
+        );
+        s.attributes.dictionary = parseAttribute(block, "Dictionary");
+        if (s.attributes.dictionary.empty()) {
             throw std::runtime_error(
                 fmt::format("No name specified for root struct:\n{}", line)
             );
         }
 
-        beginName++;
-        const size_t endName = line.find(')', beginName);
-        if (beginName == endName) {
-            throw std::runtime_error(
-                fmt::format("No name specified for root struct:\n{}", line)
-            );
-        }
-
-        s.attributeRenderable = line.substr(beginName, endName - beginName);
+        s.attributes.namespaceSpecifier = parseAttribute(block, "namespace");
         cursor = endAttribute + 1;
     }
 
@@ -839,36 +832,6 @@ Enum parseEnum(std::string_view line) {
     size_t cursor = line.find(' ', line.find(' ') + 1);
     assert(line.substr(0, cursor) == "enum class");
     cursor++;
-
-    //const size_t beginAttribute = line.find("[[", cursor);
-    //if (beginAttribute != std::string_view::npos) {
-    //    const size_t endAttribute = line.find("]]", beginAttribute) + 2;
-    //    if (endAttribute == std::string_view::npos) {
-    //        throw std::runtime_error(
-    //            fmt::format(
-    //                "Could not find closing bracket for attribute in struct:\n{}", line
-    //            )
-    //        );
-    //    }
-
-    //    size_t beginName = line.find('(', beginAttribute);
-    //    if (beginName == std::string_view::npos) {
-    //        throw std::runtime_error(
-    //            fmt::format("No name specified for root struct:\n{}", line)
-    //        );
-    //    }
-
-    //    beginName++;
-    //    const size_t endName = line.find(')', beginName);
-    //    if (beginName == endName) {
-    //        throw std::runtime_error(
-    //            fmt::format("No name specified for root struct:\n{}", line)
-    //        );
-    //    }
-
-    //    s.attributeRenderable = line.substr(beginName, endName - beginName);
-    //    cursor = endAttribute + 1;
-    //}
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
@@ -1012,6 +975,18 @@ void handleStructEnd(State& state) {
 
     std::string name = join(state.stack, "::");
     if (isRootStruct) {
+        std::string fqName;
+        if (state.rootStruct.attributes.namespaceSpecifier.empty()) {
+            fqName = fmt::format("openspace::{}", state.rootStruct.attributes.dictionary);
+        }
+        else {
+            fqName = fmt::format(
+                "openspace::{}::{}",
+                state.rootStruct.attributes.namespaceSpecifier,
+                state.rootStruct.attributes.dictionary
+            );
+        }
+
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
         int n = sprintf(
@@ -1021,11 +996,14 @@ void handleStructEnd(State& state) {
 
 template <typename T> T bake(const ghoul::Dictionary& dict) { static_assert(sizeof(T) == 0); };
 template <> %s bake<%s>(const ghoul::Dictionary& dict) {
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<openspace::%s>(), dict, "%s");
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
     %s res;
 )",
             name.c_str(), name.c_str(),
-            state.rootStruct.second.c_str(), state.rootStruct.second.c_str(),
+            fqName.c_str(),
+            //fqName.c_str(),
+            std::string(state.rootStruct.attributes.dictionary).c_str(),
+            //std::string(state.rootStruct.attributes.dictionary).c_str(),
             name.c_str()
         );
         ConverterResult += n;
@@ -1168,6 +1146,18 @@ void handleVariable(Variable var, State& state) {
 }
 
 void finalizeVerifier(State& state) {
+    std::string name;
+    if (state.rootStruct.attributes.namespaceSpecifier.empty()) {
+        name = fmt::format("openspace::{}", state.rootStruct.attributes.dictionary);
+    }
+    else {
+        name = fmt::format(
+            "openspace::{}::{}",
+            state.rootStruct.attributes.namespaceSpecifier,
+            state.rootStruct.attributes.dictionary
+        );
+    }
+
     std::array<char, 512> Buf;
     std::fill(Buf.begin(), Buf.end(), '\0');
     int n = sprintf(
@@ -1177,10 +1167,10 @@ namespace codegen {
 template <typename T> openspace::documentation::Documentation doc() {
     static_assert(sizeof(T) == 0); // This should never be called
 }
-template <> openspace::documentation::Documentation doc<openspace::%s>() {
+template <> openspace::documentation::Documentation doc<%s>() {
     using namespace openspace::documentation;
 )",
-        state.rootStruct.second.c_str()
+        name.c_str()
     );
 
     std::memmove(
@@ -1191,7 +1181,7 @@ template <> openspace::documentation::Documentation doc<openspace::%s>() {
     std::memcpy(VerifierResultBase, Buf.data(), n);
     VerifierResult += n;
 
-    std::string rootStruct = std::string("codegen_") + state.rootStruct.first;
+    std::string rootStruct = fmt::format("codegen_{}", state.rootStruct.name);
     n = sprintf(
         VerifierResult,
         R"(
@@ -1206,8 +1196,8 @@ template <> openspace::documentation::Documentation doc<openspace::%s>() {
 } // namespace codegen
 
 )",
-        state.rootStruct.second.c_str(),
-        state.rootStruct.second.c_str(),
+        std::string(state.rootStruct.attributes.dictionary).c_str(),
+        std::string(state.rootStruct.attributes.dictionary).c_str(),
         rootStruct.c_str(),
         rootStruct.c_str()
     );
@@ -1347,9 +1337,9 @@ void handleFile(std::filesystem::path path) {
                 state.structComments[std::string(s.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
-                if (!s.attributeRenderable.empty()) {
-                    if (!state.rootStruct.first.empty() ||
-                        !state.rootStruct.second.empty())
+                if (!s.attributes.dictionary.empty()) {
+                    if (!state.rootStruct.name.empty() ||
+                        !state.rootStruct.attributes.dictionary.empty())
                     {
                         throw std::runtime_error(fmt::format(
                             "Only the root struct can have a [[codegen::Dictionary()]] "
@@ -1357,8 +1347,7 @@ void handleFile(std::filesystem::path path) {
                             s.name
                         ));
                     }
-                    state.rootStruct.first = s.name;
-                    state.rootStruct.second = s.attributeRenderable;
+                    state.rootStruct = s;
                 }
 
                 handleStructStart(state);
@@ -1382,11 +1371,6 @@ void handleFile(std::filesystem::path path) {
             }
 
             if (startsWith(line, "};")) {
-                if (!state.commentBuffer.empty()) {
-                    throw std::runtime_error(
-                        "Unaccounted for comments at the end of a struct definition"
-                    );
-                }
                 StackElement e = state.stack.back();
                 switch (e.type) {
                     case StackElement::Type::Struct:
@@ -1432,7 +1416,7 @@ void handleFile(std::filesystem::path path) {
         }
     }
 
-    if (state.rootStruct.first.empty() || state.rootStruct.second.empty()) {
+    if (state.rootStruct.name.empty() || state.rootStruct.attributes.dictionary.empty()) {
         throw std::runtime_error(
             "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
         );
@@ -1453,7 +1437,7 @@ void handleFile(std::filesystem::path path) {
 // If a compiler error brought you here, a struct tagged with "codegen::Dictionary"
 // was changed without the codegen tool being run again.
 )",
-        path.string().c_str()
+        path.filename().string().c_str()
     );
 
     output.write(ScratchSpace, n);
