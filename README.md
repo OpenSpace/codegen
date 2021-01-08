@@ -2,10 +2,17 @@
 The codegen program created generated code for `struct`s marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name (mostly the class name of the Renderable for which the code is generated).  Everything touched by the code generation has to be delared inside the struct (referred to as the *root struct*).  Member variables, structs, documentations can be modified by adding attributes of the style `[[codegen::TYPE(PARAMETER)]]` where *TYPE* is a keyword for the attribute and *PARAMETER* are optional parameters that might be necessary. Multiple attributes can be added by separating them with a comma (`[[codegen::key(ABC), codegen::inrange(0.0, 1.0)]]`).
 
 Execution:
-`codegen.exe --folder C:/Development/OpenSpace/modules`  to run it an all files recursively in the modules folder.  Every file that does not contain a marked struct will be ignored
+`codegen.exe --folder C:/Development/OpenSpace/modules`  to run it an all files recursively in the modules folder.  Every file that does not contain a marked struct will be ignored.  For every other file `renderabletest.cpp`, a `renderabletest_codegen.cpp` will be generated that will have to be included directly *after* the struct definition. For example in a file renderableexample.cpp:
+```
+struct [[codegen::Dictionary(RenderableExample)]] Params {
+  // Description for example
+  float example;
+};
+#include "renderabletest_codegen.cpp"
+```
 
 ## Root struct
-The root struct needs to be marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name.  Every struct not marked as such will be ignored by the codegen program.
+The root struct needs to be marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name.  Every struct not marked as such will be ignored by the codegen program.  Furthermore, the root struct (and the following include) must be declared in an anonymous namespace.
 
 ### Attributes
  - `[[codegen::namespace(NS)]]`: Necessary if the type specified in the `Dictionary` attribute is living in namespace other than `openspace`
