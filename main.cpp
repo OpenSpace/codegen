@@ -959,9 +959,11 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
     std::string v = verifierForType(type, attributes, state);
     
     if (!v.empty()) {
+        state.typeUsage[std::string(type)] = true;
         return std::string("new ") + v;
     }
     else if (startsWith(type, "std::vector<")) {
+        state.typeUsage["std::vector"] = true;
         std::string_view subtype = type.substr(12);
         subtype.remove_suffix(1);
 
@@ -971,16 +973,23 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
         }
 
         std::string ver = verifier(subtype, attributes, state);
-        std::array<char, 256> Buf;
-        std::fill(Buf.begin(), Buf.end(), '\0');
+        char* base = ScratchSpace;
         int n = sprintf(
-            Buf.data(),
+            ScratchSpace,
             "new TableVerifier({{\"*\",%s,Optional::Yes, %s}})\n",
             ver.c_str(),
             comments.c_str()
         );
-        return std::string(Buf.data(), Buf.data() + n);
+        ScratchSpace += n;
+
+        return std::string(base, base + n);
     }
+    //else if (startsWith(type, "std::variant<")) {
+    //    state.typeUsage["std::variant"] = true;
+
+
+
+    //}
     else {
         std::vector<StackElement> stack = state.stack;
         stack.push_back({ StackElement::Type::Struct, type });
@@ -1005,6 +1014,7 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
             ));
         }
 
+        state.typeUsage[std::string(type)] = true;
         return std::string("codegen_") + join(state.stack, "_") + "_" + std::string(type);
     }
 }
@@ -1158,11 +1168,7 @@ void handleVariable(Variable var, State& state) {
         var.type.remove_prefix(std::string_view("std::optional<").size());
         var.type.remove_suffix(1);
     }
-    if (startsWith(var.type, "std::vector<")) {
-        state.typeUsage["std::vector"] = true;
-    }
 
-    state.typeUsage[std::string(var.type)] = true;
     std::string v = verifier(var.type, var.attributes, state);
     int n = sprintf(
         VerifierResult,
@@ -1523,7 +1529,13 @@ int main(int argc, char** argv) {
     std::string_view type = argv[1];
     std::string_view src = argv[2];
     if (type == "--file") {
-        handleFile(src);
+        try {
+            handleFile(src);
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << e.what() << '\n';
+            exit(EXIT_FAILURE);
+        }
     }
     else if (type == "--folder") {
         namespace fs = std::filesystem;
@@ -1536,11 +1548,17 @@ int main(int argc, char** argv) {
         auto beg = std::chrono::high_resolution_clock::now();
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
             if (p.path().extension() == ".cpp") {
-                handleFile(p.path());
+                try {
+                    handleFile(p.path());
+                }
+                catch (const std::runtime_error& e) {
+                    std::cout << e.what() << '\n';
+                    exit(EXIT_FAILURE);
+                }
             }
         }
         auto end = std::chrono::high_resolution_clock::now();
-        printf("Time: %i\n", static_cast<int>((end - beg).count()/ 1000));
+        printf("Time: %i\n", static_cast<int>((end - beg).count() / 1000));
     }
     else {
         throw std::runtime_error(fmt::format(
