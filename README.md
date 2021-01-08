@@ -41,7 +41,8 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::greater(val)]]`, `[[codegen:greaterequal(val)]]`, `[[codegen:unequal(val)]]` likewise
  - `[[codegen::inlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is one of a finite list of values.  Example: `std::string foo [[codegen::inlist("v1", "v2", "v3")]];`
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
- 
+ - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
+
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
 ```
