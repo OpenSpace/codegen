@@ -43,6 +43,7 @@
  - Need support for a std::map?
  - Add ability to include an external parameter (in replacement for the ReferencingVerifier
  - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
+ - std::variant<glm::vec3, glm::vec4> type detection stops at space after , not at the end
 */
 
 #ifdef WIN32
@@ -129,6 +130,9 @@ struct State {
     std::map<std::string, std::string, std::less<>> structConverters;
 
     std::map<std::string, bool, std::less<>> typeUsage;
+
+    std::vector<std::string> structList;
+    std::vector<std::string> enumList;
 };
 
 
@@ -978,6 +982,29 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
         return std::string(Buf.data(), Buf.data() + n);
     }
     else {
+        std::vector<StackElement> stack = state.stack;
+        stack.push_back({ StackElement::Type::Struct, type });
+        std::string structCandidate = join(stack, "::");
+
+        stack.pop_back();
+        stack.push_back({ StackElement::Type::Enum, type });
+        std::string enumCandidate = join(stack, "::");
+
+        auto itStruct = std::find(
+            state.structList.begin(), state.structList.end(),
+            structCandidate
+        );
+        auto itEnum = std::find(
+            state.enumList.begin(), state.enumList.end(),
+            enumCandidate
+        );
+        if (itStruct == state.structList.end() && itEnum == state.enumList.end()) {
+            throw std::runtime_error(fmt::format(
+                "Unhandled type detected and codegen doesn't know how to handle it: {}",
+                type
+            ));
+        }
+
         return std::string("codegen_") + join(state.stack, "_") + "_" + std::string(type);
     }
 }
@@ -1355,6 +1382,7 @@ void handleFile(std::filesystem::path path) {
             if (startsWith(line, "struct")) {
                 Struct s = parseStruct(line);
                 state.stack.push_back({ StackElement::Type::Struct, s.name });
+                state.structList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(s.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
@@ -1378,6 +1406,7 @@ void handleFile(std::filesystem::path path) {
             if (startsWith(line, "enum class")) {
                 Enum e = parseEnum(line);
                 state.stack.push_back({ StackElement::Type::Enum, e.name });
+                state.enumList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(e.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
