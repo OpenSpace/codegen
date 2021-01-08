@@ -169,6 +169,7 @@ namespace {
     constexpr const char BakeFunctionDMat4x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n";
     constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
+    constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
     constexpr const char BakeFunctionOptional[] = R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
@@ -191,7 +192,6 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     }
 }
 )";
-    constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
 
     void reportUnsupportedAttribute(std::string_view type, std::string_view name,
         std::string_view value)
@@ -952,6 +952,22 @@ std::string resolveComment(std::string comment) {
     return comment;
 }
 
+std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
+    std::vector<std::string_view> res;
+
+    size_t base = 0;
+    size_t cursor = 0;
+    do {
+        cursor++;
+        if (types[cursor] == ',' || types[cursor] == '>') {
+            std::string_view subtype = types.substr(base, cursor - base);
+            res.push_back(subtype);
+            base = cursor + 1;
+        }
+    } while (types[cursor] != '>');
+
+    return res;
+}
 
 
 std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
@@ -964,7 +980,7 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
     }
     else if (startsWith(type, "std::vector<")) {
         state.typeUsage["std::vector"] = true;
-        std::string_view subtype = type.substr(12);
+        std::string_view subtype = type.substr(std::string_view("std::vector<").size());
         subtype.remove_suffix(1);
 
         std::string comments;
@@ -984,12 +1000,32 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
 
         return std::string(base, base + n);
     }
-    //else if (startsWith(type, "std::variant<")) {
-    //    state.typeUsage["std::variant"] = true;
+    else if (startsWith(type, "std::variant<")) {
+        state.typeUsage["std::variant"] = true;
 
+        std::string_view subtypes = type.substr(std::string_view("std::variant<").size());
+        if (subtypes.find('>') == std::string_view::npos) {
+            throw std::runtime_error(fmt::format(
+                "Could not find closing > in variant definition:\n{}", type
+            ));
+        }
+        assert(subtypes.back() == '>');
 
+        char* resBase = ScratchSpace;
+        int n = sprintf(ScratchSpace, "new OrVerifier({");
+        ScratchSpace += n;
 
-    //}
+        std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
+        for (std::string_view subtype : ttypes) {
+            std::string ver = verifier(subtype, attributes, state);
+            n = sprintf(ScratchSpace, "%s,", ver.c_str());
+            ScratchSpace += n;
+        }
+
+        n = sprintf(ScratchSpace, "})");
+        ScratchSpace += n;
+        return std::string(resBase, ScratchSpace - resBase);
+    }
     else {
         std::vector<StackElement> stack = state.stack;
         stack.push_back({ StackElement::Type::Struct, type });
@@ -1197,6 +1233,31 @@ void handleVariable(Variable var, State& state) {
     converter += std::string(ScratchSpace, ScratchSpace + n);
     ScratchSpace += n;
     state.structConverters[name] = converter;
+
+    if (startsWith(var.type, "std::variant")) {
+        std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());
+
+        n = sprintf(
+            ConverterResult,
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n",
+            std::string(var.type).c_str()
+        );
+        ConverterResult += n;
+
+        std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
+        for (std::string_view subtype : ttypes) {
+            n = sprintf(
+                ConverterResult,
+                "   if (d.hasValue<%s>(key)) { *val = d.value<%s>(key); return; }\n",
+                std::string(subtype).c_str(),
+                std::string(subtype).c_str()
+            );
+            ConverterResult += n;
+        }
+
+        n = sprintf(ConverterResult, "}");
+        ConverterResult += n;
+    }
 }
 
 void finalizeVerifier(State& state) {

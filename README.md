@@ -24,10 +24,11 @@ All types and variable definitions can have comments defined directly before the
  - `[[codegen::description(ID)]]` will be replaced with `ID.description` to be able to reuse descriptions from a PropertyInfo `ID`.
 
 ## Supported types for member variables
- - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`
+ - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`, `std::variant`
  - `glm::ivec2`, `glm::ivec3`, `glm::ivec4`, `glm::dvec2`, `glm::dvec3`, `glm::dvec4`, `glm::vec2`, `glm::vec3`, `glm::vec4`, `glm::mat2x2`, `glm::mat2x3`, `glm::mat2x4`, `glm::mat3x2`, `glm::mat3x3`, `glm::mat3x4`, `glm::mat4x2`, `glm::mat4x3`, `glm::mat4x4`, `glm::dmat2x2`, `glm::dmat2x3`, `glm::dmat2x4`, `glm::dmat3x2`, `glm::dmat3x3`, `glm::dmat3x4`, `glm::dmat4x2`, `glm::dmat4x3`, `glm::dmat4x4`
  - `struct`s (must be defined inside the root struct)
  - `enum class` (must be defind inside the root struct)
+
 
 The variable's name will be used to get a value out of the dictionary in the baking process.  The only transformation of the name is that the first letter is capitalized (`referenceName` will be looked up as `ReferenceName`)
 
