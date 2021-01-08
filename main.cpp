@@ -41,9 +41,7 @@
  - Check for unknown codegen::attributes and throw error
  - Check for mixing of different attributes (inrange + greater, for example)
  - Need support for a std::map?
- - Add ability to include an external parameter (in replacement for the ReferencingVerifier
  - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
- - std::variant<glm::vec3, glm::vec4> type detection stops at space after , not at the end
 */
 
 #ifdef WIN32
