@@ -34,6 +34,7 @@
 #include <numeric>
 #include <optional>
 #include <string_view>
+#include <variant>
 #include <unordered_map>
 
 /* TODO
@@ -42,6 +43,8 @@
  - Check for mixing of different attributes (inrange + greater, for example)
  - Need support for a std::map?
  - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
+ - First TableVerifier doesn't need to be dynamically allocated
+ - Multiline struct definitions
 */
 
 #ifdef WIN32
@@ -67,24 +70,27 @@ namespace {
 } // namespace
 
 
-struct StackElement {
-    enum class Type { Struct, Enum };
-    Type type;
-    std::string_view name;
-};
-
 struct Struct {
     std::string_view name;
 
     struct Attributes {
         std::string_view dictionary;
         std::string_view namespaceSpecifier;
+        bool noTypeCheck = true;
+        bool noExhaustive = true;
     };
     Attributes attributes;
 };
 
 struct Enum {
     std::string_view name;
+};
+
+struct StackElement {
+    enum class Type { Struct, Enum };
+    Type type;
+
+    std::variant<Struct, Enum> payload;
 };
 
 struct EnumElement {
@@ -127,6 +133,7 @@ struct State {
     std::map<std::string, std::string, std::less<>> structComments;
     Struct rootStruct;
     std::map<std::string, std::string, std::less<>> structConverters;
+    std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
 
     std::map<std::string, bool, std::less<>> typeUsage;
 
@@ -823,11 +830,37 @@ std::string join(const std::vector<std::string_view>& list, std::string_view sep
     return res;
 }
 
+std::string join(const std::vector<std::string>& list, std::string_view sep) {
+    size_t size = 0;
+    for (std::string_view l : list) {
+        size += l.size();
+    }
+    // this allocates space for one sep more than needed, but it simplifies the for loop
+    size += sep.size() * (list.size() - 1);
+
+    std::string res;
+    res.reserve(size);
+    for (const std::string& l : list) {
+        res.append(l);
+        res.append(sep.data(), sep.size());
+    }
+    // Remove the last separator
+    for (size_t i = 0; i < sep.size(); ++i) {
+        res.pop_back();
+    }
+    return res;
+}
+
 std::string join(const std::vector<StackElement>& list, std::string_view sep) {
     std::vector<std::string_view> names;
     names.reserve(list.size());
     for (const StackElement& e : list) {
-        names.push_back(e.name);
+        if (e.type == StackElement::Type::Enum) {
+            names.push_back(std::get<Enum>(e.payload).name);
+        }
+        if (e.type == StackElement::Type::Struct) {
+            names.push_back(std::get<Struct>(e.payload).name);
+        }
     }
     return join(names, sep);
 }
@@ -910,6 +943,10 @@ Struct parseStruct(std::string_view line) {
         }
 
         s.attributes.namespaceSpecifier = parseAttribute(block, "namespace");
+        //s.attributes.noTypeCheck =
+        //    block.find("[[codegen::notypecheck]]") != std::string_view::npos;
+        //s.attributes.noExhaustive =
+        //    block.find("[[codegen::noexhaustive]]") != std::string_view::npos;
         cursor = endAttribute + 1;
     }
 
@@ -1128,11 +1165,11 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
     }
     else {
         std::vector<StackElement> stack = state.stack;
-        stack.push_back({ StackElement::Type::Struct, type });
+        stack.push_back({ StackElement::Type::Struct, Struct { type } });
         std::string structCandidate = join(stack, "::");
 
         stack.pop_back();
-        stack.push_back({ StackElement::Type::Enum, type });
+        stack.push_back({ StackElement::Type::Enum, Enum { type } });
         std::string enumCandidate = join(stack, "::");
 
         auto itStruct = std::find(
@@ -1155,13 +1192,24 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
     }
 }
 
-void handleStructStart(State& state) {
+void handleStructStart(const Struct& s, State& state) {
     std::string name = "codegen_" + join(state.stack, "_");
     int n = sprintf(
         VerifierResult,
         "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
     );
     VerifierResult += n;
+
+    const bool isRootStruct = state.stack.size() == 1;
+    if (isRootStruct && !s.attributes.noTypeCheck) {
+        n = sprintf(
+            VerifierResult,
+            "    %s->documentations.push_back({ \"Type\", new StringEqualVerifier(\"%s\"), Optional::No });\n",
+            name.c_str(),
+            std::string(s.attributes.dictionary).c_str()
+        );
+        VerifierResult += n;
+    }
 }
 
 void handleStructEnd(State& state) {
@@ -1195,9 +1243,7 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
 )",
             name.c_str(), name.c_str(),
             fqName.c_str(),
-            //fqName.c_str(),
             std::string(state.rootStruct.attributes.dictionary).c_str(),
-            //std::string(state.rootStruct.attributes.dictionary).c_str(),
             name.c_str()
         );
         ConverterResult += n;
@@ -1218,9 +1264,41 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     if (it == state.structConverters.end()) {
         throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
     }
+    assert(state.structVariables.find(name) != state.structVariables.end());
+    assert(!state.structVariables[name].empty());
 
     std::memcpy(ConverterResult, it->second.data(), it->second.size());
     ConverterResult += it->second.size();
+
+
+
+    const StackElement& elem = state.stack.back();
+    assert(elem.type == StackElement::Type::Struct);
+    const Struct& s = std::get<Struct>(elem.payload);
+    if (!s.attributes.noExhaustive) {
+        std::vector<std::string> variableNames = state.structVariables[name];
+        if (!s.attributes.noTypeCheck) {
+            variableNames.push_back("\"Type\"");
+        }
+
+
+        std::string joined = join(variableNames, ", ");
+        int n = sprintf(
+            ConverterResult,
+            R"(
+    const std::array<std::string_view, %i> AllowedKeys = { %s };
+    for (std::string_view k : dict.keys()) {
+        if (std::find(AllowedKeys.begin(), AllowedKeys.end(), k) == AllowedKeys.end()) {
+            throw ghoul::RuntimeError(fmt::format("Extra key found: {}", k));
+        }
+    }
+)",
+            static_cast<int>(variableNames.size()),
+            joined.c_str()
+        );
+        ConverterResult += n;
+    }
+
 
     if (isRootStruct) {
         int n = sprintf(ConverterResult, "    return res;\n}\n");
@@ -1333,6 +1411,10 @@ void handleVariable(Variable var, State& state) {
     converter += std::string(ScratchSpace, ScratchSpace + n);
     ScratchSpace += n;
     state.structConverters[name] = converter;
+    std::vector<std::string> variables = state.structVariables[name];
+    variables.push_back("\"" + variableName + "\"");
+    state.structVariables[name] = variables;
+
 
     if (startsWith(var.type, "std::variant")) {
         std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());
@@ -1548,7 +1630,7 @@ void handleFile(std::filesystem::path path) {
 
             if (startsWith(line, "struct")) {
                 Struct s = parseStruct(line);
-                state.stack.push_back({ StackElement::Type::Struct, s.name });
+                state.stack.push_back({ StackElement::Type::Struct, s });
                 state.structList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(s.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
@@ -1566,13 +1648,13 @@ void handleFile(std::filesystem::path path) {
                     state.rootStruct = s;
                 }
 
-                handleStructStart(state);
+                handleStructStart(s, state);
                 continue;
             }
 
             if (startsWith(line, "enum class")) {
                 Enum e = parseEnum(line);
-                state.stack.push_back({ StackElement::Type::Enum, e.name });
+                state.stack.push_back({ StackElement::Type::Enum, e });
                 state.enumList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(e.name)] = state.commentBuffer;
                 state.commentBuffer.clear();
