@@ -176,6 +176,7 @@ namespace {
     constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
     constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
+    constexpr const char BakeFunctionOptionalDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
     constexpr const char BakeFunctionOptional[] = R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
@@ -186,6 +187,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     else *val = std::nullopt;
 }
 )";
+    constexpr const char BakeFunctionVectorDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
     constexpr const char BakeFunctionVector[] = R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
@@ -271,9 +273,9 @@ std::string_view bakeFunctionForType(std::string_view type) {
         { "glm::dmat4x2",   BakeFunctionDMat4x2 },
         { "glm::dmat4x3",   BakeFunctionDMat4x3 },
         { "glm::dmat4x4",   BakeFunctionDMat4x4 },
+        { "std::monostate", BakeFunctionMonostate },
         { "std::optional",  BakeFunctionOptional },
-        { "std::vector",    BakeFunctionVector },
-        { "std::monostate", BakeFunctionMonostate }
+        { "std::vector",    BakeFunctionVector }
     };
 
     const auto it = BakeFunctions.find(type);
@@ -1229,6 +1231,25 @@ void handleStructEnd(State& state) {
             );
         }
 
+
+        for (const std::pair<const std::string, bool>& kv : state.typeUsage) {
+            assert(kv.second);
+            if (kv.first != "std::vector" && kv.first != "std::optional") {
+                continue;
+            }
+            if (kv.second) {
+                std::string_view bake = bakeFunctionForType(kv.first);
+                if (!bake.empty()) {
+                    // The return value is empty for types that don't have a
+                    // preamble-defined bake functions, like all custom structs
+                    std::memcpy(ConverterResult, bake.data(), bake.size());
+                    ConverterResult += bake.size();
+                }
+            }
+
+        }
+
+
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
         int n = sprintf(
@@ -1236,7 +1257,7 @@ void handleStructEnd(State& state) {
             R"(
 } // namespace internal
 
-template <typename T> T bake(const ghoul::Dictionary& dict) { static_assert(sizeof(T) == 0); };
+template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
 template <> %s bake<%s>(const ghoul::Dictionary& dict) {
     openspace::documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
     %s res;
@@ -1430,7 +1451,7 @@ void handleVariable(Variable var, State& state) {
         for (std::string_view subtype : ttypes) {
             n = sprintf(
                 ConverterResult,
-                "   if (d.hasValue<%s>(key)) { *val = d.value<%s>(key); return; }\n",
+                "   if (d.hasValue<%s>(key)) { %s v; bakeTo(d, key, &v); *val = std::move(v); }\n",
                 std::string(subtype).c_str(),
                 std::string(subtype).c_str()
             );
@@ -1463,6 +1484,7 @@ void finalizeVerifier(State& state) {
 namespace codegen {
 template <typename T> openspace::documentation::Documentation doc() {
     static_assert(sizeof(T) == 0); // This should never be called
+    return openspace::documentation::Documentation();
 }
 template <> openspace::documentation::Documentation doc<%s>() {
     using namespace openspace::documentation;
@@ -1507,8 +1529,52 @@ void finalizeConverter(State& state) {
     std::memcpy(ScratchSpace, preamble.data(), preamble.size());
     ScratchSpace += preamble.size();
 
+    // For Linux, we need to delcare the functions in the following order or the overload
+    // resolution picks the top fall back implentation and triggers a static_assert:
+    // 1. <typename T> bakeTo(..., T*) { static_assert(false); } // fallback
+    // 2. bakeTo(..., T*) {...} for T=base types
+    // 3. <typename T> bakeTo(..., std::optional<T>*)   declaration only
+    // 4. <typename T> bakeTo(..., std::vector<T>*)   declaration only
+    // 5. <typename T> bakeTo(..., T*) {...}  for T=custom structs
+    // 6. <typename T> bakeTo(..., std::optional<T>*) {...}   definition
+    // 7. <typename T> bakeTo(..., std::vector<T>*) {...}   definition
+    //
+    // Reason:  When going through the custom structs, they need to know that there will
+    // be implementatinos for the optional and vector types or otherwise they will trip
+    // the fall back.  However, the actual implementation needs to know about the custom
+    // struct one or else *they* will trip the fall back in the implementation.
+    // For ease of implementation, we are putting 3&4 before 2 instead
 
-    for (const std::pair<const std::string, bool>& kv : state.typeUsage) {
+    if (auto it = state.typeUsage.find("std::optional");
+        it != state.typeUsage.end() && it->second)
+    {
+        std::string_view decl = BakeFunctionOptionalDeclaration;
+        std::memcpy(ScratchSpace, decl.data(), decl.size());
+        ScratchSpace += decl.size();
+    }
+    if (auto it = state.typeUsage.find("std::vector");
+        it != state.typeUsage.end() && it->second)
+    {
+        std::string_view decl = BakeFunctionVectorDeclaration;
+        std::memcpy(ScratchSpace, decl.data(), decl.size());
+        ScratchSpace += decl.size();
+    }
+
+
+    std::map<std::string, bool, std::less<>> firstPhaseType = state.typeUsage;
+    firstPhaseType.erase("std::optional");
+    firstPhaseType.erase("std::vector");
+
+    std::map<std::string, bool, std::less<>> secondPhaseType;
+    if (state.typeUsage.find("std::vector") != state.typeUsage.end()) {
+        secondPhaseType["std::vector"] = state.typeUsage["std::vector"];
+    }
+    if (state.typeUsage.find("std::optional") != state.typeUsage.end()) {
+        secondPhaseType["std::optional"] = state.typeUsage["std::optional"];
+    }
+
+
+    for (const std::pair<const std::string, bool>& kv : firstPhaseType) {
         assert(kv.second);
         if (kv.second) {
             std::string_view bake = bakeFunctionForType(kv.first);
@@ -1520,6 +1586,7 @@ void finalizeConverter(State& state) {
             }
         }
     }
+
     long long preambleSize = ScratchSpace - base;
 
     std::memmove(
