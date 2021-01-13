@@ -24,6 +24,7 @@
 
 #include <fmt/format.h>
 #include <array>
+#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <execution>
@@ -54,8 +55,9 @@
 
 
 namespace {
-    constexpr const bool PrintMemoryUsage = false;
-    constexpr const bool AlwaysOutputFiles = true;
+    constexpr const bool PrintMemoryUsage = true;
+    constexpr const bool PrintTiming = true;
+    constexpr const bool AlwaysOutputFiles = false;
 
 
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
@@ -81,6 +83,8 @@ namespace {
     };
     std::vector<Memory> MemoryPool;
 
+    std::atomic_int ChangedFiles = 0;
+    std::atomic_int AllFiles = 0;
 
     std::mutex consoleMutex;
     template <typename... Ts>
@@ -240,7 +244,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 )";
 
     void reportUnsupportedAttribute(std::string_view type, std::string_view name,
-        std::string_view value)
+                                    std::string_view value)
     {
         if (!value.empty()) {
             throw std::runtime_error(fmt::format(
@@ -249,58 +253,57 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
         }
     }
 
-    std::string addQualifier(std::string verifier, std::string qualifier,
-        std::string parameters)
-    {
+    std::string addQualifier(std::string ver, std::string qual, std::string param) {
         return fmt::format(
-            "{}<{}>({})", std::move(qualifier), std::move(verifier), std::move(parameters)
+            "{}<{}>({})", std::move(qual), std::move(ver), std::move(param)
         );
     }
 
+
+    std::string_view bakeFunctionForType(std::string_view type) {
+        static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
+            { "bool",           BakeFunctionBool },
+            { "int",            BakeFunctionInt },
+            { "double",         BakeFunctionDouble },
+            { "float",          BakeFunctionFloat },
+            { "std::string",    BakeFunctionString },
+            { "glm::ivec2",     BakeFunctionIVec2 },
+            { "glm::ivec3",     BakeFunctionIVec3 },
+            { "glm::ivec4",     BakeFunctionIVec4 },
+            { "glm::dvec2",     BakeFunctionDVec2 },
+            { "glm::dvec3",     BakeFunctionDVec3 },
+            { "glm::dvec4",     BakeFunctionDVec4 },
+            { "glm::vec2",      BakeFunctionVec2 },
+            { "glm::vec3",      BakeFunctionVec3 },
+            { "glm::vec4",      BakeFunctionVec4 },
+            { "glm::mat2x2",    BakeFunctionMat2x2 },
+            { "glm::mat2x3",    BakeFunctionMat2x3 },
+            { "glm::mat2x4",    BakeFunctionMat2x4 },
+            { "glm::mat3x2",    BakeFunctionMat3x2 },
+            { "glm::mat3x3",    BakeFunctionMat3x3 },
+            { "glm::mat3x4",    BakeFunctionMat3x4 },
+            { "glm::mat4x2",    BakeFunctionMat4x2 },
+            { "glm::mat4x3",    BakeFunctionMat4x3 },
+            { "glm::mat4x4",    BakeFunctionMat4x4 },
+            { "glm::dmat2x2",   BakeFunctionDMat2x2 },
+            { "glm::dmat2x3",   BakeFunctionDMat2x3 },
+            { "glm::dmat2x4",   BakeFunctionDMat2x4 },
+            { "glm::dmat3x2",   BakeFunctionDMat3x2 },
+            { "glm::dmat3x3",   BakeFunctionDMat3x3 },
+            { "glm::dmat3x4",   BakeFunctionDMat3x4 },
+            { "glm::dmat4x2",   BakeFunctionDMat4x2 },
+            { "glm::dmat4x3",   BakeFunctionDMat4x3 },
+            { "glm::dmat4x4",   BakeFunctionDMat4x4 },
+            { "std::monostate", BakeFunctionMonostate },
+            { "std::optional",  BakeFunctionOptional },
+            { "std::vector",    BakeFunctionVector }
+        };
+
+        const auto it = BakeFunctions.find(type);
+        return it != BakeFunctions.end() ? it->second : std::string_view();
+    }
+
 } // namespace
-
-std::string_view bakeFunctionForType(std::string_view type) {
-    static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
-        { "bool",           BakeFunctionBool },
-        { "int",            BakeFunctionInt },
-        { "double",         BakeFunctionDouble },
-        { "float",          BakeFunctionFloat },
-        { "std::string",    BakeFunctionString },
-        { "glm::ivec2",     BakeFunctionIVec2 },
-        { "glm::ivec3",     BakeFunctionIVec3 },
-        { "glm::ivec4",     BakeFunctionIVec4 },
-        { "glm::dvec2",     BakeFunctionDVec2 },
-        { "glm::dvec3",     BakeFunctionDVec3 },
-        { "glm::dvec4",     BakeFunctionDVec4 },
-        { "glm::vec2",      BakeFunctionVec2 },
-        { "glm::vec3",      BakeFunctionVec3 },
-        { "glm::vec4",      BakeFunctionVec4 },
-        { "glm::mat2x2",    BakeFunctionMat2x2 },
-        { "glm::mat2x3",    BakeFunctionMat2x3 },
-        { "glm::mat2x4",    BakeFunctionMat2x4 },
-        { "glm::mat3x2",    BakeFunctionMat3x2 },
-        { "glm::mat3x3",    BakeFunctionMat3x3 },
-        { "glm::mat3x4",    BakeFunctionMat3x4 },
-        { "glm::mat4x2",    BakeFunctionMat4x2 },
-        { "glm::mat4x3",    BakeFunctionMat4x3 },
-        { "glm::mat4x4",    BakeFunctionMat4x4 },
-        { "glm::dmat2x2",   BakeFunctionDMat2x2 },
-        { "glm::dmat2x3",   BakeFunctionDMat2x3 },
-        { "glm::dmat2x4",   BakeFunctionDMat2x4 },
-        { "glm::dmat3x2",   BakeFunctionDMat3x2 },
-        { "glm::dmat3x3",   BakeFunctionDMat3x3 },
-        { "glm::dmat3x4",   BakeFunctionDMat3x4 },
-        { "glm::dmat4x2",   BakeFunctionDMat4x2 },
-        { "glm::dmat4x3",   BakeFunctionDMat4x3 },
-        { "glm::dmat4x4",   BakeFunctionDMat4x4 },
-        { "std::monostate", BakeFunctionMonostate },
-        { "std::optional",  BakeFunctionOptional },
-        { "std::vector",    BakeFunctionVector }
-    };
-
-    const auto it = BakeFunctions.find(type);
-    return it != BakeFunctions.end() ? it->second : std::string_view();
-}
 
 std::string verifierForType(std::string_view type, Variable::Attributes attributes, const State& state) {
     if (type == "bool") {
@@ -1661,8 +1664,8 @@ void handleFile(std::filesystem::path path) {
     if (content.empty()) {
         return;
     }
-
-    print("Processing file '%s'\n", path.filename().string().c_str());
+    
+    AllFiles++;
 
     std::filesystem::path destination = path;
     destination.replace_extension();
@@ -1840,11 +1843,13 @@ void handleFile(std::filesystem::path path) {
     newContent += std::string(VerifierResultBase, VerifierResult - VerifierResultBase);
     newContent += std::string(ConverterResultBase, ConverterResult - ConverterResultBase);
 
-    if constexpr (PrintMemoryUsage) {
-        print("Memory usage (Buffer: %i)\n", BufferSize);
-        print("Converter: %lli\n", ConverterResult - ConverterResultBase);
-        print("Verifier: %lli\n", VerifierResult - VerifierResultBase);
-        print("Scratch: %lli\n", ScratchSpace - ScratchSpaceBase);
+    if (PrintMemoryUsage) {
+        print(
+            "Memory usage:   Converter(%lli/%i)   Verifier(%lli/%i)   Scratch(%lli/%i)\n",
+            ConverterResult - ConverterResultBase, BufferSize,
+            VerifierResult - VerifierResultBase, BufferSize,
+            ScratchSpace - ScratchSpaceBase, BufferSize
+        );
     }
 
     bool shouldWriteFile;
@@ -1858,8 +1863,10 @@ void handleFile(std::filesystem::path path) {
     }
 
     if (shouldWriteFile || AlwaysOutputFiles) {
+        print("Processed file '%s'\n", path.filename().string().c_str());
         std::ofstream output(destination);
         output.write(newContent.c_str(), newContent.size());
+        ChangedFiles++;
     }
 }
 
@@ -1914,7 +1921,15 @@ int main(int argc, char** argv) {
         );
 
         auto end = std::chrono::high_resolution_clock::now();
-        printf("Time: %i\n", static_cast<int>((end - beg).count() / 1000));
+        if (AlwaysOutputFiles) {
+            printf("Force overrite all files\n");
+        }
+        else {
+            printf("%i/%i files changed\n", ChangedFiles.load(), AllFiles.load());
+        }
+        if (PrintTiming) {
+            printf("Time: %i\n", static_cast<int>((end - beg).count() / 1000));
+        }
     }
     else {
         std::cerr << fmt::format(
