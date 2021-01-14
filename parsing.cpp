@@ -28,6 +28,43 @@
 #include <fmt/format.h>
 #include <cassert>
 
+namespace {
+    std::string_view parseAttribute(std::string_view block, std::string_view name) {
+        assert(!block.empty());
+        assert(!name.empty());
+
+        std::string key = std::string("codegen::" + std::string(name));
+        const size_t p = block.find(key);
+        if (p == std::string_view::npos) {
+            return std::string_view();
+        }
+        const size_t beg = block.find('(', p) + 1;
+
+        if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
+            throw std::runtime_error(fmt::format(
+                "Attribute parameter has unterminated parameter list:\n{}", block
+            ));
+        }
+
+        size_t cursor = beg;
+        int paranthesisCount = 1;
+        while (cursor < block.size() && paranthesisCount > 0) {
+            if (block[cursor] == '(') {
+                paranthesisCount++;
+            }
+            if (block[cursor] == ')') {
+                paranthesisCount--;
+            }
+
+            cursor++;
+        }
+        cursor--;
+
+        std::string_view content = block.substr(beg, cursor - beg);
+        return content;
+    }
+} // namespace
+
 std::string_view parseCommentLine(std::string_view line) {
     assert(line.size() >= 2);
 
@@ -36,39 +73,45 @@ std::string_view parseCommentLine(std::string_view line) {
     return comment;
 }
 
-std::string_view parseAttribute(std::string_view block, std::string_view name) {
-    assert(!block.empty());
-    assert(!name.empty());
-
-    std::string key = std::string("codegen::" + std::string(name));
-    const size_t p = block.find(key);
-    if (p == std::string_view::npos) {
-        return std::string_view();
+Variable::Attributes parseAttributes(std::string_view line) {
+    Variable::Attributes res;
+    if (std::string_view a = parseAttribute(line, "key"); !a.empty()) {
+        res["key"] = a;
     }
-    const size_t beg = block.find('(', p) + 1;
-
-    if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Attribute parameter has unterminated parameter list:\n{}", block
-        ));
+    if (std::string_view a = parseAttribute(line, "reference"); !a.empty()) {
+        res["reference"] = a;
     }
-
-    size_t cursor = beg;
-    int paranthesisCount = 1;
-    while (cursor < block.size() && paranthesisCount > 0) {
-        if (block[cursor] == '(') {
-            paranthesisCount++;
-        }
-        if (block[cursor] == ')') {
-            paranthesisCount--;
-        }
-
-        cursor++;
+    if (std::string_view a = parseAttribute(line, "inrange"); !a.empty()) {
+        res["inrange"] = a;
     }
-    cursor--;
-
-    std::string_view content = block.substr(beg, cursor - beg);
-    return content;
+    if (std::string_view a = parseAttribute(line, "notinrange"); !a.empty()) {
+        res["notinrange"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "less"); !a.empty()) {
+        res["less"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "lessequal"); !a.empty()) {
+        res["lessequal"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "greater"); !a.empty()) {
+        res["greater"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "greaterequal"); !a.empty()) {
+        res["greaterequal"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "unequal"); !a.empty()) {
+        res["unequal"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "inlist"); !a.empty()) {
+        res["inlist"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "notinlist"); !a.empty()) {
+        res["notinlist"] = a;
+    }
+    if (std::string_view a = parseAttribute(line, "annotation"); !a.empty()) {
+        res["annotation"] = a;
+    }
+    return res;
 }
 
 Struct parseStruct(std::string_view line) {
@@ -188,43 +231,7 @@ Variable parseVariable(std::string_view line) {
     res.name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
-        if (std::string_view a = parseAttribute(attributes, "key"); !a.empty()) {
-            res.attributes["key"] = parseAttribute(attributes, "key");
-        }
-        if (std::string_view a = parseAttribute(attributes, "reference"); !a.empty()) {
-            res.attributes["reference"] = parseAttribute(attributes, "reference");
-        }
-
-        if (std::string_view a = parseAttribute(attributes, "inrange"); !a.empty()) {
-            res.attributes["inrange"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "notinrange"); !a.empty()) {
-            res.attributes["notinrange"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "less"); !a.empty()) {
-            res.attributes["less"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "lessequal"); !a.empty()) {
-            res.attributes["lessequal"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "greater"); !a.empty()) {
-            res.attributes["greater"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "greaterequal"); !a.empty()) {
-            res.attributes["greaterequal"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "unequal"); !a.empty()) {
-            res.attributes["unequal"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "inlist"); !a.empty()) {
-            res.attributes["inlist"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "notinlist"); !a.empty()) {
-            res.attributes["notinlist"] = a;
-        }
-        if (std::string_view a = parseAttribute(attributes, "annotation"); !a.empty()) {
-            res.attributes["annotation"] = a;
-        }
+        res.attributes = parseAttributes(attributes);
     }
 
     return res;

@@ -40,7 +40,7 @@ namespace {
         constexpr const char InList[] = "inlist";
         constexpr const char NotInList[] = "notinlist";
         constexpr const char Reference[] = "reference";
-    } // attribute
+    } // namespace attribute
 
     void reportUnsupportedAttribute(std::string_view type, const Variable::Attributes& attributes) {
         using namespace attribute;
@@ -128,20 +128,19 @@ namespace {
     std::string addQualifier(std::string ver, std::string qual, std::string_view param) {
         assert(!ver.empty());
         assert(!qual.empty());
-        assert(!param.empty());
         return fmt::format(
             "{}<{}>({})", std::move(qual), std::move(ver), std::string(param)
         );
     }
 } // namespace
 
-std::string verifierForType(std::string_view type, const Variable::Attributes& attributes, std::string_view dictionaryName) {
+std::string verifierForType(std::string_view type, const Variable::Attributes& attributes, 
+                            std::string_view dictionaryName)
+{
     assert(!type.empty());
 
     reportUnsupportedAttribute(type, attributes);
-    if (type == "bool") {
-        return "BoolVerifier";
-    }
+    if (type == "bool") { return "BoolVerifier"; }
     else if (type == "int") {
         std::string res = "IntVerifier";
         if (auto it = attributes.find("inrange"); it != attributes.end()) {

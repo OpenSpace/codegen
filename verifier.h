@@ -25,7 +25,6 @@
 #ifndef __OPENSPACE_CODEGEN___VERIFIER___H__
 #define __OPENSPACE_CODEGEN___VERIFIER___H__
 
-
 #include "types.h"
 #include <string>
 #include <string_view>
