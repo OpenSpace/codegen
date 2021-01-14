@@ -163,15 +163,15 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::string ver = verifier(subtype, variable, state);
         char* base = ScratchSpace;
-        int n = sprintf(
-            ScratchSpace,
-            "new TableVerifier({{\"*\",%s,Optional::Yes, %s}})\n",
-            ver.c_str(),
-            comments.c_str()
-        );
-        ScratchSpace += n;
 
-        return std::string(base, base + n);
+        char* out = fmt::format_to(
+            ScratchSpace,
+            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n",
+            ver, comments
+        );
+        ScratchSpace = out;
+
+        return std::string(base, ScratchSpace);
     }
     else if (startsWith(type, "std::variant<")) {
         state.typeUsage["std::variant"] = true;
@@ -185,18 +185,15 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         assert(subtypes.back() == '>');
 
         char* resBase = ScratchSpace;
-        int n = sprintf(ScratchSpace, "new OrVerifier({");
-        ScratchSpace += n;
+        ScratchSpace = fmt::format_to(ScratchSpace, "new OrVerifier({{");
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
             std::string ver = verifier(subtype, variable, state);
-            n = sprintf(ScratchSpace, "%s,", ver.c_str());
-            ScratchSpace += n;
+            ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
-        n = sprintf(ScratchSpace, "})");
-        ScratchSpace += n;
+        ScratchSpace = fmt::format_to(ScratchSpace, "}})");
         return std::string(resBase, ScratchSpace - resBase);
     }
     else {
@@ -230,21 +227,19 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
 void handleStructStart(const Struct& s, State& state) {
     std::string name = "codegen_" + join(state.stack, "_");
-    int n = sprintf(
+    VerifierResult = fmt::format_to(
         VerifierResult,
-        "    TableVerifier* %s = new TableVerifier;\n", name.c_str()
+        "    TableVerifier* {} = new TableVerifier;\n",
+        name
     );
-    VerifierResult += n;
 
     const bool isRootStruct = state.stack.size() == 1;
     if (isRootStruct && !s.attributes.noTypeCheck) {
-        n = sprintf(
+        VerifierResult = fmt::format_to(
             VerifierResult,
-            "    %s->documentations.push_back({ \"Type\", new StringEqualVerifier(\"%s\"), Optional::No });\n",
-            name.c_str(),
-            std::string(s.attributes.dictionary).c_str()
+            "    {}->documentations.push_back({{ \"Type\", new StringEqualVerifier(\"{}\"), Optional::No }});\n",
+            name, s.attributes.dictionary
         );
-        VerifierResult += n;
     }
 }
 
@@ -286,32 +281,29 @@ void handleStructEnd(State& state) {
 
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
-        int n = sprintf(
+        ConverterResult = fmt::format_to(
             ConverterResult,
             R"(
-} // namespace internal
+}} // namespace internal
 
-template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
-template <> %s bake<%s>(const ghoul::Dictionary& dict) {
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<%s>(), dict, "%s");
-    %s res;
+template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
+template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<{1}>(), dict, "{2}");
+    {0} res;
 )",
-            name.c_str(), name.c_str(),
-            fqName.c_str(),
-            std::string(state.rootStruct.attributes.dictionary).c_str(),
-            name.c_str()
+            name,
+            fqName,
+            state.rootStruct.attributes.dictionary
         );
-        ConverterResult += n;
     }
     else {
-        int n = sprintf(
+        ConverterResult = fmt::format_to(
             ConverterResult,
-            "template <> void bakeTo<%s>(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
-            "    %s& res = *val;\n"
+            "template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{\n"
+            "    {0}& res = *val;\n"
             "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
-            name.c_str(), name.c_str(), name.c_str()
+            name
         );
-        ConverterResult += n;
     }
 
 
@@ -338,63 +330,55 @@ template <> %s bake<%s>(const ghoul::Dictionary& dict) {
 
 
         std::string joined = join(variableNames, ", ");
-        int n = sprintf(
+        ConverterResult = fmt::format_to(
             ConverterResult,
             R"(
-    const std::array<std::string_view, %i> AllowedKeys = { %s };
+    const std::array<std::string_view, {}> AllowedKeys = {{ {} }};
     for (std::string_view k : dict.keys()) {
-        if (std::find(AllowedKeys.begin(), AllowedKeys.end(), k) == AllowedKeys.end()) {
-            throw ghoul::RuntimeError(fmt::format("Extra key found: {}", k));
-        }
-    }
+        if (std::find(AllowedKeys.begin(), AllowedKeys.end(), k) == AllowedKeys.end()) {{
+            throw ghoul::RuntimeError(fmt::format("Extra key found: {{}}", k));
+        }}
+    }}
 )",
-            static_cast<int>(variableNames.size()),
-            joined.c_str()
+            variableNames.size(), joined
         );
-        ConverterResult += n;
     }
 
 
     if (isRootStruct) {
-        int n = sprintf(ConverterResult, "    return res;\n}\n");
-        ConverterResult += n;
+        ConverterResult = fmt::format_to(ConverterResult, "    return res;\n}}\n");
     }
     else {
-        int n = sprintf(ConverterResult, "}\n");
-        ConverterResult += n;
+        ConverterResult = fmt::format_to(ConverterResult, "}}\n");
     }
 }
 
 void handleEnumStart(State& state) {
     std::string name = "codegen_" + join(state.stack, "_");
 
-    int n = sprintf(
+    VerifierResult = fmt::format_to(
         VerifierResult,
-        "    StringInListVerifier* %s = new StringInListVerifier({", name.c_str()
+        "    StringInListVerifier* {} = new StringInListVerifier({{", name
     );
-    VerifierResult += n;
 
 
     std::string type = join(state.stack, "::");
-    n = sprintf(
+    ConverterResult = fmt::format_to(
         ConverterResult,
-        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n"
+        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
         "    std::string v = d.value<std::string>(key);\n",
-        std::string(type).c_str()
+        type
     );
-    ConverterResult += n;
 }
 
 void handleEnumEnd(State& state) {
     // The last element has a , at the end that we can overwrite
     VerifierResult -= 1;
 
-    int n = sprintf(VerifierResult, "});\n");
-    VerifierResult += n;
+    VerifierResult = fmt::format_to(VerifierResult, "}});\n");
 
 
-    n = sprintf(ConverterResult, "}\n");
-    ConverterResult += n;
+    ConverterResult = fmt::format_to(ConverterResult, "}}\n");
 }
 
 void handleEnumValue(EnumElement element, State& state) {
@@ -403,17 +387,14 @@ void handleEnumValue(EnumElement element, State& state) {
         element.attributes.key = element.name;
     }
 
-    int n = sprintf(VerifierResult, "\"%s\",", std::string(element.attributes.key).c_str());
-    VerifierResult += n;
+    VerifierResult = fmt::format_to(VerifierResult, "\"{}\",", element.attributes.key);
 
     std::string type = join(state.stack, "::");
-    n = sprintf(
+    ConverterResult = fmt::format_to(
         ConverterResult,
-        "    if (v == \"%s\") { *val = %s::%s; }\n",
-        std::string(element.attributes.key).c_str(), type.c_str(),
-        std::string(element.name).c_str()
+        "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
+        element.attributes.key, type, element.name
     );
-    ConverterResult += n;
 }
 
 void handleVariable(Variable var, State& state) {
@@ -440,13 +421,12 @@ void handleVariable(Variable var, State& state) {
     }
 
     std::string v = verifier(var.type, var, state);
-    int n = sprintf(
+    VerifierResult = fmt::format_to(
         VerifierResult,
-        "    %s->documentations.push_back({\"%s\",%s,%s,%s});\n",
-        ver.c_str(), variableName.c_str(), v.c_str(),
-        isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer.c_str()
+        "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
+        ver, variableName, v,
+        isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer
     );
-    VerifierResult += n;
     state.commentBuffer.clear();
 
 
@@ -457,15 +437,14 @@ void handleVariable(Variable var, State& state) {
         converter = it->second;
     }
 
-    n = sprintf(
+    char* out = fmt::format_to(
         ScratchSpace,
-        "    internal::bakeTo(dict, \"%s\", &res.%s);\n",
-        variableName.c_str(),
-        std::string(var.name).c_str()
+        "    internal::bakeTo(dict, \"{}\", &res.{});\n",
+        variableName, var.name
     );
 
-    converter += std::string(ScratchSpace, ScratchSpace + n);
-    ScratchSpace += n;
+    converter += std::string(ScratchSpace, out);
+    ScratchSpace = out;
     state.structConverters[name] = converter;
     std::vector<std::string> variables = state.structVariables[name];
     variables.push_back("\"" + variableName + "\"");
@@ -475,26 +454,22 @@ void handleVariable(Variable var, State& state) {
     if (startsWith(var.type, "std::variant")) {
         std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());
 
-        n = sprintf(
+        ConverterResult = fmt::format_to(
             ConverterResult,
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, %s* val) {\n",
-            std::string(var.type).c_str()
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
+            var.type
         );
-        ConverterResult += n;
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            n = sprintf(
+            ConverterResult = fmt::format_to(
                 ConverterResult,
-                "   if (d.hasValue<%s>(key)) { %s v; bakeTo(d, key, &v); *val = std::move(v); }\n",
-                std::string(subtype).c_str(),
-                std::string(subtype).c_str()
+                "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
+                subtype
             );
-            ConverterResult += n;
         }
 
-        n = sprintf(ConverterResult, "}");
-        ConverterResult += n;
+        ConverterResult = fmt::format_to(ConverterResult, "}}");
     }
 }
 
@@ -513,19 +488,20 @@ void finalizeVerifier(State& state) {
 
     std::array<char, 512> Buf;
     std::fill(Buf.begin(), Buf.end(), '\0');
-    int n = sprintf(
+    char* out = fmt::format_to(
         Buf.data(),
         R"(
-namespace codegen {
-template <typename T> openspace::documentation::Documentation doc() {
+namespace codegen {{
+template <typename T> openspace::documentation::Documentation doc() {{
     static_assert(sizeof(T) == 0); // This should never be called
     return openspace::documentation::Documentation();
-}
-template <> openspace::documentation::Documentation doc<%s>() {
+}}
+template <> openspace::documentation::Documentation doc<{}>() {{
     using namespace openspace::documentation;
 )",
-        name.c_str()
+        name
     );
+    int n = (out - Buf.data());
 
     std::memmove(
         VerifierResultBase + n,
@@ -536,22 +512,19 @@ template <> openspace::documentation::Documentation doc<%s>() {
     VerifierResult += n;
 
     std::string rootStruct = fmt::format("codegen_{}", state.rootStruct.name);
-    n = sprintf(
+    VerifierResult = fmt::format_to(
         VerifierResult,
         R"(
-    openspace::documentation::Documentation d = { "%s", "%s", std::move(%s->documentations) };
-    delete %s;
+    openspace::documentation::Documentation d = {{ "{0}", "{0}", std::move({1}->documentations) }};
+    delete {1};
     return d;
-}
-} // namespace codegen
+}}
+}} // namespace codegen
 
 )",
-        std::string(state.rootStruct.attributes.dictionary).c_str(),
-        std::string(state.rootStruct.attributes.dictionary).c_str(),
-        rootStruct.c_str(),
-        rootStruct.c_str()
+        state.rootStruct.attributes.dictionary,
+        fmt::format("codegen_{}", state.rootStruct.name)
     );
-    VerifierResult += n;
 }
 
 void finalizeConverter(State& state) {
@@ -809,14 +782,9 @@ void handleFile(std::filesystem::path path) {
         );
     }
 
-
-    int n = sprintf(
-        ScratchSpace,
-        fileHeader,
-        path.filename().string().c_str()
-    );
-    std::string newContent = std::string(ScratchSpace, ScratchSpace + n);
-    ScratchSpace += n;
+    char* out = fmt::format_to(ScratchSpace, fileHeader, path.filename().string());
+    std::string newContent = std::string(ScratchSpace, out);
+    ScratchSpace = out;
 
     finalizeVerifier(state);
     finalizeConverter(state);
@@ -844,6 +812,13 @@ void handleFile(std::filesystem::path path) {
     }
 
     if (shouldWriteFile && PreventFileChange) {
+        std::filesystem::path debugDestination = destination;
+        debugDestination.replace_extension();
+        debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
+
+        std::ofstream output(debugDestination);
+        output.write(newContent.c_str(), newContent.size());
+
         throw std::runtime_error(fmt::format(
             "Asked to prevent file change, but file change detected in '{}'",
             path.filename().string()
