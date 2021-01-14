@@ -53,6 +53,7 @@
 #pragma warning (disable : 4996)
 #endif // WIN32
 
+//#define USE_MULTITHREADED_GENERATION
 
 namespace {
     constexpr const bool PrintMemoryUsage = true;
@@ -131,22 +132,7 @@ struct Variable {
     std::string_view type;
     std::string_view name;
 
-    struct Attributes {
-        std::string_view key;
-        std::string_view reference;
-
-        std::string_view annotation;
-        std::string_view inRange;
-        std::string_view notInRange;
-        std::string_view less;
-        std::string_view lessEqual;
-        std::string_view greater;
-        std::string_view greaterEqual;
-        std::string_view unequal;
-        std::string_view inList;
-        std::string_view notInList;
-    };
-    Attributes attributes;
+    std::unordered_map<std::string_view, std::string_view> attributes;
 };
 
 
@@ -243,19 +229,108 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 // was changed without the codegen tool being run again.
 )";
 
-    void reportUnsupportedAttribute(std::string_view type, std::string_view name,
-                                    std::string_view value)
-    {
-        if (!value.empty()) {
-            throw std::runtime_error(fmt::format(
-                "Attribute '{}' not supported for type '{}'", name, type
-            ));
+    //void reportUnsupportedAttribute(std::string_view type, std::string_view name,
+    //                                std::string_view value)
+    //{
+    //    if (!value.empty()) {
+    //        throw std::runtime_error(fmt::format(
+    //            "Attribute '{}' not supported for type '{}'", name, type
+    //        ));
+    //    }
+    //}
+
+
+    void reportUnsupportedAttribute(std::string_view type, const Variable& var) {
+        static const std::vector<std::string_view> AllAttributes = {
+            "annotation", "inrange", "notinrange", "less", "lessequal", "greater",
+            "greaterequal", "unequal", "inlist", "notinlist", "reference"
+        };
+
+        static std::unordered_map<std::string_view, std::vector<std::string_view>> Types =
+        {
+            {
+                "bool",
+                {
+                    "annotation", "inrange", "notinrange", "less", "lessequal", "greater",
+                    "greaterequal", "unequal", "inlist", "notinlist", "reference"
+                }
+            },
+            {
+                "int",
+                { "annotation", "inlist", "notinlist", "reference" }
+            },
+            {
+                "double",
+                { "annotation", "inlist", "notinlist", "reference" }
+            },
+            {
+                "float",
+                { "annotation", "inlist", "notinlist", "reference" }
+            },
+            {
+                "std::string",
+                {
+                    "inrange", "notinrange", "less", "lessequal", "greater",
+                    "greaterequal", "reference"
+                }
+            },
+            { "glm::ivec2",     AllAttributes },
+            { "glm::ivec3",     AllAttributes },
+            { "glm::ivec4",     AllAttributes },
+            { "glm::dvec2",     AllAttributes },
+            { "glm::dvec3",     AllAttributes },
+            { "glm::dvec4",     AllAttributes },
+            { "glm::vec2",      AllAttributes },
+            { "glm::vec3",      AllAttributes },
+            { "glm::vec4",      AllAttributes },
+            { "glm::mat2x2",    AllAttributes },
+            { "glm::mat2x3",    AllAttributes },
+            { "glm::mat2x4",    AllAttributes },
+            { "glm::mat3x2",    AllAttributes },
+            { "glm::mat3x3",    AllAttributes },
+            { "glm::mat3x4",    AllAttributes },
+            { "glm::mat4x2",    AllAttributes },
+            { "glm::mat4x3",    AllAttributes },
+            { "glm::mat4x4",    AllAttributes },
+            { "glm::dmat2x2",   AllAttributes },
+            { "glm::dmat2x3",   AllAttributes },
+            { "glm::dmat2x4",   AllAttributes },
+            { "glm::dmat3x2",   AllAttributes },
+            { "glm::dmat3x3",   AllAttributes },
+            { "glm::dmat3x4",   AllAttributes },
+            { "glm::dmat4x2",   AllAttributes },
+            { "glm::dmat4x3",   AllAttributes },
+            { "glm::dmat4x4",   AllAttributes },
+            {
+                "std::monostate",
+                {
+                    "annotation", "inrange", "notinrange", "less", "lessequal", "greater",
+                    "greaterequal", "unequal", "inlist", "notinlist"
+                }
+            }
+        };
+
+        const auto it = Types.find(type);
+        if (it == Types.end()) {
+            return;
+        }
+
+        for (std::string_view attr : it->second) {
+            if (auto it = var.attributes.find(attr); it != var.attributes.end()) {
+                assert(!it->second.empty());
+                throw std::runtime_error(fmt::format(
+                    "Attribute '{}' not supported for type '{}'", attr, type
+                ));
+            }
         }
     }
 
-    std::string addQualifier(std::string ver, std::string qual, std::string param) {
+    std::string addQualifier(std::string ver, std::string qual, std::string_view param) {
+        assert(!ver.empty());
+        assert(!qual.empty());
+        assert(!param.empty());
         return fmt::format(
-            "{}<{}>({})", std::move(qual), std::move(ver), std::move(param)
+            "{}<{}>({})", std::move(qual), std::move(ver), std::string(param)
         );
     }
 
@@ -305,498 +380,167 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 
 } // namespace
 
-std::string verifierForType(std::string_view type, Variable::Attributes attributes, const State& state) {
+std::string verifierForType(std::string_view type, const Variable& var, const State& state) {
+    reportUnsupportedAttribute(type, var);
     if (type == "bool") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "BoolVerifier";
     }
     else if (type == "int") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
-
         std::string res = "IntVerifier";
-        if (!attributes.inRange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
+        if (auto it = var.attributes.find("inrange"); it != var.attributes.end()) {
+            res = addQualifier(res, "InRangeVerifier", it->second);
         }
-        if (!attributes.notInRange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", std::string(attributes.notInRange));
+        if (auto it = var.attributes.find("notinrange"); it != var.attributes.end()) {
+            res = addQualifier(res, "NotInRangeVerifier", it->second);
         }
-        if (!attributes.less.empty()) {
-            res = addQualifier(res, "LessVerifier", std::string(attributes.less));
+        if (auto it = var.attributes.find("less"); it != var.attributes.end()) {
+            res = addQualifier(res, "LessVerifier", it->second);
         }
-        if (!attributes.lessEqual.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", std::string(attributes.lessEqual));
+        if (auto it = var.attributes.find("lessequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "LessEqualVerifier", it->second);
         }
-        if (!attributes.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", std::string(attributes.greater));
+        if (auto it = var.attributes.find("greater"); it != var.attributes.end()) {
+            res = addQualifier(res, "GreaterVerifier", it->second);
         }
-        if (!attributes.greaterEqual.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", std::string(attributes.greaterEqual));
+        if (auto it = var.attributes.find("greaterequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "GreaterEqualVerifier", it->second);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", std::string(attributes.unequal));
+        if (auto it = var.attributes.find("unequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "UnequalVerifier", it->second);
         }
         return res;
     }
     else if (type == "double" || type == "float") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
-
         std::string res = "DoubleVerifier";
-        if (!attributes.inRange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", std::string(attributes.inRange));
+        if (auto it = var.attributes.find("inrange"); it != var.attributes.end()) {
+            res = addQualifier(res, "InRangeVerifier", it->second);
         }
-        if (!attributes.notInRange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", std::string(attributes.notInRange));
+        if (auto it = var.attributes.find("notinrange"); it != var.attributes.end()) {
+            res = addQualifier(res, "NotInRangeVerifier", it->second);
         }
-        if (!attributes.less.empty()) {
-            res = addQualifier(res, "LessVerifier", std::string(attributes.less));
+        if (auto it = var.attributes.find("less"); it != var.attributes.end()) {
+            res = addQualifier(res, "LessVerifier", it->second);
         }
-        if (!attributes.lessEqual.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", std::string(attributes.lessEqual));
+        if (auto it = var.attributes.find("lessequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "LessEqualVerifier", it->second);
         }
-        if (!attributes.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", std::string(attributes.greater));
+        if (auto it = var.attributes.find("greater"); it != var.attributes.end()) {
+            res = addQualifier(res, "GreaterVerifier", it->second);
         }
-        if (!attributes.greaterEqual.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", std::string(attributes.greaterEqual));
+        if (auto it = var.attributes.find("greaterequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "GreaterEqualVerifier", it->second);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", std::string(attributes.unequal));
+        if (auto it = var.attributes.find("unequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "UnequalVerifier", it->second);
         }
         return res;
     }
     else if (type == "std::string") {
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
-
         std::string res = "StringVerifier";
-        if (!attributes.inList.empty()) {
-            std::string attr = std::string(attributes.inList);
-            res = addQualifier(res, "InListVerifier", "{" + attr + "}");
+        if (auto it = var.attributes.find("inlist"); it != var.attributes.end()) {
+            std::string param = '{' + std::string(it->second) + '}';
+            res = addQualifier(res, "InListVerifier", param);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", std::string(attributes.unequal));
+        if (auto it = var.attributes.find("unequal"); it != var.attributes.end()) {
+            res = addQualifier(res, "UnequalVerifier", it->second);
         }
-        if (!attributes.annotation.empty()) {
-            if (!attributes.inList.empty() || !attributes.unequal.empty()) {
+        if (auto it = var.attributes.find("annotation"); it != var.attributes.end()) {
+            if (var.attributes.find("inlist") != var.attributes.end() ||
+                var.attributes.find("unequal") != var.attributes.end())
+            {
                 throw std::runtime_error(fmt::format(
                     "When using the annotation attribute, no other attribute can be used:\n{}", type
                 ));
             }
-            res = addQualifier(res, "AnnotationVerifier", "\"" + std::string(attributes.annotation) + "\"");
+            std::string param = "\"" + std::string(it->second) + "\"";
+            res = addQualifier(res, "AnnotationVerifier", param);
         }
         return res;
     }
     else if (type == "glm::ivec2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "IntVector2Verifier";
     }
     else if (type == "glm::ivec3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "IntVector3Verifier";
     }
     else if (type == "glm::ivec4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "IntVector4Verifier";
     }
     else if (type == "glm::dvec2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector2Verifier";
     }
     else if (type == "glm::dvec3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector3Verifier";
     }
     else if (type == "glm::dvec4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector4Verifier";
     }
     else if (type == "glm::vec2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector2Verifier";
     }
     else if (type == "glm::vec3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector3Verifier";
     }
     else if (type == "glm::vec4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleVector4Verifier";
     }
     else if (type == "glm::dmat2x2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x2Verifier";
     }
     else if (type == "glm::dmat2x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x3Verifier";
     }
     else if (type == "glm::dmat2x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x4Verifier";
     }
     else if (type == "glm::dmat3x2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix3x2Verifier";
     }
     else if (type == "glm::dmat3x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix3x3Verifier";
     }
     else if (type == "glm::dmat3x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix3x4Verifier";
     }
     else if (type == "glm::dmat4x2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x2Verifier";
     }
     else if (type == "glm::dmat4x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x3Verifier";
     }
     else if (type == "glm::dmat4x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x4Verifier";
     }
     else if (type == "glm::mat2x2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x2Verifier";
     }
     else if (type == "glm::mat2x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x3Verifier";
     }
     else if (type == "glm::mat2x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix2x4Verifier";
     }
     else if (type == "glm::mat3x2") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix3x2Verifier";
     }
     else if (type == "glm::mat3x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix3x3Verifier";
     }
     else if (type == "glm::mat3x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
         return "DoubleMatrix3x4Verifier";
     }
     else if (type == "glm::mat4x2") {
-    reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-    reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x2Verifier";
     }
     else if (type == "glm::mat4x3") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x3Verifier";
     }
     else if (type == "glm::mat4x4") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-        reportUnsupportedAttribute(type, "reference", attributes.reference);
         return "DoubleMatrix4x4Verifier";
     }
     else if (type == "std::monostate") {
-        reportUnsupportedAttribute(type, "annotation", attributes.annotation);
-        reportUnsupportedAttribute(type, "inrange", attributes.inRange);
-        reportUnsupportedAttribute(type, "notinrange", attributes.notInRange);
-        reportUnsupportedAttribute(type, "less", attributes.less);
-        reportUnsupportedAttribute(type, "lessequal", attributes.lessEqual);
-        reportUnsupportedAttribute(type, "greater", attributes.greater);
-        reportUnsupportedAttribute(type, "greaterequal", attributes.greaterEqual);
-        reportUnsupportedAttribute(type, "unequal", attributes.unequal);
-        reportUnsupportedAttribute(type, "inlist", attributes.inList);
-        reportUnsupportedAttribute(type, "notinlist", attributes.notInList);
-
-        if (attributes.reference.empty()) {
+        const auto it = var.attributes.find("reference");
+        if (it == var.attributes.end()) {
             throw std::runtime_error(
                 "Using a monostate needs to have an attribute 'reference'"
             );
@@ -804,9 +548,9 @@ std::string verifierForType(std::string_view type, Variable::Attributes attribut
 
         return fmt::format(
             "ReferencingVerifier({})",
-            attributes.reference == "this" ?
+            it->second == "this" ?
                 fmt::format("\"{}\"", state.rootStruct.attributes.dictionary) :
-                std::string(attributes.reference)
+                std::string(it->second)
         );
     }
     else {
@@ -1059,19 +803,43 @@ Variable parseVariable(std::string_view line) {
     res.name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
-        res.attributes.key = parseAttribute(attributes, "key");
-        res.attributes.reference = parseAttribute(attributes, "reference");
+        if (std::string_view a = parseAttribute(attributes, "key"); !a.empty()) {
+            res.attributes["key"] = parseAttribute(attributes, "key");
+        }
+        if (std::string_view a = parseAttribute(attributes, "reference"); !a.empty()) {
+            res.attributes["reference"] = parseAttribute(attributes, "reference");
+        }
 
-        res.attributes.inRange = parseAttribute(attributes, "inrange");
-        res.attributes.notInRange = parseAttribute(attributes, "notinrange");
-        res.attributes.less = parseAttribute(attributes, "less");
-        res.attributes.lessEqual = parseAttribute(attributes, "lessequal");
-        res.attributes.greater = parseAttribute(attributes, "greater");
-        res.attributes.greaterEqual = parseAttribute(attributes, "greaterequal");
-        res.attributes.unequal = parseAttribute(attributes, "unequal");
-        res.attributes.inList = parseAttribute(attributes, "inlist");
-        res.attributes.notInList = parseAttribute(attributes, "notinlist");
-        res.attributes.annotation = parseAttribute(attributes, "annotation");
+        if (std::string_view a = parseAttribute(attributes, "inrange"); !a.empty()) {
+            res.attributes["inrange"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "notinrange"); !a.empty()) {
+            res.attributes["notinrange"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "less"); !a.empty()) {
+            res.attributes["less"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "lessequal"); !a.empty()) {
+            res.attributes["lessequal"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "greater"); !a.empty()) {
+            res.attributes["greater"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "greaterequal"); !a.empty()) {
+            res.attributes["greaterequal"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "unequal"); !a.empty()) {
+            res.attributes["unequal"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "inlist"); !a.empty()) {
+            res.attributes["inlist"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "notinlist"); !a.empty()) {
+            res.attributes["notinlist"] = a;
+        }
+        if (std::string_view a = parseAttribute(attributes, "annotation"); !a.empty()) {
+            res.attributes["annotation"] = a;
+        }
     }
 
     return res;
@@ -1132,9 +900,8 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 }
 
 
-std::string verifier(std::string_view type, Variable::Attributes attributes, State& state)
-{
-    std::string v = verifierForType(type, attributes, state);
+std::string verifier(std::string_view type, const Variable& variable, State& state) {
+    std::string v = verifierForType(type, variable, state);
     
     if (!v.empty()) {
         state.typeUsage[std::string(type)] = true;
@@ -1150,7 +917,7 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
             comments = resolveComment(it->second);
         }
 
-        std::string ver = verifier(subtype, attributes, state);
+        std::string ver = verifier(subtype, variable, state);
         char* base = ScratchSpace;
         int n = sprintf(
             ScratchSpace,
@@ -1179,7 +946,7 @@ std::string verifier(std::string_view type, Variable::Attributes attributes, Sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, attributes, state);
+            std::string ver = verifier(subtype, variable, state);
             n = sprintf(ScratchSpace, "%s,", ver.c_str());
             ScratchSpace += n;
         }
@@ -1407,14 +1174,15 @@ void handleEnumValue(EnumElement element, State& state) {
 
 void handleVariable(Variable var, State& state) {
     std::string ver = std::string("codegen_") + join(state.stack, "_");
-    std::string variableName;
 
-    if (var.attributes.key.empty()) {
-        variableName = std::string(var.name);
-        variableName[0] = static_cast<char>(::toupper(variableName[0]));
+    std::string variableName;
+    if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
+        assert(!it->second.empty());
+        variableName = std::string(it->second);
     }
     else {
-        variableName = std::string(var.attributes.key);
+        variableName = std::string(var.name);
+        variableName[0] = static_cast<char>(::toupper(variableName[0]));
     }
 
     state.commentBuffer = resolveComment(state.commentBuffer);
@@ -1427,7 +1195,7 @@ void handleVariable(Variable var, State& state) {
         var.type.remove_suffix(1);
     }
 
-    std::string v = verifier(var.type, var.attributes, state);
+    std::string v = verifier(var.type, var, state);
     int n = sprintf(
         VerifierResult,
         "    %s->documentations.push_back({\"%s\",%s,%s,%s});\n",
@@ -1907,7 +1675,9 @@ int main(int argc, char** argv) {
         }
 
         std::for_each(
+#ifdef USE_MULTITHREADED_GENERATION
             std::execution::par_unseq,
+#endif // USE_MULTITHREADED_GENERATION
             entries.begin(), entries.end(),
             [](const fs::directory_entry& p) {
                 try {
