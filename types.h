@@ -1,0 +1,92 @@
+/*****************************************************************************************
+ *                                                                                       *
+ * OpenSpace Codegen                                                                     *
+ *                                                                                       *
+ * Copyright (c) 2021                                                                    *
+ *                                                                                       *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this  *
+ * software and associated documentation files (the "Software"), to deal in the Software *
+ * without restriction, including without limitation the rights to use, copy, modify,    *
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to    *
+ * permit persons to whom the Software is furnished to do so, subject to the following   *
+ * conditions:                                                                           *
+ *                                                                                       *
+ * The above copyright notice and this permission notice shall be included in all copies *
+ * or substantial portions of the Software.                                              *
+ *                                                                                       *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,   *
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A         *
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT    *
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF  *
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE  *
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
+ ****************************************************************************************/
+
+#ifndef __OPENSPACE_CODEGEN___TYPES___H__
+#define __OPENSPACE_CODEGEN___TYPES___H__
+
+#include <string_view>
+#include <map>
+#include <unordered_map>
+#include <variant>
+
+struct Struct {
+    std::string_view name;
+
+    struct Attributes {
+        std::string_view dictionary;
+        std::string_view namespaceSpecifier;
+        bool noTypeCheck = true;
+        bool noExhaustive = true;
+    };
+    Attributes attributes;
+};
+
+struct Enum {
+    std::string_view name;
+};
+
+struct StackElement {
+    enum class Type { Struct, Enum };
+    Type type;
+
+    std::variant<Struct, Enum> payload;
+};
+
+struct EnumElement {
+    std::string_view name;
+
+    struct Attributes {
+        std::string_view key;
+    };
+    Attributes attributes;
+};
+
+struct Variable {
+    std::string_view type;
+    std::string_view name;
+
+    using Attributes = std::unordered_map<std::string_view, std::string_view>;
+    Attributes attributes;
+};
+
+
+struct State {
+    std::string commentBuffer;
+    std::string variableBuffer;
+    std::vector<StackElement> stack;
+
+    std::map<std::string, std::string, std::less<>> structComments;
+    Struct rootStruct;
+    std::map<std::string, std::string, std::less<>> structConverters;
+    std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
+
+    std::map<std::string, bool, std::less<>> typeUsage;
+
+    std::vector<std::string> structList;
+    std::vector<std::string> enumList;
+};
+
+
+
+#endif // __OPENSPACE_CODEGEN___TYPES___H__
