@@ -27,7 +27,6 @@
 #include <atomic>
 #include <cassert>
 #include <chrono>
-#include <execution>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -51,9 +50,11 @@
 
 #ifdef WIN32
 #pragma warning (disable : 4996)
-#endif // WIN32
 
 //#define USE_MULTITHREADED_GENERATION
+#include <execution>
+#endif // WIN32
+
 
 namespace {
     constexpr const bool PrintMemoryUsage = true;
@@ -229,16 +230,6 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 // was changed without the codegen tool being run again.
 )";
 
-    //void reportUnsupportedAttribute(std::string_view type, std::string_view name,
-    //                                std::string_view value)
-    //{
-    //    if (!value.empty()) {
-    //        throw std::runtime_error(fmt::format(
-    //            "Attribute '{}' not supported for type '{}'", name, type
-    //        ));
-    //    }
-    //}
-
 
     void reportUnsupportedAttribute(std::string_view type, const Variable& var) {
         static const std::vector<std::string_view> AllAttributes = {
@@ -248,13 +239,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 
         static std::unordered_map<std::string_view, std::vector<std::string_view>> Types =
         {
-            {
-                "bool",
-                {
-                    "annotation", "inrange", "notinrange", "less", "lessequal", "greater",
-                    "greaterequal", "unequal", "inlist", "notinlist", "reference"
-                }
-            },
+            { "bool", AllAttributes },
             {
                 "int",
                 { "annotation", "inlist", "notinlist", "reference" }
@@ -1613,7 +1598,7 @@ void handleFile(std::filesystem::path path) {
 
     if (PrintMemoryUsage) {
         print(
-            "Memory usage:   Converter(%lli/%i)   Verifier(%lli/%i)   Scratch(%lli/%i)\n",
+            "Memory usage:   Converter(%5lli/%i)   Verifier(%5lli/%i)   Scratch(%5lli/%i)\n",
             ConverterResult - ConverterResultBase, BufferSize,
             VerifierResult - VerifierResultBase, BufferSize,
             ScratchSpace - ScratchSpaceBase, BufferSize
