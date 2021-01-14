@@ -104,20 +104,29 @@ int main(int argc, char** argv) {
         );
 
         auto end = std::chrono::high_resolution_clock::now();
+        const float ms = static_cast<int>((end - beg).count()) / 1000000.f;
+
+        const int nChangedFiles = ChangedFiles.load();
+        const int nAllFiles = AllFiles.load();
+
         if (AlwaysOutputFiles) {
-            printf("Force overrite all files\n");
+            if (PrintTiming) {
+                std::cout << fmt::format("Force overwrite all files in {} ms\n", ms);
+            }
+            else {
+                std::cout << "Force overwrite all files\n";
+            }
         }
         else {
             if (PrintTiming) {
-                printf(
-                    "%i/%i files changed in %f ms\n",
-                    ChangedFiles.load(),
-                    AllFiles.load(),
-                    static_cast<int>((end - beg).count()) / 1000000.f
+                std::cout << fmt::format(
+                    "{}/{} files changed in {} ms\n", nChangedFiles, nAllFiles, ms
                 );
             }
             else {
-                printf("%i/%i files changed\n", ChangedFiles.load(), AllFiles.load());
+                std::cout << fmt::format(
+                    "{}/{} files changed\n", nChangedFiles, nAllFiles
+                );
             }
         }
     }

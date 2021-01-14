@@ -35,9 +35,6 @@
 #include <cassert>
 #include <fstream>
 
-#ifdef WIN32
-#pragma warning (disable : 4996)
-#endif // WIN32
 namespace {
     std::string_view bakeFunctionForType(std::string_view type) {
         assert(!type.empty());
@@ -501,7 +498,7 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 )",
         name
     );
-    int n = (out - Buf.data());
+    int n = static_cast<int>(out - Buf.data());
 
     std::memmove(
         VerifierResultBase + n,
@@ -601,8 +598,7 @@ void finalizeConverter(State& state) {
     std::memcpy(ConverterResultBase, base, preambleSize);
     ConverterResult += preambleSize;
 
-    int n = sprintf(ConverterResult, "} // namespace codegen\n");
-    ConverterResult += n;
+    ConverterResult = fmt::format_to(ConverterResult, "}} // namespace codegen\n");
 }
 
 void handleFile(std::filesystem::path path) {
