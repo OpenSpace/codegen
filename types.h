@@ -49,7 +49,7 @@ struct Variable {
 
     std::string comment;
 
-    using Attributes = std::unordered_map<std::string_view, std::string_view>;
+    using Attributes = std::map<std::string, std::string, std::less<>>;
     Attributes attributes;
 };
 

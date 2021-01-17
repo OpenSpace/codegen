@@ -89,6 +89,78 @@ namespace {
         return !bake.empty();
     }
 
+    std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
+        assert(!types.empty());
+
+        std::vector<std::string_view> res;
+
+        size_t base = 0;
+        size_t cursor = 0;
+        do {
+            cursor++;
+            if (types[cursor] == ',' || types[cursor] == '>') {
+                std::string_view subtype = types.substr(base, cursor - base);
+                res.push_back(strip(subtype));
+                base = cursor + 1;
+            }
+        } while (types[cursor] != '>');
+
+        return res;
+    }
+
+    std::vector<std::string> usedTypes(Struct* s) {
+        std::vector<std::string> res;
+        for (Variable* var : s->variables) {
+            std::string_view type = var->type;
+
+            if (startsWith(type, "std::optional<")) {
+                res.push_back("std::optional");
+                type.remove_prefix(std::string_view("std::optional<").size());
+                type.remove_suffix(1);
+
+                if (isBasicType(type)) {
+                    res.push_back(std::string(type));
+                }
+            }
+
+            if (startsWith(type, "std::vector<")) {
+                res.push_back("std::vector");
+                type.remove_prefix(std::string_view("std::vector<").size());
+                type.remove_suffix(1);
+
+                if (isBasicType(type)) {
+                    res.push_back(std::string(type));
+                }
+            }
+
+            if (startsWith(type, "std::variant<")) {
+                res.push_back("std::variant");
+                std::string_view subtype = type.substr(std::string_view("std::variant<").size());
+                std::vector<std::string_view> types = extractTemplateTypeList(subtype);
+
+                for (std::string_view t : types) {
+                    if (isBasicType(t)) {
+                        res.push_back(std::string(t));
+                    }
+                }
+            }
+
+            if (isBasicType(var->type)) {
+                res.push_back(std::string(var->type));
+            }
+        }
+
+        for (StackElement* e : s->children) {
+            if (e->type != StackElement::Type::Struct)  continue;
+
+            Struct* s = static_cast<Struct*>(e);
+            std::vector<std::string> t = usedTypes(s);
+            res.insert(res.end(), t.begin(), t.end());
+        }
+
+        return res;
+    }
+
     std::string resolveComment(std::string comment) {
         if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
             const size_t l = std::string_view("codegen::description").size();
@@ -125,28 +197,7 @@ namespace {
         }
         return comment;
     }
-
-    std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
-        assert(!types.empty());
-
-        std::vector<std::string_view> res;
-
-        size_t base = 0;
-        size_t cursor = 0;
-        do {
-            cursor++;
-            if (types[cursor] == ',' || types[cursor] == '>') {
-                std::string_view subtype = types.substr(base, cursor - base);
-                res.push_back(strip(subtype));
-                base = cursor + 1;
-            }
-        } while (types[cursor] != '>');
-
-        return res;
-    }
-
 } // namespace
-
 
 std::string verifier(std::string_view type, const Variable& variable, Struct* currentStruct) {
     assert(!type.empty());
@@ -233,58 +284,6 @@ void handleStructStart(Struct* s) {
     }
 }
 
-std::vector<std::string> usedTypes(Struct* s) {
-    std::vector<std::string> res;
-    for (Variable* var : s->variables) {
-        std::string_view type = var->type;
-
-        if (startsWith(type, "std::optional<")) {
-            res.push_back("std::optional");
-            type.remove_prefix(std::string_view("std::optional<").size());
-            type.remove_suffix(1);
-
-            if (isBasicType(type)) {
-                res.push_back(std::string(type));
-            }
-        }
-
-        if (startsWith(type, "std::vector<")) {
-            res.push_back("std::vector");
-            type.remove_prefix(std::string_view("std::vector<").size());
-            type.remove_suffix(1);
-
-            if (isBasicType(type)) {
-                res.push_back(std::string(type));
-            }
-        }
-
-        if (startsWith(type, "std::variant<")) {
-            res.push_back("std::variant");
-            std::string_view subtype = type.substr(std::string_view("std::variant<").size());
-            std::vector<std::string_view> types = extractTemplateTypeList(subtype);
-
-            for (std::string_view t : types) {
-                if (isBasicType(t)) {
-                    res.push_back(std::string(t));
-                }
-            }
-        }
-
-        if (isBasicType(var->type)) {
-            res.push_back(std::string(var->type));
-        }
-    }
-
-    for (StackElement* e : s->children) {
-        if (e->type != StackElement::Type::Struct)  continue;
-
-        Struct* s = static_cast<Struct*>(e);
-        std::vector<std::string> t = usedTypes(s);
-        res.insert(res.end(), t.begin(), t.end());
-    }
-
-    return res;
-}
 
 void handleStructEnd(Struct* s) {
     std::string name = fqn(s, "::");
@@ -410,8 +409,6 @@ void handleEnumEnd() {
     VerifierResult -= 1;
 
     VerifierResult = fmt::format_to(VerifierResult, "}});\n");
-
-
     ConverterResult = fmt::format_to(ConverterResult, "}}\n");
 }
 
@@ -602,6 +599,8 @@ void finalizeConverter(Struct* rootStruct) {
     ConverterResult = fmt::format_to(ConverterResult, "}} // namespace codegen\n");
 }
 
+void exportResult(Struct* s, std::filesystem::path path, std::filesystem::path destination);
+
 void handleFile(std::filesystem::path path) {
     std::string res;
     {
@@ -637,9 +636,9 @@ void handleFile(std::filesystem::path path) {
     if (size_t p = res.find(destination.filename().string());
         p == std::string_view::npos)
     {
-        throw std::runtime_error(
-            "File does not include the generated file. This was probably a mistake"
-        );
+        //throw std::runtime_error(
+        //    "File does not include the generated file. This was probably a mistake"
+        //);
     }
 
     auto it = std::find_if(
@@ -817,6 +816,12 @@ void handleFile(std::filesystem::path path) {
     newContent += std::string(VerifierResultBase, VerifierResult - VerifierResultBase);
     newContent += std::string(ConverterResultBase, ConverterResult - ConverterResultBase);
 
+    std::filesystem::path dd = path;
+    dd.replace_extension();
+    dd.replace_filename(dd.filename().string() + "_codegen_previous.cpp");
+
+    exportResult(rootStruct, path, destination);
+
     if (PrintMemoryUsage) {
         print(
             "Memory usage:   Converter(%5lli/%i)   Verifier(%5lli/%i)   Scratch(%5lli/%i)\n",
@@ -850,10 +855,364 @@ void handleFile(std::filesystem::path path) {
         ));
     }
 
+    print("Processed file '%s'\n", path.filename().string().c_str());
     if (shouldWriteFile || AlwaysOutputFiles) {
-        print("Processed file '%s'\n", path.filename().string().c_str());
-        std::ofstream output(destination);
+        std::ofstream output(dd);
         output.write(newContent.c_str(), newContent.size());
         ChangedFiles++;
     }
+}
+
+
+
+char* writeStructDocumentation(char* buffer, Struct* s) {
+    std::string name = "codegen_" + fqn(s, "_");
+    buffer = fmt::format_to(
+        buffer,
+        "    TableVerifier* {} = new TableVerifier;\n",
+        name
+    );
+
+    const bool isRootStruct = s->parent == nullptr;
+    if (isRootStruct && !s->attributes.noTypeCheck) {
+        buffer = fmt::format_to(
+            buffer,
+            "    {}->documentations.push_back({{ \"Type\", new StringEqualVerifier(\"{}\"), Optional::No }});\n",
+            name, s->attributes.dictionary
+        );
+    }
+
+    for (StackElement* e : s->children) {
+        if (e->type == StackElement::Type::Struct) {
+            buffer = writeStructDocumentation(buffer, static_cast<Struct*>(e));
+        }
+        if (e->type == StackElement::Type::Enum) {
+            std::string name = "codegen_" + fqn(e, "_");
+
+            buffer = fmt::format_to(
+                buffer,
+                "    StringInListVerifier* {} = new StringInListVerifier({{", name
+            );
+
+
+            Enum* en = static_cast<Enum*>(e);
+            for (EnumElement* em : en->elements) {
+                // If no key attribute is specified, we use the name instead
+                std::string_view key;
+                if (em->attributes.key.empty()) {
+                    key = em->name;
+                }
+                else {
+                    key = em->attributes.key;
+                }
+
+                buffer = fmt::format_to(buffer, "\"{}\",", key);
+            }
+            // The last element has a , at the end that we can overwrite
+            buffer -= 1;
+
+            buffer = fmt::format_to(buffer, "}});\n");
+        }
+    }
+
+    for (Variable* var : s->variables) {
+        var->comment = resolveComment(var->comment);
+
+        std::string type = var->type;
+        bool isOptional = false;
+        if (startsWith(var->type, "std::optional<")) {
+            isOptional = true;
+            type = var->type.substr(std::string_view("std::optional<").size());
+            type = type.substr(0, type.size() - 1);
+        }
+
+        std::string ver = std::string("codegen_") + fqn(s, "_");
+        std::string v = verifier(type, *var, s);
+        buffer = fmt::format_to(
+            buffer,
+            "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
+            ver, var->key, v,
+            isOptional ? "Optional::Yes" : "Optional::No", var->comment
+        );
+    }
+
+    return buffer;
+}
+
+char* writeStructConverter(char* buffer, Struct* s) {
+    for (Variable* var : s->variables) {
+        if (startsWith(var->type, "std::variant")) {
+            std::string subtypes = var->type.substr(std::string_view("std::variant<").size());
+
+            buffer = fmt::format_to(
+                buffer,
+                "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
+                var->type
+            );
+
+            std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
+            for (std::string_view subtype : ttypes) {
+                buffer = fmt::format_to(
+                    buffer,
+                    "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
+                    subtype
+                );
+            }
+
+            buffer = fmt::format_to(buffer, "}}");
+        }
+    }
+
+
+    for (StackElement* e : s->children) {
+        if (e->type == StackElement::Type::Struct) {
+            buffer = writeStructConverter(buffer, static_cast<Struct*>(e));
+        }
+
+        if (e->type == StackElement::Type::Enum) {
+            std::string type = fqn(e, "::");
+            buffer = fmt::format_to(
+                buffer,
+                "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
+                "    std::string v = d.value<std::string>(key);\n",
+                type
+            );
+
+            for (EnumElement* elem : static_cast<Enum*>(e)->elements) {
+                std::string_view key;
+                if (elem->attributes.key.empty()) {
+                    key = elem->name;
+                }
+                else {
+                    key = elem->attributes.key;
+                }
+
+                std::string type = fqn(e, "::");
+                buffer = fmt::format_to(
+                    buffer,
+                    "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
+                    key, type, elem->name
+                );
+            }
+
+            buffer = fmt::format_to(buffer, "}}\n");
+
+        }
+    }
+
+    if (s->parent == nullptr) {
+        return buffer;
+    }
+
+    std::string name = fqn(s, "::");
+    buffer = fmt::format_to(
+        buffer,
+        "template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{\n"
+        "    {0}& res = *val;\n"
+        "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
+        name
+    );
+
+    for (Variable* var : s->variables) {
+        buffer = fmt::format_to(
+            buffer,
+            "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
+        );
+    }
+
+    buffer = fmt::format_to(buffer, "}}\n");
+
+    return buffer;
+}
+
+void exportResult(Struct* s, std::filesystem::path path, std::filesystem::path destination) {
+    std::vector<char> storage;
+    storage.resize(BufferSize);
+
+    char* base = storage.data();
+    char* buffer = base;
+
+    buffer = fmt::format_to(buffer, fileHeader, path.filename().string());
+
+    std::string name;
+    if (s->attributes.namespaceSpecifier.empty()) {
+        name = fmt::format("openspace::{}", s->attributes.dictionary);
+    }
+    else {
+        name = fmt::format(
+            "openspace::{}::{}",
+            s->attributes.namespaceSpecifier,
+            s->attributes.dictionary
+        );
+    }
+    buffer = fmt::format_to(
+        buffer,
+        R"(
+namespace codegen {{
+template <typename T> openspace::documentation::Documentation doc() {{
+    static_assert(sizeof(T) == 0); // This should never be called
+    return openspace::documentation::Documentation();
+}}
+template <> openspace::documentation::Documentation doc<{}>() {{
+    using namespace openspace::documentation;
+)",
+        name
+    );
+
+    buffer = writeStructDocumentation(buffer, s);
+    buffer = fmt::format_to(
+        buffer,
+        R"(
+    openspace::documentation::Documentation d = {{ "{0}", "{0}", std::move({1}->documentations) }};
+    delete {1};
+    return d;
+}}
+}} // namespace codegen
+
+)",
+    s->attributes.dictionary,
+    fmt::format("codegen_{}", s->name)
+);
+
+    std::string_view preamble = bakeFunctionPreamble;
+    std::memcpy(buffer, preamble.data(), preamble.size());
+    buffer += preamble.size();
+
+    //buffer = writeStructConverter(buffer, s);
+
+
+
+
+    // For Linux, we need to delcare the functions in the following order or the overload
+    // resolution picks the top fall back implentation and triggers a static_assert:
+    // 1. <typename T> bakeTo(..., T*) { static_assert(false); } // fallback
+    // 2. bakeTo(..., T*) {...} for T=base types
+    // 3. <typename T> bakeTo(..., std::optional<T>*)   declaration only
+    // 4. <typename T> bakeTo(..., std::vector<T>*)   declaration only
+    // 5. <typename T> bakeTo(..., T*) {...}  for T=custom structs
+    // 6. <typename T> bakeTo(..., std::optional<T>*) {...}   definition
+    // 7. <typename T> bakeTo(..., std::vector<T>*) {...}   definition
+    //
+    // Reason:  When going through the custom structs, they need to know that there will
+    // be implementatinos for the optional and vector types or otherwise they will trip
+    // the fall back.  However, the actual implementation needs to know about the custom
+    // struct one or else *they* will trip the fall back in the implementation.
+    // For ease of implementation, we are putting 3&4 before 2 instead
+
+    std::vector<std::string> types = usedTypes(s);
+    std::sort(types.begin(), types.end());
+    types.erase(std::unique(types.begin(), types.end()), types.end());
+
+    if (auto it = std::find(types.begin(), types.end(), "std::optional");
+        it != types.end())
+    {
+        std::string_view decl = BakeFunctionOptionalDeclaration;
+        std::memcpy(buffer, decl.data(), decl.size());
+        buffer += decl.size();
+    }
+    if (auto it = std::find(types.begin(), types.end(), "std::vector");
+        it != types.end())
+    {
+        std::string_view decl = BakeFunctionVectorDeclaration;
+        std::memcpy(buffer, decl.data(), decl.size());
+        buffer += decl.size();
+    }
+
+    std::vector<std::string> firstPhaseTypes = types;
+    auto itOptional = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::optional");
+    if (itOptional != firstPhaseTypes.end()) {
+        firstPhaseTypes.erase(itOptional);
+    }
+    auto itVector = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::vector");
+    if (itVector != firstPhaseTypes.end()) {
+        firstPhaseTypes.erase(itVector);
+    }
+
+    for (const std::string& t : firstPhaseTypes) {
+        std::string_view bake = bakeFunctionForType(t);
+        if (!bake.empty()) {
+            // The return value is empty for types that don't have a
+            // preamble-defined bake functions, like all custom structs
+            std::memcpy(buffer, bake.data(), bake.size());
+            buffer += bake.size();
+        }
+    }
+
+
+
+
+
+    buffer = writeStructConverter(buffer, s);
+
+
+    std::string fqName;
+    if (s->attributes.namespaceSpecifier.empty()) {
+        fqName = fmt::format("openspace::{}", s->attributes.dictionary);
+    }
+    else {
+        fqName = fmt::format(
+            "openspace::{}::{}",
+            s->attributes.namespaceSpecifier,
+            s->attributes.dictionary
+        );
+    }
+
+    for (const std::string& type : types) {
+        if (type != "std::vector" && type != "std::optional")  continue;
+
+        std::string_view bake = bakeFunctionForType(type);
+        assert(!bake.empty());
+        // The return value is empty for types that don't have a
+        // preamble-defined bake functions, like all custom structs
+        std::memcpy(buffer, bake.data(), bake.size());
+        buffer += bake.size();
+    }
+
+    // This is the last struct to be closed, so it is the struct that the user will
+    // ask for
+    buffer = fmt::format_to(
+        buffer,
+        R"(
+}} // namespace internal
+
+template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
+template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<{1}>(), dict, "{2}");
+    {0} res;
+)",
+        s->name,
+        fqName,
+        s->attributes.dictionary
+    );
+
+    for (Variable* var : s->variables) {
+        buffer = fmt::format_to(
+            buffer,
+            "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
+        );
+    }
+
+    buffer = fmt::format_to(buffer, "    return res;\n}}\n");
+
+
+    //long long preambleSize = ScratchSpace - base;
+
+    //std::memmove(
+    //    ConverterResultBase + preambleSize,
+    //    ConverterResultBase,
+    //    ConverterResult - ConverterResultBase
+    //);
+    //std::memcpy(ConverterResultBase, base, preambleSize);
+    //ConverterResult += preambleSize;
+
+    buffer = fmt::format_to(buffer, "}} // namespace codegen\n");
+
+
+
+
+
+
+
+    std::ofstream f(destination);
+    f.write(base, buffer - base);
 }
