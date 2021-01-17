@@ -57,11 +57,8 @@ struct Variable {
 struct Struct : public StackElement {
     Struct() { type = StackElement::Type::Struct; }
 
-
     std::vector<StackElement*> children;
     std::vector<Variable*> variables;
-
-    std::string converter;
 
     struct Attributes {
         std::string_view dictionary;

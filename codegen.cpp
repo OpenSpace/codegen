@@ -156,11 +156,9 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
     std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
     
     if (!v.empty()) {
-        //state.typeUsage[std::string(type)] = true;
         return std::string("new ") + v;
     }
     else if (startsWith(type, "std::vector<")) {
-        //state.typeUsage["std::vector"] = true;
         std::string_view subtype = type.substr(std::string_view("std::vector<").size());
         subtype.remove_suffix(1);
 
@@ -184,8 +182,6 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
         return std::string(base, ScratchSpace);
     }
     else if (startsWith(type, "std::variant<")) {
-        //state.typeUsage["std::variant"] = true;
-
         std::string_view subtypes = type.substr(std::string_view("std::variant<").size());
         if (subtypes.find('>') == std::string_view::npos) {
             throw std::runtime_error(fmt::format(
@@ -348,10 +344,12 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
         );
     }
 
-
-    std::memcpy(ConverterResult, s->converter.data(), s->converter.size());
-    ConverterResult += s->converter.size();
-
+    for (Variable* var : s->variables) {
+        ConverterResult = fmt::format_to(
+            ConverterResult,
+            "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
+        );
+    }
 
 
     if (!s->attributes.noExhaustive) {
@@ -455,14 +453,6 @@ void handleVariable(Variable var, Struct* s) {
 
 
     // Converter
-    char* out = fmt::format_to(
-        ScratchSpace,
-        "    internal::bakeTo(dict, \"{}\", &res.{});\n",
-        var.key, var.name
-    );
-    s->converter += std::string(ScratchSpace, out);
-    ScratchSpace = out;
-
     if (startsWith(var.type, "std::variant")) {
         std::string subtypes = var.type.substr(std::string_view("std::variant<").size());
 
