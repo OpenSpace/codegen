@@ -40,9 +40,20 @@ struct StackElement {
     Struct* parent = nullptr;
 };
 
+
+struct Variable {
+    std::string_view type;
+    std::string_view name;
+
+    using Attributes = std::unordered_map<std::string_view, std::string_view>;
+    Attributes attributes;
+};
+
+
 struct Struct : public StackElement {
     Struct() { type = StackElement::Type::Struct; }
 
+    std::vector<Variable> variables;
 
     struct Attributes {
         std::string_view dictionary;
@@ -55,7 +66,7 @@ struct Struct : public StackElement {
     std::vector<StackElement*> children;
 };
 
-//Struct* rootStruct(Struct* s);
+Struct* rootStruct(Struct* s);
 const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
@@ -70,14 +81,6 @@ struct EnumElement {
     struct Attributes {
         std::string_view key;
     };
-    Attributes attributes;
-};
-
-struct Variable {
-    std::string_view type;
-    std::string_view name;
-
-    using Attributes = std::unordered_map<std::string_view, std::string_view>;
     Attributes attributes;
 };
 

@@ -142,10 +142,12 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 }
 
 
-std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* rootStruct, Struct* currentStuct) {
+std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* currentStuct) {
     assert(!type.empty());
 
-    std::string v = verifierForType(type, variable.attributes, rootStruct->attributes.dictionary);
+    Struct* root = rootStruct(currentStuct);
+
+    std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
     
     if (!v.empty()) {
         state.typeUsage[std::string(type)] = true;
@@ -161,7 +163,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
             comments = resolveComment(it->second);
         }
 
-        std::string ver = verifier(subtype, variable, state, rootStruct, currentStuct);
+        std::string ver = verifier(subtype, variable, state, currentStuct);
         char* base = ScratchSpace;
 
         char* out = fmt::format_to(
@@ -189,7 +191,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, state, rootStruct, currentStuct);
+            std::string ver = verifier(subtype, variable, state, currentStuct);
             ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
@@ -210,7 +212,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
     }
 }
 
-void handleStructStart(Struct* s, bool isRootStruct) {
+void handleStructStart(Struct* s) {
     std::string name = "codegen_" + fqn(s, "_");
     VerifierResult = fmt::format_to(
         VerifierResult,
@@ -218,6 +220,7 @@ void handleStructStart(Struct* s, bool isRootStruct) {
         name
     );
 
+    const bool isRootStruct = s->parent == nullptr;
     if (isRootStruct && !s->attributes.noTypeCheck) {
         VerifierResult = fmt::format_to(
             VerifierResult,
@@ -227,8 +230,9 @@ void handleStructStart(Struct* s, bool isRootStruct) {
     }
 }
 
-void handleStructEnd(State& state, Struct* s, bool isRootStruct) {
+void handleStructEnd(State& state, Struct* s) {
     std::string name = fqn(s, "::");
+    const bool isRootStruct = s->parent == nullptr;
     if (isRootStruct) {
         std::string fqName;
         if (s->attributes.namespaceSpecifier.empty()) {
@@ -376,7 +380,7 @@ void handleEnumValue(EnumElement element, const std::vector<StackElement*>& stac
     );
 }
 
-void handleVariable(Variable var, State& state, Struct* s, Struct* rootStruct) {
+void handleVariable(Variable var, State& state, Struct* s) {
     std::string ver = std::string("codegen_") + fqn(s, "_");
 
     std::string variableName;
@@ -399,7 +403,7 @@ void handleVariable(Variable var, State& state, Struct* s, Struct* rootStruct) {
         var.type.remove_suffix(1);
     }
 
-    std::string v = verifier(var.type, var, state, rootStruct, s);
+    std::string v = verifier(var.type, var, state, s);
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
@@ -700,8 +704,7 @@ void handleFile(std::filesystem::path path) {
                     rootStruct = s;
                 }
 
-                const bool isRootStruct = (s == rootStruct);
-                handleStructStart(s, isRootStruct);
+                handleStructStart(s);
                 continue;
             }
 
@@ -729,11 +732,7 @@ void handleFile(std::filesystem::path path) {
                 StackElement* e = stack.back();
                 switch (e->type) {
                     case StackElement::Type::Struct:
-                        handleStructEnd(
-                            state,
-                            static_cast<Struct*>(e),
-                            e == rootStruct
-                        );
+                        handleStructEnd(state, static_cast<Struct*>(e));
                         break;
                     case StackElement::Type::Enum:
                         handleEnumEnd();
@@ -760,12 +759,13 @@ void handleFile(std::filesystem::path path) {
                 }
                 if (state.variableBuffer.empty()) {
                     Variable var = parseVariable(line);
-                    handleVariable(var, state, static_cast<Struct*>(e), rootStruct);
+                    static_cast<Struct*>(e)->variables.push_back(var);
+                    handleVariable(var, state, static_cast<Struct*>(e));
                 }
                 else {
                     state.variableBuffer += std::string(line);
                     Variable var = parseVariable(state.variableBuffer);
-                    handleVariable(var, state, static_cast<Struct*>(e), rootStruct);
+                    handleVariable(var, state, static_cast<Struct*>(e));
                     state.variableBuffer.clear();
                 }
                 break;
