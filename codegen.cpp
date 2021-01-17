@@ -142,7 +142,7 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 }
 
 
-std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
+std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* rootStruct, Struct* currentStuct) {
     assert(!type.empty());
 
     std::string v = verifierForType(type, variable.attributes, rootStruct->attributes.dictionary);
@@ -161,7 +161,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
             comments = resolveComment(it->second);
         }
 
-        std::string ver = verifier(subtype, variable, state, rootStruct, stack);
+        std::string ver = verifier(subtype, variable, state, rootStruct, currentStuct);
         char* base = ScratchSpace;
 
         char* out = fmt::format_to(
@@ -189,7 +189,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, state, rootStruct, stack);
+            std::string ver = verifier(subtype, variable, state, rootStruct, currentStuct);
             ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
@@ -197,8 +197,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         return std::string(resBase, ScratchSpace - resBase);
     }
     else {
-        Struct* s = static_cast<Struct*>(stack.back());
-        StackElement* e = resolveType(s, type);
+        const StackElement* e = resolveType(currentStuct, type);
         if (!e) {
             throw std::runtime_error(fmt::format(
                 "Unhandled type detected and codegen doesn't know how to handle it: {}",
@@ -207,42 +206,39 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         }
 
         state.typeUsage[std::string(type)] = true;
-        return std::string("codegen_") + fqn(stack.back(), "_") + "_" + std::string(type);
+        return std::string("codegen_") + fqn(currentStuct, "_") + "_" + std::string(type);
     }
 }
 
-void handleStructStart(const Struct& s, State& state, const std::vector<StackElement*>& stack) {
-    std::string name = "codegen_" + fqn(stack.back(), "_");
+void handleStructStart(Struct* s, bool isRootStruct) {
+    std::string name = "codegen_" + fqn(s, "_");
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    TableVerifier* {} = new TableVerifier;\n",
         name
     );
 
-    const bool isRootStruct = stack.size() == 1;
-    if (isRootStruct && !s.attributes.noTypeCheck) {
+    if (isRootStruct && !s->attributes.noTypeCheck) {
         VerifierResult = fmt::format_to(
             VerifierResult,
             "    {}->documentations.push_back({{ \"Type\", new StringEqualVerifier(\"{}\"), Optional::No }});\n",
-            name, s.attributes.dictionary
+            name, s->attributes.dictionary
         );
     }
 }
 
-void handleStructEnd(State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
-    const bool isRootStruct = stack.size() == 1;
-
-    std::string name = fqn(stack.back(), "::");
+void handleStructEnd(State& state, Struct* s, bool isRootStruct) {
+    std::string name = fqn(s, "::");
     if (isRootStruct) {
         std::string fqName;
-        if (rootStruct->attributes.namespaceSpecifier.empty()) {
-            fqName = fmt::format("openspace::{}", rootStruct->attributes.dictionary);
+        if (s->attributes.namespaceSpecifier.empty()) {
+            fqName = fmt::format("openspace::{}", s->attributes.dictionary);
         }
         else {
             fqName = fmt::format(
                 "openspace::{}::{}",
-                rootStruct->attributes.namespaceSpecifier,
-                rootStruct->attributes.dictionary
+                s->attributes.namespaceSpecifier,
+                s->attributes.dictionary
             );
         }
 
@@ -279,7 +275,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 )",
             name,
             fqName,
-            rootStruct->attributes.dictionary
+            s->attributes.dictionary
         );
     }
     else {
@@ -305,9 +301,6 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 
 
 
-    StackElement* elem = stack.back();
-    assert(elem->type == StackElement::Type::Struct);
-    Struct* s = static_cast<Struct*>(elem);
     if (!s->attributes.noExhaustive) {
         std::vector<std::string> variableNames = state.structVariables[name];
         if (!s->attributes.noTypeCheck) {
@@ -339,7 +332,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     }
 }
 
-void handleEnumStart(State& state, const std::vector<StackElement*>& stack) {
+void handleEnumStart(const std::vector<StackElement*>& stack) {
     std::string name = "codegen_" + fqn(stack.back(), "_");
 
     VerifierResult = fmt::format_to(
@@ -357,7 +350,7 @@ void handleEnumStart(State& state, const std::vector<StackElement*>& stack) {
     );
 }
 
-void handleEnumEnd(State& state) {
+void handleEnumEnd() {
     // The last element has a , at the end that we can overwrite
     VerifierResult -= 1;
 
@@ -367,7 +360,7 @@ void handleEnumEnd(State& state) {
     ConverterResult = fmt::format_to(ConverterResult, "}}\n");
 }
 
-void handleEnumValue(EnumElement element, State& state, const std::vector<StackElement*>& stack) {
+void handleEnumValue(EnumElement element, const std::vector<StackElement*>& stack) {
     // If no key attribute is specified, we use the name instead
     if (element.attributes.key.empty()) {
         element.attributes.key = element.name;
@@ -383,8 +376,8 @@ void handleEnumValue(EnumElement element, State& state, const std::vector<StackE
     );
 }
 
-void handleVariable(Variable var, State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
-    std::string ver = std::string("codegen_") + fqn(stack.back(), "_");
+void handleVariable(Variable var, State& state, Struct* s, Struct* rootStruct) {
+    std::string ver = std::string("codegen_") + fqn(s, "_");
 
     std::string variableName;
     if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
@@ -406,7 +399,7 @@ void handleVariable(Variable var, State& state, Struct* rootStruct, const std::v
         var.type.remove_suffix(1);
     }
 
-    std::string v = verifier(var.type, var, state, rootStruct, stack);
+    std::string v = verifier(var.type, var, state, rootStruct, s);
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
@@ -418,7 +411,7 @@ void handleVariable(Variable var, State& state, Struct* rootStruct, const std::v
 
     // Converter
     std::string converter;
-    std::string name = fqn(stack.back(), "::");
+    std::string name = fqn(s, "::");
     if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
         converter = it->second;
     }
@@ -459,7 +452,7 @@ void handleVariable(Variable var, State& state, Struct* rootStruct, const std::v
     }
 }
 
-void finalizeVerifier(State& state, Struct* rootStruct) {
+void finalizeVerifier(Struct* rootStruct) {
     std::string name;
     if (rootStruct->attributes.namespaceSpecifier.empty()) {
         name = fmt::format("openspace::{}", rootStruct->attributes.dictionary);
@@ -707,7 +700,8 @@ void handleFile(std::filesystem::path path) {
                     rootStruct = s;
                 }
 
-                handleStructStart(*s, state, stack);
+                const bool isRootStruct = (s == rootStruct);
+                handleStructStart(s, isRootStruct);
                 continue;
             }
 
@@ -721,7 +715,7 @@ void handleFile(std::filesystem::path path) {
                 state.structComments[std::string(e->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
-                handleEnumStart(state, stack);
+                handleEnumStart(stack);
                 continue;
             }
 
@@ -735,10 +729,14 @@ void handleFile(std::filesystem::path path) {
                 StackElement* e = stack.back();
                 switch (e->type) {
                     case StackElement::Type::Struct:
-                        handleStructEnd(state, rootStruct, stack);
+                        handleStructEnd(
+                            state,
+                            static_cast<Struct*>(e),
+                            e == rootStruct
+                        );
                         break;
                     case StackElement::Type::Enum:
-                        handleEnumEnd(state);
+                        handleEnumEnd();
                         break;
                     default: throw std::logic_error("Unhandled case label");
                 }
@@ -762,22 +760,22 @@ void handleFile(std::filesystem::path path) {
                 }
                 if (state.variableBuffer.empty()) {
                     Variable var = parseVariable(line);
-                    handleVariable(var, state, rootStruct, stack);
+                    handleVariable(var, state, static_cast<Struct*>(e), rootStruct);
                 }
                 else {
                     state.variableBuffer += std::string(line);
                     Variable var = parseVariable(state.variableBuffer);
-                    handleVariable(var, state, rootStruct, stack);
+                    handleVariable(var, state, static_cast<Struct*>(e), rootStruct);
                     state.variableBuffer.clear();
                 }
                 break;
             case StackElement::Type::Enum:
-                handleEnumValue(parseEnumElement(line), state, stack);
+                handleEnumValue(parseEnumElement(line), stack);
                 break;
         }
     }
 
-    if (!rootStruct || rootStruct->name.empty() || rootStruct->attributes.dictionary.empty()) {
+    if (!rootStruct || rootStruct->attributes.dictionary.empty()) {
         throw std::runtime_error(
             "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
         );
@@ -787,7 +785,7 @@ void handleFile(std::filesystem::path path) {
     std::string newContent = std::string(ScratchSpace, out);
     ScratchSpace = out;
 
-    finalizeVerifier(state, rootStruct);
+    finalizeVerifier(rootStruct);
     finalizeConverter(state);
 
     newContent += std::string(VerifierResultBase, VerifierResult - VerifierResultBase);

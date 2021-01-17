@@ -56,7 +56,7 @@ struct Struct : public StackElement {
 };
 
 //Struct* rootStruct(Struct* s);
-StackElement* resolveType(Struct* context, std::string_view type);
+const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
 

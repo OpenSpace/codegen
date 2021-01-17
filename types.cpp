@@ -37,7 +37,7 @@ Struct* rootStruct(Struct* s) {
     return s;
 }
 
-StackElement* resolveType(Struct* context, std::string_view type) {
+const StackElement* resolveType(const Struct* context, std::string_view type) {
     if (context->name == type) {
         return context;
     }
@@ -51,7 +51,7 @@ StackElement* resolveType(Struct* context, std::string_view type) {
 
     // Then check the parent
     if (context->parent) {
-        StackElement* s = resolveType(context->parent, type);
+        const StackElement* s = resolveType(context->parent, type);
         if (s) {
             return s;
         }
