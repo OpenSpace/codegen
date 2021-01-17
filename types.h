@@ -30,7 +30,18 @@
 #include <unordered_map>
 #include <variant>
 
-struct Struct {
+struct Struct;
+
+struct StackElement {
+    enum class Type { Struct, Enum };
+    Type type;
+
+    Struct* parent = nullptr;
+};
+
+struct Struct : public StackElement {
+    Struct() { type = StackElement::Type::Struct; }
+
     std::string_view name;
 
     struct Attributes {
@@ -42,15 +53,10 @@ struct Struct {
     Attributes attributes;
 };
 
-struct Enum {
+struct Enum : public StackElement {
+    Enum() { type = StackElement::Type::Enum; }
+
     std::string_view name;
-};
-
-struct StackElement {
-    enum class Type { Struct, Enum };
-    Type type;
-
-    std::variant<Struct, Enum> payload;
 };
 
 struct EnumElement {
@@ -74,10 +80,10 @@ struct Variable {
 struct State {
     std::string commentBuffer;
     std::string variableBuffer;
-    std::vector<StackElement> stack;
+    std::vector<StackElement*> stack;
 
     std::map<std::string, std::string, std::less<>> structComments;
-    Struct rootStruct;
+    Struct* rootStruct = nullptr;
     std::map<std::string, std::string, std::less<>> structConverters;
     std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
 

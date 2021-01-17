@@ -28,12 +28,15 @@
 #include "settings.h"
 #include "snippets.h"
 #include "storage.h"
+#include "types.h"
 #include "util.h"
 #include "verifier.h"
 #include <fmt/format.h>
 #include <array>
 #include <cassert>
 #include <fstream>
+#include <string>
+#include <vector>
 
 namespace {
     std::string_view bakeFunctionForType(std::string_view type) {
@@ -142,7 +145,7 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 std::string verifier(std::string_view type, const Variable& variable, State& state) {
     assert(!type.empty());
 
-    std::string v = verifierForType(type, variable.attributes, state.rootStruct.attributes.dictionary);
+    std::string v = verifierForType(type, variable.attributes, state.rootStruct->attributes.dictionary);
     
     if (!v.empty()) {
         state.typeUsage[std::string(type)] = true;
@@ -194,13 +197,22 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         return std::string(resBase, ScratchSpace - resBase);
     }
     else {
-        std::vector<StackElement> stack = state.stack;
-        stack.push_back({ StackElement::Type::Struct, Struct { type } });
-        std::string structCandidate = join(stack, "::");
+        std::string stackbase = join(state.stack, "::");
+        std::string structCandidate = stackbase;
+        structCandidate += "::";
+        structCandidate += type;
 
-        stack.pop_back();
-        stack.push_back({ StackElement::Type::Enum, Enum { type } });
-        std::string enumCandidate = join(stack, "::");
+        //std::vector<StackElement> stack = state.stack;
+        //stack.push_back({ StackElement::Type::Struct, Struct { type } });
+        //std::string structCandidate = join(stack, "::");
+
+        std::string enumCandidate = stackbase;
+        enumCandidate += "::";
+        enumCandidate += type;
+
+        //stack.pop_back();
+        //stack.push_back({ StackElement::Type::Enum, Enum { type } });
+        //std::string enumCandidate = join(stack, "::");
 
         auto itStruct = std::find(
             state.structList.begin(), state.structList.end(),
@@ -246,14 +258,14 @@ void handleStructEnd(State& state) {
     std::string name = join(state.stack, "::");
     if (isRootStruct) {
         std::string fqName;
-        if (state.rootStruct.attributes.namespaceSpecifier.empty()) {
-            fqName = fmt::format("openspace::{}", state.rootStruct.attributes.dictionary);
+        if (state.rootStruct->attributes.namespaceSpecifier.empty()) {
+            fqName = fmt::format("openspace::{}", state.rootStruct->attributes.dictionary);
         }
         else {
             fqName = fmt::format(
                 "openspace::{}::{}",
-                state.rootStruct.attributes.namespaceSpecifier,
-                state.rootStruct.attributes.dictionary
+                state.rootStruct->attributes.namespaceSpecifier,
+                state.rootStruct->attributes.dictionary
             );
         }
 
@@ -290,7 +302,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 )",
             name,
             fqName,
-            state.rootStruct.attributes.dictionary
+            state.rootStruct->attributes.dictionary
         );
     }
     else {
@@ -316,12 +328,12 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 
 
 
-    const StackElement& elem = state.stack.back();
-    assert(elem.type == StackElement::Type::Struct);
-    const Struct& s = std::get<Struct>(elem.payload);
-    if (!s.attributes.noExhaustive) {
+    StackElement* elem = state.stack.back();
+    assert(elem->type == StackElement::Type::Struct);
+    Struct* s = static_cast<Struct*>(elem);
+    if (!s->attributes.noExhaustive) {
         std::vector<std::string> variableNames = state.structVariables[name];
-        if (!s.attributes.noTypeCheck) {
+        if (!s->attributes.noTypeCheck) {
             variableNames.push_back("\"Type\"");
         }
 
@@ -472,14 +484,14 @@ void handleVariable(Variable var, State& state) {
 
 void finalizeVerifier(State& state) {
     std::string name;
-    if (state.rootStruct.attributes.namespaceSpecifier.empty()) {
-        name = fmt::format("openspace::{}", state.rootStruct.attributes.dictionary);
+    if (state.rootStruct->attributes.namespaceSpecifier.empty()) {
+        name = fmt::format("openspace::{}", state.rootStruct->attributes.dictionary);
     }
     else {
         name = fmt::format(
             "openspace::{}::{}",
-            state.rootStruct.attributes.namespaceSpecifier,
-            state.rootStruct.attributes.dictionary
+            state.rootStruct->attributes.namespaceSpecifier,
+            state.rootStruct->attributes.dictionary
         );
     }
 
@@ -508,7 +520,7 @@ template <> openspace::documentation::Documentation doc<{}>() {{
     std::memcpy(VerifierResultBase, Buf.data(), n);
     VerifierResult += n;
 
-    std::string rootStruct = fmt::format("codegen_{}", state.rootStruct.name);
+    std::string rootStruct = fmt::format("codegen_{}", state.rootStruct->name);
     VerifierResult = fmt::format_to(
         VerifierResult,
         R"(
@@ -519,8 +531,8 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 }} // namespace codegen
 
 )",
-        state.rootStruct.attributes.dictionary,
-        fmt::format("codegen_{}", state.rootStruct.name)
+        state.rootStruct->attributes.dictionary,
+        fmt::format("codegen_{}", state.rootStruct->name)
     );
 }
 
@@ -686,34 +698,32 @@ void handleFile(std::filesystem::path path) {
             }
 
             if (startsWith(line, "struct")) {
-                Struct s = parseStruct(line);
-                state.stack.push_back({ StackElement::Type::Struct, s });
+                Struct* s = parseStruct(line);
+                state.stack.push_back(s);
                 state.structList.push_back(join(state.stack, "::"));
-                state.structComments[std::string(s.name)] = state.commentBuffer;
+                state.structComments[std::string(s->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
-                if (!s.attributes.dictionary.empty()) {
-                    if (!state.rootStruct.name.empty() ||
-                        !state.rootStruct.attributes.dictionary.empty())
-                    {
+                if (!s->attributes.dictionary.empty()) {
+                    if (state.rootStruct) {
                         throw std::runtime_error(fmt::format(
                             "Only the root struct can have a [[codegen::Dictionary()]] "
                             "attribute, found a second one here:\n{}",
-                            s.name
+                            s->name
                         ));
                     }
                     state.rootStruct = s;
                 }
 
-                handleStructStart(s, state);
+                handleStructStart(*s, state);
                 continue;
             }
 
             if (startsWith(line, "enum class")) {
-                Enum e = parseEnum(line);
-                state.stack.push_back({ StackElement::Type::Enum, e });
+                Enum* e = parseEnum(line);
+                state.stack.push_back(e);
                 state.enumList.push_back(join(state.stack, "::"));
-                state.structComments[std::string(e.name)] = state.commentBuffer;
+                state.structComments[std::string(e->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
                 handleEnumStart(state);
@@ -727,8 +737,8 @@ void handleFile(std::filesystem::path path) {
             }
 
             if (startsWith(line, "};")) {
-                StackElement e = state.stack.back();
-                switch (e.type) {
+                StackElement* e = state.stack.back();
+                switch (e->type) {
                     case StackElement::Type::Struct:
                         handleStructEnd(state);
                         break;
@@ -746,8 +756,8 @@ void handleFile(std::filesystem::path path) {
         // If we got this far, we must be in a variable definition or an enum defintion
         // if the highest stack element is a struct, we are in a variable definition, if
         // the highest stack element is an enum, we are in an enum definition
-        const StackElement& e = state.stack.back();
-        switch (e.type) {
+        StackElement* e = state.stack.back();
+        switch (e->type) {
             case StackElement::Type::Struct:
                 if (line.find(';') == std::string_view::npos) {
                     // No semicolon on this line but we are looking for a variable, so we
@@ -772,7 +782,7 @@ void handleFile(std::filesystem::path path) {
         }
     }
 
-    if (state.rootStruct.name.empty() || state.rootStruct.attributes.dictionary.empty()) {
+    if (state.rootStruct->name.empty() || state.rootStruct->attributes.dictionary.empty()) {
         throw std::runtime_error(
             "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
         );

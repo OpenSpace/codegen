@@ -114,10 +114,10 @@ Variable::Attributes parseAttributes(std::string_view line) {
     return res;
 }
 
-Struct parseStruct(std::string_view line) {
+Struct* parseStruct(std::string_view line) {
     assert(!line.empty());
 
-    Struct s;
+    Struct* s = new Struct;
 
     size_t cursor = line.find(' ');
     assert(line.substr(0, cursor) == "struct");
@@ -130,14 +130,14 @@ Struct parseStruct(std::string_view line) {
             beginAttribute,
             endAttribute - beginAttribute
         );
-        s.attributes.dictionary = parseAttribute(block, "Dictionary");
-        if (s.attributes.dictionary.empty()) {
+        s->attributes.dictionary = parseAttribute(block, "Dictionary");
+        if (s->attributes.dictionary.empty()) {
             throw std::runtime_error(
                 fmt::format("No name specified for root struct:\n{}", line)
             );
         }
 
-        s.attributes.namespaceSpecifier = parseAttribute(block, "namespace");
+        s->attributes.namespaceSpecifier = parseAttribute(block, "namespace");
         cursor = endAttribute + 1;
     }
 
@@ -147,14 +147,14 @@ Struct parseStruct(std::string_view line) {
             fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
         );
     }
-    s.name = line.substr(cursor, endStruct - cursor);
+    s->name = line.substr(cursor, endStruct - cursor);
     return s;
 }
 
-Enum parseEnum(std::string_view line) {
+Enum* parseEnum(std::string_view line) {
     assert(!line.empty());
 
-    Enum e;
+    Enum* e = new Enum;
 
     size_t cursor = line.find(' ', line.find(' ') + 1);
     assert(line.substr(0, cursor) == "enum class");
@@ -166,7 +166,7 @@ Enum parseEnum(std::string_view line) {
             fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
         );
     }
-    e.name = line.substr(cursor, endStruct - cursor);
+    e->name = line.substr(cursor, endStruct - cursor);
     return e;
 }
 

@@ -25,22 +25,8 @@
 #ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
 #define __OPENSPACE_CODEGEN___CODEGEN___H__
 
-#include "types.h"
 #include <filesystem>
-#include <string>
-#include <vector>
 
-std::string resolveComment(std::string comment);
-std::vector<std::string_view> extractTemplateTypeList(std::string_view types);
-std::string verifier(std::string_view type, const Variable& variable, State& state);
-void handleStructStart(const Struct& s, State& state);
-void handleStructEnd(State& state);
-void handleEnumStart(State& state);
-void handleEnumEnd(State& state);
-void handleEnumValue(EnumElement element, State& state);
-void handleVariable(Variable var, State& state);
-void finalizeVerifier(State& state);
-void finalizeConverter(State& state);
 void handleFile(std::filesystem::path path);
 
 #endif // __OPENSPACE_CODEGEN___CODEGEN___H__
