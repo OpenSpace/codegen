@@ -43,8 +43,8 @@ struct StackElement {
 
 
 struct Variable {
-    std::string_view type;
-    std::string_view name;
+    std::string type;
+    std::string name;
     std::string key;
 
     std::string comment;
@@ -90,12 +90,6 @@ struct Enum : public StackElement {
     Enum() { type = StackElement::Type::Enum; }
 
     std::vector<EnumElement*> elements;
-};
-
-
-
-struct State {
-    std::map<std::string, bool, std::less<>> typeUsage;
 };
 
 #endif // __OPENSPACE_CODEGEN___TYPES___H__

@@ -83,66 +83,72 @@ namespace {
         return it != BakeFunctions.end() ? it->second : std::string_view();
     }
 
+    bool isBasicType(std::string_view type) {
+        // Stand-in for a list of basic types that are supported
+        std::string_view bake = bakeFunctionForType(type);
+        return !bake.empty();
+    }
+
+    std::string resolveComment(std::string comment) {
+        if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
+            const size_t l = std::string_view("codegen::description").size();
+            it += l;
+            if (comment[it] != '(') {
+                throw std::runtime_error(
+                    fmt::format(
+                        "Malformed codegen::description. Expected ( after token:\n{}", comment
+                    )
+                );
+            }
+            it++;
+            size_t end = comment.find(')', it);
+            std::string identifier = comment.substr(it, end - it);
+            comment = identifier + ".description";
+        }
+        else {
+            if (size_t it = comment.find('"');
+                it != std::string::npos && comment[it - 1] != '\\')
+            {
+                throw std::runtime_error(
+                    fmt::format(
+                        "Discovered unallowed unescaped \" in comment line:\n{}", comment
+                    )
+                );
+            }
+
+            // We add artificial spaces between the multiline comments, which causes there to
+            // be a stray space at the end
+            if (!comment.empty()) {
+                comment.pop_back();
+            }
+            comment = std::string("\"") + comment + "\"";
+        }
+        return comment;
+    }
+
+    std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
+        assert(!types.empty());
+
+        std::vector<std::string_view> res;
+
+        size_t base = 0;
+        size_t cursor = 0;
+        do {
+            cursor++;
+            if (types[cursor] == ',' || types[cursor] == '>') {
+                std::string_view subtype = types.substr(base, cursor - base);
+                res.push_back(strip(subtype));
+                base = cursor + 1;
+            }
+        } while (types[cursor] != '>');
+
+        return res;
+    }
+
 } // namespace
 
-std::string resolveComment(std::string comment) {
-    if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
-        const size_t l = std::string_view("codegen::description").size();
-        it += l;
-        if (comment[it] != '(') {
-            throw std::runtime_error(
-                fmt::format(
-                    "Malformed codegen::description. Expected ( after token:\n{}", comment
-                )
-            );
-        }
-        it++;
-        size_t end = comment.find(')', it);
-        std::string identifier = comment.substr(it, end - it);
-        comment = identifier + ".description";
-    }
-    else {
-        if (size_t it = comment.find('"');
-            it != std::string::npos && comment[it - 1] != '\\')
-        {
-            throw std::runtime_error(
-                fmt::format(
-                    "Discovered unallowed unescaped \" in comment line:\n{}", comment
-                )
-            );
-        }
 
-        // We add artificial spaces between the multiline comments, which causes there to
-        // be a stray space at the end
-        if (!comment.empty()) {
-            comment.pop_back();
-        }
-        comment = std::string("\"") + comment + "\"";
-    }
-    return comment;
-}
-
-std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
-    assert(!types.empty());
-    
-    std::vector<std::string_view> res;
-
-    size_t base = 0;
-    size_t cursor = 0;
-    do {
-        cursor++;
-        if (types[cursor] == ',' || types[cursor] == '>') {
-            std::string_view subtype = types.substr(base, cursor - base);
-            res.push_back(strip(subtype));
-            base = cursor + 1;
-        }
-    } while (types[cursor] != '>');
-
-    return res;
-}
-
-
-std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* currentStruct) {
+std::string verifier(std::string_view type, const Variable& variable, Struct* currentStruct) {
     assert(!type.empty());
 
     Struct* root = rootStruct(currentStruct);
@@ -150,11 +156,11 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
     std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
     
     if (!v.empty()) {
-        state.typeUsage[std::string(type)] = true;
+        //state.typeUsage[std::string(type)] = true;
         return std::string("new ") + v;
     }
     else if (startsWith(type, "std::vector<")) {
-        state.typeUsage["std::vector"] = true;
+        //state.typeUsage["std::vector"] = true;
         std::string_view subtype = type.substr(std::string_view("std::vector<").size());
         subtype.remove_suffix(1);
 
@@ -165,7 +171,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
             comments = resolveComment(e->comment);
         }
 
-        std::string ver = verifier(subtype, variable, state, currentStruct);
+        std::string ver = verifier(subtype, variable, currentStruct);
         char* base = ScratchSpace;
 
         char* out = fmt::format_to(
@@ -178,7 +184,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         return std::string(base, ScratchSpace);
     }
     else if (startsWith(type, "std::variant<")) {
-        state.typeUsage["std::variant"] = true;
+        //state.typeUsage["std::variant"] = true;
 
         std::string_view subtypes = type.substr(std::string_view("std::variant<").size());
         if (subtypes.find('>') == std::string_view::npos) {
@@ -193,7 +199,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, state, currentStruct);
+            std::string ver = verifier(subtype, variable, currentStruct);
             ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
@@ -209,7 +215,6 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
             ));
         }
 
-        state.typeUsage[std::string(type)] = true;
         return std::string("codegen_") + fqn(currentStruct, "_") + "_" + std::string(type);
     }
 }
@@ -232,7 +237,60 @@ void handleStructStart(Struct* s) {
     }
 }
 
-void handleStructEnd(State& state, Struct* s) {
+std::vector<std::string> usedTypes(Struct* s) {
+    std::vector<std::string> res;
+    for (Variable* var : s->variables) {
+        std::string_view type = var->type;
+
+        if (startsWith(type, "std::optional<")) {
+            res.push_back("std::optional");
+            type.remove_prefix(std::string_view("std::optional<").size());
+            type.remove_suffix(1);
+
+            if (isBasicType(type)) {
+                res.push_back(std::string(type));
+            }
+        }
+
+        if (startsWith(type, "std::vector<")) {
+            res.push_back("std::vector");
+            type.remove_prefix(std::string_view("std::vector<").size());
+            type.remove_suffix(1);
+
+            if (isBasicType(type)) {
+                res.push_back(std::string(type));
+            }
+        }
+
+        if (startsWith(type, "std::variant<")) {
+            res.push_back("std::variant");
+            std::string_view subtype = type.substr(std::string_view("std::variant<").size());
+            std::vector<std::string_view> types = extractTemplateTypeList(subtype);
+
+            for (std::string_view t : types) {
+                if (isBasicType(t)) {
+                    res.push_back(std::string(t));
+                }
+            }
+        }
+
+        if (isBasicType(var->type)) {
+            res.push_back(std::string(var->type));
+        }
+    }
+
+    for (StackElement* e : s->children) {
+        if (e->type != StackElement::Type::Struct)  continue;
+
+        Struct* s = static_cast<Struct*>(e);
+        std::vector<std::string> t = usedTypes(s);
+        res.insert(res.end(), t.begin(), t.end());
+    }
+
+    return res;
+}
+
+void handleStructEnd(Struct* s) {
     std::string name = fqn(s, "::");
     const bool isRootStruct = s->parent == nullptr;
     if (isRootStruct) {
@@ -248,24 +306,20 @@ void handleStructEnd(State& state, Struct* s) {
             );
         }
 
+        std::vector<std::string> types = usedTypes(s);
+        std::sort(types.begin(), types.end());
+        types.erase(std::unique(types.begin(), types.end()), types.end());
 
-        for (const std::pair<const std::string, bool>& kv : state.typeUsage) {
-            assert(kv.second);
-            if (kv.first != "std::vector" && kv.first != "std::optional") {
-                continue;
-            }
-            if (kv.second) {
-                std::string_view bake = bakeFunctionForType(kv.first);
-                if (!bake.empty()) {
-                    // The return value is empty for types that don't have a
-                    // preamble-defined bake functions, like all custom structs
-                    std::memcpy(ConverterResult, bake.data(), bake.size());
-                    ConverterResult += bake.size();
-                }
-            }
+        for (const std::string& type : types) {
+            if (type != "std::vector" && type != "std::optional")  continue;
 
+            std::string_view bake = bakeFunctionForType(type);
+            assert(!bake.empty());
+            // The return value is empty for types that don't have a
+            // preamble-defined bake functions, like all custom structs
+            std::memcpy(ConverterResult, bake.data(), bake.size());
+            ConverterResult += bake.size();
         }
-
 
         // This is the last struct to be closed, so it is the struct that the user will
         // ask for
@@ -293,12 +347,6 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
             name
         );
     }
-
-
-    //auto it = state.structConverters.find(name);
-    //if (it == state.structConverters.end()) {
-    //    throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
-    //}
 
 
     std::memcpy(ConverterResult, s->converter.data(), s->converter.size());
@@ -385,19 +433,19 @@ void handleEnumValue(EnumElement element, const std::vector<StackElement*>& stac
     );
 }
 
-void handleVariable(Variable var, State& state, Struct* s) {
+void handleVariable(Variable var, Struct* s) {
     var.comment = resolveComment(var.comment);
 
     bool isOptional = false;
     if (startsWith(var.type, "std::optional<")) {
         isOptional = true;
-        state.typeUsage["std::optional"] = true;
-        var.type.remove_prefix(std::string_view("std::optional<").size());
-        var.type.remove_suffix(1);
+        //state.typeUsage["std::optional"] = true;
+        var.type = var.type.substr(std::string_view("std::optional<").size());
+        var.type = var.type.substr(0, var.type.size() - 1);
     }
 
     std::string ver = std::string("codegen_") + fqn(s, "_");
-    std::string v = verifier(var.type, var, state, s);
+    std::string v = verifier(var.type, var, s);
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
@@ -416,7 +464,7 @@ void handleVariable(Variable var, State& state, Struct* s) {
     ScratchSpace = out;
 
     if (startsWith(var.type, "std::variant")) {
-        std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());
+        std::string subtypes = var.type.substr(std::string_view("std::variant<").size());
 
         ConverterResult = fmt::format_to(
             ConverterResult,
@@ -490,7 +538,7 @@ template <> openspace::documentation::Documentation doc<{}>() {{
     );
 }
 
-void finalizeConverter(State& state) {
+void finalizeConverter(Struct* rootStruct) {
     char* base = ScratchSpace;
     std::string_view preamble = bakeFunctionPreamble;
     std::memcpy(ScratchSpace, preamble.data(), preamble.size());
@@ -512,45 +560,42 @@ void finalizeConverter(State& state) {
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    if (auto it = state.typeUsage.find("std::optional");
-        it != state.typeUsage.end() && it->second)
+    std::vector<std::string> types = usedTypes(rootStruct);
+    std::sort(types.begin(), types.end());
+    types.erase(std::unique(types.begin(), types.end()), types.end());
+
+    if (auto it = std::find(types.begin(), types.end(), "std::optional");
+        it != types.end())
     {
         std::string_view decl = BakeFunctionOptionalDeclaration;
         std::memcpy(ScratchSpace, decl.data(), decl.size());
         ScratchSpace += decl.size();
     }
-    if (auto it = state.typeUsage.find("std::vector");
-        it != state.typeUsage.end() && it->second)
+    if (auto it = std::find(types.begin(), types.end(), "std::vector");
+        it != types.end())
     {
         std::string_view decl = BakeFunctionVectorDeclaration;
         std::memcpy(ScratchSpace, decl.data(), decl.size());
         ScratchSpace += decl.size();
     }
 
-
-    std::map<std::string, bool, std::less<>> firstPhaseType = state.typeUsage;
-    firstPhaseType.erase("std::optional");
-    firstPhaseType.erase("std::vector");
-
-    std::map<std::string, bool, std::less<>> secondPhaseType;
-    if (state.typeUsage.find("std::vector") != state.typeUsage.end()) {
-        secondPhaseType["std::vector"] = state.typeUsage["std::vector"];
+    std::vector<std::string> firstPhaseTypes = types;
+    auto itOptional = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::optional");
+    if (itOptional != firstPhaseTypes.end()) {
+        firstPhaseTypes.erase(itOptional);
     }
-    if (state.typeUsage.find("std::optional") != state.typeUsage.end()) {
-        secondPhaseType["std::optional"] = state.typeUsage["std::optional"];
+    auto itVector = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::vector");
+    if (itVector != firstPhaseTypes.end()) {
+        firstPhaseTypes.erase(itVector);
     }
 
-
-    for (const std::pair<const std::string, bool>& kv : firstPhaseType) {
-        assert(kv.second);
-        if (kv.second) {
-            std::string_view bake = bakeFunctionForType(kv.first);
-            if (!bake.empty()) {
-                // The return value is empty for types that don't have a
-                // preamble-defined bake functions, like all custom structs
-                std::memcpy(ScratchSpace, bake.data(), bake.size());
-                ScratchSpace += bake.size();
-            }
+    for (const std::string& t : firstPhaseTypes) {
+        std::string_view bake = bakeFunctionForType(t);
+        if (!bake.empty()) {
+            // The return value is empty for types that don't have a
+            // preamble-defined bake functions, like all custom structs
+            std::memcpy(ScratchSpace, bake.data(), bake.size());
+            ScratchSpace += bake.size();
         }
     }
 
@@ -607,8 +652,6 @@ void handleFile(std::filesystem::path path) {
         );
     }
 
-
-    State state;
     auto it = std::find_if(
         MemoryPool.begin(), MemoryPool.end(),
         [](const Memory& m) { return m.id == std::this_thread::get_id(); }
@@ -717,7 +760,7 @@ void handleFile(std::filesystem::path path) {
                 StackElement* e = stack.back();
                 switch (e->type) {
                     case StackElement::Type::Struct:
-                        handleStructEnd(state, static_cast<Struct*>(e));
+                        handleStructEnd(static_cast<Struct*>(e));
                         break;
                     case StackElement::Type::Enum:
                         handleEnumEnd();
@@ -747,14 +790,15 @@ void handleFile(std::filesystem::path path) {
                     var->comment = commentBuffer;
                     commentBuffer.clear();
                     static_cast<Struct*>(e)->variables.push_back(var);
-                    handleVariable(*var, state, static_cast<Struct*>(e));
+                    handleVariable(*var, static_cast<Struct*>(e));
                 }
                 else {
                     variableBuffer += std::string(line);
                     Variable* var = parseVariable(variableBuffer);
                     var->comment = commentBuffer;
                     commentBuffer.clear();
-                    handleVariable(*var, state, static_cast<Struct*>(e));
+                    static_cast<Struct*>(e)->variables.push_back(var);
+                    handleVariable(*var, static_cast<Struct*>(e));
                     variableBuffer.clear();
                 }
                 break;
@@ -778,7 +822,7 @@ void handleFile(std::filesystem::path path) {
     ScratchSpace = out;
 
     finalizeVerifier(rootStruct);
-    finalizeConverter(state);
+    finalizeConverter(rootStruct);
 
     newContent += std::string(VerifierResultBase, VerifierResult - VerifierResultBase);
     newContent += std::string(ConverterResultBase, ConverterResult - ConverterResultBase);
