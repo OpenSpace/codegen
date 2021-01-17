@@ -381,8 +381,6 @@ void handleEnumValue(EnumElement element, const std::vector<StackElement*>& stac
 }
 
 void handleVariable(Variable var, State& state, Struct* s) {
-    std::string ver = std::string("codegen_") + fqn(s, "_");
-
     std::string variableName;
     if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
         assert(!it->second.empty());
@@ -403,6 +401,7 @@ void handleVariable(Variable var, State& state, Struct* s) {
         var.type.remove_suffix(1);
     }
 
+    std::string ver = std::string("codegen_") + fqn(s, "_");
     std::string v = verifier(var.type, var, state, s);
     VerifierResult = fmt::format_to(
         VerifierResult,
@@ -654,6 +653,8 @@ void handleFile(std::filesystem::path path) {
 
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
+    
+    std::string variableBuffer;
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
@@ -664,7 +665,7 @@ void handleFile(std::filesystem::path path) {
 
         // If the variable buffer is filled, then we are in a continuation of a variable
         // definition
-        if (state.variableBuffer.empty()) {
+        if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
                 std::string_view comment = parseCommentLine(line);
                 state.commentBuffer.append(comment);
@@ -754,19 +755,19 @@ void handleFile(std::filesystem::path path) {
                 if (line.find(';') == std::string_view::npos) {
                     // No semicolon on this line but we are looking for a variable, so we
                     // are in a definition line that spans multiple lines
-                    state.variableBuffer += std::string(line) + " ";
+                    variableBuffer += std::string(line) + " ";
                     continue;
                 }
-                if (state.variableBuffer.empty()) {
+                if (variableBuffer.empty()) {
                     Variable var = parseVariable(line);
                     static_cast<Struct*>(e)->variables.push_back(var);
                     handleVariable(var, state, static_cast<Struct*>(e));
                 }
                 else {
-                    state.variableBuffer += std::string(line);
-                    Variable var = parseVariable(state.variableBuffer);
+                    variableBuffer += std::string(line);
+                    Variable var = parseVariable(variableBuffer);
                     handleVariable(var, state, static_cast<Struct*>(e));
-                    state.variableBuffer.clear();
+                    variableBuffer.clear();
                 }
                 break;
             case StackElement::Type::Enum:

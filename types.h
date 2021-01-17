@@ -45,6 +45,8 @@ struct Variable {
     std::string_view type;
     std::string_view name;
 
+    std::string comment;
+
     using Attributes = std::unordered_map<std::string_view, std::string_view>;
     Attributes attributes;
 };
@@ -87,7 +89,6 @@ struct EnumElement {
 
 struct State {
     std::string commentBuffer;
-    std::string variableBuffer;
 
     std::map<std::string, std::string, std::less<>> structComments;
     std::map<std::string, std::string, std::less<>> structConverters;
