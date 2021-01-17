@@ -22,77 +22,54 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___TYPES___H__
-#define __OPENSPACE_CODEGEN___TYPES___H__
+#include "types.h"
 
-#include <string_view>
-#include <map>
-#include <unordered_map>
-#include <variant>
+#include "util.h"
+#include <cassert>
 
-struct Struct;
+Struct* rootStruct(Struct* s) {
+    assert(s);
 
-struct StackElement {
-    enum class Type { Struct, Enum };
-    Type type;
+    while (s->parent) {
+        s = s->parent;
+    }
 
-    std::string_view name;
-    Struct* parent = nullptr;
-};
+    return s;
+}
 
-struct Struct : public StackElement {
-    Struct() { type = StackElement::Type::Struct; }
+StackElement* resolveType(Struct* context, std::string_view type) {
+    if (context->name == type) {
+        return context;
+    }
 
+    // Check the children of the context first
+    for (StackElement* e : context->children) {
+        if (e->name == type) {
+            return e;
+        }
+    }
 
-    struct Attributes {
-        std::string_view dictionary;
-        std::string_view namespaceSpecifier;
-        bool noTypeCheck = true;
-        bool noExhaustive = true;
-    };
-    Attributes attributes;
+    // Then check the parent
+    if (context->parent) {
+        StackElement* s = resolveType(context->parent, type);
+        if (s) {
+            return s;
+        }
+    }
 
-    std::vector<StackElement*> children;
-};
+    // If we got this far, noone knew what to do with the type
+    return nullptr;
+}
 
-//Struct* rootStruct(Struct* s);
-StackElement* resolveType(Struct* context, std::string_view type);
-//std::string fqn(const StackElement* s, std::string_view separator);
+std::string fqn(const StackElement* s, std::string_view separator) {
+    assert(s);
+    assert(!separator.empty());
 
-
-struct Enum : public StackElement {
-    Enum() { type = StackElement::Type::Enum; }
-};
-
-struct EnumElement {
-    std::string_view name;
-
-    struct Attributes {
-        std::string_view key;
-    };
-    Attributes attributes;
-};
-
-struct Variable {
-    std::string_view type;
-    std::string_view name;
-
-    using Attributes = std::unordered_map<std::string_view, std::string_view>;
-    Attributes attributes;
-};
-
-
-struct State {
-    std::string commentBuffer;
-    std::string variableBuffer;
-
-    std::map<std::string, std::string, std::less<>> structComments;
-    std::map<std::string, std::string, std::less<>> structConverters;
-    std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
-
-    std::map<std::string, bool, std::less<>> typeUsage;
-};
-
-
-
-#endif // __OPENSPACE_CODEGEN___TYPES___H__
+    std::vector<std::string_view> names;
+    while (s) {
+        names.push_back(s->name);
+        s = s->parent;
+    }
+    std::reverse(names.begin(), names.end());
+    return join(names, separator);
+}

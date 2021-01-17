@@ -142,10 +142,10 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 }
 
 
-std::string verifier(std::string_view type, const Variable& variable, State& state) {
+std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
     assert(!type.empty());
 
-    std::string v = verifierForType(type, variable.attributes, state.rootStruct->attributes.dictionary);
+    std::string v = verifierForType(type, variable.attributes, rootStruct->attributes.dictionary);
     
     if (!v.empty()) {
         state.typeUsage[std::string(type)] = true;
@@ -161,7 +161,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
             comments = resolveComment(it->second);
         }
 
-        std::string ver = verifier(subtype, variable, state);
+        std::string ver = verifier(subtype, variable, state, rootStruct, stack);
         char* base = ScratchSpace;
 
         char* out = fmt::format_to(
@@ -189,7 +189,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, state);
+            std::string ver = verifier(subtype, variable, state, rootStruct, stack);
             ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
@@ -197,32 +197,9 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         return std::string(resBase, ScratchSpace - resBase);
     }
     else {
-        std::string stackbase = join(state.stack, "::");
-        std::string structCandidate = stackbase;
-        structCandidate += "::";
-        structCandidate += type;
-
-        //std::vector<StackElement> stack = state.stack;
-        //stack.push_back({ StackElement::Type::Struct, Struct { type } });
-        //std::string structCandidate = join(stack, "::");
-
-        std::string enumCandidate = stackbase;
-        enumCandidate += "::";
-        enumCandidate += type;
-
-        //stack.pop_back();
-        //stack.push_back({ StackElement::Type::Enum, Enum { type } });
-        //std::string enumCandidate = join(stack, "::");
-
-        auto itStruct = std::find(
-            state.structList.begin(), state.structList.end(),
-            structCandidate
-        );
-        auto itEnum = std::find(
-            state.enumList.begin(), state.enumList.end(),
-            enumCandidate
-        );
-        if (itStruct == state.structList.end() && itEnum == state.enumList.end()) {
+        Struct* s = static_cast<Struct*>(stack.back());
+        StackElement* e = resolveType(s, type);
+        if (!e) {
             throw std::runtime_error(fmt::format(
                 "Unhandled type detected and codegen doesn't know how to handle it: {}",
                 type
@@ -230,19 +207,19 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         }
 
         state.typeUsage[std::string(type)] = true;
-        return std::string("codegen_") + join(state.stack, "_") + "_" + std::string(type);
+        return std::string("codegen_") + join(stack, "_") + "_" + std::string(type);
     }
 }
 
-void handleStructStart(const Struct& s, State& state) {
-    std::string name = "codegen_" + join(state.stack, "_");
+void handleStructStart(const Struct& s, State& state, const std::vector<StackElement*>& stack) {
+    std::string name = "codegen_" + join(stack, "_");
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    TableVerifier* {} = new TableVerifier;\n",
         name
     );
 
-    const bool isRootStruct = state.stack.size() == 1;
+    const bool isRootStruct = stack.size() == 1;
     if (isRootStruct && !s.attributes.noTypeCheck) {
         VerifierResult = fmt::format_to(
             VerifierResult,
@@ -252,20 +229,20 @@ void handleStructStart(const Struct& s, State& state) {
     }
 }
 
-void handleStructEnd(State& state) {
-    const bool isRootStruct = state.stack.size() == 1;
+void handleStructEnd(State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
+    const bool isRootStruct = stack.size() == 1;
 
-    std::string name = join(state.stack, "::");
+    std::string name = join(stack, "::");
     if (isRootStruct) {
         std::string fqName;
-        if (state.rootStruct->attributes.namespaceSpecifier.empty()) {
-            fqName = fmt::format("openspace::{}", state.rootStruct->attributes.dictionary);
+        if (rootStruct->attributes.namespaceSpecifier.empty()) {
+            fqName = fmt::format("openspace::{}", rootStruct->attributes.dictionary);
         }
         else {
             fqName = fmt::format(
                 "openspace::{}::{}",
-                state.rootStruct->attributes.namespaceSpecifier,
-                state.rootStruct->attributes.dictionary
+                rootStruct->attributes.namespaceSpecifier,
+                rootStruct->attributes.dictionary
             );
         }
 
@@ -302,7 +279,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 )",
             name,
             fqName,
-            state.rootStruct->attributes.dictionary
+            rootStruct->attributes.dictionary
         );
     }
     else {
@@ -328,7 +305,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 
 
 
-    StackElement* elem = state.stack.back();
+    StackElement* elem = stack.back();
     assert(elem->type == StackElement::Type::Struct);
     Struct* s = static_cast<Struct*>(elem);
     if (!s->attributes.noExhaustive) {
@@ -362,8 +339,8 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     }
 }
 
-void handleEnumStart(State& state) {
-    std::string name = "codegen_" + join(state.stack, "_");
+void handleEnumStart(State& state, const std::vector<StackElement*>& stack) {
+    std::string name = "codegen_" + join(stack, "_");
 
     VerifierResult = fmt::format_to(
         VerifierResult,
@@ -371,7 +348,7 @@ void handleEnumStart(State& state) {
     );
 
 
-    std::string type = join(state.stack, "::");
+    std::string type = join(stack, "::");
     ConverterResult = fmt::format_to(
         ConverterResult,
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
@@ -390,7 +367,7 @@ void handleEnumEnd(State& state) {
     ConverterResult = fmt::format_to(ConverterResult, "}}\n");
 }
 
-void handleEnumValue(EnumElement element, State& state) {
+void handleEnumValue(EnumElement element, State& state, const std::vector<StackElement*>& stack) {
     // If no key attribute is specified, we use the name instead
     if (element.attributes.key.empty()) {
         element.attributes.key = element.name;
@@ -398,7 +375,7 @@ void handleEnumValue(EnumElement element, State& state) {
 
     VerifierResult = fmt::format_to(VerifierResult, "\"{}\",", element.attributes.key);
 
-    std::string type = join(state.stack, "::");
+    std::string type = join(stack, "::");
     ConverterResult = fmt::format_to(
         ConverterResult,
         "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
@@ -406,8 +383,8 @@ void handleEnumValue(EnumElement element, State& state) {
     );
 }
 
-void handleVariable(Variable var, State& state) {
-    std::string ver = std::string("codegen_") + join(state.stack, "_");
+void handleVariable(Variable var, State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
+    std::string ver = std::string("codegen_") + join(stack, "_");
 
     std::string variableName;
     if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
@@ -429,7 +406,7 @@ void handleVariable(Variable var, State& state) {
         var.type.remove_suffix(1);
     }
 
-    std::string v = verifier(var.type, var, state);
+    std::string v = verifier(var.type, var, state, rootStruct, stack);
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
@@ -441,7 +418,7 @@ void handleVariable(Variable var, State& state) {
 
     // Converter
     std::string converter;
-    std::string name = join(state.stack, "::");
+    std::string name = join(stack, "::");
     if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
         converter = it->second;
     }
@@ -482,16 +459,16 @@ void handleVariable(Variable var, State& state) {
     }
 }
 
-void finalizeVerifier(State& state) {
+void finalizeVerifier(State& state, Struct* rootStruct) {
     std::string name;
-    if (state.rootStruct->attributes.namespaceSpecifier.empty()) {
-        name = fmt::format("openspace::{}", state.rootStruct->attributes.dictionary);
+    if (rootStruct->attributes.namespaceSpecifier.empty()) {
+        name = fmt::format("openspace::{}", rootStruct->attributes.dictionary);
     }
     else {
         name = fmt::format(
             "openspace::{}::{}",
-            state.rootStruct->attributes.namespaceSpecifier,
-            state.rootStruct->attributes.dictionary
+            rootStruct->attributes.namespaceSpecifier,
+            rootStruct->attributes.dictionary
         );
     }
 
@@ -520,7 +497,6 @@ template <> openspace::documentation::Documentation doc<{}>() {{
     std::memcpy(VerifierResultBase, Buf.data(), n);
     VerifierResult += n;
 
-    std::string rootStruct = fmt::format("codegen_{}", state.rootStruct->name);
     VerifierResult = fmt::format_to(
         VerifierResult,
         R"(
@@ -531,8 +507,8 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 }} // namespace codegen
 
 )",
-        state.rootStruct->attributes.dictionary,
-        fmt::format("codegen_{}", state.rootStruct->name)
+        rootStruct->attributes.dictionary,
+        fmt::format("codegen_{}", rootStruct->name)
     );
 }
 
@@ -679,6 +655,8 @@ void handleFile(std::filesystem::path path) {
     std::fill(ConverterResultBase, ConverterResultBase + BufferSize - 1, '\0');
     std::fill(ScratchSpaceBase, ScratchSpaceBase + BufferSize - 1, '\0');
 
+    Struct* rootStruct = nullptr;
+    std::vector<StackElement*> stack;
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
@@ -698,35 +676,52 @@ void handleFile(std::filesystem::path path) {
             }
 
             if (startsWith(line, "struct")) {
+                if (!stack.empty() &&
+                    stack.back()->type != StackElement::Type::Struct)
+                {
+                    throw std::runtime_error(fmt::format(
+                        "Struct definition found outside a parent struct.\n{}",
+                        line
+                    ));
+                }
+
                 Struct* s = parseStruct(line);
-                state.stack.push_back(s);
-                state.structList.push_back(join(state.stack, "::"));
+                if (!stack.empty()) {
+                    assert(stack.back()->type == StackElement::Type::Struct);
+                    s->parent = static_cast<Struct*>(stack.back());
+                    s->parent->children.push_back(s);
+                }
+
+                stack.push_back(s);
+                //s->children.push_back(s);
+                //state.structList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(s->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
                 if (!s->attributes.dictionary.empty()) {
-                    if (state.rootStruct) {
+                    if (rootStruct) {
                         throw std::runtime_error(fmt::format(
                             "Only the root struct can have a [[codegen::Dictionary()]] "
                             "attribute, found a second one here:\n{}",
                             s->name
                         ));
                     }
-                    state.rootStruct = s;
+                    rootStruct = s;
                 }
 
-                handleStructStart(*s, state);
+                handleStructStart(*s, state, stack);
                 continue;
             }
 
             if (startsWith(line, "enum class")) {
                 Enum* e = parseEnum(line);
-                state.stack.push_back(e);
-                state.enumList.push_back(join(state.stack, "::"));
+                assert(stack.back()->type == StackElement::Type::Struct);
+                static_cast<Struct*>(stack.back())->children.push_back(e);
+                stack.push_back(e);
                 state.structComments[std::string(e->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
-                handleEnumStart(state);
+                handleEnumStart(state, stack);
                 continue;
             }
 
@@ -737,10 +732,10 @@ void handleFile(std::filesystem::path path) {
             }
 
             if (startsWith(line, "};")) {
-                StackElement* e = state.stack.back();
+                StackElement* e = stack.back();
                 switch (e->type) {
                     case StackElement::Type::Struct:
-                        handleStructEnd(state);
+                        handleStructEnd(state, rootStruct, stack);
                         break;
                     case StackElement::Type::Enum:
                         handleEnumEnd(state);
@@ -748,7 +743,7 @@ void handleFile(std::filesystem::path path) {
                     default: throw std::logic_error("Unhandled case label");
                 }
 
-                state.stack.pop_back();
+                stack.pop_back();
                 continue;
             }
         }
@@ -756,7 +751,7 @@ void handleFile(std::filesystem::path path) {
         // If we got this far, we must be in a variable definition or an enum defintion
         // if the highest stack element is a struct, we are in a variable definition, if
         // the highest stack element is an enum, we are in an enum definition
-        StackElement* e = state.stack.back();
+        StackElement* e = stack.back();
         switch (e->type) {
             case StackElement::Type::Struct:
                 if (line.find(';') == std::string_view::npos) {
@@ -767,22 +762,22 @@ void handleFile(std::filesystem::path path) {
                 }
                 if (state.variableBuffer.empty()) {
                     Variable var = parseVariable(line);
-                    handleVariable(var, state);
+                    handleVariable(var, state, rootStruct, stack);
                 }
                 else {
                     state.variableBuffer += std::string(line);
                     Variable var = parseVariable(state.variableBuffer);
-                    handleVariable(var, state);
+                    handleVariable(var, state, rootStruct, stack);
                     state.variableBuffer.clear();
                 }
                 break;
             case StackElement::Type::Enum:
-                handleEnumValue(parseEnumElement(line), state);
+                handleEnumValue(parseEnumElement(line), state, stack);
                 break;
         }
     }
 
-    if (state.rootStruct->name.empty() || state.rootStruct->attributes.dictionary.empty()) {
+    if (!rootStruct || rootStruct->name.empty() || rootStruct->attributes.dictionary.empty()) {
         throw std::runtime_error(
             "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
         );
@@ -792,7 +787,7 @@ void handleFile(std::filesystem::path path) {
     std::string newContent = std::string(ScratchSpace, out);
     ScratchSpace = out;
 
-    finalizeVerifier(state);
+    finalizeVerifier(state, rootStruct);
     finalizeConverter(state);
 
     newContent += std::string(VerifierResultBase, VerifierResult - VerifierResultBase);

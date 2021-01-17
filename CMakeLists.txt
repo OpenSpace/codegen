@@ -4,12 +4,13 @@ set(FILES
   main.cpp
   codegen.h
   codegen.cpp
-  types.h
   parsing.h
   parsing.cpp
   settings.h
   snippets.h
   storage.h
+  types.h
+  types.cpp
   util.h
   util.cpp
   verifier.h

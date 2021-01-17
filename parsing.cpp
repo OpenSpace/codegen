@@ -24,6 +24,7 @@
 
 #include "types.h"
 
+#include "storage.h"
 #include "util.h"
 #include <fmt/format.h>
 #include <cassert>
@@ -117,7 +118,8 @@ Variable::Attributes parseAttributes(std::string_view line) {
 Struct* parseStruct(std::string_view line) {
     assert(!line.empty());
 
-    Struct* s = new Struct;
+    Struct* s = new (ScratchSpace) Struct;
+    ScratchSpace += sizeof(Struct);
 
     size_t cursor = line.find(' ');
     assert(line.substr(0, cursor) == "struct");
@@ -154,7 +156,8 @@ Struct* parseStruct(std::string_view line) {
 Enum* parseEnum(std::string_view line) {
     assert(!line.empty());
 
-    Enum* e = new Enum;
+    Enum* e = new (ScratchSpace) Enum;
+    ScratchSpace += sizeof(Enum);
 
     size_t cursor = line.find(' ', line.find(' ') + 1);
     assert(line.substr(0, cursor) == "enum class");
