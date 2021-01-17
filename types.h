@@ -88,8 +88,6 @@ struct EnumElement {
 
 
 struct State {
-    std::string commentBuffer;
-
     std::map<std::string, std::string, std::less<>> structComments;
     std::map<std::string, std::string, std::less<>> structConverters;
     std::map<std::string, std::vector<std::string>, std::less<>> structVariables;

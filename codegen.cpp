@@ -391,7 +391,7 @@ void handleVariable(Variable var, State& state, Struct* s) {
         variableName[0] = static_cast<char>(::toupper(variableName[0]));
     }
 
-    state.commentBuffer = resolveComment(state.commentBuffer);
+    var.comment = resolveComment(var.comment);
 
     bool isOptional = false;
     if (startsWith(var.type, "std::optional<")) {
@@ -407,9 +407,8 @@ void handleVariable(Variable var, State& state, Struct* s) {
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
         ver, variableName, v,
-        isOptional ? "Optional::Yes" : "Optional::No", state.commentBuffer
+        isOptional ? "Optional::Yes" : "Optional::No", var.comment
     );
-    state.commentBuffer.clear();
 
 
     // Converter
@@ -655,6 +654,7 @@ void handleFile(std::filesystem::path path) {
     std::vector<StackElement*> stack;
     
     std::string variableBuffer;
+    std::string commentBuffer;
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
@@ -668,8 +668,8 @@ void handleFile(std::filesystem::path path) {
         if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
                 std::string_view comment = parseCommentLine(line);
-                state.commentBuffer.append(comment);
-                state.commentBuffer.append(" ");
+                commentBuffer.append(comment);
+                commentBuffer.append(" ");
                 continue;
             }
 
@@ -691,8 +691,8 @@ void handleFile(std::filesystem::path path) {
                 }
 
                 stack.push_back(s);
-                state.structComments[std::string(s->name)] = state.commentBuffer;
-                state.commentBuffer.clear();
+                state.structComments[std::string(s->name)] = commentBuffer;
+                commentBuffer.clear();
 
                 if (!s->attributes.dictionary.empty()) {
                     if (rootStruct) {
@@ -716,8 +716,8 @@ void handleFile(std::filesystem::path path) {
                 parent->children.push_back(e);
                 e->parent = parent;
                 stack.push_back(e);
-                state.structComments[std::string(e->name)] = state.commentBuffer;
-                state.commentBuffer.clear();
+                state.structComments[std::string(e->name)] = commentBuffer;
+                commentBuffer.clear();
 
                 handleEnumStart(stack);
                 continue;
@@ -760,12 +760,16 @@ void handleFile(std::filesystem::path path) {
                 }
                 if (variableBuffer.empty()) {
                     Variable var = parseVariable(line);
+                    var.comment = commentBuffer;
+                    commentBuffer.clear();
                     static_cast<Struct*>(e)->variables.push_back(var);
                     handleVariable(var, state, static_cast<Struct*>(e));
                 }
                 else {
                     variableBuffer += std::string(line);
                     Variable var = parseVariable(variableBuffer);
+                    var.comment = commentBuffer;
+                    commentBuffer.clear();
                     handleVariable(var, state, static_cast<Struct*>(e));
                     variableBuffer.clear();
                 }
