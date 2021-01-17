@@ -32,7 +32,7 @@
 [[nodiscard]] std::string_view parseCommentLine(std::string_view line);
 [[nodiscard]] Struct* parseStruct(std::string_view line);
 [[nodiscard]] Enum* parseEnum(std::string_view line);
-[[nodiscard]] EnumElement parseEnumElement(std::string_view line);
-[[nodiscard]] Variable parseVariable(std::string_view line);
+[[nodiscard]] EnumElement* parseEnumElement(std::string_view line);
+[[nodiscard]] Variable* parseVariable(std::string_view line);
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

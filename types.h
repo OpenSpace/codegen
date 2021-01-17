@@ -57,7 +57,11 @@ struct Variable {
 struct Struct : public StackElement {
     Struct() { type = StackElement::Type::Struct; }
 
-    std::vector<Variable> variables;
+
+    std::vector<StackElement*> children;
+    std::vector<Variable*> variables;
+
+    std::string converter;
 
     struct Attributes {
         std::string_view dictionary;
@@ -66,11 +70,6 @@ struct Struct : public StackElement {
         bool noExhaustive = true;
     };
     Attributes attributes;
-
-    std::vector<StackElement*> children;
-
-
-    std::string converter;
 };
 
 Struct* rootStruct(Struct* s);
@@ -90,7 +89,7 @@ struct EnumElement {
 struct Enum : public StackElement {
     Enum() { type = StackElement::Type::Enum; }
 
-    std::vector<EnumElement> elements;
+    std::vector<EnumElement*> elements;
 };
 
 

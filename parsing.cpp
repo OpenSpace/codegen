@@ -173,24 +173,26 @@ Enum* parseEnum(std::string_view line) {
     return e;
 }
 
-EnumElement parseEnumElement(std::string_view line) {
+EnumElement* parseEnumElement(std::string_view line) {
     assert(!line.empty());
+
+    EnumElement* e = new (ScratchSpace) EnumElement;
+    ScratchSpace += sizeof(EnumElement);
 
     if (line.back() == ',') {
         line.remove_suffix(1);
     }
 
     size_t i = line.find(' ');
-    EnumElement e;
-    e.name = line.substr(0, i);
+    e->name = line.substr(0, i);
     if (i != std::string_view::npos) {
         std::string_view attributes = line.substr(i + 1);
-        e.attributes.key = parseAttribute(attributes, "key");
+        e->attributes.key = parseAttribute(attributes, "key");
     }
     return e;
 }
 
-Variable parseVariable(std::string_view line) {
+Variable* parseVariable(std::string_view line) {
     assert(!line.empty());
 
     // Remove the trailing ;
@@ -229,22 +231,24 @@ Variable parseVariable(std::string_view line) {
         );
     }
 
-    Variable res;
-    res.type = line.substr(0, p1);
-    res.name = line.substr(p1 + 1, p2 - p1 - 1);
+    Variable* res = new (ScratchSpace) Variable;
+    ScratchSpace += sizeof(Variable);
+
+    res->type = line.substr(0, p1);
+    res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
-        res.attributes = parseAttributes(attributes);
+        res->attributes = parseAttributes(attributes);
     }
 
     std::string variableName;
-    if (auto it = res.attributes.find("key"); it != res.attributes.end()) {
+    if (auto it = res->attributes.find("key"); it != res->attributes.end()) {
         assert(!it->second.empty());
-        res.key = std::string(it->second);
+        res->key = std::string(it->second);
     }
     else {
-        res.key = std::string(res.name);
-        res.key[0] = static_cast<char>(::toupper(res.key[0]));
+        res->key = std::string(res->name);
+        res->key[0] = static_cast<char>(::toupper(res->key[0]));
     }
 
     return res;

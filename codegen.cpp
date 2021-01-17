@@ -309,8 +309,8 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     if (!s->attributes.noExhaustive) {
         // @TODO The correctness of this is not checked as it was not used before
         std::vector<std::string> variableNames;
-        for (const Variable& var : s->variables) {
-            variableNames.push_back("\"" + var.key + "\"");
+        for (Variable* var : s->variables) {
+            variableNames.push_back("\"" + var->key + "\"");
         }
         if (!s->attributes.noTypeCheck) {
             variableNames.push_back("\"Type\"");
@@ -743,24 +743,27 @@ void handleFile(std::filesystem::path path) {
                     continue;
                 }
                 if (variableBuffer.empty()) {
-                    Variable var = parseVariable(line);
-                    var.comment = commentBuffer;
+                    Variable* var = parseVariable(line);
+                    var->comment = commentBuffer;
                     commentBuffer.clear();
                     static_cast<Struct*>(e)->variables.push_back(var);
-                    handleVariable(var, state, static_cast<Struct*>(e));
+                    handleVariable(*var, state, static_cast<Struct*>(e));
                 }
                 else {
                     variableBuffer += std::string(line);
-                    Variable var = parseVariable(variableBuffer);
-                    var.comment = commentBuffer;
+                    Variable* var = parseVariable(variableBuffer);
+                    var->comment = commentBuffer;
                     commentBuffer.clear();
-                    handleVariable(var, state, static_cast<Struct*>(e));
+                    handleVariable(*var, state, static_cast<Struct*>(e));
                     variableBuffer.clear();
                 }
                 break;
-            case StackElement::Type::Enum:
-                handleEnumValue(parseEnumElement(line), stack);
+            case StackElement::Type::Enum: {
+                EnumElement* el = parseEnumElement(line);
+                static_cast<Enum*>(e)->elements.push_back(el);
+                handleEnumValue(*el, stack);
                 break;
+            }
         }
     }
 
