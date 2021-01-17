@@ -98,22 +98,6 @@ std::string join(const std::vector<std::string>& list, std::string_view sep) {
     return res;
 }
 
-std::string join(const std::vector<StackElement*>& list, std::string_view sep) {
-    assert(!sep.empty());
-
-    std::vector<std::string_view> names;
-    names.reserve(list.size());
-    for (StackElement* e : list) {
-        if (e->type == StackElement::Type::Enum) {
-            names.push_back(static_cast<Enum*>(e)->name);
-        }
-        if (e->type == StackElement::Type::Struct) {
-            names.push_back(static_cast<Struct*>(e)->name);
-        }
-    }
-    return join(names, sep);
-}
-
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
     assert(!sv.empty());
     assert(cursor);

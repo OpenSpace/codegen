@@ -66,10 +66,11 @@ std::string fqn(const StackElement* s, std::string_view separator) {
     assert(!separator.empty());
 
     std::vector<std::string_view> names;
-    while (s) {
-        names.push_back(s->name);
+    names.push_back(s->name);
+    while (s->parent) {
         s = s->parent;
-    }
+        names.push_back(s->name);
+    };
     std::reverse(names.begin(), names.end());
     return join(names, separator);
 }

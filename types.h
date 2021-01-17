@@ -57,7 +57,7 @@ struct Struct : public StackElement {
 
 //Struct* rootStruct(Struct* s);
 StackElement* resolveType(Struct* context, std::string_view type);
-//std::string fqn(const StackElement* s, std::string_view separator);
+std::string fqn(const StackElement* s, std::string_view separator);
 
 
 struct Enum : public StackElement {
@@ -92,7 +92,5 @@ struct State {
 
     std::map<std::string, bool, std::less<>> typeUsage;
 };
-
-
 
 #endif // __OPENSPACE_CODEGEN___TYPES___H__

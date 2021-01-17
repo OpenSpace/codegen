@@ -207,12 +207,12 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         }
 
         state.typeUsage[std::string(type)] = true;
-        return std::string("codegen_") + join(stack, "_") + "_" + std::string(type);
+        return std::string("codegen_") + fqn(stack.back(), "_") + "_" + std::string(type);
     }
 }
 
 void handleStructStart(const Struct& s, State& state, const std::vector<StackElement*>& stack) {
-    std::string name = "codegen_" + join(stack, "_");
+    std::string name = "codegen_" + fqn(stack.back(), "_");
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    TableVerifier* {} = new TableVerifier;\n",
@@ -232,7 +232,7 @@ void handleStructStart(const Struct& s, State& state, const std::vector<StackEle
 void handleStructEnd(State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
     const bool isRootStruct = stack.size() == 1;
 
-    std::string name = join(stack, "::");
+    std::string name = fqn(stack.back(), "::");
     if (isRootStruct) {
         std::string fqName;
         if (rootStruct->attributes.namespaceSpecifier.empty()) {
@@ -340,7 +340,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 }
 
 void handleEnumStart(State& state, const std::vector<StackElement*>& stack) {
-    std::string name = "codegen_" + join(stack, "_");
+    std::string name = "codegen_" + fqn(stack.back(), "_");
 
     VerifierResult = fmt::format_to(
         VerifierResult,
@@ -348,7 +348,7 @@ void handleEnumStart(State& state, const std::vector<StackElement*>& stack) {
     );
 
 
-    std::string type = join(stack, "::");
+    std::string type = fqn(stack.back(), "::");
     ConverterResult = fmt::format_to(
         ConverterResult,
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
@@ -375,7 +375,7 @@ void handleEnumValue(EnumElement element, State& state, const std::vector<StackE
 
     VerifierResult = fmt::format_to(VerifierResult, "\"{}\",", element.attributes.key);
 
-    std::string type = join(stack, "::");
+    std::string type = fqn(stack.back(), "::");
     ConverterResult = fmt::format_to(
         ConverterResult,
         "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
@@ -384,7 +384,7 @@ void handleEnumValue(EnumElement element, State& state, const std::vector<StackE
 }
 
 void handleVariable(Variable var, State& state, Struct* rootStruct, const std::vector<StackElement*>& stack) {
-    std::string ver = std::string("codegen_") + join(stack, "_");
+    std::string ver = std::string("codegen_") + fqn(stack.back(), "_");
 
     std::string variableName;
     if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
@@ -418,7 +418,7 @@ void handleVariable(Variable var, State& state, Struct* rootStruct, const std::v
 
     // Converter
     std::string converter;
-    std::string name = join(stack, "::");
+    std::string name = fqn(stack.back(), "::");
     if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
         converter = it->second;
     }
@@ -693,8 +693,6 @@ void handleFile(std::filesystem::path path) {
                 }
 
                 stack.push_back(s);
-                //s->children.push_back(s);
-                //state.structList.push_back(join(state.stack, "::"));
                 state.structComments[std::string(s->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
 
@@ -715,8 +713,10 @@ void handleFile(std::filesystem::path path) {
 
             if (startsWith(line, "enum class")) {
                 Enum* e = parseEnum(line);
-                assert(stack.back()->type == StackElement::Type::Struct);
-                static_cast<Struct*>(stack.back())->children.push_back(e);
+                Struct* parent = static_cast<Struct*>(stack.back());
+                assert(parent->type == StackElement::Type::Struct);
+                parent->children.push_back(e);
+                e->parent = parent;
                 stack.push_back(e);
                 state.structComments[std::string(e->name)] = state.commentBuffer;
                 state.commentBuffer.clear();
