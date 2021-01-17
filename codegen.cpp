@@ -293,14 +293,14 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     }
 
 
-    auto it = state.structConverters.find(name);
-    if (it == state.structConverters.end()) {
-        throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
-    }
+    //auto it = state.structConverters.find(name);
+    //if (it == state.structConverters.end()) {
+    //    throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
+    //}
 
 
-    std::memcpy(ConverterResult, it->second.data(), it->second.size());
-    ConverterResult += it->second.size();
+    std::memcpy(ConverterResult, s->converter.data(), s->converter.size());
+    ConverterResult += s->converter.size();
 
 
 
@@ -405,21 +405,13 @@ void handleVariable(Variable var, State& state, Struct* s) {
 
 
     // Converter
-    std::string converter;
-    std::string name = fqn(s, "::");
-    if (auto it = state.structConverters.find(name); it != state.structConverters.end()) {
-        converter = it->second;
-    }
-
     char* out = fmt::format_to(
         ScratchSpace,
         "    internal::bakeTo(dict, \"{}\", &res.{});\n",
         var.key, var.name
     );
-
-    converter += std::string(ScratchSpace, out);
+    s->converter += std::string(ScratchSpace, out);
     ScratchSpace = out;
-    state.structConverters[name] = converter;
 
     if (startsWith(var.type, "std::variant")) {
         std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());

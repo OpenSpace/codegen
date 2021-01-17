@@ -67,6 +67,9 @@ struct Struct : public StackElement {
     Attributes attributes;
 
     std::vector<StackElement*> children;
+
+
+    std::string converter;
 };
 
 Struct* rootStruct(Struct* s);
@@ -93,8 +96,6 @@ struct Enum : public StackElement {
 
 struct State {
     std::map<std::string, std::string, std::less<>> structComments;
-    std::map<std::string, std::string, std::less<>> structConverters;
-    //std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
 
     std::map<std::string, bool, std::less<>> typeUsage;
 };
