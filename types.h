@@ -44,6 +44,7 @@ struct StackElement {
 struct Variable {
     std::string_view type;
     std::string_view name;
+    std::string key;
 
     std::string comment;
 
@@ -73,10 +74,6 @@ const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
 
-struct Enum : public StackElement {
-    Enum() { type = StackElement::Type::Enum; }
-};
-
 struct EnumElement {
     std::string_view name;
 
@@ -86,11 +83,18 @@ struct EnumElement {
     Attributes attributes;
 };
 
+struct Enum : public StackElement {
+    Enum() { type = StackElement::Type::Enum; }
+
+    std::vector<EnumElement> elements;
+};
+
+
 
 struct State {
     std::map<std::string, std::string, std::less<>> structComments;
     std::map<std::string, std::string, std::less<>> structConverters;
-    std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
+    //std::map<std::string, std::vector<std::string>, std::less<>> structVariables;
 
     std::map<std::string, bool, std::less<>> typeUsage;
 };

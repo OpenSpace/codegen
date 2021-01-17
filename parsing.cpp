@@ -237,5 +237,15 @@ Variable parseVariable(std::string_view line) {
         res.attributes = parseAttributes(attributes);
     }
 
+    std::string variableName;
+    if (auto it = res.attributes.find("key"); it != res.attributes.end()) {
+        assert(!it->second.empty());
+        res.key = std::string(it->second);
+    }
+    else {
+        res.key = std::string(res.name);
+        res.key[0] = static_cast<char>(::toupper(res.key[0]));
+    }
+
     return res;
 }

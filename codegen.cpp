@@ -297,8 +297,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     if (it == state.structConverters.end()) {
         throw std::runtime_error(fmt::format("Empty structs are not allowed:\n{}", name));
     }
-    assert(state.structVariables.find(name) != state.structVariables.end());
-    assert(!state.structVariables[name].empty());
+
 
     std::memcpy(ConverterResult, it->second.data(), it->second.size());
     ConverterResult += it->second.size();
@@ -306,7 +305,11 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 
 
     if (!s->attributes.noExhaustive) {
-        std::vector<std::string> variableNames = state.structVariables[name];
+        // @TODO The correctness of this is not checked as it was not used before
+        std::vector<std::string> variableNames;
+        for (const Variable& var : s->variables) {
+            variableNames.push_back("\"" + var.key + "\"");
+        }
         if (!s->attributes.noTypeCheck) {
             variableNames.push_back("\"Type\"");
         }
@@ -381,16 +384,6 @@ void handleEnumValue(EnumElement element, const std::vector<StackElement*>& stac
 }
 
 void handleVariable(Variable var, State& state, Struct* s) {
-    std::string variableName;
-    if (auto it = var.attributes.find("key"); it != var.attributes.end()) {
-        assert(!it->second.empty());
-        variableName = std::string(it->second);
-    }
-    else {
-        variableName = std::string(var.name);
-        variableName[0] = static_cast<char>(::toupper(variableName[0]));
-    }
-
     var.comment = resolveComment(var.comment);
 
     bool isOptional = false;
@@ -406,7 +399,7 @@ void handleVariable(Variable var, State& state, Struct* s) {
     VerifierResult = fmt::format_to(
         VerifierResult,
         "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
-        ver, variableName, v,
+        ver, var.key, v,
         isOptional ? "Optional::Yes" : "Optional::No", var.comment
     );
 
@@ -421,16 +414,12 @@ void handleVariable(Variable var, State& state, Struct* s) {
     char* out = fmt::format_to(
         ScratchSpace,
         "    internal::bakeTo(dict, \"{}\", &res.{});\n",
-        variableName, var.name
+        var.key, var.name
     );
 
     converter += std::string(ScratchSpace, out);
     ScratchSpace = out;
     state.structConverters[name] = converter;
-    std::vector<std::string> variables = state.structVariables[name];
-    variables.push_back("\"" + variableName + "\"");
-    state.structVariables[name] = variables;
-
 
     if (startsWith(var.type, "std::variant")) {
         std::string_view subtypes = var.type.substr(std::string_view("std::variant<").size());
