@@ -38,6 +38,8 @@ Struct* rootStruct(Struct* s) {
 }
 
 const StackElement* resolveType(const Struct* context, std::string_view type) {
+    assert(context);
+
     if (context->name == type) {
         return context;
     }

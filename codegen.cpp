@@ -142,10 +142,10 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
 }
 
 
-std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* currentStuct) {
+std::string verifier(std::string_view type, const Variable& variable, State& state, Struct* currentStruct) {
     assert(!type.empty());
 
-    Struct* root = rootStruct(currentStuct);
+    Struct* root = rootStruct(currentStruct);
 
     std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
     
@@ -158,12 +158,14 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         std::string_view subtype = type.substr(std::string_view("std::vector<").size());
         subtype.remove_suffix(1);
 
+        const StackElement* e = resolveType(currentStruct, subtype);
         std::string comments;
-        if (auto it = state.structComments.find(subtype); it != state.structComments.end()) {
-            comments = resolveComment(it->second);
+        if (e) {
+            // e is false for subtypes that are not our own structs
+            comments = resolveComment(e->comment);
         }
 
-        std::string ver = verifier(subtype, variable, state, currentStuct);
+        std::string ver = verifier(subtype, variable, state, currentStruct);
         char* base = ScratchSpace;
 
         char* out = fmt::format_to(
@@ -191,7 +193,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, state, currentStuct);
+            std::string ver = verifier(subtype, variable, state, currentStruct);
             ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
         }
 
@@ -199,7 +201,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         return std::string(resBase, ScratchSpace - resBase);
     }
     else {
-        const StackElement* e = resolveType(currentStuct, type);
+        const StackElement* e = resolveType(currentStruct, type);
         if (!e) {
             throw std::runtime_error(fmt::format(
                 "Unhandled type detected and codegen doesn't know how to handle it: {}",
@@ -208,7 +210,7 @@ std::string verifier(std::string_view type, const Variable& variable, State& sta
         }
 
         state.typeUsage[std::string(type)] = true;
-        return std::string("codegen_") + fqn(currentStuct, "_") + "_" + std::string(type);
+        return std::string("codegen_") + fqn(currentStruct, "_") + "_" + std::string(type);
     }
 }
 
@@ -672,7 +674,8 @@ void handleFile(std::filesystem::path path) {
                 }
 
                 stack.push_back(s);
-                state.structComments[std::string(s->name)] = commentBuffer;
+                s->comment = commentBuffer;
+                //state.structComments[std::string(s->name)] = commentBuffer;
                 commentBuffer.clear();
 
                 if (!s->attributes.dictionary.empty()) {
@@ -697,7 +700,7 @@ void handleFile(std::filesystem::path path) {
                 parent->children.push_back(e);
                 e->parent = parent;
                 stack.push_back(e);
-                state.structComments[std::string(e->name)] = commentBuffer;
+                e->comment = commentBuffer;
                 commentBuffer.clear();
 
                 handleEnumStart(stack);

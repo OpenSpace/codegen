@@ -37,6 +37,7 @@ struct StackElement {
     Type type;
 
     std::string_view name;
+    std::string comment;
     Struct* parent = nullptr;
 };
 
@@ -95,8 +96,6 @@ struct Enum : public StackElement {
 
 
 struct State {
-    std::map<std::string, std::string, std::less<>> structComments;
-
     std::map<std::string, bool, std::less<>> typeUsage;
 };
 
