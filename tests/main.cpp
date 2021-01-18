@@ -22,70 +22,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___TYPES___H__
-#define __OPENSPACE_CODEGEN___TYPES___H__
+#define CATCH_CONFIG_RUNNER
+#include "catch2/catch.hpp"
 
-#include <string_view>
-#include <map>
-#include <unordered_map>
-#include <variant>
-
-struct Struct;
-
-struct StackElement {
-    enum class Type { Struct, Enum };
-    Type type;
-
-    std::string_view name;
-    std::string comment;
-    Struct* parent = nullptr;
-};
-
-
-struct Variable {
-    std::string type;
-    std::string name;
-    std::string key;
-
-    std::string comment;
-
-    using Attributes = std::map<std::string, std::string, std::less<>>;
-    Attributes attributes;
-};
-
-
-struct Struct : public StackElement {
-    Struct() { type = StackElement::Type::Struct; }
-
-    std::vector<StackElement*> children;
-    std::vector<Variable*> variables;
-
-    struct Attributes {
-        std::string_view dictionary;
-        std::string_view namespaceSpecifier;
-        bool noExhaustive = true;
-    };
-    Attributes attributes;
-};
-
-const Struct* rootStruct(const Struct* s);
-const StackElement* resolveType(const Struct* context, std::string_view type);
-std::string fqn(const StackElement* s, std::string_view separator);
-
-
-struct EnumElement {
-    std::string_view name;
-
-    struct Attributes {
-        std::string_view key;
-    };
-    Attributes attributes;
-};
-
-struct Enum : public StackElement {
-    Enum() { type = StackElement::Type::Enum; }
-
-    std::vector<EnumElement*> elements;
-};
-
-#endif // __OPENSPACE_CODEGEN___TYPES___H__
+int main(int argc, char** argv) {
+    int result = Catch::Session().run(argc, argv);
+    return result;
+}

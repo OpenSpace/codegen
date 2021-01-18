@@ -22,11 +22,23 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-project(Codegen VERSION 1.0)
+set(FILES
+  codegen.h
+  codegen.cpp
+  parsing.h
+  parsing.cpp
+  settings.h
+  snippets.h
+  snippets.cpp
+  types.h
+  types.cpp
+  util.h
+  util.cpp
+  verifier.h
+  verifier.cpp
+)
 
-add_subdirectory(lib)
-add_subdirectory(tests)
-
-add_executable(codegen main.cpp)
-target_link_libraries(codegen PUBLIC codegen-lib)
-
+add_library(codegen-lib ${FILES})
+target_include_directories(codegen-lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_features(codegen-lib PUBLIC cxx_std_17)
+target_link_libraries(codegen-lib PUBLIC fmt)

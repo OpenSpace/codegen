@@ -22,11 +22,12 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-project(Codegen VERSION 1.0)
+add_executable(
+  codegentest
+  main.cpp
+  struct.cpp
+  variable.cpp
+)
 
-add_subdirectory(lib)
-add_subdirectory(tests)
-
-add_executable(codegen main.cpp)
-target_link_libraries(codegen PUBLIC codegen-lib)
-
+target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
+target_link_libraries(codegentest PUBLIC codegen-lib)

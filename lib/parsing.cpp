@@ -287,6 +287,9 @@ Struct* parseRootStruct(std::string_view code) {
                 }
 
                 stack.push_back(s);
+                if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
+                    commentBuffer.pop_back();
+                }
                 s->comment = commentBuffer;
                 //state.structComments[std::string(s->name)] = commentBuffer;
                 commentBuffer.clear();
@@ -311,6 +314,9 @@ Struct* parseRootStruct(std::string_view code) {
                 parent->children.push_back(e);
                 e->parent = parent;
                 stack.push_back(e);
+                if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
+                    commentBuffer.pop_back();
+                }
                 e->comment = commentBuffer;
                 commentBuffer.clear();
                 continue;
@@ -333,33 +339,39 @@ Struct* parseRootStruct(std::string_view code) {
         // the highest stack element is an enum, we are in an enum definition
         StackElement* e = stack.back();
         switch (e->type) {
-        case StackElement::Type::Struct:
-            if (line.find(';') == std::string_view::npos) {
-                // No semicolon on this line but we are looking for a variable, so we
-                // are in a definition line that spans multiple lines
-                variableBuffer += std::string(line) + " ";
-                continue;
+            case StackElement::Type::Struct:
+                if (line.find(';') == std::string_view::npos) {
+                    // No semicolon on this line but we are looking for a variable, so we
+                    // are in a definition line that spans multiple lines
+                    variableBuffer += std::string(line) + " ";
+                    continue;
+                }
+                if (variableBuffer.empty()) {
+                    Variable* var = parseVariable(line);
+                    if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
+                        commentBuffer.pop_back();
+                    }
+                    var->comment = commentBuffer;
+                    commentBuffer.clear();
+                    static_cast<Struct*>(e)->variables.push_back(var);
+                }
+                else {
+                    variableBuffer += std::string(line);
+                    Variable* var = parseVariable(variableBuffer);
+                    if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
+                        commentBuffer.pop_back();
+                    }
+                    var->comment = commentBuffer;
+                    commentBuffer.clear();
+                    static_cast<Struct*>(e)->variables.push_back(var);
+                    variableBuffer.clear();
+                }
+                break;
+            case StackElement::Type::Enum: {
+                EnumElement* el = parseEnumElement(line);
+                static_cast<Enum*>(e)->elements.push_back(el);
+                break;
             }
-            if (variableBuffer.empty()) {
-                Variable* var = parseVariable(line);
-                var->comment = commentBuffer;
-                commentBuffer.clear();
-                static_cast<Struct*>(e)->variables.push_back(var);
-            }
-            else {
-                variableBuffer += std::string(line);
-                Variable* var = parseVariable(variableBuffer);
-                var->comment = commentBuffer;
-                commentBuffer.clear();
-                static_cast<Struct*>(e)->variables.push_back(var);
-                variableBuffer.clear();
-            }
-            break;
-        case StackElement::Type::Enum: {
-            EnumElement* el = parseEnumElement(line);
-            static_cast<Enum*>(e)->elements.push_back(el);
-            break;
-        }
         }
     }
 
