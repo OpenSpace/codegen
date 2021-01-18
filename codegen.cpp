@@ -376,7 +376,14 @@ char* writeStructConverter(char* buffer, Struct* s) {
     return buffer;
 }
 
-std::string_view generateResult(Struct* s) {
+std::string generateResult(Struct* s) {
+    std::vector<char> storage;
+    storage.resize(BufferSize);
+    std::fill(storage.begin(), storage.end(), '\0');
+
+    char* ResultBase = storage.data();
+    char* Result = storage.data();
+
     Result = fmt::format_to(Result, FileHeader);
 
     std::string name;
@@ -478,13 +485,23 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     }
 
     Result = fmt::format_to(Result, "    return res;\n}}\n}} // namespace codegen\n");
-    return std::string_view(ResultBase, Result - ResultBase);
+
+
+    if (PrintMemoryUsage) {
+        print(
+            "Memory usage:   Result(%5lli/%i)    Scratch(%5lli/%i)\n",
+            ScratchSpace - ScratchSpaceBase, BufferSize,
+            Result - ResultBase, BufferSize
+        );
+    }
+
+    return std::string(ResultBase, Result - ResultBase);
 }
 
-std::string_view handleCode(std::string_view code, std::string_view path) {
+std::string handleCode(std::string_view code, std::string_view path) {
     std::string_view content = strip(validCode(code));
     if (content.empty()) {
-        return std::string_view();
+        return std::string();
     }
 
     // Some initial sanity checks
@@ -509,22 +526,19 @@ std::string_view handleCode(std::string_view code, std::string_view path) {
     if (it == MemoryPool.end()) {
         Memory m;
         m.ScratchSpace = new char[BufferSize];
-        m.Result = new char[BufferSize];
         MemoryPool.push_back(m);
         it = MemoryPool.end() - 1;
     }
 
     ScratchSpaceBase = it->ScratchSpace;
-    ResultBase = it->Result;
 
     ScratchSpace = ScratchSpaceBase;
-    Result = ResultBase;
     std::fill(ScratchSpaceBase, ScratchSpaceBase + BufferSize - 1, '\0');
-    std::fill(ResultBase, ResultBase + BufferSize - 1, '\0');
 
 
     Struct* rootStruct = parseRootStruct(content);
-    std::string_view genContent = generateResult(rootStruct);
+    std::string genContent = generateResult(rootStruct);
+
     return genContent;
 }
 
@@ -535,21 +549,13 @@ void handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    std::string_view genContent = handleCode(res, p);
+    std::string genContent = handleCode(res, p);
 
     if (genContent.empty()) {
         return;
     }
 
     AllFiles++;
-
-    if (PrintMemoryUsage) {
-        print(
-            "Memory usage:   Result(%5lli/%i)    Scratch(%5lli/%i)\n",
-            ScratchSpace - ScratchSpaceBase, BufferSize,
-            Result - ResultBase, BufferSize
-        );
-    }
 
     std::filesystem::path destination = path;
     destination.replace_extension();

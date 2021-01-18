@@ -35,17 +35,12 @@ constexpr const int BufferSize = 32768;
 inline thread_local char* ScratchSpaceBase = nullptr;
 inline thread_local char* ScratchSpace = nullptr;
 
-inline thread_local char* ResultBase = nullptr;
-inline thread_local char* Result = nullptr;
-
-
 struct Memory {
     // Key
     std::thread::id id;
 
     // Value
     char* ScratchSpace = nullptr;
-    char* Result = nullptr;
 };
 
 inline std::vector<Memory> MemoryPool;
