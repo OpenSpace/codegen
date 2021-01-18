@@ -376,8 +376,8 @@ char* writeStructConverter(char* buffer, Struct* s) {
     return buffer;
 }
 
-std::string_view generateResult(Struct* s, std::filesystem::path path) {
-    Result = fmt::format_to(Result, FileHeader, path.filename().string());
+std::string_view generateResult(Struct* s) {
+    Result = fmt::format_to(Result, FileHeader);
 
     std::string name;
     if (s->attributes.namespaceSpecifier.empty()) {
@@ -524,7 +524,7 @@ std::string_view handleCode(std::string_view code, std::string_view path) {
 
 
     Struct* rootStruct = parseRootStruct(content);
-    std::string_view genContent = generateResult(rootStruct, path);
+    std::string_view genContent = generateResult(rootStruct);
     return genContent;
 }
 
