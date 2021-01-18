@@ -68,7 +68,7 @@ struct Struct : public StackElement {
     Attributes attributes;
 };
 
-Struct* rootStruct(Struct* s);
+const Struct* rootStruct(const Struct* s);
 const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 

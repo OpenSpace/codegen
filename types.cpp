@@ -25,9 +25,11 @@
 #include "types.h"
 
 #include "util.h"
+#include <algorithm>
 #include <cassert>
+#include <functional>
 
-Struct* rootStruct(Struct* s) {
+const Struct* rootStruct(const Struct* s) {
     assert(s);
 
     while (s->parent) {
@@ -39,16 +41,19 @@ Struct* rootStruct(Struct* s) {
 
 const StackElement* resolveType(const Struct* context, std::string_view type) {
     assert(context);
+    assert(!type.empty());
 
     if (context->name == type) {
         return context;
     }
 
     // Check the children of the context first
-    for (StackElement* e : context->children) {
-        if (e->name == type) {
-            return e;
-        }
+    const auto it = std::find_if(
+        context->children.begin(), context->children.end(),
+        [type](StackElement* e) { return e->name == type; }
+    );
+    if (it != context->children.end()) {
+        return *it;
     }
 
     // Then check the parent
@@ -74,5 +79,10 @@ std::string fqn(const StackElement* s, std::string_view separator) {
         names.push_back(s->name);
     };
     std::reverse(names.begin(), names.end());
+
+    assert(
+        std::none_of(names.begin(), names.end(), std::mem_fn(&std::string_view::empty))
+    );
+
     return join(names, separator);
 }

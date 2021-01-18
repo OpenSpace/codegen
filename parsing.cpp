@@ -124,29 +124,27 @@ Struct* parseStruct(std::string_view line) {
     assert(line.substr(0, cursor) == "struct");
     cursor++;
 
-    const size_t beginAttribute = line.find("[[", cursor);
-    if (beginAttribute != std::string_view::npos) {
-        const size_t endAttribute = line.find("]]", beginAttribute) + 2;
-        std::string_view block = line.substr(
-            beginAttribute,
-            endAttribute - beginAttribute
-        );
+    if (const size_t beginAttr = line.find("[[", cursor);
+        beginAttr != std::string_view::npos)
+    {
+        const size_t endAttr = line.find("]]", beginAttr) + 2;
+        std::string_view block = line.substr(beginAttr, endAttr - beginAttr);
         s->attributes.dictionary = parseAttribute(block, "Dictionary");
         if (s->attributes.dictionary.empty()) {
-            throw std::runtime_error(
-                fmt::format("No name specified for root struct:\n{}", line)
-            );
+            throw std::runtime_error(fmt::format(
+                "No name specified for root struct:\n{}", line
+            ));
         }
 
         s->attributes.namespaceSpecifier = parseAttribute(block, "namespace");
-        cursor = endAttribute + 1;
+        cursor = endAttr + 1;
     }
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw std::runtime_error(
-            fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
-        );
+        throw std::runtime_error(fmt::format(
+            "Missing space before the closing {{ of a struct:\n{}", line
+        ));
     }
     s->name = line.substr(cursor, endStruct - cursor);
     return s;
@@ -164,9 +162,9 @@ Enum* parseEnum(std::string_view line) {
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw std::runtime_error(
-            fmt::format("Missing space before the closing {{ of a struct:\n{}", line)
-        );
+        throw std::runtime_error(fmt::format(
+            "Missing space before the closing {{ of a struct:\n{}", line
+        ));
     }
     e->name = line.substr(cursor, endStruct - cursor);
     return e;
@@ -182,7 +180,7 @@ EnumElement* parseEnumElement(std::string_view line) {
         line.remove_suffix(1);
     }
 
-    size_t i = line.find(' ');
+    const size_t i = line.find(' ');
     e->name = line.substr(0, i);
     if (i != std::string_view::npos) {
         std::string_view attributes = line.substr(i + 1);
@@ -225,9 +223,9 @@ Variable* parseVariable(std::string_view line) {
     const size_t p1 = cursor;
     const size_t p2 = line.find(' ', p1 + 1);
     if (p1 == std::string_view::npos) {
-        throw std::runtime_error(
-            fmt::format("Too few spaces in variable definition:\n{}", line)
-        );
+        throw std::runtime_error(fmt::format(
+            "Too few spaces in variable definition:\n{}", line
+        ));
     }
 
     Variable* res = new (ScratchSpace) Variable;
@@ -282,8 +280,7 @@ Struct* parseRootStruct(std::string_view code) {
                     stack.back()->type != StackElement::Type::Struct)
                 {
                     throw std::runtime_error(fmt::format(
-                        "Struct definition found outside a parent struct.\n{}",
-                        line
+                        "Struct definition found outside a parent struct.\n{}", line
                     ));
                 }
 

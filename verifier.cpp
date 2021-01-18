@@ -42,7 +42,9 @@ namespace {
         constexpr const char Reference[] = "reference";
     } // namespace attribute
 
-    void reportUnsupportedAttribute(std::string_view type, const Variable::Attributes& attributes) {
+    void reportUnsupportedAttribute(std::string_view type,
+                                    const Variable::Attributes& attributes)
+    {
         using namespace attribute;
 
         assert(!type.empty());
@@ -55,18 +57,9 @@ namespace {
         static std::unordered_map<std::string_view, std::vector<std::string_view>> Types =
         {
             { "bool", AllAttributes },
-            {
-                "int",
-                { Annotation, InList, NotInList, Reference }
-            },
-            {
-                "double",
-                { Annotation, InList, NotInList, Reference }
-            },
-            {
-                "float",
-                { Annotation, InList, NotInList, Reference }
-            },
+            { "int", { Annotation, InList, NotInList, Reference } },
+            { "double", { Annotation, InList, NotInList, Reference } },
+            { "float", { Annotation, InList, NotInList, Reference } },
             {
                 "std::string",
                 {
@@ -251,7 +244,7 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
         return fmt::format(
             "ReferencingVerifier({})",
             it->second == "this" ?
-            fmt::format("\"{}\"", dictionaryName) :
+            fmt::format(R"("{}")", dictionaryName) :
             std::string(it->second)
         );
     }

@@ -47,6 +47,7 @@ std::string_view strip(std::string_view sv) {
 bool startsWith(std::string_view lhs, std::string_view rhs) {
     assert(!lhs.empty());
     assert(!rhs.empty());
+
     return lhs.size() >= rhs.size() && lhs.substr(0, rhs.size()) == rhs;
 }
 
@@ -102,6 +103,7 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
     assert(!sv.empty());
     assert(cursor);
     assert(*cursor == 0 || sv[*cursor - 1] == '\n');
+
     const size_t p = sv.find('\n', *cursor);
 
     if (p != std::string_view::npos) {
@@ -117,6 +119,8 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
 }
 
 std::string_view validCode(std::string_view code) {
+    assert(!code.empty());
+
     const size_t mainLocation = code.find(AttributeDictionary);
     if (mainLocation == std::string_view::npos) {
         // We did't find the attrbute

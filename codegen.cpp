@@ -38,6 +38,8 @@
 #include <string>
 #include <vector>
 
+using namespace std::literals;
+
 namespace {
     bool isBasicType(std::string_view type) {
         // Stand-in for a list of basic types that are supported
@@ -64,69 +66,71 @@ namespace {
         return res;
     }
 
-    std::vector<std::string> usedTypes(Struct* s) {
-        std::vector<std::string> res;
-        for (Variable* var : s->variables) {
+    std::vector<std::string_view> usedTypes(const Struct& s) {
+        std::vector<std::string_view> res;
+        for (const Variable* var : s.variables) {
             std::string_view type = var->type;
 
             if (startsWith(type, "std::optional<")) {
                 res.push_back("std::optional");
-                type.remove_prefix(std::string_view("std::optional<").size());
+                type.remove_prefix("std::optional<"sv.size());
                 type.remove_suffix(1);
 
                 if (isBasicType(type)) {
-                    res.push_back(std::string(type));
+                    res.push_back(type);
                 }
             }
 
             if (startsWith(type, "std::vector<")) {
                 res.push_back("std::vector");
-                type.remove_prefix(std::string_view("std::vector<").size());
+                type.remove_prefix("std::vector<"sv.size());
                 type.remove_suffix(1);
 
                 if (isBasicType(type)) {
-                    res.push_back(std::string(type));
+                    res.push_back(type);
                 }
             }
 
             if (startsWith(type, "std::variant<")) {
                 res.push_back("std::variant");
-                std::string_view subtype = type.substr(std::string_view("std::variant<").size());
-                std::vector<std::string_view> types = extractTemplateTypeList(subtype);
+                type.remove_prefix("std::variant<"sv.size());
+                std::vector<std::string_view> types = extractTemplateTypeList(type);
 
                 for (std::string_view t : types) {
                     if (isBasicType(t)) {
-                        res.push_back(std::string(t));
+                        res.push_back(t);
                     }
                 }
             }
 
             if (isBasicType(var->type)) {
-                res.push_back(std::string(var->type));
+                res.push_back(var->type);
             }
         }
 
-        for (StackElement* e : s->children) {
+        for (StackElement* e : s.children) {
             if (e->type != StackElement::Type::Struct)  continue;
 
-            Struct* s = static_cast<Struct*>(e);
-            std::vector<std::string> t = usedTypes(s);
+            const Struct& s = static_cast<const Struct&>(*e);
+            std::vector<std::string_view> t = usedTypes(s);
             res.insert(res.end(), t.begin(), t.end());
         }
+
+        // Remove duplicates
+        std::sort(res.begin(), res.end());
+        res.erase(std::unique(res.begin(), res.end()), res.end());
 
         return res;
     }
 
     std::string resolveComment(std::string comment) {
         if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
-            const size_t l = std::string_view("codegen::description").size();
+            const size_t l = "codegen::description"sv.size();
             it += l;
             if (comment[it] != '(') {
-                throw std::runtime_error(
-                    fmt::format(
-                        "Malformed codegen::description. Expected ( after token:\n{}", comment
-                    )
-                );
+                throw std::runtime_error(fmt::format(
+                    "Malformed codegen::description. Expected ( after token:\n{}", comment
+                ));
             }
             it++;
             size_t end = comment.find(')', it);
@@ -137,11 +141,9 @@ namespace {
             if (size_t it = comment.find('"');
                 it != std::string::npos && comment[it - 1] != '\\')
             {
-                throw std::runtime_error(
-                    fmt::format(
-                        "Discovered unallowed unescaped \" in comment line:\n{}", comment
-                    )
-                );
+                throw std::runtime_error(fmt::format(
+                    "Discovered unallowed unescaped \" in comment line:\n{}", comment
+                ));
             }
 
             // We add artificial spaces between the multiline comments, which causes there to
@@ -149,7 +151,7 @@ namespace {
             if (!comment.empty()) {
                 comment.pop_back();
             }
-            comment = std::string("\"") + comment + "\"";
+            comment = fmt::format("\"{}\"", comment);
         }
         return comment;
     }
@@ -158,38 +160,35 @@ namespace {
 std::string verifier(std::string_view type, const Variable& variable, Struct* currentStruct) {
     assert(!type.empty());
 
-    Struct* root = rootStruct(currentStruct);
-
+    const Struct* root = rootStruct(currentStruct);
     std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
     
     if (!v.empty()) {
         return std::string("new ") + v;
     }
     else if (startsWith(type, "std::vector<")) {
-        std::string_view subtype = type.substr(std::string_view("std::vector<").size());
-        subtype.remove_suffix(1);
+        type.remove_prefix("std::vector<"sv.size());
+        type.remove_suffix(1);
 
-        const StackElement* e = resolveType(currentStruct, subtype);
+        const StackElement* e = resolveType(currentStruct, type);
         std::string comments;
         if (e) {
             // e is false for subtypes that are not our own structs
             comments = resolveComment(e->comment);
         }
 
-        std::string ver = verifier(subtype, variable, currentStruct);
+        std::string ver = verifier(type, variable, currentStruct);
         char* base = ScratchSpace;
 
-        char* out = fmt::format_to(
-            ScratchSpace,
+        ScratchSpace = fmt::format_to(ScratchSpace,
             "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n",
             ver, comments
         );
-        ScratchSpace = out;
 
         return std::string(base, ScratchSpace);
     }
     else if (startsWith(type, "std::variant<")) {
-        std::string_view subtypes = type.substr(std::string_view("std::variant<").size());
+        std::string_view subtypes = type.substr("std::variant<"sv.size());
         if (subtypes.find('>') == std::string_view::npos) {
             throw std::runtime_error(fmt::format(
                 "Could not find closing > in variant definition:\n{}", type
@@ -213,21 +212,64 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
         const StackElement* e = resolveType(currentStruct, type);
         if (!e) {
             throw std::runtime_error(fmt::format(
-                "Unhandled type detected and codegen doesn't know how to handle it: {}",
-                type
+                "Type detected that codegen doesn't know how to handle: {}", type
             ));
         }
 
-        return std::string("codegen_") + fqn(currentStruct, "_") + "_" + std::string(type);
+        return fmt::format("codegen_{}_{}", fqn(currentStruct, "_"), type);
     }
 }
 
+char* writeEnumDocumentation(char* buffer, Enum* e) {
+    std::string name = "codegen_" + fqn(e, "_");
+
+    buffer = fmt::format_to(buffer,
+        "    StringInListVerifier* {} = new StringInListVerifier({{",
+        fmt::format("codegen_{}", fqn(e, "_"))
+    );
+
+
+    Enum* en = static_cast<Enum*>(e);
+    for (EnumElement* em : en->elements) {
+        // If no key attribute is specified, we use the name instead
+        std::string_view key =
+            em->attributes.key.empty() ?
+            em->name :
+            em->attributes.key;
+
+        buffer = fmt::format_to(buffer, "\"{}\",", key);
+    }
+    // The last element has a , at the end that we can overwrite
+    buffer -= 1;
+
+    buffer = fmt::format_to(buffer, "}});\n");
+    return buffer;
+}
+
+char* writeVariableDocumentation(char* buffer, Struct* s, Variable* var) {
+    var->comment = resolveComment(var->comment);
+
+    std::string_view type = var->type;
+    bool isOptional = false;
+    if (startsWith(var->type, "std::optional<")) {
+        isOptional = true;
+        type.remove_prefix("std::optional<"sv.size());
+        type.remove_suffix(1);
+    }
+
+    std::string ver = std::string("codegen_") + fqn(s, "_");
+    std::string v = verifier(type, *var, s);
+    buffer = fmt::format_to(buffer,
+        "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
+        ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
+    );
+    return buffer;
+}
+
 char* writeStructDocumentation(char* buffer, Struct* s) {
-    std::string name = "codegen_" + fqn(s, "_");
-    buffer = fmt::format_to(
-        buffer,
-        "    TableVerifier* {} = new TableVerifier;\n",
-        name
+    std::string name = fqn(s, "_");
+    buffer = fmt::format_to(buffer,
+        "    TableVerifier* codegen_{} = new TableVerifier;\n", name
     );
 
     for (StackElement* e : s->children) {
@@ -235,80 +277,70 @@ char* writeStructDocumentation(char* buffer, Struct* s) {
             buffer = writeStructDocumentation(buffer, static_cast<Struct*>(e));
         }
         if (e->type == StackElement::Type::Enum) {
-            std::string name = "codegen_" + fqn(e, "_");
-
-            buffer = fmt::format_to(
-                buffer,
-                "    StringInListVerifier* {} = new StringInListVerifier({{", name
-            );
-
-
-            Enum* en = static_cast<Enum*>(e);
-            for (EnumElement* em : en->elements) {
-                // If no key attribute is specified, we use the name instead
-                std::string_view key;
-                if (em->attributes.key.empty()) {
-                    key = em->name;
-                }
-                else {
-                    key = em->attributes.key;
-                }
-
-                buffer = fmt::format_to(buffer, "\"{}\",", key);
-            }
-            // The last element has a , at the end that we can overwrite
-            buffer -= 1;
-
-            buffer = fmt::format_to(buffer, "}});\n");
+            buffer = writeEnumDocumentation(buffer, static_cast<Enum*>(e));
         }
     }
 
     for (Variable* var : s->variables) {
-        var->comment = resolveComment(var->comment);
-
-        std::string type = var->type;
-        bool isOptional = false;
-        if (startsWith(var->type, "std::optional<")) {
-            isOptional = true;
-            type = var->type.substr(std::string_view("std::optional<").size());
-            type = type.substr(0, type.size() - 1);
-        }
-
-        std::string ver = std::string("codegen_") + fqn(s, "_");
-        std::string v = verifier(type, *var, s);
-        buffer = fmt::format_to(
-            buffer,
-            "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
-            ver, var->key, v,
-            isOptional ? "Optional::Yes" : "Optional::No", var->comment
-        );
+        buffer = writeVariableDocumentation(buffer, s, var);
     }
 
     return buffer;
 }
 
+char* writeVariableConverter(char* buffer, Variable* var) {
+    if (startsWith(var->type, "std::variant")) {
+        std::string subtypes = var->type.substr("std::variant<"sv.size());
+
+        buffer = fmt::format_to(buffer,
+            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
+            var->type
+        );
+
+        std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
+        for (std::string_view subtype : ttypes) {
+            buffer = fmt::format_to(buffer,
+                "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
+                subtype
+            );
+        }
+
+        buffer = fmt::format_to(buffer, "}}");
+    }
+    return buffer;
+}
+
+char* writeEnumConverter(char* buffer, Enum* e) {
+    std::string type = fqn(e, "::");
+    buffer = fmt::format_to(buffer,
+        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
+        "    std::string v = d.value<std::string>(key);\n",
+        type
+    );
+
+    for (EnumElement* elem : e->elements) {
+        std::string_view key;
+        if (elem->attributes.key.empty()) {
+            key = elem->name;
+        }
+        else {
+            key = elem->attributes.key;
+        }
+
+        std::string type = fqn(e, "::");
+        buffer = fmt::format_to(buffer,
+            "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
+            key, type, elem->name
+        );
+    }
+
+    buffer = fmt::format_to(buffer, "}}\n");
+    return buffer;
+}
+
 char* writeStructConverter(char* buffer, Struct* s) {
     for (Variable* var : s->variables) {
-        if (startsWith(var->type, "std::variant")) {
-            std::string subtypes = var->type.substr(std::string_view("std::variant<").size());
-
-            buffer = fmt::format_to(
-                buffer,
-                "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
-                var->type
-            );
-
-            std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
-            for (std::string_view subtype : ttypes) {
-                buffer = fmt::format_to(
-                    buffer,
-                    "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
-                    subtype
-                );
-            }
-
-            buffer = fmt::format_to(buffer, "}}");
-        }
+        buffer = writeVariableConverter(buffer, var);
     }
 
 
@@ -318,33 +350,7 @@ char* writeStructConverter(char* buffer, Struct* s) {
         }
 
         if (e->type == StackElement::Type::Enum) {
-            std::string type = fqn(e, "::");
-            buffer = fmt::format_to(
-                buffer,
-                "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
-                "    std::string v = d.value<std::string>(key);\n",
-                type
-            );
-
-            for (EnumElement* elem : static_cast<Enum*>(e)->elements) {
-                std::string_view key;
-                if (elem->attributes.key.empty()) {
-                    key = elem->name;
-                }
-                else {
-                    key = elem->attributes.key;
-                }
-
-                std::string type = fqn(e, "::");
-                buffer = fmt::format_to(
-                    buffer,
-                    "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
-                    key, type, elem->name
-                );
-            }
-
-            buffer = fmt::format_to(buffer, "}}\n");
-
+            buffer = writeEnumConverter(buffer, static_cast<Enum*>(e));
         }
     }
 
@@ -353,28 +359,25 @@ char* writeStructConverter(char* buffer, Struct* s) {
     }
 
     std::string name = fqn(s, "::");
-    buffer = fmt::format_to(
-        buffer,
-        "template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{\n"
-        "    {0}& res = *val;\n"
-        "    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);\n",
+    buffer = fmt::format_to(buffer,R"(template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
+    {0}& res = *val;
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+)",
         name
     );
 
     for (Variable* var : s->variables) {
-        buffer = fmt::format_to(
-            buffer,
+        buffer = fmt::format_to(buffer,
             "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
         );
     }
 
     buffer = fmt::format_to(buffer, "}}\n");
-
     return buffer;
 }
 
 std::string_view generateResult(Struct* s, std::filesystem::path path) {
-    Result = fmt::format_to(Result, fileHeader, path.filename().string());
+    Result = fmt::format_to(Result, FileHeader, path.filename().string());
 
     std::string name;
     if (s->attributes.namespaceSpecifier.empty()) {
@@ -388,39 +391,9 @@ std::string_view generateResult(Struct* s, std::filesystem::path path) {
         );
     }
 
-
-    Result = fmt::format_to(
-        Result,
-        R"(
-namespace codegen {{
-template <typename T> openspace::documentation::Documentation doc() {{
-    static_assert(sizeof(T) == 0); // This should never be called
-    return openspace::documentation::Documentation();
-}}
-template <> openspace::documentation::Documentation doc<{}>() {{
-    using namespace openspace::documentation;
-)",
-        name
-    );
-
+    Result = fmt::format_to(Result, DocumentationPreamble, name);
     Result = writeStructDocumentation(Result, s);
-    Result = fmt::format_to(
-        Result,
-        R"(
-    openspace::documentation::Documentation d = {{ "{0}", "{0}", std::move({1}->documentations) }};
-    delete {1};
-    return d;
-}}
-}} // namespace codegen
-
-)",
-        s->attributes.dictionary,
-        fmt::format("codegen_{}", s->name)
-    );
-
-    std::string_view preamble = bakeFunctionPreamble;
-    std::memcpy(Result, preamble.data(), preamble.size());
-    Result += preamble.size();
+    Result = fmt::format_to(Result, DocumentationEpilog, s->attributes.dictionary, s->name);
 
 
 
@@ -440,36 +413,19 @@ template <> openspace::documentation::Documentation doc<{}>() {{
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    std::vector<std::string> types = usedTypes(s);
-    std::sort(types.begin(), types.end());
-    types.erase(std::unique(types.begin(), types.end()), types.end());
+    Result = fmt::format_to(Result, BakeFunctionPreamble);
 
-    if (auto it = std::find(types.begin(), types.end(), "std::optional");
-        it != types.end())
-    {
-        std::string_view decl = BakeFunctionOptionalDeclaration;
-        std::memcpy(Result, decl.data(), decl.size());
-        Result += decl.size();
-    }
-    if (auto it = std::find(types.begin(), types.end(), "std::vector");
-        it != types.end())
-    {
-        std::string_view decl = BakeFunctionVectorDeclaration;
-        std::memcpy(Result, decl.data(), decl.size());
-        Result += decl.size();
-    }
+    std::vector<std::string_view> types = usedTypes(*s);
+    for (std::string_view t : types) {
+        if (t == "std::optional") {
+            Result = fmt::format_to(Result, BakeFunctionOptionalDeclaration);
+            continue;
+        }
+        if (t == "std::vector") {
+            Result = fmt::format_to(Result, BakeFunctionVectorDeclaration);
+            continue;
+        }
 
-    std::vector<std::string> firstPhaseTypes = types;
-    auto itOptional = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::optional");
-    if (itOptional != firstPhaseTypes.end()) {
-        firstPhaseTypes.erase(itOptional);
-    }
-    auto itVector = std::find(firstPhaseTypes.begin(), firstPhaseTypes.end(), "std::vector");
-    if (itVector != firstPhaseTypes.end()) {
-        firstPhaseTypes.erase(itVector);
-    }
-
-    for (const std::string& t : firstPhaseTypes) {
         std::string_view bake = bakeFunctionForType(t);
         if (!bake.empty()) {
             // The return value is empty for types that don't have a
@@ -494,7 +450,7 @@ template <> openspace::documentation::Documentation doc<{}>() {{
         );
     }
 
-    for (const std::string& type : types) {
+    for (std::string_view type : types) {
         if (type != "std::vector" && type != "std::optional")  continue;
 
         std::string_view bake = bakeFunctionForType(type);
@@ -505,10 +461,7 @@ template <> openspace::documentation::Documentation doc<{}>() {{
         Result += bake.size();
     }
 
-    // This is the last struct to be closed, so it is the struct that the user will
-    // ask for
-    Result = fmt::format_to(
-        Result,
+    Result = fmt::format_to(Result,
         R"(
 }} // namespace internal
 
@@ -523,8 +476,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 );
 
     for (Variable* var : s->variables) {
-        Result = fmt::format_to(
-            Result,
+        Result = fmt::format_to(Result,
             "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
         );
     }
