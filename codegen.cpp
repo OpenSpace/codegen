@@ -27,7 +27,6 @@
 #include "parsing.h"
 #include "settings.h"
 #include "snippets.h"
-#include "storage.h"
 #include "types.h"
 #include "util.h"
 #include "verifier.h"
@@ -178,14 +177,10 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
         }
 
         std::string ver = verifier(type, variable, currentStruct);
-        char* base = ScratchSpace;
-
-        ScratchSpace = fmt::format_to(ScratchSpace,
+        return fmt::format(
             "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n",
             ver, comments
         );
-
-        return std::string(base, ScratchSpace);
     }
     else if (startsWith(type, "std::variant<")) {
         std::string_view subtypes = type.substr("std::variant<"sv.size());
@@ -196,17 +191,19 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
         }
         assert(subtypes.back() == '>');
 
-        char* resBase = ScratchSpace;
-        ScratchSpace = fmt::format_to(ScratchSpace, "new OrVerifier({{");
+        std::string result = "new OrVerifier({";
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
             std::string ver = verifier(subtype, variable, currentStruct);
-            ScratchSpace = fmt::format_to(ScratchSpace, "{},", ver);
+            result += ver + ",";
         }
 
-        ScratchSpace = fmt::format_to(ScratchSpace, "}})");
-        return std::string(resBase, ScratchSpace - resBase);
+        // Remove the final ,
+        result.pop_back();
+
+        result += "})";
+        return result;
     }
     else {
         const StackElement* e = resolveType(currentStruct, type);
@@ -220,12 +217,10 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
     }
 }
 
-char* writeEnumDocumentation(char* buffer, Enum* e) {
-    std::string name = "codegen_" + fqn(e, "_");
-
-    buffer = fmt::format_to(buffer,
-        "    StringInListVerifier* {} = new StringInListVerifier({{",
-        fmt::format("codegen_{}", fqn(e, "_"))
+std::string writeEnumDocumentation(Enum* e) {
+    std::string result = fmt::format(
+        "    StringInListVerifier* codegen_{} = new StringInListVerifier({{",
+        fqn(e, "_")
     );
 
 
@@ -237,16 +232,16 @@ char* writeEnumDocumentation(char* buffer, Enum* e) {
             em->name :
             em->attributes.key;
 
-        buffer = fmt::format_to(buffer, "\"{}\",", key);
+        result += fmt::format("\"{}\",", key);
     }
     // The last element has a , at the end that we can overwrite
-    buffer -= 1;
+    result.pop_back();
 
-    buffer = fmt::format_to(buffer, "}});\n");
-    return buffer;
+    result += "});\n";
+    return result;
 }
 
-char* writeVariableDocumentation(char* buffer, Struct* s, Variable* var) {
+std::string writeVariableDocumentation(Struct* s, Variable* var) {
     var->comment = resolveComment(var->comment);
 
     std::string_view type = var->type;
@@ -257,62 +252,63 @@ char* writeVariableDocumentation(char* buffer, Struct* s, Variable* var) {
         type.remove_suffix(1);
     }
 
-    std::string ver = std::string("codegen_") + fqn(s, "_");
+    std::string ver = fqn(s, "_");
     std::string v = verifier(type, *var, s);
-    buffer = fmt::format_to(buffer,
-        "    {}->documentations.push_back({{\"{}\",{},{},{}}});\n",
+    std::string result = fmt::format(
+        "    codegen_{}->documentations.push_back({{\"{}\",{},{},{}}});\n",
         ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
     );
-    return buffer;
+    return result;
 }
 
-char* writeStructDocumentation(char* buffer, Struct* s) {
+std::string writeStructDocumentation(Struct* s) {
     std::string name = fqn(s, "_");
-    buffer = fmt::format_to(buffer,
+    std::string result = fmt::format(
         "    TableVerifier* codegen_{} = new TableVerifier;\n", name
     );
 
     for (StackElement* e : s->children) {
         if (e->type == StackElement::Type::Struct) {
-            buffer = writeStructDocumentation(buffer, static_cast<Struct*>(e));
+            result += writeStructDocumentation(static_cast<Struct*>(e));
         }
         if (e->type == StackElement::Type::Enum) {
-            buffer = writeEnumDocumentation(buffer, static_cast<Enum*>(e));
+            result += writeEnumDocumentation(static_cast<Enum*>(e));
         }
     }
 
     for (Variable* var : s->variables) {
-        buffer = writeVariableDocumentation(buffer, s, var);
+        result += writeVariableDocumentation(s, var);
     }
 
-    return buffer;
+    return result;
 }
 
-char* writeVariableConverter(char* buffer, Variable* var) {
+std::string writeVariableConverter(Variable* var) {
+    std::string result;
     if (startsWith(var->type, "std::variant")) {
         std::string subtypes = var->type.substr("std::variant<"sv.size());
 
-        buffer = fmt::format_to(buffer,
+        result = fmt::format(
             "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
             var->type
         );
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            buffer = fmt::format_to(buffer,
+            result += fmt::format(
                 "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
                 subtype
             );
         }
 
-        buffer = fmt::format_to(buffer, "}}");
+        result += "}";
     }
-    return buffer;
+    return result;
 }
 
-char* writeEnumConverter(char* buffer, Enum* e) {
+std::string writeEnumConverter(Enum* e) {
     std::string type = fqn(e, "::");
-    buffer = fmt::format_to(buffer,
+    std::string result = fmt::format(
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
         "    std::string v = d.value<std::string>(key);\n",
         type
@@ -328,38 +324,38 @@ char* writeEnumConverter(char* buffer, Enum* e) {
         }
 
         std::string type = fqn(e, "::");
-        buffer = fmt::format_to(buffer,
+        result += fmt::format(
             "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
             key, type, elem->name
         );
     }
 
-    buffer = fmt::format_to(buffer, "}}\n");
-    return buffer;
+    result += "}\n";
+    return result;
 }
 
-char* writeStructConverter(char* buffer, Struct* s) {
+std::string writeStructConverter(Struct* s) {
+    std::string result;
     for (Variable* var : s->variables) {
-        buffer = writeVariableConverter(buffer, var);
+        result += writeVariableConverter(var);
     }
-
 
     for (StackElement* e : s->children) {
         if (e->type == StackElement::Type::Struct) {
-            buffer = writeStructConverter(buffer, static_cast<Struct*>(e));
+            result += writeStructConverter(static_cast<Struct*>(e));
         }
 
         if (e->type == StackElement::Type::Enum) {
-            buffer = writeEnumConverter(buffer, static_cast<Enum*>(e));
+            result += writeEnumConverter(static_cast<Enum*>(e));
         }
     }
 
     if (s->parent == nullptr) {
-        return buffer;
+        return result;
     }
 
     std::string name = fqn(s, "::");
-    buffer = fmt::format_to(buffer,R"(template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
+    result += fmt::format(R"(template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
     {0}& res = *val;
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
 )",
@@ -367,24 +363,17 @@ char* writeStructConverter(char* buffer, Struct* s) {
     );
 
     for (Variable* var : s->variables) {
-        buffer = fmt::format_to(buffer,
+        result += fmt::format(
             "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
         );
     }
 
-    buffer = fmt::format_to(buffer, "}}\n");
-    return buffer;
+    result += "}\n";
+    return result;
 }
 
 std::string generateResult(Struct* s) {
-    std::vector<char> storage;
-    storage.resize(BufferSize);
-    std::fill(storage.begin(), storage.end(), '\0');
-
-    char* ResultBase = storage.data();
-    char* Result = storage.data();
-
-    Result = fmt::format_to(Result, FileHeader);
+    std::string result = fmt::format(FileHeader);
 
     std::string name;
     if (s->attributes.namespaceSpecifier.empty()) {
@@ -398,9 +387,9 @@ std::string generateResult(Struct* s) {
         );
     }
 
-    Result = fmt::format_to(Result, DocumentationPreamble, name);
-    Result = writeStructDocumentation(Result, s);
-    Result = fmt::format_to(Result, DocumentationEpilog, s->attributes.dictionary, s->name);
+    result += fmt::format(DocumentationPreamble, name);
+    result += writeStructDocumentation(s);
+    result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
 
 
 
@@ -420,16 +409,16 @@ std::string generateResult(Struct* s) {
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    Result = fmt::format_to(Result, BakeFunctionPreamble);
+    result += BakeFunctionPreamble;
 
     std::vector<std::string_view> types = usedTypes(*s);
     for (std::string_view t : types) {
         if (t == "std::optional") {
-            Result = fmt::format_to(Result, BakeFunctionOptionalDeclaration);
+            result += BakeFunctionOptionalDeclaration;
             continue;
         }
         if (t == "std::vector") {
-            Result = fmt::format_to(Result, BakeFunctionVectorDeclaration);
+            result += BakeFunctionVectorDeclaration;
             continue;
         }
 
@@ -437,12 +426,12 @@ std::string generateResult(Struct* s) {
         if (!bake.empty()) {
             // The return value is empty for types that don't have a
             // preamble-defined bake functions, like all custom structs
-            Result = fmt::format_to(Result, bake);
+            result += bake;
         }
     }
 
 
-    Result = writeStructConverter(Result, s);
+    result += writeStructConverter(s);
 
     std::string fqName;
     if (s->attributes.namespaceSpecifier.empty()) {
@@ -461,10 +450,10 @@ std::string generateResult(Struct* s) {
 
         std::string_view bake = bakeFunctionForType(type);
         assert(!bake.empty());
-        Result = fmt::format_to(Result, bake);
+        result += bake;
     }
 
-    Result = fmt::format_to(Result,
+    result += fmt::format(
         R"(
 }} // namespace internal
 
@@ -479,23 +468,13 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 );
 
     for (Variable* var : s->variables) {
-        Result = fmt::format_to(Result,
+        result += fmt::format(
             "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
         );
     }
 
-    Result = fmt::format_to(Result, "    return res;\n}}\n}} // namespace codegen\n");
-
-
-    if (PrintMemoryUsage) {
-        print(
-            "Memory usage:   Result(%5lli/%i)    Scratch(%5lli/%i)\n",
-            ScratchSpace - ScratchSpaceBase, BufferSize,
-            Result - ResultBase, BufferSize
-        );
-    }
-
-    return std::string(ResultBase, Result - ResultBase);
+    result += fmt::format("    return res;\n}}\n}} // namespace codegen\n");
+    return result;
 }
 
 std::string handleCode(std::string_view code, std::string_view path) {
@@ -519,30 +498,13 @@ std::string handleCode(std::string_view code, std::string_view path) {
         ));
     }
 
-    auto it = std::find_if(
-        MemoryPool.begin(), MemoryPool.end(),
-        [](const Memory& m) { return m.id == std::this_thread::get_id(); }
-    );
-    if (it == MemoryPool.end()) {
-        Memory m;
-        m.ScratchSpace = new char[BufferSize];
-        MemoryPool.push_back(m);
-        it = MemoryPool.end() - 1;
-    }
-
-    ScratchSpaceBase = it->ScratchSpace;
-
-    ScratchSpace = ScratchSpaceBase;
-    std::fill(ScratchSpaceBase, ScratchSpaceBase + BufferSize - 1, '\0');
-
-
     Struct* rootStruct = parseRootStruct(content);
     std::string genContent = generateResult(rootStruct);
 
     return genContent;
 }
 
-void handleFile(std::filesystem::path path) {
+Result handleFile(std::filesystem::path path) {
     std::ifstream f(path);
     std::string res = std::string(std::istreambuf_iterator<char>{f}, {});
     f.close();
@@ -552,10 +514,8 @@ void handleFile(std::filesystem::path path) {
     std::string genContent = handleCode(res, p);
 
     if (genContent.empty()) {
-        return;
+        return Result::NotProcessed;
     }
-
-    AllFiles++;
 
     std::filesystem::path destination = path;
     destination.replace_extension();
@@ -587,6 +547,13 @@ void handleFile(std::filesystem::path path) {
 
     if (shouldWriteFile || AlwaysOutputFiles) {
         print("Processed file '%s'\n", path.filename().string().c_str());
-        ChangedFiles++;
+
+        std::ofstream r(destination);
+        r.write(genContent.data(), genContent.size());
+
+        return Result::Processed;
+    }
+    else {
+        return Result::Skipped;
     }
 }

@@ -24,7 +24,6 @@
 
 #include "parsing.h"
 
-#include "storage.h"
 #include "types.h"
 #include "util.h"
 #include <fmt/format.h>
@@ -117,8 +116,7 @@ Variable::Attributes parseAttributes(std::string_view line) {
 Struct* parseStruct(std::string_view line) {
     assert(!line.empty());
 
-    Struct* s = new (ScratchSpace) Struct;
-    ScratchSpace += sizeof(Struct);
+    Struct* s = new Struct;
 
     size_t cursor = line.find(' ');
     assert(line.substr(0, cursor) == "struct");
@@ -153,8 +151,7 @@ Struct* parseStruct(std::string_view line) {
 Enum* parseEnum(std::string_view line) {
     assert(!line.empty());
 
-    Enum* e = new (ScratchSpace) Enum;
-    ScratchSpace += sizeof(Enum);
+    Enum* e = new Enum;
 
     size_t cursor = line.find(' ', line.find(' ') + 1);
     assert(line.substr(0, cursor) == "enum class");
@@ -173,8 +170,7 @@ Enum* parseEnum(std::string_view line) {
 EnumElement* parseEnumElement(std::string_view line) {
     assert(!line.empty());
 
-    EnumElement* e = new (ScratchSpace) EnumElement;
-    ScratchSpace += sizeof(EnumElement);
+    EnumElement* e = new EnumElement;
 
     if (line.back() == ',') {
         line.remove_suffix(1);
@@ -228,8 +224,7 @@ Variable* parseVariable(std::string_view line) {
         ));
     }
 
-    Variable* res = new (ScratchSpace) Variable;
-    ScratchSpace += sizeof(Variable);
+    Variable* res = new Variable;
 
     res->type = line.substr(0, p1);
     res->name = line.substr(p1 + 1, p2 - p1 - 1);

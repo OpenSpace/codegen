@@ -26,7 +26,6 @@
 #include "parsing.h"
 #include "settings.h"
 #include "snippets.h"
-#include "storage.h"
 #include "types.h"
 #include "util.h"
 #include "verifier.h"
@@ -50,6 +49,10 @@
 //#define USE_MULTITHREADED_GENERATION
 #include <execution>
 #endif // WIN32
+
+long long totalTime = 0;
+std::atomic_int ChangedFiles = 0;
+std::atomic_int AllFiles = 0;
 
 int main(int argc, char** argv) {
     if (argc != 3) {
@@ -87,6 +90,8 @@ int main(int argc, char** argv) {
             }
         }
 
+
+
         std::for_each(
 #ifdef USE_MULTITHREADED_GENERATION
             std::execution::par_unseq,
@@ -94,7 +99,16 @@ int main(int argc, char** argv) {
             entries.begin(), entries.end(),
             [](const fs::directory_entry& p) {
                 try {
-                    handleFile(p.path());
+                    auto b = std::chrono::high_resolution_clock::now();
+                    Result res = handleFile(p.path());
+                    auto e = std::chrono::high_resolution_clock::now();
+                    if (res == Result::Processed) {
+                        ChangedFiles++;
+                        totalTime += (e - b).count();
+                    }
+                    if (res != Result::Skipped) {
+                        AllFiles++;
+                    }
                 }
                 catch (const std::runtime_error& e) {
                     print("%s: %s\n", p.path().string().c_str(), e.what());
@@ -104,14 +118,14 @@ int main(int argc, char** argv) {
         );
 
         auto end = std::chrono::high_resolution_clock::now();
-        const float ms = static_cast<int>((end - beg).count()) / 1000000.f;
+        const double ms = (end - beg).count() / 1000000.0;
 
         const int nChangedFiles = ChangedFiles.load();
         const int nAllFiles = AllFiles.load();
 
         if (AlwaysOutputFiles) {
             if (PrintTiming) {
-                std::cout << fmt::format("Force overwrite all files in {} ms\n", ms);
+                std::cout << fmt::format("Force overwrite all files in {} ms.  Pure time: {} ms", ms, totalTime / 1000000.0);
             }
             else {
                 std::cout << "Force overwrite all files\n";
@@ -120,7 +134,7 @@ int main(int argc, char** argv) {
         else {
             if (PrintTiming) {
                 std::cout << fmt::format(
-                    "{}/{} files changed in {} ms\n", nChangedFiles, nAllFiles, ms
+                    "{}/{} files changed in {} ms.  Pure time: {} ms\n", nChangedFiles, nAllFiles, ms, totalTime / 1000000.0
                 );
             }
             else {

@@ -9,7 +9,6 @@ set(FILES
   settings.h
   snippets.h
   snippets.cpp
-  storage.h
   types.h
   types.cpp
   util.h

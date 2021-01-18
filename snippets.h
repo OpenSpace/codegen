@@ -33,9 +33,9 @@ namespace {
 
 
     constexpr const char BakeFunctionPreamble[] = R"(
-namespace codegen {{
-namespace internal {{
-template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) {{ static_assert(sizeof(T) == 0); }} // This should never be called
+namespace codegen {
+namespace internal {
+template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
 )";
 
     constexpr const char DocumentationPreamble[] = R"(

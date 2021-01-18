@@ -27,6 +27,12 @@
 
 #include <filesystem>
 
-void handleFile(std::filesystem::path path);
+enum class Result {
+    NotProcessed,
+    Processed,
+    Skipped
+};
+
+Result handleFile(std::filesystem::path path);
 
 #endif // __OPENSPACE_CODEGEN___CODEGEN___H__
