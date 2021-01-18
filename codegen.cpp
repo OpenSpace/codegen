@@ -400,9 +400,9 @@ std::string_view generateResult(Struct* s, std::filesystem::path path) {
     // For Linux, we need to delcare the functions in the following order or the overload
     // resolution picks the top fall back implentation and triggers a static_assert:
     // 1. <typename T> bakeTo(..., T*) { static_assert(false); } // fallback
-    // 2. bakeTo(..., T*) {...} for T=base types
-    // 3. <typename T> bakeTo(..., std::optional<T>*)   declaration only
-    // 4. <typename T> bakeTo(..., std::vector<T>*)   declaration only
+    // 2. <typename T> bakeTo(..., std::optional<T>*)   declaration only
+    // 3. <typename T> bakeTo(..., std::vector<T>*)   declaration only
+    // 4. bakeTo(..., T*) {...} for T=base types
     // 5. <typename T> bakeTo(..., T*) {...}  for T=custom structs
     // 6. <typename T> bakeTo(..., std::optional<T>*) {...}   definition
     // 7. <typename T> bakeTo(..., std::vector<T>*) {...}   definition
@@ -430,8 +430,7 @@ std::string_view generateResult(Struct* s, std::filesystem::path path) {
         if (!bake.empty()) {
             // The return value is empty for types that don't have a
             // preamble-defined bake functions, like all custom structs
-            std::memcpy(Result, bake.data(), bake.size());
-            Result += bake.size();
+            Result = fmt::format_to(Result, bake);
         }
     }
 
@@ -455,10 +454,7 @@ std::string_view generateResult(Struct* s, std::filesystem::path path) {
 
         std::string_view bake = bakeFunctionForType(type);
         assert(!bake.empty());
-        // The return value is empty for types that don't have a
-        // preamble-defined bake functions, like all custom structs
-        std::memcpy(Result, bake.data(), bake.size());
-        Result += bake.size();
+        Result = fmt::format_to(Result, bake);
     }
 
     Result = fmt::format_to(Result,
@@ -485,23 +481,11 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     return std::string_view(ResultBase, Result - ResultBase);
 }
 
-
-void handleFile(std::filesystem::path path) {
-    std::string res;
-    {
-        std::ifstream f(path);
-        res = std::string(std::istreambuf_iterator<char>{f}, {});
-    }
-    std::string_view content = strip(validCode(res));
+std::string_view handleCode(std::string_view code, std::string_view path) {
+    std::string_view content = strip(validCode(code));
     if (content.empty()) {
-        return;
+        return std::string_view();
     }
-    
-    AllFiles++;
-
-    std::filesystem::path destination = path;
-    destination.replace_extension();
-    destination.replace_filename(destination.filename().string() + "_codegen.cpp");
 
     // Some initial sanity checks
     if (std::string_view s = content.substr(0, 6); s != "struct") {
@@ -516,14 +500,6 @@ void handleFile(std::filesystem::path path) {
         throw std::runtime_error(fmt::format(
             "Block comments are not allowed:\n{}", content.substr(p, ErrorContext)
         ));
-    }
-
-    if (size_t p = res.find(destination.filename().string());
-        p == std::string_view::npos)
-    {
-        throw std::runtime_error(
-            "File does not include the generated file. This was probably a mistake"
-        );
     }
 
     auto it = std::find_if(
@@ -549,7 +525,23 @@ void handleFile(std::filesystem::path path) {
 
     Struct* rootStruct = parseRootStruct(content);
     std::string_view genContent = generateResult(rootStruct, path);
+    return genContent;
+}
 
+void handleFile(std::filesystem::path path) {
+    std::ifstream f(path);
+    std::string res = std::string(std::istreambuf_iterator<char>{f}, {});
+    f.close();
+
+
+    std::string p = path.string();
+    std::string_view genContent = handleCode(res, p);
+
+    if (genContent.empty()) {
+        return;
+    }
+
+    AllFiles++;
 
     if (PrintMemoryUsage) {
         print(
@@ -558,6 +550,10 @@ void handleFile(std::filesystem::path path) {
             Result - ResultBase, BufferSize
         );
     }
+
+    std::filesystem::path destination = path;
+    destination.replace_extension();
+    destination.replace_filename(destination.filename().string() + "_codegen.cpp");
 
     bool shouldWriteFile;
     if (std::filesystem::exists(destination)) {
