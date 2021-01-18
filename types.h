@@ -63,7 +63,6 @@ struct Struct : public StackElement {
     struct Attributes {
         std::string_view dictionary;
         std::string_view namespaceSpecifier;
-        bool noTypeCheck = true;
         bool noExhaustive = true;
     };
     Attributes attributes;

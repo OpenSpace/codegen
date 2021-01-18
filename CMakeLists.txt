@@ -8,6 +8,7 @@ set(FILES
   parsing.cpp
   settings.h
   snippets.h
+  snippets.cpp
   storage.h
   types.h
   types.cpp

@@ -39,50 +39,6 @@
 #include <vector>
 
 namespace {
-    std::string_view bakeFunctionForType(std::string_view type) {
-        assert(!type.empty());
-        static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
-            { "bool",           BakeFunctionBool },
-            { "int",            BakeFunctionInt },
-            { "double",         BakeFunctionDouble },
-            { "float",          BakeFunctionFloat },
-            { "std::string",    BakeFunctionString },
-            { "glm::ivec2",     BakeFunctionIVec2 },
-            { "glm::ivec3",     BakeFunctionIVec3 },
-            { "glm::ivec4",     BakeFunctionIVec4 },
-            { "glm::dvec2",     BakeFunctionDVec2 },
-            { "glm::dvec3",     BakeFunctionDVec3 },
-            { "glm::dvec4",     BakeFunctionDVec4 },
-            { "glm::vec2",      BakeFunctionVec2 },
-            { "glm::vec3",      BakeFunctionVec3 },
-            { "glm::vec4",      BakeFunctionVec4 },
-            { "glm::mat2x2",    BakeFunctionMat2x2 },
-            { "glm::mat2x3",    BakeFunctionMat2x3 },
-            { "glm::mat2x4",    BakeFunctionMat2x4 },
-            { "glm::mat3x2",    BakeFunctionMat3x2 },
-            { "glm::mat3x3",    BakeFunctionMat3x3 },
-            { "glm::mat3x4",    BakeFunctionMat3x4 },
-            { "glm::mat4x2",    BakeFunctionMat4x2 },
-            { "glm::mat4x3",    BakeFunctionMat4x3 },
-            { "glm::mat4x4",    BakeFunctionMat4x4 },
-            { "glm::dmat2x2",   BakeFunctionDMat2x2 },
-            { "glm::dmat2x3",   BakeFunctionDMat2x3 },
-            { "glm::dmat2x4",   BakeFunctionDMat2x4 },
-            { "glm::dmat3x2",   BakeFunctionDMat3x2 },
-            { "glm::dmat3x3",   BakeFunctionDMat3x3 },
-            { "glm::dmat3x4",   BakeFunctionDMat3x4 },
-            { "glm::dmat4x2",   BakeFunctionDMat4x2 },
-            { "glm::dmat4x3",   BakeFunctionDMat4x3 },
-            { "glm::dmat4x4",   BakeFunctionDMat4x4 },
-            { "std::monostate", BakeFunctionMonostate },
-            { "std::optional",  BakeFunctionOptional },
-            { "std::vector",    BakeFunctionVector }
-        };
-
-        const auto it = BakeFunctions.find(type);
-        return it != BakeFunctions.end() ? it->second : std::string_view();
-    }
-
     bool isBasicType(std::string_view type) {
         // Stand-in for a list of basic types that are supported
         std::string_view bake = bakeFunctionForType(type);
@@ -273,15 +229,6 @@ char* writeStructDocumentation(char* buffer, Struct* s) {
         "    TableVerifier* {} = new TableVerifier;\n",
         name
     );
-
-    const bool isRootStruct = s->parent == nullptr;
-    if (isRootStruct && !s->attributes.noTypeCheck) {
-        buffer = fmt::format_to(
-            buffer,
-            "    {}->documentations.push_back({{ \"Type\", new StringEqualVerifier(\"{}\"), Optional::No }});\n",
-            name, s->attributes.dictionary
-        );
-    }
 
     for (StackElement* e : s->children) {
         if (e->type == StackElement::Type::Struct) {
@@ -622,9 +569,9 @@ void handleFile(std::filesystem::path path) {
     if (size_t p = res.find(destination.filename().string());
         p == std::string_view::npos)
     {
-        //throw std::runtime_error(
-        //    "File does not include the generated file. This was probably a mistake"
-        //);
+        throw std::runtime_error(
+            "File does not include the generated file. This was probably a mistake"
+        );
     }
 
     auto it = std::find_if(
@@ -647,130 +594,10 @@ void handleFile(std::filesystem::path path) {
     std::fill(ScratchSpaceBase, ScratchSpaceBase + BufferSize - 1, '\0');
     std::fill(ResultBase, ResultBase + BufferSize - 1, '\0');
 
-    Struct* rootStruct = nullptr;
-    std::vector<StackElement*> stack;
-    
-    std::string variableBuffer;
-    std::string commentBuffer;
 
-    size_t cursor = 0;
-    while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(content, &cursor);
-        if (line.empty()) {
-            continue;
-        }
-
-        // If the variable buffer is filled, then we are in a continuation of a variable
-        // definition
-        if (variableBuffer.empty()) {
-            if (startsWith(line, "//")) {
-                std::string_view comment = parseCommentLine(line);
-                commentBuffer.append(comment);
-                commentBuffer.append(" ");
-                continue;
-            }
-
-            if (startsWith(line, "struct")) {
-                if (!stack.empty() &&
-                    stack.back()->type != StackElement::Type::Struct)
-                {
-                    throw std::runtime_error(fmt::format(
-                        "Struct definition found outside a parent struct.\n{}",
-                        line
-                    ));
-                }
-
-                Struct* s = parseStruct(line);
-                if (!stack.empty()) {
-                    assert(stack.back()->type == StackElement::Type::Struct);
-                    s->parent = static_cast<Struct*>(stack.back());
-                    s->parent->children.push_back(s);
-                }
-
-                stack.push_back(s);
-                s->comment = commentBuffer;
-                //state.structComments[std::string(s->name)] = commentBuffer;
-                commentBuffer.clear();
-
-                if (!s->attributes.dictionary.empty()) {
-                    if (rootStruct) {
-                        throw std::runtime_error(fmt::format(
-                            "Only the root struct can have a [[codegen::Dictionary()]] "
-                            "attribute, found a second one here:\n{}",
-                            s->name
-                        ));
-                    }
-                    rootStruct = s;
-                }
-                continue;
-            }
-
-            if (startsWith(line, "enum class")) {
-                Enum* e = parseEnum(line);
-                Struct* parent = static_cast<Struct*>(stack.back());
-                assert(parent->type == StackElement::Type::Struct);
-                parent->children.push_back(e);
-                e->parent = parent;
-                stack.push_back(e);
-                e->comment = commentBuffer;
-                commentBuffer.clear();
-                continue;
-            }
-
-            if (startsWith(line, "enum")) {
-                throw std::runtime_error(
-                    "Old-style 'enum' not supported. Use 'enum class' instead"
-                );
-            }
-
-            if (startsWith(line, "};")) {
-                stack.pop_back();
-                continue;
-            }
-        }
-
-        // If we got this far, we must be in a variable definition or an enum defintion
-        // if the highest stack element is a struct, we are in a variable definition, if
-        // the highest stack element is an enum, we are in an enum definition
-        StackElement* e = stack.back();
-        switch (e->type) {
-            case StackElement::Type::Struct:
-                if (line.find(';') == std::string_view::npos) {
-                    // No semicolon on this line but we are looking for a variable, so we
-                    // are in a definition line that spans multiple lines
-                    variableBuffer += std::string(line) + " ";
-                    continue;
-                }
-                if (variableBuffer.empty()) {
-                    Variable* var = parseVariable(line);
-                    var->comment = commentBuffer;
-                    commentBuffer.clear();
-                    static_cast<Struct*>(e)->variables.push_back(var);
-                }
-                else {
-                    variableBuffer += std::string(line);
-                    Variable* var = parseVariable(variableBuffer);
-                    var->comment = commentBuffer;
-                    commentBuffer.clear();
-                    static_cast<Struct*>(e)->variables.push_back(var);
-                    variableBuffer.clear();
-                }
-                break;
-            case StackElement::Type::Enum: {
-                EnumElement* el = parseEnumElement(line);
-                static_cast<Enum*>(e)->elements.push_back(el);
-                break;
-            }
-        }
-    }
-
-    if (!rootStruct || rootStruct->attributes.dictionary.empty()) {
-        throw std::runtime_error(
-            "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
-        );
-    }
-
+    Struct* rootStruct = parseRootStruct(content);
     std::string_view genContent = generateResult(rootStruct, path);
+
 
     if (PrintMemoryUsage) {
         print(

@@ -22,49 +22,48 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "types.h"
+#include "parsing.h"
 
 #include "storage.h"
+#include "types.h"
 #include "util.h"
 #include <fmt/format.h>
 #include <cassert>
 
-namespace {
-    std::string_view parseAttribute(std::string_view block, std::string_view name) {
-        assert(!block.empty());
-        assert(!name.empty());
+std::string_view parseAttribute(std::string_view block, std::string_view name) {
+    assert(!block.empty());
+    assert(!name.empty());
 
-        std::string key = std::string("codegen::" + std::string(name));
-        const size_t p = block.find(key);
-        if (p == std::string_view::npos) {
-            return std::string_view();
-        }
-        const size_t beg = block.find('(', p) + 1;
-
-        if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
-            throw std::runtime_error(fmt::format(
-                "Attribute parameter has unterminated parameter list:\n{}", block
-            ));
-        }
-
-        size_t cursor = beg;
-        int paranthesisCount = 1;
-        while (cursor < block.size() && paranthesisCount > 0) {
-            if (block[cursor] == '(') {
-                paranthesisCount++;
-            }
-            if (block[cursor] == ')') {
-                paranthesisCount--;
-            }
-
-            cursor++;
-        }
-        cursor--;
-
-        std::string_view content = block.substr(beg, cursor - beg);
-        return content;
+    std::string key = std::string("codegen::" + std::string(name));
+    const size_t p = block.find(key);
+    if (p == std::string_view::npos) {
+        return std::string_view();
     }
-} // namespace
+    const size_t beg = block.find('(', p) + 1;
+
+    if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
+        throw std::runtime_error(fmt::format(
+            "Attribute parameter has unterminated parameter list:\n{}", block
+        ));
+    }
+
+    size_t cursor = beg;
+    int paranthesisCount = 1;
+    while (cursor < block.size() && paranthesisCount > 0) {
+        if (block[cursor] == '(') {
+            paranthesisCount++;
+        }
+        if (block[cursor] == ')') {
+            paranthesisCount--;
+        }
+
+        cursor++;
+    }
+    cursor--;
+
+    std::string_view content = block.substr(beg, cursor - beg);
+    return content;
+}
 
 std::string_view parseCommentLine(std::string_view line) {
     assert(line.size() >= 2);
@@ -252,4 +251,131 @@ Variable* parseVariable(std::string_view line) {
     }
 
     return res;
+}
+
+Struct* parseRootStruct(std::string_view code) {
+    Struct* rootStruct = nullptr;
+    std::vector<StackElement*> stack;
+
+    std::string variableBuffer;
+    std::string commentBuffer;
+
+    size_t cursor = 0;
+    while (cursor != std::string_view::npos) {
+        std::string_view line = extractLine(code, &cursor);
+        if (line.empty()) {
+            continue;
+        }
+
+        // If the variable buffer is filled, then we are in a continuation of a variable
+        // definition
+        if (variableBuffer.empty()) {
+            if (startsWith(line, "//")) {
+                std::string_view comment = parseCommentLine(line);
+                commentBuffer.append(comment);
+                commentBuffer.append(" ");
+                continue;
+            }
+
+            if (startsWith(line, "struct")) {
+                if (!stack.empty() &&
+                    stack.back()->type != StackElement::Type::Struct)
+                {
+                    throw std::runtime_error(fmt::format(
+                        "Struct definition found outside a parent struct.\n{}",
+                        line
+                    ));
+                }
+
+                Struct* s = parseStruct(line);
+                if (!stack.empty()) {
+                    assert(stack.back()->type == StackElement::Type::Struct);
+                    s->parent = static_cast<Struct*>(stack.back());
+                    s->parent->children.push_back(s);
+                }
+
+                stack.push_back(s);
+                s->comment = commentBuffer;
+                //state.structComments[std::string(s->name)] = commentBuffer;
+                commentBuffer.clear();
+
+                if (!s->attributes.dictionary.empty()) {
+                    if (rootStruct) {
+                        throw std::runtime_error(fmt::format(
+                            "Only the root struct can have a [[codegen::Dictionary()]] "
+                            "attribute, found a second one here:\n{}",
+                            s->name
+                        ));
+                    }
+                    rootStruct = s;
+                }
+                continue;
+            }
+
+            if (startsWith(line, "enum class")) {
+                Enum* e = parseEnum(line);
+                Struct* parent = static_cast<Struct*>(stack.back());
+                assert(parent->type == StackElement::Type::Struct);
+                parent->children.push_back(e);
+                e->parent = parent;
+                stack.push_back(e);
+                e->comment = commentBuffer;
+                commentBuffer.clear();
+                continue;
+            }
+
+            if (startsWith(line, "enum")) {
+                throw std::runtime_error(
+                    "Old-style 'enum' not supported. Use 'enum class' instead"
+                );
+            }
+
+            if (startsWith(line, "};")) {
+                stack.pop_back();
+                continue;
+            }
+        }
+
+        // If we got this far, we must be in a variable definition or an enum defintion
+        // if the highest stack element is a struct, we are in a variable definition, if
+        // the highest stack element is an enum, we are in an enum definition
+        StackElement* e = stack.back();
+        switch (e->type) {
+        case StackElement::Type::Struct:
+            if (line.find(';') == std::string_view::npos) {
+                // No semicolon on this line but we are looking for a variable, so we
+                // are in a definition line that spans multiple lines
+                variableBuffer += std::string(line) + " ";
+                continue;
+            }
+            if (variableBuffer.empty()) {
+                Variable* var = parseVariable(line);
+                var->comment = commentBuffer;
+                commentBuffer.clear();
+                static_cast<Struct*>(e)->variables.push_back(var);
+            }
+            else {
+                variableBuffer += std::string(line);
+                Variable* var = parseVariable(variableBuffer);
+                var->comment = commentBuffer;
+                commentBuffer.clear();
+                static_cast<Struct*>(e)->variables.push_back(var);
+                variableBuffer.clear();
+            }
+            break;
+        case StackElement::Type::Enum: {
+            EnumElement* el = parseEnumElement(line);
+            static_cast<Enum*>(e)->elements.push_back(el);
+            break;
+        }
+        }
+    }
+
+    if (!rootStruct || rootStruct->attributes.dictionary.empty()) {
+        throw std::runtime_error(
+            "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
+        );
+    }
+
+    return rootStruct;
 }

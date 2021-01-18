@@ -28,7 +28,7 @@
 constexpr const bool PrintMemoryUsage = true;
 constexpr const bool PrintTiming = true;
 constexpr const bool AlwaysOutputFiles = false;
-constexpr const bool PreventFileChange = false;
+constexpr const bool PreventFileChange = true;
 
 
 
