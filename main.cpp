@@ -84,8 +84,16 @@ int main(int argc, char** argv) {
         auto beg = std::chrono::high_resolution_clock::now();
 
         std::vector<fs::directory_entry> entries;
+        std::string extFolder = fmt::format(
+            "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
+        );
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
-            if (p.path().extension() == ".cpp") {
+            std::filesystem::path path = p.path();
+
+            if (path.extension() == ".cpp" &&
+                path.string().find("_codegen") == std::string::npos &&
+                path.string().find(extFolder) == std::string::npos)
+            {
                 entries.push_back(p);
             }
         }
