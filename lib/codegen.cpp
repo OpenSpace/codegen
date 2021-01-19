@@ -531,11 +531,10 @@ Result handleFile(std::filesystem::path path) {
         shouldWriteFile = true;
     }
 
+    std::filesystem::path debugDestination = destination;
+    debugDestination.replace_extension();
+    debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
     if (shouldWriteFile && PreventFileChange) {
-        std::filesystem::path debugDestination = destination;
-        debugDestination.replace_extension();
-        debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
-
         std::ofstream output(debugDestination);
         output.write(genContent.data(), genContent.size());
 
@@ -551,9 +550,11 @@ Result handleFile(std::filesystem::path path) {
         std::ofstream r(destination);
         r.write(genContent.data(), genContent.size());
 
+        std::filesystem::remove(debugDestination);
         return Result::Processed;
     }
     else {
+        std::filesystem::remove(debugDestination);
         return Result::Skipped;
     }
 }
