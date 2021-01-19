@@ -147,7 +147,7 @@ namespace {
 
             // We add artificial spaces between the multiline comments, which causes there to
             // be a stray space at the end
-            if (!comment.empty()) {
+            if (!comment.empty() && comment.back() == ' ') {
                 comment.pop_back();
             }
             comment = fmt::format("\"{}\"", comment);
