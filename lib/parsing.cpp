@@ -255,7 +255,7 @@ Struct* parseRootStruct(std::string_view code) {
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
         std::string_view line = extractLine(code, &cursor);
-        if (line.empty()) {
+        if (strip(line).empty()) {
             continue;
         }
 
@@ -365,11 +365,11 @@ Struct* parseRootStruct(std::string_view code) {
                     static_cast<Struct*>(e)->variables.push_back(var);
                     variableBuffer.clear();
                 }
-                break;
+                continue;
             case StackElement::Type::Enum: {
                 EnumElement* el = parseEnumElement(line);
                 static_cast<Enum*>(e)->elements.push_back(el);
-                break;
+                continue;
             }
         }
     }

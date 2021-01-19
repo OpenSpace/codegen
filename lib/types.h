@@ -36,7 +36,7 @@ struct StackElement {
     enum class Type { Struct, Enum };
     Type type;
 
-    std::string_view name;
+    std::string name;
     std::string comment;
     Struct* parent = nullptr;
 };
@@ -74,8 +74,8 @@ struct Struct : public StackElement {
     std::vector<Variable*> variables;
 
     struct Attributes {
-        std::string_view dictionary;
-        std::string_view namespaceSpecifier;
+        std::string dictionary;
+        std::string namespaceSpecifier;
         bool noExhaustive = true; // @TODO change to false once OpenSpace works with it
     };
     Attributes attributes;
@@ -87,10 +87,10 @@ std::string fqn(const StackElement* s, std::string_view separator);
 
 
 struct EnumElement {
-    std::string_view name;
+    std::string name;
 
     struct Attributes {
-        std::string_view key;
+        std::string key;
     };
     Attributes attributes;
 };

@@ -34,14 +34,15 @@ namespace {
 } // namespace
 
 std::string_view strip(std::string_view sv) {
-    const size_t strBegin = sv.find_first_not_of(' ');
-    if (strBegin == std::string::npos) {
-        return sv;
+    while (!sv.empty() && sv[0] == ' ') {
+        sv.remove_prefix(1);
     }
 
-    const size_t strEnd = sv.find_last_not_of(' ');
-    const size_t strRange = strEnd - strBegin + 1;
-    return sv.substr(strBegin, strRange);
+    while (!sv.empty() && sv[sv.size() - 1] == ' ') {
+        sv.remove_suffix(1);
+    }
+
+    return sv;
 }
 
 bool startsWith(std::string_view lhs, std::string_view rhs) {
