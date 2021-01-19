@@ -49,7 +49,20 @@ struct Variable {
 
     std::string comment;
 
-    using Attributes = std::map<std::string, std::string, std::less<>>;
+    struct Attributes {
+        std::string key;
+        std::string reference;
+        std::string inrange;
+        std::string notinrange;
+        std::string less;
+        std::string lessequal;
+        std::string greater;
+        std::string greaterequal;
+        std::string unequal;
+        std::string inlist;
+        std::string notinlist;
+        std::string annotation;
+    };
     Attributes attributes;
 };
 

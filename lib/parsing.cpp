@@ -75,40 +75,40 @@ std::string_view parseCommentLine(std::string_view line) {
 Variable::Attributes parseAttributes(std::string_view line) {
     Variable::Attributes res;
     if (std::string_view a = parseAttribute(line, "key"); !a.empty()) {
-        res["key"] = a;
+        res.key = a;
     }
     if (std::string_view a = parseAttribute(line, "reference"); !a.empty()) {
-        res["reference"] = a;
+        res.reference = a;
     }
     if (std::string_view a = parseAttribute(line, "inrange"); !a.empty()) {
-        res["inrange"] = a;
+        res.inrange = a;
     }
     if (std::string_view a = parseAttribute(line, "notinrange"); !a.empty()) {
-        res["notinrange"] = a;
+        res.notinrange = a;
     }
     if (std::string_view a = parseAttribute(line, "less"); !a.empty()) {
-        res["less"] = a;
+        res.less = a;
     }
     if (std::string_view a = parseAttribute(line, "lessequal"); !a.empty()) {
-        res["lessequal"] = a;
+        res.lessequal = a;
     }
     if (std::string_view a = parseAttribute(line, "greater"); !a.empty()) {
-        res["greater"] = a;
+        res.greater = a;
     }
     if (std::string_view a = parseAttribute(line, "greaterequal"); !a.empty()) {
-        res["greaterequal"] = a;
+        res.greaterequal = a;
     }
     if (std::string_view a = parseAttribute(line, "unequal"); !a.empty()) {
-        res["unequal"] = a;
+        res.unequal = a;
     }
     if (std::string_view a = parseAttribute(line, "inlist"); !a.empty()) {
-        res["inlist"] = a;
+        res.inlist = a;
     }
     if (std::string_view a = parseAttribute(line, "notinlist"); !a.empty()) {
-        res["notinlist"] = a;
+        res.notinlist = a;
     }
     if (std::string_view a = parseAttribute(line, "annotation"); !a.empty()) {
-        res["annotation"] = a;
+        res.annotation = a;
     }
     return res;
 }
@@ -234,13 +234,12 @@ Variable* parseVariable(std::string_view line) {
     }
 
     std::string variableName;
-    if (auto it = res->attributes.find("key"); it != res->attributes.end()) {
-        assert(!it->second.empty());
-        res->key = std::string(it->second);
+    if (!res->attributes.key.empty()) {
+        res->key = std::string(res->attributes.key);
     }
     else {
         res->key = std::string(res->name);
-        res->key[0] = static_cast<char>(::toupper(res->key[0]));
+        res->key[0] = static_cast<char>(::toupper(res->name[0]));
     }
 
     return res;

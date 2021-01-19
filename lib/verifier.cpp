@@ -107,14 +107,14 @@ namespace {
             return;
         }
 
-        for (std::string_view attr : it->second) {
-            if (auto it = attributes.find(attr); it != attributes.end()) {
-                assert(!it->second.empty());
-                throw std::runtime_error(fmt::format(
-                    "Attribute '{}' not supported for type '{}'", attr, type
-                ));
-            }
-        }
+        //for (std::string_view attr : it->second) {
+        //    if (auto it = attributes.find(attr); it != attributes.end()) {
+        //        assert(!it->second.empty());
+        //        throw std::runtime_error(fmt::format(
+        //            "Attribute '{}' not supported for type '{}'", attr, type
+        //        ));
+        //    }
+        //}
     }
 
 
@@ -136,72 +136,70 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
     if (type == "bool") { return "BoolVerifier"; }
     else if (type == "int") {
         std::string res = "IntVerifier";
-        if (auto it = attributes.find("inrange"); it != attributes.end()) {
-            res = addQualifier(res, "InRangeVerifier", it->second);
+        if (!attributes.inrange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", attributes.inrange);
         }
-        if (auto it = attributes.find("notinrange"); it != attributes.end()) {
-            res = addQualifier(res, "NotInRangeVerifier", it->second);
+        if (!attributes.notinrange.empty()) {
+            res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
         }
-        if (auto it = attributes.find("less"); it != attributes.end()) {
-            res = addQualifier(res, "LessVerifier", it->second);
+        if (!attributes.less.empty()) {
+            res = addQualifier(res, "LessVerifier", attributes.less);
         }
-        if (auto it = attributes.find("lessequal"); it != attributes.end()) {
-            res = addQualifier(res, "LessEqualVerifier", it->second);
+        if (!attributes.lessequal.empty()) {
+            res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
         }
-        if (auto it = attributes.find("greater"); it != attributes.end()) {
-            res = addQualifier(res, "GreaterVerifier", it->second);
+        if (!attributes.greater.empty()) {
+            res = addQualifier(res, "GreaterVerifier", attributes.greater);
         }
-        if (auto it = attributes.find("greaterequal"); it != attributes.end()) {
-            res = addQualifier(res, "GreaterEqualVerifier", it->second);
+        if (!attributes.greaterequal.empty()) {
+            res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
         }
-        if (auto it = attributes.find("unequal"); it != attributes.end()) {
-            res = addQualifier(res, "UnequalVerifier", it->second);
+        if (!attributes.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
         }
         return res;
     }
     else if (type == "double" || type == "float") {
         std::string res = "DoubleVerifier";
-        if (auto it = attributes.find("inrange"); it != attributes.end()) {
-            res = addQualifier(res, "InRangeVerifier", it->second);
+        if (!attributes.inrange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", attributes.inrange);
         }
-        if (auto it = attributes.find("notinrange"); it != attributes.end()) {
-            res = addQualifier(res, "NotInRangeVerifier", it->second);
+        if (!attributes.notinrange.empty()) {
+            res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
         }
-        if (auto it = attributes.find("less"); it != attributes.end()) {
-            res = addQualifier(res, "LessVerifier", it->second);
+        if (!attributes.less.empty()) {
+            res = addQualifier(res, "LessVerifier", attributes.less);
         }
-        if (auto it = attributes.find("lessequal"); it != attributes.end()) {
-            res = addQualifier(res, "LessEqualVerifier", it->second);
+        if (!attributes.lessequal.empty()) {
+            res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
         }
-        if (auto it = attributes.find("greater"); it != attributes.end()) {
-            res = addQualifier(res, "GreaterVerifier", it->second);
+        if (!attributes.greater.empty()) {
+            res = addQualifier(res, "GreaterVerifier", attributes.greater);
         }
-        if (auto it = attributes.find("greaterequal"); it != attributes.end()) {
-            res = addQualifier(res, "GreaterEqualVerifier", it->second);
+        if (!attributes.greaterequal.empty()) {
+            res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
         }
-        if (auto it = attributes.find("unequal"); it != attributes.end()) {
-            res = addQualifier(res, "UnequalVerifier", it->second);
+        if (!attributes.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
         }
         return res;
     }
     else if (type == "std::string") {
         std::string res = "StringVerifier";
-        if (auto it = attributes.find("inlist"); it != attributes.end()) {
-            std::string param = '{' + std::string(it->second) + '}';
+        if (!attributes.inlist.empty()) {
+            std::string param = '{' + std::string(attributes.inlist) + '}';
             res = addQualifier(res, "InListVerifier", param);
         }
-        if (auto it = attributes.find("unequal"); it != attributes.end()) {
-            res = addQualifier(res, "UnequalVerifier", it->second);
+        if (!attributes.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
         }
-        if (auto it = attributes.find("annotation"); it != attributes.end()) {
-            if (attributes.find("inlist") != attributes.end() ||
-                attributes.find("unequal") != attributes.end())
-            {
+        if (!attributes.annotation.empty()) {
+            if (!attributes.inlist.empty() || !attributes.unequal.empty()) {
                 throw std::runtime_error(fmt::format(
                     "When using the annotation attribute, no other attribute can be used:\n{}", type
                 ));
             }
-            std::string param = "\"" + std::string(it->second) + "\"";
+            std::string param = "\"" + std::string(attributes.annotation) + "\"";
             res = addQualifier(res, "AnnotationVerifier", param);
         }
         return res;
@@ -234,8 +232,7 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
     else if (type == "glm::mat4x3") { return "DoubleMatrix4x3Verifier"; }
     else if (type == "glm::mat4x4") { return "DoubleMatrix4x4Verifier"; }
     else if (type == "std::monostate") {
-        const auto it = attributes.find("reference");
-        if (it == attributes.end()) {
+        if (attributes.reference.empty()) {
             throw std::runtime_error(
                 "Using a monostate needs to have an attribute 'reference'"
             );
@@ -243,9 +240,9 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
 
         return fmt::format(
             "ReferencingVerifier({})",
-            it->second == "this" ?
+            attributes.reference == "this" ?
             fmt::format(R"("{}")", dictionaryName) :
-            std::string(it->second)
+            std::string(attributes.reference)
         );
     }
     else {
