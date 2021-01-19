@@ -25,8 +25,8 @@
 add_executable(
   codegentest
   main.cpp
-  struct.cpp
-  variable.cpp
+  parsing_struct.cpp
+  parsing_variable.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
