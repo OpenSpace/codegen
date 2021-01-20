@@ -27,7 +27,43 @@ add_executable(
   main.cpp
   parsing_struct.cpp
   parsing_variable.cpp
+
+  execution/basic_types.cpp
+  execution/basic_types_optional.cpp
+  execution/basic_types_optional_vector.cpp
+  execution/basic_types_vector.cpp
+  execution/simple.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
-target_link_libraries(codegentest PUBLIC codegen-lib)
+target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-module-collection)
+
+if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
+  # wanted by CEF
+  set(PROJECT_ARCH "x86_64")
+
+  if (WIN32)
+    set(RESOURCE_FILE ${OPENSPACE_APPS_DIR}/OpenSpace/openspace.rc)
+  endif ()
+
+  # Add the CEF binary distribution's cmake/ directory to the module path and
+  # find CEF to initialize it properly.
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${WEBBROWSER_MODULE_PATH}/cmake")
+  include(webbrowser_helpers)
+
+  set_cef_targets("${CEF_ROOT}" codegentest)
+  run_cef_platform_config("${CEF_ROOT}" "${CEF_TARGET}" "${WEBBROWSER_MODULE_PATH}")
+elseif ()
+  message(WARNING "Web configured to be included, but no CEF_ROOT was found, please try configuring CMake again.")
+endif ()
+
+# It is important that the __codegen.h does not actually exist so that this target
+# is never considered as finished
+add_custom_target(run_test_codegen ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h")
+add_dependencies(run_test_codegen codegen)
+add_dependencies(codegentest run_test_codegen)
+add_custom_command(
+  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
+  COMMAND codegen ARGS "--folder" "${CMAKE_CURRENT_SOURCE_DIR}/execution"
+  VERBATIM
+)

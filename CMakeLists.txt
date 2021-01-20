@@ -25,7 +25,6 @@
 project(Codegen VERSION 1.0)
 
 add_subdirectory(lib)
-add_subdirectory(tests)
 
 add_executable(codegen main.cpp)
 target_link_libraries(codegen PUBLIC codegen-lib)
