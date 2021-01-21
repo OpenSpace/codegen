@@ -33,7 +33,7 @@ namespace openspace { struct Simple; }
 namespace {
     struct [[codegen::Dictionary(Simple)]] Parameters {
         // value documentation
-        int value;
+        float value;
     };
 #include "simple_codegen.cpp"
 } // namespace
@@ -43,7 +43,7 @@ TEST_CASE("Simple bake", "[verifier]") {
     d.setValue("Value", 5.0);
 
     Parameters p = codegen::bake<Parameters>(d);
-    REQUIRE(p.value == 5);
+    REQUIRE(p.value == 5.f);
 }
 
 TEST_CASE("Simple documentation", "[verifier]") {
@@ -55,7 +55,6 @@ TEST_CASE("Simple documentation", "[verifier]") {
     REQUIRE(e.key == "Value");
     REQUIRE(!e.optional);
     REQUIRE(e.documentation == "value documentation");
-    REQUIRE(e.verifier->type() == "Integer");
-    IntVerifier* v = dynamic_cast<IntVerifier*>(e.verifier.get());
-    REQUIRE(v != nullptr);
+    REQUIRE(e.verifier->type() == "Double");
+    REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
 }

@@ -33,7 +33,7 @@ std::string_view parseAttribute(std::string_view block, std::string_view name) {
     assert(!block.empty());
     assert(!name.empty());
 
-    std::string key = std::string("codegen::" + std::string(name));
+    std::string key = std::string("codegen::" + std::string(name) + "(");
     const size_t p = block.find(key);
     if (p == std::string_view::npos) {
         return std::string_view();

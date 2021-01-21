@@ -739,9 +739,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Boolean");
-        REQUIRE(
-            dynamic_cast<BoolVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<BoolVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
@@ -753,9 +751,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Integer");
-        REQUIRE(
-            dynamic_cast<IntVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
@@ -767,9 +763,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Double");
-        REQUIRE(
-            dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
@@ -781,9 +775,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Double");
-        REQUIRE(
-            dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[4];
@@ -795,9 +787,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "String");
-        REQUIRE(
-            dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[5];
@@ -809,9 +799,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<int>");
-        REQUIRE(
-            dynamic_cast<IntVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector2Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[6];
@@ -823,9 +811,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<int>");
-        REQUIRE(
-            dynamic_cast<IntVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector3Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[7];
@@ -837,9 +823,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<int>");
-        REQUIRE(
-            dynamic_cast<IntVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector4Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[8];
@@ -852,7 +836,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -866,7 +850,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -880,7 +864,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -894,7 +878,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -908,7 +892,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -922,7 +906,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -936,7 +920,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -950,7 +934,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -964,7 +948,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -978,7 +962,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -992,7 +976,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1006,7 +990,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1020,7 +1004,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1034,7 +1018,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1048,7 +1032,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1062,7 +1046,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1076,7 +1060,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1090,7 +1074,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1104,7 +1088,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1118,7 +1102,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1132,7 +1116,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1146,7 +1130,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1160,7 +1144,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
@@ -1174,7 +1158,7 @@ TEST_CASE("Basic Types Vector documentation", "[verifier]") {
         REQUIRE(t->documentations[0].key == "*");
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
 }

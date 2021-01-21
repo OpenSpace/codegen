@@ -15,7 +15,7 @@ template <typename T> openspace::documentation::Documentation doc() {
 template <> openspace::documentation::Documentation doc<openspace::Simple>() {
     using namespace openspace::documentation;
     TableVerifier* codegen_Parameters = new TableVerifier;
-    codegen_Parameters->documentations.push_back({"Value",new IntVerifier,Optional::No,"value documentation"});
+    codegen_Parameters->documentations.push_back({"Value",new DoubleVerifier,Optional::No,"value documentation"});
 
     openspace::documentation::Documentation d = { "Simple", "Simple", std::move(codegen_Parameters->documentations) };
     delete codegen_Parameters;
@@ -27,7 +27,7 @@ template <> openspace::documentation::Documentation doc<openspace::Simple>() {
 namespace codegen {
 namespace internal {
 template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }
 
 } // namespace internal
 

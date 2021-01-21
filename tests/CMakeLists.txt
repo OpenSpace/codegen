@@ -28,11 +28,14 @@ add_executable(
   parsing_struct.cpp
   parsing_variable.cpp
 
+  execution/attributes.cpp
   execution/basic_types.cpp
   execution/basic_types_optional.cpp
   execution/basic_types_optional_vector.cpp
   execution/basic_types_vector.cpp
+  execution/enums.cpp
   execution/simple.cpp
+  execution/substructs.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")

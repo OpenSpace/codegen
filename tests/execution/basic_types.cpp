@@ -314,7 +314,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "bool value documentation");
         REQUIRE(e.verifier->type() == "Boolean");
-        REQUIRE(dynamic_cast<BoolVerifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<BoolVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
@@ -322,7 +322,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "int value documentation");
         REQUIRE(e.verifier->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<IntVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
@@ -330,7 +330,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "double value documentation");
         REQUIRE(e.verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
@@ -338,7 +338,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "float value documentation");
         REQUIRE(e.verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[4];
@@ -346,7 +346,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "string value documentation");
         REQUIRE(e.verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[5];
@@ -354,7 +354,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "ivec2 value documentation");
         REQUIRE(e.verifier->type() == "Vector2<int>");
-        REQUIRE(dynamic_cast<IntVector2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<IntVector2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[6];
@@ -362,7 +362,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "ivec3 value documentation");
         REQUIRE(e.verifier->type() == "Vector3<int>");
-        REQUIRE(dynamic_cast<IntVector3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<IntVector3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[7];
@@ -370,7 +370,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "ivec4 value documentation");
         REQUIRE(e.verifier->type() == "Vector4<int>");
-        REQUIRE(dynamic_cast<IntVector4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<IntVector4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[8];
@@ -378,7 +378,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dvec2 value documentation");
         REQUIRE(e.verifier->type() == "Vector2<double>");
-        REQUIRE(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[9];
@@ -386,7 +386,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dvec3 value documentation");
         REQUIRE(e.verifier->type() == "Vector3<double>");
-        REQUIRE(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[10];
@@ -394,7 +394,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dvec4 value documentation");
         REQUIRE(e.verifier->type() == "Vector4<double>");
-        REQUIRE(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[11];
@@ -402,7 +402,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "vec2 value documentation");
         REQUIRE(e.verifier->type() == "Vector2<double>");
-        REQUIRE(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[12];
@@ -410,7 +410,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "vec3 value documentation");
         REQUIRE(e.verifier->type() == "Vector3<double>");
-        REQUIRE(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[13];
@@ -418,7 +418,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "vec4 value documentation");
         REQUIRE(e.verifier->type() == "Vector4<double>");
-        REQUIRE(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[14];
@@ -426,7 +426,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat2x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[15];
@@ -434,7 +434,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat2x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[16];
@@ -442,7 +442,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat2x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[17];
@@ -450,7 +450,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat3x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[18];
@@ -458,7 +458,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat3x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[19];
@@ -466,7 +466,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat3x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[20];
@@ -474,7 +474,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat4x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[21];
@@ -482,7 +482,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat4x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[22];
@@ -490,7 +490,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "mat4x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[23];
@@ -498,7 +498,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat2x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[24];
@@ -506,7 +506,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat2x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[25];
@@ -514,7 +514,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat2x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix2x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[26];
@@ -522,7 +522,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat3x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[27];
@@ -530,7 +530,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat3x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[28];
@@ -538,7 +538,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat3x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix3x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[29];
@@ -546,7 +546,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat4x2 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x2<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[30];
@@ -554,7 +554,7 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat4x3 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x3<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[31];
@@ -562,6 +562,6 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "dmat4x4 value documentation");
         REQUIRE(e.verifier->type() == "Matrix4x4<double>");
-        REQUIRE(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()) != nullptr);
+        REQUIRE(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
     }
 }

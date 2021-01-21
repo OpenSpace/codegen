@@ -106,15 +106,6 @@ namespace {
         if (it == Types.end()) {
             return;
         }
-
-        //for (std::string_view attr : it->second) {
-        //    if (auto it = attributes.find(attr); it != attributes.end()) {
-        //        assert(!it->second.empty());
-        //        throw std::runtime_error(fmt::format(
-        //            "Attribute '{}' not supported for type '{}'", attr, type
-        //        ));
-        //    }
-        //}
     }
 
 

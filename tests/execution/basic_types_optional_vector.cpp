@@ -133,7 +133,7 @@ namespace {
 #include "basic_types_optional_vector_codegen.cpp"
 } // namespace
 
-TEST_CASE("Basic Types Vector bake", "[verifier]") {
+TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
     ghoul::Dictionary d;
     {
         ghoul::Dictionary v;
@@ -478,46 +478,56 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
     }
 
     const Parameters p = codegen::bake<Parameters>(d);
-    REQUIRE
-    REQUIRE(p.boolValue.size() == 3);
+    REQUIRE(p.boolValue.has_value());
+    REQUIRE(p.boolValue->size() == 3);
     REQUIRE(p.boolValue == std::vector<bool>{ true, false, true });
-    REQUIRE(p.intValue.size() == 3);
+    REQUIRE(p.intValue.has_value());
+    REQUIRE(p.intValue->size() == 3);
     REQUIRE(p.intValue == std::vector<int>{ 2, 3, 4 });
-    REQUIRE(p.doubleValue.size() == 3);
+    REQUIRE(p.doubleValue.has_value());
+    REQUIRE(p.doubleValue->size() == 3);
     REQUIRE(p.doubleValue == std::vector<double>{ 5.1, 5.2, 5.3 });
-    REQUIRE(p.floatValue.size() == 3);
+    REQUIRE(p.floatValue.has_value());
+    REQUIRE(p.floatValue->size() == 3);
     REQUIRE(p.floatValue == std::vector<float>{ 6.1f, 6.2f, 6.3f });
-    REQUIRE(p.stringValue.size() == 3);
+    REQUIRE(p.stringValue.has_value());
+    REQUIRE(p.stringValue->size() == 3);
     REQUIRE(p.stringValue == std::vector<std::string>{ "abc", "def", "ghi" });
-    REQUIRE(p.ivec2Value.size() == 3);
+    REQUIRE(p.ivec2Value.has_value());
+    REQUIRE(p.ivec2Value->size() == 3);
     REQUIRE(
         p.ivec2Value == std::vector<glm::ivec2>{ { 7, 8 }, { 9, 10 }, { 11, 12 } }
     );
-    REQUIRE(p.ivec3Value.size() == 3);
+    REQUIRE(p.ivec3Value.has_value());
+    REQUIRE(p.ivec3Value->size() == 3);
     REQUIRE(
         p.ivec3Value ==
         std::vector<glm::ivec3>{ { 13, 14, 15 }, { 16, 17, 18 }, { 19, 20, 21 } }
     );
-    REQUIRE(p.ivec4Value.size() == 3);
+    REQUIRE(p.ivec4Value.has_value());
+    REQUIRE(p.ivec4Value->size() == 3);
     REQUIRE(
         p.ivec4Value ==
         std::vector<glm::ivec4>{
             { 22, 23, 24, 25 }, { 26, 27, 28, 29 }, { 30, 31, 32, 33 }
         }
     );
-    REQUIRE(p.dvec2Value.size() == 3);
+    REQUIRE(p.dvec2Value.has_value());
+    REQUIRE(p.dvec2Value->size() == 3);
     REQUIRE(
         p.dvec2Value ==
         std::vector<glm::dvec2>{ { 34.1, 34.2 }, { 35.1, 35.2 }, { 36.1, 36.2 }}
     );
-    REQUIRE(p.dvec3Value.size() == 3);
+    REQUIRE(p.dvec3Value.has_value());
+    REQUIRE(p.dvec3Value->size() == 3);
     REQUIRE(
         p.dvec3Value ==
         std::vector<glm::dvec3>{
             { 37.1, 37.2, 37.3 }, { 38.1, 38.2, 38.3 }, { 39.1, 39.2, 39.3 }
         }
     );
-    REQUIRE(p.dvec4Value.size() == 3);
+    REQUIRE(p.dvec4Value.has_value());
+    REQUIRE(p.dvec4Value->size() == 3);
     REQUIRE(
             p.dvec4Value ==
             std::vector<glm::dvec4>{
@@ -526,19 +536,22 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
                 { 42.1, 42.2, 42.3, 42.4 }
         }
     );
-    REQUIRE(p.vec2Value.size() == 3);
+    REQUIRE(p.vec2Value.has_value());
+    REQUIRE(p.vec2Value->size() == 3);
     REQUIRE(
         p.vec2Value ==
         std::vector<glm::vec2>{ { 43.1f, 43.2f }, { 44.1f, 44.2f }, { 45.1f, 45.2f }}
     );
-    REQUIRE(p.dvec3Value.size() == 3);
+    REQUIRE(p.vec3Value.has_value());
+    REQUIRE(p.vec3Value->size() == 3);
     REQUIRE(
         p.vec3Value ==
         std::vector<glm::vec3>{
             { 46.1f, 46.2f, 46.3f }, { 47.1f, 47.2f, 47.3f }, { 48.1f, 48.2f, 48.3f }
     }
     );
-    REQUIRE(p.vec4Value.size() == 3);
+    REQUIRE(p.vec4Value.has_value());
+    REQUIRE(p.vec4Value->size() == 3);
     REQUIRE(
         p.vec4Value ==
         std::vector<glm::vec4>{
@@ -547,7 +560,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 51.1f, 51.2f, 51.3f, 51.4f }
         }
     );
-    REQUIRE(p.mat2x2Value.size() == 3);
+    REQUIRE(p.mat2x2Value.has_value());
+    REQUIRE(p.mat2x2Value->size() == 3);
     REQUIRE(
         p.mat2x2Value ==
         std::vector<glm::mat2x2>{
@@ -556,7 +570,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 54.1f, 54.2f, 54.3f, 54.4f }
         }
     );
-    REQUIRE(p.mat2x3Value.size() == 3);
+    REQUIRE(p.mat2x3Value.has_value());
+    REQUIRE(p.mat2x3Value->size() == 3);
     REQUIRE(
         p.mat2x3Value ==
         std::vector<glm::mat2x3>{
@@ -565,7 +580,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 57.1f, 57.2f, 57.3f, 57.4f, 57.5f, 57.6f }
         }
     );
-    REQUIRE(p.mat2x4Value.size() == 3);
+    REQUIRE(p.mat2x4Value.has_value());
+    REQUIRE(p.mat2x4Value->size() == 3);
     REQUIRE(
         p.mat2x4Value ==
         std::vector<glm::mat2x4>{
@@ -574,7 +590,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 60.1f, 60.2f, 60.3f, 60.4f, 60.5f, 60.6f, 60.7f, 60.8f }
         }
     );
-    REQUIRE(p.mat3x2Value.size() == 3);
+    REQUIRE(p.mat3x2Value.has_value());
+    REQUIRE(p.mat3x2Value->size() == 3);
     REQUIRE(
         p.mat3x2Value ==
         std::vector<glm::mat3x2>{
@@ -583,7 +600,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 63.1f, 63.2f, 63.3f, 63.4f, 63.5f, 63.6f }
         }
     );
-    REQUIRE(p.mat3x3Value.size() == 3);
+    REQUIRE(p.mat3x3Value.has_value());
+    REQUIRE(p.mat3x3Value->size() == 3);
     REQUIRE(
         p.mat3x3Value ==
         std::vector<glm::mat3x3>{
@@ -592,7 +610,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 66.1f, 66.2f, 66.3f, 66.4f, 66.5f, 66.6f, 66.7f, 66.8f, 66.9f }
         }
     );
-    REQUIRE(p.mat3x4Value.size() == 3);
+    REQUIRE(p.mat3x4Value.has_value());
+    REQUIRE(p.mat3x4Value->size() == 3);
     REQUIRE(
         p.mat3x4Value ==
         std::vector<glm::mat3x4>{
@@ -604,7 +623,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
               69.7f, 69.8f, 69.9f, 69.10f, 69.11f, 69.12f }
         }
     );
-    REQUIRE(p.mat4x2Value.size() == 3);
+    REQUIRE(p.mat4x2Value.has_value());
+    REQUIRE(p.mat4x2Value->size() == 3);
     REQUIRE(
         p.mat4x2Value ==
         std::vector<glm::mat4x2>{
@@ -613,7 +633,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 72.1f, 72.2f, 72.3f, 72.4f, 72.5f, 72.6f, 72.7f, 72.8f }
     }
     );
-    REQUIRE(p.mat4x3Value.size() == 3);
+    REQUIRE(p.mat4x3Value.has_value());
+    REQUIRE(p.mat4x3Value->size() == 3);
     REQUIRE(
         p.mat4x3Value ==
         std::vector<glm::mat4x3>{
@@ -625,7 +646,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
               75.7f, 75.8f, 75.9f, 75.10f, 75.11f, 75.12f }
     }
     );
-    REQUIRE(p.mat4x4Value.size() == 3);
+    REQUIRE(p.mat4x4Value.has_value());
+    REQUIRE(p.mat4x4Value->size() == 3);
     REQUIRE(
         p.mat4x4Value ==
         std::vector<glm::mat4x4>{
@@ -637,7 +659,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
               78.9f, 78.10f, 78.11f, 78.12f, 78.13f, 78.14f, 78.15f, 78.16f }
         }
     );
-    REQUIRE(p.dmat2x2Value.size() == 3);
+    REQUIRE(p.dmat2x2Value.has_value());
+    REQUIRE(p.dmat2x2Value->size() == 3);
     REQUIRE(
         p.dmat2x2Value ==
         std::vector<glm::dmat2x2>{
@@ -646,7 +669,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 81.1, 81.2, 81.3, 81.4 }
         }
     );
-    REQUIRE(p.dmat2x3Value.size() == 3);
+    REQUIRE(p.dmat2x3Value.has_value());
+    REQUIRE(p.dmat2x3Value->size() == 3);
     REQUIRE(
         p.dmat2x3Value ==
         std::vector<glm::dmat2x3>{
@@ -655,7 +679,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 84.1, 84.2, 84.3, 84.4, 84.5, 84.6 }
         }
     );
-    REQUIRE(p.dmat2x4Value.size() == 3);
+    REQUIRE(p.dmat2x4Value.has_value());
+    REQUIRE(p.dmat2x4Value->size() == 3);
     REQUIRE(
         p.dmat2x4Value ==
         std::vector<glm::dmat2x4>{
@@ -664,7 +689,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 87.1, 87.2, 87.3, 87.4, 87.5, 87.6, 87.7, 87.8 }
         }
     );
-    REQUIRE(p.dmat3x2Value.size() == 3);
+    REQUIRE(p.dmat3x2Value.has_value());
+    REQUIRE(p.dmat3x2Value->size() == 3);
     REQUIRE(
         p.dmat3x2Value ==
         std::vector<glm::dmat3x2>{
@@ -673,7 +699,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 90.1, 90.2, 90.3, 90.4, 90.5, 90.6 }
         }
     );
-    REQUIRE(p.dmat3x3Value.size() == 3);
+    REQUIRE(p.dmat3x3Value.has_value());
+    REQUIRE(p.dmat3x3Value->size() == 3);
     REQUIRE(
         p.dmat3x3Value ==
         std::vector<glm::dmat3x3>{
@@ -682,7 +709,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 93.1, 93.2, 93.3, 93.4, 93.5, 93.6, 93.7, 93.8, 93.9 }
         }
     );
-    REQUIRE(p.dmat3x4Value.size() == 3);
+    REQUIRE(p.dmat3x4Value.has_value());
+    REQUIRE(p.dmat3x4Value->size() == 3);
     REQUIRE(
         p.dmat3x4Value ==
         std::vector<glm::dmat3x4>{
@@ -691,7 +719,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 96.1, 96.2, 96.3, 96.4, 96.5, 96.6, 96.7, 96.8, 96.9, 96.10, 96.11, 96.12 }
         }
     );
-    REQUIRE(p.dmat4x2Value.size() == 3);
+    REQUIRE(p.dmat4x2Value.has_value());
+    REQUIRE(p.dmat4x2Value->size() == 3);
     REQUIRE(
         p.dmat4x2Value ==
         std::vector<glm::dmat4x2>{
@@ -700,7 +729,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
             { 99.1, 99.2, 99.3, 99.4, 99.5, 99.6, 99.7, 99.8 }
         }
     );
-    REQUIRE(p.dmat4x3Value.size() == 3);
+    REQUIRE(p.dmat4x3Value.has_value());
+    REQUIRE(p.dmat4x3Value->size() == 3);
     REQUIRE(
         p.dmat4x3Value ==
         std::vector<glm::dmat4x3>{
@@ -712,7 +742,8 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
               102.7, 102.8, 102.9, 102.10, 102.11, 102.12 }
         }
     );
-    REQUIRE(p.dmat4x4Value.size() == 3);
+    REQUIRE(p.dmat4x4Value.has_value());
+    REQUIRE(p.dmat4x4Value->size() == 3);
     REQUIRE(
         p.dmat4x4Value ==
         std::vector<glm::dmat4x4>{
@@ -724,459 +755,511 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
               105.9, 105.10, 105.11, 105.12, 105.13, 105.14, 105.15, 105.16 }
         }
     );
+
+
+    ghoul::Dictionary e;
+    const Parameters p2 = codegen::bake<Parameters>(e);
+    REQUIRE(!p2.boolValue.has_value());
+    REQUIRE(!p2.intValue.has_value());
+    REQUIRE(!p2.doubleValue.has_value());
+    REQUIRE(!p2.floatValue.has_value());
+    REQUIRE(!p2.stringValue.has_value());
+    REQUIRE(!p2.ivec2Value.has_value());
+    REQUIRE(!p2.ivec3Value.has_value());
+    REQUIRE(!p2.ivec4Value.has_value());
+    REQUIRE(!p2.dvec2Value.has_value());
+    REQUIRE(!p2.dvec3Value.has_value());
+    REQUIRE(!p2.dvec4Value.has_value());
+    REQUIRE(!p2.vec2Value.has_value());
+    REQUIRE(!p2.vec3Value.has_value());
+    REQUIRE(!p2.vec4Value.has_value());
+    REQUIRE(!p2.mat2x2Value.has_value());
+    REQUIRE(!p2.mat2x3Value.has_value());
+    REQUIRE(!p2.mat2x4Value.has_value());
+    REQUIRE(!p2.mat3x2Value.has_value());
+    REQUIRE(!p2.mat3x3Value.has_value());
+    REQUIRE(!p2.mat3x4Value.has_value());
+    REQUIRE(!p2.mat4x2Value.has_value());
+    REQUIRE(!p2.mat4x3Value.has_value());
+    REQUIRE(!p2.mat4x4Value.has_value());
+    REQUIRE(!p2.dmat2x2Value.has_value());
+    REQUIRE(!p2.dmat2x3Value.has_value());
+    REQUIRE(!p2.dmat2x4Value.has_value());
+    REQUIRE(!p2.dmat3x2Value.has_value());
+    REQUIRE(!p2.dmat3x3Value.has_value());
+    REQUIRE(!p2.dmat3x4Value.has_value());
+    REQUIRE(!p2.dmat4x2Value.has_value());
+    REQUIRE(!p2.dmat4x3Value.has_value());
+    REQUIRE(!p2.dmat4x4Value.has_value());
 }
 
-TEST_CASE("Basic Types Vector documentation", "[verifier]") {
+TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::BasicTypesVector>();
+    Documentation doc = codegen::doc<openspace::BasicTypesOptionalVector>();
 
     REQUIRE(doc.entries.size() == 32);
     {
         DocumentationEntry e = doc.entries[0];
         REQUIRE(e.key == "BoolValue");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "bool value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Boolean");
-        REQUIRE(
-            dynamic_cast<BoolVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<BoolVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
         REQUIRE(e.key == "IntValue");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "int value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Integer");
-        REQUIRE(
-            dynamic_cast<IntVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
         REQUIRE(e.key == "DoubleValue");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "double value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Double");
-        REQUIRE(
-            dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
         REQUIRE(e.key == "FloatValue");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "float value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Double");
-        REQUIRE(
-            dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<DoubleVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[4];
         REQUIRE(e.key == "StringValue");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "string value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "String");
-        REQUIRE(
-            dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[5];
         REQUIRE(e.key == "Ivec2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "ivec2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<int>");
-        REQUIRE(
-            dynamic_cast<IntVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector2Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[6];
         REQUIRE(e.key == "Ivec3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "ivec3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<int>");
-        REQUIRE(
-            dynamic_cast<IntVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector3Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[7];
         REQUIRE(e.key == "Ivec4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "ivec4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<int>");
-        REQUIRE(
-            dynamic_cast<IntVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
-        );
+        REQUIRE(dynamic_cast<IntVector4Verifier*>(t->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[8];
         REQUIRE(e.key == "Dvec2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dvec2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[9];
         REQUIRE(e.key == "Dvec3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dvec3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[10];
         REQUIRE(e.key == "Dvec4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dvec4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[11];
         REQUIRE(e.key == "Vec2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "vec2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector2<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[12];
         REQUIRE(e.key == "Vec3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "vec3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector3<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[13];
         REQUIRE(e.key == "Vec4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "vec4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Vector4<double>");
         REQUIRE(
-            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[14];
         REQUIRE(e.key == "Mat2x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat2x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[15];
         REQUIRE(e.key == "Mat2x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat2x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[16];
         REQUIRE(e.key == "Mat2x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat2x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[17];
         REQUIRE(e.key == "Mat3x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat3x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[18];
         REQUIRE(e.key == "Mat3x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat3x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[19];
         REQUIRE(e.key == "Mat3x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat3x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[20];
         REQUIRE(e.key == "Mat4x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat4x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[21];
         REQUIRE(e.key == "Mat4x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat4x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[22];
         REQUIRE(e.key == "Mat4x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "mat4x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[23];
         REQUIRE(e.key == "Dmat2x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat2x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[24];
         REQUIRE(e.key == "Dmat2x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat2x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[25];
         REQUIRE(e.key == "Dmat2x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat2x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix2x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix2x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[26];
         REQUIRE(e.key == "Dmat3x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat3x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[27];
         REQUIRE(e.key == "Dmat3x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat3x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[28];
         REQUIRE(e.key == "Dmat3x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat3x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix3x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix3x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[29];
         REQUIRE(e.key == "Dmat4x2Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat4x2 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x2<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x2Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[30];
         REQUIRE(e.key == "Dmat4x3Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat4x3 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x3<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x3Verifier*>(t->documentations[0].verifier.get())
         );
     }
     {
         DocumentationEntry e = doc.entries[31];
         REQUIRE(e.key == "Dmat4x4Value");
-        REQUIRE(!e.optional);
+        REQUIRE(e.optional);
         REQUIRE(e.documentation == "dmat4x4 value documentation");
         REQUIRE(e.verifier->type() == "Table");
         TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         REQUIRE(t->documentations[0].key == "*");
+        REQUIRE(t->documentations[0].optional);
         REQUIRE(t->documentations[0].verifier->type() == "Matrix4x4<double>");
         REQUIRE(
-            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get()) != nullptr
+            dynamic_cast<DoubleMatrix4x4Verifier*>(t->documentations[0].verifier.get())
         );
     }
 }
