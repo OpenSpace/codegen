@@ -61,7 +61,7 @@ namespace {
         // variable structCValue documentation
         std::vector<C> structCValue;
     };
-#include "substructs_codegen.cpp"
+#include "execution_substructs_codegen.cpp"
 } // namespace
 
 TEST_CASE("Substruct Bake", "[verifier]") {

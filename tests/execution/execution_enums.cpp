@@ -61,7 +61,7 @@ namespace {
         // variable enumCValue documentation
         std::vector<C> enumCValue;
     };
-#include "enums_codegen.cpp"
+#include "execution_enums_codegen.cpp"
 } // namespace
 
 TEST_CASE("Enum Bake", "[verifier]") {

@@ -25,17 +25,20 @@
 add_executable(
   codegentest
   main.cpp
+
+  execution/execution_attributes.cpp
+  execution/execution_basic_types.cpp
+  execution/execution_basic_types_optional.cpp
+  execution/execution_basic_types_optional_vector.cpp
+  execution/execution_basic_types_vector.cpp
+  execution/execution_enums.cpp
+  execution/execution_simple.cpp
+  execution/execution_substructs.cpp
+  execution/execution_variant.cpp
+
+  parsing_attributes.cpp
   parsing_struct.cpp
   parsing_variable.cpp
-
-  execution/attributes.cpp
-  execution/basic_types.cpp
-  execution/basic_types_optional.cpp
-  execution/basic_types_optional_vector.cpp
-  execution/basic_types_vector.cpp
-  execution/enums.cpp
-  execution/simple.cpp
-  execution/substructs.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")

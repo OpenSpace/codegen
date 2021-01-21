@@ -35,15 +35,17 @@ namespace {
         // value documentation
         float value;
     };
-#include "simple_codegen.cpp"
+#include "execution_simple_codegen.cpp"
 } // namespace
 
 TEST_CASE("Simple bake", "[verifier]") {
-    ghoul::Dictionary d;
-    d.setValue("Value", 5.0);
+    {
+        ghoul::Dictionary d;
+        d.setValue("Value", 5.0);
 
-    Parameters p = codegen::bake<Parameters>(d);
-    REQUIRE(p.value == 5.f);
+        Parameters p = codegen::bake<Parameters>(d);
+        REQUIRE(p.value == 5.f);
+    }
 }
 
 TEST_CASE("Simple documentation", "[verifier]") {

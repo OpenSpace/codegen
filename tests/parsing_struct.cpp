@@ -27,7 +27,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Minimal", "[struct]") {
+TEST_CASE("Minimal", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
 };
@@ -41,7 +41,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables.empty());
 }
 
-TEST_CASE("Namespace specified", "[struct]") {
+TEST_CASE("Namespace specified", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
 };
@@ -55,7 +55,7 @@ struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
     REQUIRE(s->variables.empty());
 }
 
-TEST_CASE("NoExhaustive", "[struct]") {
+TEST_CASE("NoExhaustive", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name), codegen::noexhaustive]] Parameters {
 };
@@ -68,7 +68,7 @@ struct [[codegen::Dictionary(Name), codegen::noexhaustive]] Parameters {
     REQUIRE(s->variables.empty());
 }
 
-TEST_CASE("Comment", "[struct]") {
+TEST_CASE("Comment", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 // Test documentation
 struct [[codegen::Dictionary(Name)]] Parameters {
@@ -84,7 +84,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables.empty());
 }
 
-TEST_CASE("Substruct", "[struct]") {
+TEST_CASE("Substruct", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
@@ -108,7 +108,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(a->attributes.noExhaustive);
 }
 
-TEST_CASE("Double Substruct", "[struct]") {
+TEST_CASE("Double Substruct", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
@@ -146,7 +146,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(b->variables.empty());
 }
 
-TEST_CASE("Variable", "[struct]") {
+TEST_CASE("Variable", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // variable documentation
@@ -165,7 +165,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[0]->comment == "variable documentation");
 }
 
-TEST_CASE("Double Variable", "[struct]") {
+TEST_CASE("Double Variable", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // variable1 documentation
@@ -190,7 +190,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[1]->comment == "variable2 documentation");
 }
 
-TEST_CASE("Empty Enum", "[struct]") {
+TEST_CASE("Empty Enum", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
@@ -210,7 +210,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->children[0]->comment == "enum documentation");
 }
 
-TEST_CASE("Enum", "[struct]") {
+TEST_CASE("Enum", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
@@ -236,7 +236,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(e->elements[1]->name == "Value2");
 }
 
-TEST_CASE("Enum Key Attribute", "[struct]") {
+TEST_CASE("Enum Key Attribute", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation

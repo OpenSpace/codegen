@@ -70,5 +70,6 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 } // namespace
 
 std::string_view bakeFunctionForType(std::string_view type);
+std::string_view variantConversionFunctionForType(std::string_view type);
 
 #endif // __OPENSPACE_CODEGEN___SNIPPETS___H__

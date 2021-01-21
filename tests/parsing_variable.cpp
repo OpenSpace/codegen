@@ -27,7 +27,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Basic Types", "[variables]") {
+TEST_CASE("Basic Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     bool boolVariable;
@@ -132,7 +132,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[31]->type == "glm::dmat4x4");
 }
 
-TEST_CASE("Vector Base Types", "[variables]") {
+TEST_CASE("Vector Base Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<bool> boolVariable;
@@ -269,7 +269,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[31]->type == "std::vector<glm::dmat4x4>");
 }
 
-TEST_CASE("Optional Base Types", "[variables]") {
+TEST_CASE("Optional Base Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<bool> boolVariable;
@@ -406,10 +406,11 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[31]->type == "std::optional<glm::dmat4x4>");
 }
 
-TEST_CASE("Variable attribute: key", "[variables]") {
+TEST_CASE("Variable attributes", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::key(Var)]];
+
 };
 )");
 
@@ -417,7 +418,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[0]->key == "Var");
 }
 
-TEST_CASE("Variable attribute: reference", "[variables]") {
+TEST_CASE("Variable attribute: reference", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::reference(Ref)]];
@@ -425,9 +426,5 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )");
 
     REQUIRE(s->variables.size() == 1);
-
+    REQUIRE(s->variables[0]->attributes.reference == "Ref");
 }
-
-
-
-

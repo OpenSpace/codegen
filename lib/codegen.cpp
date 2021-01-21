@@ -295,10 +295,7 @@ std::string writeVariableConverter(Variable* var) {
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            result += fmt::format(
-                "   if (d.hasValue<{0}>(key)) {{ {0} v; bakeTo(d, key, &v); *val = std::move(v); }}\n",
-                subtype
-            );
+            result += variantConversionFunctionForType(subtype);
         }
 
         result += "}";

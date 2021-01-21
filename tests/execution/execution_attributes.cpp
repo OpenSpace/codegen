@@ -156,7 +156,7 @@ namespace {
         // referenceValue documentation
         std::optional<std::monostate> referenceValue [[codegen::reference("abc")]];
     };
-#include "attributes_codegen.cpp"
+#include "execution_attributes_codegen.cpp"
 } // namespace
 
 TEST_CASE("Attributes Bake", "[verifier]") {
