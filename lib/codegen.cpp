@@ -127,21 +127,26 @@ namespace {
             const size_t l = "codegen::description"sv.size();
             it += l;
             if (comment[it] != '(') {
-                throw std::runtime_error(fmt::format(
-                    "Malformed codegen::description. Expected ( after token:\n{}", comment
+                throw ParsingError(fmt::format(
+                    "Malformed codegen::description. Expected ( after token\n{}", comment
                 ));
             }
             it++;
             size_t end = comment.find(')', it);
             std::string identifier = comment.substr(it, end - it);
+            if (identifier.empty()) {
+                throw SpecificationError(
+                    "Empty comment identifier in codegen::description"
+                );
+            }
             comment = identifier + ".description";
         }
         else {
             if (size_t it = comment.find('"');
                 it != std::string::npos && comment[it - 1] != '\\')
             {
-                throw std::runtime_error(fmt::format(
-                    "Discovered unallowed unescaped \" in comment line:\n{}", comment
+                throw ParsingError(fmt::format(
+                    "Discovered unallowed unescaped \" in comment line\n{}", comment
                 ));
             }
 
@@ -185,8 +190,9 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
     else if (startsWith(type, "std::variant<")) {
         std::string_view subtypes = type.substr("std::variant<"sv.size());
         if (subtypes.find('>') == std::string_view::npos) {
-            throw std::runtime_error(fmt::format(
-                "Could not find closing > in variant definition:\n{}", type
+            // I don't think this can actually fire as it gets tested in the parsing step
+            throw ParsingError(fmt::format(
+                "Could not find closing > in variant definition: {}", type
             ));
         }
         assert(subtypes.back() == '>');
@@ -208,7 +214,7 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
     else {
         const StackElement* e = resolveType(currentStruct, type);
         if (!e) {
-            throw std::runtime_error(fmt::format(
+            throw ParsingError(fmt::format(
                 "Type detected that codegen doesn't know how to handle: {}", type
             ));
         }
@@ -227,11 +233,7 @@ std::string writeEnumDocumentation(Enum* e) {
     Enum* en = static_cast<Enum*>(e);
     for (EnumElement* em : en->elements) {
         // If no key attribute is specified, we use the name instead
-        std::string_view key =
-            em->attributes.key.empty() ?
-            em->name :
-            em->attributes.key;
-
+        std::string_view key = em->attributes.key.empty() ? em->name : em->attributes.key;
         result += fmt::format("\"{}\",", key);
     }
     // The last element has a , at the end that we can overwrite
@@ -322,8 +324,7 @@ std::string writeEnumConverter(Enum* e) {
 
         std::string type = fqn(e, "::");
         result += fmt::format(
-            "    if (v == \"{}\") {{ *val = {}::{}; }}\n",
-            key, type, elem->name
+            "    if (v == \"{}\") {{ *val = {}::{}; }}\n", key, type, elem->name
         );
     }
 
@@ -470,7 +471,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
         );
     }
 
-    result += fmt::format("    return res;\n}}\n}} // namespace codegen\n");
+    result += "    return res;\n}\n} // namespace codegen\n";
     return result;
 }
 
@@ -478,21 +479,6 @@ std::string handleCode(std::string_view code, std::string_view path) {
     std::string_view content = strip(validCode(code));
     if (content.empty()) {
         return std::string();
-    }
-
-    // Some initial sanity checks
-    if (std::string_view s = content.substr(0, 6); s != "struct") {
-        throw std::runtime_error(fmt::format(
-            "[[codegen::Dictionary]] needs a 'struct' declaration immediately before on "
-            "the same line. Found {}", s
-        ));
-    }
-
-    if (size_t p = content.find("/*"); p != std::string_view::npos) {
-        constexpr const int ErrorContext = 50;
-        throw std::runtime_error(fmt::format(
-            "Block comments are not allowed:\n{}", content.substr(p, ErrorContext)
-        ));
     }
 
     Struct* rootStruct = parseRootStruct(content);
@@ -508,7 +494,11 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    std::string genContent = handleCode(res, p);
+    Struct* rootStruct = parseRootStruct(res);
+    if (!rootStruct) {
+        return Result::NotProcessed;
+    }
+    std::string genContent = generateResult(rootStruct);
 
     if (genContent.empty()) {
         return Result::NotProcessed;
@@ -535,7 +525,7 @@ Result handleFile(std::filesystem::path path) {
         std::ofstream output(debugDestination);
         output.write(genContent.data(), genContent.size());
 
-        throw std::runtime_error(fmt::format(
+        throw CodegenError(fmt::format(
             "Asked to prevent file change, but file change detected in '{}'",
             path.filename().string()
         ));

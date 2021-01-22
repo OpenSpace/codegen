@@ -37,12 +37,53 @@ add_executable(
   execution/execution_variant.cpp
 
   parsing_attributes.cpp
+  parsing_attributes_error_bool.cpp
+  parsing_attributes_error_dmat2x2.cpp
+  parsing_attributes_error_dmat2x3.cpp
+  parsing_attributes_error_dmat2x4.cpp
+  parsing_attributes_error_dmat3x2.cpp
+  parsing_attributes_error_dmat3x3.cpp
+  parsing_attributes_error_dmat3x4.cpp
+  parsing_attributes_error_dmat4x2.cpp
+  parsing_attributes_error_dmat4x3.cpp
+  parsing_attributes_error_dmat4x4.cpp
+  parsing_attributes_error_double.cpp
+  parsing_attributes_error_dvec2.cpp
+  parsing_attributes_error_dvec3.cpp
+  parsing_attributes_error_dvec4.cpp
+  parsing_attributes_error_float.cpp
+  parsing_attributes_error_int.cpp
+  parsing_attributes_error_ivec2.cpp
+  parsing_attributes_error_ivec3.cpp
+  parsing_attributes_error_ivec4.cpp
+  parsing_attributes_error_mat2x2.cpp
+  parsing_attributes_error_mat2x3.cpp
+  parsing_attributes_error_mat2x4.cpp
+  parsing_attributes_error_mat3x2.cpp
+  parsing_attributes_error_mat3x3.cpp
+  parsing_attributes_error_mat3x4.cpp
+  parsing_attributes_error_mat4x2.cpp
+  parsing_attributes_error_mat4x3.cpp
+  parsing_attributes_error_mat4x4.cpp
+  parsing_attributes_error_monostate.cpp
+  parsing_attributes_error_string.cpp
+  parsing_attributes_error_vec2.cpp
+  parsing_attributes_error_vec3.cpp
+  parsing_attributes_error_vec4.cpp
+  parsing_error.cpp
+  parsing_other.cpp
   parsing_struct.cpp
   parsing_variable.cpp
+  parsing_variant.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
 target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-module-collection)
+if (MSVC)
+  target_compile_options(codegentest PRIVATE "/wd5030")
+else ()
+  target_compile_options(codegentest PRIVATE "-Wno-unknown-attributes")
+endif ()
 
 if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
   # wanted by CEF

@@ -25,10 +25,30 @@
 #ifndef __OPENSPACE_CODEGEN___TYPES___H__
 #define __OPENSPACE_CODEGEN___TYPES___H__
 
+#include <stdexcept>
 #include <string_view>
 #include <map>
 #include <unordered_map>
 #include <variant>
+
+struct ParsingError : public std::runtime_error {
+    ParsingError(std::string e) : std::runtime_error(e) {}
+
+    operator std::string() const noexcept { return what(); }
+};
+
+struct SpecificationError : public std::runtime_error {
+    SpecificationError(std::string e) : std::runtime_error(e) {}
+
+    operator std::string() const noexcept { return what(); }
+};
+
+struct CodegenError : public std::runtime_error {
+    CodegenError(std::string e) : std::runtime_error(e) {}
+
+    operator std::string() const noexcept { return what(); }
+};
+
 
 struct Struct;
 
@@ -50,18 +70,18 @@ struct Variable {
     std::string comment;
 
     struct Attributes {
+        std::string annotation;
         std::string key;
-        std::string reference;
+        std::string inlist;
         std::string inrange;
-        std::string notinrange;
         std::string less;
         std::string lessequal;
         std::string greater;
         std::string greaterequal;
-        std::string unequal;
-        std::string inlist;
         std::string notinlist;
-        std::string annotation;
+        std::string notinrange;
+        std::string reference;
+        std::string unequal;
     };
     Attributes attributes;
 };

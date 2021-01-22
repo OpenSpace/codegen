@@ -27,7 +27,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Basic Types", "[parsing]") {
+TEST_CASE("Parsing Variable: Basic Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     bool boolVariable;
@@ -66,73 +66,201 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )");
 
     REQUIRE(s->variables.size() == 32);
-    REQUIRE(s->variables[0]->name == "boolVariable");
-    REQUIRE(s->variables[0]->type == "bool");
-    REQUIRE(s->variables[1]->name == "intVariable");
-    REQUIRE(s->variables[1]->type == "int");
-    REQUIRE(s->variables[2]->name == "doubleValue");
-    REQUIRE(s->variables[2]->type == "double");
-    REQUIRE(s->variables[3]->name == "floatValue");
-    REQUIRE(s->variables[3]->type == "float");
-    REQUIRE(s->variables[4]->name == "stringValue");
-    REQUIRE(s->variables[4]->type == "std::string");
-    REQUIRE(s->variables[5]->name == "ivec2Value");
-    REQUIRE(s->variables[5]->type == "glm::ivec2");
-    REQUIRE(s->variables[6]->name == "ivec3Value");
-    REQUIRE(s->variables[6]->type == "glm::ivec3");
-    REQUIRE(s->variables[7]->name == "ivec4Value");
-    REQUIRE(s->variables[7]->type == "glm::ivec4");
-    REQUIRE(s->variables[8]->name == "dvec2Value");
-    REQUIRE(s->variables[8]->type == "glm::dvec2");
-    REQUIRE(s->variables[9]->name == "dvec3Value");
-    REQUIRE(s->variables[9]->type == "glm::dvec3");
-    REQUIRE(s->variables[10]->name == "dvec4Value");
-    REQUIRE(s->variables[10]->type == "glm::dvec4");
-    REQUIRE(s->variables[11]->name == "vec2Value");
-    REQUIRE(s->variables[11]->type == "glm::vec2");
-    REQUIRE(s->variables[12]->name == "vec3Value");
-    REQUIRE(s->variables[12]->type == "glm::vec3");
-    REQUIRE(s->variables[13]->name == "vec4Value");
-    REQUIRE(s->variables[13]->type == "glm::vec4");
-    REQUIRE(s->variables[14]->name == "mat2x2Value");
-    REQUIRE(s->variables[14]->type == "glm::mat2x2");
-    REQUIRE(s->variables[15]->name == "mat2x3Value");
-    REQUIRE(s->variables[15]->type == "glm::mat2x3");
-    REQUIRE(s->variables[16]->name == "mat2x4Value");
-    REQUIRE(s->variables[16]->type == "glm::mat2x4");
-    REQUIRE(s->variables[17]->name == "mat3x2Value");
-    REQUIRE(s->variables[17]->type == "glm::mat3x2");
-    REQUIRE(s->variables[18]->name == "mat3x3Value");
-    REQUIRE(s->variables[18]->type == "glm::mat3x3");
-    REQUIRE(s->variables[19]->name == "mat3x4Value");
-    REQUIRE(s->variables[19]->type == "glm::mat3x4");
-    REQUIRE(s->variables[20]->name == "mat4x2Value");
-    REQUIRE(s->variables[20]->type == "glm::mat4x2");
-    REQUIRE(s->variables[21]->name == "mat4x3Value");
-    REQUIRE(s->variables[21]->type == "glm::mat4x3");
-    REQUIRE(s->variables[22]->name == "mat4x4Value");
-    REQUIRE(s->variables[22]->type == "glm::mat4x4");
-    REQUIRE(s->variables[23]->name == "dmat2x2Value");
-    REQUIRE(s->variables[23]->type == "glm::dmat2x2");
-    REQUIRE(s->variables[24]->name == "dmat2x3Value");
-    REQUIRE(s->variables[24]->type == "glm::dmat2x3");
-    REQUIRE(s->variables[25]->name == "dmat2x4Value");
-    REQUIRE(s->variables[25]->type == "glm::dmat2x4");
-    REQUIRE(s->variables[26]->name == "dmat3x2Value");
-    REQUIRE(s->variables[26]->type == "glm::dmat3x2");
-    REQUIRE(s->variables[27]->name == "dmat3x3Value");
-    REQUIRE(s->variables[27]->type == "glm::dmat3x3");
-    REQUIRE(s->variables[28]->name == "dmat3x4Value");
-    REQUIRE(s->variables[28]->type == "glm::dmat3x4");
-    REQUIRE(s->variables[29]->name == "dmat4x2Value");
-    REQUIRE(s->variables[29]->type == "glm::dmat4x2");
-    REQUIRE(s->variables[30]->name == "dmat4x3Value");
-    REQUIRE(s->variables[30]->type == "glm::dmat4x3");
-    REQUIRE(s->variables[31]->name == "dmat4x4Value");
-    REQUIRE(s->variables[31]->type == "glm::dmat4x4");
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "boolVariable");
+        REQUIRE(var->key == "BoolVariable");
+        REQUIRE(var->type == "bool");
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var->name == "intVariable");
+        REQUIRE(var->key == "IntVariable");
+        REQUIRE(var->type == "int");
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var->name == "doubleValue");
+        REQUIRE(var->key == "DoubleValue");
+        REQUIRE(var->type == "double");
+    }
+    {
+        Variable* var = s->variables[3];
+        REQUIRE(var->name == "floatValue");
+        REQUIRE(var->key == "FloatValue");
+        REQUIRE(var->type == "float");
+    }
+    {
+        Variable* var = s->variables[4];
+        REQUIRE(var->name == "stringValue");
+        REQUIRE(var->key == "StringValue");
+        REQUIRE(var->type == "std::string");
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var->name == "ivec2Value");
+        REQUIRE(var->key == "Ivec2Value");
+        REQUIRE(var->type == "glm::ivec2");
+    }
+    {
+        Variable* var = s->variables[6];
+        REQUIRE(var->name == "ivec3Value");
+        REQUIRE(var->key == "Ivec3Value");
+        REQUIRE(var->type == "glm::ivec3");
+    }
+    {
+        Variable* var = s->variables[7];
+        REQUIRE(var->name == "ivec4Value");
+        REQUIRE(var->key == "Ivec4Value");
+        REQUIRE(var->type == "glm::ivec4");
+    }
+    {
+        Variable* var = s->variables[8];
+        REQUIRE(var->name == "dvec2Value");
+        REQUIRE(var->key == "Dvec2Value");
+        REQUIRE(var->type == "glm::dvec2");
+    }
+    {
+        Variable* var = s->variables[9];
+        REQUIRE(var->name == "dvec3Value");
+        REQUIRE(var->key == "Dvec3Value");
+        REQUIRE(var->type == "glm::dvec3");
+    }
+    {
+        Variable* var = s->variables[10];
+        REQUIRE(var->name == "dvec4Value");
+        REQUIRE(var->key == "Dvec4Value");
+        REQUIRE(var->type == "glm::dvec4");
+    }
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var->name == "vec2Value");
+        REQUIRE(var->key == "Vec2Value");
+        REQUIRE(var->type == "glm::vec2");
+    }
+    {
+        Variable* var = s->variables[12];
+        REQUIRE(var->name == "vec3Value");
+        REQUIRE(var->key == "Vec3Value");
+        REQUIRE(var->type == "glm::vec3");
+    }
+    {
+        Variable* var = s->variables[13];
+        REQUIRE(var->name == "vec4Value");
+        REQUIRE(var->key == "Vec4Value");
+        REQUIRE(var->type == "glm::vec4");
+    }
+    {
+        Variable* var = s->variables[14];
+        REQUIRE(var->name == "mat2x2Value");
+        REQUIRE(var->key == "Mat2x2Value");
+        REQUIRE(var->type == "glm::mat2x2");
+    }
+    {
+        Variable* var = s->variables[15];
+        REQUIRE(var->name == "mat2x3Value");
+        REQUIRE(var->key == "Mat2x3Value");
+        REQUIRE(var->type == "glm::mat2x3");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var->name == "mat2x4Value");
+        REQUIRE(var->key == "Mat2x4Value");
+        REQUIRE(var->type == "glm::mat2x4");
+    }
+    {
+        Variable* var = s->variables[17];
+        REQUIRE(var->name == "mat3x2Value");
+        REQUIRE(var->key == "Mat3x2Value");
+        REQUIRE(var->type == "glm::mat3x2");
+    }
+    {
+        Variable* var = s->variables[18];
+        REQUIRE(var->name == "mat3x3Value");
+        REQUIRE(var->key == "Mat3x3Value");
+        REQUIRE(var->type == "glm::mat3x3");
+    }
+    {
+        Variable* var = s->variables[19];
+        REQUIRE(var->name == "mat3x4Value");
+        REQUIRE(var->key == "Mat3x4Value");
+        REQUIRE(var->type == "glm::mat3x4");
+    }
+    {
+        Variable* var = s->variables[20];
+        REQUIRE(var->name == "mat4x2Value");
+        REQUIRE(var->key == "Mat4x2Value");
+        REQUIRE(var->type == "glm::mat4x2");
+    }
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var->name == "mat4x3Value");
+        REQUIRE(var->key == "Mat4x3Value");
+        REQUIRE(var->type == "glm::mat4x3");
+    }
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var->name == "mat4x4Value");
+        REQUIRE(var->key == "Mat4x4Value");
+        REQUIRE(var->type == "glm::mat4x4");
+    }
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var->name == "dmat2x2Value");
+        REQUIRE(var->key == "Dmat2x2Value");
+        REQUIRE(var->type == "glm::dmat2x2");
+    }
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var->name == "dmat2x3Value");
+        REQUIRE(var->key == "Dmat2x3Value");
+        REQUIRE(var->type == "glm::dmat2x3");
+    }
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var->name == "dmat2x4Value");
+        REQUIRE(var->key == "Dmat2x4Value");
+        REQUIRE(var->type == "glm::dmat2x4");
+    }
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var->name == "dmat3x2Value");
+        REQUIRE(var->key == "Dmat3x2Value");
+        REQUIRE(var->type == "glm::dmat3x2");
+    }
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var->name == "dmat3x3Value");
+        REQUIRE(var->key == "Dmat3x3Value");
+        REQUIRE(var->type == "glm::dmat3x3");
+    }
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var->name == "dmat3x4Value");
+        REQUIRE(var->key == "Dmat3x4Value");
+        REQUIRE(var->type == "glm::dmat3x4");
+    }
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var->name == "dmat4x2Value");
+        REQUIRE(var->key == "Dmat4x2Value");
+        REQUIRE(var->type == "glm::dmat4x2");
+    }
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var->name == "dmat4x3Value");
+        REQUIRE(var->key == "Dmat4x3Value");
+        REQUIRE(var->type == "glm::dmat4x3");
+    }
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var->name == "dmat4x4Value");
+        REQUIRE(var->key == "Dmat4x4Value");
+        REQUIRE(var->type == "glm::dmat4x4");
+    }
 }
 
-TEST_CASE("Vector Base Types", "[parsing]") {
+TEST_CASE("Parsing Variable: Vector Base Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<bool> boolVariable;
@@ -171,105 +299,201 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )");
 
     REQUIRE(s->variables.size() == 32);
-    REQUIRE(s->variables[0]->name == "boolVariable");
-    REQUIRE(s->variables[0]->key == "BoolVariable");
-    REQUIRE(s->variables[0]->type == "std::vector<bool>");
-    REQUIRE(s->variables[1]->name == "intVariable");
-    REQUIRE(s->variables[1]->key == "IntVariable");
-    REQUIRE(s->variables[1]->type == "std::vector<int>");
-    REQUIRE(s->variables[2]->name == "doubleValue");
-    REQUIRE(s->variables[2]->key == "DoubleValue");
-    REQUIRE(s->variables[2]->type == "std::vector<double>");
-    REQUIRE(s->variables[3]->name == "floatValue");
-    REQUIRE(s->variables[3]->key == "FloatValue");
-    REQUIRE(s->variables[3]->type == "std::vector<float>");
-    REQUIRE(s->variables[4]->name == "stringValue");
-    REQUIRE(s->variables[4]->key == "StringValue");
-    REQUIRE(s->variables[4]->type == "std::vector<std::string>");
-    REQUIRE(s->variables[5]->name == "ivec2Value");
-    REQUIRE(s->variables[5]->key == "Ivec2Value");
-    REQUIRE(s->variables[5]->type == "std::vector<glm::ivec2>");
-    REQUIRE(s->variables[6]->name == "ivec3Value");
-    REQUIRE(s->variables[6]->key == "Ivec3Value");
-    REQUIRE(s->variables[6]->type == "std::vector<glm::ivec3>");
-    REQUIRE(s->variables[7]->name == "ivec4Value");
-    REQUIRE(s->variables[7]->key == "Ivec4Value");
-    REQUIRE(s->variables[7]->type == "std::vector<glm::ivec4>");
-    REQUIRE(s->variables[8]->name == "dvec2Value");
-    REQUIRE(s->variables[8]->key == "Dvec2Value");
-    REQUIRE(s->variables[8]->type == "std::vector<glm::dvec2>");
-    REQUIRE(s->variables[9]->name == "dvec3Value");
-    REQUIRE(s->variables[9]->key == "Dvec3Value");
-    REQUIRE(s->variables[9]->type == "std::vector<glm::dvec3>");
-    REQUIRE(s->variables[10]->name == "dvec4Value");
-    REQUIRE(s->variables[10]->key == "Dvec4Value");
-    REQUIRE(s->variables[10]->type == "std::vector<glm::dvec4>");
-    REQUIRE(s->variables[11]->name == "vec2Value");
-    REQUIRE(s->variables[11]->key == "Vec2Value");
-    REQUIRE(s->variables[11]->type == "std::vector<glm::vec2>");
-    REQUIRE(s->variables[12]->name == "vec3Value");
-    REQUIRE(s->variables[12]->key == "Vec3Value");
-    REQUIRE(s->variables[12]->type == "std::vector<glm::vec3>");
-    REQUIRE(s->variables[13]->name == "vec4Value");
-    REQUIRE(s->variables[13]->key == "Vec4Value");
-    REQUIRE(s->variables[13]->type == "std::vector<glm::vec4>");
-    REQUIRE(s->variables[14]->name == "mat2x2Value");
-    REQUIRE(s->variables[14]->key == "Mat2x2Value");
-    REQUIRE(s->variables[14]->type == "std::vector<glm::mat2x2>");
-    REQUIRE(s->variables[15]->name == "mat2x3Value");
-    REQUIRE(s->variables[15]->key == "Mat2x3Value");
-    REQUIRE(s->variables[15]->type == "std::vector<glm::mat2x3>");
-    REQUIRE(s->variables[16]->name == "mat2x4Value");
-    REQUIRE(s->variables[16]->key == "Mat2x4Value");
-    REQUIRE(s->variables[16]->type == "std::vector<glm::mat2x4>");
-    REQUIRE(s->variables[17]->name == "mat3x2Value");
-    REQUIRE(s->variables[17]->key == "Mat3x2Value");
-    REQUIRE(s->variables[17]->type == "std::vector<glm::mat3x2>");
-    REQUIRE(s->variables[18]->name == "mat3x3Value");
-    REQUIRE(s->variables[18]->key == "Mat3x3Value");
-    REQUIRE(s->variables[18]->type == "std::vector<glm::mat3x3>");
-    REQUIRE(s->variables[19]->name == "mat3x4Value");
-    REQUIRE(s->variables[19]->key == "Mat3x4Value");
-    REQUIRE(s->variables[19]->type == "std::vector<glm::mat3x4>");
-    REQUIRE(s->variables[20]->name == "mat4x2Value");
-    REQUIRE(s->variables[20]->key == "Mat4x2Value");
-    REQUIRE(s->variables[20]->type == "std::vector<glm::mat4x2>");
-    REQUIRE(s->variables[21]->name == "mat4x3Value");
-    REQUIRE(s->variables[21]->key == "Mat4x3Value");
-    REQUIRE(s->variables[21]->type == "std::vector<glm::mat4x3>");
-    REQUIRE(s->variables[22]->name == "mat4x4Value");
-    REQUIRE(s->variables[22]->key == "Mat4x4Value");
-    REQUIRE(s->variables[22]->type == "std::vector<glm::mat4x4>");
-    REQUIRE(s->variables[23]->name == "dmat2x2Value");
-    REQUIRE(s->variables[23]->key == "Dmat2x2Value");
-    REQUIRE(s->variables[23]->type == "std::vector<glm::dmat2x2>");
-    REQUIRE(s->variables[24]->name == "dmat2x3Value");
-    REQUIRE(s->variables[24]->key == "Dmat2x3Value");
-    REQUIRE(s->variables[24]->type == "std::vector<glm::dmat2x3>");
-    REQUIRE(s->variables[25]->name == "dmat2x4Value");
-    REQUIRE(s->variables[25]->key == "Dmat2x4Value");
-    REQUIRE(s->variables[25]->type == "std::vector<glm::dmat2x4>");
-    REQUIRE(s->variables[26]->name == "dmat3x2Value");
-    REQUIRE(s->variables[26]->key == "Dmat3x2Value");
-    REQUIRE(s->variables[26]->type == "std::vector<glm::dmat3x2>");
-    REQUIRE(s->variables[27]->name == "dmat3x3Value");
-    REQUIRE(s->variables[27]->key == "Dmat3x3Value");
-    REQUIRE(s->variables[27]->type == "std::vector<glm::dmat3x3>");
-    REQUIRE(s->variables[28]->name == "dmat3x4Value");
-    REQUIRE(s->variables[28]->key == "Dmat3x4Value");
-    REQUIRE(s->variables[28]->type == "std::vector<glm::dmat3x4>");
-    REQUIRE(s->variables[29]->name == "dmat4x2Value");
-    REQUIRE(s->variables[29]->key == "Dmat4x2Value");
-    REQUIRE(s->variables[29]->type == "std::vector<glm::dmat4x2>");
-    REQUIRE(s->variables[30]->name == "dmat4x3Value");
-    REQUIRE(s->variables[30]->key == "Dmat4x3Value");
-    REQUIRE(s->variables[30]->type == "std::vector<glm::dmat4x3>");
-    REQUIRE(s->variables[31]->name == "dmat4x4Value");
-    REQUIRE(s->variables[31]->key == "Dmat4x4Value");
-    REQUIRE(s->variables[31]->type == "std::vector<glm::dmat4x4>");
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "boolVariable");
+        REQUIRE(var->key == "BoolVariable");
+        REQUIRE(var->type == "std::vector<bool>");
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var->name == "intVariable");
+        REQUIRE(var->key == "IntVariable");
+        REQUIRE(var->type == "std::vector<int>");
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var->name == "doubleValue");
+        REQUIRE(var->key == "DoubleValue");
+        REQUIRE(var->type == "std::vector<double>");
+    }
+    {
+        Variable* var = s->variables[3];
+        REQUIRE(var->name == "floatValue");
+        REQUIRE(var->key == "FloatValue");
+        REQUIRE(var->type == "std::vector<float>");
+    }
+    {
+        Variable* var = s->variables[4];
+        REQUIRE(var->name == "stringValue");
+        REQUIRE(var->key == "StringValue");
+        REQUIRE(var->type == "std::vector<std::string>");
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var->name == "ivec2Value");
+        REQUIRE(var->key == "Ivec2Value");
+        REQUIRE(var->type == "std::vector<glm::ivec2>");
+    }
+    {
+        Variable* var = s->variables[6];
+        REQUIRE(var->name == "ivec3Value");
+        REQUIRE(var->key == "Ivec3Value");
+        REQUIRE(var->type == "std::vector<glm::ivec3>");
+    }
+    {
+        Variable* var = s->variables[7];
+        REQUIRE(var->name == "ivec4Value");
+        REQUIRE(var->key == "Ivec4Value");
+        REQUIRE(var->type == "std::vector<glm::ivec4>");
+    }
+    {
+        Variable* var = s->variables[8];
+        REQUIRE(var->name == "dvec2Value");
+        REQUIRE(var->key == "Dvec2Value");
+        REQUIRE(var->type == "std::vector<glm::dvec2>");
+    }
+    {
+        Variable* var = s->variables[9];
+        REQUIRE(var->name == "dvec3Value");
+        REQUIRE(var->key == "Dvec3Value");
+        REQUIRE(var->type == "std::vector<glm::dvec3>");
+    }
+    {
+        Variable* var = s->variables[10];
+        REQUIRE(var->name == "dvec4Value");
+        REQUIRE(var->key == "Dvec4Value");
+        REQUIRE(var->type == "std::vector<glm::dvec4>");
+    }
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var->name == "vec2Value");
+        REQUIRE(var->key == "Vec2Value");
+        REQUIRE(var->type == "std::vector<glm::vec2>");
+    }
+    {
+        Variable* var = s->variables[12];
+        REQUIRE(var->name == "vec3Value");
+        REQUIRE(var->key == "Vec3Value");
+        REQUIRE(var->type == "std::vector<glm::vec3>");
+    }
+    {
+        Variable* var = s->variables[13];
+        REQUIRE(var->name == "vec4Value");
+        REQUIRE(var->key == "Vec4Value");
+        REQUIRE(var->type == "std::vector<glm::vec4>");
+    }
+    {
+        Variable* var = s->variables[14];
+        REQUIRE(var->name == "mat2x2Value");
+        REQUIRE(var->key == "Mat2x2Value");
+        REQUIRE(var->type == "std::vector<glm::mat2x2>");
+    }
+    {
+        Variable* var = s->variables[15];
+        REQUIRE(var->name == "mat2x3Value");
+        REQUIRE(var->key == "Mat2x3Value");
+        REQUIRE(var->type == "std::vector<glm::mat2x3>");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var->name == "mat2x4Value");
+        REQUIRE(var->key == "Mat2x4Value");
+        REQUIRE(var->type == "std::vector<glm::mat2x4>");
+    }
+    {
+        Variable* var = s->variables[17];
+        REQUIRE(var->name == "mat3x2Value");
+        REQUIRE(var->key == "Mat3x2Value");
+        REQUIRE(var->type == "std::vector<glm::mat3x2>");
+    }
+    {
+        Variable* var = s->variables[18];
+        REQUIRE(var->name == "mat3x3Value");
+        REQUIRE(var->key == "Mat3x3Value");
+        REQUIRE(var->type == "std::vector<glm::mat3x3>");
+    }
+    {
+        Variable* var = s->variables[19];
+        REQUIRE(var->name == "mat3x4Value");
+        REQUIRE(var->key == "Mat3x4Value");
+        REQUIRE(var->type == "std::vector<glm::mat3x4>");
+    }
+    {
+        Variable* var = s->variables[20];
+        REQUIRE(var->name == "mat4x2Value");
+        REQUIRE(var->key == "Mat4x2Value");
+        REQUIRE(var->type == "std::vector<glm::mat4x2>");
+    }
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var->name == "mat4x3Value");
+        REQUIRE(var->key == "Mat4x3Value");
+        REQUIRE(var->type == "std::vector<glm::mat4x3>");
+    }
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var->name == "mat4x4Value");
+        REQUIRE(var->key == "Mat4x4Value");
+        REQUIRE(var->type == "std::vector<glm::mat4x4>");
+    }
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var->name == "dmat2x2Value");
+        REQUIRE(var->key == "Dmat2x2Value");
+        REQUIRE(var->type == "std::vector<glm::dmat2x2>");
+    }
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var->name == "dmat2x3Value");
+        REQUIRE(var->key == "Dmat2x3Value");
+        REQUIRE(var->type == "std::vector<glm::dmat2x3>");
+    }
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var->name == "dmat2x4Value");
+        REQUIRE(var->key == "Dmat2x4Value");
+        REQUIRE(var->type == "std::vector<glm::dmat2x4>");
+    }
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var->name == "dmat3x2Value");
+        REQUIRE(var->key == "Dmat3x2Value");
+        REQUIRE(var->type == "std::vector<glm::dmat3x2>");
+    }
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var->name == "dmat3x3Value");
+        REQUIRE(var->key == "Dmat3x3Value");
+        REQUIRE(var->type == "std::vector<glm::dmat3x3>");
+    }
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var->name == "dmat3x4Value");
+        REQUIRE(var->key == "Dmat3x4Value");
+        REQUIRE(var->type == "std::vector<glm::dmat3x4>");
+    }
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var->name == "dmat4x2Value");
+        REQUIRE(var->key == "Dmat4x2Value");
+        REQUIRE(var->type == "std::vector<glm::dmat4x2>");
+    }
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var->name == "dmat4x3Value");
+        REQUIRE(var->key == "Dmat4x3Value");
+        REQUIRE(var->type == "std::vector<glm::dmat4x3>");
+    }
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var->name == "dmat4x4Value");
+        REQUIRE(var->key == "Dmat4x4Value");
+        REQUIRE(var->type == "std::vector<glm::dmat4x4>");
+    }
 }
 
-TEST_CASE("Optional Base Types", "[parsing]") {
+TEST_CASE("Parsing Variable: Optional Base Types", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<bool> boolVariable;
@@ -308,105 +532,201 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )");
 
     REQUIRE(s->variables.size() == 32);
-    REQUIRE(s->variables[0]->name == "boolVariable");
-    REQUIRE(s->variables[0]->key == "BoolVariable");
-    REQUIRE(s->variables[0]->type == "std::optional<bool>");
-    REQUIRE(s->variables[1]->name == "intVariable");
-    REQUIRE(s->variables[1]->key == "IntVariable");
-    REQUIRE(s->variables[1]->type == "std::optional<int>");
-    REQUIRE(s->variables[2]->name == "doubleValue");
-    REQUIRE(s->variables[2]->key == "DoubleValue");
-    REQUIRE(s->variables[2]->type == "std::optional<double>");
-    REQUIRE(s->variables[3]->name == "floatValue");
-    REQUIRE(s->variables[3]->key == "FloatValue");
-    REQUIRE(s->variables[3]->type == "std::optional<float>");
-    REQUIRE(s->variables[4]->name == "stringValue");
-    REQUIRE(s->variables[4]->key == "StringValue");
-    REQUIRE(s->variables[4]->type == "std::optional<std::string>");
-    REQUIRE(s->variables[5]->name == "ivec2Value");
-    REQUIRE(s->variables[5]->key == "Ivec2Value");
-    REQUIRE(s->variables[5]->type == "std::optional<glm::ivec2>");
-    REQUIRE(s->variables[6]->name == "ivec3Value");
-    REQUIRE(s->variables[6]->key == "Ivec3Value");
-    REQUIRE(s->variables[6]->type == "std::optional<glm::ivec3>");
-    REQUIRE(s->variables[7]->name == "ivec4Value");
-    REQUIRE(s->variables[7]->key == "Ivec4Value");
-    REQUIRE(s->variables[7]->type == "std::optional<glm::ivec4>");
-    REQUIRE(s->variables[8]->name == "dvec2Value");
-    REQUIRE(s->variables[8]->key == "Dvec2Value");
-    REQUIRE(s->variables[8]->type == "std::optional<glm::dvec2>");
-    REQUIRE(s->variables[9]->name == "dvec3Value");
-    REQUIRE(s->variables[9]->key == "Dvec3Value");
-    REQUIRE(s->variables[9]->type == "std::optional<glm::dvec3>");
-    REQUIRE(s->variables[10]->name == "dvec4Value");
-    REQUIRE(s->variables[10]->key == "Dvec4Value");
-    REQUIRE(s->variables[10]->type == "std::optional<glm::dvec4>");
-    REQUIRE(s->variables[11]->name == "vec2Value");
-    REQUIRE(s->variables[11]->key == "Vec2Value");
-    REQUIRE(s->variables[11]->type == "std::optional<glm::vec2>");
-    REQUIRE(s->variables[12]->name == "vec3Value");
-    REQUIRE(s->variables[12]->key == "Vec3Value");
-    REQUIRE(s->variables[12]->type == "std::optional<glm::vec3>");
-    REQUIRE(s->variables[13]->name == "vec4Value");
-    REQUIRE(s->variables[13]->key == "Vec4Value");
-    REQUIRE(s->variables[13]->type == "std::optional<glm::vec4>");
-    REQUIRE(s->variables[14]->name == "mat2x2Value");
-    REQUIRE(s->variables[14]->key == "Mat2x2Value");
-    REQUIRE(s->variables[14]->type == "std::optional<glm::mat2x2>");
-    REQUIRE(s->variables[15]->name == "mat2x3Value");
-    REQUIRE(s->variables[15]->key == "Mat2x3Value");
-    REQUIRE(s->variables[15]->type == "std::optional<glm::mat2x3>");
-    REQUIRE(s->variables[16]->name == "mat2x4Value");
-    REQUIRE(s->variables[16]->key == "Mat2x4Value");
-    REQUIRE(s->variables[16]->type == "std::optional<glm::mat2x4>");
-    REQUIRE(s->variables[17]->name == "mat3x2Value");
-    REQUIRE(s->variables[17]->key == "Mat3x2Value");
-    REQUIRE(s->variables[17]->type == "std::optional<glm::mat3x2>");
-    REQUIRE(s->variables[18]->name == "mat3x3Value");
-    REQUIRE(s->variables[18]->key == "Mat3x3Value");
-    REQUIRE(s->variables[18]->type == "std::optional<glm::mat3x3>");
-    REQUIRE(s->variables[19]->name == "mat3x4Value");
-    REQUIRE(s->variables[19]->key == "Mat3x4Value");
-    REQUIRE(s->variables[19]->type == "std::optional<glm::mat3x4>");
-    REQUIRE(s->variables[20]->name == "mat4x2Value");
-    REQUIRE(s->variables[20]->key == "Mat4x2Value");
-    REQUIRE(s->variables[20]->type == "std::optional<glm::mat4x2>");
-    REQUIRE(s->variables[21]->name == "mat4x3Value");
-    REQUIRE(s->variables[21]->key == "Mat4x3Value");
-    REQUIRE(s->variables[21]->type == "std::optional<glm::mat4x3>");
-    REQUIRE(s->variables[22]->name == "mat4x4Value");
-    REQUIRE(s->variables[22]->key == "Mat4x4Value");
-    REQUIRE(s->variables[22]->type == "std::optional<glm::mat4x4>");
-    REQUIRE(s->variables[23]->name == "dmat2x2Value");
-    REQUIRE(s->variables[23]->key == "Dmat2x2Value");
-    REQUIRE(s->variables[23]->type == "std::optional<glm::dmat2x2>");
-    REQUIRE(s->variables[24]->name == "dmat2x3Value");
-    REQUIRE(s->variables[24]->key == "Dmat2x3Value");
-    REQUIRE(s->variables[24]->type == "std::optional<glm::dmat2x3>");
-    REQUIRE(s->variables[25]->name == "dmat2x4Value");
-    REQUIRE(s->variables[25]->key == "Dmat2x4Value");
-    REQUIRE(s->variables[25]->type == "std::optional<glm::dmat2x4>");
-    REQUIRE(s->variables[26]->name == "dmat3x2Value");
-    REQUIRE(s->variables[26]->key == "Dmat3x2Value");
-    REQUIRE(s->variables[26]->type == "std::optional<glm::dmat3x2>");
-    REQUIRE(s->variables[27]->name == "dmat3x3Value");
-    REQUIRE(s->variables[27]->key == "Dmat3x3Value");
-    REQUIRE(s->variables[27]->type == "std::optional<glm::dmat3x3>");
-    REQUIRE(s->variables[28]->name == "dmat3x4Value");
-    REQUIRE(s->variables[28]->key == "Dmat3x4Value");
-    REQUIRE(s->variables[28]->type == "std::optional<glm::dmat3x4>");
-    REQUIRE(s->variables[29]->name == "dmat4x2Value");
-    REQUIRE(s->variables[29]->key == "Dmat4x2Value");
-    REQUIRE(s->variables[29]->type == "std::optional<glm::dmat4x2>");
-    REQUIRE(s->variables[30]->name == "dmat4x3Value");
-    REQUIRE(s->variables[30]->key == "Dmat4x3Value");
-    REQUIRE(s->variables[30]->type == "std::optional<glm::dmat4x3>");
-    REQUIRE(s->variables[31]->name == "dmat4x4Value");
-    REQUIRE(s->variables[31]->key == "Dmat4x4Value");
-    REQUIRE(s->variables[31]->type == "std::optional<glm::dmat4x4>");
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "boolVariable");
+        REQUIRE(var->key == "BoolVariable");
+        REQUIRE(var->type == "std::optional<bool>");
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var->name == "intVariable");
+        REQUIRE(var->key == "IntVariable");
+        REQUIRE(var->type == "std::optional<int>");
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var->name == "doubleValue");
+        REQUIRE(var->key == "DoubleValue");
+        REQUIRE(var->type == "std::optional<double>");
+    }
+    {
+        Variable* var = s->variables[3];
+        REQUIRE(var->name == "floatValue");
+        REQUIRE(var->key == "FloatValue");
+        REQUIRE(var->type == "std::optional<float>");
+    }
+    {
+        Variable* var = s->variables[4];
+        REQUIRE(var->name == "stringValue");
+        REQUIRE(var->key == "StringValue");
+        REQUIRE(var->type == "std::optional<std::string>");
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var->name == "ivec2Value");
+        REQUIRE(var->key == "Ivec2Value");
+        REQUIRE(var->type == "std::optional<glm::ivec2>");
+    }
+    {
+        Variable* var = s->variables[6];
+        REQUIRE(var->name == "ivec3Value");
+        REQUIRE(var->key == "Ivec3Value");
+        REQUIRE(var->type == "std::optional<glm::ivec3>");
+    }
+    {
+        Variable* var = s->variables[7];
+        REQUIRE(var->name == "ivec4Value");
+        REQUIRE(var->key == "Ivec4Value");
+        REQUIRE(var->type == "std::optional<glm::ivec4>");
+    }
+    {
+        Variable* var = s->variables[8];
+        REQUIRE(var->name == "dvec2Value");
+        REQUIRE(var->key == "Dvec2Value");
+        REQUIRE(var->type == "std::optional<glm::dvec2>");
+    }
+    {
+        Variable* var = s->variables[9];
+        REQUIRE(var->name == "dvec3Value");
+        REQUIRE(var->key == "Dvec3Value");
+        REQUIRE(var->type == "std::optional<glm::dvec3>");
+    }
+    {
+        Variable* var = s->variables[10];
+        REQUIRE(var->name == "dvec4Value");
+        REQUIRE(var->key == "Dvec4Value");
+        REQUIRE(var->type == "std::optional<glm::dvec4>");
+    }
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var->name == "vec2Value");
+        REQUIRE(var->key == "Vec2Value");
+        REQUIRE(var->type == "std::optional<glm::vec2>");
+    }
+    {
+        Variable* var = s->variables[12];
+        REQUIRE(var->name == "vec3Value");
+        REQUIRE(var->key == "Vec3Value");
+        REQUIRE(var->type == "std::optional<glm::vec3>");
+    }
+    {
+        Variable* var = s->variables[13];
+        REQUIRE(var->name == "vec4Value");
+        REQUIRE(var->key == "Vec4Value");
+        REQUIRE(var->type == "std::optional<glm::vec4>");
+    }
+    {
+        Variable* var = s->variables[14];
+        REQUIRE(var->name == "mat2x2Value");
+        REQUIRE(var->key == "Mat2x2Value");
+        REQUIRE(var->type == "std::optional<glm::mat2x2>");
+    }
+    {
+        Variable* var = s->variables[15];
+        REQUIRE(var->name == "mat2x3Value");
+        REQUIRE(var->key == "Mat2x3Value");
+        REQUIRE(var->type == "std::optional<glm::mat2x3>");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var->name == "mat2x4Value");
+        REQUIRE(var->key == "Mat2x4Value");
+        REQUIRE(var->type == "std::optional<glm::mat2x4>");
+    }
+    {
+        Variable* var = s->variables[17];
+        REQUIRE(var->name == "mat3x2Value");
+        REQUIRE(var->key == "Mat3x2Value");
+        REQUIRE(var->type == "std::optional<glm::mat3x2>");
+    }
+    {
+        Variable* var = s->variables[18];
+        REQUIRE(var->name == "mat3x3Value");
+        REQUIRE(var->key == "Mat3x3Value");
+        REQUIRE(var->type == "std::optional<glm::mat3x3>");
+    }
+    {
+        Variable* var = s->variables[19];
+        REQUIRE(var->name == "mat3x4Value");
+        REQUIRE(var->key == "Mat3x4Value");
+        REQUIRE(var->type == "std::optional<glm::mat3x4>");
+    }
+    {
+        Variable* var = s->variables[20];
+        REQUIRE(var->name == "mat4x2Value");
+        REQUIRE(var->key == "Mat4x2Value");
+        REQUIRE(var->type == "std::optional<glm::mat4x2>");
+    }
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var->name == "mat4x3Value");
+        REQUIRE(var->key == "Mat4x3Value");
+        REQUIRE(var->type == "std::optional<glm::mat4x3>");
+    }
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var->name == "mat4x4Value");
+        REQUIRE(var->key == "Mat4x4Value");
+        REQUIRE(var->type == "std::optional<glm::mat4x4>");
+    }
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var->name == "dmat2x2Value");
+        REQUIRE(var->key == "Dmat2x2Value");
+        REQUIRE(var->type == "std::optional<glm::dmat2x2>");
+    }
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var->name == "dmat2x3Value");
+        REQUIRE(var->key == "Dmat2x3Value");
+        REQUIRE(var->type == "std::optional<glm::dmat2x3>");
+    }
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var->name == "dmat2x4Value");
+        REQUIRE(var->key == "Dmat2x4Value");
+        REQUIRE(var->type == "std::optional<glm::dmat2x4>");
+    }
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var->name == "dmat3x2Value");
+        REQUIRE(var->key == "Dmat3x2Value");
+        REQUIRE(var->type == "std::optional<glm::dmat3x2>");
+    }
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var->name == "dmat3x3Value");
+        REQUIRE(var->key == "Dmat3x3Value");
+        REQUIRE(var->type == "std::optional<glm::dmat3x3>");
+    }
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var->name == "dmat3x4Value");
+        REQUIRE(var->key == "Dmat3x4Value");
+        REQUIRE(var->type == "std::optional<glm::dmat3x4>");
+    }
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var->name == "dmat4x2Value");
+        REQUIRE(var->key == "Dmat4x2Value");
+        REQUIRE(var->type == "std::optional<glm::dmat4x2>");
+    }
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var->name == "dmat4x3Value");
+        REQUIRE(var->key == "Dmat4x3Value");
+        REQUIRE(var->type == "std::optional<glm::dmat4x3>");
+    }
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var->name == "dmat4x4Value");
+        REQUIRE(var->key == "Dmat4x4Value");
+        REQUIRE(var->type == "std::optional<glm::dmat4x4>");
+    }
 }
 
-TEST_CASE("Variable attributes", "[parsing]") {
+TEST_CASE("Parsing Variable: Variable attributes", "[parsing]") {
     Struct* s = parseRootStruct(R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::key(Var)]];

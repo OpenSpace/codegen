@@ -24,14 +24,17 @@
 
 #include "catch2/catch.hpp"
 
+#include "codegen.h"
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Minimal", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Minimal", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
 };
-)");
+)";
+
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -39,13 +42,17 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.empty());
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Namespace specified", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Namespace specified", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -53,44 +60,90 @@ struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.empty());
+    
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("NoExhaustive", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name), codegen::noexhaustive]] Parameters {
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
     REQUIRE(s->attributes.noExhaustive);
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.empty());
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Comment", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[parsing]") {
+    constexpr const char Sources[] = R"(
+struct [[codegen::Dictionary(Name), codegen::noexhaustive(true)]] Parameters {
+};
+)";
+    Struct* s = parseRootStruct(Sources);
+
+    REQUIRE(s->name == "Parameters");
+    REQUIRE(s->attributes.dictionary == "Name");
+    REQUIRE(s->attributes.noExhaustive);
+    REQUIRE(s->children.empty());
+    REQUIRE(s->variables.empty());
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
+}
+
+TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[parsing]") {
+    constexpr const char Sources[] = R"(
+struct [[codegen::Dictionary(Name), codegen::noexhaustive(false)]] Parameters {
+};
+)";
+    Struct* s = parseRootStruct(Sources);
+
+    REQUIRE(s->name == "Parameters");
+    REQUIRE(s->attributes.dictionary == "Name");
+    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s->children.empty());
+    REQUIRE(s->variables.empty());
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
+}
+
+TEST_CASE("Parsing Struct: Comment Ignored", "[parsing]") {
+    constexpr const char Sources[] = R"(
 // Test documentation
 struct [[codegen::Dictionary(Name)]] Parameters {
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
     REQUIRE(s->attributes.namespaceSpecifier.empty());
     //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->comment == "Test documentation");
+    REQUIRE(s->comment.empty());
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.empty());
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Substruct", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Substruct", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
     };
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -99,24 +152,31 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables.empty());
 
     REQUIRE(s->children.size() == 1);
-    REQUIRE(s->children[0]->type == StackElement::Type::Struct);
-    REQUIRE(s->children[0]->name == "A");
-    Struct* a = static_cast<Struct*>(s->children[0]);
-    REQUIRE(a->comment.empty());
-    REQUIRE(a->attributes.dictionary.empty());
-    REQUIRE(a->attributes.namespaceSpecifier.empty());
-    REQUIRE(a->attributes.noExhaustive);
+    {
+        StackElement* e = s->children[0];
+        REQUIRE(e->type == StackElement::Type::Struct);
+        REQUIRE(e->name == "A");
+        Struct* a = static_cast<Struct*>(e);
+        REQUIRE(a->comment.empty());
+        REQUIRE(a->attributes.dictionary.empty());
+        REQUIRE(a->attributes.namespaceSpecifier.empty());
+        REQUIRE(a->attributes.noExhaustive);
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Double Substruct", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
     };
     struct B {
     };
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -125,34 +185,43 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables.empty());
 
     REQUIRE(s->children.size() == 2);
-    REQUIRE(s->children[0]->type == StackElement::Type::Struct);
-    REQUIRE(s->children[0]->name == "A");
-    Struct* a = static_cast<Struct*>(s->children[0]);
-    REQUIRE(a->comment.empty());
-    REQUIRE(a->attributes.dictionary.empty());
-    REQUIRE(a->attributes.namespaceSpecifier.empty());
-    REQUIRE(a->attributes.noExhaustive);
-    REQUIRE(a->children.empty());
-    REQUIRE(a->variables.empty());
+    {
+        StackElement* e = s->children[0];
+        REQUIRE(e->type == StackElement::Type::Struct);
+        REQUIRE(e->name == "A");
+        Struct* a = static_cast<Struct*>(e);
+        REQUIRE(a->comment.empty());
+        REQUIRE(a->attributes.dictionary.empty());
+        REQUIRE(a->attributes.namespaceSpecifier.empty());
+        REQUIRE(a->attributes.noExhaustive);
+        REQUIRE(a->children.empty());
+        REQUIRE(a->variables.empty());
+    }
+    {
+        StackElement* e = s->children[1];
+        REQUIRE(e->type == StackElement::Type::Struct);
+        REQUIRE(e->name == "B");
+        Struct* b = static_cast<Struct*>(e);
+        REQUIRE(b->comment.empty());
+        REQUIRE(b->attributes.dictionary.empty());
+        REQUIRE(b->attributes.namespaceSpecifier.empty());
+        REQUIRE(b->attributes.noExhaustive);
+        REQUIRE(b->children.empty());
+        REQUIRE(b->variables.empty());
+    }
 
-    REQUIRE(s->children[1]->type == StackElement::Type::Struct);
-    REQUIRE(s->children[1]->name == "B");
-    Struct* b = static_cast<Struct*>(s->children[1]);
-    REQUIRE(b->comment.empty());
-    REQUIRE(b->attributes.dictionary.empty());
-    REQUIRE(b->attributes.namespaceSpecifier.empty());
-    REQUIRE(b->attributes.noExhaustive);
-    REQUIRE(b->children.empty());
-    REQUIRE(b->variables.empty());
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Variable", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Variable", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // variable documentation
     int variable;
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -160,13 +229,20 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.size() == 1);
-    REQUIRE(s->variables[0]->name == "variable");
-    REQUIRE(s->variables[0]->type == "int");
-    REQUIRE(s->variables[0]->comment == "variable documentation");
+    {
+
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "variable");
+        REQUIRE(var->type == "int");
+        REQUIRE(var->comment == "variable documentation");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Double Variable", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // variable1 documentation
     int variable;
@@ -174,7 +250,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     // variable2 documentation
     float variable2;
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -182,22 +259,32 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->children.empty());
     REQUIRE(s->variables.size() == 2);
-    REQUIRE(s->variables[0]->name == "variable");
-    REQUIRE(s->variables[0]->type == "int");
-    REQUIRE(s->variables[0]->comment == "variable1 documentation");
-    REQUIRE(s->variables[1]->name == "variable2");
-    REQUIRE(s->variables[1]->type == "float");
-    REQUIRE(s->variables[1]->comment == "variable2 documentation");
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "variable");
+        REQUIRE(var->type == "int");
+        REQUIRE(var->comment == "variable1 documentation");
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var->name == "variable2");
+        REQUIRE(var->type == "float");
+        REQUIRE(var->comment == "variable2 documentation");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Empty Enum", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
     };
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -205,13 +292,19 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->variables.empty());
     REQUIRE(s->children.size() == 1);
-    REQUIRE(s->children[0]->type == StackElement::Type::Enum);
-    REQUIRE(s->children[0]->name == "Name");
-    REQUIRE(s->children[0]->comment == "enum documentation");
+    {
+        StackElement* e = s->children[0];
+        REQUIRE(e->type == StackElement::Type::Enum);
+        REQUIRE(e->name == "Name");
+        REQUIRE(e->comment == "enum documentation");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Enum", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Enum", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
@@ -219,7 +312,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         Value2
     };
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -227,17 +321,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->variables.empty());
     REQUIRE(s->children.size() == 1);
-    REQUIRE(s->children[0]->type == StackElement::Type::Enum);
-    REQUIRE(s->children[0]->name == "Name");
-    REQUIRE(s->children[0]->comment == "enum documentation");
-    Enum* e = static_cast<Enum*>(s->children[0]);
-    REQUIRE(e->elements.size() == 2);
-    REQUIRE(e->elements[0]->name == "Value");
-    REQUIRE(e->elements[1]->name == "Value2");
+    {
+        StackElement* e = s->children[0];
+        REQUIRE(e->type == StackElement::Type::Enum);
+        REQUIRE(e->name == "Name");
+        REQUIRE(e->comment == "enum documentation");
+        Enum* ee = static_cast<Enum*>(e);
+        REQUIRE(ee->elements.size() == 2);
+        REQUIRE(ee->elements[0]->name == "Value");
+        REQUIRE(ee->elements[1]->name == "Value2");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }
 
-TEST_CASE("Enum Key Attribute", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
+    constexpr const char Sources[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
@@ -245,7 +345,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         Value2
     };
 };
-)");
+)";
+    Struct* s = parseRootStruct(Sources);
 
     REQUIRE(s->name == "Parameters");
     REQUIRE(s->attributes.dictionary == "Name");
@@ -253,13 +354,91 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     //REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->variables.empty());
     REQUIRE(s->children.size() == 1);
-    REQUIRE(s->children[0]->type == StackElement::Type::Enum);
-    REQUIRE(s->children[0]->name == "Name");
-    REQUIRE(s->children[0]->comment == "enum documentation");
-    Enum* e = static_cast<Enum*>(s->children[0]);
-    REQUIRE(e->elements.size() == 2);
-    REQUIRE(e->elements[0]->name == "Value");
-    REQUIRE(e->elements[0]->attributes.key == "VK");
-    REQUIRE(e->elements[1]->name == "Value2");
-    REQUIRE(e->elements[1]->attributes.key.empty());
+    {
+        StackElement* e = s->children[0];
+        REQUIRE(e->type == StackElement::Type::Enum);
+        REQUIRE(e->name == "Name");
+        REQUIRE(e->comment == "enum documentation");
+        Enum* ee = static_cast<Enum*>(e);
+        REQUIRE(ee->elements.size() == 2);
+        REQUIRE(ee->elements[0]->name == "Value");
+        REQUIRE(ee->elements[0]->attributes.key == "VK");
+        REQUIRE(ee->elements[1]->name == "Value2");
+        REQUIRE(ee->elements[1]->attributes.key.empty());
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
+}
+
+TEST_CASE("Parsing Struct: New lines", "[parsing]") {
+ constexpr const char Sources[] = R"(
+struct
+[[codegen::Dictionary(Dictionary),
+codegen::namespace(NS),
+codegen::noexhaustive(false)]]
+Parameters
+{
+    int value;
+};
+)";
+    Struct* s = parseRootStruct(Sources);
+
+    REQUIRE(s->name == "Parameters");
+    REQUIRE(s->attributes.dictionary == "Dictionary");
+    REQUIRE(s->attributes.namespaceSpecifier == "NS");
+    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s->variables.size() == 1);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "value");
+        REQUIRE(var->key == "Value");
+        REQUIRE(var->type == "int");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
+}
+
+TEST_CASE("Parsing Struct: New lines go nuts", "[parsing]") {
+    constexpr const char Sources[] = R"(
+
+
+struct
+
+
+
+[[codegen::Dictionary(Dictionary),
+
+codegen::namespace(NS),
+
+
+codegen::noexhaustive(false)]]
+
+Parameters
+
+{
+
+    int value;
+
+
+
+};
+)";
+    Struct* s = parseRootStruct(Sources);
+
+    REQUIRE(s->name == "Parameters");
+    REQUIRE(s->attributes.dictionary == "Dictionary");
+    REQUIRE(s->attributes.namespaceSpecifier == "NS");
+    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s->variables.size() == 1);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "value");
+        REQUIRE(var->key == "Value");
+        REQUIRE(var->type == "int");
+    }
+
+    std::string r = generateResult(s);
+    REQUIRE(!r.empty());
 }

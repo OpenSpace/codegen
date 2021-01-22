@@ -29,20 +29,52 @@
 #include <fmt/format.h>
 #include <cassert>
 
+bool hasAttribute(std::string_view block, std::string_view name) {
+    assert(!block.empty());
+    assert(!name.empty());
+
+    std::string key = fmt::format("codegen::{}", name);
+    const size_t p = block.find(key);
+    if (p == std::string::npos) {
+        return false;
+    }
+
+    size_t cursor = p + key.size();
+
+    if (block[cursor] != '(') {
+        // No parameter provided -> true
+        return true;
+    }
+    cursor++;
+    const size_t end = block.find(')', cursor);
+    std::string_view param = block.substr(cursor, end - cursor);
+
+    if (param == "true" || param.empty()) {
+        return true;
+    }
+    if (param == "false") {
+        return false;
+    }
+    throw ParsingError(fmt::format(
+        "Unexpected boolean attribute parameter '{}'. Expected empty, true, or false",
+        param
+    ));
+}
+
 std::string_view parseAttribute(std::string_view block, std::string_view name) {
     assert(!block.empty());
     assert(!name.empty());
 
-    std::string key = std::string("codegen::" + std::string(name) + "(");
+    std::string key = fmt::format("codegen::{}(", name);
     const size_t p = block.find(key);
-    if (p == std::string_view::npos) {
+    if (p == std::string::npos) {
         return std::string_view();
     }
     const size_t beg = block.find('(', p) + 1;
 
     if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Attribute parameter has unterminated parameter list:\n{}", block
+        throw ParsingError(fmt::format(
+            "Attribute parameter has unterminated parameter list\n{}", block
         ));
     }
 
@@ -129,19 +161,20 @@ Struct* parseStruct(std::string_view line) {
         std::string_view block = line.substr(beginAttr, endAttr - beginAttr);
         s->attributes.dictionary = parseAttribute(block, "Dictionary");
         if (s->attributes.dictionary.empty()) {
-            throw std::runtime_error(fmt::format(
-                "No name specified for root struct:\n{}", line
+            throw SpecificationError(fmt::format(
+                "No name specified for root struct\n{}", line
             ));
         }
 
         s->attributes.namespaceSpecifier = parseAttribute(block, "namespace");
+        s->attributes.noExhaustive = hasAttribute(block, "noexhaustive");
         cursor = endAttr + 1;
     }
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Missing space before the closing {{ of a struct:\n{}", line
+        throw ParsingError(fmt::format(
+            "Missing space or struct name before the closing {{ of a struct\n{}", line
         ));
     }
     s->name = line.substr(cursor, endStruct - cursor);
@@ -159,8 +192,8 @@ Enum* parseEnum(std::string_view line) {
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Missing space before the closing {{ of a struct:\n{}", line
+        throw ParsingError(fmt::format(
+            "Missing space before the closing {{ of a struct\n{}", line
         ));
     }
     e->name = line.substr(cursor, endStruct - cursor);
@@ -192,8 +225,8 @@ Variable* parseVariable(std::string_view line) {
     line.remove_suffix(1);
 
     if (line.find(' ') == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Variable definition does not contain any empty character:\n{}", line
+        throw ParsingError(fmt::format(
+            "Variable definition does not contain any empty character\n{}", line
         ));
     }
 
@@ -201,7 +234,7 @@ Variable* parseVariable(std::string_view line) {
     // arguments
     size_t cursor = 0;
     int nBrackets = 0;
-    while (true) {
+    while (cursor < line.size()) {
         if (line[cursor] == '<') {
             nBrackets++;
         }
@@ -216,11 +249,15 @@ Variable* parseVariable(std::string_view line) {
         cursor++;
     }
 
+    if (nBrackets != 0) {
+        throw ParsingError(fmt::format("Unbalanced number of < > brackets\n{}", line));
+    }
+
     const size_t p1 = cursor;
     const size_t p2 = line.find(' ', p1 + 1);
     if (p1 == std::string_view::npos) {
-        throw std::runtime_error(fmt::format(
-            "Too few spaces in variable definition:\n{}", line
+        throw ParsingError(fmt::format(
+            "Too few spaces in variable definition\n{}", line
         ));
     }
 
@@ -246,15 +283,35 @@ Variable* parseVariable(std::string_view line) {
 }
 
 Struct* parseRootStruct(std::string_view code) {
+    for (char c : code) {
+        if (c < 0) {
+            throw ParsingError(fmt::format("Illegal character '{}' detected", c));
+        }
+    }
+
+    std::string_view content = strip(validCode(code));
+    if (content.empty()) {
+        return nullptr;
+    }
+
+    if (size_t p = content.find("/*"); p != std::string_view::npos) {
+        constexpr const int ErrorContext = 50;
+        throw ParsingError(fmt::format(
+            "Block comments are not allowed\n{}", content.substr(p, ErrorContext)
+        ));
+    }
+
+
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
 
+    std::string structBuffer;
     std::string variableBuffer;
     std::string commentBuffer;
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(code, &cursor);
+        std::string_view line = extractLine(content, &cursor);
         if (strip(line).empty()) {
             continue;
         }
@@ -269,16 +326,22 @@ Struct* parseRootStruct(std::string_view code) {
                 continue;
             }
 
-            if (startsWith(line, "struct")) {
+            if (startsWith(line, "struct") || !structBuffer.empty()) {
+                structBuffer += line;
+                structBuffer += " ";
+                // Check if we have a continuation going on
+                if (strip(line).back() != '{')  continue;
+
                 if (!stack.empty() &&
                     stack.back()->type != StackElement::Type::Struct)
                 {
-                    throw std::runtime_error(fmt::format(
-                        "Struct definition found outside a parent struct.\n{}", line
+                    throw ParsingError(fmt::format(
+                        "Struct definition found outside a parent struct\n{}",
+                        structBuffer
                     ));
                 }
 
-                Struct* s = parseStruct(line);
+                Struct* s = parseStruct(structBuffer);
                 if (!stack.empty()) {
                     assert(stack.back()->type == StackElement::Type::Struct);
                     s->parent = static_cast<Struct*>(stack.back());
@@ -290,19 +353,13 @@ Struct* parseRootStruct(std::string_view code) {
                     commentBuffer.pop_back();
                 }
                 s->comment = commentBuffer;
-                //state.structComments[std::string(s->name)] = commentBuffer;
                 commentBuffer.clear();
 
                 if (!s->attributes.dictionary.empty()) {
-                    if (rootStruct) {
-                        throw std::runtime_error(fmt::format(
-                            "Only the root struct can have a [[codegen::Dictionary()]] "
-                            "attribute, found a second one here:\n{}",
-                            s->name
-                        ));
-                    }
+                    assert(rootStruct == nullptr);
                     rootStruct = s;
                 }
+                structBuffer.clear();
                 continue;
             }
 
@@ -322,7 +379,7 @@ Struct* parseRootStruct(std::string_view code) {
             }
 
             if (startsWith(line, "enum")) {
-                throw std::runtime_error(
+                throw ParsingError(
                     "Old-style 'enum' not supported. Use 'enum class' instead"
                 );
             }
@@ -374,11 +431,7 @@ Struct* parseRootStruct(std::string_view code) {
         }
     }
 
-    if (!rootStruct || rootStruct->attributes.dictionary.empty()) {
-        throw std::runtime_error(
-            "Root struct tag [[codegen::Dictionary]] is missing the renderable name"
-        );
-    }
-
+    assert(rootStruct);
+    assert(!rootStruct->attributes.dictionary.empty());
     return rootStruct;
 }
