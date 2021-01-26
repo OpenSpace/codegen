@@ -38,11 +38,9 @@
 /* TODO
  - Check for extra keys in the bake function to protect against misspellings
  - Check for unknown codegen::attributes and throw error
- - Check for mixing of different attributes (inrange + greater, for example)
  - Need support for a std::map?
  - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
  - First TableVerifier doesn't need to be dynamically allocated
- - Multiline struct definitions
 */
 
 #ifdef WIN32

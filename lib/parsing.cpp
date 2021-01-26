@@ -61,17 +61,22 @@ bool hasAttribute(std::string_view block, std::string_view name) {
     ));
 }
 
-std::string_view parseAttribute(std::string_view block, std::string_view name) {
-    assert(!block.empty());
-    assert(!name.empty());
+struct AttributeParsing {
+    std::string_view key;
+    std::string_view value;
+};
 
-    std::string key = fmt::format("codegen::{}(", name);
+std::vector<AttributeParsing> parseAttribute(std::string_view block) {
+    assert(!block.empty());
+
+    std::string_view key = "codegen::";
     const size_t p = block.find(key);
     if (p == std::string::npos) {
-        return std::string_view();
+        return {};
     }
     const size_t beg = block.find('(', p) + 1;
 
+    std::string_view name = block.substr(p + key.size(), beg - (p + key.size()) - 1);
     if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
         throw ParsingError(fmt::format(
             "Attribute parameter has unterminated parameter list\n{}", block
@@ -90,10 +95,27 @@ std::string_view parseAttribute(std::string_view block, std::string_view name) {
 
         cursor++;
     }
-    cursor--;
+    //cursor--;
 
-    std::string_view content = block.substr(beg, cursor - beg);
-    return content;
+    std::string_view content = block.substr(beg, cursor - beg - 1);
+    std::vector<AttributeParsing> res;
+    res.push_back({ name, content });
+
+    // Skip over whitespaces
+    while (cursor < block.size() && ::isspace(block[cursor])) {
+        cursor++;
+    }
+    if (block[cursor] == ',') {
+        std::vector<AttributeParsing> recRes = parseAttribute(block.substr(cursor));
+        res.insert(res.end(), recRes.begin(), recRes.end());
+    }
+    else if (block[cursor] != ']') {
+        throw ParsingError(fmt::format(
+            "Parameter attribute was not terminated\n{}", block
+        ));
+    }
+
+    return res;
 }
 
 std::string_view parseCommentLine(std::string_view line) {
@@ -106,42 +128,23 @@ std::string_view parseCommentLine(std::string_view line) {
 
 Variable::Attributes parseAttributes(std::string_view line) {
     Variable::Attributes res;
-    if (std::string_view a = parseAttribute(line, "key"); !a.empty()) {
-        res.key = a;
+
+    std::vector<AttributeParsing> a = parseAttribute(line);
+    for (const AttributeParsing& p : a) {
+        if (p.key == "key")  res.key = p.value;
+        if (p.key == "reference")  res.reference = p.value;
+        if (p.key == "inrange")  res.inrange = p.value;
+        if (p.key == "notinrange")  res.notinrange = p.value;
+        if (p.key == "less")  res.less = p.value;
+        if (p.key == "lessequal")  res.lessequal = p.value;
+        if (p.key == "greater")  res.greater = p.value;
+        if (p.key == "greaterequal")  res.greaterequal = p.value;
+        if (p.key == "unequal")  res.unequal = p.value;
+        if (p.key == "inlist")  res.inlist = p.value;
+        if (p.key == "notinlist")  res.notinlist = p.value;
+        if (p.key == "annotation")  res.annotation = p.value;
     }
-    if (std::string_view a = parseAttribute(line, "reference"); !a.empty()) {
-        res.reference = a;
-    }
-    if (std::string_view a = parseAttribute(line, "inrange"); !a.empty()) {
-        res.inrange = a;
-    }
-    if (std::string_view a = parseAttribute(line, "notinrange"); !a.empty()) {
-        res.notinrange = a;
-    }
-    if (std::string_view a = parseAttribute(line, "less"); !a.empty()) {
-        res.less = a;
-    }
-    if (std::string_view a = parseAttribute(line, "lessequal"); !a.empty()) {
-        res.lessequal = a;
-    }
-    if (std::string_view a = parseAttribute(line, "greater"); !a.empty()) {
-        res.greater = a;
-    }
-    if (std::string_view a = parseAttribute(line, "greaterequal"); !a.empty()) {
-        res.greaterequal = a;
-    }
-    if (std::string_view a = parseAttribute(line, "unequal"); !a.empty()) {
-        res.unequal = a;
-    }
-    if (std::string_view a = parseAttribute(line, "inlist"); !a.empty()) {
-        res.inlist = a;
-    }
-    if (std::string_view a = parseAttribute(line, "notinlist"); !a.empty()) {
-        res.notinlist = a;
-    }
-    if (std::string_view a = parseAttribute(line, "annotation"); !a.empty()) {
-        res.annotation = a;
-    }
+
     return res;
 }
 
@@ -159,15 +162,19 @@ Struct* parseStruct(std::string_view line) {
     {
         const size_t endAttr = line.find("]]", beginAttr) + 2;
         std::string_view block = line.substr(beginAttr, endAttr - beginAttr);
-        s->attributes.dictionary = parseAttribute(block, "Dictionary");
+        std::vector<AttributeParsing> attrs = parseAttribute(block);
+        for (const AttributeParsing& a : attrs) {
+            if (a.key == "Dictionary")  s->attributes.dictionary = a.value;
+            if (a.key == "namespace")  s->attributes.namespaceSpecifier = a.value;
+            if (a.key == "noexhaustive") {
+                s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
+            }
+        }
         if (s->attributes.dictionary.empty()) {
             throw SpecificationError(fmt::format(
                 "No name specified for root struct\n{}", line
             ));
         }
-
-        s->attributes.namespaceSpecifier = parseAttribute(block, "namespace");
-        s->attributes.noExhaustive = hasAttribute(block, "noexhaustive");
         cursor = endAttr + 1;
     }
 
@@ -213,7 +220,17 @@ EnumElement* parseEnumElement(std::string_view line) {
     e->name = line.substr(0, i);
     if (i != std::string_view::npos) {
         std::string_view attributes = line.substr(i + 1);
-        e->attributes.key = parseAttribute(attributes, "key");
+        std::vector<AttributeParsing> attr = parseAttribute(attributes);
+        for (const AttributeParsing& a : attr) {
+            if (a.key == "key") {
+                e->attributes.key = a.value;
+                continue;
+            }
+
+            throw SpecificationError(fmt::format(
+                "Unrecognized attribute '{}' found when parsing enum\n{}", a.key, line
+            ));
+        }
     }
     return e;
 }

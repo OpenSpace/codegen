@@ -67,7 +67,7 @@ struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
 
 TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
     constexpr const char Sources[] = R"(
-struct [[codegen::Dictionary(Name), codegen::noexhaustive]] Parameters {
+struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
 };
 )";
     Struct* s = parseRootStruct(Sources);

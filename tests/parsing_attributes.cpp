@@ -972,9 +972,9 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
     }
 }
 
-TEST_CASE("Parsing Attribute: Struct Attribute", "[parsing]") {
+TEST_CASE("Parsing Attribute: Struct Attribute empty noexhaustive", "[parsing]") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive]] Parameters {
+struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive()]] Parameters {
     int value;
 };
 )";
@@ -983,6 +983,40 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
     REQUIRE(s->attributes.dictionary == "Par");
     REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
     REQUIRE(s->attributes.noExhaustive);
+    REQUIRE(s->variables.size() == 1);
+    REQUIRE(s->variables[0]->name == "value");
+    REQUIRE(s->variables[0]->key == "Value");
+    REQUIRE(s->variables[0]->type == "int");
+}
+
+TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive(true)]] Parameters {
+    int value;
+};
+)";
+
+    Struct* s = parseRootStruct(Source);
+    REQUIRE(s->attributes.dictionary == "Par");
+    REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
+    REQUIRE(s->attributes.noExhaustive);
+    REQUIRE(s->variables.size() == 1);
+    REQUIRE(s->variables[0]->name == "value");
+    REQUIRE(s->variables[0]->key == "Value");
+    REQUIRE(s->variables[0]->type == "int");
+}
+
+TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive(false)]] Parameters {
+    int value;
+};
+)";
+
+    Struct* s = parseRootStruct(Source);
+    REQUIRE(s->attributes.dictionary == "Par");
+    REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
+    REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]->name == "value");
     REQUIRE(s->variables[0]->key == "Value");

@@ -168,8 +168,8 @@ struct [[codegen::Dictionary]] Parameters {
 
     REQUIRE_THROWS_MATCHES(
         parseRootStruct(Source),
-        SpecificationError,
-        Catch::Matchers::Contains("No name specified for root struct")
+        ParsingError,
+        Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
     );
 }
 
