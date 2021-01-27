@@ -125,23 +125,18 @@ namespace {
     }
 
     std::string resolveComment(std::string comment) {
-        if (size_t it = comment.find("codegen::description"); it != std::string::npos) {
-            const size_t l = "codegen::description"sv.size();
+        if (size_t it = comment.find("codegen::verbatim"); it != std::string::npos) {
+            const size_t l = "codegen::verbatim"sv.size();
             it += l;
             if (comment[it] != '(') {
                 throw ParsingError(fmt::format(
-                    "Malformed codegen::description. Expected ( after token\n{}", comment
+                    "Malformed codegen::verbatim. Expected ( after token\n{}", comment
                 ));
             }
             it++;
             const size_t end = comment.find(')', it);
-            std::string identifier = comment.substr(it, end - it);
-            if (identifier.empty()) {
-                throw SpecificationError(
-                    "Empty comment identifier in codegen::description"
-                );
-            }
-            comment = identifier + ".description";
+            std::string argument = comment.substr(it, end - it);
+            comment = argument;
         }
         else {
             if (size_t it = comment.find('"');

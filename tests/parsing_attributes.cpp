@@ -121,7 +121,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // unequalValueFloatOptional documentation
         std::optional<float> unequalValueFloatOptional [[codegen::unequal(123.0)]];
 
-        // [[codegen::description(desc)]]
+        // [[codegen::verbatim(description)]]
         bool descValue;
 
         // inListValue1 documentation
@@ -758,7 +758,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var->name == "descValue");
         REQUIRE(var->key == "DescValue");
         REQUIRE(var->type == "bool");
-        REQUIRE(var->comment == "[[codegen::description(desc)]]");
+        REQUIRE(var->comment == "[[codegen::verbatim(description)]]");
 
         REQUIRE(var->attributes.annotation.empty());
         REQUIRE(var->attributes.greater.empty());

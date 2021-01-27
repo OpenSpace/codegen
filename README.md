@@ -21,7 +21,7 @@ The root struct needs to be marked with the `[[codegen::Dictionary(Name)]]` attr
 All types and variable definitions can have comments defined directly before the struct, or variable.
 
 ### Attributes
- - `[[codegen::description(ID)]]` will be replaced with `ID.description` to be able to reuse descriptions from a PropertyInfo `ID`.
+ - `[[codegen::verbatim(ID.description)]]` will be replaced with `ID.description` to be able to reuse descriptions from a PropertyInfo `ID` or any other parameter.  The only difference to writing `// ID.description` is that the latter will add " around the parameter which `codegen::verbatim` omits
 
 ## Supported types for member variables
  - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`, `std::variant`

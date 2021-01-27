@@ -31,7 +31,7 @@
 TEST_CASE("Parsing Error: Missing description", "[parsing_error]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
-    // [[codegen::description]]
+    // [[codegen::verbatim]]
     int error;
 };
 )";
@@ -39,22 +39,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     REQUIRE_THROWS_MATCHES(
         generateResult(s),
         ParsingError,
-        Catch::Matchers::Contains("Malformed codegen::description")
-    );
-}
-
-TEST_CASE("Parsing Error: Empty description", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Error)]] Parameters {
-    // [[codegen::description()]]
-    int error;
-};
-)";
-    Struct* s = parseRootStruct(Source);
-    REQUIRE_THROWS_MATCHES(
-        generateResult(s),
-        SpecificationError,
-        Catch::Matchers::Contains("Empty comment identifier in codegen::description")
+        Catch::Matchers::Contains("Malformed codegen::verbatim")
     );
 }
 

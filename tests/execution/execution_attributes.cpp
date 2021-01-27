@@ -34,10 +34,7 @@
 namespace openspace { struct Attributes; }
 
 namespace {
-    struct Description {
-        std::string description;
-    };
-    Description desc = { "Description" };
+    std::string description = "Description";
 
     std::vector<std::string> List = { "D", "E", "F" };
 
@@ -132,7 +129,7 @@ namespace {
         // unequalValueFloatOptional documentation
         std::optional<float> unequalValueFloatOptional [[codegen::unequal(123.0)]];
 
-        // [[codegen::description(desc)]]
+        // [[codegen::verbatim(description)]]
         bool descValue;
 
         // inListValue1 documentation
@@ -617,7 +614,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         DocumentationEntry e = doc.entries[30];
         REQUIRE(e.key == "DescValue");
         REQUIRE(!e.optional);
-        REQUIRE(e.documentation == desc.description);
+        REQUIRE(e.documentation == description);
         REQUIRE(e.verifier->type() == "Boolean");
         REQUIRE(dynamic_cast<BoolVerifier*>(e.verifier.get()));
     }
