@@ -50,7 +50,6 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 
     constexpr const char DocumentationEpilog[] = R"(
     openspace::documentation::Documentation d = {{ "{0}", "{0}", std::move(codegen_{1}->documentations) }};
-    delete codegen_{1};
     return d;
 }}
 }} // namespace codegen

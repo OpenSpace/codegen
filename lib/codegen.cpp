@@ -265,9 +265,20 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
 
 std::string writeStructDocumentation(Struct* s) {
     std::string name = fqn(s, "_");
-    std::string result = fmt::format(
-        "    TableVerifier* codegen_{} = new TableVerifier;\n", name
-    );
+    std::string result;
+    if (s->parent) {
+        result = fmt::format(
+            "    TableVerifier* codegen_{} = new TableVerifier;\n", name
+        );
+    }
+    else {
+        // root struct
+        result = fmt::format(
+            "    TableVerifier codegen_{0}_content;\n"
+            "    TableVerifier* codegen_{0} = &codegen_{0}_content;\n"
+            , name
+        );
+    }
 
     for (StackElement* e : s->children) {
         if (e->type == StackElement::Type::Struct) {

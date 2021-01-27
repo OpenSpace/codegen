@@ -131,6 +131,20 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
+TEST_CASE("Parsing Error: Unknown attribute (variable)", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Error)]] Parameters {
+    int val [[codegen::unknown_key(parameter)]];
+};
+)";
+
+    REQUIRE_THROWS_MATCHES(
+        parseRootStruct(Source),
+        SpecificationError,
+        Catch::Matchers::Contains("Unknown attribute 'unknown_key' in attribute")
+    );
+}
+
 TEST_CASE("Parsing Error: Unterminated dictionary", "[parsing_error]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error]] Parameters {
@@ -142,6 +156,38 @@ struct [[codegen::Dictionary(Error]] Parameters {
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
+    );
+}
+
+TEST_CASE("Parsing Error: Unknown attribute (struct)", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Error)]] Parameters {
+    struct [[codegen::unknown_key()]] P {
+    };
+};
+)";
+
+    REQUIRE_THROWS_MATCHES(
+        parseRootStruct(Source),
+        SpecificationError,
+        Catch::Matchers::Contains("Unknown attribute 'unknown_key' in struct definition")
+    );
+}
+
+TEST_CASE("Parsing Error: Unknown attribute (enum)", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Error)]] Parameters {
+    enum class E {
+        Value [[codegen::unknown_key()]],
+        Value2
+    };
+};
+)";
+
+    REQUIRE_THROWS_MATCHES(
+        parseRootStruct(Source),
+        SpecificationError,
+        Catch::Matchers::Contains("Unrecognized attribute 'unknown_key' found")
     );
 }
 

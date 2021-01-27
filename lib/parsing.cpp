@@ -95,7 +95,6 @@ std::vector<AttributeParsing> parseAttribute(std::string_view block) {
 
         cursor++;
     }
-    //cursor--;
 
     std::string_view content = block.substr(beg, cursor - beg - 1);
     std::vector<AttributeParsing> res;
@@ -132,17 +131,22 @@ Variable::Attributes parseAttributes(std::string_view line) {
     std::vector<AttributeParsing> a = parseAttribute(line);
     for (const AttributeParsing& p : a) {
         if (p.key == "key")  res.key = p.value;
-        if (p.key == "reference")  res.reference = p.value;
-        if (p.key == "inrange")  res.inrange = p.value;
-        if (p.key == "notinrange")  res.notinrange = p.value;
-        if (p.key == "less")  res.less = p.value;
-        if (p.key == "lessequal")  res.lessequal = p.value;
-        if (p.key == "greater")  res.greater = p.value;
-        if (p.key == "greaterequal")  res.greaterequal = p.value;
-        if (p.key == "unequal")  res.unequal = p.value;
-        if (p.key == "inlist")  res.inlist = p.value;
-        if (p.key == "notinlist")  res.notinlist = p.value;
-        if (p.key == "annotation")  res.annotation = p.value;
+        else if (p.key == "reference")  res.reference = p.value;
+        else if (p.key == "inrange")  res.inrange = p.value;
+        else if (p.key == "notinrange")  res.notinrange = p.value;
+        else if (p.key == "less")  res.less = p.value;
+        else if (p.key == "lessequal")  res.lessequal = p.value;
+        else if (p.key == "greater")  res.greater = p.value;
+        else if (p.key == "greaterequal")  res.greaterequal = p.value;
+        else if (p.key == "unequal")  res.unequal = p.value;
+        else if (p.key == "inlist")  res.inlist = p.value;
+        else if (p.key == "notinlist")  res.notinlist = p.value;
+        else if (p.key == "annotation")  res.annotation = p.value;
+        else {
+            throw SpecificationError(fmt::format(
+                "Unknown attribute '{}' in attribute found\n{}", p.key, line
+            ));
+        }
     }
 
     return res;
@@ -165,9 +169,14 @@ Struct* parseStruct(std::string_view line) {
         std::vector<AttributeParsing> attrs = parseAttribute(block);
         for (const AttributeParsing& a : attrs) {
             if (a.key == "Dictionary")  s->attributes.dictionary = a.value;
-            if (a.key == "namespace")  s->attributes.namespaceSpecifier = a.value;
-            if (a.key == "noexhaustive") {
+            else if (a.key == "namespace")  s->attributes.namespaceSpecifier = a.value;
+            else if (a.key == "noexhaustive") {
                 s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
+            }
+            else {
+                throw SpecificationError(fmt::format(
+                    "Unknown attribute '{}' in struct definition found\n{}", a.key, line
+                ));
             }
         }
         if (s->attributes.dictionary.empty()) {
@@ -228,7 +237,8 @@ EnumElement* parseEnumElement(std::string_view line) {
             }
 
             throw SpecificationError(fmt::format(
-                "Unrecognized attribute '{}' found when parsing enum\n{}", a.key, line
+                "Unrecognized attribute '{}' found when parsing enum value\n{}",
+                a.key, line
             ));
         }
     }
