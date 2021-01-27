@@ -981,7 +981,7 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 
     Struct* s = parseRootStruct(Source);
     REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
+    REQUIRE(s->attributes.namespaceName == "Namespace");
     REQUIRE(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]->name == "value");
@@ -998,7 +998,7 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 
     Struct* s = parseRootStruct(Source);
     REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
+    REQUIRE(s->attributes.namespaceName == "Namespace");
     REQUIRE(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]->name == "value");
@@ -1015,7 +1015,7 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 
     Struct* s = parseRootStruct(Source);
     REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceSpecifier == "Namespace");
+    REQUIRE(s->attributes.namespaceName == "Namespace");
     REQUIRE(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]->name == "value");

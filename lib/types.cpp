@@ -35,7 +35,6 @@ const Struct* rootStruct(const Struct* s) {
     while (s->parent) {
         s = s->parent;
     }
-
     return s;
 }
 
@@ -49,7 +48,7 @@ const StackElement* resolveType(const Struct* context, std::string_view type) {
 
     // Check the children of the context first
     const auto it = std::find_if(
-        context->children.begin(), context->children.end(),
+        context->children.cbegin(), context->children.cend(),
         [type](StackElement* e) { return e->name == type; }
     );
     if (it != context->children.end()) {

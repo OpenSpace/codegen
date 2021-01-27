@@ -263,20 +263,21 @@ struct [[codegen::Dictionary(abc)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Illegal characters", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(abc)]] Parameters {
-    // smörgåstårta
-    int value;
-};
-)";
-
-    REQUIRE_THROWS_MATCHES(
-        parseRootStruct(Source),
-        ParsingError,
-        Catch::Matchers::Contains("Illegal character")
-    );
-}
+// Let's see if we can live without this exception
+//TEST_CASE("Parsing Error: Illegal characters", "[parsing_error]") {
+//    constexpr const char Source[] = R"(
+//struct [[codegen::Dictionary(abc)]] Parameters {
+//    // smörgåstårta
+//    int value;
+//};
+//)";
+//
+//    REQUIRE_THROWS_MATCHES(
+//        parseRootStruct(Source),
+//        ParsingError,
+//        Catch::Matchers::Contains("Illegal character")
+//    );
+//}
 
 TEST_CASE("Parsing Error: Duplicate root struct", "[parsing_error]") {
     constexpr const char Source[] = R"(

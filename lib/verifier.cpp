@@ -24,24 +24,11 @@
 
 #include "verifier.h"
 
+#include "types.h"
 #include <fmt/format.h>
 #include <cassert>
 
 namespace {
-    namespace attribute {
-        constexpr const char Annotation[] = "annotation";
-        constexpr const char InList[] = "inlist";
-        constexpr const char InRange[] = "inrange";
-        constexpr const char Less[] = "less";
-        constexpr const char LessEqual[] = "lessequal";
-        constexpr const char Greater[] = "greater";
-        constexpr const char GreaterEqual[] = "greaterequal";
-        constexpr const char NotInList[] = "notinlist";
-        constexpr const char NotInRange[] = "notinrange";
-        constexpr const char Reference[] = "reference";
-        constexpr const char Unequal[] = "unequal";
-    } // namespace attribute
-
     void reportUnsupportedAttribute(std::string_view type,
                                     const Variable::Attributes& attributes)
     {
@@ -66,45 +53,45 @@ namespace {
             type == "glm::dmat3x2" || type == "glm::dmat3x3" || type == "glm::dmat3x4" ||
             type == "glm::dmat4x2" || type == "glm::dmat4x3" || type == "glm::dmat4x4")
         {
-            report(attributes.annotation, attribute::Annotation);
-            report(attributes.inlist, attribute::InList);
-            report(attributes.inrange, attribute::InRange);
-            report(attributes.less, attribute::Less);
-            report(attributes.lessequal, attribute::LessEqual);
-            report(attributes.greater, attribute::Greater);
-            report(attributes.greaterequal, attribute::GreaterEqual);
-            report(attributes.notinlist, attribute::NotInList);
-            report(attributes.notinrange, attribute::NotInRange);
-            report(attributes.reference, attribute::Reference);
-            report(attributes.unequal, attribute::Unequal);
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inlist, attributes::InList);
+            report(attributes.inrange, attributes::InRange);
+            report(attributes.less, attributes::Less);
+            report(attributes.lessequal, attributes::LessEqual);
+            report(attributes.greater, attributes::Greater);
+            report(attributes.greaterequal, attributes::GreaterEqual);
+            report(attributes.notinlist, attributes::NotInList);
+            report(attributes.notinrange, attributes::NotInRange);
+            report(attributes.reference, attributes::Reference);
+            report(attributes.unequal, attributes::Unequal);
         }
         else if (type == "int" || type == "double" || type == "float") {
-            report(attributes.annotation, attribute::Annotation);
-            report(attributes.inlist, attribute::InList);
-            report(attributes.notinlist, attribute::NotInList);
-            report(attributes.reference, attribute::Reference);
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inlist, attributes::InList);
+            report(attributes.notinlist, attributes::NotInList);
+            report(attributes.reference, attributes::Reference);
         }
         else if (type == "std::string") {
-            report(attributes.annotation, attribute::Annotation);
-            report(attributes.inrange, attribute::InRange);
-            report(attributes.less, attribute::Less);
-            report(attributes.lessequal, attribute::LessEqual);
-            report(attributes.greater, attribute::Greater);
-            report(attributes.greaterequal, attribute::GreaterEqual);
-            report(attributes.notinrange, attribute::NotInRange);
-            report(attributes.reference, attribute::Reference);
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inrange, attributes::InRange);
+            report(attributes.less, attributes::Less);
+            report(attributes.lessequal, attributes::LessEqual);
+            report(attributes.greater, attributes::Greater);
+            report(attributes.greaterequal, attributes::GreaterEqual);
+            report(attributes.notinrange, attributes::NotInRange);
+            report(attributes.reference, attributes::Reference);
         }
         else if (type == "std::monostate") {
-            report(attributes.annotation, attribute::Annotation);
-            report(attributes.inlist, attribute::InList);
-            report(attributes.inrange, attribute::InRange);
-            report(attributes.less, attribute::Less);
-            report(attributes.lessequal, attribute::LessEqual);
-            report(attributes.greater, attribute::Greater);
-            report(attributes.greaterequal, attribute::GreaterEqual);
-            report(attributes.notinlist, attribute::NotInList);
-            report(attributes.notinrange, attribute::NotInRange);
-            report(attributes.unequal, attribute::Unequal);
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inlist, attributes::InList);
+            report(attributes.inrange, attributes::InRange);
+            report(attributes.less, attributes::Less);
+            report(attributes.lessequal, attributes::LessEqual);
+            report(attributes.greater, attributes::Greater);
+            report(attributes.greaterequal, attributes::GreaterEqual);
+            report(attributes.notinlist, attributes::NotInList);
+            report(attributes.notinrange, attributes::NotInRange);
+            report(attributes.unequal, attributes::Unequal);
         }
     }
 
@@ -112,9 +99,7 @@ namespace {
     std::string addQualifier(std::string ver, std::string qual, std::string_view param) {
         assert(!ver.empty());
         assert(!qual.empty());
-        return fmt::format(
-            "{}<{}>({})", std::move(qual), std::move(ver), std::string(param)
-        );
+        return fmt::format("{}<{}>({})", std::move(qual), std::move(ver), param);
     }
 } // namespace
 
@@ -187,10 +172,11 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
         if (!attributes.annotation.empty()) {
             if (!attributes.inlist.empty() || !attributes.unequal.empty()) {
                 throw SpecificationError(fmt::format(
-                    "When using the annotation attribute, no other attribute can be used:\n{}", type
+                    "With the annotation attribute, no other attribute can be used:\n{}",
+                    type
                 ));
             }
-            std::string param = "\"" + std::string(attributes.annotation) + "\"";
+            std::string param = fmt::format("\"{}\"", attributes.annotation);
             res = addQualifier(res, "AnnotationVerifier", param);
         }
         return res;
@@ -224,17 +210,13 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
     else if (type == "glm::mat4x4") { return "DoubleMatrix4x4Verifier"; }
     else if (type == "std::monostate") {
         if (attributes.reference.empty()) {
-            throw SpecificationError(
-                "Using a monostate needs to have an attribute 'reference'"
-            );
+            throw SpecificationError("A monostate must have a 'reference' attribute");
         }
 
-        return fmt::format(
-            "ReferencingVerifier({})",
-            attributes.reference == "this" ?
+        std::string r = attributes.reference == "this" ?
             fmt::format(R"("{}")", dictionaryName) :
-            std::string(attributes.reference)
-        );
+            std::string(attributes.reference);
+        return fmt::format("ReferencingVerifier({})", r);
     }
     else {
         return std::string();

@@ -108,7 +108,9 @@ namespace {
         }
 
         for (StackElement* e : s.children) {
-            if (e->type != StackElement::Type::Struct)  continue;
+            if (e->type != StackElement::Type::Struct) {
+                continue;
+            }
 
             const Struct& s = static_cast<const Struct&>(*e);
             std::vector<std::string_view> t = usedTypes(s);
@@ -132,7 +134,7 @@ namespace {
                 ));
             }
             it++;
-            size_t end = comment.find(')', it);
+            const size_t end = comment.find(')', it);
             std::string identifier = comment.substr(it, end - it);
             if (identifier.empty()) {
                 throw SpecificationError(
@@ -150,8 +152,8 @@ namespace {
                 ));
             }
 
-            // We add artificial spaces between the multiline comments, which causes there to
-            // be a stray space at the end
+            // We add artificial spaces between the multiline comments, which causes there
+            // to be a stray space at the end
             if (!comment.empty() && comment.back() == ' ') {
                 comment.pop_back();
             }
@@ -161,11 +163,11 @@ namespace {
     }
 } // namespace
 
-std::string verifier(std::string_view type, const Variable& variable, Struct* currentStruct) {
+std::string verifier(std::string_view type, const Variable& var, Struct* currentStruct) {
     assert(!type.empty());
 
     const Struct* root = rootStruct(currentStruct);
-    std::string v = verifierForType(type, variable.attributes, root->attributes.dictionary);
+    std::string v = verifierForType(type, var.attributes, root->attributes.dictionary);
     
     if (!v.empty()) {
         return std::string("new ") + v;
@@ -181,10 +183,9 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
             comments = resolveComment(e->comment);
         }
 
-        std::string ver = verifier(type, variable, currentStruct);
+        std::string ver = verifier(type, var, currentStruct);
         return fmt::format(
-            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n",
-            ver, comments
+            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n", ver, comments
         );
     }
     else if (startsWith(type, "std::variant<")) {
@@ -199,10 +200,9 @@ std::string verifier(std::string_view type, const Variable& variable, Struct* cu
 
         std::string result = "new OrVerifier({";
 
-        std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
-        for (std::string_view subtype : ttypes) {
-            std::string ver = verifier(subtype, variable, currentStruct);
-            result += ver + ",";
+        std::vector<std::string_view> types = extractTemplateTypeList(subtypes);
+        for (std::string_view subtype : types) {
+            result += verifier(subtype, var, currentStruct) + ',';
         }
 
         // Remove the final ,
@@ -229,7 +229,6 @@ std::string writeEnumDocumentation(Enum* e) {
         fqn(e, "_")
     );
 
-
     Enum* en = static_cast<Enum*>(e);
     for (EnumElement* em : en->elements) {
         // If no key attribute is specified, we use the name instead
@@ -238,8 +237,8 @@ std::string writeEnumDocumentation(Enum* e) {
     }
     // The last element has a , at the end that we can overwrite
     result.pop_back();
-
     result += "});\n";
+
     return result;
 }
 
@@ -247,11 +246,14 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     var->comment = resolveComment(var->comment);
 
     std::string_view type = var->type;
-    bool isOptional = false;
+    bool isOptional;
     if (startsWith(var->type, "std::optional<")) {
         isOptional = true;
         type.remove_prefix("std::optional<"sv.size());
         type.remove_suffix(1);
+    }
+    else {
+        isOptional = false;
     }
 
     std::string ver = fqn(s, "_");
@@ -311,7 +313,7 @@ std::string writeVariableConverter(Variable* var) {
             result += variantConversionFunctionForType(subtype);
         }
 
-        result += "}";
+        result += '}';
     }
     return result;
 }
@@ -325,21 +327,16 @@ std::string writeEnumConverter(Enum* e) {
     );
 
     for (EnumElement* elem : e->elements) {
-        std::string_view key;
-        if (elem->attributes.key.empty()) {
-            key = elem->name;
-        }
-        else {
-            key = elem->attributes.key;
-        }
+        std::string_view key =
+            elem->attributes.key.empty() ? elem->name : elem->attributes.key;
 
         std::string type = fqn(e, "::");
         result += fmt::format(
             "    if (v == \"{}\") {{ *val = {}::{}; }}\n", key, type, elem->name
         );
     }
-
     result += "}\n";
+
     return result;
 }
 
@@ -385,14 +382,12 @@ std::string generateResult(Struct* s) {
     std::string result = fmt::format(FileHeader);
 
     std::string name;
-    if (s->attributes.namespaceSpecifier.empty()) {
+    if (s->attributes.namespaceName.empty()) {
         name = fmt::format("openspace::{}", s->attributes.dictionary);
     }
     else {
         name = fmt::format(
-            "openspace::{}::{}",
-            s->attributes.namespaceSpecifier,
-            s->attributes.dictionary
+            "openspace::{}::{}", s->attributes.namespaceName, s->attributes.dictionary
         );
     }
 
@@ -443,19 +438,21 @@ std::string generateResult(Struct* s) {
     result += writeStructConverter(s);
 
     std::string fqName;
-    if (s->attributes.namespaceSpecifier.empty()) {
+    if (s->attributes.namespaceName.empty()) {
         fqName = fmt::format("openspace::{}", s->attributes.dictionary);
     }
     else {
         fqName = fmt::format(
             "openspace::{}::{}",
-            s->attributes.namespaceSpecifier,
-            s->attributes.dictionary
+            s->attributes.namespaceName, s->attributes.dictionary
         );
     }
 
     for (std::string_view type : types) {
-        if (type != "std::vector" && type != "std::optional")  continue;
+        if (type != "std::vector" && type != "std::optional") {
+            // These types were covered higher up
+            continue;
+        }
 
         std::string_view bake = bakeFunctionForType(type);
         assert(!bake.empty());
@@ -471,9 +468,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{1}>(), dict, "{2}");
     {0} res;
 )",
-        s->name,
-        fqName,
-        s->attributes.dictionary
+        s->name, fqName, s->attributes.dictionary
 );
 
     for (Variable* var : s->variables) {
@@ -487,15 +482,14 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 }
 
 std::string handleCode(std::string_view code, std::string_view path) {
-    std::string_view content = strip(validCode(code));
-    if (content.empty()) {
+    Struct* rootStruct = parseRootStruct(code);
+    if (rootStruct) {
+        std::string genContent = generateResult(rootStruct);
+        return genContent;
+    }
+    else {
         return std::string();
     }
-
-    Struct* rootStruct = parseRootStruct(content);
-    std::string genContent = generateResult(rootStruct);
-
-    return genContent;
 }
 
 Result handleFile(std::filesystem::path path) {
@@ -509,9 +503,8 @@ Result handleFile(std::filesystem::path path) {
     if (!rootStruct) {
         return Result::NotProcessed;
     }
-    std::string genContent = generateResult(rootStruct);
-
-    if (genContent.empty()) {
+    std::string content = generateResult(rootStruct);
+    if (content.empty()) {
         return Result::NotProcessed;
     }
 
@@ -523,7 +516,7 @@ Result handleFile(std::filesystem::path path) {
     if (std::filesystem::exists(destination)) {
         std::ifstream f(destination);
         std::string prev = std::string(std::istreambuf_iterator<char>{f}, {});
-        shouldWriteFile = (prev != genContent);
+        shouldWriteFile = (prev != content);
     }
     else {
         shouldWriteFile = true;
@@ -534,7 +527,7 @@ Result handleFile(std::filesystem::path path) {
     debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
     if (shouldWriteFile && PreventFileChange) {
         std::ofstream output(debugDestination);
-        output.write(genContent.data(), genContent.size());
+        output.write(content.data(), content.size());
 
         throw CodegenError(fmt::format(
             "Asked to prevent file change, but file change detected in '{}'",
@@ -546,7 +539,7 @@ Result handleFile(std::filesystem::path path) {
         print("Processed file '%s'\n", path.filename().string().c_str());
 
         std::ofstream r(destination);
-        r.write(genContent.data(), genContent.size());
+        r.write(content.data(), content.size());
 
         std::filesystem::remove(debugDestination);
         return Result::Processed;

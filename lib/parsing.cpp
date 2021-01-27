@@ -29,44 +29,16 @@
 #include <fmt/format.h>
 #include <cassert>
 
-bool hasAttribute(std::string_view block, std::string_view name) {
-    assert(!block.empty());
-    assert(!name.empty());
+namespace {
+    constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
+} // namespace
 
-    std::string key = fmt::format("codegen::{}", name);
-    const size_t p = block.find(key);
-    if (p == std::string::npos) {
-        return false;
-    }
-
-    size_t cursor = p + key.size();
-
-    if (block[cursor] != '(') {
-        // No parameter provided -> true
-        return true;
-    }
-    cursor++;
-    const size_t end = block.find(')', cursor);
-    std::string_view param = block.substr(cursor, end - cursor);
-
-    if (param == "true" || param.empty()) {
-        return true;
-    }
-    if (param == "false") {
-        return false;
-    }
-    throw ParsingError(fmt::format(
-        "Unexpected boolean attribute parameter '{}'. Expected empty, true, or false",
-        param
-    ));
-}
-
-struct AttributeParsing {
+struct ParseResult {
     std::string_view key;
     std::string_view value;
 };
 
-std::vector<AttributeParsing> parseAttribute(std::string_view block) {
+std::vector<ParseResult> parseAttribute(std::string_view block) {
     assert(!block.empty());
 
     std::string_view key = "codegen::";
@@ -97,7 +69,7 @@ std::vector<AttributeParsing> parseAttribute(std::string_view block) {
     }
 
     std::string_view content = block.substr(beg, cursor - beg - 1);
-    std::vector<AttributeParsing> res;
+    std::vector<ParseResult> res;
     res.push_back({ name, content });
 
     // Skip over whitespaces
@@ -105,7 +77,7 @@ std::vector<AttributeParsing> parseAttribute(std::string_view block) {
         cursor++;
     }
     if (block[cursor] == ',') {
-        std::vector<AttributeParsing> recRes = parseAttribute(block.substr(cursor));
+        std::vector<ParseResult> recRes = parseAttribute(block.substr(cursor));
         res.insert(res.end(), recRes.begin(), recRes.end());
     }
     else if (block[cursor] != ']') {
@@ -128,20 +100,44 @@ std::string_view parseCommentLine(std::string_view line) {
 Variable::Attributes parseAttributes(std::string_view line) {
     Variable::Attributes res;
 
-    std::vector<AttributeParsing> a = parseAttribute(line);
-    for (const AttributeParsing& p : a) {
-        if (p.key == "key")  res.key = p.value;
-        else if (p.key == "reference")  res.reference = p.value;
-        else if (p.key == "inrange")  res.inrange = p.value;
-        else if (p.key == "notinrange")  res.notinrange = p.value;
-        else if (p.key == "less")  res.less = p.value;
-        else if (p.key == "lessequal")  res.lessequal = p.value;
-        else if (p.key == "greater")  res.greater = p.value;
-        else if (p.key == "greaterequal")  res.greaterequal = p.value;
-        else if (p.key == "unequal")  res.unequal = p.value;
-        else if (p.key == "inlist")  res.inlist = p.value;
-        else if (p.key == "notinlist")  res.notinlist = p.value;
-        else if (p.key == "annotation")  res.annotation = p.value;
+    std::vector<ParseResult> a = parseAttribute(line);
+    for (const ParseResult& p : a) {
+        if (p.key == attributes::Key) {
+            res.key = p.value;
+        }
+        else if (p.key == attributes::Reference) {
+            res.reference = p.value;
+        }
+        else if (p.key == attributes::InRange) {
+            res.inrange = p.value;
+        }
+        else if (p.key == attributes::NotInRange) {
+            res.notinrange = p.value;
+        }
+        else if (p.key == attributes::Less) {
+            res.less = p.value;
+        }
+        else if (p.key == attributes::LessEqual) {
+            res.lessequal = p.value;
+        }
+        else if (p.key == attributes::Greater) {
+            res.greater = p.value;
+        }
+        else if (p.key == attributes::GreaterEqual) {
+            res.greaterequal = p.value;
+        }
+        else if (p.key == attributes::Unequal) {
+            res.unequal = p.value;
+        }
+        else if (p.key == attributes::InList) {
+            res.inlist = p.value;
+        }
+        else if (p.key == attributes::NotInList) {
+            res.notinlist = p.value;
+        }
+        else if (p.key == attributes::Annotation) {
+            res.annotation = p.value;
+        }
         else {
             throw SpecificationError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line
@@ -161,16 +157,18 @@ Struct* parseStruct(std::string_view line) {
     assert(line.substr(0, cursor) == "struct");
     cursor++;
 
-    if (const size_t beginAttr = line.find("[[", cursor);
-        beginAttr != std::string_view::npos)
-    {
-        const size_t endAttr = line.find("]]", beginAttr) + 2;
-        std::string_view block = line.substr(beginAttr, endAttr - beginAttr);
-        std::vector<AttributeParsing> attrs = parseAttribute(block);
-        for (const AttributeParsing& a : attrs) {
-            if (a.key == "Dictionary")  s->attributes.dictionary = a.value;
-            else if (a.key == "namespace")  s->attributes.namespaceSpecifier = a.value;
-            else if (a.key == "noexhaustive") {
+    if (const size_t begin = line.find("[[", cursor); begin != std::string_view::npos) {
+        const size_t endAttr = line.find("]]", begin) + 2;
+        std::string_view block = line.substr(begin, endAttr - begin);
+        std::vector<ParseResult> attrs = parseAttribute(block);
+        for (const ParseResult& a : attrs) {
+            if (a.key == attributes::Dictionary) {
+                s->attributes.dictionary = a.value;
+            }
+            else if (a.key == attributes::Namespace) {
+                s->attributes.namespaceName = a.value;
+            }
+            else if (a.key == attributes::NoExhaustive) {
                 s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
             }
             else {
@@ -229,17 +227,17 @@ EnumElement* parseEnumElement(std::string_view line) {
     e->name = line.substr(0, i);
     if (i != std::string_view::npos) {
         std::string_view attributes = line.substr(i + 1);
-        std::vector<AttributeParsing> attr = parseAttribute(attributes);
-        for (const AttributeParsing& a : attr) {
+        std::vector<ParseResult> attr = parseAttribute(attributes);
+        for (const ParseResult& a : attr) {
             if (a.key == "key") {
                 e->attributes.key = a.value;
-                continue;
             }
-
-            throw SpecificationError(fmt::format(
-                "Unrecognized attribute '{}' found when parsing enum value\n{}",
-                a.key, line
-            ));
+            else {
+                throw SpecificationError(fmt::format(
+                    "Unrecognized attribute '{}' found when parsing enum value\n{}",
+                    a.key, line
+                ));
+            }
         }
     }
     return e;
@@ -309,12 +307,86 @@ Variable* parseVariable(std::string_view line) {
     return res;
 }
 
-Struct* parseRootStruct(std::string_view code) {
-    for (char c : code) {
-        if (c < 0) {
-            throw ParsingError(fmt::format("Illegal character '{}' detected", c));
+std::string_view validCode(std::string_view code) {
+    assert(!code.empty());
+
+    const size_t mainLoc = code.find(AttributeDictionary);
+    if (mainLoc == std::string_view::npos) {
+        // We did't find the attrbute
+        return std::string_view();
+    }
+
+    if (code.find(AttributeDictionary, mainLoc + 1) != std::string_view::npos) {
+        throw ParsingError(fmt::format(
+            "We currently only support one struct per file annotated with {}, "
+            "including commented out ones",
+            AttributeDictionary
+        ));
+    }
+
+    int64_t cursor = mainLoc;
+    while (code.substr(cursor, mainLoc - cursor).find("struct") == std::string_view::npos)
+    {
+        cursor--;
+
+        if (cursor < 0) {
+            int beg = static_cast<int>(mainLoc) - 50;
+            std::string_view sb = code.substr(
+                static_cast<size_t>(std::max(0, beg)),
+                std::min<size_t>(50, code.size() - 1)
+            );
+            throw ParsingError(fmt::format(
+                "Could not find 'struct' before '[[codegen::Dictionary' before reaching "
+                "the beginning of the file\n{}",
+                sb
+            ));
         }
     }
+
+    std::string_view nameCheck = code.substr(cursor, mainLoc - cursor);
+    assert(startsWith(nameCheck, "struct"));
+
+    using namespace std::literals;
+    nameCheck.remove_prefix(("struct"sv).size());
+    for (char c : nameCheck) {
+        if (::isspace(c) == 0) {
+            throw SpecificationError(fmt::format(
+                "Only 'struct' can appear directly before [[codegen::Dictionary\n{}",
+                code.substr(0, std::min<size_t>(code.size(), 50))
+            ));
+        }
+    }
+
+    const size_t lastNewLine = static_cast<size_t>(cursor);
+
+    cursor = code.find('{', lastNewLine) + 1;
+    for (int counter = 1; counter > 0; cursor++) {
+        if (cursor >= static_cast<int64_t>(code.size())) {
+            throw ParsingError(fmt::format(
+                "Could not find closing }} of root struct\n{}", code
+            ));
+        }
+
+        if (code[cursor] == '{') {
+            counter++;
+        }
+        if (code[cursor] == '}') {
+            counter--;
+        }
+    }
+
+    return code.substr(lastNewLine, cursor - lastNewLine + 1);
+}
+
+Struct* parseRootStruct(std::string_view code) {
+    // I really would prefer not to have this code as it basically makes any UTF-8
+    // character invalid, which would be a shame
+    //for (char c : code) {
+    //    // This only should really happen when a UTF-8 character is encountered
+    //    if (c < 0) {
+    //        throw ParsingError(fmt::format("Illegal character '{}' detected", c));
+    //    }
+    //}
 
     std::string_view content = strip(validCode(code));
     if (content.empty()) {
@@ -322,16 +394,14 @@ Struct* parseRootStruct(std::string_view code) {
     }
 
     if (size_t p = content.find("/*"); p != std::string_view::npos) {
-        constexpr const int ErrorContext = 50;
         throw ParsingError(fmt::format(
-            "Block comments are not allowed\n{}", content.substr(p, ErrorContext)
+            "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
 
 
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
-
     std::string structBuffer;
     std::string variableBuffer;
     std::string commentBuffer;
@@ -343,8 +413,7 @@ Struct* parseRootStruct(std::string_view code) {
             continue;
         }
 
-        // If the variable buffer is filled, then we are in a continuation of a variable
-        // definition
+        // If the buffer is filled, then we are in a continuation of a variable definition
         if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
                 std::string_view comment = parseCommentLine(line);
@@ -357,11 +426,11 @@ Struct* parseRootStruct(std::string_view code) {
                 structBuffer += line;
                 structBuffer += " ";
                 // Check if we have a continuation going on
-                if (strip(line).back() != '{')  continue;
+                if (strip(line).back() != '{') {
+                    continue;
+                }
 
-                if (!stack.empty() &&
-                    stack.back()->type != StackElement::Type::Struct)
-                {
+                if (!stack.empty() && stack.back()->type != StackElement::Type::Struct) {
                     throw ParsingError(fmt::format(
                         "Struct definition found outside a parent struct\n{}",
                         structBuffer
@@ -369,13 +438,14 @@ Struct* parseRootStruct(std::string_view code) {
                 }
 
                 Struct* s = parseStruct(structBuffer);
+                assert(s);
                 if (!stack.empty()) {
                     assert(stack.back()->type == StackElement::Type::Struct);
                     s->parent = static_cast<Struct*>(stack.back());
                     s->parent->children.push_back(s);
                 }
-
                 stack.push_back(s);
+
                 if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
                     commentBuffer.pop_back();
                 }
@@ -392,7 +462,9 @@ Struct* parseRootStruct(std::string_view code) {
 
             if (startsWith(line, "enum class")) {
                 Enum* e = parseEnum(line);
+                assert(e);
                 Struct* parent = static_cast<Struct*>(stack.back());
+                assert(parent);
                 assert(parent->type == StackElement::Type::Struct);
                 parent->children.push_back(e);
                 e->parent = parent;
@@ -421,38 +493,45 @@ Struct* parseRootStruct(std::string_view code) {
         // if the highest stack element is a struct, we are in a variable definition, if
         // the highest stack element is an enum, we are in an enum definition
         StackElement* e = stack.back();
+        assert(e);
         switch (e->type) {
             case StackElement::Type::Struct:
                 if (line.find(';') == std::string_view::npos) {
                     // No semicolon on this line but we are looking for a variable, so we
                     // are in a definition line that spans multiple lines
-                    variableBuffer += std::string(line) + " ";
+                    variableBuffer += line;
+                    variableBuffer += " ";
                     continue;
                 }
                 if (variableBuffer.empty()) {
                     Variable* var = parseVariable(line);
+                    assert(var);
                     if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
                         commentBuffer.pop_back();
                     }
                     var->comment = commentBuffer;
                     commentBuffer.clear();
-                    static_cast<Struct*>(e)->variables.push_back(var);
+                    Struct* s = static_cast<Struct*>(e);
+                    s->variables.push_back(var);
                 }
                 else {
-                    variableBuffer += std::string(line);
+                    variableBuffer += line;
                     Variable* var = parseVariable(variableBuffer);
+                    variableBuffer.clear();
+                    assert(var);
                     if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
                         commentBuffer.pop_back();
                     }
                     var->comment = commentBuffer;
                     commentBuffer.clear();
-                    static_cast<Struct*>(e)->variables.push_back(var);
-                    variableBuffer.clear();
+                    Struct* s = static_cast<Struct*>(e);
+                    s->variables.push_back(var);
                 }
                 continue;
             case StackElement::Type::Enum: {
                 EnumElement* el = parseEnumElement(line);
-                static_cast<Enum*>(e)->elements.push_back(el);
+                Enum* en = static_cast<Enum*>(e);
+                en->elements.push_back(el);
                 continue;
             }
         }

@@ -34,18 +34,21 @@
 struct ParsingError : public std::runtime_error {
     ParsingError(std::string e) : std::runtime_error(e) {}
 
+    // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept { return what(); }
 };
 
 struct SpecificationError : public std::runtime_error {
     SpecificationError(std::string e) : std::runtime_error(e) {}
 
+    // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept { return what(); }
 };
 
 struct CodegenError : public std::runtime_error {
     CodegenError(std::string e) : std::runtime_error(e) {}
 
+    // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept { return what(); }
 };
 
@@ -61,6 +64,26 @@ struct StackElement {
     Struct* parent = nullptr;
 };
 
+namespace attributes {
+    constexpr const char Annotation[] = "annotation";
+    constexpr const char InList[] = "inlist";
+    constexpr const char InRange[] = "inrange";
+    constexpr const char Less[] = "less";
+    constexpr const char LessEqual[] = "lessequal";
+    constexpr const char Greater[] = "greater";
+    constexpr const char GreaterEqual[] = "greaterequal";
+    constexpr const char NotInList[] = "notinlist";
+    constexpr const char NotInRange[] = "notinrange";
+    constexpr const char Reference[] = "reference";
+    constexpr const char Unequal[] = "unequal";
+
+    constexpr const char Key[] = "key";
+
+    constexpr const char Dictionary[] = "Dictionary";
+    constexpr const char Namespace[] = "namespace";
+    constexpr const char NoExhaustive[] = "noexhaustive";
+
+} // namespace attributes
 
 struct Variable {
     std::string type;
@@ -95,16 +118,11 @@ struct Struct : public StackElement {
 
     struct Attributes {
         std::string dictionary;
-        std::string namespaceSpecifier;
+        std::string namespaceName;
         bool noExhaustive = true; // @TODO change to false once OpenSpace works with it
     };
     Attributes attributes;
 };
-
-const Struct* rootStruct(const Struct* s);
-const StackElement* resolveType(const Struct* context, std::string_view type);
-std::string fqn(const StackElement* s, std::string_view separator);
-
 
 struct EnumElement {
     std::string name;
@@ -120,5 +138,10 @@ struct Enum : public StackElement {
 
     std::vector<EnumElement*> elements;
 };
+
+
+const Struct* rootStruct(const Struct* s);
+const StackElement* resolveType(const Struct* context, std::string_view type);
+std::string fqn(const StackElement* s, std::string_view separator);
 
 #endif // __OPENSPACE_CODEGEN___TYPES___H__

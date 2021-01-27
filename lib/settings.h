@@ -25,7 +25,6 @@
 #ifndef __OPENSPACE_CODEGEN___SETTINGS___H__
 #define __OPENSPACE_CODEGEN___SETTINGS___H__
 
-constexpr const bool PrintMemoryUsage = true;
 constexpr const bool PrintTiming = true;
 constexpr const bool AlwaysOutputFiles = false;
 constexpr const bool PreventFileChange = false;

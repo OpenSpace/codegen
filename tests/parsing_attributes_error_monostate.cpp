@@ -326,3 +326,14 @@ std::optional<std::monostate> v [[codegen::notinrange(1)]];
         CM::Contains("'std::monostate' does not support attribute 'notinrange'")
     );
 }
+
+TEST_CASE("Missing Attribute: monostate reference", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::monostate v;
+};)";
+    REQUIRE_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        SpecificationError,
+        CM::Contains("A monostate must have a 'reference' attribute")
+    );
+}

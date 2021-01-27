@@ -40,9 +40,6 @@ void print(const char format[], Ts... ts) {
 [[nodiscard]] std::string_view strip(std::string_view sv);
 [[nodiscard]] bool startsWith(std::string_view lhs, std::string_view rhs);
 [[nodiscard]] std::string join(const std::vector<std::string_view>& list, std::string_view sep);
-[[nodiscard]] std::string join(const std::vector<std::string>& list, std::string_view sep);
 [[nodiscard]] std::string_view extractLine(std::string_view sv, size_t* cursor);
-
-[[nodiscard]] std::string_view validCode(std::string_view code);
 
 #endif // __OPENSPACE_CODEGEN___UTIL___H__

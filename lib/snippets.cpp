@@ -27,6 +27,9 @@
 #include <cassert>
 #include <unordered_map>
 
+// This file is full of line length violations, but f it;  the generated code would look
+// a lot worse if we would break these everywhere or it would be unreadable
+
 namespace {
     constexpr const char BakeFunctionBool[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n";
     constexpr const char BakeFunctionInt[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }\n";
@@ -75,11 +78,25 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     constexpr const char BakeFunctionVector[] = R"(
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
-    std::vector<std::string_view> keys = dict.keys();
-    val->reserve(keys.size());
-    for (size_t i = 0; i < dict.size(); ++i) {
+    // For the moment we need to make sure in here that all of the keys are sequential
+    // since our TableVerifier doesn't really do that and we don't have a VectorVerifier
+    // for a flat list (yet).  So you might have gotten a specification error from here
+    // iff the Dictionary that was passed in contained keys other than a linear sequence
+    // from 1 - dict.size()  [1 because Lua for some strange reason wants to start at the
+    // wrong number]
+
+    for (size_t i = 1; i <= dict.size(); ++i) {
+        std::string key = std::to_string(i);
+        if (!dict.hasKey(key)) {
+            throw std::runtime_error(
+                "Could not find key '" + key + "' in the dictionary"
+            );
+        }
+    }    
+
+    for (size_t i = 1; i <= dict.size(); ++i) {
         T v;
-        bakeTo(dict, keys[i], &v);
+        bakeTo(dict, std::to_string(i), &v);
         val->push_back(std::move(v));
     }
 }

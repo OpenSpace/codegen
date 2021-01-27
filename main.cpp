@@ -35,11 +35,11 @@
 #include <filesystem>
 #include <iostream>
 
-/* TODO
- - Check for extra keys in the bake function to protect against misspellings
- - Need support for a std::map?
- - Name used for ReferencingVerifier has to be generated in a better way (including some more information to disambiguate)
-*/
+// TODO
+//   - Check for extra keys in the bake function to protect against misspellings
+//   - Need support for a std::map?
+//   - Name used for ReferencingVerifier has to be generated in a better way (including
+//     some more information to disambiguate)
 
 #ifdef WIN32
 //#define USE_MULTITHREADED_GENERATION
@@ -63,7 +63,12 @@ int main(int argc, char** argv) {
     std::string_view src = argv[2];
     if (type == "--file") {
         try {
-            handleFile(src);
+            Result r = handleFile(src);
+            switch (r) {
+                case Result::NotProcessed: std::cout << "Not processed\n"; break;
+                case Result::Processed: std::cout << "Processed\n"; break;
+                case Result::Skipped: std::cout << "Skipped\n"; break;
+            }
         }
         catch (const std::runtime_error& e) {
             std::cerr << e.what() << '\n';
@@ -129,7 +134,10 @@ int main(int argc, char** argv) {
 
         if (AlwaysOutputFiles) {
             if (PrintTiming) {
-                std::cout << fmt::format("Force overwrite all files in {} ms.  Pure time: {} ms", ms, totalTime / 1000000.0);
+                std::cout << fmt::format(
+                    "Force overwrite all files in {} ms.  Pure time: {} ms",
+                    ms, totalTime / 1000000.0
+                );
             }
             else {
                 std::cout << "Force overwrite all files\n";
@@ -138,7 +146,8 @@ int main(int argc, char** argv) {
         else {
             if (PrintTiming) {
                 std::cout << fmt::format(
-                    "{}/{} files changed in {} ms.  Pure time: {} ms\n", nChangedFiles, nAllFiles, ms, totalTime / 1000000.0
+                    "{}/{} files changed in {} ms.  Pure time: {} ms\n",
+                    nChangedFiles, nAllFiles, ms, totalTime / 1000000.0
                 );
             }
             else {

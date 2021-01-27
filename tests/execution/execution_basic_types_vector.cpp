@@ -153,6 +153,24 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
         v.setValue("1", 5.1);
         v.setValue("2", 5.2);
         v.setValue("3", 5.3);
+        v.setValue("4", 5.4);
+        v.setValue("5", 5.5);
+        v.setValue("6", 5.6);
+        v.setValue("7", 5.7);
+        v.setValue("8", 5.8);
+        v.setValue("9", 5.9);
+        v.setValue("10", 5.10);
+        v.setValue("11", 5.11);
+        v.setValue("12", 5.12);
+        v.setValue("13", 5.13);
+        v.setValue("14", 5.14);
+        v.setValue("15", 5.15);
+        v.setValue("16", 5.16);
+        v.setValue("17", 5.17);
+        v.setValue("18", 5.18);
+        v.setValue("19", 5.19);
+        v.setValue("20", 5.20);
+        v.setValue("21", 5.21);
         d.setValue("DoubleValue", v);
     }
     {
@@ -481,8 +499,13 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
     REQUIRE(p.boolValue == std::vector<bool>{ true, false, true });
     REQUIRE(p.intValue.size() == 3);
     REQUIRE(p.intValue == std::vector<int>{ 2, 3, 4 });
-    REQUIRE(p.doubleValue.size() == 3);
-    REQUIRE(p.doubleValue == std::vector<double>{ 5.1, 5.2, 5.3 });
+    REQUIRE(p.doubleValue.size() == 21);
+    REQUIRE(
+        p.doubleValue == std::vector<double>{
+            5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12, 5.13, 5.14,
+            5.15, 5.16, 5.17, 5.18, 5.19, 5.20, 5.21
+        }
+    );
     REQUIRE(p.floatValue.size() == 3);
     REQUIRE(p.floatValue == std::vector<float>{ 6.1f, 6.2f, 6.3f });
     REQUIRE(p.stringValue.size() == 3);
