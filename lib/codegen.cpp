@@ -220,7 +220,7 @@ std::string verifier(std::string_view type, const Variable& var, Struct* current
 
 std::string writeEnumDocumentation(Enum* e) {
     std::string result = fmt::format(
-        "    StringInListVerifier* codegen_{} = new StringInListVerifier({{",
+        "    std::shared_ptr<StringInListVerifier> codegen_{} = std::make_shared<StringInListVerifier>(std::vector<std::string>{{",
         fqn(e, "_")
     );
 
@@ -265,7 +265,7 @@ std::string writeStructDocumentation(Struct* s) {
     std::string result;
     if (s->parent) {
         result = fmt::format(
-            "    TableVerifier* codegen_{} = new TableVerifier;\n", name
+            "    std::shared_ptr<TableVerifier> codegen_{} = std::make_shared<TableVerifier>();\n", name
         );
     }
     else {
