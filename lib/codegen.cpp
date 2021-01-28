@@ -293,14 +293,27 @@ std::string writeStructDocumentation(Struct* s) {
     return result;
 }
 
-std::string writeVariableConverter(Variable* var) {
+std::string writeVariableConverter(Variable* var, std::vector<std::string>& converters) {
     std::string result;
-    if (startsWith(var->type, "std::variant")) {
-        std::string subtypes = var->type.substr("std::variant<"sv.size());
+    if (const size_t p = var->type.find("std::variant"); p != std::string::npos) {
+        std::string subtypes = var->type.substr(p + "std::variant<"sv.size());
+
+        if (std::find(converters.begin(), converters.end(), subtypes) != converters.end())
+        {
+            return result;
+        }
+
+        converters.push_back(subtypes);
+
+        std::string_view fullType = var->type;
+        if (startsWith(fullType, "std::optional<")) {
+            fullType.remove_prefix("std::optional<"sv.size());
+            fullType.remove_suffix(">"sv.size());
+        }
 
         result = fmt::format(
             "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
-            var->type
+            fullType
         );
 
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
@@ -308,7 +321,7 @@ std::string writeVariableConverter(Variable* var) {
             result += variantConversionFunctionForType(subtype);
         }
 
-        result += '}';
+        result += "}\n";
     }
     return result;
 }
@@ -337,8 +350,9 @@ std::string writeEnumConverter(Enum* e) {
 
 std::string writeStructConverter(Struct* s) {
     std::string result;
+    std::vector<std::string> writtenVariantConverters;
     for (Variable* var : s->variables) {
-        result += writeVariableConverter(var);
+        result += writeVariableConverter(var, writtenVariantConverters);
     }
 
     for (StackElement* e : s->children) {

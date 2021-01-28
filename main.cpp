@@ -40,6 +40,8 @@
 //   - Need support for a std::map?
 //   - Name used for ReferencingVerifier has to be generated in a better way (including
 //     some more information to disambiguate)
+//   - Add support for glm::uvecX
+//   - Add support for glm::dmatX mapping to glm::dmatXxX
 
 #ifdef WIN32
 //#define USE_MULTITHREADED_GENERATION

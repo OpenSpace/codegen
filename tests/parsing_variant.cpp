@@ -55,3 +55,21 @@ struct [[codegen::Dictionary(D)]] P {
         REQUIRE(var->comment == "b comment");
     }
 }
+
+TEST_CASE("Parsing: Optional Variant", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    // a comment
+    std::optional<std::variant<bool, int>> ov;
+})";
+
+    Struct* s = parseRootStruct(Source);
+    REQUIRE(s->variables.size() == 1);
+
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var->name == "ov");
+        REQUIRE(var->type == "std::optional<std::variant<bool, int>>");
+        REQUIRE(var->comment == "a comment");
+    }
+}

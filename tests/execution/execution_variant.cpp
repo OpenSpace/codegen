@@ -27,6 +27,7 @@
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <optional>
 #include <variant>
 
 namespace {
@@ -50,6 +51,9 @@ namespace {
         // rest value documentation
         std::variant<glm::vec2, glm::vec3, glm::vec4, glm::mat2x3, glm::mat2x4,
             glm::mat3x3, glm::mat3x4, glm::mat4x4> restValue;
+
+        // optional documentation
+        std::optional<std::variant<bool, int>> optionalValue;
     };
 #include "execution_variant_codegen.cpp"
 } // namespace
@@ -66,6 +70,7 @@ TEST_CASE("Variant bake", "[verifier]") {
             "RestValue",
             glm::dmat3x4(5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12)
         );
+        d1.setValue("OptionalValue", 5.0);
         const Parameters p1 = codegen::bake<Parameters>(d1);
         REQUIRE(std::get<bool>(p1.boolDoubleValue) == false);
         REQUIRE(std::get<float>(p1.floatStringValue) == 2.f);
@@ -79,6 +84,8 @@ TEST_CASE("Variant bake", "[verifier]") {
                 5.7f, 5.8f, 5.9f, 5.10f, 5.11f, 5.12f
             )
         );
+        REQUIRE(p1.optionalValue.has_value());
+        REQUIRE(std::get<int>(*p1.optionalValue) == 5);
     }
 
     {
@@ -114,6 +121,7 @@ TEST_CASE("Variant bake", "[verifier]") {
                 12.7f, 12.8f, 12.9f, 12.10f, 12.11f, 12.12f
             )
         );
+        REQUIRE(!p2.optionalValue.has_value());
     }
 
     {
@@ -127,6 +135,7 @@ TEST_CASE("Variant bake", "[verifier]") {
             glm::dmat2x4(19.1, 19.2, 19.3, 19.4, 19.5, 19.6, 19.7, 19.8)
         );
         d3.setValue("RestValue", glm::dmat2x3(20.1, 20.2, 20.3, 20.4, 20.5, 20.6));
+        d3.setValue("OptionalValue", true);
         const Parameters p3 = codegen::bake<Parameters>(d3);
         REQUIRE(std::get<double>(p3.boolDoubleValue) == 13.1);
         REQUIRE(std::get<std::string>(p3.floatStringValue) == "abc");
@@ -140,6 +149,8 @@ TEST_CASE("Variant bake", "[verifier]") {
             std::get<glm::mat2x3>(p3.restValue) ==
             glm::mat2x3(20.1f, 20.2f, 20.3f, 20.4f, 20.5f, 20.6f)
         );
+        REQUIRE(p3.optionalValue.has_value());
+        REQUIRE(std::get<bool>(*p3.optionalValue) == true);
     }
 
     {
@@ -182,6 +193,7 @@ TEST_CASE("Variant bake", "[verifier]") {
                 25.7f, 25.8f, 25.9f, 25.10f, 25.11f, 25.12f
             )
         );
+        REQUIRE(!p4.optionalValue.has_value());
     }
 }
 
@@ -189,7 +201,7 @@ TEST_CASE("Variant documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 6);
+    REQUIRE(doc.entries.size() == 7);
     {
         DocumentationEntry e = doc.entries[0];
         REQUIRE(e.key == "BoolDoubleValue");
@@ -309,5 +321,19 @@ TEST_CASE("Variant documentation", "[verifier]") {
         REQUIRE(dynamic_cast<Matrix3x4Verifier<double>*>(v->values[6].get()));
         REQUIRE(v->values[7]->type() == "Matrix4x4<double>");
         REQUIRE(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[7].get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[6];
+        REQUIRE(e.key == "OptionalValue");
+        REQUIRE(e.optional);
+        REQUIRE(e.documentation == "optional documentation");
+        REQUIRE(e.verifier->type() == "Boolean, or Integer");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        REQUIRE(v->values[0]->type() == "Boolean");
+        REQUIRE(dynamic_cast<BoolVerifier*>(v->values[0].get()));
+        REQUIRE(v->values[1]->type() == "Integer");
+        REQUIRE(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
 }
