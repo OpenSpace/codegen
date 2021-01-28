@@ -29,8 +29,6 @@
 #include <ghoul/misc/dictionary.h>
 #include <vector>
 
-namespace openspace { struct BasicTypesVector; }
-
 namespace {
     struct [[codegen::Dictionary(BasicTypesVector)]] Parameters {
         // bool value documentation
@@ -749,7 +747,7 @@ TEST_CASE("Basic Types Vector bake", "[verifier]") {
 
 TEST_CASE("Basic Types Vector documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::BasicTypesVector>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 32);
     {

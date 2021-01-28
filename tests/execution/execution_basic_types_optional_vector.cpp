@@ -30,8 +30,6 @@
 #include <optional>
 #include <vector>
 
-namespace openspace { struct BasicTypesOptionalVector; }
-
 namespace {
     struct [[codegen::Dictionary(BasicTypesOptionalVector)]] Parameters {
         // bool value documentation
@@ -795,7 +793,7 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
 
 TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::BasicTypesOptionalVector>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 32);
     {

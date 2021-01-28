@@ -30,8 +30,6 @@
 #include <optional>
 #include <vector>
 
-namespace openspace { struct Enums; }
-
 namespace {
     struct [[codegen::Dictionary(Enums)]] Parameters {
         // enum A documentation
@@ -89,7 +87,7 @@ TEST_CASE("Enum Bake", "[verifier]") {
 
 TEST_CASE("Enum Documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::Enums>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 3);
     {

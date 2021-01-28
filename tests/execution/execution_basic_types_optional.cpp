@@ -29,8 +29,6 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 
-namespace openspace { struct BasicTypesOptional; }
-
 namespace {
     struct [[codegen::Dictionary(BasicTypesOptional)]] Parameters {
         // bool value documentation
@@ -385,7 +383,7 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
 
 TEST_CASE("Basic Types Optional documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::BasicTypesOptional>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 32);
     {

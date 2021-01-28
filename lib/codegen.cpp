@@ -386,7 +386,7 @@ std::string generateResult(Struct* s) {
         );
     }
 
-    result += fmt::format(DocumentationPreamble, name);
+    result += fmt::format(DocumentationPreamble, s->name);
     result += writeStructDocumentation(s);
     result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
 
@@ -432,17 +432,6 @@ std::string generateResult(Struct* s) {
 
     result += writeStructConverter(s);
 
-    std::string fqName;
-    if (s->attributes.namespaceName.empty()) {
-        fqName = fmt::format("openspace::{}", s->attributes.dictionary);
-    }
-    else {
-        fqName = fmt::format(
-            "openspace::{}::{}",
-            s->attributes.namespaceName, s->attributes.dictionary
-        );
-    }
-
     for (std::string_view type : types) {
         if (type != "std::vector" && type != "std::optional") {
             // These types were covered higher up
@@ -460,10 +449,10 @@ std::string generateResult(Struct* s) {
 
 template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
 template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<{1}>(), dict, "{2}");
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>(), dict, "{1}");
     {0} res;
 )",
-        s->name, fqName, s->attributes.dictionary
+        s->name, s->attributes.dictionary
 );
 
     for (Variable* var : s->variables) {

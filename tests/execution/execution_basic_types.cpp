@@ -28,8 +28,6 @@
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
 
-namespace openspace { struct BasicTypes; }
-
 namespace {
     struct [[codegen::Dictionary(BasicTypes)]] Parameters {
         // bool value documentation
@@ -305,7 +303,7 @@ TEST_CASE("Basic Types bake", "[verifier]") {
 
 TEST_CASE("Basic Types documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::BasicTypes>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 32);
     {

@@ -29,8 +29,6 @@
 #include <ghoul/misc/dictionary.h>
 #include <variant>
 
-namespace openspace { struct Variant; }
-
 namespace {
     struct [[codegen::Dictionary(Variant)]] Parameters {
         // boolDouble value documentation
@@ -189,7 +187,7 @@ TEST_CASE("Variant bake", "[verifier]") {
 
 TEST_CASE("Variant documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::Variant>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 6);
     {

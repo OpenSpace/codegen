@@ -86,11 +86,9 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     // wrong number]
 
     for (size_t i = 1; i <= dict.size(); ++i) {
-        std::string key = std::to_string(i);
-        if (!dict.hasKey(key)) {
-            throw std::runtime_error(
-                "Could not find key '" + key + "' in the dictionary"
-            );
+        std::string k = std::to_string(i);
+        if (!dict.hasKey(k)) {
+            throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
         }
     }    
 

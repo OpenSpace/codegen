@@ -28,8 +28,6 @@
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
 
-namespace openspace { struct Simple; }
-
 namespace {
     struct [[codegen::Dictionary(Simple)]] Parameters {
         // value documentation
@@ -50,7 +48,7 @@ TEST_CASE("Simple bake", "[verifier]") {
 
 TEST_CASE("Simple documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::Simple>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 1);
     DocumentationEntry e = doc.entries[0];

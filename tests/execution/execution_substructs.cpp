@@ -30,8 +30,6 @@
 #include <optional>
 #include <vector>
 
-namespace openspace { struct Substructs; }
-
 namespace {
     struct [[codegen::Dictionary(Substructs)]] Parameters {
         // struct A documentation
@@ -106,7 +104,7 @@ TEST_CASE("Substruct Bake", "[verifier]") {
 
 TEST_CASE("Substruct Documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<openspace::Substructs>();
+    Documentation doc = codegen::doc<Parameters>();
 
     REQUIRE(doc.entries.size() == 3);
     {
