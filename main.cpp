@@ -135,7 +135,7 @@ int main(int argc, char** argv) {
         if (AlwaysOutputFiles) {
             if (PrintTiming) {
                 std::cout << fmt::format(
-                    "Force overwrite all files in {} ms.  Pure time: {} ms",
+                    "Force overwrite all files in {} ms.  Pure time in codegen: {} ms",
                     ms, totalTime / 1000000.0
                 );
             }
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
         else {
             if (PrintTiming) {
                 std::cout << fmt::format(
-                    "{}/{} files changed in {} ms.  Pure time: {} ms\n",
+                    "{}/{} files changed in {} ms.  Pure time in codegen: {} ms\n",
                     nChangedFiles, nAllFiles, ms, totalTime / 1000000.0
                 );
             }

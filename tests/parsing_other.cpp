@@ -59,11 +59,17 @@ bool misalignedIndent;
     // attribute
     int multiLineCommentAttribute
     [[codegen::inrange(2, 3)]];
+
+    std::string multilineinlist [[codegen::inlist(A, "Very", Long, "List", Of, Variables,
+"And", "String Literals", That, Will, Cover,
+    And, Span, Multiple,
+Lines, With, Weird,
+                Indentations)]];
 };
 )";
 
     Struct* s = parseRootStruct(Source);
-    REQUIRE(s->variables.size() == 5);
+    REQUIRE(s->variables.size() == 6);
     {
         Variable* var = s->variables[0];
         REQUIRE(var->name == "multiLineCommenting");
@@ -94,6 +100,13 @@ bool misalignedIndent;
         REQUIRE(var->type == "int");
         REQUIRE(var->comment == "multiline comment with attribute");
         REQUIRE(var->attributes.inrange == "2, 3");
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var->name == "multilineinlist");
+        REQUIRE(var->type == "std::string");
+        REQUIRE(var->comment.empty());
+        REQUIRE(var->attributes.inlist == "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations");
     }
 
     std::string r = generateResult(s);
