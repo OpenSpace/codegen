@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 annotation", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 annotation", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inlist'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 inlist", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inlist'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 inlist", "[parsing_error
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inlist'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inrange'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 inrange", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inrange'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 inrange", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'inrange'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'less'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 less", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'less'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 less", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'less'")
@@ -166,7 +166,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'lessequal'")
@@ -177,7 +177,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 lessequal", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'lessequal'")
@@ -188,7 +188,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 lessequal", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'lessequal'")
@@ -199,7 +199,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greater'")
@@ -212,7 +212,7 @@ struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::greater(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greater'")
@@ -223,7 +223,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 greater", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greater'")
@@ -234,7 +234,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 greaterequal", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greaterequal'")
@@ -245,7 +245,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 greaterequal", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greaterequal'")
@@ -256,7 +256,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 greaterequal", "[parsing
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'greaterequal'")
@@ -267,7 +267,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinlist'")
@@ -278,7 +278,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 notinlist", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinlist'")
@@ -289,7 +289,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 notinlist", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinlist'")
@@ -300,7 +300,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinrange'")
@@ -311,7 +311,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 notinrange", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinrange'")
@@ -322,7 +322,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 notinrange", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'notinrange'")
@@ -333,7 +333,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'reference'")
@@ -344,7 +344,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 reference", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'reference'")
@@ -355,7 +355,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 reference", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'reference'")
@@ -366,7 +366,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x2 unequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat2x2 v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'unequal'")
@@ -377,7 +377,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x2 unequal", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat2x2> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'unequal'")
@@ -388,7 +388,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x2 unequal", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat2x2> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::mat2x2' does not support attribute 'unequal'")

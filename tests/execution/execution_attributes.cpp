@@ -379,97 +379,97 @@ TEST_CASE("Attributes Bake", "[verifier]") {
 
     Parameters p = codegen::bake<Parameters>(d);
 
-    REQUIRE(p.keyValue == 2.1f);
+    CHECK(p.keyValue == 2.1f);
     REQUIRE(p.keyValueOptional.has_value());
-    REQUIRE(p.keyValueOptional == 2.2f);
-    REQUIRE(p.keyValueVector == std::vector{ 2.3f, 2.4f, 2.5f });
+    CHECK(p.keyValueOptional == 2.2f);
+    CHECK(p.keyValueVector == std::vector{ 2.3f, 2.4f, 2.5f });
 
-    REQUIRE(p.inRangeValueInt == 3);
+    CHECK(p.inRangeValueInt == 3);
     REQUIRE(p.inRangeValueIntOptional.has_value());
-    REQUIRE(p.inRangeValueIntOptional == 4);
-    REQUIRE(p.inRangeValueIntVector == std::vector{ 5, 6, 7 });
+    CHECK(p.inRangeValueIntOptional == 4);
+    CHECK(p.inRangeValueIntVector == std::vector{ 5, 6, 7 });
 
-    REQUIRE(p.inRangeValueFloat == 8.1f);
+    CHECK(p.inRangeValueFloat == 8.1f);
     REQUIRE(p.inRangeValueFloatOptional.has_value());
-    REQUIRE(p.inRangeValueFloatOptional == 8.2f);
-    REQUIRE(p.inRangeValueFloatVector == std::vector{ 8.3f, 8.4f, 8.5f });
+    CHECK(p.inRangeValueFloatOptional == 8.2f);
+    CHECK(p.inRangeValueFloatVector == std::vector{ 8.3f, 8.4f, 8.5f });
 
-    REQUIRE(p.notInRangeValueInt == 9);
+    CHECK(p.notInRangeValueInt == 9);
     REQUIRE(p.notInRangeValueIntOptional.has_value());
-    REQUIRE(p.notInRangeValueIntOptional == 10);
-    REQUIRE(p.notInRangeValueIntVector == std::vector{ 11, 12, 13 });
+    CHECK(p.notInRangeValueIntOptional == 10);
+    CHECK(p.notInRangeValueIntVector == std::vector{ 11, 12, 13 });
 
-    REQUIRE(p.notInRangeValueFloat == 14.1f);
+    CHECK(p.notInRangeValueFloat == 14.1f);
     REQUIRE(p.notInRangeValueFloatOptional.has_value());
-    REQUIRE(p.notInRangeValueFloatOptional == 14.2f);
-    REQUIRE(p.notInRangeValueFloatVector == std::vector{ 14.3f, 14.4f, 14.5f });
+    CHECK(p.notInRangeValueFloatOptional == 14.2f);
+    CHECK(p.notInRangeValueFloatVector == std::vector{ 14.3f, 14.4f, 14.5f });
 
-    REQUIRE(p.lessValueInt == 15);
+    CHECK(p.lessValueInt == 15);
     REQUIRE(p.lessValueIntOptional.has_value());
-    REQUIRE(p.lessValueIntOptional == 16);
-    REQUIRE(p.lessValueIntVector == std::vector{ 17, 18, 19 });
+    CHECK(p.lessValueIntOptional == 16);
+    CHECK(p.lessValueIntVector == std::vector{ 17, 18, 19 });
 
-    REQUIRE(p.lessValueFloat == 20.1f);
+    CHECK(p.lessValueFloat == 20.1f);
     REQUIRE(p.lessValueFloatOptional.has_value());
-    REQUIRE(p.lessValueFloatOptional == 20.2f);
-    REQUIRE(p.lessValueFloatVector == std::vector{ 20.3f, 20.4f, 20.5f });
+    CHECK(p.lessValueFloatOptional == 20.2f);
+    CHECK(p.lessValueFloatVector == std::vector{ 20.3f, 20.4f, 20.5f });
 
-    REQUIRE(p.lessEqualValueInt == 21);
+    CHECK(p.lessEqualValueInt == 21);
     REQUIRE(p.lessEqualValueIntOptional.has_value());
-    REQUIRE(p.lessEqualValueIntOptional == 22);
-    REQUIRE(p.lessEqualValueIntVector == std::vector{ 23, 24, 25 });
+    CHECK(p.lessEqualValueIntOptional == 22);
+    CHECK(p.lessEqualValueIntVector == std::vector{ 23, 24, 25 });
 
-    REQUIRE(p.lessEqualValueFloat == 26.1f);
+    CHECK(p.lessEqualValueFloat == 26.1f);
     REQUIRE(p.lessEqualValueFloatOptional.has_value());
-    REQUIRE(p.lessEqualValueFloatOptional == 26.2f);
-    REQUIRE(p.lessEqualValueFloatVector == std::vector{ 26.3f, 26.4f, 26.5f });
+    CHECK(p.lessEqualValueFloatOptional == 26.2f);
+    CHECK(p.lessEqualValueFloatVector == std::vector{ 26.3f, 26.4f, 26.5f });
 
-    REQUIRE(p.greaterValueInt == 27);
+    CHECK(p.greaterValueInt == 27);
     REQUIRE(p.greaterValueIntOptional.has_value());
-    REQUIRE(p.greaterValueIntOptional == 28);
-    REQUIRE(p.greaterValueIntVector == std::vector{ 29, 30, 31 });
+    CHECK(p.greaterValueIntOptional == 28);
+    CHECK(p.greaterValueIntVector == std::vector{ 29, 30, 31 });
 
-    REQUIRE(p.greaterValueFloat == 32.1f);
+    CHECK(p.greaterValueFloat == 32.1f);
     REQUIRE(p.greaterValueFloatOptional.has_value());
-    REQUIRE(p.greaterValueFloatOptional == 32.2f);
-    REQUIRE(p.greaterValueFloatVector == std::vector{ 32.3f, 32.4f, 32.5f });
+    CHECK(p.greaterValueFloatOptional == 32.2f);
+    CHECK(p.greaterValueFloatVector == std::vector{ 32.3f, 32.4f, 32.5f });
 
-    REQUIRE(p.greaterEqualValueInt == 33);
+    CHECK(p.greaterEqualValueInt == 33);
     REQUIRE(p.greaterEqualValueIntOptional.has_value());
-    REQUIRE(p.greaterEqualValueIntOptional == 34);
-    REQUIRE(p.greaterEqualValueIntVector == std::vector{ 35, 36, 37 });
+    CHECK(p.greaterEqualValueIntOptional == 34);
+    CHECK(p.greaterEqualValueIntVector == std::vector{ 35, 36, 37 });
 
-    REQUIRE(p.greaterEqualValueFloat == 38.1f);
+    CHECK(p.greaterEqualValueFloat == 38.1f);
     REQUIRE(p.greaterEqualValueFloatOptional.has_value());
-    REQUIRE(p.greaterEqualValueFloatOptional == 38.2f);
-    REQUIRE(p.greaterEqualValueFloatVector == std::vector{ 38.3f, 38.4f, 38.5f });
+    CHECK(p.greaterEqualValueFloatOptional == 38.2f);
+    CHECK(p.greaterEqualValueFloatVector == std::vector{ 38.3f, 38.4f, 38.5f });
 
-    REQUIRE(p.unequalValueInt == 39);
+    CHECK(p.unequalValueInt == 39);
     REQUIRE(p.unequalValueIntOptional.has_value());
-    REQUIRE(p.unequalValueIntOptional == 40);
-    REQUIRE(p.unequalValueIntVector == std::vector{ 41, 42, 43 });
+    CHECK(p.unequalValueIntOptional == 40);
+    CHECK(p.unequalValueIntVector == std::vector{ 41, 42, 43 });
 
-    REQUIRE(p.unequalValueFloat == 44.1f);
+    CHECK(p.unequalValueFloat == 44.1f);
     REQUIRE(p.unequalValueFloatOptional.has_value());
-    REQUIRE(p.unequalValueFloatOptional == 44.2f);
-    REQUIRE(p.unequalValueFloatVector == std::vector{ 44.3f, 44.4f, 44.5f });
+    CHECK(p.unequalValueFloatOptional == 44.2f);
+    CHECK(p.unequalValueFloatVector == std::vector{ 44.3f, 44.4f, 44.5f });
 
-    REQUIRE(p.descValue == true);
+    CHECK(p.descValue == true);
 
-    REQUIRE(p.inListValue1 == "A");
+    CHECK(p.inListValue1 == "A");
     REQUIRE(p.inListValue1Optional.has_value());
-    REQUIRE(p.inListValue1Optional == "B");
-    REQUIRE(p.inListValue1Vector == std::vector<std::string>{ "C", "D", "E" });
+    CHECK(p.inListValue1Optional == "B");
+    CHECK(p.inListValue1Vector == std::vector<std::string>{ "C", "D", "E" });
 
-    REQUIRE(p.inListValue2 == "F");
+    CHECK(p.inListValue2 == "F");
     REQUIRE(p.inListValue2Optional.has_value());
-    REQUIRE(p.inListValue2Optional == "G");
-    REQUIRE(p.inListValue2Vector == std::vector<std::string>{ "H", "I", "J" });
+    CHECK(p.inListValue2Optional == "G");
+    CHECK(p.inListValue2Vector == std::vector<std::string>{ "H", "I", "J" });
 
-    REQUIRE(p.unequalValueString == "zyxwv");
+    CHECK(p.unequalValueString == "zyxwv");
     REQUIRE(p.unequalValueStringOptional.has_value());
-    REQUIRE(p.unequalValueStringOptional == "zyxwv");
-    REQUIRE(
+    CHECK(p.unequalValueStringOptional == "zyxwv");
+    CHECK(
         p.unequalValueStringVector ==
         std::vector<std::string>{ "zyxwv1", "zyxwv2", "zyxwv3"}
     );
@@ -482,360 +482,360 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
     REQUIRE(doc.entries.size() == 57);
     {
         DocumentationEntry e = doc.entries[0];
-        REQUIRE(e.key == "KeyKey");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "keyValue documentation");
-        REQUIRE(e.verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+        CHECK(e.key == "KeyKey");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "keyValue documentation");
+        CHECK(e.verifier->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
-        REQUIRE(e.key == "KeyKeyOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "keyValueOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+        CHECK(e.key == "KeyKeyOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "keyValueOptional documentation");
+        CHECK(e.verifier->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
-        REQUIRE(e.key == "KeyKeyVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "keyValueVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "KeyKeyVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "keyValueVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
-        REQUIRE(e.key == "InRangeValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inRangeValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "InRangeValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inRangeValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         InRangeVerifier<IntVerifier>* v =
             dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == -2);
-        REQUIRE(v->upper == 8);
+        CHECK(v->lower == -2);
+        CHECK(v->upper == 8);
     }
     {
         DocumentationEntry e = doc.entries[4];
-        REQUIRE(e.key == "InRangeValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "inRangeValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "InRangeValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "inRangeValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         InRangeVerifier<IntVerifier>* v =
             dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == -2);
-        REQUIRE(v->upper == 8);
+        CHECK(v->lower == -2);
+        CHECK(v->upper == 8);
     }
     {
         DocumentationEntry e = doc.entries[5];
-        REQUIRE(e.key == "InRangeValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inRangeValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "InRangeValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inRangeValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         InRangeVerifier<IntVerifier>* w = dynamic_cast<InRangeVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->lower == -2);
-        REQUIRE(w->upper == 8);
+        CHECK(w->lower == -2);
+        CHECK(w->upper == 8);
     }
     {
         DocumentationEntry e = doc.entries[6];
-        REQUIRE(e.key == "InRangeValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inRangeValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "InRangeValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inRangeValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         InRangeVerifier<DoubleVerifier>* v =
             dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == 8.0);
-        REQUIRE(v->upper == 9.0);
+        CHECK(v->lower == 8.0);
+        CHECK(v->upper == 9.0);
     }
     {
         DocumentationEntry e = doc.entries[7];
-        REQUIRE(e.key == "InRangeValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "inRangeValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "InRangeValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "inRangeValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         InRangeVerifier<DoubleVerifier>* v =
             dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == 8.0);
-        REQUIRE(v->upper == 9.0);
+        CHECK(v->lower == 8.0);
+        CHECK(v->upper == 9.0);
     }
     {
         DocumentationEntry e = doc.entries[8];
-        REQUIRE(e.key == "InRangeValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inRangeValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "InRangeValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inRangeValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         InRangeVerifier<DoubleVerifier>* w =
             dynamic_cast<InRangeVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->lower == 8.0);
-        REQUIRE(w->upper == 9.0);
+        CHECK(w->lower == 8.0);
+        CHECK(w->upper == 9.0);
     }
     {
         DocumentationEntry e = doc.entries[9];
-        REQUIRE(e.key == "NotInRangeValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "notInRangeValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "NotInRangeValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInRangeValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         NotInRangeVerifier<IntVerifier>* v =
             dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == 5);
-        REQUIRE(v->upper == 7);
+        CHECK(v->lower == 5);
+        CHECK(v->upper == 7);
     }
     {
         DocumentationEntry e = doc.entries[10];
-        REQUIRE(e.key == "NotInRangeValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "notInRangeValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "NotInRangeValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "notInRangeValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         NotInRangeVerifier<IntVerifier>* v =
             dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == 5);
-        REQUIRE(v->upper == 7);
+        CHECK(v->lower == 5);
+        CHECK(v->upper == 7);
     }
     {
         DocumentationEntry e = doc.entries[11];
-        REQUIRE(e.key == "NotInRangeValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "notInRangeValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "NotInRangeValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInRangeValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         NotInRangeVerifier<IntVerifier>* w =
             dynamic_cast<NotInRangeVerifier<IntVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->lower == 5);
-        REQUIRE(w->upper == 7);
+        CHECK(w->lower == 5);
+        CHECK(w->upper == 7);
     }
     {
         DocumentationEntry e = doc.entries[12];
-        REQUIRE(e.key == "NotInRangeValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "notInRangeValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "NotInRangeValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInRangeValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         NotInRangeVerifier<DoubleVerifier>* v =
             dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == -0.5);
-        REQUIRE(v->upper == 0.5);
+        CHECK(v->lower == -0.5);
+        CHECK(v->upper == 0.5);
     }
     {
         DocumentationEntry e = doc.entries[13];
-        REQUIRE(e.key == "NotInRangeValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "notInRangeValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "NotInRangeValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "notInRangeValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         NotInRangeVerifier<DoubleVerifier>* v =
             dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->lower == -0.5);
-        REQUIRE(v->upper == 0.5);
+        CHECK(v->lower == -0.5);
+        CHECK(v->upper == 0.5);
     }
     {
         DocumentationEntry e = doc.entries[14];
-        REQUIRE(e.key == "NotInRangeValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "notInRangeValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "NotInRangeValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInRangeValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         NotInRangeVerifier<DoubleVerifier>* w =
             dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->lower == -0.5);
-        REQUIRE(w->upper == 0.5);
+        CHECK(w->lower == -0.5);
+        CHECK(w->upper == 0.5);
     }
     {
         DocumentationEntry e = doc.entries[15];
-        REQUIRE(e.key == "LessValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "LessValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         LessVerifier<IntVerifier>* v =
             dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 20);
+        CHECK(v->value == 20);
     }
     {
         DocumentationEntry e = doc.entries[16];
-        REQUIRE(e.key == "LessValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "lessValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "LessValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "lessValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         LessVerifier<IntVerifier>* v =
             dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 20);
+        CHECK(v->value == 20);
     }
     {
         DocumentationEntry e = doc.entries[17];
-        REQUIRE(e.key == "LessValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "LessValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         LessVerifier<IntVerifier>* w = dynamic_cast<LessVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->value == 20);
+        CHECK(w->value == 20);
     }
     {
         DocumentationEntry e = doc.entries[18];
-        REQUIRE(e.key == "LessValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "LessValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         LessVerifier<DoubleVerifier>* v =
             dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 21.0);
+        CHECK(v->value == 21.0);
     }
     {
         DocumentationEntry e = doc.entries[19];
-        REQUIRE(e.key == "LessValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "lessValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "LessValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "lessValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         LessVerifier<DoubleVerifier>* v =
             dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 22.0);
+        CHECK(v->value == 22.0);
     }
     {
         DocumentationEntry e = doc.entries[20];
-        REQUIRE(e.key == "LessValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "LessValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         LessVerifier<DoubleVerifier>* w = dynamic_cast<LessVerifier<DoubleVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->value == 23.0);
+        CHECK(w->value == 23.0);
     }
     {
         DocumentationEntry e = doc.entries[21];
-        REQUIRE(e.key == "LessEqualValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessEqualValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "LessEqualValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessEqualValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         LessEqualVerifier<IntVerifier>* v =
             dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 25);
+        CHECK(v->value == 25);
     }
     {
         DocumentationEntry e = doc.entries[22];
-        REQUIRE(e.key == "LessEqualValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "lessEqualValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "LessEqualValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "lessEqualValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         LessEqualVerifier<IntVerifier>* v =
             dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 25);
+        CHECK(v->value == 25);
     }
     {
         DocumentationEntry e = doc.entries[23];
-        REQUIRE(e.key == "LessEqualValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessEqualValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "LessEqualValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessEqualValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         LessEqualVerifier<IntVerifier>* w = dynamic_cast<LessEqualVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->value == 25);
+        CHECK(w->value == 25);
     }
     {
         DocumentationEntry e = doc.entries[24];
-        REQUIRE(e.key == "LessEqualValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessEqualValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "LessEqualValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessEqualValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         LessEqualVerifier<DoubleVerifier>* v =
             dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 27.0);
+        CHECK(v->value == 27.0);
     }
     {
         DocumentationEntry e = doc.entries[25];
-        REQUIRE(e.key == "LessEqualValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "lessEqualValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "LessEqualValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "lessEqualValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         LessEqualVerifier<DoubleVerifier>* v =
             dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 27.0);
+        CHECK(v->value == 27.0);
     }
     {
         DocumentationEntry e = doc.entries[26];
-        REQUIRE(e.key == "LessEqualValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "lessEqualValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "LessEqualValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "lessEqualValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         LessEqualVerifier<DoubleVerifier>* w =
             dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->value == 27.0);
+        CHECK(w->value == 27.0);
     }
     {
         DocumentationEntry e = doc.entries[27];
@@ -850,379 +850,382 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
     }
     {
         DocumentationEntry e = doc.entries[28];
-        REQUIRE(e.key == "GreaterValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "greaterValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "GreaterValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "greaterValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         GreaterVerifier<IntVerifier>* v =
             dynamic_cast<GreaterVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 25);
+        CHECK(v->value == 25);
     }
     {
         DocumentationEntry e = doc.entries[29];
-        REQUIRE(e.key == "GreaterValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "GreaterValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         GreaterVerifier<IntVerifier>* w = dynamic_cast<GreaterVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->value == 25);
+        CHECK(w->value == 25);
     }
     {
         DocumentationEntry e = doc.entries[30];
-        REQUIRE(e.key == "GreaterValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "GreaterValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         GreaterVerifier<DoubleVerifier>* v =
             dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == -5.0);
+        CHECK(v->value == -5.0);
     }
     {
         DocumentationEntry e = doc.entries[31];
-        REQUIRE(e.key == "GreaterValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "greaterValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "GreaterValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "greaterValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         GreaterVerifier<DoubleVerifier>* v =
             dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == -5.0);
+        CHECK(v->value == -5.0);
     }
     {
         DocumentationEntry e = doc.entries[32];
-        REQUIRE(e.key == "GreaterValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "GreaterValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         GreaterVerifier<DoubleVerifier>* w =
             dynamic_cast<GreaterVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->value == -5.0);
+        CHECK(w->value == -5.0);
     }
     {
         DocumentationEntry e = doc.entries[33];
-        REQUIRE(e.key == "GreaterEqualValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "GreaterEqualValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterEqualValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         GreaterEqualVerifier<IntVerifier>* v =
             dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 33);
+        CHECK(v->value == 33);
     }
     {
         DocumentationEntry e = doc.entries[34];
-        REQUIRE(e.key == "GreaterEqualValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "GreaterEqualValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "greaterEqualValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         GreaterEqualVerifier<IntVerifier>* v =
             dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 33);
+        CHECK(v->value == 33);
     }
     {
         DocumentationEntry e = doc.entries[35];
-        REQUIRE(e.key == "GreaterEqualValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "GreaterEqualValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterEqualValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         GreaterEqualVerifier<IntVerifier>* w =
             dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->value == 33);
+        CHECK(w->value == 33);
     }
     {
         DocumentationEntry e = doc.entries[36];
-        REQUIRE(e.key == "GreaterEqualValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "GreaterEqualValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterEqualValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         GreaterEqualVerifier<DoubleVerifier>* v =
             dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == -25.0);
+        CHECK(v->value == -25.0);
     }
     {
         DocumentationEntry e = doc.entries[37];
-        REQUIRE(e.key == "GreaterEqualValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "GreaterEqualValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "greaterEqualValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         GreaterEqualVerifier<DoubleVerifier>* v =
             dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == -25.0);
+        CHECK(v->value == -25.0);
     }
     {
         DocumentationEntry e = doc.entries[38];
-        REQUIRE(e.key == "GreaterEqualValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "greaterEqualValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "GreaterEqualValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "greaterEqualValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         GreaterEqualVerifier<DoubleVerifier>* w =
             dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->value == -25.0);
+        CHECK(w->value == -25.0);
     }
     {
         DocumentationEntry e = doc.entries[39];
-        REQUIRE(e.key == "UnequalValueInt");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueInt documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "UnequalValueInt");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueInt documentation");
+        CHECK(e.verifier->type() == "Integer");
         UnequalVerifier<IntVerifier>* v =
             dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 1);
+        CHECK(v->value == 1);
     }
     {
         DocumentationEntry e = doc.entries[40];
-        REQUIRE(e.key == "UnequalValueIntOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "unequalValueIntOptional documentation");
-        REQUIRE(e.verifier->type() == "Integer");
+        CHECK(e.key == "UnequalValueIntOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "unequalValueIntOptional documentation");
+        CHECK(e.verifier->type() == "Integer");
         UnequalVerifier<IntVerifier>* v =
             dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 1);
+        CHECK(v->value == 1);
     }
     {
         DocumentationEntry e = doc.entries[41];
-        REQUIRE(e.key == "UnequalValueIntVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueIntVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "UnequalValueIntVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueIntVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
         UnequalVerifier<IntVerifier>* w = dynamic_cast<UnequalVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->value == 1);
+        CHECK(w->value == 1);
     }
     {
         DocumentationEntry e = doc.entries[42];
-        REQUIRE(e.key == "UnequalValueFloat");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueFloat documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "UnequalValueFloat");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueFloat documentation");
+        CHECK(e.verifier->type() == "Double");
         UnequalVerifier<DoubleVerifier>* v =
             dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 123.0);
+        CHECK(v->value == 123.0);
     }
     {
         DocumentationEntry e = doc.entries[43];
-        REQUIRE(e.key == "UnequalValueFloatOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "unequalValueFloatOptional documentation");
-        REQUIRE(e.verifier->type() == "Double");
+        CHECK(e.key == "UnequalValueFloatOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "unequalValueFloatOptional documentation");
+        CHECK(e.verifier->type() == "Double");
         UnequalVerifier<DoubleVerifier>* v =
             dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == 123.0);
+        CHECK(v->value == 123.0);
     }
     {
         DocumentationEntry e = doc.entries[44];
-        REQUIRE(e.key == "UnequalValueFloatVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueFloatVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "UnequalValueFloatVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueFloatVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Double");
         UnequalVerifier<DoubleVerifier>* w =
             dynamic_cast<UnequalVerifier<DoubleVerifier>*>(
                 v->documentations[0].verifier.get()
             );
         REQUIRE(w);
-        REQUIRE(w->value == 123.0);
+        CHECK(w->value == 123.0);
     }
     {
         DocumentationEntry e = doc.entries[45];
-        REQUIRE(e.key == "DescValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == description);
-        REQUIRE(e.verifier->type() == "Boolean");
-        REQUIRE(dynamic_cast<BoolVerifier*>(e.verifier.get()));
+        CHECK(e.key == "DescValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == description);
+        CHECK(e.verifier->type() == "Boolean");
+        CHECK(dynamic_cast<BoolVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[46];
-        REQUIRE(e.key == "InListValue1");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inListValue1 documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "InListValue1");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inListValue1 documentation");
+        CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
             dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+        CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
         DocumentationEntry e = doc.entries[47];
-        REQUIRE(e.key == "InListValue1Optional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "inListValue1Optional documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "InListValue1Optional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "inListValue1Optional documentation");
+        CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
             dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+        CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
         DocumentationEntry e = doc.entries[48];
-        REQUIRE(e.key == "InListValue1Vector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inListValue1Vector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "InListValue1Vector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inListValue1Vector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
         InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
         );
-        REQUIRE(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+        REQUIRE(w);
+        CHECK(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
         DocumentationEntry e = doc.entries[49];
-        REQUIRE(e.key == "InListValue2");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inListValue2 documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "InListValue2");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inListValue2 documentation");
+        CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
             dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+        CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
         DocumentationEntry e = doc.entries[50];
-        REQUIRE(e.key == "InListValue2Optional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "inListValue2Optional documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "InListValue2Optional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "inListValue2Optional documentation");
+        CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
             dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+        CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
         DocumentationEntry e = doc.entries[51];
-        REQUIRE(e.key == "InListValue2Vector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "inListValue2Vector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "InListValue2Vector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "inListValue2Vector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
         InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
         );
-        REQUIRE(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+        REQUIRE(w);
+        CHECK(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
         DocumentationEntry e = doc.entries[52];
-        REQUIRE(e.key == "UnequalValueString");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueString documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "UnequalValueString");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueString documentation");
+        CHECK(e.verifier->type() == "String");
         UnequalVerifier<StringVerifier>* v =
             dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == "abcdef");
+        CHECK(v->value == "abcdef");
     }
     {
         DocumentationEntry e = doc.entries[53];
-        REQUIRE(e.key == "UnequalValueStringOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "unequalValueStringOptional documentation");
-        REQUIRE(e.verifier->type() == "String");
+        CHECK(e.key == "UnequalValueStringOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "unequalValueStringOptional documentation");
+        CHECK(e.verifier->type() == "String");
         UnequalVerifier<StringVerifier>* v =
             dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->value == "abcdef");
+        CHECK(v->value == "abcdef");
     }
     {
         DocumentationEntry e = doc.entries[54];
-        REQUIRE(e.key == "UnequalValueStringVector");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "unequalValueStringVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "UnequalValueStringVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "unequalValueStringVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
         UnequalVerifier<StringVerifier>* w =
             dynamic_cast<UnequalVerifier<StringVerifier>*>(
                 v->documentations[0].verifier.get()
             );
-        REQUIRE(w->value == "abcdef");
+        REQUIRE(w);
+        CHECK(w->value == "abcdef");
     }
     {
         DocumentationEntry e = doc.entries[55];
-        REQUIRE(e.key == "ReferenceValueOptional");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "referenceValueOptional documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "ReferenceValueOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "referenceValueOptional documentation");
+        CHECK(e.verifier->type() == "Table");
         ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->identifier == "abc");
+        CHECK(v->identifier == "abc");
     }
     {
         DocumentationEntry e = doc.entries[56];
-        REQUIRE(e.key == "ReferenceValueVector");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "referenceValueVector documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "ReferenceValueVector");
+        CHECK(e.optional);
+        CHECK(e.documentation == "referenceValueVector documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].verifier->type() == "Table");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
-        REQUIRE(w->identifier == "abc");
+        CHECK(w->identifier == "abc");
     }
 }

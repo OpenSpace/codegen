@@ -208,1174 +208,1231 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 )";
     Struct* s = parseRootStruct(Source);
 
-    REQUIRE(s->children.empty());
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 58);
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "keyValue");
-        REQUIRE(var->key == "KeyKey");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "keyValue documentation");
-        REQUIRE(var->attributes.key == "KeyKey");
+        REQUIRE(var);
+        CHECK(var->name == "keyValue");
+        CHECK(var->key == "KeyKey");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "keyValue documentation");
+        CHECK(var->attributes.key == "KeyKey");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinlist.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[1];
-        REQUIRE(var->name == "keyValueOptional");
-        REQUIRE(var->key == "KeyKeyOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "keyValueOptional documentation");
-        REQUIRE(var->attributes.key == "KeyKeyOptional");
+        REQUIRE(var);
+        CHECK(var->name == "keyValueOptional");
+        CHECK(var->key == "KeyKeyOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "keyValueOptional documentation");
+        CHECK(var->attributes.key == "KeyKeyOptional");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinlist.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[2];
-        REQUIRE(var->name == "keyValueVector");
-        REQUIRE(var->key == "KeyKeyVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "keyValueVector documentation");
-        REQUIRE(var->attributes.key == "KeyKeyVector");
+        REQUIRE(var);
+        CHECK(var->name == "keyValueVector");
+        CHECK(var->key == "KeyKeyVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "keyValueVector documentation");
+        CHECK(var->attributes.key == "KeyKeyVector");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinlist.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[3];
-        REQUIRE(var->name == "inRangeValueInt");
-        REQUIRE(var->key == "InRangeValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "inRangeValueInt documentation");
-        REQUIRE(var->attributes.inrange == "-2, 2");
+        CHECK(var->name == "inRangeValueInt");
+        CHECK(var->key == "InRangeValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "inRangeValueInt documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinlist.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[4];
-        REQUIRE(var->name == "inRangeValueIntOptional");
-        REQUIRE(var->key == "InRangeValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "inRangeValueIntOptional documentation");
-        REQUIRE(var->attributes.inrange == "-2, 2");
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIntOptional");
+        CHECK(var->key == "InRangeValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "inRangeValueIntOptional documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[5];
-        REQUIRE(var->name == "inRangeValueIntVector");
-        REQUIRE(var->key == "InRangeValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "inRangeValueIntVector documentation");
-        REQUIRE(var->attributes.inrange == "-2, 2");
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIntVector");
+        CHECK(var->key == "InRangeValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "inRangeValueIntVector documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[6];
-        REQUIRE(var->name == "inRangeValueFloat");
-        REQUIRE(var->key == "InRangeValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "inRangeValueFloat documentation");
-        REQUIRE(var->attributes.inrange == "-0.5, 0.75");
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloat");
+        CHECK(var->key == "InRangeValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "inRangeValueFloat documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[7];
-        REQUIRE(var->name == "inRangeValueFloatOptional");
-        REQUIRE(var->key == "InRangeValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "inRangeValueFloatOptional documentation");
-        REQUIRE(var->attributes.inrange == "-0.5, 0.75");
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloatOptional");
+        CHECK(var->key == "InRangeValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "inRangeValueFloatOptional documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[8];
-        REQUIRE(var->name == "inRangeValueFloatVector");
-        REQUIRE(var->key == "InRangeValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "inRangeValueFloatVector documentation");
-        REQUIRE(var->attributes.inrange == "-0.5, 0.75");
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloatVector");
+        CHECK(var->key == "InRangeValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "inRangeValueFloatVector documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[9];
-        REQUIRE(var->name == "notInRangeValueInt");
-        REQUIRE(var->key == "NotInRangeValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "notInRangeValueInt documentation");
-        REQUIRE(var->attributes.notinrange == "5, 7");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueInt");
+        CHECK(var->key == "NotInRangeValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "notInRangeValueInt documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[10];
-        REQUIRE(var->name == "notInRangeValueIntOptional");
-        REQUIRE(var->key == "NotInRangeValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "notInRangeValueIntOptional documentation");
-        REQUIRE(var->attributes.notinrange == "5, 7");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIntOptional");
+        CHECK(var->key == "NotInRangeValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "notInRangeValueIntOptional documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[11];
-        REQUIRE(var->name == "notInRangeValueIntVector");
-        REQUIRE(var->key == "NotInRangeValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "notInRangeValueIntVector documentation");
-        REQUIRE(var->attributes.notinrange == "5, 7");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIntVector");
+        CHECK(var->key == "NotInRangeValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "notInRangeValueIntVector documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[12];
-        REQUIRE(var->name == "notInRangeValueFloat");
-        REQUIRE(var->key == "NotInRangeValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "notInRangeValueFloat documentation");
-        REQUIRE(var->attributes.notinrange == "-0.5, 0.5");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloat");
+        CHECK(var->key == "NotInRangeValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "notInRangeValueFloat documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[13];
-        REQUIRE(var->name == "notInRangeValueFloatOptional");
-        REQUIRE(var->key == "NotInRangeValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "notInRangeValueFloatOptional documentation");
-        REQUIRE(var->attributes.notinrange == "-0.5, 0.5");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloatOptional");
+        CHECK(var->key == "NotInRangeValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "notInRangeValueFloatOptional documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[14];
-        REQUIRE(var->name == "notInRangeValueFloatVector");
-        REQUIRE(var->key == "NotInRangeValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "notInRangeValueFloatVector documentation");
-        REQUIRE(var->attributes.notinrange == "-0.5, 0.5");
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloatVector");
+        CHECK(var->key == "NotInRangeValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "notInRangeValueFloatVector documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[15];
-        REQUIRE(var->name == "lessValueInt");
-        REQUIRE(var->key == "LessValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "lessValueInt documentation");
-        REQUIRE(var->attributes.less == "-5");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueInt");
+        CHECK(var->key == "LessValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "lessValueInt documentation");
+        CHECK(var->attributes.less == "-5");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[16];
-        REQUIRE(var->name == "lessValueIntOptional");
-        REQUIRE(var->key == "LessValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "lessValueIntOptional documentation");
-        REQUIRE(var->attributes.less == "-5");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIntOptional");
+        CHECK(var->key == "LessValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "lessValueIntOptional documentation");
+        CHECK(var->attributes.less == "-5");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[17];
-        REQUIRE(var->name == "lessValueIntVector");
-        REQUIRE(var->key == "LessValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "lessValueIntVector documentation");
-        REQUIRE(var->attributes.less == "-5");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIntVector");
+        CHECK(var->key == "LessValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "lessValueIntVector documentation");
+        CHECK(var->attributes.less == "-5");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[18];
-        REQUIRE(var->name == "lessValueFloat");
-        REQUIRE(var->key == "LessValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "lessValueFloat documentation");
-        REQUIRE(var->attributes.less == "15.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloat");
+        CHECK(var->key == "LessValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "lessValueFloat documentation");
+        CHECK(var->attributes.less == "15.0");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[19];
-        REQUIRE(var->name == "lessValueFloatOptional");
-        REQUIRE(var->key == "LessValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "lessValueFloatOptional documentation");
-        REQUIRE(var->attributes.less == "15.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloatOptional");
+        CHECK(var->key == "LessValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "lessValueFloatOptional documentation");
+        CHECK(var->attributes.less == "15.0");
         
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[20];
-        REQUIRE(var->name == "lessValueFloatVector");
-        REQUIRE(var->key == "LessValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "lessValueFloatVector documentation");
-        REQUIRE(var->attributes.less == "15.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloatVector");
+        CHECK(var->key == "LessValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "lessValueFloatVector documentation");
+        CHECK(var->attributes.less == "15.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[21];
-        REQUIRE(var->name == "lessEqualValueInt");
-        REQUIRE(var->key == "LessEqualValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "lessEqualValueInt documentation");
-        REQUIRE(var->attributes.lessequal == "25");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueInt");
+        CHECK(var->key == "LessEqualValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "lessEqualValueInt documentation");
+        CHECK(var->attributes.lessequal == "25");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[22];
-        REQUIRE(var->name == "lessEqualValueIntOptional");
-        REQUIRE(var->key == "LessEqualValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "lessEqualValueIntOptional documentation");
-        REQUIRE(var->attributes.lessequal == "25");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIntOptional");
+        CHECK(var->key == "LessEqualValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "lessEqualValueIntOptional documentation");
+        CHECK(var->attributes.lessequal == "25");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[23];
-        REQUIRE(var->name == "lessEqualValueIntVector");
-        REQUIRE(var->key == "LessEqualValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "lessEqualValueIntVector documentation");
-        REQUIRE(var->attributes.lessequal == "25");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIntVector");
+        CHECK(var->key == "LessEqualValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "lessEqualValueIntVector documentation");
+        CHECK(var->attributes.lessequal == "25");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[24];
-        REQUIRE(var->name == "lessEqualValueFloat");
-        REQUIRE(var->key == "LessEqualValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "lessEqualValueFloat documentation");
-        REQUIRE(var->attributes.lessequal == "12.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloat");
+        CHECK(var->key == "LessEqualValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "lessEqualValueFloat documentation");
+        CHECK(var->attributes.lessequal == "12.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[25];
-        REQUIRE(var->name == "lessEqualValueFloatOptional");
-        REQUIRE(var->key == "LessEqualValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "lessEqualValueFloatOptional documentation");
-        REQUIRE(var->attributes.lessequal == "12.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloatOptional");
+        CHECK(var->key == "LessEqualValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "lessEqualValueFloatOptional documentation");
+        CHECK(var->attributes.lessequal == "12.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[26];
-        REQUIRE(var->name == "lessEqualValueFloatVector");
-        REQUIRE(var->key == "LessEqualValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "lessEqualValueFloatVector documentation");
-        REQUIRE(var->attributes.lessequal == "12.0");
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloatVector");
+        CHECK(var->key == "LessEqualValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "lessEqualValueFloatVector documentation");
+        CHECK(var->attributes.lessequal == "12.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[27];
-        REQUIRE(var->name == "greaterValueInt");
-        REQUIRE(var->key == "GreaterValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "greaterValueInt documentation");
-        REQUIRE(var->attributes.greater == "45");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueInt");
+        CHECK(var->key == "GreaterValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "greaterValueInt documentation");
+        CHECK(var->attributes.greater == "45");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[28];
-        REQUIRE(var->name == "greaterValueIntOptional");
-        REQUIRE(var->key == "GreaterValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "greaterValueIntOptional documentation");
-        REQUIRE(var->attributes.greater == "45");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIntOptional");
+        CHECK(var->key == "GreaterValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "greaterValueIntOptional documentation");
+        CHECK(var->attributes.greater == "45");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[29];
-        REQUIRE(var->name == "greaterValueIntVector");
-        REQUIRE(var->key == "GreaterValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "greaterValueIntVector documentation");
-        REQUIRE(var->attributes.greater == "45");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIntVector");
+        CHECK(var->key == "GreaterValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "greaterValueIntVector documentation");
+        CHECK(var->attributes.greater == "45");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[30];
-        REQUIRE(var->name == "greaterValueFloat");
-        REQUIRE(var->key == "GreaterValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "greaterValueFloat documentation");
-        REQUIRE(var->attributes.greater == "-5.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloat");
+        CHECK(var->key == "GreaterValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "greaterValueFloat documentation");
+        CHECK(var->attributes.greater == "-5.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[31];
-        REQUIRE(var->name == "greaterValueFloatOptional");
-        REQUIRE(var->key == "GreaterValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "greaterValueFloatOptional documentation");
-        REQUIRE(var->attributes.greater == "-5.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloatOptional");
+        CHECK(var->key == "GreaterValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "greaterValueFloatOptional documentation");
+        CHECK(var->attributes.greater == "-5.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[32];
-        REQUIRE(var->name == "greaterValueFloatVector");
-        REQUIRE(var->key == "GreaterValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "greaterValueFloatVector documentation");
-        REQUIRE(var->attributes.greater == "-5.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloatVector");
+        CHECK(var->key == "GreaterValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "greaterValueFloatVector documentation");
+        CHECK(var->attributes.greater == "-5.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[33];
-        REQUIRE(var->name == "greaterEqualValueInt");
-        REQUIRE(var->key == "GreaterEqualValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "greaterEqualValueInt documentation");
-        REQUIRE(var->attributes.greaterequal == "2");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueInt");
+        CHECK(var->key == "GreaterEqualValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "greaterEqualValueInt documentation");
+        CHECK(var->attributes.greaterequal == "2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[34];
-        REQUIRE(var->name == "greaterEqualValueIntOptional");
-        REQUIRE(var->key == "GreaterEqualValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "greaterEqualValueIntOptional documentation");
-        REQUIRE(var->attributes.greaterequal == "2");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIntOptional");
+        CHECK(var->key == "GreaterEqualValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "greaterEqualValueIntOptional documentation");
+        CHECK(var->attributes.greaterequal == "2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[35];
-        REQUIRE(var->name == "greaterEqualValueIntVector");
-        REQUIRE(var->key == "GreaterEqualValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "greaterEqualValueIntVector documentation");
-        REQUIRE(var->attributes.greaterequal == "2");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIntVector");
+        CHECK(var->key == "GreaterEqualValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "greaterEqualValueIntVector documentation");
+        CHECK(var->attributes.greaterequal == "2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[36];
-        REQUIRE(var->name == "greaterEqualValueFloat");
-        REQUIRE(var->key == "GreaterEqualValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "greaterEqualValueFloat documentation");
-        REQUIRE(var->attributes.greaterequal == "-25.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloat");
+        CHECK(var->key == "GreaterEqualValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "greaterEqualValueFloat documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[37];
-        REQUIRE(var->name == "greaterEqualValueFloatOptional");
-        REQUIRE(var->key == "GreaterEqualValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "greaterEqualValueFloatOptional documentation");
-        REQUIRE(var->attributes.greaterequal == "-25.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloatOptional");
+        CHECK(var->key == "GreaterEqualValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "greaterEqualValueFloatOptional documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[38];
-        REQUIRE(var->name == "greaterEqualValueFloatVector");
-        REQUIRE(var->key == "GreaterEqualValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "greaterEqualValueFloatVector documentation");
-        REQUIRE(var->attributes.greaterequal == "-25.0");
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloatVector");
+        CHECK(var->key == "GreaterEqualValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "greaterEqualValueFloatVector documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[39];
-        REQUIRE(var->name == "unequalValueInt");
-        REQUIRE(var->key == "UnequalValueInt");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "unequalValueInt documentation");
-        REQUIRE(var->attributes.unequal == "1");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueInt");
+        CHECK(var->key == "UnequalValueInt");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "unequalValueInt documentation");
+        CHECK(var->attributes.unequal == "1");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[40];
-        REQUIRE(var->name == "unequalValueIntOptional");
-        REQUIRE(var->key == "UnequalValueIntOptional");
-        REQUIRE(var->type == "std::optional<int>");
-        REQUIRE(var->comment == "unequalValueIntOptional documentation");
-        REQUIRE(var->attributes.unequal == "1");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIntOptional");
+        CHECK(var->key == "UnequalValueIntOptional");
+        CHECK(var->type == "std::optional<int>");
+        CHECK(var->comment == "unequalValueIntOptional documentation");
+        CHECK(var->attributes.unequal == "1");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[41];
-        REQUIRE(var->name == "unequalValueIntVector");
-        REQUIRE(var->key == "UnequalValueIntVector");
-        REQUIRE(var->type == "std::vector<int>");
-        REQUIRE(var->comment == "unequalValueIntVector documentation");
-        REQUIRE(var->attributes.unequal == "1");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIntVector");
+        CHECK(var->key == "UnequalValueIntVector");
+        CHECK(var->type == "std::vector<int>");
+        CHECK(var->comment == "unequalValueIntVector documentation");
+        CHECK(var->attributes.unequal == "1");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[42];
-        REQUIRE(var->name == "unequalValueFloat");
-        REQUIRE(var->key == "UnequalValueFloat");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "unequalValueFloat documentation");
-        REQUIRE(var->attributes.unequal == "123.0");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloat");
+        CHECK(var->key == "UnequalValueFloat");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "unequalValueFloat documentation");
+        CHECK(var->attributes.unequal == "123.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[43];
-        REQUIRE(var->name == "unequalValueFloatOptional");
-        REQUIRE(var->key == "UnequalValueFloatOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "unequalValueFloatOptional documentation");
-        REQUIRE(var->attributes.unequal == "123.0");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloatOptional");
+        CHECK(var->key == "UnequalValueFloatOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "unequalValueFloatOptional documentation");
+        CHECK(var->attributes.unequal == "123.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[44];
-        REQUIRE(var->name == "unequalValueFloatVector");
-        REQUIRE(var->key == "UnequalValueFloatVector");
-        REQUIRE(var->type == "std::vector<float>");
-        REQUIRE(var->comment == "unequalValueFloatVector documentation");
-        REQUIRE(var->attributes.unequal == "123.0");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloatVector");
+        CHECK(var->key == "UnequalValueFloatVector");
+        CHECK(var->type == "std::vector<float>");
+        CHECK(var->comment == "unequalValueFloatVector documentation");
+        CHECK(var->attributes.unequal == "123.0");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[45];
-        REQUIRE(var->name == "descValue");
-        REQUIRE(var->key == "DescValue");
-        REQUIRE(var->type == "bool");
-        REQUIRE(var->comment == "[[codegen::verbatim(description)]]");
+        REQUIRE(var);
+        CHECK(var->name == "descValue");
+        CHECK(var->key == "DescValue");
+        CHECK(var->type == "bool");
+        CHECK(var->comment == "[[codegen::verbatim(description)]]");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[46];
-        REQUIRE(var->name == "inListValue1");
-        REQUIRE(var->key == "InListValue1");
-        REQUIRE(var->type == "std::string");
-        REQUIRE(var->comment == "inListValue1 documentation");
-        REQUIRE(var->attributes.inlist == "\"A\", \"B\", \"C\"");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue1");
+        CHECK(var->key == "InListValue1");
+        CHECK(var->type == "std::string");
+        CHECK(var->comment == "inListValue1 documentation");
+        CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[47];
-        REQUIRE(var->name == "inListValue1Optional");
-        REQUIRE(var->key == "InListValue1Optional");
-        REQUIRE(var->type == "std::optional<std::string>");
-        REQUIRE(var->comment == "inListValue1Optional documentation");
-        REQUIRE(var->attributes.inlist == "\"A\", \"B\", \"C\"");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue1Optional");
+        CHECK(var->key == "InListValue1Optional");
+        CHECK(var->type == "std::optional<std::string>");
+        CHECK(var->comment == "inListValue1Optional documentation");
+        CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[48];
-        REQUIRE(var->name == "inListValue1Vector");
-        REQUIRE(var->key == "InListValue1Vector");
-        REQUIRE(var->type == "std::vector<std::string>");
-        REQUIRE(var->comment == "inListValue1Vector documentation");
-        REQUIRE(var->attributes.inlist == "\"A\", \"B\", \"C\"");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue1Vector");
+        CHECK(var->key == "InListValue1Vector");
+        CHECK(var->type == "std::vector<std::string>");
+        CHECK(var->comment == "inListValue1Vector documentation");
+        CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[49];
-        REQUIRE(var->name == "inListValue2");
-        REQUIRE(var->key == "InListValue2");
-        REQUIRE(var->type == "std::string");
-        REQUIRE(var->comment == "inListValue2 documentation");
-        REQUIRE(var->attributes.inlist == "List");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue2");
+        CHECK(var->key == "InListValue2");
+        CHECK(var->type == "std::string");
+        CHECK(var->comment == "inListValue2 documentation");
+        CHECK(var->attributes.inlist == "List");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[50];
-        REQUIRE(var->name == "inListValue2Optional");
-        REQUIRE(var->key == "InListValue2Optional");
-        REQUIRE(var->type == "std::optional<std::string>");
-        REQUIRE(var->comment == "inListValue2Optional documentation");
-        REQUIRE(var->attributes.inlist == "List");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue2Optional");
+        CHECK(var->key == "InListValue2Optional");
+        CHECK(var->type == "std::optional<std::string>");
+        CHECK(var->comment == "inListValue2Optional documentation");
+        CHECK(var->attributes.inlist == "List");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[51];
-        REQUIRE(var->name == "inListValue2Vector");
-        REQUIRE(var->key == "InListValue2Vector");
-        REQUIRE(var->type == "std::vector<std::string>");
-        REQUIRE(var->comment == "inListValue2Vector documentation");
-        REQUIRE(var->attributes.inlist == "List");
+        REQUIRE(var);
+        CHECK(var->name == "inListValue2Vector");
+        CHECK(var->key == "InListValue2Vector");
+        CHECK(var->type == "std::vector<std::string>");
+        CHECK(var->comment == "inListValue2Vector documentation");
+        CHECK(var->attributes.inlist == "List");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[52];
-        REQUIRE(var->name == "unequalValueString");
-        REQUIRE(var->key == "UnequalValueString");
-        REQUIRE(var->type == "std::string");
-        REQUIRE(var->comment == "unequalValueString documentation");
-        REQUIRE(var->attributes.unequal == "\"abcdef\"");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueString");
+        CHECK(var->key == "UnequalValueString");
+        CHECK(var->type == "std::string");
+        CHECK(var->comment == "unequalValueString documentation");
+        CHECK(var->attributes.unequal == "\"abcdef\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[53];
-        REQUIRE(var->name == "unequalValueStringOptional");
-        REQUIRE(var->key == "UnequalValueStringOptional");
-        REQUIRE(var->type == "std::optional<std::string>");
-        REQUIRE(var->comment == "unequalValueStringOptional documentation");
-        REQUIRE(var->attributes.unequal == "\"abcdef\"");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueStringOptional");
+        CHECK(var->key == "UnequalValueStringOptional");
+        CHECK(var->type == "std::optional<std::string>");
+        CHECK(var->comment == "unequalValueStringOptional documentation");
+        CHECK(var->attributes.unequal == "\"abcdef\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[54];
-        REQUIRE(var->name == "unequalValueStringVector");
-        REQUIRE(var->key == "UnequalValueStringVector");
-        REQUIRE(var->type == "std::vector<std::string>");
-        REQUIRE(var->comment == "unequalValueStringVector documentation");
-        REQUIRE(var->attributes.unequal == "\"abcdef\"");
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueStringVector");
+        CHECK(var->key == "UnequalValueStringVector");
+        CHECK(var->type == "std::vector<std::string>");
+        CHECK(var->comment == "unequalValueStringVector documentation");
+        CHECK(var->attributes.unequal == "\"abcdef\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     {
         Variable* var = s->variables[55];
-        REQUIRE(var->name == "referenceValue");
-        REQUIRE(var->key == "ReferenceValue");
-        REQUIRE(var->type == "std::monostate");
-        REQUIRE(var->comment == "referenceValue documentation");
-        REQUIRE(var->attributes.reference == "\"abc\"");
+        REQUIRE(var);
+        CHECK(var->name == "referenceValue");
+        CHECK(var->key == "ReferenceValue");
+        CHECK(var->type == "std::monostate");
+        CHECK(var->comment == "referenceValue documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[56];
-        REQUIRE(var->name == "referenceValueOptional");
-        REQUIRE(var->key == "ReferenceValueOptional");
-        REQUIRE(var->type == "std::optional<std::monostate>");
-        REQUIRE(var->comment == "referenceValueOptional documentation");
-        REQUIRE(var->attributes.reference == "\"abc\"");
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueOptional");
+        CHECK(var->key == "ReferenceValueOptional");
+        CHECK(var->type == "std::optional<std::monostate>");
+        CHECK(var->comment == "referenceValueOptional documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[57];
-        REQUIRE(var->name == "referenceValueVector");
-        REQUIRE(var->key == "ReferenceValueVector");
-        REQUIRE(var->type == "std::vector<std::monostate>");
-        REQUIRE(var->comment == "referenceValueVector documentation");
-        REQUIRE(var->attributes.reference == "\"abc\"");
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueVector");
+        CHECK(var->key == "ReferenceValueVector");
+        CHECK(var->type == "std::vector<std::monostate>");
+        CHECK(var->comment == "referenceValueVector documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.inrange.empty());
-        REQUIRE(var->attributes.key.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
@@ -1394,42 +1451,44 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
     
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "keyInRangeValue");
-        REQUIRE(var->key == "KeyKey");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "keyInRangeValue documentation");
-        REQUIRE(var->attributes.key == "KeyKey");
-        REQUIRE(var->attributes.inrange == "-2, 2");
+        REQUIRE(var);
+        CHECK(var->name == "keyInRangeValue");
+        CHECK(var->key == "KeyKey");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "keyInRangeValue documentation");
+        CHECK(var->attributes.key == "KeyKey");
+        CHECK(var->attributes.inrange == "-2, 2");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 
     {
         Variable* var = s->variables[1];
-        REQUIRE(var->name == "keyValueInRangeOptional");
-        REQUIRE(var->key == "KeyKeyOptional");
-        REQUIRE(var->type == "std::optional<float>");
-        REQUIRE(var->comment == "keyInRangeValueOptional documentation");
-        REQUIRE(var->attributes.key == "KeyKeyOptional");
-        REQUIRE(var->attributes.inrange == "-2, 3");
+        REQUIRE(var);
+        CHECK(var->name == "keyValueInRangeOptional");
+        CHECK(var->key == "KeyKeyOptional");
+        CHECK(var->type == "std::optional<float>");
+        CHECK(var->comment == "keyInRangeValueOptional documentation");
+        CHECK(var->attributes.key == "KeyKeyOptional");
+        CHECK(var->attributes.inrange == "-2, 3");
 
-        REQUIRE(var->attributes.annotation.empty());
-        REQUIRE(var->attributes.greater.empty());
-        REQUIRE(var->attributes.greaterequal.empty());
-        REQUIRE(var->attributes.inlist.empty());
-        REQUIRE(var->attributes.less.empty());
-        REQUIRE(var->attributes.lessequal.empty());
-        REQUIRE(var->attributes.notinrange.empty());
-        REQUIRE(var->attributes.reference.empty());
-        REQUIRE(var->attributes.unequal.empty());
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
     }
 }
 
@@ -1441,13 +1500,15 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 )";
 
     Struct* s = parseRootStruct(Source);
-    REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceName == "Namespace");
-    REQUIRE(s->attributes.noExhaustive);
+    REQUIRE(s);
+    CHECK(s->attributes.dictionary == "Par");
+    CHECK(s->attributes.namespaceName == "Namespace");
+    CHECK(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
-    REQUIRE(s->variables[0]->name == "value");
-    REQUIRE(s->variables[0]->key == "Value");
-    REQUIRE(s->variables[0]->type == "int");
+    REQUIRE(s->variables[0]);
+    CHECK(s->variables[0]->name == "value");
+    CHECK(s->variables[0]->key == "Value");
+    CHECK(s->variables[0]->type == "int");
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[parsing]") {
@@ -1458,13 +1519,15 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 )";
 
     Struct* s = parseRootStruct(Source);
-    REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceName == "Namespace");
-    REQUIRE(s->attributes.noExhaustive);
+    REQUIRE(s);
+    CHECK(s->attributes.dictionary == "Par");
+    CHECK(s->attributes.namespaceName == "Namespace");
+    CHECK(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
-    REQUIRE(s->variables[0]->name == "value");
-    REQUIRE(s->variables[0]->key == "Value");
-    REQUIRE(s->variables[0]->type == "int");
+    REQUIRE(s->variables[0]);
+    CHECK(s->variables[0]->name == "value");
+    CHECK(s->variables[0]->key == "Value");
+    CHECK(s->variables[0]->type == "int");
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[parsing]") {
@@ -1475,11 +1538,13 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 )";
 
     Struct* s = parseRootStruct(Source);
-    REQUIRE(s->attributes.dictionary == "Par");
-    REQUIRE(s->attributes.namespaceName == "Namespace");
-    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s);
+    CHECK(s->attributes.dictionary == "Par");
+    CHECK(s->attributes.namespaceName == "Namespace");
+    CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
-    REQUIRE(s->variables[0]->name == "value");
-    REQUIRE(s->variables[0]->key == "Value");
-    REQUIRE(s->variables[0]->type == "int");
+    REQUIRE(s->variables[0]);
+    CHECK(s->variables[0]->name == "value");
+    CHECK(s->variables[0]->key == "Value");
+    CHECK(s->variables[0]->type == "int");
 }

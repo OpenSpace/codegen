@@ -69,46 +69,57 @@ Lines, With, Weird,
 )";
 
     Struct* s = parseRootStruct(Source);
+    REQUIRE(s);
     REQUIRE(s->variables.size() == 6);
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "multiLineCommenting");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "multi line commenting");
+        REQUIRE(var);
+        CHECK(var->name == "multiLineCommenting");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "multi line commenting");
     }
     {
         Variable* var = s->variables[1];
-        REQUIRE(var->name == "multiLineSimpleVariableDef");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "multi line simple variable def");
+        REQUIRE(var);
+        CHECK(var->name == "multiLineSimpleVariableDef");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "multi line simple variable def");
     }
     {
         Variable* var = s->variables[2];
-        REQUIRE(var->name == "multiLineCommentAndDef");
-        REQUIRE(var->type == "std::string");
-        REQUIRE(var->comment == "multi line commenting and multi line variable def");
+        REQUIRE(var);
+        CHECK(var->name == "multiLineCommentAndDef");
+        CHECK(var->type == "std::string");
+        CHECK(var->comment == "multi line commenting and multi line variable def");
     }
     {
         Variable* var = s->variables[3];
-        REQUIRE(var->name == "misalignedIndent");
-        REQUIRE(var->type == "bool");
-        REQUIRE(var->comment == "misaligned commenting all over the place");
+        REQUIRE(var);
+        CHECK(var->name == "misalignedIndent");
+        CHECK(var->type == "bool");
+        CHECK(var->comment == "misaligned commenting all over the place");
     }
     {
         Variable* var = s->variables[4];
-        REQUIRE(var->name == "multiLineCommentAttribute");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "multiline comment with attribute");
-        REQUIRE(var->attributes.inrange == "2, 3");
+        REQUIRE(var);
+        CHECK(var->name == "multiLineCommentAttribute");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "multiline comment with attribute");
+        CHECK(var->attributes.inrange == "2, 3");
     }
     {
         Variable* var = s->variables[5];
-        REQUIRE(var->name == "multilineinlist");
-        REQUIRE(var->type == "std::string");
-        REQUIRE(var->comment.empty());
-        REQUIRE(var->attributes.inlist == "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations");
+        REQUIRE(var);
+        CHECK(var->name == "multilineinlist");
+        CHECK(var->type == "std::string");
+        CHECK(var->comment.empty());
+        CHECK(
+            var->attributes.inlist ==
+            "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", "
+            "That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations"
+        );
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }

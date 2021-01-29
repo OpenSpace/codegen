@@ -72,12 +72,12 @@ TEST_CASE("Variant bake", "[verifier]") {
         );
         d1.setValue("OptionalValue", 5.0);
         const Parameters p1 = codegen::bake<Parameters>(d1);
-        REQUIRE(std::get<bool>(p1.boolDoubleValue) == false);
-        REQUIRE(std::get<float>(p1.floatStringValue) == 2.f);
-        REQUIRE(std::get<glm::ivec2>(p1.ivecsValue) == glm::ivec2(1, 2));
-        REQUIRE(std::get<glm::dvec2>(p1.vecmat1) == glm::dvec2(3.1, 3.2));
-        REQUIRE(std::get<glm::mat2x2>(p1.vecmat2) == glm::mat2x2(4.1f, 4.2f, 4.3f, 4.4f));
-        REQUIRE(
+        CHECK(std::get<bool>(p1.boolDoubleValue) == false);
+        CHECK(std::get<float>(p1.floatStringValue) == 2.f);
+        CHECK(std::get<glm::ivec2>(p1.ivecsValue) == glm::ivec2(1, 2));
+        CHECK(std::get<glm::dvec2>(p1.vecmat1) == glm::dvec2(3.1, 3.2));
+        CHECK(std::get<glm::mat2x2>(p1.vecmat2) == glm::mat2x2(4.1f, 4.2f, 4.3f, 4.4f));
+        CHECK(
             std::get<glm::mat3x4>(p1.restValue) ==
             glm::mat3x4(
                 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f,
@@ -85,7 +85,7 @@ TEST_CASE("Variant bake", "[verifier]") {
             )
         );
         REQUIRE(p1.optionalValue.has_value());
-        REQUIRE(std::get<int>(*p1.optionalValue) == 5);
+        CHECK(std::get<int>(*p1.optionalValue) == 5);
     }
 
     {
@@ -106,22 +106,22 @@ TEST_CASE("Variant bake", "[verifier]") {
             )
         );
         const Parameters p2 = codegen::bake<Parameters>(d2);
-        REQUIRE(std::get<double>(p2.boolDoubleValue) == 6.0);
-        REQUIRE(std::get<std::string>(p2.floatStringValue) == "abc");
-        REQUIRE(std::get<glm::ivec3>(p2.ivecsValue) == glm::ivec3(7, 8, 9));
-        REQUIRE(std::get<glm::dvec3>(p2.vecmat1) == glm::dvec3(10.1, 10.2, 10.3));
-        REQUIRE(
+        CHECK(std::get<double>(p2.boolDoubleValue) == 6.0);
+        CHECK(std::get<std::string>(p2.floatStringValue) == "abc");
+        CHECK(std::get<glm::ivec3>(p2.ivecsValue) == glm::ivec3(7, 8, 9));
+        CHECK(std::get<glm::dvec3>(p2.vecmat1) == glm::dvec3(10.1, 10.2, 10.3));
+        CHECK(
             std::get<glm::dmat3x3>(p2.vecmat2) ==
             glm::dmat3x3(11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9)
         );
-        REQUIRE(
+        CHECK(
             std::get<glm::mat3x4>(p2.restValue) ==
             glm::mat3x4(
                 12.1f, 12.2f, 12.3f, 12.4f, 12.5f, 12.6f,
                 12.7f, 12.8f, 12.9f, 12.10f, 12.11f, 12.12f
             )
         );
-        REQUIRE(!p2.optionalValue.has_value());
+        CHECK(!p2.optionalValue.has_value());
     }
 
     {
@@ -137,20 +137,20 @@ TEST_CASE("Variant bake", "[verifier]") {
         d3.setValue("RestValue", glm::dmat2x3(20.1, 20.2, 20.3, 20.4, 20.5, 20.6));
         d3.setValue("OptionalValue", true);
         const Parameters p3 = codegen::bake<Parameters>(d3);
-        REQUIRE(std::get<double>(p3.boolDoubleValue) == 13.1);
-        REQUIRE(std::get<std::string>(p3.floatStringValue) == "abc");
-        REQUIRE(std::get<glm::ivec4>(p3.ivecsValue) == glm::ivec4(14, 15, 16, 17));
-        REQUIRE(std::get<glm::dvec4>(p3.vecmat1) == glm::dvec4(18.1, 18.2, 18.3, 18.4));
-        REQUIRE(
+        CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
+        CHECK(std::get<std::string>(p3.floatStringValue) == "abc");
+        CHECK(std::get<glm::ivec4>(p3.ivecsValue) == glm::ivec4(14, 15, 16, 17));
+        CHECK(std::get<glm::dvec4>(p3.vecmat1) == glm::dvec4(18.1, 18.2, 18.3, 18.4));
+        CHECK(
             std::get<glm::mat2x4>(p3.vecmat2) ==
             glm::mat2x4(19.1f, 19.2f, 19.3f, 19.4f, 19.5f, 19.6f, 19.7f, 19.8f)
         );
-        REQUIRE(
+        CHECK(
             std::get<glm::mat2x3>(p3.restValue) ==
             glm::mat2x3(20.1f, 20.2f, 20.3f, 20.4f, 20.5f, 20.6f)
         );
         REQUIRE(p3.optionalValue.has_value());
-        REQUIRE(std::get<bool>(*p3.optionalValue) == true);
+        CHECK(std::get<bool>(*p3.optionalValue) == true);
     }
 
     {
@@ -173,27 +173,27 @@ TEST_CASE("Variant bake", "[verifier]") {
             )
         );
         const Parameters p4 = codegen::bake<Parameters>(d4);
-        REQUIRE(std::get<double>(p4.boolDoubleValue) == 20);
-        REQUIRE(std::get<std::string>(p4.floatStringValue) == "abc");
-        REQUIRE(std::get<glm::ivec2>(p4.ivecsValue) == glm::ivec2(21, 22));
-        REQUIRE(
+        CHECK(std::get<double>(p4.boolDoubleValue) == 20);
+        CHECK(std::get<std::string>(p4.floatStringValue) == "abc");
+        CHECK(std::get<glm::ivec2>(p4.ivecsValue) == glm::ivec2(21, 22));
+        CHECK(
             std::get<glm::dmat4x4>(p4.vecmat1) ==
             glm::dmat4x4(
                 23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8,
                 23.9, 23.10, 23.11, 23.12, 23.13, 23.14, 23.15, 23.16
             )
         );
-        REQUIRE(
+        CHECK(
             std::get<glm::mat2x2>(p4.vecmat2) == glm::mat2x2(24.1f, 24.2f, 24.3f, 24.4f)
         );
-        REQUIRE(
+        CHECK(
             std::get<glm::mat3x4>(p4.restValue) ==
             glm::mat3x4(
                 25.1f, 25.2f, 25.3f, 25.4f, 25.5f, 25.6f,
                 25.7f, 25.8f, 25.9f, 25.10f, 25.11f, 25.12f
             )
         );
-        REQUIRE(!p4.optionalValue.has_value());
+        CHECK(!p4.optionalValue.has_value());
     }
 }
 
@@ -204,54 +204,54 @@ TEST_CASE("Variant documentation", "[verifier]") {
     REQUIRE(doc.entries.size() == 7);
     {
         DocumentationEntry e = doc.entries[0];
-        REQUIRE(e.key == "BoolDoubleValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "boolDouble value documentation");
-        REQUIRE(e.verifier->type() == "Boolean, or Double");
+        CHECK(e.key == "BoolDoubleValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "boolDouble value documentation");
+        CHECK(e.verifier->type() == "Boolean, or Double");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
-        REQUIRE(v->values[0]->type() == "Boolean");
-        REQUIRE(dynamic_cast<BoolVerifier*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+        CHECK(v->values[0]->type() == "Boolean");
+        CHECK(dynamic_cast<BoolVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
-        REQUIRE(e.key == "FloatStringValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "floatString value documentation");
-        REQUIRE(e.verifier->type() == "Double, or String");
+        CHECK(e.key == "FloatStringValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "floatString value documentation");
+        CHECK(e.verifier->type() == "Double, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
-        REQUIRE(v->values[0]->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(v->values[1].get()));
+        CHECK(v->values[0]->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[1].get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
-        REQUIRE(e.key == "IvecsValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "ivecs value documentation");
-        REQUIRE(e.verifier->type() == "Vector2<int>, Vector3<int>, or Vector4<int>");
+        CHECK(e.key == "IvecsValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "ivecs value documentation");
+        CHECK(e.verifier->type() == "Vector2<int>, Vector3<int>, or Vector4<int>");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 3);
-        REQUIRE(v->values[0]->type() == "Vector2<int>");
-        REQUIRE(dynamic_cast<Vector2Verifier<int>*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Vector3<int>");
-        REQUIRE(dynamic_cast<Vector3Verifier<int>*>(v->values[1].get()));
-        REQUIRE(v->values[2]->type() == "Vector4<int>");
-        REQUIRE(dynamic_cast<Vector4Verifier<int>*>(v->values[2].get()));
+        CHECK(v->values[0]->type() == "Vector2<int>");
+        CHECK(dynamic_cast<Vector2Verifier<int>*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Vector3<int>");
+        CHECK(dynamic_cast<Vector3Verifier<int>*>(v->values[1].get()));
+        CHECK(v->values[2]->type() == "Vector4<int>");
+        CHECK(dynamic_cast<Vector4Verifier<int>*>(v->values[2].get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
-        REQUIRE(e.key == "Vecmat1");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "vecmat1 value documentation");
-        REQUIRE(
+        CHECK(e.key == "Vecmat1");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vecmat1 value documentation");
+        CHECK(
             e.verifier->type() ==
             "Vector2<double>, Vector3<double>, Vector4<double>, Matrix2x3<double>, "
             "Matrix4x2<double>, or Matrix4x4<double>"
@@ -259,44 +259,44 @@ TEST_CASE("Variant documentation", "[verifier]") {
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 6);
-        REQUIRE(v->values[0]->type() == "Vector2<double>");
-        REQUIRE(dynamic_cast<Vector2Verifier<double>*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Vector3<double>");
-        REQUIRE(dynamic_cast<Vector3Verifier<double>*>(v->values[1].get()));
-        REQUIRE(v->values[2]->type() == "Vector4<double>");
-        REQUIRE(dynamic_cast<Vector4Verifier<double>*>(v->values[2].get()));
-        REQUIRE(v->values[3]->type() == "Matrix2x3<double>");
-        REQUIRE(dynamic_cast<Matrix2x3Verifier<double>*>(v->values[3].get()));
-        REQUIRE(v->values[4]->type() == "Matrix4x2<double>");
-        REQUIRE(dynamic_cast<Matrix4x2Verifier<double>*>(v->values[4].get()));
-        REQUIRE(v->values[5]->type() == "Matrix4x4<double>");
-        REQUIRE(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[5].get()));
+        CHECK(v->values[0]->type() == "Vector2<double>");
+        CHECK(dynamic_cast<Vector2Verifier<double>*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Vector3<double>");
+        CHECK(dynamic_cast<Vector3Verifier<double>*>(v->values[1].get()));
+        CHECK(v->values[2]->type() == "Vector4<double>");
+        CHECK(dynamic_cast<Vector4Verifier<double>*>(v->values[2].get()));
+        CHECK(v->values[3]->type() == "Matrix2x3<double>");
+        CHECK(dynamic_cast<Matrix2x3Verifier<double>*>(v->values[3].get()));
+        CHECK(v->values[4]->type() == "Matrix4x2<double>");
+        CHECK(dynamic_cast<Matrix4x2Verifier<double>*>(v->values[4].get()));
+        CHECK(v->values[5]->type() == "Matrix4x4<double>");
+        CHECK(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[5].get()));
     }
     {
         DocumentationEntry e = doc.entries[4];
-        REQUIRE(e.key == "Vecmat2");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "vecmat2 value documentation");
-        REQUIRE(
+        CHECK(e.key == "Vecmat2");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vecmat2 value documentation");
+        CHECK(
             e.verifier->type() ==
             "Matrix2x2<double>, Matrix3x3<double>, or Matrix2x4<double>"
         );
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 3);
-        REQUIRE(v->values[0]->type() == "Matrix2x2<double>");
-        REQUIRE(dynamic_cast<Matrix2x2Verifier<double>*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Matrix3x3<double>");
-        REQUIRE(dynamic_cast<Matrix3x3Verifier<double>*>(v->values[1].get()));
-        REQUIRE(v->values[2]->type() == "Matrix2x4<double>");
-        REQUIRE(dynamic_cast<Matrix2x4Verifier<double>*>(v->values[2].get()));
+        CHECK(v->values[0]->type() == "Matrix2x2<double>");
+        CHECK(dynamic_cast<Matrix2x2Verifier<double>*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Matrix3x3<double>");
+        CHECK(dynamic_cast<Matrix3x3Verifier<double>*>(v->values[1].get()));
+        CHECK(v->values[2]->type() == "Matrix2x4<double>");
+        CHECK(dynamic_cast<Matrix2x4Verifier<double>*>(v->values[2].get()));
     }
     {
         DocumentationEntry e = doc.entries[5];
-        REQUIRE(e.key == "RestValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "rest value documentation");
-        REQUIRE(
+        CHECK(e.key == "RestValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "rest value documentation");
+        CHECK(
             e.verifier->type() ==
             "Vector2<double>, Vector3<double>, Vector4<double>, Matrix2x3<double>, "
             "Matrix2x4<double>, Matrix3x3<double>, Matrix3x4<double>, or "
@@ -305,35 +305,35 @@ TEST_CASE("Variant documentation", "[verifier]") {
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 8);
-        REQUIRE(v->values[0]->type() == "Vector2<double>");
-        REQUIRE(dynamic_cast<Vector2Verifier<double>*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Vector3<double>");
-        REQUIRE(dynamic_cast<Vector3Verifier<double>*>(v->values[1].get()));
-        REQUIRE(v->values[2]->type() == "Vector4<double>");
-        REQUIRE(dynamic_cast<Vector4Verifier<double>*>(v->values[2].get()));
-        REQUIRE(v->values[3]->type() == "Matrix2x3<double>");
-        REQUIRE(dynamic_cast<Matrix2x3Verifier<double>*>(v->values[3].get()));
-        REQUIRE(v->values[4]->type() == "Matrix2x4<double>");
-        REQUIRE(dynamic_cast<Matrix2x4Verifier<double>*>(v->values[4].get()));
-        REQUIRE(v->values[5]->type() == "Matrix3x3<double>");
-        REQUIRE(dynamic_cast<Matrix3x3Verifier<double>*>(v->values[5].get()));
-        REQUIRE(v->values[6]->type() == "Matrix3x4<double>");
-        REQUIRE(dynamic_cast<Matrix3x4Verifier<double>*>(v->values[6].get()));
-        REQUIRE(v->values[7]->type() == "Matrix4x4<double>");
-        REQUIRE(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[7].get()));
+        CHECK(v->values[0]->type() == "Vector2<double>");
+        CHECK(dynamic_cast<Vector2Verifier<double>*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Vector3<double>");
+        CHECK(dynamic_cast<Vector3Verifier<double>*>(v->values[1].get()));
+        CHECK(v->values[2]->type() == "Vector4<double>");
+        CHECK(dynamic_cast<Vector4Verifier<double>*>(v->values[2].get()));
+        CHECK(v->values[3]->type() == "Matrix2x3<double>");
+        CHECK(dynamic_cast<Matrix2x3Verifier<double>*>(v->values[3].get()));
+        CHECK(v->values[4]->type() == "Matrix2x4<double>");
+        CHECK(dynamic_cast<Matrix2x4Verifier<double>*>(v->values[4].get()));
+        CHECK(v->values[5]->type() == "Matrix3x3<double>");
+        CHECK(dynamic_cast<Matrix3x3Verifier<double>*>(v->values[5].get()));
+        CHECK(v->values[6]->type() == "Matrix3x4<double>");
+        CHECK(dynamic_cast<Matrix3x4Verifier<double>*>(v->values[6].get()));
+        CHECK(v->values[7]->type() == "Matrix4x4<double>");
+        CHECK(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[7].get()));
     }
     {
         DocumentationEntry e = doc.entries[6];
-        REQUIRE(e.key == "OptionalValue");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "optional documentation");
-        REQUIRE(e.verifier->type() == "Boolean, or Integer");
+        CHECK(e.key == "OptionalValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optional documentation");
+        CHECK(e.verifier->type() == "Boolean, or Integer");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
-        REQUIRE(v->values[0]->type() == "Boolean");
-        REQUIRE(dynamic_cast<BoolVerifier*>(v->values[0].get()));
-        REQUIRE(v->values[1]->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(v->values[1].get()));
+        CHECK(v->values[0]->type() == "Boolean");
+        CHECK(dynamic_cast<BoolVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
 }

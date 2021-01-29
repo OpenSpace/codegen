@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 annotation", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'annotation'")
     );
@@ -44,7 +44,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 annotation", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'annotation'")
     );
@@ -54,7 +54,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 annotation", "[parsing_
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'annotation'")
     );
@@ -64,7 +64,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inlist'")
     );
@@ -74,7 +74,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 inlist", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inlist'")
     );
@@ -84,7 +84,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 inlist", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inlist'")
     );
@@ -94,7 +94,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inrange'")
     );
@@ -104,7 +104,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 inrange", "[parsing_error
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inrange'")
     );
@@ -114,7 +114,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 inrange", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'inrange'")
     );
@@ -124,7 +124,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'less'")
     );
@@ -134,7 +134,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 less", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'less'")
     );
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 less", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'less'")
     );
@@ -154,7 +154,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'lessequal'")
     );
@@ -164,7 +164,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 lessequal", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'lessequal'")
     );
@@ -174,7 +174,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 lessequal", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'lessequal'")
     );
@@ -184,7 +184,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greater'")
     );
@@ -194,7 +194,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 greater", "[parsing_error
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greater'")
     );
@@ -204,7 +204,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 greater", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greater'")
     );
@@ -214,7 +214,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 greaterequal", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greaterequal'")
     );
@@ -224,7 +224,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 greaterequal", "[parsing_
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greaterequal'")
     );
@@ -234,7 +234,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 greaterequal", "[parsin
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'greaterequal'")
     );
@@ -244,7 +244,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinlist'")
     );
@@ -254,7 +254,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 notinlist", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinlist'")
     );
@@ -264,7 +264,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 notinlist", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinlist'")
     );
@@ -276,7 +276,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat4x4 v [[codegen::notinrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinrange'")
     );
@@ -286,7 +286,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 notinrange", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinrange'")
     );
@@ -296,7 +296,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 notinrange", "[parsing_
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'notinrange'")
     );
@@ -306,7 +306,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'reference'")
     );
@@ -316,7 +316,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 reference", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'reference'")
     );
@@ -326,7 +326,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 reference", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'reference'")
     );
@@ -336,7 +336,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat4x4 unequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat4x4 v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'unequal'")
     );
@@ -346,7 +346,7 @@ TEST_CASE("Unsupported Attributes: vector glm::dmat4x4 unequal", "[parsing_error
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dmat4x4> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat4x4' does not support attribute 'unequal'")
@@ -357,7 +357,7 @@ TEST_CASE("Unsupported Attributes: optional glm::dmat4x4 unequal", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dmat4x4> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'glm::dmat4x4' does not support attribute 'unequal'")
     );

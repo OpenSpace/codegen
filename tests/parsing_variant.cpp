@@ -40,19 +40,22 @@ struct [[codegen::Dictionary(D)]] P {
 )";
 
     Struct* s = parseRootStruct(Source);
+    REQUIRE(s);
     REQUIRE(s->variables.size() == 2);
 
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "a");
-        REQUIRE(var->type == "std::variant<int, float>");
-        REQUIRE(var->comment == "a comment");
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(var->type == "std::variant<int, float>");
+        CHECK(var->comment == "a comment");
     }
     {
         Variable* var = s->variables[1];
-        REQUIRE(var->name == "b");
-        REQUIRE(var->type == "std::variant<bool, std::string, glm::ivec2, glm::mat3x4>");
-        REQUIRE(var->comment == "b comment");
+        REQUIRE(var);
+        CHECK(var->name == "b");
+        CHECK(var->type == "std::variant<bool, std::string, glm::ivec2, glm::mat3x4>");
+        CHECK(var->comment == "b comment");
     }
 }
 
@@ -64,12 +67,14 @@ struct [[codegen::Dictionary(D)]] P {
 })";
 
     Struct* s = parseRootStruct(Source);
+    REQUIRE(s);
     REQUIRE(s->variables.size() == 1);
 
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "ov");
-        REQUIRE(var->type == "std::optional<std::variant<bool, int>>");
-        REQUIRE(var->comment == "a comment");
+        REQUIRE(var);
+        CHECK(var->name == "ov");
+        CHECK(var->type == "std::optional<std::variant<bool, int>>");
+        CHECK(var->comment == "a comment");
     }
 }

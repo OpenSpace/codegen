@@ -129,24 +129,24 @@ TEST_CASE("Substruct Bake", "[verifier]") {
     }
 
     Parameters p = codegen::bake<Parameters>(d);
-    REQUIRE(p.structAValue.value == 5);
+    CHECK(p.structAValue.value == 5);
     REQUIRE(p.structBValue.has_value());
-    REQUIRE(p.structBValue->valval == 2.1f);
+    CHECK(p.structBValue->valval == 2.1f);
     REQUIRE(p.structCValue.size() == 2);
-    REQUIRE(p.structCValue[0].eulav == "text");
-    REQUIRE(p.structCValue[0].lavlav == true);
-    REQUIRE(p.structCValue[1].eulav == "text2");
-    REQUIRE(p.structCValue[1].lavlav == false);
-    REQUIRE(p.structDValue.a == "abc");
-    REQUIRE(p.structDValue.b == 2);
+    CHECK(p.structCValue[0].eulav == "text");
+    CHECK(p.structCValue[0].lavlav == true);
+    CHECK(p.structCValue[1].eulav == "text2");
+    CHECK(p.structCValue[1].lavlav == false);
+    CHECK(p.structDValue.a == "abc");
+    CHECK(p.structDValue.b == 2);
     REQUIRE(p.structDVectorValue.size() == 2);
-    REQUIRE(p.structDVectorValue[0].a == "abc");
-    REQUIRE(p.structDVectorValue[0].b == 2);
-    REQUIRE(p.structDVectorValue[1].a == "def");
-    REQUIRE(p.structDVectorValue[1].b == 3);
+    CHECK(p.structDVectorValue[0].a == "abc");
+    CHECK(p.structDVectorValue[0].b == 2);
+    CHECK(p.structDVectorValue[1].a == "def");
+    CHECK(p.structDVectorValue[1].b == 3);
     REQUIRE(p.structDOptionalValue.has_value());
-    REQUIRE(p.structDOptionalValue->a == "abc");
-    REQUIRE(p.structDOptionalValue->b == 2);
+    CHECK(p.structDOptionalValue->a == "abc");
+    CHECK(p.structDOptionalValue->b == 2);
 
 }
 
@@ -157,136 +157,135 @@ TEST_CASE("Substruct Documentation", "[verifier]") {
     REQUIRE(doc.entries.size() == 6);
     {
         DocumentationEntry e = doc.entries[0];
-        REQUIRE(e.key == "StructAValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable structAValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructAValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable structAValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "Value");
-        REQUIRE(!v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "A::value documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations[0].key == "Value");
+        CHECK(!v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "A::value documentation");
+        CHECK(v->documentations[0].verifier->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
-        REQUIRE(e.key == "StructBValue");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "variable structBValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructBValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "variable structBValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "Valval");
-        REQUIRE(!v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "B::valval documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "Double");
-        REQUIRE(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations[0].key == "Valval");
+        CHECK(!v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "B::valval documentation");
+        CHECK(v->documentations[0].verifier->type() == "Double");
+        CHECK(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
-        REQUIRE(e.key == "StructCValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable structCValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructCValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable structCValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "struct C documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "Table");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "struct C documentation");
+        CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 2);
-        REQUIRE(w->documentations[0].key == "Eulav");
-        REQUIRE(!w->documentations[0].optional);
-        REQUIRE(w->documentations[0].documentation == "C::eulav documentation");
-        REQUIRE(w->documentations[0].verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        CHECK(w->documentations[0].key == "Eulav");
+        CHECK(!w->documentations[0].optional);
+        CHECK(w->documentations[0].documentation == "C::eulav documentation");
+        CHECK(w->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
 
-        REQUIRE(w->documentations[1].key == "Lavlav");
-        REQUIRE(!w->documentations[1].optional);
-        REQUIRE(w->documentations[1].documentation == "C::lavlav documentation");
-        REQUIRE(w->documentations[1].verifier->type() == "Boolean");
-        REQUIRE(dynamic_cast<BoolVerifier*>(w->documentations[1].verifier.get()));
+        CHECK(w->documentations[1].key == "Lavlav");
+        CHECK(!w->documentations[1].optional);
+        CHECK(w->documentations[1].documentation == "C::lavlav documentation");
+        CHECK(w->documentations[1].verifier->type() == "Boolean");
+        CHECK(dynamic_cast<BoolVerifier*>(w->documentations[1].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[3];
-        REQUIRE(e.key == "StructDValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable structDValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructDValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable structDValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 2);
-        REQUIRE(v->documentations[0].key == "A");
-        REQUIRE(!v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "D::a documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations[0].key == "A");
+        CHECK(!v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "D::a documentation");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
 
-        REQUIRE(v->documentations[1].key == "B");
-        REQUIRE(!v->documentations[1].optional);
-        REQUIRE(v->documentations[1].documentation == "D::b docuimentation");
-        REQUIRE(v->documentations[1].verifier->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(v->documentations[1].verifier.get()));
+        CHECK(v->documentations[1].key == "B");
+        CHECK(!v->documentations[1].optional);
+        CHECK(v->documentations[1].documentation == "D::b docuimentation");
+        CHECK(v->documentations[1].verifier->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->documentations[1].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[4];
-        REQUIRE(e.key == "StructDVectorValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable structDVectorValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructDVectorValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable structDVectorValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "struct D documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "Table");
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "struct D documentation");
+        CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
 
-        REQUIRE(w);
         REQUIRE(w->documentations.size() == 2);
-        REQUIRE(w->documentations[0].key == "A");
-        REQUIRE(!w->documentations[0].optional);
-        REQUIRE(w->documentations[0].documentation == "D::a documentation");
-        REQUIRE(w->documentations[0].verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        CHECK(w->documentations[0].key == "A");
+        CHECK(!w->documentations[0].optional);
+        CHECK(w->documentations[0].documentation == "D::a documentation");
+        CHECK(w->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
 
-        REQUIRE(w->documentations[1].key == "B");
-        REQUIRE(!w->documentations[1].optional);
-        REQUIRE(w->documentations[1].documentation == "D::b docuimentation");
-        REQUIRE(w->documentations[1].verifier->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(w->documentations[1].verifier.get()));
+        CHECK(w->documentations[1].key == "B");
+        CHECK(!w->documentations[1].optional);
+        CHECK(w->documentations[1].documentation == "D::b docuimentation");
+        CHECK(w->documentations[1].verifier->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(w->documentations[1].verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[5];
-        REQUIRE(e.key == "StructDOptionalValue");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "variable structDOptionalValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "StructDOptionalValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "variable structDOptionalValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 2);
-        REQUIRE(v->documentations[0].key == "A");
-        REQUIRE(!v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "D::a documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations[0].key == "A");
+        CHECK(!v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "D::a documentation");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
 
-        REQUIRE(v->documentations[1].key == "B");
-        REQUIRE(!v->documentations[1].optional);
-        REQUIRE(v->documentations[1].documentation == "D::b docuimentation");
-        REQUIRE(v->documentations[1].verifier->type() == "Integer");
-        REQUIRE(dynamic_cast<IntVerifier*>(v->documentations[1].verifier.get()));
+        CHECK(v->documentations[1].key == "B");
+        CHECK(!v->documentations[1].optional);
+        CHECK(v->documentations[1].documentation == "D::b docuimentation");
+        CHECK(v->documentations[1].verifier->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->documentations[1].verifier.get()));
     }
 }

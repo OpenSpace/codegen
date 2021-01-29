@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: std::string annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector std::string annotation", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional std::string annotation", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: std::string inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'inrange'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector std::string inrange", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'inrange'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional std::string inrange", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'inrange'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: std::string less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'less'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector std::string less", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'less'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional std::string less", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'less'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: std::string lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'lessequal'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector std::string lessequal", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'lessequal'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional std::string lessequal", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'lessequal'")
@@ -166,7 +166,7 @@ TEST_CASE("Unsupported Attributes: std::string greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greater'")
@@ -177,7 +177,7 @@ TEST_CASE("Unsupported Attributes: vector std::string greater", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greater'")
@@ -188,7 +188,7 @@ TEST_CASE("Unsupported Attributes: optional std::string greater", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greater'")
@@ -199,7 +199,7 @@ TEST_CASE("Unsupported Attributes: std::string greaterequal", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greaterequal'")
@@ -210,7 +210,7 @@ TEST_CASE("Unsupported Attributes: vector std::string greaterequal", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greaterequal'")
@@ -221,7 +221,7 @@ TEST_CASE("Unsupported Attributes: optional std::string greaterequal", "[parsing
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'greaterequal'")
@@ -232,7 +232,7 @@ TEST_CASE("Unsupported Attributes: std::string notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'notinrange'")
@@ -243,7 +243,7 @@ TEST_CASE("Unsupported Attributes: vector std::string notinrange", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'notinrange'")
@@ -254,7 +254,7 @@ TEST_CASE("Unsupported Attributes: optional std::string notinrange", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'notinrange'")
@@ -265,7 +265,7 @@ TEST_CASE("Unsupported Attributes: std::string reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'reference'")
@@ -276,7 +276,7 @@ TEST_CASE("Unsupported Attributes: vector std::string reference", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'reference'")
@@ -287,7 +287,7 @@ TEST_CASE("Unsupported Attributes: optional std::string reference", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::string' does not support attribute 'reference'")

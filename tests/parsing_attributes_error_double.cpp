@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: double annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector double annotation", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional double annotation", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: double inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'inlist'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector double inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'inlist'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional double inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'inlist'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: double notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'notinlist'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector double notinlist", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'notinlist'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional double notinlist", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'notinlist'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: double reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'reference'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector double reference", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'reference'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional double reference", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'double' does not support attribute 'reference'")

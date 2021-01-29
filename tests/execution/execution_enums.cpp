@@ -76,13 +76,18 @@ TEST_CASE("Enum Bake", "[verifier]") {
     }
 
     Parameters p = codegen::bake<Parameters>(d);
-    REQUIRE(p.enumAValue == Parameters::A::Value1);
+    CHECK(p.enumAValue == Parameters::A::Value1);
     REQUIRE(p.enumBValue.has_value());
-    REQUIRE(*p.enumBValue == Parameters::B::value2);
-    REQUIRE(p.enumCValue.size() == 3);
-    REQUIRE(p.enumCValue[0] == Parameters::C::Value3);
-    REQUIRE(p.enumCValue[1] == Parameters::C::value2);
-    REQUIRE(p.enumCValue[2] == Parameters::C::Value1);
+    CHECK(*p.enumBValue == Parameters::B::value2);
+    CHECK(p.enumCValue.size() == 3);
+    CHECK(
+        p.enumCValue ==
+        std::vector{
+            Parameters::C::Value3,
+            Parameters::C::value2,
+            Parameters::C::Value1
+        }
+    );
 }
 
 TEST_CASE("Enum Documentation", "[verifier]") {
@@ -92,33 +97,33 @@ TEST_CASE("Enum Documentation", "[verifier]") {
     REQUIRE(doc.entries.size() == 3);
     {
         DocumentationEntry e = doc.entries[0];
-        REQUIRE(e.key == "EnumAValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable enumAValue documentation");
-        REQUIRE(e.verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(e.verifier.get()));
+        CHECK(e.key == "EnumAValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable enumAValue documentation");
+        CHECK(e.verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[1];
-        REQUIRE(e.key == "EnumBValue");
-        REQUIRE(e.optional);
-        REQUIRE(e.documentation == "variable enumBValue documentation");
-        REQUIRE(e.verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(e.verifier.get()));
+        CHECK(e.key == "EnumBValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "variable enumBValue documentation");
+        CHECK(e.verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
         DocumentationEntry e = doc.entries[2];
-        REQUIRE(e.key == "EnumCValue");
-        REQUIRE(!e.optional);
-        REQUIRE(e.documentation == "variable enumCValue documentation");
-        REQUIRE(e.verifier->type() == "Table");
+        CHECK(e.key == "EnumCValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable enumCValue documentation");
+        CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
-        REQUIRE(v->documentations.size() == 1);
-        REQUIRE(v->documentations[0].key == "*");
-        REQUIRE(v->documentations[0].optional);
-        REQUIRE(v->documentations[0].documentation == "enum C documentation");
-        REQUIRE(v->documentations[0].verifier->type() == "String");
-        REQUIRE(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        CHECK(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].optional);
+        CHECK(v->documentations[0].documentation == "enum C documentation");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
     }
 }

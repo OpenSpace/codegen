@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: int annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector int annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional int annotation", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: int inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'inlist'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector int inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'inlist'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional int inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'inlist'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: int notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int notinlist [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'notinlist'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector int notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'notinlist'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional int notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'notinlist'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: int reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'reference'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector int reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'reference'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional int reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::reference(1)]];
 };)";
-REQUIRE_THROWS_MATCHES(
+CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'int' does not support attribute 'reference'")

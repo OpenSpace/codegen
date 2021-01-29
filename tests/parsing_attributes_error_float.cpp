@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: float annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector float annotation", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional float annotation", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: float inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'inlist'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector float inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'inlist'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional float inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'inlist'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: float notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'notinlist'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector float notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'notinlist'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional float notinlist", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'notinlist'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: float reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'reference'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector float reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'reference'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional float reference", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'float' does not support attribute 'reference'")

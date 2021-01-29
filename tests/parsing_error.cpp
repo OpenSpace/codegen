@@ -36,7 +36,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
     Struct* s = parseRootStruct(Source);
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(s),
         ParsingError,
         Catch::Matchers::Contains("Malformed codegen::verbatim")
@@ -51,7 +51,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
     Struct* s = parseRootStruct(Source);
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(s),
         ParsingError,
         Catch::Matchers::Contains("Discovered unallowed unescaped")
@@ -64,7 +64,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     std::variant<int, float error;
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         [&](){
             Struct* s = parseRootStruct(Source);
             std::string r = generateResult(s);
@@ -81,7 +81,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
     Struct* s = parseRootStruct(Source);
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(s),
         ParsingError,
         Catch::Matchers::Contains("Type detected that codegen doesn't know how to handle")
@@ -95,7 +95,7 @@ Type [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Could not find 'struct' before '[[codegen")
@@ -109,7 +109,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
@@ -123,7 +123,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         SpecificationError,
         Catch::Matchers::Contains("Unknown attribute 'unknown_key' in attribute")
@@ -137,7 +137,7 @@ struct [[codegen::Dictionary(Error]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
@@ -152,7 +152,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         SpecificationError,
         Catch::Matchers::Contains("Unknown attribute 'unknown_key' in struct definition")
@@ -169,7 +169,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         SpecificationError,
         Catch::Matchers::Contains("Unrecognized attribute 'unknown_key' found")
@@ -183,7 +183,7 @@ struct [[codegen::Dictionary()]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         SpecificationError,
         Catch::Matchers::Contains("No name specified for root struct")
@@ -197,7 +197,7 @@ struct [[codegen::Dictionary]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
@@ -210,7 +210,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int val;
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Could not find closing } of root struct")
@@ -224,7 +224,7 @@ struct Parameters [[codegen::Dictionary(abc)]] {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         SpecificationError,
         Catch::Matchers::Contains(
@@ -241,7 +241,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Block comments are not allowed")
@@ -257,7 +257,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 //};
 //)";
 //
-//    REQUIRE_THROWS_MATCHES(
+//    CHECK_THROWS_MATCHES(
 //        parseRootStruct(Source),
 //        ParsingError,
 //        Catch::Matchers::Contains("Illegal character")
@@ -274,7 +274,7 @@ struct [[codegen::Dictionary(S1)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains(
@@ -294,7 +294,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains(
@@ -314,7 +314,7 @@ struct [[codegen::Dictionary(def)]] Parameters2 {
 };
 )";
 
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains(

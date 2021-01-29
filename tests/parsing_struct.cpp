@@ -34,15 +34,16 @@ TEST_CASE("Parsing Struct: Minimal", "[parsing]") {
 
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Namespace specified", "[parsing]") {
@@ -50,15 +51,16 @@ TEST_CASE("Parsing Struct: Namespace specified", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName == "Namespace");
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName == "Namespace");
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
     
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
@@ -66,14 +68,15 @@ TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[parsing]") {
@@ -81,14 +84,15 @@ TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[parsing]") {
@@ -96,14 +100,15 @@ TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(!s->attributes.noExhaustive);
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Comment Ignored", "[parsing]") {
@@ -112,16 +117,17 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->comment.empty());
-    REQUIRE(s->children.empty());
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->children.empty());
+    CHECK(s->variables.empty());
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Substruct", "[parsing]") {
@@ -131,22 +137,24 @@ struct A {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->variables.empty());
 
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
-        REQUIRE(e->type == StackElement::Type::Struct);
-        REQUIRE(e->name == "A");
+        REQUIRE(e);
+        CHECK(e->type == StackElement::Type::Struct);
+        CHECK(e->name == "A");
         Struct* a = static_cast<Struct*>(e);
-        REQUIRE(a->comment.empty());
-        REQUIRE(a->attributes.dictionary.empty());
-        REQUIRE(a->attributes.namespaceName.empty());
-        REQUIRE(a->attributes.noExhaustive);
+        CHECK(a->comment.empty());
+        CHECK(a->attributes.dictionary.empty());
+        CHECK(a->attributes.namespaceName.empty());
+        CHECK(a->attributes.noExhaustive);
     }
 
     std::string r = generateResult(s);
@@ -162,40 +170,41 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->variables.empty());
 
     REQUIRE(s->children.size() == 2);
     {
         StackElement* e = s->children[0];
-        REQUIRE(e->type == StackElement::Type::Struct);
-        REQUIRE(e->name == "A");
+        CHECK(e->type == StackElement::Type::Struct);
+        CHECK(e->name == "A");
         Struct* a = static_cast<Struct*>(e);
-        REQUIRE(a->comment.empty());
-        REQUIRE(a->attributes.dictionary.empty());
-        REQUIRE(a->attributes.namespaceName.empty());
-        REQUIRE(a->attributes.noExhaustive);
-        REQUIRE(a->children.empty());
-        REQUIRE(a->variables.empty());
+        CHECK(a->comment.empty());
+        CHECK(a->attributes.dictionary.empty());
+        CHECK(a->attributes.namespaceName.empty());
+        CHECK(a->attributes.noExhaustive);
+        CHECK(a->children.empty());
+        CHECK(a->variables.empty());
     }
     {
         StackElement* e = s->children[1];
-        REQUIRE(e->type == StackElement::Type::Struct);
-        REQUIRE(e->name == "B");
+        CHECK(e->type == StackElement::Type::Struct);
+        CHECK(e->name == "B");
         Struct* b = static_cast<Struct*>(e);
-        REQUIRE(b->comment.empty());
-        REQUIRE(b->attributes.dictionary.empty());
-        REQUIRE(b->attributes.namespaceName.empty());
-        REQUIRE(b->attributes.noExhaustive);
-        REQUIRE(b->children.empty());
-        REQUIRE(b->variables.empty());
+        CHECK(b->comment.empty());
+        CHECK(b->attributes.dictionary.empty());
+        CHECK(b->attributes.namespaceName.empty());
+        CHECK(b->attributes.noExhaustive);
+        CHECK(b->children.empty());
+        CHECK(b->variables.empty());
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Variable", "[parsing]") {
@@ -205,22 +214,24 @@ TEST_CASE("Parsing Struct: Variable", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 1);
     {
 
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "variable");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "variable documentation");
+        REQUIRE(var);
+        CHECK(var->name == "variable");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "variable documentation");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
@@ -233,27 +244,30 @@ TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->children.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 2);
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "variable");
-        REQUIRE(var->type == "int");
-        REQUIRE(var->comment == "variable1 documentation");
+        REQUIRE(var);
+        CHECK(var->name == "variable");
+        CHECK(var->type == "int");
+        CHECK(var->comment == "variable1 documentation");
     }
     {
         Variable* var = s->variables[1];
-        REQUIRE(var->name == "variable2");
-        REQUIRE(var->type == "float");
-        REQUIRE(var->comment == "variable2 documentation");
+        REQUIRE(var);
+        CHECK(var->name == "variable2");
+        CHECK(var->type == "float");
+        CHECK(var->comment == "variable2 documentation");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
@@ -264,21 +278,23 @@ TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
-        REQUIRE(e->type == StackElement::Type::Enum);
-        REQUIRE(e->name == "Name");
-        REQUIRE(e->comment == "enum documentation");
+        REQUIRE(e);
+        CHECK(e->type == StackElement::Type::Enum);
+        CHECK(e->name == "Name");
+        CHECK(e->comment == "enum documentation");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Enum", "[parsing]") {
@@ -291,25 +307,27 @@ TEST_CASE("Parsing Struct: Enum", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
-        REQUIRE(e->type == StackElement::Type::Enum);
-        REQUIRE(e->name == "Name");
-        REQUIRE(e->comment == "enum documentation");
+        REQUIRE(e);
+        CHECK(e->type == StackElement::Type::Enum);
+        CHECK(e->name == "Name");
+        CHECK(e->comment == "enum documentation");
         Enum* ee = static_cast<Enum*>(e);
-        REQUIRE(ee->elements.size() == 2);
-        REQUIRE(ee->elements[0]->name == "Value");
-        REQUIRE(ee->elements[1]->name == "Value2");
+        CHECK(ee->elements.size() == 2);
+        CHECK(ee->elements[0]->name == "Value");
+        CHECK(ee->elements[1]->name == "Value2");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
@@ -322,27 +340,29 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Name");
-    REQUIRE(s->attributes.namespaceName.empty());
-    //REQUIRE(!s->attributes.noExhaustive);
-    REQUIRE(s->variables.empty());
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.namespaceName.empty());
+    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
-        REQUIRE(e->type == StackElement::Type::Enum);
-        REQUIRE(e->name == "Name");
-        REQUIRE(e->comment == "enum documentation");
+        REQUIRE(e);
+        CHECK(e->type == StackElement::Type::Enum);
+        CHECK(e->name == "Name");
+        CHECK(e->comment == "enum documentation");
         Enum* ee = static_cast<Enum*>(e);
         REQUIRE(ee->elements.size() == 2);
-        REQUIRE(ee->elements[0]->name == "Value");
-        REQUIRE(ee->elements[0]->attributes.key == "VK");
-        REQUIRE(ee->elements[1]->name == "Value2");
-        REQUIRE(ee->elements[1]->attributes.key.empty());
+        CHECK(ee->elements[0]->name == "Value");
+        CHECK(ee->elements[0]->attributes.key == "VK");
+        CHECK(ee->elements[1]->name == "Value2");
+        CHECK(ee->elements[1]->attributes.key.empty());
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: New lines", "[parsing]") {
@@ -356,20 +376,22 @@ Parameters
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Dictionary");
-    REQUIRE(s->attributes.namespaceName == "NS");
-    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Dictionary");
+    CHECK(s->attributes.namespaceName == "NS");
+    CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "value");
-        REQUIRE(var->key == "Value");
-        REQUIRE(var->type == "int");
+        REQUIRE(var);
+        CHECK(var->name == "value");
+        CHECK(var->key == "Value");
+        CHECK(var->type == "int");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: New lines go nuts", "[parsing]") {
@@ -397,18 +419,20 @@ Parameters
 };)";
     Struct* s = parseRootStruct(Sources);
 
-    REQUIRE(s->name == "Parameters");
-    REQUIRE(s->attributes.dictionary == "Dictionary");
-    REQUIRE(s->attributes.namespaceName == "NS");
-    REQUIRE(!s->attributes.noExhaustive);
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Dictionary");
+    CHECK(s->attributes.namespaceName == "NS");
+    CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];
-        REQUIRE(var->name == "value");
-        REQUIRE(var->key == "Value");
-        REQUIRE(var->type == "int");
+        REQUIRE(var);
+        CHECK(var->name == "value");
+        CHECK(var->key == "Value");
+        CHECK(var->type == "int");
     }
 
     std::string r = generateResult(s);
-    REQUIRE(!r.empty());
+    CHECK(!r.empty());
 }

@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: std::monostate annotation", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'annotation'")
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate annotation", "[parsing_
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'annotation'")
@@ -56,7 +56,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate annotation", "[parsin
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::annotation(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'annotation'")
@@ -67,7 +67,7 @@ TEST_CASE("Unsupported Attributes: std::monostate inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inlist'")
@@ -78,7 +78,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate inlist", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inlist'")
@@ -89,7 +89,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate inlist", "[parsing_er
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::inlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inlist'")
@@ -100,7 +100,7 @@ TEST_CASE("Unsupported Attributes: std::monostate inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inrange'")
@@ -111,7 +111,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate inrange", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inrange'")
@@ -122,7 +122,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate inrange", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::inrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'inrange'")
@@ -133,7 +133,7 @@ TEST_CASE("Unsupported Attributes: std::monostate less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'less'")
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate less", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'less'")
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate less", "[parsing_erro
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'less'")
@@ -166,7 +166,7 @@ TEST_CASE("Unsupported Attributes: std::monostate lessequal", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'lessequal'")
@@ -177,7 +177,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate lessequal", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'lessequal'")
@@ -188,7 +188,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate lessequal", "[parsing
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'lessequal'")
@@ -199,7 +199,7 @@ TEST_CASE("Unsupported Attributes: std::monostate greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greater'")
@@ -210,7 +210,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate greater", "[parsing_err
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greater'")
@@ -221,7 +221,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate greater", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greater'")
@@ -232,7 +232,7 @@ TEST_CASE("Unsupported Attributes: std::monostate greaterequal", "[parsing_error
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
@@ -243,7 +243,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate greaterequal", "[parsin
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
@@ -254,7 +254,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate greaterequal", "[pars
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
@@ -265,7 +265,7 @@ TEST_CASE("Unsupported Attributes: std::monostate notinlist", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinlist'")
@@ -276,7 +276,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate notinlist", "[parsing_e
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinlist'")
@@ -287,7 +287,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate notinlist", "[parsing
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::notinlist(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinlist'")
@@ -298,7 +298,7 @@ TEST_CASE("Unsupported Attributes: std::monostate notinrange", "[parsing_error]"
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinrange'")
@@ -309,7 +309,7 @@ TEST_CASE("Unsupported Attributes: vector std::monostate notinrange", "[parsing_
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::monostate> v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinrange'")
@@ -320,7 +320,7 @@ TEST_CASE("Unsupported Attributes: optional std::monostate notinrange", "[parsin
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::monostate> v [[codegen::notinrange(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'std::monostate' does not support attribute 'notinrange'")
@@ -331,7 +331,7 @@ TEST_CASE("Missing Attribute: monostate reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::monostate v;
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("A monostate must have a 'reference' attribute")

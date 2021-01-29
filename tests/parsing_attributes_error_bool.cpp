@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: Bool annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'annotation'")
     );
@@ -44,7 +44,7 @@ TEST_CASE("Unsupported Attributes: vector bool annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'annotation'")
     );
@@ -54,7 +54,7 @@ TEST_CASE("Unsupported Attributes: optional bool annotation", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'annotation'")
     );
@@ -64,7 +64,7 @@ TEST_CASE("Unsupported Attributes: Bool inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inlist'")
     );
@@ -74,7 +74,7 @@ TEST_CASE("Unsupported Attributes: vector bool inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inlist'")
     );
@@ -84,7 +84,7 @@ TEST_CASE("Unsupported Attributes: optional bool inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inlist'")
     );
@@ -94,7 +94,7 @@ TEST_CASE("Unsupported Attributes: Bool inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inrange'")
     );
@@ -104,7 +104,7 @@ TEST_CASE("Unsupported Attributes: vector bool inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inrange'")
     );
@@ -114,7 +114,7 @@ TEST_CASE("Unsupported Attributes: optional bool inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'inrange'")
     );
@@ -124,7 +124,7 @@ TEST_CASE("Unsupported Attributes: Bool less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'less'")
     );
@@ -134,7 +134,7 @@ TEST_CASE("Unsupported Attributes: vector bool less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'less'")
     );
@@ -144,7 +144,7 @@ TEST_CASE("Unsupported Attributes: optional bool less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::less(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'less'")
     );
@@ -154,7 +154,7 @@ TEST_CASE("Unsupported Attributes: Bool lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'lessequal'")
     );
@@ -164,7 +164,7 @@ TEST_CASE("Unsupported Attributes: vector bool lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'lessequal'")
     );
@@ -174,7 +174,7 @@ TEST_CASE("Unsupported Attributes: optional bool lessequal", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::lessequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'lessequal'")
     );
@@ -184,7 +184,7 @@ TEST_CASE("Unsupported Attributes: Bool greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greater'")
     );
@@ -194,7 +194,7 @@ TEST_CASE("Unsupported Attributes: vector bool greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greater'")
     );
@@ -204,7 +204,7 @@ TEST_CASE("Unsupported Attributes: optional bool greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greater(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greater'")
     );
@@ -214,7 +214,7 @@ TEST_CASE("Unsupported Attributes: Bool greaterequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greaterequal'")
     );
@@ -224,7 +224,7 @@ TEST_CASE("Unsupported Attributes: vector bool greaterequal", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greaterequal'")
     );
@@ -234,7 +234,7 @@ TEST_CASE("Unsupported Attributes: optional bool greaterequal", "[parsing_error]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greaterequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'greaterequal'")
     );
@@ -244,7 +244,7 @@ TEST_CASE("Unsupported Attributes: Bool notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinlist'")
     );
@@ -254,7 +254,7 @@ TEST_CASE("Unsupported Attributes: vector bool notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinlist'")
     );
@@ -264,7 +264,7 @@ TEST_CASE("Unsupported Attributes: optional bool notinlist", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinlist(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinlist'")
     );
@@ -274,7 +274,7 @@ TEST_CASE("Unsupported Attributes: Bool notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinrange'")
     );
@@ -284,7 +284,7 @@ TEST_CASE("Unsupported Attributes: vector bool notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinrange'")
     );
@@ -294,7 +294,7 @@ TEST_CASE("Unsupported Attributes: optional bool notinrange", "[parsing_error]")
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinrange(1, 2)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'notinrange'")
     );
@@ -304,7 +304,7 @@ TEST_CASE("Unsupported Attributes: Bool reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'reference'")
     );
@@ -314,7 +314,7 @@ TEST_CASE("Unsupported Attributes: vector bool reference", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'reference'")
     );
@@ -324,7 +324,7 @@ TEST_CASE("Unsupported Attributes: optional bool reference", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::reference(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'reference'")
     );
@@ -334,7 +334,7 @@ TEST_CASE("Unsupported Attributes: Bool unequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'unequal'")
     );
@@ -344,7 +344,7 @@ TEST_CASE("Unsupported Attributes: vector bool unequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'unequal'")
     );
@@ -354,7 +354,7 @@ TEST_CASE("Unsupported Attributes: optional bool unequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::unequal(1)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError, CM::Contains("'bool' does not support attribute 'unequal'")
     );

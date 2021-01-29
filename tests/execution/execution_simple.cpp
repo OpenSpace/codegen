@@ -42,7 +42,7 @@ TEST_CASE("Simple bake", "[verifier]") {
         d.setValue("Value", 5.0);
 
         Parameters p = codegen::bake<Parameters>(d);
-        REQUIRE(p.value == 5.f);
+        CHECK(p.value == 5.f);
     }
 }
 
@@ -52,9 +52,9 @@ TEST_CASE("Simple documentation", "[verifier]") {
 
     REQUIRE(doc.entries.size() == 1);
     DocumentationEntry e = doc.entries[0];
-    REQUIRE(e.key == "Value");
-    REQUIRE(!e.optional);
-    REQUIRE(e.documentation == "value documentation");
-    REQUIRE(e.verifier->type() == "Double");
-    REQUIRE(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+    CHECK(e.key == "Value");
+    CHECK(!e.optional);
+    CHECK(e.documentation == "value documentation");
+    CHECK(e.verifier->type() == "Double");
+    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
 }

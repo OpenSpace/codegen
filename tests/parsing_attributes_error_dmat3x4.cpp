@@ -34,7 +34,7 @@ TEST_CASE("Unsupported Attributes: glm::dmat3x4 annotation", "[parsing_error]") 
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat3x4 v [[codegen::annotation(ABC)]];
 };)";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
@@ -47,7 +47,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::annotation(ABC)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
@@ -60,7 +60,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::annotation(ABC)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
@@ -73,7 +73,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::inlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
@@ -86,7 +86,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::inlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
@@ -99,7 +99,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::inlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
@@ -112,7 +112,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::inrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
@@ -125,7 +125,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::inrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
@@ -138,7 +138,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::inrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
@@ -151,7 +151,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::less(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
@@ -164,7 +164,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::less(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
@@ -177,7 +177,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::less(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
@@ -190,7 +190,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::lessequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
@@ -203,7 +203,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::lessequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
@@ -216,7 +216,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::lessequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
@@ -229,7 +229,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::greater(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
@@ -242,7 +242,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::greater(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
@@ -255,7 +255,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::greater(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
@@ -268,7 +268,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::greaterequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
@@ -281,7 +281,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::greaterequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
@@ -294,7 +294,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::greaterequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
@@ -307,7 +307,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::notinlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
@@ -320,7 +320,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::notinlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
@@ -333,7 +333,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::notinlist(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
@@ -346,7 +346,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::notinrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
@@ -359,7 +359,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::notinrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
@@ -372,7 +372,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::notinrange(1, 2)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
@@ -385,7 +385,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::reference(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
@@ -398,7 +398,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::reference(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
@@ -411,7 +411,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::reference(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
@@ -424,7 +424,7 @@ struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::unequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
@@ -437,7 +437,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::unequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
@@ -450,7 +450,7 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::unequal(1)]];
 };
 )";
-    REQUIRE_THROWS_MATCHES(
+    CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
         SpecificationError,
         CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
