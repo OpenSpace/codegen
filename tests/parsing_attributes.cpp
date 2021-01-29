@@ -37,11 +37,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // keyValueOptional documentation
         std::optional<float> keyValueOptional [[codegen::key(KeyKeyOptional)]];
 
+        // keyValueVector documentation
+        std::vector<float> keyValueVector [[codegen::key(KeyKeyVector)]];
+
         // inRangeValueInt documentation
         int inRangeValueInt [[codegen::inrange(-2, 2)]];
 
         // inRangeValueIntOptional documentation
         std::optional<int> inRangeValueIntOptional [[codegen::inrange(-2, 2)]];
+
+        // inRangeValueIntVector documentation
+        std::vector<int> inRangeValueIntVector [[codegen::inrange(-2, 2)]];
 
         // inRangeValueFloat documentation
         float inRangeValueFloat [[codegen::inrange(-0.5, 0.75)]];
@@ -49,11 +55,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // inRangeValueFloatOptional documentation
         std::optional<float> inRangeValueFloatOptional [[codegen::inrange(-0.5, 0.75)]];
 
+        // inRangeValueFloatVector documentation
+        std::vector<float> inRangeValueFloatVector [[codegen::inrange(-0.5, 0.75)]];
+
         // notInRangeValueInt documentation
         int notInRangeValueInt [[codegen::notinrange(5, 7)]];
 
         // notInRangeValueIntOptional documentation
         std::optional<int> notInRangeValueIntOptional [[codegen::notinrange(5, 7)]];
+
+        // notInRangeValueIntVector documentation
+        std::vector<int> notInRangeValueIntVector [[codegen::notinrange(5, 7)]];
 
         // notInRangeValueFloat documentation
         float notInRangeValueFloat [[codegen::notinrange(-0.5, 0.5)]];
@@ -61,11 +73,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // notInRangeValueFloatOptional documentation
         std::optional<float> notInRangeValueFloatOptional [[codegen::notinrange(-0.5, 0.5)]];
 
+        // notInRangeValueFloatVector documentation
+        std::vector<float> notInRangeValueFloatVector [[codegen::notinrange(-0.5, 0.5)]];
+
         // lessValueInt documentation
         int lessValueInt [[codegen::less(-5)]];
         
         // lessValueIntOptional documentation
         std::optional<int> lessValueIntOptional [[codegen::less(-5)]];
+
+        // lessValueIntVector documentation
+        std::vector<int> lessValueIntVector [[codegen::less(-5)]];
 
         // lessValueFloat documentation
         float lessValueFloat [[codegen::less(15.0)]];
@@ -73,11 +91,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // lessValueFloatOptional documentation
         std::optional<float> lessValueFloatOptional [[codegen::less(15.0)]];
 
+        // lessValueFloatVector documentation
+        std::vector<float> lessValueFloatVector [[codegen::less(15.0)]];
+
         // lessEqualValueInt documentation
         int lessEqualValueInt [[codegen::lessequal(25)]];
 
         // lessEqualValueIntOptional documentation
         std::optional<int> lessEqualValueIntOptional [[codegen::lessequal(25)]];
+
+        // lessEqualValueIntVector documentation
+        std::vector<int> lessEqualValueIntVector [[codegen::lessequal(25)]];
 
         // lessEqualValueFloat documentation
         float lessEqualValueFloat [[codegen::lessequal(12.0)]];
@@ -85,11 +109,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // lessEqualValueFloatOptional documentation
         std::optional<float> lessEqualValueFloatOptional [[codegen::lessequal(12.0)]];
 
+        // lessEqualValueFloatVector documentation
+        std::vector<float> lessEqualValueFloatVector [[codegen::lessequal(12.0)]];
+
         // greaterValueInt documentation
         int greaterValueInt [[codegen::greater(45)]];
 
         // greaterValueIntOptional documentation
         std::optional<int> greaterValueIntOptional [[codegen::greater(45)]];
+
+        // greaterValueIntVector documentation
+        std::vector<int> greaterValueIntVector [[codegen::greater(45)]];
 
         // greaterValueFloat documentation
         float greaterValueFloat [[codegen::greater(-5.0)]];
@@ -97,11 +127,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // greaterValueFloatOptional documentation
         std::optional<float> greaterValueFloatOptional [[codegen::greater(-5.0)]];
 
+        // greaterValueFloatVector documentation
+        std::vector<float> greaterValueFloatVector [[codegen::greater(-5.0)]];
+
         // greaterEqualValueInt documentation
         int greaterEqualValueInt [[codegen::greaterequal(2)]];
 
         // greaterEqualValueIntOptional documentation
         std::optional<int> greaterEqualValueIntOptional [[codegen::greaterequal(2)]];
+
+        // greaterEqualValueIntVector documentation
+        std::vector<int> greaterEqualValueIntVector [[codegen::greaterequal(2)]];
 
         // greaterEqualValueFloat documentation
         float greaterEqualValueFloat [[codegen::greaterequal(-25.0)]];
@@ -109,17 +145,26 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // greaterEqualValueFloatOptional documentation
         std::optional<float> greaterEqualValueFloatOptional [[codegen::greaterequal(-25.0)]];
 
+        // greaterEqualValueFloatVector documentation
+        std::vector<float> greaterEqualValueFloatVector [[codegen::greaterequal(-25.0)]];
+
         // unequalValueInt documentation
         int unequalValueInt [[codegen::unequal(1)]];
 
         // unequalValueIntOptional documentation
         std::optional<int> unequalValueIntOptional [[codegen::unequal(1)]];
 
+        // unequalValueIntVector documentation
+        std::vector<int> unequalValueIntVector [[codegen::unequal(1)]];
+
         // unequalValueFloat documentation
         float unequalValueFloat [[codegen::unequal(123.0)]];
 
         // unequalValueFloatOptional documentation
         std::optional<float> unequalValueFloatOptional [[codegen::unequal(123.0)]];
+
+        // unequalValueFloatVector documentation
+        std::vector<float> unequalValueFloatVector [[codegen::unequal(123.0)]];
 
         // [[codegen::verbatim(description)]]
         bool descValue;
@@ -130,11 +175,17 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // inListValue1Optional documentation
         std::optional<std::string> inListValue1Optional [[codegen::inlist("A", "B", "C")]];
 
+        // inListValue1Vector documentation
+        std::vector<std::string> inListValue1Vector [[codegen::inlist("A", "B", "C")]];
+
         // inListValue2 documentation
         std::string inListValue2 [[codegen::inlist(List)]];
 
         // inListValue2Optional documentation
         std::optional<std::string> inListValue2Optional [[codegen::inlist(List)]];
+
+        // inListValue2Vector documentation
+        std::vector<std::string> inListValue2Vector [[codegen::inlist(List)]];
 
         // unequalValueString documentation
         std::string unequalValueString [[codegen::unequal("abcdef")]];
@@ -142,14 +193,23 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // unequalValueStringOptional documentation
         std::optional<std::string> unequalValueStringOptional [[codegen::unequal("abcdef")]];
 
+        // unequalValueStringVector documentation
+        std::vector<std::string> unequalValueStringVector [[codegen::unequal("abcdef")]];
+
         // referenceValue documentation
-        std::optional<std::monostate> referenceValue [[codegen::reference("abc")]];
+        std::monostate referenceValue [[codegen::reference("abc")]];
+
+        // referenceValueOptional documentation
+        std::optional<std::monostate> referenceValueOptional [[codegen::reference("abc")]];
+
+        // referenceValueVector documentation
+        std::vector<std::monostate> referenceValueVector [[codegen::reference("abc")]];
     };
 )";
     Struct* s = parseRootStruct(Source);
 
     REQUIRE(s->children.empty());
-    REQUIRE(s->variables.size() == 38);
+    REQUIRE(s->variables.size() == 58);
     {
         Variable* var = s->variables[0];
         REQUIRE(var->name == "keyValue");
@@ -194,6 +254,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
     {
         Variable* var = s->variables[2];
+        REQUIRE(var->name == "keyValueVector");
+        REQUIRE(var->key == "KeyKeyVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "keyValueVector documentation");
+        REQUIRE(var->attributes.key == "KeyKeyVector");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinlist.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[3];
         REQUIRE(var->name == "inRangeValueInt");
         REQUIRE(var->key == "InRangeValueInt");
         REQUIRE(var->type == "int");
@@ -214,7 +295,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[3];
+        Variable* var = s->variables[4];
         REQUIRE(var->name == "inRangeValueIntOptional");
         REQUIRE(var->key == "InRangeValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -234,7 +315,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[4];
+        Variable* var = s->variables[5];
+        REQUIRE(var->name == "inRangeValueIntVector");
+        REQUIRE(var->key == "InRangeValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "inRangeValueIntVector documentation");
+        REQUIRE(var->attributes.inrange == "-2, 2");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[6];
         REQUIRE(var->name == "inRangeValueFloat");
         REQUIRE(var->key == "InRangeValueFloat");
         REQUIRE(var->type == "float");
@@ -254,7 +355,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[5];
+        Variable* var = s->variables[7];
         REQUIRE(var->name == "inRangeValueFloatOptional");
         REQUIRE(var->key == "InRangeValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -274,7 +375,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[6];
+        Variable* var = s->variables[8];
+        REQUIRE(var->name == "inRangeValueFloatVector");
+        REQUIRE(var->key == "InRangeValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "inRangeValueFloatVector documentation");
+        REQUIRE(var->attributes.inrange == "-0.5, 0.75");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[9];
         REQUIRE(var->name == "notInRangeValueInt");
         REQUIRE(var->key == "NotInRangeValueInt");
         REQUIRE(var->type == "int");
@@ -294,7 +415,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[7];
+        Variable* var = s->variables[10];
         REQUIRE(var->name == "notInRangeValueIntOptional");
         REQUIRE(var->key == "NotInRangeValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -314,7 +435,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[8];
+        Variable* var = s->variables[11];
+        REQUIRE(var->name == "notInRangeValueIntVector");
+        REQUIRE(var->key == "NotInRangeValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "notInRangeValueIntVector documentation");
+        REQUIRE(var->attributes.notinrange == "5, 7");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[12];
         REQUIRE(var->name == "notInRangeValueFloat");
         REQUIRE(var->key == "NotInRangeValueFloat");
         REQUIRE(var->type == "float");
@@ -334,7 +475,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[9];
+        Variable* var = s->variables[13];
         REQUIRE(var->name == "notInRangeValueFloatOptional");
         REQUIRE(var->key == "NotInRangeValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -354,7 +495,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[10];
+        Variable* var = s->variables[14];
+        REQUIRE(var->name == "notInRangeValueFloatVector");
+        REQUIRE(var->key == "NotInRangeValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "notInRangeValueFloatVector documentation");
+        REQUIRE(var->attributes.notinrange == "-0.5, 0.5");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[15];
         REQUIRE(var->name == "lessValueInt");
         REQUIRE(var->key == "LessValueInt");
         REQUIRE(var->type == "int");
@@ -374,7 +535,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[11];
+        Variable* var = s->variables[16];
         REQUIRE(var->name == "lessValueIntOptional");
         REQUIRE(var->key == "LessValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -394,7 +555,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[12];
+        Variable* var = s->variables[17];
+        REQUIRE(var->name == "lessValueIntVector");
+        REQUIRE(var->key == "LessValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "lessValueIntVector documentation");
+        REQUIRE(var->attributes.less == "-5");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[18];
         REQUIRE(var->name == "lessValueFloat");
         REQUIRE(var->key == "LessValueFloat");
         REQUIRE(var->type == "float");
@@ -414,7 +595,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[13];
+        Variable* var = s->variables[19];
         REQUIRE(var->name == "lessValueFloatOptional");
         REQUIRE(var->key == "LessValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -434,7 +615,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[14];
+        Variable* var = s->variables[20];
+        REQUIRE(var->name == "lessValueFloatVector");
+        REQUIRE(var->key == "LessValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "lessValueFloatVector documentation");
+        REQUIRE(var->attributes.less == "15.0");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[21];
         REQUIRE(var->name == "lessEqualValueInt");
         REQUIRE(var->key == "LessEqualValueInt");
         REQUIRE(var->type == "int");
@@ -454,7 +655,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[15];
+        Variable* var = s->variables[22];
         REQUIRE(var->name == "lessEqualValueIntOptional");
         REQUIRE(var->key == "LessEqualValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -474,7 +675,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[16];
+        Variable* var = s->variables[23];
+        REQUIRE(var->name == "lessEqualValueIntVector");
+        REQUIRE(var->key == "LessEqualValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "lessEqualValueIntVector documentation");
+        REQUIRE(var->attributes.lessequal == "25");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[24];
         REQUIRE(var->name == "lessEqualValueFloat");
         REQUIRE(var->key == "LessEqualValueFloat");
         REQUIRE(var->type == "float");
@@ -494,7 +715,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[17];
+        Variable* var = s->variables[25];
         REQUIRE(var->name == "lessEqualValueFloatOptional");
         REQUIRE(var->key == "LessEqualValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -514,7 +735,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[18];
+        Variable* var = s->variables[26];
+        REQUIRE(var->name == "lessEqualValueFloatVector");
+        REQUIRE(var->key == "LessEqualValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "lessEqualValueFloatVector documentation");
+        REQUIRE(var->attributes.lessequal == "12.0");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[27];
         REQUIRE(var->name == "greaterValueInt");
         REQUIRE(var->key == "GreaterValueInt");
         REQUIRE(var->type == "int");
@@ -534,7 +775,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[19];
+        Variable* var = s->variables[28];
         REQUIRE(var->name == "greaterValueIntOptional");
         REQUIRE(var->key == "GreaterValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -554,7 +795,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[20];
+        Variable* var = s->variables[29];
+        REQUIRE(var->name == "greaterValueIntVector");
+        REQUIRE(var->key == "GreaterValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "greaterValueIntVector documentation");
+        REQUIRE(var->attributes.greater == "45");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[30];
         REQUIRE(var->name == "greaterValueFloat");
         REQUIRE(var->key == "GreaterValueFloat");
         REQUIRE(var->type == "float");
@@ -574,7 +835,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[21];
+        Variable* var = s->variables[31];
         REQUIRE(var->name == "greaterValueFloatOptional");
         REQUIRE(var->key == "GreaterValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -594,7 +855,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[22];
+        Variable* var = s->variables[32];
+        REQUIRE(var->name == "greaterValueFloatVector");
+        REQUIRE(var->key == "GreaterValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "greaterValueFloatVector documentation");
+        REQUIRE(var->attributes.greater == "-5.0");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[33];
         REQUIRE(var->name == "greaterEqualValueInt");
         REQUIRE(var->key == "GreaterEqualValueInt");
         REQUIRE(var->type == "int");
@@ -614,7 +895,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[23];
+        Variable* var = s->variables[34];
         REQUIRE(var->name == "greaterEqualValueIntOptional");
         REQUIRE(var->key == "GreaterEqualValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -634,7 +915,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[24];
+        Variable* var = s->variables[35];
+        REQUIRE(var->name == "greaterEqualValueIntVector");
+        REQUIRE(var->key == "GreaterEqualValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "greaterEqualValueIntVector documentation");
+        REQUIRE(var->attributes.greaterequal == "2");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[36];
         REQUIRE(var->name == "greaterEqualValueFloat");
         REQUIRE(var->key == "GreaterEqualValueFloat");
         REQUIRE(var->type == "float");
@@ -654,7 +955,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[25];
+        Variable* var = s->variables[37];
         REQUIRE(var->name == "greaterEqualValueFloatOptional");
         REQUIRE(var->key == "GreaterEqualValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -674,7 +975,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[26];
+        Variable* var = s->variables[38];
+        REQUIRE(var->name == "greaterEqualValueFloatVector");
+        REQUIRE(var->key == "GreaterEqualValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "greaterEqualValueFloatVector documentation");
+        REQUIRE(var->attributes.greaterequal == "-25.0");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[39];
         REQUIRE(var->name == "unequalValueInt");
         REQUIRE(var->key == "UnequalValueInt");
         REQUIRE(var->type == "int");
@@ -694,7 +1015,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[27];
+        Variable* var = s->variables[40];
         REQUIRE(var->name == "unequalValueIntOptional");
         REQUIRE(var->key == "UnequalValueIntOptional");
         REQUIRE(var->type == "std::optional<int>");
@@ -714,7 +1035,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[28];
+        Variable* var = s->variables[41];
+        REQUIRE(var->name == "unequalValueIntVector");
+        REQUIRE(var->key == "UnequalValueIntVector");
+        REQUIRE(var->type == "std::vector<int>");
+        REQUIRE(var->comment == "unequalValueIntVector documentation");
+        REQUIRE(var->attributes.unequal == "1");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+    }
+
+    {
+        Variable* var = s->variables[42];
         REQUIRE(var->name == "unequalValueFloat");
         REQUIRE(var->key == "UnequalValueFloat");
         REQUIRE(var->type == "float");
@@ -734,7 +1075,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[29];
+        Variable* var = s->variables[43];
         REQUIRE(var->name == "unequalValueFloatOptional");
         REQUIRE(var->key == "UnequalValueFloatOptional");
         REQUIRE(var->type == "std::optional<float>");
@@ -754,7 +1095,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[30];
+        Variable* var = s->variables[44];
+        REQUIRE(var->name == "unequalValueFloatVector");
+        REQUIRE(var->key == "UnequalValueFloatVector");
+        REQUIRE(var->type == "std::vector<float>");
+        REQUIRE(var->comment == "unequalValueFloatVector documentation");
+        REQUIRE(var->attributes.unequal == "123.0");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+    }
+
+    {
+        Variable* var = s->variables[45];
         REQUIRE(var->name == "descValue");
         REQUIRE(var->key == "DescValue");
         REQUIRE(var->type == "bool");
@@ -774,7 +1135,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[31];
+        Variable* var = s->variables[46];
         REQUIRE(var->name == "inListValue1");
         REQUIRE(var->key == "InListValue1");
         REQUIRE(var->type == "std::string");
@@ -794,7 +1155,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[32];
+        Variable* var = s->variables[47];
         REQUIRE(var->name == "inListValue1Optional");
         REQUIRE(var->key == "InListValue1Optional");
         REQUIRE(var->type == "std::optional<std::string>");
@@ -814,7 +1175,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[33];
+        Variable* var = s->variables[48];
+        REQUIRE(var->name == "inListValue1Vector");
+        REQUIRE(var->key == "InListValue1Vector");
+        REQUIRE(var->type == "std::vector<std::string>");
+        REQUIRE(var->comment == "inListValue1Vector documentation");
+        REQUIRE(var->attributes.inlist == "\"A\", \"B\", \"C\"");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[49];
         REQUIRE(var->name == "inListValue2");
         REQUIRE(var->key == "InListValue2");
         REQUIRE(var->type == "std::string");
@@ -834,7 +1215,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[34];
+        Variable* var = s->variables[50];
         REQUIRE(var->name == "inListValue2Optional");
         REQUIRE(var->key == "InListValue2Optional");
         REQUIRE(var->type == "std::optional<std::string>");
@@ -854,7 +1235,27 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[35];
+        Variable* var = s->variables[51];
+        REQUIRE(var->name == "inListValue2Vector");
+        REQUIRE(var->key == "InListValue2Vector");
+        REQUIRE(var->type == "std::vector<std::string>");
+        REQUIRE(var->comment == "inListValue2Vector documentation");
+        REQUIRE(var->attributes.inlist == "List");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[52];
         REQUIRE(var->name == "unequalValueString");
         REQUIRE(var->key == "UnequalValueString");
         REQUIRE(var->type == "std::string");
@@ -874,7 +1275,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[36];
+        Variable* var = s->variables[53];
         REQUIRE(var->name == "unequalValueStringOptional");
         REQUIRE(var->key == "UnequalValueStringOptional");
         REQUIRE(var->type == "std::optional<std::string>");
@@ -894,11 +1295,71 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[37];
+        Variable* var = s->variables[54];
+        REQUIRE(var->name == "unequalValueStringVector");
+        REQUIRE(var->key == "UnequalValueStringVector");
+        REQUIRE(var->type == "std::vector<std::string>");
+        REQUIRE(var->comment == "unequalValueStringVector documentation");
+        REQUIRE(var->attributes.unequal == "\"abcdef\"");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.reference.empty());
+    }
+
+    {
+        Variable* var = s->variables[55];
         REQUIRE(var->name == "referenceValue");
         REQUIRE(var->key == "ReferenceValue");
-        REQUIRE(var->type == "std::optional<std::monostate>");
+        REQUIRE(var->type == "std::monostate");
         REQUIRE(var->comment == "referenceValue documentation");
+        REQUIRE(var->attributes.reference == "\"abc\"");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[56];
+        REQUIRE(var->name == "referenceValueOptional");
+        REQUIRE(var->key == "ReferenceValueOptional");
+        REQUIRE(var->type == "std::optional<std::monostate>");
+        REQUIRE(var->comment == "referenceValueOptional documentation");
+        REQUIRE(var->attributes.reference == "\"abc\"");
+
+        REQUIRE(var->attributes.annotation.empty());
+        REQUIRE(var->attributes.greater.empty());
+        REQUIRE(var->attributes.greaterequal.empty());
+        REQUIRE(var->attributes.inlist.empty());
+        REQUIRE(var->attributes.inrange.empty());
+        REQUIRE(var->attributes.key.empty());
+        REQUIRE(var->attributes.less.empty());
+        REQUIRE(var->attributes.lessequal.empty());
+        REQUIRE(var->attributes.notinrange.empty());
+        REQUIRE(var->attributes.unequal.empty());
+    }
+
+    {
+        Variable* var = s->variables[57];
+        REQUIRE(var->name == "referenceValueVector");
+        REQUIRE(var->key == "ReferenceValueVector");
+        REQUIRE(var->type == "std::vector<std::monostate>");
+        REQUIRE(var->comment == "referenceValueVector documentation");
         REQUIRE(var->attributes.reference == "\"abc\"");
 
         REQUIRE(var->attributes.annotation.empty());
