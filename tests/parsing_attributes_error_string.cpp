@@ -30,39 +30,6 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: std::string annotation", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::string v [[codegen::annotation(1)]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'annotation'")
-    );
-}
-
-TEST_CASE("Unsupported Attributes: vector std::string annotation", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::string> v [[codegen::annotation(1)]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'annotation'")
-    );
-}
-
-TEST_CASE("Unsupported Attributes: optional std::string annotation", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::string> v [[codegen::annotation(1)]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'annotation'")
-    );
-}
-
 TEST_CASE("Unsupported Attributes: std::string inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::inrange(1)]];

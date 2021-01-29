@@ -72,7 +72,6 @@ namespace {
             report(attributes.reference, attributes::Reference);
         }
         else if (type == "std::string") {
-            report(attributes.annotation, attributes::Annotation);
             report(attributes.inrange, attributes::InRange);
             report(attributes.less, attributes::Less);
             report(attributes.lessequal, attributes::LessEqual);
@@ -176,8 +175,7 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
                     type
                 ));
             }
-            std::string param = fmt::format("\"{}\"", attributes.annotation);
-            res = addQualifier(res, "AnnotationVerifier", param);
+            res = addQualifier(res, "AnnotationVerifier", attributes.annotation);
         }
         return res;
     }

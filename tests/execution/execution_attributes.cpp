@@ -207,6 +207,15 @@ namespace {
 
         // referenceValueVector documentation
         std::optional<std::vector<std::monostate>> referenceValueVector [[codegen::reference("abc")]];
+
+        // annotation documentation
+        std::string annotation [[codegen::annotation("abc")]];
+
+        // annotationOptional documentation
+        std::optional<std::string> annotationOptional [[codegen::annotation("def")]];
+
+        // annotationVector documentation
+        std::vector<std::string> annotationVector [[codegen::annotation("ghi")]];
     };
 #include "execution_attributes_codegen.cpp"
 } // namespace
@@ -377,6 +386,16 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         d.setValue("UnequalValueStringVector", e);
     }
 
+    d.setValue("Annotation", std::string("annotation_abc"));
+    d.setValue("AnnotationOptional", std::string("annotation_def"));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", std::string("annotation_ghi"));
+        e.setValue("2", std::string("annotation_jkl"));
+        e.setValue("3", std::string("annotation_mno"));
+        d.setValue("AnnotationVector", e);
+    }
+
     Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
@@ -473,13 +492,21 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         p.unequalValueStringVector ==
         std::vector<std::string>{ "zyxwv1", "zyxwv2", "zyxwv3"}
     );
+
+    CHECK(p.annotation == "annotation_abc");
+    CHECK(p.annotationOptional == "annotation_def");
+    CHECK(p.annotationVector.size() == 3);
+    CHECK(
+        p.annotationVector ==
+        std::vector<std::string>{ "annotation_ghi", "annotation_jkl", "annotation_mno" }
+    );
 }
 
 TEST_CASE("Attributes Documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 57);
+    REQUIRE(doc.entries.size() == 60);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -1227,5 +1254,42 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[57];
+        CHECK(e.key == "Annotation");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "annotation documentation");
+        CHECK(e.verifier->type() == "String");
+        StringAnnotationVerifier* v =
+            dynamic_cast<StringAnnotationVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->annotation == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[58];
+        CHECK(e.key == "AnnotationOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "annotationOptional documentation");
+        CHECK(e.verifier->type() == "String");
+        StringAnnotationVerifier* v =
+            dynamic_cast<StringAnnotationVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->annotation == "def");
+    }
+    {
+        DocumentationEntry e = doc.entries[59];
+        CHECK(e.key == "AnnotationVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "annotationVector documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "String");
+        StringAnnotationVerifier* w =
+            dynamic_cast<StringAnnotationVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        CHECK(w->annotation == "ghi");
     }
 }

@@ -53,14 +53,24 @@ namespace {
 
         size_t base = 0;
         size_t cursor = 0;
+        size_t nBrackets = 1;
         do {
             cursor++;
-            if (types[cursor] == ',' || types[cursor] == '>') {
+
+            if (types[cursor] == '<') {
+                nBrackets += 1;
+            }
+
+            if (types[cursor] == '>') {
+                nBrackets -= 1;
+            }
+
+            if (types[cursor] == ',' || ((types[cursor] == '>') && (nBrackets == 0))) {
                 std::string_view subtype = types.substr(base, cursor - base);
                 res.push_back(strip(subtype));
                 base = cursor + 1;
             }
-        } while (types[cursor] != '>');
+        } while (nBrackets > 0);
 
         return res;
     }
