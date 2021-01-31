@@ -112,6 +112,19 @@ namespace {
                 }
             }
 
+            // Yea, we need to do the vector check twice to make sure that we detect:
+            // std::variant<std::vector<string>, std::string>
+            if (startsWith(type, "std::vector<")) {
+                res.push_back("std::vector");
+                type.remove_prefix("std::vector<"sv.size());
+                type.remove_suffix(1);
+
+                if (isBasicType(type)) {
+                    res.push_back(type);
+                }
+            }
+
+
             if (isBasicType(var->type)) {
                 res.push_back(var->type);
             }
@@ -326,11 +339,43 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             fullType
         );
 
+        int nVectorTypes = 0;
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
-            result += variantConversionFunctionForType(subtype);
+            std::string_view originalSubtype = subtype;
+            bool isVectorType = false;
+            if (startsWith(subtype, "std::vector<")) {
+                subtype.remove_prefix("std::vector<"sv.size());
+                subtype.remove_suffix(">"sv.size());
+                nVectorTypes += 1;
+                isVectorType = true;
+            }
+            if (nVectorTypes > 1) {
+                throw SpecificationError(fmt::format(
+                    "We can't have a variant containing multiple vector types, try a "
+                    "vector of variants instead\n{}", var->type
+                ));
+            }
+
+            std::string_view conv = variantConversionFunctionForType(subtype);
+
+            if (conv.empty()) {
+                throw SpecificationError(fmt::format(
+                    "Unsupported type '{}' found in variant list\n{}", subtype, var->type
+                ));
+            }
+
+            if (isVectorType) {
+                result += vectorBakeFunctionForType(originalSubtype);
+            }
+            else {
+                result += conv;
+            }
         }
 
+        result += "    // Any of the previous values should have triggered and returned\n";
+        result += "    // If this assert triggers, something in the codegen went wrong\n";
+        result += "    assert(false);\n";
         result += "}\n";
     }
     return result;

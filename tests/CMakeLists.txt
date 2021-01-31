@@ -75,6 +75,7 @@ add_executable(
   parsing_struct.cpp
   parsing_variable.cpp
   parsing_variant.cpp
+  parsing_variant_error.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")

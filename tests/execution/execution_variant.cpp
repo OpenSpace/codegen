@@ -54,6 +54,12 @@ namespace {
 
         // optional documentation
         std::optional<std::variant<bool, int>> optionalValue;
+
+        // variant vector documentation
+        std::variant<std::vector<std::string>, std::string> variantVector;
+
+        // variant vector 2 documentation
+        std::variant<std::string, std::vector<std::string>> variantVector2;
     };
 #include "execution_variant_codegen.cpp"
 } // namespace
@@ -71,6 +77,9 @@ TEST_CASE("Variant bake", "[verifier]") {
             glm::dmat3x4(5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12)
         );
         d1.setValue("OptionalValue", 5.0);
+        d1.setValue("VariantVector", std::string("abc"));
+        d1.setValue("VariantVector2", std::string("def"));
+
         const Parameters p1 = codegen::bake<Parameters>(d1);
         CHECK(std::get<bool>(p1.boolDoubleValue) == false);
         CHECK(std::get<float>(p1.floatStringValue) == 2.f);
@@ -86,6 +95,10 @@ TEST_CASE("Variant bake", "[verifier]") {
         );
         REQUIRE(p1.optionalValue.has_value());
         CHECK(std::get<int>(*p1.optionalValue) == 5);
+        REQUIRE(std::holds_alternative<std::string>(p1.variantVector));
+        CHECK(std::get<std::string>(p1.variantVector) == "abc");
+        REQUIRE(std::holds_alternative<std::string>(p1.variantVector2));
+        CHECK(std::get<std::string>(p1.variantVector2) == "def");
     }
 
     {
@@ -105,6 +118,23 @@ TEST_CASE("Variant bake", "[verifier]") {
                 12.7, 12.8, 12.9, 12.10, 12.11, 12.12
             )
         );
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", std::string("abc"));
+            e.setValue("2", std::string("def"));
+            e.setValue("3", std::string("ghi"));
+            e.setValue("4", std::string("jkl"));
+            d2.setValue("VariantVector", e);
+        }
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", std::string("mno"));
+            e.setValue("2", std::string("pqr"));
+            e.setValue("3", std::string("stu"));
+            e.setValue("4", std::string("vwx"));
+            d2.setValue("VariantVector2", e);
+        }
+
         const Parameters p2 = codegen::bake<Parameters>(d2);
         CHECK(std::get<double>(p2.boolDoubleValue) == 6.0);
         CHECK(std::get<std::string>(p2.floatStringValue) == "abc");
@@ -122,6 +152,16 @@ TEST_CASE("Variant bake", "[verifier]") {
             )
         );
         CHECK(!p2.optionalValue.has_value());
+        REQUIRE(std::holds_alternative<std::vector<std::string>>(p2.variantVector));
+        CHECK(
+            std::get<std::vector<std::string>>(p2.variantVector) ==
+            std::vector<std::string>{ "abc", "def", "ghi", "jkl" }
+        );
+        REQUIRE(std::holds_alternative<std::vector<std::string>>(p2.variantVector2));
+        CHECK(
+            std::get<std::vector<std::string>>(p2.variantVector2) ==
+            std::vector<std::string>{ "mno", "pqr", "stu", "vwx" }
+        );
     }
 
     {
@@ -136,6 +176,8 @@ TEST_CASE("Variant bake", "[verifier]") {
         );
         d3.setValue("RestValue", glm::dmat2x3(20.1, 20.2, 20.3, 20.4, 20.5, 20.6));
         d3.setValue("OptionalValue", true);
+        d3.setValue("VariantVector", std::string("abc"));
+        d3.setValue("VariantVector2", std::string("def"));
         const Parameters p3 = codegen::bake<Parameters>(d3);
         CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
         CHECK(std::get<std::string>(p3.floatStringValue) == "abc");
@@ -151,6 +193,10 @@ TEST_CASE("Variant bake", "[verifier]") {
         );
         REQUIRE(p3.optionalValue.has_value());
         CHECK(std::get<bool>(*p3.optionalValue) == true);
+        REQUIRE(std::holds_alternative<std::string>(p3.variantVector));
+        CHECK(std::get<std::string>(p3.variantVector) == "abc");
+        REQUIRE(std::holds_alternative<std::string>(p3.variantVector2));
+        CHECK(std::get<std::string>(p3.variantVector2) == "def");
     }
 
     {
@@ -172,6 +218,8 @@ TEST_CASE("Variant bake", "[verifier]") {
                 25.1, 25.2, 25.3, 25.4, 25.5, 25.6, 25.7, 25.8, 25.9, 25.10, 25.11, 25.12
             )
         );
+        d4.setValue("VariantVector", std::string("abc"));
+        d4.setValue("VariantVector2", std::string("def"));
         const Parameters p4 = codegen::bake<Parameters>(d4);
         CHECK(std::get<double>(p4.boolDoubleValue) == 20);
         CHECK(std::get<std::string>(p4.floatStringValue) == "abc");
@@ -194,6 +242,10 @@ TEST_CASE("Variant bake", "[verifier]") {
             )
         );
         CHECK(!p4.optionalValue.has_value());
+        REQUIRE(std::holds_alternative<std::string>(p4.variantVector));
+        CHECK(std::get<std::string>(p4.variantVector) == "abc");
+        REQUIRE(std::holds_alternative<std::string>(p4.variantVector2));
+        CHECK(std::get<std::string>(p4.variantVector2) == "def");
     }
 }
 
@@ -201,7 +253,7 @@ TEST_CASE("Variant documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 7);
+    REQUIRE(doc.entries.size() == 9);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
@@ -335,5 +387,45 @@ TEST_CASE("Variant documentation", "[verifier]") {
         CHECK(dynamic_cast<BoolVerifier*>(v->values[0].get()));
         CHECK(v->values[1]->type() == "Integer");
         CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[7];
+        CHECK(e.key == "VariantVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variant vector documentation");
+        CHECK(e.verifier->type() == "Table, or String");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(v->values[0].get());
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].optional);
+        CHECK(w->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        CHECK(v->values[1]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[1].get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[8];
+        CHECK(e.key == "VariantVector2");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variant vector 2 documentation");
+        CHECK(e.verifier->type() == "String, or Table");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(v->values[1].get());
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].optional);
+        CHECK(w->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
     }
 }
