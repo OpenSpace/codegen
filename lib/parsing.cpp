@@ -403,6 +403,7 @@ Struct* parseRootStruct(std::string_view code) {
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
     std::string structBuffer;
+    std::string enumBuffer;
     std::string variableBuffer;
     std::string commentBuffer;
 
@@ -417,8 +418,8 @@ Struct* parseRootStruct(std::string_view code) {
         if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
                 std::string_view comment = parseCommentLine(line);
-                commentBuffer.append(comment);
-                commentBuffer.append(" ");
+                commentBuffer += comment;
+                commentBuffer += " ";
                 continue;
             }
 
@@ -484,6 +485,24 @@ Struct* parseRootStruct(std::string_view code) {
             }
 
             if (startsWith(line, "};")) {
+                // A bit of a special case for enums.  Since we want to support multiple
+                // lines for enum value we have to store the line in a buffer to check
+                // when we are finished.  We use a finalizing , for it, which does not
+                // have to exist and it would also be annoying to force people to enter
+                // that for every enum and it is error prone.  So we need to check here if
+                // we still have an enum in the buffer and add that if it is so
+
+                if (stack.back()->type == StackElement::Type::Enum && !enumBuffer.empty())
+                {
+                    Enum* e = static_cast<Enum*>(stack.back());
+                
+                    enumBuffer += line;
+                    EnumElement* el = parseEnumElement(enumBuffer);
+                    assert(el);
+                    enumBuffer.clear();
+                    e->elements.push_back(el);
+                }
+
                 stack.pop_back();
                 continue;
             }
@@ -517,8 +536,8 @@ Struct* parseRootStruct(std::string_view code) {
                 else {
                     variableBuffer += line;
                     Variable* var = parseVariable(variableBuffer);
-                    variableBuffer.clear();
                     assert(var);
+                    variableBuffer.clear();
                     if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
                         commentBuffer.pop_back();
                     }
@@ -529,10 +548,31 @@ Struct* parseRootStruct(std::string_view code) {
                 }
                 continue;
             case StackElement::Type::Enum: {
-                EnumElement* el = parseEnumElement(line);
-                Enum* en = static_cast<Enum*>(e);
-                en->elements.push_back(el);
-                continue;
+                if (strip(line).back() != ',') {
+                    // No comma at the end means that this line is not finished yet.
+                    // Though this means that that the last value will be added to the
+                    // buffer since it will not be finished
+                    enumBuffer += line;
+                    enumBuffer += " ";
+                    continue;
+                }
+                
+                if (enumBuffer.empty()) {
+                    EnumElement* el = parseEnumElement(line);
+                    assert(el);
+                    Enum* en = static_cast<Enum*>(e);
+                    en->elements.push_back(el);
+                    continue;
+                }
+                else {
+                    enumBuffer += line;
+                    EnumElement* el = parseEnumElement(enumBuffer);
+                    assert(el);
+                    enumBuffer.clear();
+                    Enum* en = static_cast<Enum*>(e);
+                    en->elements.push_back(el);
+                    continue;
+                }
             }
         }
     }

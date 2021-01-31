@@ -58,6 +58,16 @@ namespace {
         };
         // variable enumCValue documentation
         std::vector<C> enumCValue;
+
+        enum class D {
+            VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe
+                [[codegen::key("On a second line or else one line would be too long")]],
+            ValueB,
+            SecondVeryLongValueThatWillCheckIfWeDetectPropertyThatWeHave
+                [[codegen::key("a continuation line as the last element of the enum")]]
+        };
+        // variable enumDValue documentation
+        D enumDValue;
     };
 #include "execution_enums_codegen.cpp"
 } // namespace
@@ -74,6 +84,10 @@ TEST_CASE("Enum Bake", "[verifier]") {
         e.setValue("3", std::string("Value1"));
         d.setValue("EnumCValue", e);
     }
+    d.setValue(
+        "EnumDValue",
+        std::string("On a second line or else one line would be too long")
+    );
 
     Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::Value1);
@@ -88,13 +102,28 @@ TEST_CASE("Enum Bake", "[verifier]") {
             Parameters::C::Value1
         }
     );
+    CHECK(
+        p.enumDValue ==
+        Parameters::D::VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe
+    );
+
+    d.setValue(
+        "EnumDValue",
+        std::string("a continuation line as the last element of the enum")
+    );
+
+    Parameters q = codegen::bake<Parameters>(d);
+    CHECK(
+        q.enumDValue ==
+        Parameters::D::SecondVeryLongValueThatWillCheckIfWeDetectPropertyThatWeHave
+    );
 }
 
 TEST_CASE("Enum Documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 3);
+    REQUIRE(doc.entries.size() == 4);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "EnumAValue");
@@ -125,5 +154,21 @@ TEST_CASE("Enum Documentation", "[verifier]") {
         CHECK(v->documentations[0].documentation == "enum C documentation");
         CHECK(v->documentations[0].verifier->type() == "String");
         CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[3];
+        CHECK(e.key == "EnumDValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable enumDValue documentation");
+        StringInListVerifier* sil = dynamic_cast<StringInListVerifier*>(e.verifier.get());
+        REQUIRE(sil);
+        CHECK(
+            sil->values ==
+            std::vector<std::string>{
+                "On a second line or else one line would be too long",
+                "ValueB",
+                "a continuation line as the last element of the enum"
+            }
+        );
     }
 }
