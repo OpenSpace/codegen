@@ -41,7 +41,7 @@ TEST_CASE("Simple bake", "[verifier]") {
         ghoul::Dictionary d;
         d.setValue("Value", 5.0);
 
-        Parameters p = codegen::bake<Parameters>(d);
+        const Parameters p = codegen::bake<Parameters>(d);
         CHECK(p.value == 5.f);
     }
 }

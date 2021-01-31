@@ -128,7 +128,7 @@ TEST_CASE("Substruct Bake", "[verifier]") {
         d.setValue("StructDOptionalValue", e);
     }
 
-    Parameters p = codegen::bake<Parameters>(d);
+    const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.structAValue.value == 5);
     REQUIRE(p.structBValue.has_value());
     CHECK(p.structBValue->valval == 2.1f);

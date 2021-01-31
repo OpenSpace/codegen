@@ -89,7 +89,7 @@ TEST_CASE("Enum Bake", "[verifier]") {
         std::string("On a second line or else one line would be too long")
     );
 
-    Parameters p = codegen::bake<Parameters>(d);
+    const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::Value1);
     REQUIRE(p.enumBValue.has_value());
     CHECK(*p.enumBValue == Parameters::B::value2);
@@ -112,7 +112,7 @@ TEST_CASE("Enum Bake", "[verifier]") {
         std::string("a continuation line as the last element of the enum")
     );
 
-    Parameters q = codegen::bake<Parameters>(d);
+    const Parameters q = codegen::bake<Parameters>(d);
     CHECK(
         q.enumDValue ==
         Parameters::D::SecondVeryLongValueThatWillCheckIfWeDetectPropertyThatWeHave

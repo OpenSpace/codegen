@@ -396,7 +396,7 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         d.setValue("AnnotationVector", e);
     }
 
-    Parameters p = codegen::bake<Parameters>(d);
+    const Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
     REQUIRE(p.keyValueOptional.has_value());

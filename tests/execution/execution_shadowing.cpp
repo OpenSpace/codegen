@@ -98,7 +98,7 @@ TEST_CASE("Shadowing Bake", "[verifier]") {
     }
 
 
-    P p = codegen::bake<P>(d);
+    const P p = codegen::bake<P>(d);
     CHECK(p.a.t == P::A::T::Type1);
     CHECK(p.b.t == P::B::T::Type4);
     CHECK(p.t == P::T::Type5);
