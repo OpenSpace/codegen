@@ -30,6 +30,7 @@
 #include <map>
 #include <unordered_map>
 #include <variant>
+#include <vector>
 
 struct ParsingError : public std::runtime_error {
     ParsingError(std::string e) : std::runtime_error(e) {}

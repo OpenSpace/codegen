@@ -32,6 +32,7 @@
 
 #include <fmt/format.h>
 #include <array>
+#include <atomic>
 #include <filesystem>
 #include <iostream>
 
