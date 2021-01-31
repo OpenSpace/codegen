@@ -451,16 +451,6 @@ std::string writeStructConverter(Struct* s) {
 std::string generateResult(Struct* s) {
     std::string result = fmt::format(FileHeader);
 
-    std::string name;
-    if (s->attributes.namespaceName.empty()) {
-        name = fmt::format("openspace::{}", s->attributes.dictionary);
-    }
-    else {
-        name = fmt::format(
-            "openspace::{}::{}", s->attributes.namespaceName, s->attributes.dictionary
-        );
-    }
-
     result += fmt::format(DocumentationPreamble, s->name);
     result += writeStructDocumentation(s);
     result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);

@@ -80,7 +80,6 @@ namespace attributes {
     constexpr const char Key[] = "key";
 
     constexpr const char Dictionary[] = "Dictionary";
-    constexpr const char Namespace[] = "namespace";
     constexpr const char NoExhaustive[] = "noexhaustive";
 
 } // namespace attributes
@@ -118,7 +117,6 @@ struct Struct : public StackElement {
 
     struct Attributes {
         std::string dictionary;
-        std::string namespaceName;
         bool noExhaustive = true; // @TODO change to false once OpenSpace works with it
     };
     Attributes attributes;

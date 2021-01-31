@@ -165,9 +165,6 @@ Struct* parseStruct(std::string_view line) {
             if (a.key == attributes::Dictionary) {
                 s->attributes.dictionary = a.value;
             }
-            else if (a.key == attributes::Namespace) {
-                s->attributes.namespaceName = a.value;
-            }
             else if (a.key == attributes::NoExhaustive) {
                 s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
             }

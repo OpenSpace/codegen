@@ -1494,7 +1494,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
 
 TEST_CASE("Parsing Attribute: Struct Attribute empty noexhaustive", "[parsing]") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive()]] Parameters {
+struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
     int value;
 };
 )";
@@ -1502,7 +1502,6 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
     Struct* s = parseRootStruct(Source);
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
-    CHECK(s->attributes.namespaceName == "Namespace");
     CHECK(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
@@ -1513,7 +1512,7 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 
 TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[parsing]") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive(true)]] Parameters {
+struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
     int value;
 };
 )";
@@ -1521,7 +1520,6 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
     Struct* s = parseRootStruct(Source);
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
-    CHECK(s->attributes.namespaceName == "Namespace");
     CHECK(s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
@@ -1532,7 +1530,7 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
 
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[parsing]") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexhaustive(false)]] Parameters {
+struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
     int value;
 };
 )";
@@ -1540,7 +1538,6 @@ struct [[codegen::Dictionary(Par), codegen::namespace(Namespace), codegen::noexh
     Struct* s = parseRootStruct(Source);
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
-    CHECK(s->attributes.namespaceName == "Namespace");
     CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);

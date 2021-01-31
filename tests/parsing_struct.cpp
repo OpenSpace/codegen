@@ -37,28 +37,10 @@ TEST_CASE("Parsing Struct: Minimal", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing Struct: Namespace specified", "[parsing]") {
-    constexpr const char Sources[] = R"(struct [[codegen::Dictionary(Name), codegen::namespace(Namespace)]] Parameters {
-};)";
-    Struct* s = parseRootStruct(Sources);
-
-    REQUIRE(s);
-    CHECK(s->name == "Parameters");
-    CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName == "Namespace");
-    //CHECK(!s->attributes.noExhaustive);
-    CHECK(s->children.empty());
-    CHECK(s->variables.empty());
-    
     std::string r = generateResult(s);
     CHECK(!r.empty());
 }
@@ -120,7 +102,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->comment.empty());
     CHECK(s->children.empty());
@@ -140,7 +121,6 @@ struct A {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->variables.empty());
 
@@ -153,7 +133,6 @@ struct A {
         Struct* a = static_cast<Struct*>(e);
         CHECK(a->comment.empty());
         CHECK(a->attributes.dictionary.empty());
-        CHECK(a->attributes.namespaceName.empty());
         CHECK(a->attributes.noExhaustive);
     }
 
@@ -173,7 +152,6 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->variables.empty());
 
@@ -185,7 +163,6 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
         Struct* a = static_cast<Struct*>(e);
         CHECK(a->comment.empty());
         CHECK(a->attributes.dictionary.empty());
-        CHECK(a->attributes.namespaceName.empty());
         CHECK(a->attributes.noExhaustive);
         CHECK(a->children.empty());
         CHECK(a->variables.empty());
@@ -197,7 +174,6 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
         Struct* b = static_cast<Struct*>(e);
         CHECK(b->comment.empty());
         CHECK(b->attributes.dictionary.empty());
-        CHECK(b->attributes.namespaceName.empty());
         CHECK(b->attributes.noExhaustive);
         CHECK(b->children.empty());
         CHECK(b->variables.empty());
@@ -217,7 +193,6 @@ TEST_CASE("Parsing Struct: Variable", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 1);
@@ -247,7 +222,6 @@ TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 2);
@@ -281,7 +255,6 @@ TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
@@ -310,7 +283,6 @@ TEST_CASE("Parsing Struct: Enum", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
@@ -343,7 +315,6 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.namespaceName.empty());
     //CHECK(!s->attributes.noExhaustive);
     CHECK(s->variables.empty());
     REQUIRE(s->children.size() == 1);
@@ -368,7 +339,6 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
 TEST_CASE("Parsing Struct: New lines", "[parsing]") {
  constexpr const char Sources[] = R"(struct
 [[codegen::Dictionary(Dictionary),
-codegen::namespace(NS),
 codegen::noexhaustive(false)]]
 Parameters
 {
@@ -379,7 +349,6 @@ Parameters
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Dictionary");
-    CHECK(s->attributes.namespaceName == "NS");
     CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     {
@@ -403,7 +372,6 @@ struct
 
 [[codegen::Dictionary(Dictionary),
 
-codegen::namespace(NS),
 
 
 codegen::noexhaustive(false)]]
@@ -422,7 +390,6 @@ Parameters
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Dictionary");
-    CHECK(s->attributes.namespaceName == "NS");
     CHECK(!s->attributes.noExhaustive);
     REQUIRE(s->variables.size() == 1);
     {
