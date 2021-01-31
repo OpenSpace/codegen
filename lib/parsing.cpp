@@ -246,6 +246,13 @@ Variable* parseVariable(std::string_view line) {
     // Remove the trailing ;
     line.remove_suffix(1);
 
+    if (line.find('=') != std::string_view::npos) {
+        throw SpecificationError(fmt::format(
+            "Found '=' in variable definition but default parameters are not allowed\n{}",
+            line
+        ));
+    }
+
     if (line.find(' ') == std::string_view::npos) {
         throw ParsingError(fmt::format(
             "Variable definition does not contain any empty character\n{}", line

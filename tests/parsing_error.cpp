@@ -322,3 +322,18 @@ struct [[codegen::Dictionary(def)]] Parameters2 {
         )
     );
 }
+
+TEST_CASE("Parsing Error: Default argument in variable", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+   int value1;
+   float v2 = 2.f;
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Source),
+        SpecificationError,
+        Catch::Matchers::Contains("Found '=' in variable definition")
+    );
+}
