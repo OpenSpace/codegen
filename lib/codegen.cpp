@@ -250,8 +250,11 @@ std::string writeEnumDocumentation(Enum* e) {
     Enum* en = static_cast<Enum*>(e);
     for (EnumElement* em : en->elements) {
         // If no key attribute is specified, we use the name instead
-        std::string_view key = em->attributes.key.empty() ? em->name : em->attributes.key;
-        result += fmt::format("\"{}\",", key);
+        std::string key =
+            em->attributes.key.empty() ?
+            fmt::format("\"{}\"", em->name) :
+            em->attributes.key;
+        result += fmt::format("{},", key);
     }
     // The last element has a , at the end that we can overwrite
     result.pop_back();
@@ -277,7 +280,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     std::string ver = fqn(s, "_");
     std::string v = verifier(type, *var, s);
     std::string result = fmt::format(
-        "    codegen_{}->documentations.push_back({{\"{}\",{},{},{}}});\n",
+        "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
         ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
     );
     return result;
@@ -390,12 +393,15 @@ std::string writeEnumConverter(Enum* e) {
     );
 
     for (EnumElement* elem : e->elements) {
-        std::string_view key =
-            elem->attributes.key.empty() ? elem->name : elem->attributes.key;
+        // If there is no explicit key, we need to use the name, but surround it with "
+        std::string key =
+            elem->attributes.key.empty() ?
+            fmt::format("\"{}\"", elem->name) :
+            elem->attributes.key;
 
         std::string type = fqn(e, "::");
         result += fmt::format(
-            "    if (v == \"{}\") {{ *val = {}::{}; }}\n", key, type, elem->name
+            "    if (v == {}) {{ *val = {}::{}; }}\n", key, type, elem->name
         );
     }
     result += "}\n";
@@ -434,7 +440,7 @@ std::string writeStructConverter(Struct* s) {
 
     for (Variable* var : s->variables) {
         result += fmt::format(
-            "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
+            "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
         );
     }
 
@@ -526,7 +532,7 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 
     for (Variable* var : s->variables) {
         result += fmt::format(
-            "    internal::bakeTo(dict, \"{}\", &res.{});\n", var->key, var->name
+            "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
         );
     }
 

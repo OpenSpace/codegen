@@ -33,7 +33,7 @@ All types and variable definitions can have comments defined directly before the
 The variable's name will be used to get a value out of the dictionary in the baking process.  The only transformation of the name is that the first letter is capitalized (`referenceName` will be looked up as `ReferenceName`)
 
 ### Member Attributes
- - `[[codegen::key(Name)]]`:  Use the `Name` instead of the (first letter capitalized) variable name to look up a value in the Dictionary during the baking
+ - `[[codegen::key("Name")]]`:  Use the `Name` instead of the (first letter capitalized) variable name to look up a value in the Dictionary during the baking. This value has to be encapsulated in "" if it is a string literal.  If you want to use the return value of a function, the "" have to be omitted, like `[[codegen::key(unitList())]]`
  - `[[codegen::inrange(min, max)]]`:  Makes sure that the `int`, `float`, or `double` value is between the `min` and `max` values.  Example: `float foo [[codegen::inrange(0.0, 1.0)]];`
  - `[[codegen::notinrange(min, max)]]`:  Makes sure that the `int`, `float`, or `double` value is outside the `min` and `max` values.  Example: `float foo [[codegen::notinrange(0.0, 1.0)]];`
  - `[[codegen::less(val)]]`:  Makes sure that the `int`, `float`, or `double` value is less than the `val` value.  Example: `float foo [[codegen::less(0.0)]];`

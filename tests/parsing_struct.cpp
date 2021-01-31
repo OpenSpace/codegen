@@ -386,7 +386,7 @@ Parameters
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "value");
-        CHECK(var->key == "Value");
+        CHECK(var->key == "\"Value\"");
         CHECK(var->type == "int");
     }
 
@@ -429,7 +429,7 @@ Parameters
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "value");
-        CHECK(var->key == "Value");
+        CHECK(var->key == "\"Value\"");
         CHECK(var->type == "int");
     }
 

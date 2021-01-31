@@ -300,8 +300,8 @@ Variable* parseVariable(std::string_view line) {
         res->key = std::string(res->attributes.key);
     }
     else {
-        res->key = std::string(res->name);
-        res->key[0] = static_cast<char>(::toupper(res->name[0]));
+        res->key = '"' + std::string(res->name) + '"';
+        res->key[1] = static_cast<char>(::toupper(res->name[0]));
     }
 
     return res;

@@ -38,13 +38,13 @@ namespace {
 
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // keyValue documentation
-        float keyValue [[codegen::key(KeyKey)]];
+        float keyValue [[codegen::key("KeyKey")]];
 
         // keyValueOptional documentation
-        std::optional<float> keyValueOptional [[codegen::key(KeyKeyOptional)]];
+        std::optional<float> keyValueOptional [[codegen::key("KeyKeyOptional")]];
 
         // keyValueVector documentation
-        std::vector<float> keyValueVector [[codegen::key(KeyKeyVector)]];
+        std::vector<float> keyValueVector [[codegen::key("KeyKeyVector")]];
 
         // inRangeValueInt documentation
         int inRangeValueInt [[codegen::inrange(-2, 8)]];
