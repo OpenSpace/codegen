@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
     std::string_view src = argv[2];
     if (type == "--file") {
         try {
+            std::cout << "codegen --file " << src << '\n';
             Result r = handleFile(src);
             switch (r) {
                 case Result::NotProcessed: std::cout << "Not processed\n"; break;
@@ -79,6 +80,8 @@ int main(int argc, char** argv) {
         }
     }
     else if (type == "--folder") {
+        std::cout << "codegen --folder " << src << '\n';
+
         namespace fs = std::filesystem;
         if (!fs::is_directory(src)) {
             std::cerr << "When using --folder, the second parameter has to name a folder";
