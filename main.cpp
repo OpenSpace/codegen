@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
             std::filesystem::path path = p.path();
 
             if (path.extension() == ".cpp" &&
-                path.string().find("_codegen") == std::string::npos &&
+                path.string().find("_codegen.cpp") == std::string::npos &&
                 path.string().find(extFolder) == std::string::npos)
             {
                 entries.push_back(p);
