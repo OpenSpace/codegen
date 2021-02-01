@@ -25,9 +25,10 @@
 #ifndef __OPENSPACE_CODEGEN___TYPES___H__
 #define __OPENSPACE_CODEGEN___TYPES___H__
 
-#include <stdexcept>
-#include <string_view>
 #include <map>
+#include <stdexcept>
+#include <string>
+#include <string_view>
 #include <unordered_map>
 #include <variant>
 #include <vector>
