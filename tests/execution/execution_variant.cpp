@@ -29,6 +29,7 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 #include <variant>
+#include <vector>
 
 namespace {
     struct [[codegen::Dictionary(Variant)]] Parameters {

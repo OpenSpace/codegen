@@ -106,6 +106,11 @@ namespace {
                 std::vector<std::string_view> types = extractTemplateTypeList(type);
 
                 for (std::string_view t : types) {
+                    if (startsWith(t, "std::vector<")) {
+                        res.push_back("std::vector");
+                        type.remove_prefix("std::vector<"sv.size());
+                        type.remove_suffix(1);
+                    }
                     if (isBasicType(t)) {
                         res.push_back(t);
                     }
@@ -121,19 +126,6 @@ namespace {
                 assert(types[1] == "std::string");
                 res.push_back("std::string");
             }
-
-            // Yea, we need to do the vector check twice to make sure that we detect:
-            // std::variant<std::vector<string>, std::string>
-            if (startsWith(type, "std::vector<")) {
-                res.push_back("std::vector");
-                type.remove_prefix("std::vector<"sv.size());
-                type.remove_suffix(1);
-
-                if (isBasicType(type)) {
-                    res.push_back(type);
-                }
-            }
-
 
             if (isBasicType(var->type)) {
                 res.push_back(var->type);

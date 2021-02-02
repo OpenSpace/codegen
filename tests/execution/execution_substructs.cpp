@@ -147,7 +147,6 @@ TEST_CASE("Substruct Bake", "[verifier]") {
     REQUIRE(p.structDOptionalValue.has_value());
     CHECK(p.structDOptionalValue->a == "abc");
     CHECK(p.structDOptionalValue->b == 2);
-
 }
 
 TEST_CASE("Substruct Documentation", "[verifier]") {
