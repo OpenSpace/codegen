@@ -32,6 +32,7 @@ add_executable(
   execution/execution_basic_types_optional_vector.cpp
   execution/execution_basic_types_vector.cpp
   execution/execution_enums.cpp
+  execution/execution_map.cpp
   execution/execution_shadowing.cpp
   execution/execution_simple.cpp
   execution/execution_substructs.cpp
@@ -72,6 +73,7 @@ add_executable(
   parsing_attributes_error_vec3.cpp
   parsing_attributes_error_vec4.cpp
   parsing_error.cpp
+  parsing_map.cpp
   parsing_other.cpp
   parsing_struct.cpp
   parsing_variable.cpp

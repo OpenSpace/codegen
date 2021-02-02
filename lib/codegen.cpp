@@ -112,6 +112,16 @@ namespace {
                 }
             }
 
+            if (startsWith(type, "std::map<")) {
+                res.push_back("std::map");
+                type.remove_prefix("std::map<"sv.size());
+                std::vector<std::string_view> types = extractTemplateTypeList(type);
+                assert(types.size() == 2);
+                assert(types[0] == "std::string");
+                assert(types[1] == "std::string");
+                res.push_back("std::string");
+            }
+
             // Yea, we need to do the vector check twice to make sure that we detect:
             // std::variant<std::vector<string>, std::string>
             if (startsWith(type, "std::vector<")) {
@@ -228,6 +238,26 @@ std::string verifier(std::string_view type, const Variable& var, Struct* current
 
         result += "})";
         return result;
+    }
+    else if (startsWith(type, "std::map<")) {
+        std::string_view subtypes = type.substr("std::map<"sv.size());
+        if (subtypes.find('>') == std::string_view::npos) {
+            // I don't think this can actually fire as it gets tested in the parsing step
+            throw ParsingError(fmt::format(
+                "Could not find closing > in map definition: {}", type
+            ));
+        }
+        assert(subtypes.back() == '>');
+        std::vector<std::string_view> types = extractTemplateTypeList(subtypes);
+        assert(types.size() == 2);
+        if (types[0] != "std::string" || types[1] != "std::string") {
+            throw SpecificationError(fmt::format(
+                "Currently, only 'std::string's are allowed as key and value types for "
+                "maps. Found: <{}, {}>", types[0], types[1]
+            ));
+        }
+
+        return  "new TableVerifier({{\"*\", new StringVerifier, Optional::No }})\n";
     }
     else {
         const StackElement* e = resolveType(currentStruct, type);
@@ -485,6 +515,10 @@ std::string generateResult(Struct* s) {
             result += BakeFunctionVectorDeclaration;
             continue;
         }
+        if (t == "std::map") {
+            result += BakeFunctionMapDeclaration;
+            continue;
+        }
 
         std::string_view bake = bakeFunctionForType(t);
         if (!bake.empty()) {
@@ -498,7 +532,7 @@ std::string generateResult(Struct* s) {
     result += writeStructConverter(s);
 
     for (std::string_view type : types) {
-        if (type != "std::vector" && type != "std::optional") {
+        if (type != "std::vector" && type != "std::optional" && type != "std::map") {
             // These types were covered higher up
             continue;
         }

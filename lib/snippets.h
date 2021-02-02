@@ -29,6 +29,7 @@
 
 namespace {
     constexpr const char BakeFunctionVectorDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
+    constexpr const char BakeFunctionMapDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val);\n";
     constexpr const char BakeFunctionOptionalDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
 
 

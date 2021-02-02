@@ -101,6 +101,18 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
 }
 )";
 
+    constexpr const char BakeFunctionMap[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+    
+    for (std::string_view k : dict.keys()) {
+        T v;
+        bakeTo(dict, k, &v);
+        val->insert({ std::string(k), v });
+    }
+}
+)";
+
     constexpr const char VariantConverterBool[] = "   if (d.hasValue<bool>(key)) { bool v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterInt[] = "   if (d.hasValue<double>(key)) { int v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterDouble[] = "   if (d.hasValue<double>(key)) { double v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -173,7 +185,8 @@ std::string_view bakeFunctionForType(std::string_view type) {
         { "glm::dmat4x4",   BakeFunctionDMat4x4 },
         { "std::monostate", BakeFunctionMonostate },
         { "std::optional",  BakeFunctionOptional },
-        { "std::vector",    BakeFunctionVector }
+        { "std::vector",    BakeFunctionVector },
+        { "std::map",       BakeFunctionMap }
     };
 
     const auto it = BakeFunctions.find(type);
