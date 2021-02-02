@@ -28,6 +28,7 @@ All types and variable definitions can have comments defined directly before the
  - `glm::ivec2`, `glm::ivec3`, `glm::ivec4`, `glm::dvec2`, `glm::dvec3`, `glm::dvec4`, `glm::vec2`, `glm::vec3`, `glm::vec4`, `glm::mat2x2`, `glm::mat2x3`, `glm::mat2x4`, `glm::mat3x2`, `glm::mat3x3`, `glm::mat3x4`, `glm::mat4x2`, `glm::mat4x3`, `glm::mat4x4`, `glm::dmat2x2`, `glm::dmat2x3`, `glm::dmat2x4`, `glm::dmat3x2`, `glm::dmat3x3`, `glm::dmat3x4`, `glm::dmat4x2`, `glm::dmat4x3`, `glm::dmat4x4`
  - `struct`s (must be defined inside the root struct)
  - `enum class` (must be defind inside the root struct)
+ - `std::monostate`. In a rare case where you need to reference another documentation generated with a specific ID elsewhere within OpenSpace.  A variable of this attribute *must* be paired with a `[[codegen::reference("Foo")]]` attribute, where `Foo` is the `id` of a defined Documentation that has been registered with the `DocumentationEngine`
 
 
 The variable's name will be used to get a value out of the dictionary in the baking process.  The only transformation of the name is that the first letter is capitalized (`referenceName` will be looked up as `ReferenceName`)
@@ -42,6 +43,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::inlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is one of a finite list of values.  Example: `std::string foo [[codegen::inlist("v1", "v2", "v3")]];`
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
  - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
+ - `[[codegen::reference("foo")]]`:  Marks a `std::monostate` as a referencing verifier that will look up a different Documentation elsewhere in the code.  This attribute can only be used with a `std::monostate`.
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
@@ -56,3 +58,32 @@ When baking, a Dictionary containing a string "V1" will result in the `E::V1` en
 
 ### Enum Attributes
  - `[[codegen::key(Name)]]`: Use the "Name" instead of the enum values name
+
+
+## Verifier Mappings
+This is a complete list of variable types and attribute combinations.  We are **not** listing the `[[codegen::key(...)]]` attribute here, as this is allowed with *every* variable.
+
+ - `int` + `[[codegen::inrange]]` -> `InRangeVerifier<IntVerifier>`
+ - `int` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<IntVerifier>`
+ - `int` + `[[codegen::less]]` -> `LessVerifier<IntVerifier>`
+ - `int` + `[[codegen::lessequal]]` -> `LessEqualVerifier<IntVerifier>`
+ - `int` + `[[codegen::greater]]` -> `GreaterVerifier<IntVerifier>`
+ - `int` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<IntVerifier>`
+ - `int` + `[[codegen::unequal]]` -> `UnequalVerifier<IntVerifier>`
+ - `double` + `[[codegen::inrange]]` -> `InRangeVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::less]]` -> `LessVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::lessequal]]` -> `LessEqualVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::greater]]` -> `GreaterVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<DoubleVerifier>`
+ - `double` + `[[codegen::unequal]]` -> `UnequalVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::inrange]]` -> `InRangeVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::less]]` -> `LessVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::lessequal]]` -> `LessEqualVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::greater]]` -> `GreaterVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<DoubleVerifier>`
+ - `float` + `[[codegen::unequal]]` -> `UnequalVerifier<DoubleVerifier>`
+ - `std::string` + `[[codegen::inlist]]` -> `InListVerifier<StringVerifier>`
+ - `std::string` + `[[codegen::unequal]]` -> `UnequalVerifier<StringVerifier>`
+ - `std::string` + `[[codegen::annotation]]` -> `AnnotationVerifier<StringVerifier>`
