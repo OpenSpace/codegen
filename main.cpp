@@ -126,7 +126,9 @@ int main(int argc, char** argv) {
                     }
                 }
                 catch (const std::runtime_error& e) {
-                    print("%s: %s\n", p.path().string().c_str(), e.what());
+                    print("\n\n");
+                    print("%s: error: %s\n", p.path().string().c_str(), e.what());
+                    print("\n\n");
                     exit(EXIT_FAILURE);
                 }
             }

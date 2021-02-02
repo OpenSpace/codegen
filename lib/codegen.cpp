@@ -478,10 +478,38 @@ std::string writeStructConverter(Struct* s) {
     return result;
 }
 
+std::string emitWarningsForDocumentationLessTypes(Struct* s) {
+    std::string res;
+    for (Variable* var : s->variables) {
+        if (var->comment.empty()) {
+#ifdef WIN32
+            std::string identifier = var->name;
+            Struct* str = s;
+            while (str) {
+                identifier = str->name + "." + identifier;
+                str = str->parent;
+            }
+            const Struct* root = rootStruct(s);
+
+            res += fmt::format(
+                "#pragma message(\"{}: [CODEGEN] {} is not documented\")\n",
+                root->sourceFile, identifier
+            );
+#endif // WIN32
+        }
+    }
+    return res;
+}
+
 std::string generateResult(Struct* s) {
     std::string result = fmt::format(FileHeader);
 
     result += fmt::format(DocumentationPreamble, s->name);
+
+    if (GenerateWarningsForDocumentationLessTypes) {
+        result += emitWarningsForDocumentationLessTypes(s);
+    }
+
     result += writeStructDocumentation(s);
     result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
 
@@ -564,9 +592,21 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     return result;
 }
 
+std::string createClickableFileName(std::string filename) {
+    for (size_t i = 0; i < filename.size(); ++i) {
+        if (filename[i] == '\\') {
+            filename.insert(filename.begin() + i, '\\');
+            i += 1;
+        }
+    }
+
+    return filename;
+}
+
 std::string handleCode(std::string_view code, std::string_view path) {
     Struct* rootStruct = parseRootStruct(code);
     if (rootStruct) {
+        rootStruct->sourceFile = createClickableFileName(std::string(path));
         std::string genContent = generateResult(rootStruct);
         return genContent;
     }
@@ -586,6 +626,8 @@ Result handleFile(std::filesystem::path path) {
     if (!rootStruct) {
         return Result::NotProcessed;
     }
+    rootStruct->sourceFile = createClickableFileName(path.string());
+
     std::string content = generateResult(rootStruct);
     if (content.empty()) {
         return Result::NotProcessed;

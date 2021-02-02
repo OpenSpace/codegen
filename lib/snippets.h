@@ -47,6 +47,7 @@ template <typename T> openspace::documentation::Documentation doc() {{
 }}
 template <> openspace::documentation::Documentation doc<{}>() {{
     using namespace openspace::documentation;
+
 )";
 
     constexpr const char DocumentationEpilog[] = R"(

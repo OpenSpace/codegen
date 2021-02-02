@@ -122,6 +122,7 @@ struct Struct : public StackElement {
         bool noExhaustive = true; // @TODO change to false once OpenSpace works with it
     };
     Attributes attributes;
+    std::string sourceFile;
 };
 
 struct EnumElement {
