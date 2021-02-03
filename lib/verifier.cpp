@@ -29,29 +29,29 @@
 #include <cassert>
 
 namespace {
-    void reportUnsupportedAttribute(std::string_view type,
+    void reportUnsupportedAttribute(BasicType::Type type,
                                     const Variable::Attributes& attributes)
     {
-        assert(!type.empty());
-     
         auto report = [type](const std::string& attr, std::string_view name) {
             if (!attr.empty()) {
+                std::string t = generateTypename(type);
                 throw SpecificationError(fmt::format(
-                    "Type '{}' does not support attribute '{}'", type, name
+                    "Type '{}' does not support attribute '{}'", t, name
                 ));
             }
         };
 
-        if (type == "bool" ||
-            type == "glm::ivec2" || type == "glm::ivec3" || type == "glm::ivec4" ||
-            type == "glm::dvec2" || type == "glm::dvec3" || type == "glm::dvec4" ||
-            type == "glm::vec2"  || type == "glm::vec3"  || type == "glm::vec4" ||
-            type == "glm::mat2x2" || type == "glm::mat2x3" || type == "glm::mat2x4" ||
-            type == "glm::mat3x2" || type == "glm::mat3x3" || type == "glm::mat3x4" ||
-            type == "glm::mat4x2" || type == "glm::mat4x3" || type == "glm::mat4x4" ||
-            type == "glm::dmat2x2" || type == "glm::dmat2x3" || type == "glm::dmat2x4" ||
-            type == "glm::dmat3x2" || type == "glm::dmat3x3" || type == "glm::dmat3x4" ||
-            type == "glm::dmat4x2" || type == "glm::dmat4x3" || type == "glm::dmat4x4")
+        using Type = BasicType::Type;
+        if (type == Type::Bool ||
+            type == Type::Ivec2 || type == Type::Ivec3 || type == Type::Ivec4 ||
+            type == Type::Dvec2 || type == Type::Dvec3 || type == Type::Dvec4 ||
+            type == Type::Vec2 || type == Type::Vec3 || type == Type::Vec4 ||
+            type == Type::Mat2x2 || type == Type::Mat2x3 || type == Type::Mat2x4 ||
+            type == Type::Mat3x2 || type == Type::Mat3x3 || type == Type::Mat3x4 ||
+            type == Type::Mat4x2 || type == Type::Mat4x3 || type == Type::Mat4x4 ||
+            type == Type::DMat2x2 || type == Type::DMat2x3 || type == Type::DMat2x4 ||
+            type == Type::DMat3x2 || type == Type::DMat3x3 || type == Type::DMat3x4 ||
+            type == Type::DMat4x2 || type == Type::DMat4x3 || type == Type::DMat4x4)
         {
             report(attributes.annotation, attributes::Annotation);
             report(attributes.inlist, attributes::InList);
@@ -65,13 +65,13 @@ namespace {
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
         }
-        else if (type == "int" || type == "double" || type == "float") {
+        else if (type == Type::Int || type == Type::Double || type == Type::Float) {
             report(attributes.annotation, attributes::Annotation);
             report(attributes.inlist, attributes::InList);
             report(attributes.notinlist, attributes::NotInList);
             report(attributes.reference, attributes::Reference);
         }
-        else if (type == "std::string") {
+        else if (type == Type::String) {
             report(attributes.inrange, attributes::InRange);
             report(attributes.less, attributes::Less);
             report(attributes.lessequal, attributes::LessEqual);
@@ -80,7 +80,7 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.reference, attributes::Reference);
         }
-        else if (type == "std::monostate") {
+        else if (type == Type::Monostate) {
             report(attributes.annotation, attributes::Annotation);
             report(attributes.inlist, attributes::InList);
             report(attributes.inrange, attributes::InRange);
@@ -102,14 +102,14 @@ namespace {
     }
 } // namespace
 
-std::string verifierForType(std::string_view type, const Variable::Attributes& attributes, 
+std::string verifierForType(BasicType::Type type, const Variable::Attributes& attributes,
                             std::string_view dictionaryName)
 {
-    assert(!type.empty());
+    using Type = BasicType::Type;
 
     reportUnsupportedAttribute(type, attributes);
-    if (type == "bool") { return "BoolVerifier"; }
-    else if (type == "int") {
+    if (type == Type::Bool) { return "BoolVerifier"; }
+    else if (type == Type::Int) {
         std::string res = "IntVerifier";
         if (!attributes.inrange.empty()) {
             res = addQualifier(res, "InRangeVerifier", attributes.inrange);
@@ -134,7 +134,7 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
         }
         return res;
     }
-    else if (type == "double" || type == "float") {
+    else if (type == Type::Double || type == Type::Float) {
         std::string res = "DoubleVerifier";
         if (!attributes.inrange.empty()) {
             res = addQualifier(res, "InRangeVerifier", attributes.inrange);
@@ -159,7 +159,7 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
         }
         return res;
     }
-    else if (type == "std::string") {
+    else if (type == Type::String) {
         std::string res = "StringVerifier";
         if (!attributes.inlist.empty()) {
             std::string param = '{' + std::string(attributes.inlist) + '}';
@@ -179,34 +179,34 @@ std::string verifierForType(std::string_view type, const Variable::Attributes& a
         }
         return res;
     }
-    else if (type == "glm::ivec2") { return "IntVector2Verifier"; }
-    else if (type == "glm::ivec3") { return "IntVector3Verifier"; }
-    else if (type == "glm::ivec4") { return "IntVector4Verifier"; }
-    else if (type == "glm::dvec2") { return "DoubleVector2Verifier"; }
-    else if (type == "glm::dvec3") { return "DoubleVector3Verifier"; }
-    else if (type == "glm::dvec4") { return "DoubleVector4Verifier"; }
-    else if (type == "glm::vec2") { return "DoubleVector2Verifier"; }
-    else if (type == "glm::vec3") { return "DoubleVector3Verifier"; }
-    else if (type == "glm::vec4") { return "DoubleVector4Verifier"; }
-    else if (type == "glm::dmat2x2") { return "DoubleMatrix2x2Verifier"; }
-    else if (type == "glm::dmat2x3") { return "DoubleMatrix2x3Verifier"; }
-    else if (type == "glm::dmat2x4") { return "DoubleMatrix2x4Verifier"; }
-    else if (type == "glm::dmat3x2") { return "DoubleMatrix3x2Verifier"; }
-    else if (type == "glm::dmat3x3") { return "DoubleMatrix3x3Verifier"; }
-    else if (type == "glm::dmat3x4") { return "DoubleMatrix3x4Verifier"; }
-    else if (type == "glm::dmat4x2") { return "DoubleMatrix4x2Verifier"; }
-    else if (type == "glm::dmat4x3") { return "DoubleMatrix4x3Verifier"; }
-    else if (type == "glm::dmat4x4") { return "DoubleMatrix4x4Verifier"; }
-    else if (type == "glm::mat2x2") { return "DoubleMatrix2x2Verifier"; }
-    else if (type == "glm::mat2x3") { return "DoubleMatrix2x3Verifier"; }
-    else if (type == "glm::mat2x4") { return "DoubleMatrix2x4Verifier"; }
-    else if (type == "glm::mat3x2") { return "DoubleMatrix3x2Verifier"; }
-    else if (type == "glm::mat3x3") { return "DoubleMatrix3x3Verifier"; }
-    else if (type == "glm::mat3x4") { return "DoubleMatrix3x4Verifier"; }
-    else if (type == "glm::mat4x2") { return "DoubleMatrix4x2Verifier"; }
-    else if (type == "glm::mat4x3") { return "DoubleMatrix4x3Verifier"; }
-    else if (type == "glm::mat4x4") { return "DoubleMatrix4x4Verifier"; }
-    else if (type == "std::monostate") {
+    else if (type == Type::Ivec2) { return "IntVector2Verifier"; }
+    else if (type == Type::Ivec3) { return "IntVector3Verifier"; }
+    else if (type == Type::Ivec4) { return "IntVector4Verifier"; }
+    else if (type == Type::Dvec2) { return "DoubleVector2Verifier"; }
+    else if (type == Type::Dvec3) { return "DoubleVector3Verifier"; }
+    else if (type == Type::Dvec4) { return "DoubleVector4Verifier"; }
+    else if (type == Type::Vec2) { return "DoubleVector2Verifier"; }
+    else if (type == Type::Vec3) { return "DoubleVector3Verifier"; }
+    else if (type == Type::Vec4) { return "DoubleVector4Verifier"; }
+    else if (type == Type::DMat2x2) { return "DoubleMatrix2x2Verifier"; }
+    else if (type == Type::DMat2x3) { return "DoubleMatrix2x3Verifier"; }
+    else if (type == Type::DMat2x4) { return "DoubleMatrix2x4Verifier"; }
+    else if (type == Type::DMat3x2) { return "DoubleMatrix3x2Verifier"; }
+    else if (type == Type::DMat3x3) { return "DoubleMatrix3x3Verifier"; }
+    else if (type == Type::DMat3x4) { return "DoubleMatrix3x4Verifier"; }
+    else if (type == Type::DMat4x2) { return "DoubleMatrix4x2Verifier"; }
+    else if (type == Type::DMat4x3) { return "DoubleMatrix4x3Verifier"; }
+    else if (type == Type::DMat4x4) { return "DoubleMatrix4x4Verifier"; }
+    else if (type == Type::Mat2x2) { return "DoubleMatrix2x2Verifier"; }
+    else if (type == Type::Mat2x3) { return "DoubleMatrix2x3Verifier"; }
+    else if (type == Type::Mat2x4) { return "DoubleMatrix2x4Verifier"; }
+    else if (type == Type::Mat3x2) { return "DoubleMatrix3x2Verifier"; }
+    else if (type == Type::Mat3x3) { return "DoubleMatrix3x3Verifier"; }
+    else if (type == Type::Mat3x4) { return "DoubleMatrix3x4Verifier"; }
+    else if (type == Type::Mat4x2) { return "DoubleMatrix4x2Verifier"; }
+    else if (type == Type::Mat4x3) { return "DoubleMatrix4x3Verifier"; }
+    else if (type == Type::Mat4x4) { return "DoubleMatrix4x4Verifier"; }
+    else if (type == Type::Monostate) {
         if (attributes.reference.empty()) {
             throw SpecificationError("A monostate must have a 'reference' attribute");
         }

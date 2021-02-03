@@ -46,61 +46,52 @@ namespace {
         return !bake.empty();
     }
 
-    std::vector<std::string_view> usedTypes(const Struct& s) {
-        std::vector<std::string_view> res;
+    std::vector<const VariableType*> usedTypes(const VariableType* var) {
+        std::vector<const VariableType*> res;
+        res.push_back(var);
+
+        switch (var->tag) {
+            case VariableType::Tag::BasicType:
+            case VariableType::Tag::CustomType:
+                break;
+            case VariableType::Tag::MapType: {
+                const MapType* mt = static_cast<const MapType*>(var);
+                std::vector<const VariableType*> v1 = usedTypes(mt->keyType);
+                std::vector<const VariableType*> v2 = usedTypes(mt->valueType);
+
+                res.insert(res.end(), v1.begin(), v1.end());
+                res.insert(res.end(), v2.begin(), v2.end());
+                break;
+            }
+            case VariableType::Tag::OptionalType: {
+                const OptionalType* pt = static_cast<const OptionalType*>(var);
+                std::vector<const VariableType*> v1 = usedTypes(pt->type);
+                res.insert(res.end(), v1.begin(), v1.end());
+                break;
+            }
+            case VariableType::Tag::VariantType: {
+                const VariantType* vt = static_cast<const VariantType*>(var);
+                for (VariableType* v : vt->types) {
+                    std::vector<const VariableType*> v1 = usedTypes(v);
+                    res.insert(res.end(), v1.begin(), v1.end());
+                }
+                break;
+            }
+            case VariableType::Tag::VectorType: {
+                const VectorType* vt = static_cast<const VectorType*>(var);
+                std::vector<const VariableType*> v1 = usedTypes(vt->type);
+                res.insert(res.end(), v1.begin(), v1.end());
+                break;
+            }
+        }
+        return res;
+    }
+
+    std::vector<const VariableType*> usedTypes(const Struct& s) {
+        std::vector<const VariableType*> res;
         for (const Variable* var : s.variables) {
-            std::string_view type = var->typeString;
-
-            if (startsWith(type, "std::optional<")) {
-                res.push_back("std::optional");
-                type.remove_prefix("std::optional<"sv.size());
-                type.remove_suffix(1);
-
-                if (isBasicType(type)) {
-                    res.push_back(type);
-                }
-            }
-
-            if (startsWith(type, "std::vector<")) {
-                res.push_back("std::vector");
-                type.remove_prefix("std::vector<"sv.size());
-                type.remove_suffix(1);
-
-                if (isBasicType(type)) {
-                    res.push_back(type);
-                }
-            }
-
-            if (startsWith(type, "std::variant<")) {
-                res.push_back("std::variant");
-                type.remove_prefix("std::variant<"sv.size());
-                std::vector<std::string_view> types = extractTemplateTypeList(type);
-
-                for (std::string_view t : types) {
-                    if (startsWith(t, "std::vector<")) {
-                        res.push_back("std::vector");
-                        type.remove_prefix("std::vector<"sv.size());
-                        type.remove_suffix(1);
-                    }
-                    if (isBasicType(t)) {
-                        res.push_back(t);
-                    }
-                }
-            }
-
-            if (startsWith(type, "std::map<")) {
-                res.push_back("std::map");
-                type.remove_prefix("std::map<"sv.size());
-                std::vector<std::string_view> types = extractTemplateTypeList(type);
-                assert(types.size() == 2);
-                assert(types[0] == "std::string");
-                assert(types[1] == "std::string");
-                res.push_back("std::string");
-            }
-
-            if (isBasicType(var->typeString)) {
-                res.push_back(var->typeString);
-            }
+            std::vector<const VariableType*> v = usedTypes(var->type);
+            res.insert(res.end(), v.begin(), v.end());
         }
 
         for (StackElement* e : s.children) {
@@ -109,13 +100,20 @@ namespace {
             }
 
             const Struct& s = static_cast<const Struct&>(*e);
-            std::vector<std::string_view> t = usedTypes(s);
+            std::vector<const VariableType*> t = usedTypes(s);
             res.insert(res.end(), t.begin(), t.end());
         }
 
         // Remove duplicates
-        std::sort(res.begin(), res.end());
-        res.erase(std::unique(res.begin(), res.end()), res.end());
+        for (int i = 0; i < static_cast<int>(res.size()); ++i) {
+            for (int j = i + 1; j < static_cast<int>(res.size()); ++j) {
+                if (*res[i] == *res[j]) {
+                    res.erase(res.begin() + j);
+                    i--;
+                    break;
+                }
+            }
+        }
 
         return res;
     }
@@ -154,46 +152,40 @@ namespace {
     }
 } // namespace
 
-std::string verifier(std::string_view type, const Variable& var, Struct* currentStruct) {
-    assert(!type.empty());
+std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
+    assert(type);
 
-    const Struct* root = rootStruct(currentStruct);
-    std::string v = verifierForType(type, var.attributes, root->attributes.dictionary);
-    
-    if (!v.empty()) {
-        return std::string("new ") + v;
+    if (type->tag == VariableType::Tag::BasicType) {
+        BasicType* bt = static_cast<BasicType*>(type);
+        const Struct* root = rootStruct(currentStruct);
+        std::string v = verifierForType(bt->type, var.attributes, root->attributes.dictionary);
+        return "new " + v;
     }
-    else if (startsWith(type, "std::vector<")) {
-        type.remove_prefix("std::vector<"sv.size());
-        type.remove_suffix(1);
-
-        const StackElement* e = resolveType(currentStruct, type);
+    else if (type->tag == VariableType::Tag::OptionalType) {
+        OptionalType* ot = static_cast<OptionalType*>(type);
+        return verifier(ot->type, var, currentStruct);
+    }
+    else if (type->tag == VariableType::Tag::VectorType) {
+        VectorType* vt = static_cast<VectorType*>(type);
+        const StackElement* e = resolveType(currentStruct, generateTypename(vt->type));
         std::string comments;
         if (e) {
             // e is false for subtypes that are not our own structs
             comments = resolveComment(e->comment);
         }
 
-        std::string ver = verifier(type, var, currentStruct);
+        std::string ver = verifier(vt->type, var, currentStruct);
         return fmt::format(
             "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n", ver, comments
         );
     }
-    else if (startsWith(type, "std::variant<")) {
-        std::string_view subtypes = type.substr("std::variant<"sv.size());
-        if (subtypes.find('>') == std::string_view::npos) {
-            // I don't think this can actually fire as it gets tested in the parsing step
-            throw ParsingError(fmt::format(
-                "Could not find closing > in variant definition: {}", type
-            ));
-        }
-        assert(subtypes.back() == '>');
+    else if (type->tag == VariableType::Tag::VariantType) {
+        VariantType* vt = static_cast<VariantType*>(type);
 
         std::string result = "new OrVerifier({";
 
-        std::vector<std::string_view> types = extractTemplateTypeList(subtypes);
-        for (std::string_view subtype : types) {
-            result += verifier(subtype, var, currentStruct) + ',';
+        for (VariableType* v : vt->types) {
+            result += verifier(v, var, currentStruct) + ',';
         }
 
         // Remove the final ,
@@ -202,35 +194,24 @@ std::string verifier(std::string_view type, const Variable& var, Struct* current
         result += "})";
         return result;
     }
-    else if (startsWith(type, "std::map<")) {
-        std::string_view subtypes = type.substr("std::map<"sv.size());
-        if (subtypes.find('>') == std::string_view::npos) {
-            // I don't think this can actually fire as it gets tested in the parsing step
-            throw ParsingError(fmt::format(
-                "Could not find closing > in map definition: {}", type
-            ));
-        }
-        assert(subtypes.back() == '>');
-        std::vector<std::string_view> types = extractTemplateTypeList(subtypes);
-        assert(types.size() == 2);
-        if (types[0] != "std::string" || types[1] != "std::string") {
-            throw SpecificationError(fmt::format(
-                "Currently, only 'std::string's are allowed as key and value types for "
-                "maps. Found: <{}, {}>", types[0], types[1]
-            ));
-        }
-
-        return  "new TableVerifier({{\"*\", new StringVerifier, Optional::No }})\n";
+    else if (type->tag == VariableType::Tag::MapType) {
+        MapType* mt = static_cast<MapType*>(type);
+        assert(mt->valueType->tag == VariableType::Tag::BasicType);
+        BasicType* valueType = static_cast<BasicType*>(mt->valueType);
+        assert(valueType->type == BasicType::Type::String);
+        const Struct* root = rootStruct(currentStruct);
+        std::string valueVerifier = verifierForType(
+            valueType->type, var.attributes, root->attributes.dictionary
+        );
+        return "new TableVerifier({{\"*\", new StringVerifier, Optional::No }})\n";
+    }
+    else if (type->tag == VariableType::Tag::CustomType) {
+        CustomType* ct = static_cast<CustomType*>(type);
+        assert(ct->type);
+        return fmt::format("codegen_{}_{}", fqn(currentStruct, "_"), ct->type->name);
     }
     else {
-        const StackElement* e = resolveType(currentStruct, type);
-        if (!e) {
-            throw ParsingError(fmt::format(
-                "Type detected that codegen doesn't know how to handle: {}", type
-            ));
-        }
-
-        return fmt::format("codegen_{}_{}", fqn(currentStruct, "_"), type);
+        throw std::logic_error("Missing case label");
     }
 }
 
@@ -259,19 +240,10 @@ std::string writeEnumDocumentation(Enum* e) {
 std::string writeVariableDocumentation(Struct* s, Variable* var) {
     var->comment = resolveComment(var->comment);
 
-    std::string_view type = var->typeString;
-    bool isOptional;
-    if (startsWith(var->typeString, "std::optional<")) {
-        isOptional = true;
-        type.remove_prefix("std::optional<"sv.size());
-        type.remove_suffix(1);
-    }
-    else {
-        isOptional = false;
-    }
+    const bool isOptional = var->type->tag == VariableType::Tag::OptionalType;
 
     std::string ver = fqn(s, "_");
-    std::string v = verifier(type, *var, s);
+    std::string v = verifier(var->type, *var, s);
     std::string result = fmt::format(
         "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
         ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
@@ -313,9 +285,10 @@ std::string writeStructDocumentation(Struct* s) {
 }
 
 std::string writeVariableConverter(Variable* var, std::vector<std::string>& converters) {
+    std::string typeString = generateTypename(var->type);
     std::string result;
-    if (const size_t p = var->typeString.find("std::variant"); p != std::string::npos) {
-        std::string subtypes = var->typeString.substr(p + "std::variant<"sv.size());
+    if (const size_t p = typeString.find("std::variant"); p != std::string::npos) {
+        std::string subtypes = typeString.substr(p + "std::variant<"sv.size());
 
         if (std::find(converters.begin(), converters.end(), subtypes) != converters.end())
         {
@@ -324,7 +297,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
 
         converters.push_back(subtypes);
 
-        std::string_view fullType = var->typeString;
+        std::string_view fullType = typeString;
         if (startsWith(fullType, "std::optional<")) {
             fullType.remove_prefix("std::optional<"sv.size());
             fullType.remove_suffix(">"sv.size());
@@ -349,7 +322,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             if (nVectorTypes > 1) {
                 throw SpecificationError(fmt::format(
                     "We can't have a variant containing multiple vector types, try a "
-                    "vector of variants instead\n{}", var->typeString
+                    "vector of variants instead\n{}", typeString
                 ));
             }
 
@@ -358,7 +331,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             if (conv.empty()) {
                 throw SpecificationError(fmt::format(
                     "Unsupported type '{}' found in variant list\n{}",
-                    subtype, var->typeString
+                    subtype, typeString
                 ));
             }
 
@@ -497,41 +470,55 @@ std::string generateResult(Struct* s) {
 
     result += BakeFunctionPreamble;
 
-    std::vector<std::string_view> types = usedTypes(*s);
-    for (std::string_view t : types) {
-        if (t == "std::optional") {
+    std::vector<const VariableType*> types = usedTypes(*s);
+    bool didOptionalDeclaration = false;
+    bool didVectorDeclaration = false;
+    bool didMapDeclaration = false;
+    for (const VariableType* t : types) {
+        if (t->tag == VariableType::Tag::OptionalType && !didOptionalDeclaration) {
             result += BakeFunctionOptionalDeclaration;
+            didOptionalDeclaration = true;
             continue;
         }
-        if (t == "std::vector") {
+        if (t->tag == VariableType::Tag::VectorType && !didVectorDeclaration) {
             result += BakeFunctionVectorDeclaration;
+            didVectorDeclaration = true;
             continue;
         }
-        if (t == "std::map") {
+        if (t->tag == VariableType::Tag::MapType && !didMapDeclaration) {
             result += BakeFunctionMapDeclaration;
+            didMapDeclaration = true;
             continue;
         }
-
-        std::string_view bake = bakeFunctionForType(t);
-        if (!bake.empty()) {
-            // The return value is empty for types that don't have a
-            // preamble-defined bake functions, like all custom structs
-            result += bake;
+        if (t->tag == VariableType::Tag::BasicType) {
+            const BasicType* bt = static_cast<const BasicType*>(t);
+            std::string name = generateTypename(bt);
+            result += bakeFunctionForType(name);
         }
     }
 
 
     result += writeStructConverter(s);
 
-    for (std::string_view type : types) {
-        if (type != "std::vector" && type != "std::optional" && type != "std::map") {
-            // These types were covered higher up
-            continue;
+    bool didOptionalDefinition = false;
+    bool didVectorDefinition = false;
+    bool didMapDefinition = false;
+    for (const VariableType* type : types) {
+        if (type->tag == VariableType::Tag::VectorType && !didVectorDefinition) {
+            std::string_view bake = bakeFunctionForType("std::vector");
+            didVectorDefinition = true;
+            result += bake;
         }
-
-        std::string_view bake = bakeFunctionForType(type);
-        assert(!bake.empty());
-        result += bake;
+        if (type->tag == VariableType::Tag::OptionalType && !didOptionalDefinition) {
+            std::string_view bake = bakeFunctionForType("std::optional");
+            didOptionalDefinition = true;
+            result += bake;
+        }
+        if (type->tag == VariableType::Tag::MapType && !didMapDefinition) {
+            std::string_view bake = bakeFunctionForType("std::map");
+            didMapDefinition = true;
+            result += bake;
+        }
     }
 
     result += fmt::format(

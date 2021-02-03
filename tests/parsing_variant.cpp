@@ -47,14 +47,17 @@ struct [[codegen::Dictionary(D)]] P {
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "a");
-        CHECK(var->typeString == "std::variant<int, float>");
+        CHECK(generateTypename(var->type) == "std::variant<int, float>");
         CHECK(var->comment == "a comment");
     }
     {
         Variable* var = s->variables[1];
         REQUIRE(var);
         CHECK(var->name == "b");
-        CHECK(var->typeString == "std::variant<bool, std::string, glm::ivec2, glm::mat3x4>");
+        CHECK(
+            generateTypename(var->type) ==
+            "std::variant<bool, std::string, glm::ivec2, glm::mat3x4>"
+        );
         CHECK(var->comment == "b comment");
     }
 }
@@ -74,7 +77,7 @@ struct [[codegen::Dictionary(D)]] P {
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "ov");
-        CHECK(var->typeString == "std::optional<std::variant<bool, int>>");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<bool, int>>");
         CHECK(var->comment == "a comment");
     }
 }

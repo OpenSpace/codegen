@@ -75,35 +75,35 @@ Lines, With, Weird,
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "multiLineCommenting");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "multi line commenting");
     }
     {
         Variable* var = s->variables[1];
         REQUIRE(var);
         CHECK(var->name == "multiLineSimpleVariableDef");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "multi line simple variable def");
     }
     {
         Variable* var = s->variables[2];
         REQUIRE(var);
         CHECK(var->name == "multiLineCommentAndDef");
-        CHECK(var->typeString == "std::string");
+        CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "multi line commenting and multi line variable def");
     }
     {
         Variable* var = s->variables[3];
         REQUIRE(var);
         CHECK(var->name == "misalignedIndent");
-        CHECK(var->typeString == "bool");
+        CHECK(generateTypename(var->type) == "bool");
         CHECK(var->comment == "misaligned commenting all over the place");
     }
     {
         Variable* var = s->variables[4];
         REQUIRE(var);
         CHECK(var->name == "multiLineCommentAttribute");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "multiline comment with attribute");
         CHECK(var->attributes.inrange == "2, 3");
     }
@@ -111,7 +111,7 @@ Lines, With, Weird,
         Variable* var = s->variables[5];
         REQUIRE(var);
         CHECK(var->name == "multilineinlist");
-        CHECK(var->typeString == "std::string");
+        CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment.empty());
         CHECK(
             var->attributes.inlist ==

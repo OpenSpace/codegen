@@ -30,6 +30,77 @@
 #include <cassert>
 #include <functional>
 
+bool operator==(const StackElement& lhs, const StackElement& rhs) {
+    return
+        lhs.type == rhs.type &&
+        lhs.name == rhs.name &&
+        lhs.comment == rhs.comment &&
+        lhs.parent == rhs.parent;
+}
+
+bool operator==(const VariableType& lhs, const VariableType& rhs) {
+    if (lhs.tag != rhs.tag) {
+        return false;
+    }
+
+    using Tag = VariableType::Tag;
+
+    switch (lhs.tag) {
+        case Tag::BasicType:
+            return static_cast<const BasicType&>(lhs) ==
+                   static_cast<const BasicType&>(rhs);
+        case Tag::MapType:
+            return static_cast<const MapType&>(lhs) ==
+                   static_cast<const MapType&>(rhs);
+        case Tag::OptionalType:
+            return static_cast<const OptionalType&>(lhs) ==
+                   static_cast<const OptionalType&>(rhs);
+        case Tag::VariantType:
+            return static_cast<const VariantType&>(lhs) ==
+                   static_cast<const VariantType&>(rhs);
+        case Tag::VectorType:
+            return static_cast<const VectorType&>(lhs) ==
+                   static_cast<const VectorType&>(rhs);
+        case Tag::CustomType:
+            return static_cast<const CustomType&>(lhs) ==
+                   static_cast<const CustomType&>(rhs);
+    }
+    throw std::logic_error("Missing case exception");
+}
+
+bool operator==(const BasicType& lhs, const BasicType& rhs) {
+    return lhs.type == rhs.type;
+}
+
+bool operator==(const MapType& lhs, const MapType& rhs) {
+    return (*lhs.keyType == *rhs.keyType) && (*lhs.valueType == *rhs.valueType);
+}
+
+bool operator==(const OptionalType& lhs, const OptionalType& rhs) {
+    return *lhs.type == *rhs.type;
+}
+
+bool operator==(const VariantType& lhs, const VariantType& rhs) {
+    if (lhs.types.size() != rhs.types.size()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < lhs.types.size(); ++i) {
+        if (!(*lhs.types[i] == *rhs.types[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool operator==(const CustomType& lhs, const CustomType& rhs) {
+    return *lhs.type == *rhs.type;
+}
+
+bool operator==(const VectorType& lhs, const VectorType& rhs) {
+    return *lhs.type == *rhs.type;
+}
+
 const Struct* rootStruct(const Struct* s) {
     assert(s);
 
@@ -210,8 +281,8 @@ VariableType* parseType(std::string_view type, Struct* context) {
     return t;
 }
 
-std::string generateTypename(const BasicType* type) {
-    switch (type->type) {
+std::string generateTypename(BasicType::Type type) {
+    switch (type) {
         case BasicType::Type::Bool:    return "bool";
         case BasicType::Type::Int:     return "int";
         case BasicType::Type::Double:  return "double";
@@ -246,6 +317,12 @@ std::string generateTypename(const BasicType* type) {
         case BasicType::Type::DMat4x4: return "glm::dmat4x4";
         case BasicType::Type::Monostate: return "std::monostate";
     }
+
+    throw std::logic_error("Missing case label");
+}
+
+std::string generateTypename(const BasicType* type) {
+    return generateTypename(type->type);
 }
 
 std::string generateTypename(const MapType* type) {
@@ -296,4 +373,5 @@ std::string generateTypename(const VariableType* type) {
         case VariableType::Tag::CustomType:
             return generateTypename(static_cast<const CustomType*>(type));
     }
+    throw std::logic_error("Missing case label");
 }

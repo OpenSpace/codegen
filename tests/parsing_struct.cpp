@@ -201,7 +201,7 @@ TEST_CASE("Parsing Struct: Variable", "[parsing]") {
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "variable");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "variable documentation");
     }
 
@@ -229,14 +229,14 @@ TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "variable");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "variable1 documentation");
     }
     {
         Variable* var = s->variables[1];
         REQUIRE(var);
         CHECK(var->name == "variable2");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "variable2 documentation");
     }
 
@@ -356,7 +356,7 @@ Parameters
         REQUIRE(var);
         CHECK(var->name == "value");
         CHECK(var->key == "\"Value\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
     }
 
     std::string r = generateResult(s);
@@ -397,7 +397,7 @@ Parameters
         REQUIRE(var);
         CHECK(var->name == "value");
         CHECK(var->key == "\"Value\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
     }
 
     std::string r = generateResult(s);

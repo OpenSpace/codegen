@@ -33,6 +33,11 @@
 #include <variant>
 #include <vector>
 
+// If this is defined, all types are declared with an empty virtual destructor, meaning
+// that they will properly disambiguate in the Visual Studio Watch window, making the
+// debugging of these types a bit easier.  No need to declare them otherwise
+#define TYPES_ADD_DEBUG_INFORMATION
+
 struct ParsingError : public std::runtime_error {
     ParsingError(std::string e) : std::runtime_error(e) {}
 
@@ -52,18 +57,6 @@ struct CodegenError : public std::runtime_error {
 
     // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept { return what(); }
-};
-
-
-struct Struct;
-
-struct StackElement {
-    enum class Type { Struct, Enum };
-    Type type;
-
-    std::string name;
-    std::string comment;
-    Struct* parent = nullptr;
 };
 
 namespace attributes {
@@ -86,7 +79,28 @@ namespace attributes {
 
 } // namespace attributes
 
+
+struct Struct;
+
+struct StackElement {
+#ifdef TYPES_ADD_DEBUG_INFORMATION
+    virtual ~StackElement() = default;
+#endif // TYPES_ADD_DEBUG_INFORMATION
+
+    enum class Type { Struct, Enum };
+    Type type;
+
+    std::string name;
+    std::string comment;
+    Struct* parent = nullptr;
+};
+
 struct VariableType {
+#ifdef TYPES_ADD_DEBUG_INFORMATION
+    virtual ~VariableType() = default;
+#endif // TYPES_ADD_DEBUG_INFORMATION
+
+
     enum class Tag {
         BasicType,
         MapType,
@@ -97,7 +111,9 @@ struct VariableType {
     };
 
     Tag tag;
+
 };
+bool operator==(const VariableType& lhs, const VariableType& rhs);
 
 VariableType* parseType(std::string_view type, Struct* s);
 std::string generateTypename(const VariableType* type);
@@ -122,31 +138,38 @@ struct BasicType : public VariableType {
     };
     Type type;
 };
+bool operator==(const BasicType& lhs, const BasicType& rhs);
+std::string generateTypename(BasicType::Type type);
 
 struct MapType : public VariableType {
-    VariableType* keyType;
-    VariableType* valueType;
+    VariableType* keyType = nullptr;
+    VariableType* valueType = nullptr;
 };
+bool operator==(const MapType& lhs, const MapType& rhs);
 
 struct OptionalType : public VariableType {
-    VariableType* type;
+    VariableType* type = nullptr;
 };
+bool operator==(const OptionalType& lhs, const OptionalType& rhs);
 
 struct VariantType : public VariableType {
     std::vector<VariableType*> types;
 };
+bool operator==(const VariantType& lhs, const VariantType& rhs);
 
 struct VectorType : public VariableType {
-    VariableType* type;
+    VariableType* type = nullptr;
 };
+bool operator==(const VectorType& lhs, const VectorType& rhs);
 
 struct CustomType : public VariableType {
-    const StackElement* type;
+    const StackElement* type = nullptr;
 };
+bool operator==(const CustomType& lhs, const CustomType& rhs);
 
 struct Variable {
     VariableType* type = nullptr;
-    std::string typeString;
+    //std::string typeString;
     std::string name;
     std::string key;
 

@@ -44,7 +44,10 @@ struct [[codegen::Dictionary(D)]] P {
         Variable* var = s->variables[0];
         REQUIRE(var);
         CHECK(var->name == "a");
-        CHECK(var->typeString == "std::variant<std::vector<int>, std::vector<float>>");
+        CHECK(
+            generateTypename(var->type) ==
+            "std::variant<std::vector<int>, std::vector<float>>"
+        );
         CHECK(var->comment == "a comment");
     }
 

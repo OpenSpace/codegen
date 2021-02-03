@@ -29,7 +29,7 @@
 #include <string>
 #include <string_view>
 
-[[nodiscard]] std::string verifierForType(std::string_view type,
+[[nodiscard]] std::string verifierForType(BasicType::Type type,
     const Variable::Attributes& attributes, std::string_view dictionaryName);
 
 #endif // __OPENSPACE_CODEGEN___VERIFIER___H__

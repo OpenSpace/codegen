@@ -215,7 +215,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "keyValue");
         CHECK(var->key == "\"KeyKey\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "keyValue documentation");
         CHECK(var->attributes.key == "\"KeyKey\"");
 
@@ -237,7 +237,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "keyValueOptional");
         CHECK(var->key == "\"KeyKeyOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "keyValueOptional documentation");
         CHECK(var->attributes.key == "\"KeyKeyOptional\"");
 
@@ -259,7 +259,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "keyValueVector");
         CHECK(var->key == "\"KeyKeyVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "keyValueVector documentation");
         CHECK(var->attributes.key == "\"KeyKeyVector\"");
 
@@ -280,7 +280,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         Variable* var = s->variables[3];
         CHECK(var->name == "inRangeValueInt");
         CHECK(var->key == "\"InRangeValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "inRangeValueInt documentation");
         CHECK(var->attributes.inrange == "-2, 2");
         
@@ -302,7 +302,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inRangeValueIntOptional");
         CHECK(var->key == "\"InRangeValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "inRangeValueIntOptional documentation");
         CHECK(var->attributes.inrange == "-2, 2");
 
@@ -323,7 +323,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inRangeValueIntVector");
         CHECK(var->key == "\"InRangeValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "inRangeValueIntVector documentation");
         CHECK(var->attributes.inrange == "-2, 2");
 
@@ -344,7 +344,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inRangeValueFloat");
         CHECK(var->key == "\"InRangeValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "inRangeValueFloat documentation");
         CHECK(var->attributes.inrange == "-0.5, 0.75");
         
@@ -365,7 +365,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inRangeValueFloatOptional");
         CHECK(var->key == "\"InRangeValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "inRangeValueFloatOptional documentation");
         CHECK(var->attributes.inrange == "-0.5, 0.75");
         
@@ -386,7 +386,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inRangeValueFloatVector");
         CHECK(var->key == "\"InRangeValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "inRangeValueFloatVector documentation");
         CHECK(var->attributes.inrange == "-0.5, 0.75");
 
@@ -407,7 +407,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueInt");
         CHECK(var->key == "\"NotInRangeValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "notInRangeValueInt documentation");
         CHECK(var->attributes.notinrange == "5, 7");
         
@@ -428,7 +428,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueIntOptional");
         CHECK(var->key == "\"NotInRangeValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "notInRangeValueIntOptional documentation");
         CHECK(var->attributes.notinrange == "5, 7");
         
@@ -449,7 +449,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueIntVector");
         CHECK(var->key == "\"NotInRangeValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "notInRangeValueIntVector documentation");
         CHECK(var->attributes.notinrange == "5, 7");
 
@@ -470,7 +470,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueFloat");
         CHECK(var->key == "\"NotInRangeValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "notInRangeValueFloat documentation");
         CHECK(var->attributes.notinrange == "-0.5, 0.5");
         
@@ -491,7 +491,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueFloatOptional");
         CHECK(var->key == "\"NotInRangeValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "notInRangeValueFloatOptional documentation");
         CHECK(var->attributes.notinrange == "-0.5, 0.5");
         
@@ -512,7 +512,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "notInRangeValueFloatVector");
         CHECK(var->key == "\"NotInRangeValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "notInRangeValueFloatVector documentation");
         CHECK(var->attributes.notinrange == "-0.5, 0.5");
 
@@ -533,7 +533,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueInt");
         CHECK(var->key == "\"LessValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "lessValueInt documentation");
         CHECK(var->attributes.less == "-5");
         
@@ -554,7 +554,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueIntOptional");
         CHECK(var->key == "\"LessValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "lessValueIntOptional documentation");
         CHECK(var->attributes.less == "-5");
         
@@ -575,7 +575,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueIntVector");
         CHECK(var->key == "\"LessValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "lessValueIntVector documentation");
         CHECK(var->attributes.less == "-5");
 
@@ -596,7 +596,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueFloat");
         CHECK(var->key == "\"LessValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "lessValueFloat documentation");
         CHECK(var->attributes.less == "15.0");
         
@@ -617,7 +617,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueFloatOptional");
         CHECK(var->key == "\"LessValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "lessValueFloatOptional documentation");
         CHECK(var->attributes.less == "15.0");
         
@@ -638,7 +638,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessValueFloatVector");
         CHECK(var->key == "\"LessValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "lessValueFloatVector documentation");
         CHECK(var->attributes.less == "15.0");
 
@@ -659,7 +659,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueInt");
         CHECK(var->key == "\"LessEqualValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "lessEqualValueInt documentation");
         CHECK(var->attributes.lessequal == "25");
 
@@ -680,7 +680,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueIntOptional");
         CHECK(var->key == "\"LessEqualValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "lessEqualValueIntOptional documentation");
         CHECK(var->attributes.lessequal == "25");
 
@@ -701,7 +701,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueIntVector");
         CHECK(var->key == "\"LessEqualValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "lessEqualValueIntVector documentation");
         CHECK(var->attributes.lessequal == "25");
 
@@ -722,7 +722,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueFloat");
         CHECK(var->key == "\"LessEqualValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "lessEqualValueFloat documentation");
         CHECK(var->attributes.lessequal == "12.0");
 
@@ -743,7 +743,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueFloatOptional");
         CHECK(var->key == "\"LessEqualValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "lessEqualValueFloatOptional documentation");
         CHECK(var->attributes.lessequal == "12.0");
 
@@ -764,7 +764,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "lessEqualValueFloatVector");
         CHECK(var->key == "\"LessEqualValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "lessEqualValueFloatVector documentation");
         CHECK(var->attributes.lessequal == "12.0");
 
@@ -785,7 +785,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueInt");
         CHECK(var->key == "\"GreaterValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "greaterValueInt documentation");
         CHECK(var->attributes.greater == "45");
 
@@ -806,7 +806,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueIntOptional");
         CHECK(var->key == "\"GreaterValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "greaterValueIntOptional documentation");
         CHECK(var->attributes.greater == "45");
 
@@ -827,7 +827,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueIntVector");
         CHECK(var->key == "\"GreaterValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "greaterValueIntVector documentation");
         CHECK(var->attributes.greater == "45");
 
@@ -848,7 +848,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueFloat");
         CHECK(var->key == "\"GreaterValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "greaterValueFloat documentation");
         CHECK(var->attributes.greater == "-5.0");
 
@@ -869,7 +869,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueFloatOptional");
         CHECK(var->key == "\"GreaterValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "greaterValueFloatOptional documentation");
         CHECK(var->attributes.greater == "-5.0");
 
@@ -890,7 +890,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterValueFloatVector");
         CHECK(var->key == "\"GreaterValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "greaterValueFloatVector documentation");
         CHECK(var->attributes.greater == "-5.0");
 
@@ -911,7 +911,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueInt");
         CHECK(var->key == "\"GreaterEqualValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "greaterEqualValueInt documentation");
         CHECK(var->attributes.greaterequal == "2");
 
@@ -932,7 +932,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueIntOptional");
         CHECK(var->key == "\"GreaterEqualValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "greaterEqualValueIntOptional documentation");
         CHECK(var->attributes.greaterequal == "2");
 
@@ -953,7 +953,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueIntVector");
         CHECK(var->key == "\"GreaterEqualValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "greaterEqualValueIntVector documentation");
         CHECK(var->attributes.greaterequal == "2");
 
@@ -974,7 +974,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueFloat");
         CHECK(var->key == "\"GreaterEqualValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "greaterEqualValueFloat documentation");
         CHECK(var->attributes.greaterequal == "-25.0");
 
@@ -995,7 +995,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueFloatOptional");
         CHECK(var->key == "\"GreaterEqualValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "greaterEqualValueFloatOptional documentation");
         CHECK(var->attributes.greaterequal == "-25.0");
 
@@ -1016,7 +1016,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "greaterEqualValueFloatVector");
         CHECK(var->key == "\"GreaterEqualValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "greaterEqualValueFloatVector documentation");
         CHECK(var->attributes.greaterequal == "-25.0");
 
@@ -1037,7 +1037,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueInt");
         CHECK(var->key == "\"UnequalValueInt\"");
-        CHECK(var->typeString == "int");
+        CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "unequalValueInt documentation");
         CHECK(var->attributes.unequal == "1");
 
@@ -1058,7 +1058,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueIntOptional");
         CHECK(var->key == "\"UnequalValueIntOptional\"");
-        CHECK(var->typeString == "std::optional<int>");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
         CHECK(var->comment == "unequalValueIntOptional documentation");
         CHECK(var->attributes.unequal == "1");
 
@@ -1079,7 +1079,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueIntVector");
         CHECK(var->key == "\"UnequalValueIntVector\"");
-        CHECK(var->typeString == "std::vector<int>");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
         CHECK(var->comment == "unequalValueIntVector documentation");
         CHECK(var->attributes.unequal == "1");
 
@@ -1100,7 +1100,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueFloat");
         CHECK(var->key == "\"UnequalValueFloat\"");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "unequalValueFloat documentation");
         CHECK(var->attributes.unequal == "123.0");
 
@@ -1121,7 +1121,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueFloatOptional");
         CHECK(var->key == "\"UnequalValueFloatOptional\"");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "unequalValueFloatOptional documentation");
         CHECK(var->attributes.unequal == "123.0");
 
@@ -1142,7 +1142,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueFloatVector");
         CHECK(var->key == "\"UnequalValueFloatVector\"");
-        CHECK(var->typeString == "std::vector<float>");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
         CHECK(var->comment == "unequalValueFloatVector documentation");
         CHECK(var->attributes.unequal == "123.0");
 
@@ -1163,7 +1163,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "descValue");
         CHECK(var->key == "\"DescValue\"");
-        CHECK(var->typeString == "bool");
+        CHECK(generateTypename(var->type) == "bool");
         CHECK(var->comment == "[[codegen::verbatim(description)]]");
 
         CHECK(var->attributes.annotation.empty());
@@ -1184,7 +1184,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue1");
         CHECK(var->key == "\"InListValue1\"");
-        CHECK(var->typeString == "std::string");
+        CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "inListValue1 documentation");
         CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
@@ -1205,7 +1205,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue1Optional");
         CHECK(var->key == "\"InListValue1Optional\"");
-        CHECK(var->typeString == "std::optional<std::string>");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
         CHECK(var->comment == "inListValue1Optional documentation");
         CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
@@ -1226,7 +1226,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue1Vector");
         CHECK(var->key == "\"InListValue1Vector\"");
-        CHECK(var->typeString == "std::vector<std::string>");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
         CHECK(var->comment == "inListValue1Vector documentation");
         CHECK(var->attributes.inlist == "\"A\", \"B\", \"C\"");
 
@@ -1247,7 +1247,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue2");
         CHECK(var->key == "\"InListValue2\"");
-        CHECK(var->typeString == "std::string");
+        CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "inListValue2 documentation");
         CHECK(var->attributes.inlist == "List");
 
@@ -1268,7 +1268,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue2Optional");
         CHECK(var->key == "\"InListValue2Optional\"");
-        CHECK(var->typeString == "std::optional<std::string>");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
         CHECK(var->comment == "inListValue2Optional documentation");
         CHECK(var->attributes.inlist == "List");
 
@@ -1289,7 +1289,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "inListValue2Vector");
         CHECK(var->key == "\"InListValue2Vector\"");
-        CHECK(var->typeString == "std::vector<std::string>");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
         CHECK(var->comment == "inListValue2Vector documentation");
         CHECK(var->attributes.inlist == "List");
 
@@ -1310,7 +1310,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueString");
         CHECK(var->key == "\"UnequalValueString\"");
-        CHECK(var->typeString == "std::string");
+        CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "unequalValueString documentation");
         CHECK(var->attributes.unequal == "\"abcdef\"");
 
@@ -1331,7 +1331,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueStringOptional");
         CHECK(var->key == "\"UnequalValueStringOptional\"");
-        CHECK(var->typeString == "std::optional<std::string>");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
         CHECK(var->comment == "unequalValueStringOptional documentation");
         CHECK(var->attributes.unequal == "\"abcdef\"");
 
@@ -1352,7 +1352,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "unequalValueStringVector");
         CHECK(var->key == "\"UnequalValueStringVector\"");
-        CHECK(var->typeString == "std::vector<std::string>");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
         CHECK(var->comment == "unequalValueStringVector documentation");
         CHECK(var->attributes.unequal == "\"abcdef\"");
 
@@ -1373,7 +1373,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValue");
         CHECK(var->key == "\"ReferenceValue\"");
-        CHECK(var->typeString == "std::monostate");
+        CHECK(generateTypename(var->type) == "std::monostate");
         CHECK(var->comment == "referenceValue documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
@@ -1394,7 +1394,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValueOptional");
         CHECK(var->key == "\"ReferenceValueOptional\"");
-        CHECK(var->typeString == "std::optional<std::monostate>");
+        CHECK(generateTypename(var->type) == "std::optional<std::monostate>");
         CHECK(var->comment == "referenceValueOptional documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
@@ -1415,7 +1415,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValueVector");
         CHECK(var->key == "\"ReferenceValueVector\"");
-        CHECK(var->typeString == "std::vector<std::monostate>");
+        CHECK(generateTypename(var->type) == "std::vector<std::monostate>");
         CHECK(var->comment == "referenceValueVector documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
@@ -1454,7 +1454,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "keyInRangeValue");
         CHECK(var->key == "KeyKey");
-        CHECK(var->typeString == "float");
+        CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "keyInRangeValue documentation");
         CHECK(var->attributes.key == "KeyKey");
         CHECK(var->attributes.inrange == "-2, 2");
@@ -1475,7 +1475,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "keyValueInRangeOptional");
         CHECK(var->key == "KeyKeyOptional");
-        CHECK(var->typeString == "std::optional<float>");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
         CHECK(var->comment == "keyInRangeValueOptional documentation");
         CHECK(var->attributes.key == "KeyKeyOptional");
         CHECK(var->attributes.inrange == "-2, 3");
@@ -1507,7 +1507,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
-    CHECK(s->variables[0]->typeString == "int");
+    CHECK(generateTypename(s->variables[0]->type) == "int");
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[parsing]") {
@@ -1525,7 +1525,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
-    CHECK(s->variables[0]->typeString == "int");
+    CHECK(generateTypename(s->variables[0]->type) == "int");
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[parsing]") {
@@ -1543,5 +1543,5 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
-    CHECK(s->variables[0]->typeString == "int");
+    CHECK(generateTypename(s->variables[0]->type) == "int");
 }
