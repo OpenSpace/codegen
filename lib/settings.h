@@ -26,19 +26,6 @@
 #define __OPENSPACE_CODEGEN___SETTINGS___H__
 
 constexpr const bool PrintTiming = true;
-constexpr const bool AlwaysOutputFiles = false;
-constexpr const bool PreventFileChange = false;
 constexpr const bool GenerateWarningsForDocumentationLessTypes = false;
-
-
-
-
-
-
-
-static_assert(
-    !(AlwaysOutputFiles && PreventFileChange),
-    "Illegal combination of parameters"
-);
 
 #endif // __OPENSPACE_CODEGEN___SETTINGS___H__

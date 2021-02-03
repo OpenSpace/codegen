@@ -116,6 +116,6 @@ add_dependencies(run_test_codegen codegen)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen ARGS "--folder" "${CMAKE_CURRENT_SOURCE_DIR}/execution"
+  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution"
   VERBATIM
 )

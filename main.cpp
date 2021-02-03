@@ -32,7 +32,6 @@
 
 #include <fmt/format.h>
 #include <array>
-#include <atomic>
 #include <filesystem>
 #include <iostream>
 
@@ -44,131 +43,76 @@
 //   - Add support for glm::uvecX
 //   - Add support for glm::dmatX mapping to glm::dmatXxX
 
-#ifdef WIN32
-//#define USE_MULTITHREADED_GENERATION
-#include <execution>
-#endif // WIN32
-
 long long totalTime = 0;
-std::atomic_int ChangedFiles = 0;
-std::atomic_int AllFiles = 0;
+int ChangedFiles = 0;
+int AllFiles = 0;
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
-        std::cerr <<
-            "Wrong number of parameters. Expected 3.\n"
-            "Usage: codegen --file <file>\n"
-            "       codegen --folder <folder>";
+    if (argc != 2) {
+        std::cerr << "Wrong number of parameters. Expected 2.\nUsage: codegen <folder>\n";
         exit(EXIT_FAILURE);
     }
 
-    std::string_view type = argv[1];
-    std::string_view src = argv[2];
-    if (type == "--file") {
-        try {
-            std::cout << "codegen --file " << src << '\n';
-            Result r = handleFile(src);
-            switch (r) {
-                case Result::NotProcessed: std::cout << "Not processed\n"; break;
-                case Result::Processed: std::cout << "Processed\n"; break;
-                case Result::Skipped: std::cout << "Skipped\n"; break;
-            }
-        }
-        catch (const std::runtime_error& e) {
-            std::cerr << e.what() << '\n';
-            exit(EXIT_FAILURE);
+    std::string_view src = argv[1];
+    std::cout << fmt::format("codegen {}\n", src);
+
+    namespace fs = std::filesystem;
+    if (!fs::is_directory(src)) {
+        std::cerr << "The second parameter has to name a folder\n";
+        exit(EXIT_FAILURE);
+    }
+
+    auto beg = std::chrono::high_resolution_clock::now();
+
+    std::vector<fs::directory_entry> entries;
+    std::string extFolder = fmt::format(
+        "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
+    );
+    for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
+        std::filesystem::path path = p.path();
+
+        if (path.extension() == ".cpp" &&
+            path.string().find("_codegen.cpp") == std::string::npos &&
+            path.string().find(extFolder) == std::string::npos)
+        {
+            entries.push_back(p);
         }
     }
-    else if (type == "--folder") {
-        std::cout << "codegen --folder " << src << '\n';
 
-        namespace fs = std::filesystem;
-        if (!fs::is_directory(src)) {
-            std::cerr << "When using --folder, the second parameter has to name a folder";
-            exit(EXIT_FAILURE);
-        }
-
-        auto beg = std::chrono::high_resolution_clock::now();
-
-        std::vector<fs::directory_entry> entries;
-        std::string extFolder = fmt::format(
-            "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
-        );
-        for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
-            std::filesystem::path path = p.path();
-
-            if (path.extension() == ".cpp" &&
-                path.string().find("_codegen.cpp") == std::string::npos &&
-                path.string().find(extFolder) == std::string::npos)
-            {
-                entries.push_back(p);
-            }
-        }
-
-
-
-        std::for_each(
-#ifdef USE_MULTITHREADED_GENERATION
-            std::execution::par_unseq,
-#endif // USE_MULTITHREADED_GENERATION
-            entries.begin(), entries.end(),
-            [](const fs::directory_entry& p) {
-                try {
-                    auto b = std::chrono::high_resolution_clock::now();
-                    Result res = handleFile(p.path());
-                    auto e = std::chrono::high_resolution_clock::now();
-                    if (res == Result::Processed) {
-                        ChangedFiles++;
-                        totalTime += (e - b).count();
-                    }
-                    if (res != Result::Skipped) {
-                        AllFiles++;
-                    }
+    std::for_each(
+        entries.cbegin(), entries.cend(),
+        [](const fs::directory_entry& p) {
+            try {
+                auto begin = std::chrono::high_resolution_clock::now();
+                Result res = handleFile(p.path());
+                auto end = std::chrono::high_resolution_clock::now();
+                if (res == Result::Processed) {
+                    ChangedFiles++;
+                    totalTime += (end - begin).count();
                 }
-                catch (const std::runtime_error& e) {
-                    print("\n\n");
-                    print("%s: error: %s\n", p.path().string().c_str(), e.what());
-                    print("\n\n");
-                    exit(EXIT_FAILURE);
+                if (res != Result::Skipped) {
+                    AllFiles++;
                 }
             }
+            catch (const std::runtime_error& e) {
+                std::cerr << fmt::format(
+                    "\n\n{}: error: {}\n\n\n", p.path().string(), e.what()
+                );
+                exit(EXIT_FAILURE);
+            }
+        }
+    );
+
+    auto end = std::chrono::high_resolution_clock::now();
+    const double ms = (end - beg).count() / 1000000.0;
+
+    if (PrintTiming) {
+        std::cout << fmt::format(
+            "{}/{} files changed in {} ms.  Pure time in codegen: {} ms\n",
+            ChangedFiles, AllFiles, ms, totalTime / 1000000.0
         );
-
-        auto end = std::chrono::high_resolution_clock::now();
-        const double ms = (end - beg).count() / 1000000.0;
-
-        const int nChangedFiles = ChangedFiles.load();
-        const int nAllFiles = AllFiles.load();
-
-        if (AlwaysOutputFiles) {
-            if (PrintTiming) {
-                std::cout << fmt::format(
-                    "Force overwrite all files in {} ms.  Pure time in codegen: {} ms",
-                    ms, totalTime / 1000000.0
-                );
-            }
-            else {
-                std::cout << "Force overwrite all files\n";
-            }
-        }
-        else {
-            if (PrintTiming) {
-                std::cout << fmt::format(
-                    "{}/{} files changed in {} ms.  Pure time in codegen: {} ms\n",
-                    nChangedFiles, nAllFiles, ms, totalTime / 1000000.0
-                );
-            }
-            else {
-                std::cout << fmt::format(
-                    "{}/{} files changed\n", nChangedFiles, nAllFiles
-                );
-            }
-        }
     }
     else {
-        std::cerr << fmt::format(
-            "Unrecognized argument '{}'. Expected '--file' or '--folder'\n", type
-        );
-        exit(EXIT_FAILURE);
+        std::cout << fmt::format("{}/{} files changed\n", ChangedFiles, AllFiles);
     }
 }

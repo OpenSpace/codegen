@@ -34,6 +34,7 @@
 #include <array>
 #include <cassert>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -417,21 +418,17 @@ std::string writeStructConverter(Struct* s) {
 
 std::string emitWarningsForDocumentationLessTypes(Struct* s) {
     std::string res;
+    const Struct* root = rootStruct(s);
     for (Variable* var : s->variables) {
         if (var->comment.empty()) {
-#ifdef WIN32
-            std::string identifier = var->name;
-            Struct* str = s;
-            while (str) {
-                identifier = str->name + "." + identifier;
-                str = str->parent;
-            }
-            const Struct* root = rootStruct(s);
-
-            res += fmt::format(
-                "#pragma message(\"{}: [CODEGEN] {} is not documented\")\n",
-                root->sourceFile, identifier
+            std::string identifier = fmt::format("{}.{}", fqn(s, "."), var->name);
+            std::string message = fmt::format(
+                "\"{}: [CODEGEN] {} is not documented\"", root->sourceFile, identifier
             );
+#ifdef WIN32
+            res += fmt::format("#pragma message({})\n", message);
+#else
+            res += fmt::format("#warning {}\n", message);
 #endif // WIN32
         }
     }
@@ -550,7 +547,6 @@ std::string createClickableFileName(std::string filename) {
             i += 1;
         }
     }
-
     return filename;
 }
 
@@ -601,18 +597,9 @@ Result handleFile(std::filesystem::path path) {
     std::filesystem::path debugDestination = destination;
     debugDestination.replace_extension();
     debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
-    if (shouldWriteFile && PreventFileChange) {
-        std::ofstream output(debugDestination);
-        output.write(content.data(), content.size());
 
-        throw CodegenError(fmt::format(
-            "Asked to prevent file change, but file change detected in '{}'",
-            path.filename().string()
-        ));
-    }
-
-    if (shouldWriteFile || AlwaysOutputFiles) {
-        print("Processed file '%s'\n", path.filename().string().c_str());
+    if (shouldWriteFile) {
+        std::cout << fmt::format("Processed file '{}'\n", path.filename().string());
 
         std::ofstream r(destination);
         r.write(content.data(), content.size());
