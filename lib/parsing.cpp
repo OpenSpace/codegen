@@ -100,44 +100,20 @@ std::string_view parseCommentLine(std::string_view line) {
 Variable::Attributes parseAttributes(std::string_view line) {
     Variable::Attributes res;
 
-    std::vector<ParseResult> a = parseAttribute(line);
-    for (const ParseResult& p : a) {
-        if (p.key == attributes::Key) {
-            res.key = p.value;
-        }
-        else if (p.key == attributes::Reference) {
-            res.reference = p.value;
-        }
-        else if (p.key == attributes::InRange) {
-            res.inrange = p.value;
-        }
-        else if (p.key == attributes::NotInRange) {
-            res.notinrange = p.value;
-        }
-        else if (p.key == attributes::Less) {
-            res.less = p.value;
-        }
-        else if (p.key == attributes::LessEqual) {
-            res.lessequal = p.value;
-        }
-        else if (p.key == attributes::Greater) {
-            res.greater = p.value;
-        }
-        else if (p.key == attributes::GreaterEqual) {
-            res.greaterequal = p.value;
-        }
-        else if (p.key == attributes::Unequal) {
-            res.unequal = p.value;
-        }
-        else if (p.key == attributes::InList) {
-            res.inlist = p.value;
-        }
-        else if (p.key == attributes::NotInList) {
-            res.notinlist = p.value;
-        }
-        else if (p.key == attributes::Annotation) {
-            res.annotation = p.value;
-        }
+    std::vector<ParseResult> attributes = parseAttribute(line);
+    for (const ParseResult& p : attributes) {
+        if (p.key == attributes::Key)               { res.key = p.value; }
+        else if (p.key == attributes::Reference)    { res.reference = p.value; }
+        else if (p.key == attributes::InRange)      { res.inrange = p.value; }
+        else if (p.key == attributes::NotInRange)   { res.notinrange = p.value; }
+        else if (p.key == attributes::Less)         { res.less = p.value; }
+        else if (p.key == attributes::LessEqual)    { res.lessequal = p.value; }
+        else if (p.key == attributes::Greater)      { res.greater = p.value; }
+        else if (p.key == attributes::GreaterEqual) { res.greaterequal = p.value; }
+        else if (p.key == attributes::Unequal)      { res.unequal = p.value; }
+        else if (p.key == attributes::InList)       { res.inlist = p.value; }
+        else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
+        else if (p.key == attributes::Annotation)   { res.annotation = p.value; }
         else {
             throw SpecificationError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line
@@ -237,6 +213,9 @@ EnumElement* parseEnumElement(std::string_view line) {
             }
         }
     }
+    if (e->attributes.key.empty()) {
+        e->attributes.key = fmt::format("\"{}\"", e->name);
+    }
     return e;
 }
 
@@ -294,7 +273,6 @@ Variable* parseVariable(std::string_view line, Struct* s) {
 
     std::string_view typeString = line.substr(0, p1);
     res->type = parseType(typeString, s);
-    //res->typeString = typeString;
     assert(generateTypename(res->type) == typeString);
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
@@ -302,12 +280,11 @@ Variable* parseVariable(std::string_view line, Struct* s) {
         res->attributes = parseAttributes(attributes);
     }
 
-    std::string variableName;
     if (!res->attributes.key.empty()) {
         res->key = std::string(res->attributes.key);
     }
     else {
-        res->key = '"' + std::string(res->name) + '"';
+        res->key = fmt::format("\"{}\"", res->name);
         res->key[1] = static_cast<char>(::toupper(res->name[0]));
     }
 
@@ -337,9 +314,8 @@ std::string_view validCode(std::string_view code) {
         cursor--;
 
         if (cursor < 0) {
-            int beg = static_cast<int>(mainLoc) - 50;
             std::string_view sb = code.substr(
-                static_cast<size_t>(std::max(0, beg)),
+                static_cast<size_t>(std::max(0, static_cast<int>(mainLoc) - 50)),
                 std::min<size_t>(50, code.size() - 1)
             );
             throw ParsingError(fmt::format(
@@ -354,7 +330,7 @@ std::string_view validCode(std::string_view code) {
     assert(startsWith(nameCheck, "struct"));
 
     using namespace std::literals;
-    nameCheck.remove_prefix(("struct"sv).size());
+    nameCheck.remove_prefix("struct"sv.size());
     for (char c : nameCheck) {
         if (::isspace(c) == 0) {
             throw SpecificationError(fmt::format(
@@ -521,7 +497,7 @@ Struct* parseRootStruct(std::string_view code) {
         StackElement* e = stack.back();
         assert(e);
         switch (e->type) {
-            case StackElement::Type::Struct:
+            case StackElement::Type::Struct: {
                 if (line.find(';') == std::string_view::npos) {
                     // No semicolon on this line but we are looking for a variable, so we
                     // are in a definition line that spans multiple lines
@@ -529,33 +505,26 @@ Struct* parseRootStruct(std::string_view code) {
                     variableBuffer += " ";
                     continue;
                 }
-                if (variableBuffer.empty()) {
-                    Struct* s = static_cast<Struct*>(e);
+                Struct* s = static_cast<Struct*>(e);
 
-                    Variable* var = parseVariable(line, s);
-                    assert(var);
-                    if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
-                        commentBuffer.pop_back();
-                    }
-                    var->comment = commentBuffer;
-                    commentBuffer.clear();
-                    s->variables.push_back(var);
+                Variable* var;
+                if (variableBuffer.empty()) {
+                    var = parseVariable(line, s);
                 }
                 else {
-                    Struct* s = static_cast<Struct*>(e);
-
                     variableBuffer += line;
-                    Variable* var = parseVariable(variableBuffer, s);
-                    assert(var);
+                    var = parseVariable(variableBuffer, s);
                     variableBuffer.clear();
-                    if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
-                        commentBuffer.pop_back();
-                    }
-                    var->comment = commentBuffer;
-                    commentBuffer.clear();
-                    s->variables.push_back(var);
                 }
+                assert(var);
+                if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
+                    commentBuffer.pop_back();
+                }
+                var->comment = commentBuffer;
+                commentBuffer.clear();
+                s->variables.push_back(var);
                 continue;
+            }
             case StackElement::Type::Enum: {
                 if (strip(line).back() != ',') {
                     // No comma at the end means that this line is not finished yet.
@@ -566,22 +535,19 @@ Struct* parseRootStruct(std::string_view code) {
                     continue;
                 }
                 
+                EnumElement* el;
                 if (enumBuffer.empty()) {
-                    EnumElement* el = parseEnumElement(line);
-                    assert(el);
-                    Enum* en = static_cast<Enum*>(e);
-                    en->elements.push_back(el);
-                    continue;
+                    el = parseEnumElement(line);
                 }
                 else {
                     enumBuffer += line;
-                    EnumElement* el = parseEnumElement(enumBuffer);
-                    assert(el);
+                    el = parseEnumElement(enumBuffer);
                     enumBuffer.clear();
-                    Enum* en = static_cast<Enum*>(e);
-                    en->elements.push_back(el);
-                    continue;
                 }
+                assert(el);
+                Enum* en = static_cast<Enum*>(e);
+                en->elements.push_back(el);
+                continue;
             }
         }
     }

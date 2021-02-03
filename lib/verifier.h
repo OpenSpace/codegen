@@ -27,9 +27,8 @@
 
 #include "types.h"
 #include <string>
-#include <string_view>
 
 [[nodiscard]] std::string verifierForType(BasicType::Type type,
-    const Variable::Attributes& attributes, std::string_view dictionaryName);
+    const Variable::Attributes& attributes);
 
 #endif // __OPENSPACE_CODEGEN___VERIFIER___H__

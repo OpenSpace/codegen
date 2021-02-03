@@ -28,7 +28,7 @@
 #include <cassert>
 #include <unordered_map>
 
-// This file is full of line length violations, but f it;  the generated code would look
+// This file is full of line length violations, but f*ck it;  the generated code would look
 // a lot worse if we would break these everywhere or it would be unreadable
 
 namespace {
@@ -65,53 +65,7 @@ namespace {
     constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
     constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
-    constexpr const char BakeFunctionOptional[] = R"(
-template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
-    if (d.hasKey(key)) {
-        T v;
-        bakeTo(d, key, &v);
-        *val = v;
-    }
-    else *val = std::nullopt;
-}
-)";
 
-    constexpr const char BakeFunctionVector[] = R"(
-template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
-    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
-    // For the moment we need to make sure in here that all of the keys are sequential
-    // since our TableVerifier doesn't really do that and we don't have a VectorVerifier
-    // for a flat list (yet).  So you might have gotten a specification error from here
-    // iff the Dictionary that was passed in contained keys other than a linear sequence
-    // from 1 - dict.size()  [1 because Lua for some strange reason wants to start at the
-    // wrong number]
-
-    for (size_t i = 1; i <= dict.size(); ++i) {
-        std::string k = std::to_string(i);
-        if (!dict.hasKey(k)) {
-            throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
-        }
-    }    
-
-    for (size_t i = 1; i <= dict.size(); ++i) {
-        T v;
-        bakeTo(dict, std::to_string(i), &v);
-        val->push_back(std::move(v));
-    }
-}
-)";
-
-    constexpr const char BakeFunctionMap[] = R"(
-template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val) {
-    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
-    
-    for (std::string_view k : dict.keys()) {
-        T v;
-        bakeTo(dict, k, &v);
-        val->insert({ std::string(k), v });
-    }
-}
-)";
 
     constexpr const char VariantConverterBool[] = "   if (d.hasValue<bool>(key)) { bool v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterInt[] = "   if (d.hasValue<double>(key)) { int v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -148,49 +102,43 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
 
 } // namespace
 
-std::string_view bakeFunctionForType(std::string_view type) {
-    assert(!type.empty());
-    static std::unordered_map<std::string_view, std::string_view> BakeFunctions = {
-        { "bool",           BakeFunctionBool },
-        { "int",            BakeFunctionInt },
-        { "double",         BakeFunctionDouble },
-        { "float",          BakeFunctionFloat },
-        { "std::string",    BakeFunctionString },
-        { "glm::ivec2",     BakeFunctionIVec2 },
-        { "glm::ivec3",     BakeFunctionIVec3 },
-        { "glm::ivec4",     BakeFunctionIVec4 },
-        { "glm::dvec2",     BakeFunctionDVec2 },
-        { "glm::dvec3",     BakeFunctionDVec3 },
-        { "glm::dvec4",     BakeFunctionDVec4 },
-        { "glm::vec2",      BakeFunctionVec2 },
-        { "glm::vec3",      BakeFunctionVec3 },
-        { "glm::vec4",      BakeFunctionVec4 },
-        { "glm::mat2x2",    BakeFunctionMat2x2 },
-        { "glm::mat2x3",    BakeFunctionMat2x3 },
-        { "glm::mat2x4",    BakeFunctionMat2x4 },
-        { "glm::mat3x2",    BakeFunctionMat3x2 },
-        { "glm::mat3x3",    BakeFunctionMat3x3 },
-        { "glm::mat3x4",    BakeFunctionMat3x4 },
-        { "glm::mat4x2",    BakeFunctionMat4x2 },
-        { "glm::mat4x3",    BakeFunctionMat4x3 },
-        { "glm::mat4x4",    BakeFunctionMat4x4 },
-        { "glm::dmat2x2",   BakeFunctionDMat2x2 },
-        { "glm::dmat2x3",   BakeFunctionDMat2x3 },
-        { "glm::dmat2x4",   BakeFunctionDMat2x4 },
-        { "glm::dmat3x2",   BakeFunctionDMat3x2 },
-        { "glm::dmat3x3",   BakeFunctionDMat3x3 },
-        { "glm::dmat3x4",   BakeFunctionDMat3x4 },
-        { "glm::dmat4x2",   BakeFunctionDMat4x2 },
-        { "glm::dmat4x3",   BakeFunctionDMat4x3 },
-        { "glm::dmat4x4",   BakeFunctionDMat4x4 },
-        { "std::monostate", BakeFunctionMonostate },
-        { "std::optional",  BakeFunctionOptional },
-        { "std::vector",    BakeFunctionVector },
-        { "std::map",       BakeFunctionMap }
-    };
-
-    const auto it = BakeFunctions.find(type);
-    return it != BakeFunctions.end() ? it->second : std::string_view();
+std::string_view bakeFunctionForType(BasicType::Type type) {
+    switch (type) {
+        case BasicType::Type::Bool:      return BakeFunctionBool;
+        case BasicType::Type::Int:       return BakeFunctionInt;
+        case BasicType::Type::Double:    return BakeFunctionDouble;
+        case BasicType::Type::Float:     return BakeFunctionFloat;
+        case BasicType::Type::String:    return BakeFunctionString;
+        case BasicType::Type::Ivec2:     return BakeFunctionIVec2;
+        case BasicType::Type::Ivec3:     return BakeFunctionIVec3;
+        case BasicType::Type::Ivec4:     return BakeFunctionIVec4;
+        case BasicType::Type::Dvec2:     return BakeFunctionDVec2;
+        case BasicType::Type::Dvec3:     return BakeFunctionDVec3;
+        case BasicType::Type::Dvec4:     return BakeFunctionDVec4;
+        case BasicType::Type::Vec2:      return BakeFunctionVec2;
+        case BasicType::Type::Vec3:      return BakeFunctionVec3;
+        case BasicType::Type::Vec4:      return BakeFunctionVec4;
+        case BasicType::Type::Mat2x2:    return BakeFunctionMat2x2;
+        case BasicType::Type::Mat2x3:    return BakeFunctionMat2x3;
+        case BasicType::Type::Mat2x4:    return BakeFunctionMat2x4;
+        case BasicType::Type::Mat3x2:    return BakeFunctionMat3x2;
+        case BasicType::Type::Mat3x3:    return BakeFunctionMat3x3;
+        case BasicType::Type::Mat3x4:    return BakeFunctionMat3x4;
+        case BasicType::Type::Mat4x2:    return BakeFunctionMat4x2;
+        case BasicType::Type::Mat4x3:    return BakeFunctionMat4x3;
+        case BasicType::Type::Mat4x4:    return BakeFunctionMat4x4;
+        case BasicType::Type::DMat2x2:   return BakeFunctionDMat2x2;
+        case BasicType::Type::DMat2x3:   return BakeFunctionDMat2x3;
+        case BasicType::Type::DMat2x4:   return BakeFunctionDMat2x4;
+        case BasicType::Type::DMat3x2:   return BakeFunctionDMat3x2;
+        case BasicType::Type::DMat3x3:   return BakeFunctionDMat3x3;
+        case BasicType::Type::DMat3x4:   return BakeFunctionDMat3x4;
+        case BasicType::Type::DMat4x2:   return BakeFunctionDMat4x2;
+        case BasicType::Type::DMat4x3:   return BakeFunctionDMat4x3;
+        case BasicType::Type::DMat4x4:   return BakeFunctionDMat4x4;
+        case BasicType::Type::Monostate: return BakeFunctionMonostate;
+    }
+    throw std::logic_error("Missing case label");
 }
 
 std::string vectorBakeFunctionForType(std::string_view type) {

@@ -25,6 +25,7 @@
 #ifndef __OPENSPACE_CODEGEN___SNIPPETS___H__
 #define __OPENSPACE_CODEGEN___SNIPPETS___H__
 
+#include "types.h"
 #include <string_view>
 
 namespace {
@@ -68,9 +69,60 @@ template <> openspace::documentation::Documentation doc<{}>() {{
 // was changed without the codegen tool being run again.
 )";
 
+    constexpr const char BakeFunctionOptional[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
+    if (d.hasKey(key)) {
+        T v;
+        bakeTo(d, key, &v);
+        *val = v;
+    }
+    else {
+        *val = std::nullopt;
+    }
+}
+)";
+
+    constexpr const char BakeFunctionVector[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+    // For the moment we need to make sure in here that all of the keys are sequential
+    // since our TableVerifier doesn't really do that and we don't have a VectorVerifier
+    // for a flat list (yet).  So you might have gotten a specification error from here
+    // iff the Dictionary that was passed in contained keys other than a linear sequence
+    // from 1 - dict.size()  [1 because Lua for some strange reason wants to start at the
+    // wrong number]
+
+    for (size_t i = 1; i <= dict.size(); ++i) {
+        std::string k = std::to_string(i);
+        if (!dict.hasKey(k)) {
+            throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
+        }
+    }    
+
+    for (size_t i = 1; i <= dict.size(); ++i) {
+        T v;
+        bakeTo(dict, std::to_string(i), &v);
+        val->push_back(std::move(v));
+    }
+}
+)";
+
+    constexpr const char BakeFunctionMap[] = R"(
+template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+    
+    for (std::string_view k : dict.keys()) {
+        T v;
+        bakeTo(dict, k, &v);
+        val->insert({ std::string(k), v });
+    }
+}
+)";
+
+
 } // namespace
 
-std::string_view bakeFunctionForType(std::string_view type);
+std::string_view bakeFunctionForType(BasicType::Type type);
 std::string vectorBakeFunctionForType(std::string_view type);
 std::string_view variantConversionFunctionForType(std::string_view type);
 

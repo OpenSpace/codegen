@@ -31,6 +31,7 @@
 #include "util.h"
 #include "verifier.h"
 #include <fmt/format.h>
+#include <algorithm>
 #include <array>
 #include <cassert>
 #include <fstream>
@@ -41,13 +42,8 @@
 using namespace std::literals;
 
 namespace {
-    bool isBasicType(std::string_view type) {
-        // Stand-in for a list of basic types that are supported
-        std::string_view bake = bakeFunctionForType(type);
-        return !bake.empty();
-    }
-
     std::vector<const VariableType*> usedTypes(const VariableType* var) {
+        assert(var);
         std::vector<const VariableType*> res;
         res.push_back(var);
 
@@ -73,6 +69,7 @@ namespace {
             case VariableType::Tag::VariantType: {
                 const VariantType* vt = static_cast<const VariantType*>(var);
                 for (VariableType* v : vt->types) {
+                    assert(v);
                     std::vector<const VariableType*> v1 = usedTypes(v);
                     res.insert(res.end(), v1.begin(), v1.end());
                 }
@@ -85,17 +82,26 @@ namespace {
                 break;
             }
         }
+
+        assert(
+            std::none_of(
+                res.begin(), res.end(),
+                [](const VariableType* v) { return v == nullptr; }
+            )
+        );
         return res;
     }
 
     std::vector<const VariableType*> usedTypes(const Struct& s) {
         std::vector<const VariableType*> res;
         for (const Variable* var : s.variables) {
+            assert(var);
             std::vector<const VariableType*> v = usedTypes(var->type);
             res.insert(res.end(), v.begin(), v.end());
         }
 
         for (StackElement* e : s.children) {
+            assert(e);
             if (e->type != StackElement::Type::Struct) {
                 continue;
             }
@@ -155,11 +161,12 @@ namespace {
 
 std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
     assert(type);
+    assert(currentStruct);
 
     if (type->tag == VariableType::Tag::BasicType) {
         BasicType* bt = static_cast<BasicType*>(type);
         const Struct* root = rootStruct(currentStruct);
-        std::string v = verifierForType(bt->type, var.attributes, root->attributes.dictionary);
+        std::string v = verifierForType(bt->type, var.attributes);
         return "new " + v;
     }
     else if (type->tag == VariableType::Tag::OptionalType) {
@@ -201,9 +208,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
         assert(valueType->type == BasicType::Type::String);
         const Struct* root = rootStruct(currentStruct);
-        std::string valueVerifier = verifierForType(
-            valueType->type, var.attributes, root->attributes.dictionary
-        );
+        std::string valueVerifier = verifierForType(valueType->type, var.attributes);
         return "new TableVerifier({{\"*\", new StringVerifier, Optional::No }})\n";
     }
     else if (type->tag == VariableType::Tag::CustomType) {
@@ -286,6 +291,11 @@ std::string writeStructDocumentation(Struct* s) {
 }
 
 std::string writeVariableConverter(Variable* var, std::vector<std::string>& converters) {
+    // @TODO (abock, 2021-02-03) This function is really ugly and should really be
+    // overhauled.  This would include not generating the typename as a string and then
+    // reparsing it.  Instead, we can walk the type tree and take out the types directly
+    // instead.
+
     std::string typeString = generateTypename(var->type);
     std::string result;
     if (const size_t p = typeString.find("std::variant"); p != std::string::npos) {
@@ -361,15 +371,11 @@ std::string writeEnumConverter(Enum* e) {
     );
 
     for (EnumElement* elem : e->elements) {
-        // If there is no explicit key, we need to use the name, but surround it with "
-        std::string key =
-            elem->attributes.key.empty() ?
-            fmt::format("\"{}\"", elem->name) :
-            elem->attributes.key;
-
+        assert(elem);
         std::string type = fqn(e, "::");
+        assert(!elem->attributes.key.empty());
         result += fmt::format(
-            "    if (v == {}) {{ *val = {}::{}; }}\n", key, type, elem->name
+            "    if (v == {}) {{ *val = {}::{}; }}\n", elem->attributes.key, type, elem->name
         );
     }
     result += "}\n";
@@ -378,13 +384,16 @@ std::string writeEnumConverter(Enum* e) {
 }
 
 std::string writeStructConverter(Struct* s) {
+    assert(s);
     std::string result;
     std::vector<std::string> writtenVariantConverters;
     for (Variable* var : s->variables) {
+        assert(var);
         result += writeVariableConverter(var, writtenVariantConverters);
     }
 
     for (StackElement* e : s->children) {
+        assert(e);
         if (e->type == StackElement::Type::Struct) {
             result += writeStructConverter(static_cast<Struct*>(e));
         }
@@ -417,9 +426,12 @@ std::string writeStructConverter(Struct* s) {
 }
 
 std::string emitWarningsForDocumentationLessTypes(Struct* s) {
+    assert(s);
+
     std::string res;
     const Struct* root = rootStruct(s);
     for (Variable* var : s->variables) {
+        assert(var);
         if (var->comment.empty()) {
             std::string identifier = fmt::format("{}.{}", fqn(s, "."), var->name);
             std::string message = fmt::format(
@@ -436,6 +448,8 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s) {
 }
 
 std::string generateResult(Struct* s) {
+    assert(s);
+
     std::string result = fmt::format(FileHeader);
 
     result += fmt::format(DocumentationPreamble, s->name);
@@ -468,54 +482,44 @@ std::string generateResult(Struct* s) {
     result += BakeFunctionPreamble;
 
     std::vector<const VariableType*> types = usedTypes(*s);
-    bool didOptionalDeclaration = false;
-    bool didVectorDeclaration = false;
-    bool didMapDeclaration = false;
+    bool hasOptionalType = false;
+    bool hasVectorType = false;
+    bool hasMapType = false;
     for (const VariableType* t : types) {
-        if (t->tag == VariableType::Tag::OptionalType && !didOptionalDeclaration) {
-            result += BakeFunctionOptionalDeclaration;
-            didOptionalDeclaration = true;
-            continue;
-        }
-        if (t->tag == VariableType::Tag::VectorType && !didVectorDeclaration) {
-            result += BakeFunctionVectorDeclaration;
-            didVectorDeclaration = true;
-            continue;
-        }
-        if (t->tag == VariableType::Tag::MapType && !didMapDeclaration) {
-            result += BakeFunctionMapDeclaration;
-            didMapDeclaration = true;
-            continue;
-        }
+        assert(t);
+        hasOptionalType |= (t->tag == VariableType::Tag::OptionalType);
+        hasVectorType |= (t->tag == VariableType::Tag::VectorType);
+        hasMapType |= (t->tag == VariableType::Tag::MapType);
+    }
+
+    if (hasOptionalType) {
+        result += BakeFunctionOptionalDeclaration;
+    }
+    if (hasVectorType) {
+        result += BakeFunctionVectorDeclaration;
+    }
+    if (hasMapType) {
+        result += BakeFunctionMapDeclaration;
+    }
+    for (const VariableType* t : types) {
         if (t->tag == VariableType::Tag::BasicType) {
             const BasicType* bt = static_cast<const BasicType*>(t);
-            std::string name = generateTypename(bt);
-            result += bakeFunctionForType(name);
+            result += bakeFunctionForType(bt->type);
         }
     }
 
 
     result += writeStructConverter(s);
 
-    bool didOptionalDefinition = false;
-    bool didVectorDefinition = false;
-    bool didMapDefinition = false;
-    for (const VariableType* type : types) {
-        if (type->tag == VariableType::Tag::VectorType && !didVectorDefinition) {
-            std::string_view bake = bakeFunctionForType("std::vector");
-            didVectorDefinition = true;
-            result += bake;
-        }
-        if (type->tag == VariableType::Tag::OptionalType && !didOptionalDefinition) {
-            std::string_view bake = bakeFunctionForType("std::optional");
-            didOptionalDefinition = true;
-            result += bake;
-        }
-        if (type->tag == VariableType::Tag::MapType && !didMapDefinition) {
-            std::string_view bake = bakeFunctionForType("std::map");
-            didMapDefinition = true;
-            result += bake;
-        }
+
+    if (hasOptionalType) {
+        result += BakeFunctionOptional;
+    }
+    if (hasVectorType) {
+        result += BakeFunctionVector;
+    }
+    if (hasMapType) {
+        result += BakeFunctionMap;
     }
 
     result += fmt::format(

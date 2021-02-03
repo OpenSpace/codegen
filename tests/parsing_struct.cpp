@@ -329,7 +329,7 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
         CHECK(ee->elements[0]->name == "Value");
         CHECK(ee->elements[0]->attributes.key == "VK");
         CHECK(ee->elements[1]->name == "Value2");
-        CHECK(ee->elements[1]->attributes.key.empty());
+        CHECK(ee->elements[1]->attributes.key == "\"Value2\"");
     }
 
     std::string r = generateResult(s);

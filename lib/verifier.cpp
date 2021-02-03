@@ -102,80 +102,78 @@ namespace {
     }
 } // namespace
 
-std::string verifierForType(BasicType::Type type, const Variable::Attributes& attributes,
-                            std::string_view dictionaryName)
-{
+std::string verifierForType(BasicType::Type type, const Variable::Attributes& attr) {
     using Type = BasicType::Type;
 
-    reportUnsupportedAttribute(type, attributes);
+    reportUnsupportedAttribute(type, attr);
     if (type == Type::Bool) { return "BoolVerifier"; }
     else if (type == Type::Int) {
         std::string res = "IntVerifier";
-        if (!attributes.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attributes.inrange);
+        if (!attr.inrange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", attr.inrange);
         }
-        if (!attributes.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
+        if (!attr.notinrange.empty()) {
+            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
         }
-        if (!attributes.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attributes.less);
+        if (!attr.less.empty()) {
+            res = addQualifier(res, "LessVerifier", attr.less);
         }
-        if (!attributes.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
+        if (!attr.lessequal.empty()) {
+            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
         }
-        if (!attributes.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attributes.greater);
+        if (!attr.greater.empty()) {
+            res = addQualifier(res, "GreaterVerifier", attr.greater);
         }
-        if (!attributes.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
+        if (!attr.greaterequal.empty()) {
+            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
+        if (!attr.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attr.unequal);
         }
         return res;
     }
     else if (type == Type::Double || type == Type::Float) {
         std::string res = "DoubleVerifier";
-        if (!attributes.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attributes.inrange);
+        if (!attr.inrange.empty()) {
+            res = addQualifier(res, "InRangeVerifier", attr.inrange);
         }
-        if (!attributes.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
+        if (!attr.notinrange.empty()) {
+            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
         }
-        if (!attributes.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attributes.less);
+        if (!attr.less.empty()) {
+            res = addQualifier(res, "LessVerifier", attr.less);
         }
-        if (!attributes.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
+        if (!attr.lessequal.empty()) {
+            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
         }
-        if (!attributes.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attributes.greater);
+        if (!attr.greater.empty()) {
+            res = addQualifier(res, "GreaterVerifier", attr.greater);
         }
-        if (!attributes.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
+        if (!attr.greaterequal.empty()) {
+            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
+        if (!attr.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attr.unequal);
         }
         return res;
     }
     else if (type == Type::String) {
         std::string res = "StringVerifier";
-        if (!attributes.inlist.empty()) {
-            std::string param = '{' + std::string(attributes.inlist) + '}';
+        if (!attr.inlist.empty()) {
+            std::string param = '{' + std::string(attr.inlist) + '}';
             res = addQualifier(res, "InListVerifier", param);
         }
-        if (!attributes.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attributes.unequal);
+        if (!attr.unequal.empty()) {
+            res = addQualifier(res, "UnequalVerifier", attr.unequal);
         }
-        if (!attributes.annotation.empty()) {
-            if (!attributes.inlist.empty() || !attributes.unequal.empty()) {
+        if (!attr.annotation.empty()) {
+            if (!attr.inlist.empty() || !attr.unequal.empty()) {
                 throw SpecificationError(fmt::format(
                     "With the annotation attribute, no other attribute can be used:\n{}",
                     type
                 ));
             }
-            res = addQualifier(res, "AnnotationVerifier", attributes.annotation);
+            res = addQualifier(res, "AnnotationVerifier", attr.annotation);
         }
         return res;
     }
@@ -207,14 +205,10 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
     else if (type == Type::Mat4x3) { return "DoubleMatrix4x3Verifier"; }
     else if (type == Type::Mat4x4) { return "DoubleMatrix4x4Verifier"; }
     else if (type == Type::Monostate) {
-        if (attributes.reference.empty()) {
+        if (attr.reference.empty()) {
             throw SpecificationError("A monostate must have a 'reference' attribute");
         }
-
-        std::string r = attributes.reference == "this" ?
-            fmt::format(R"("{}")", dictionaryName) :
-            std::string(attributes.reference);
-        return fmt::format("ReferencingVerifier({})", r);
+        return fmt::format("ReferencingVerifier({})", attr.reference);
     }
     else {
         return std::string();
