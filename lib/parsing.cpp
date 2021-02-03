@@ -240,7 +240,7 @@ EnumElement* parseEnumElement(std::string_view line) {
     return e;
 }
 
-Variable* parseVariable(std::string_view line) {
+Variable* parseVariable(std::string_view line, Struct* s) {
     assert(!line.empty());
 
     // Remove the trailing ;
@@ -293,6 +293,9 @@ Variable* parseVariable(std::string_view line) {
     Variable* res = new Variable;
 
     res->typeString = line.substr(0, p1);
+    res->type = parseType(res->typeString, s);
+    std::string gt = generateTypename(res->type);
+    assert(gt == res->typeString);
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
@@ -527,19 +530,22 @@ Struct* parseRootStruct(std::string_view code) {
                     continue;
                 }
                 if (variableBuffer.empty()) {
-                    Variable* var = parseVariable(line);
+                    Struct* s = static_cast<Struct*>(e);
+
+                    Variable* var = parseVariable(line, s);
                     assert(var);
                     if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
                         commentBuffer.pop_back();
                     }
                     var->comment = commentBuffer;
                     commentBuffer.clear();
-                    Struct* s = static_cast<Struct*>(e);
                     s->variables.push_back(var);
                 }
                 else {
+                    Struct* s = static_cast<Struct*>(e);
+
                     variableBuffer += line;
-                    Variable* var = parseVariable(variableBuffer);
+                    Variable* var = parseVariable(variableBuffer, s);
                     assert(var);
                     variableBuffer.clear();
                     if (!commentBuffer.empty() && commentBuffer.back() == ' ') {
@@ -547,7 +553,6 @@ Struct* parseRootStruct(std::string_view code) {
                     }
                     var->comment = commentBuffer;
                     commentBuffer.clear();
-                    Struct* s = static_cast<Struct*>(e);
                     s->variables.push_back(var);
                 }
                 continue;

@@ -80,9 +80,8 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     std::list<int> error;
 };
 )";
-    Struct* s = parseRootStruct(Source);
     CHECK_THROWS_MATCHES(
-        generateResult(s),
+        parseRootStruct(Source),
         ParsingError,
         Catch::Matchers::Contains("Type detected that codegen doesn't know how to handle")
     );

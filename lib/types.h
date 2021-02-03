@@ -86,7 +86,66 @@ namespace attributes {
 
 } // namespace attributes
 
+struct VariableType {
+    enum class Tag {
+        BasicType,
+        MapType,
+        OptionalType,
+        VariantType,
+        VectorType,
+        CustomType
+    };
+
+    Tag tag;
+};
+
+VariableType* parseType(std::string_view type, Struct* s);
+std::string generateTypename(const VariableType* type);
+
+struct BasicType : public VariableType {
+    enum class Type {
+        Bool,
+        Int,
+        Double,
+        Float,
+        String,
+        Ivec2, Ivec3, Ivec4,
+        Dvec2, Dvec3, Dvec4,
+        Vec2, Vec3, Vec4,
+        Mat2x2, Mat2x3, Mat2x4,
+        Mat3x2, Mat3x3, Mat3x4,
+        Mat4x2, Mat4x3, Mat4x4,
+        DMat2x2, DMat2x3, DMat2x4,
+        DMat3x2, DMat3x3, DMat3x4,
+        DMat4x2, DMat4x3, DMat4x4,
+        Monostate
+    };
+    Type type;
+};
+
+struct MapType : public VariableType {
+    VariableType* keyType;
+    VariableType* valueType;
+};
+
+struct OptionalType : public VariableType {
+    VariableType* type;
+};
+
+struct VariantType : public VariableType {
+    std::vector<VariableType*> types;
+};
+
+struct VectorType : public VariableType {
+    VariableType* type;
+};
+
+struct CustomType : public VariableType {
+    const StackElement* type;
+};
+
 struct Variable {
+    VariableType* type = nullptr;
     std::string typeString;
     std::string name;
     std::string key;

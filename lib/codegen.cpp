@@ -46,35 +46,6 @@ namespace {
         return !bake.empty();
     }
 
-    std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
-        assert(!types.empty());
-
-        std::vector<std::string_view> res;
-
-        size_t base = 0;
-        size_t cursor = 0;
-        size_t nBrackets = 1;
-        do {
-            cursor++;
-
-            if (types[cursor] == '<') {
-                nBrackets += 1;
-            }
-
-            if (types[cursor] == '>') {
-                nBrackets -= 1;
-            }
-
-            if (types[cursor] == ',' || ((types[cursor] == '>') && (nBrackets == 0))) {
-                std::string_view subtype = types.substr(base, cursor - base);
-                res.push_back(strip(subtype));
-                base = cursor + 1;
-            }
-        } while (nBrackets > 0);
-
-        return res;
-    }
-
     std::vector<std::string_view> usedTypes(const Struct& s) {
         std::vector<std::string_view> res;
         for (const Variable* var : s.variables) {
