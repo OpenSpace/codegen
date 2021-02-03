@@ -37,7 +37,6 @@
 
 // TODO
 //   - Check for extra keys in the bake function to protect against misspellings
-//   - Need support for a std::map?
 //   - Name used for ReferencingVerifier has to be generated in a better way (including
 //     some more information to disambiguate)
 //   - Add support for glm::uvecX
@@ -47,20 +46,32 @@ long long totalTime = 0;
 int ChangedFiles = 0;
 int AllFiles = 0;
 
+namespace fs = std::filesystem;
+
 int main(int argc, char** argv) {
-    if (argc != 2) {
-        std::cerr << "Wrong number of parameters. Expected 2.\nUsage: codegen <folder>\n";
+    if (argc < 2) {
+        std::cerr <<
+            "Wrong number of parameters. Expected at least 2.\nUsage: codegen <folder>\n";
         exit(EXIT_FAILURE);
     }
 
-    std::string_view src = argv[1];
-    std::cout << fmt::format("codegen {}\n", src);
 
-    namespace fs = std::filesystem;
-    if (!fs::is_directory(src)) {
-        std::cerr << "The second parameter has to name a folder\n";
-        exit(EXIT_FAILURE);
+    std::cout << fmt::format("codegen");
+    std::vector<std::string_view> srcs;
+    for (int i = 1; i < argc; ++i) {
+        std::string_view src = argv[i];
+        std::cout << " " << src;
+
+        if (!fs::is_directory(src)) {
+            std::cerr << fmt::format(
+                "All parameters has to name a folder. '{}' is not\n", src
+            );
+            exit(EXIT_FAILURE);
+        }
+
+        srcs.push_back(src);
     }
+    std::cout << '\n';
 
     auto beg = std::chrono::high_resolution_clock::now();
 
@@ -68,14 +79,16 @@ int main(int argc, char** argv) {
     std::string extFolder = fmt::format(
         "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
     );
-    for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
-        std::filesystem::path path = p.path();
+    for (std::string_view src : srcs) {
+        for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
+            std::filesystem::path path = p.path();
 
-        if (path.extension() == ".cpp" &&
-            path.string().find("_codegen.cpp") == std::string::npos &&
-            path.string().find(extFolder) == std::string::npos)
-        {
-            entries.push_back(p);
+            if (path.extension() == ".cpp" &&
+                path.string().find("_codegen.cpp") == std::string::npos &&
+                path.string().find(extFolder) == std::string::npos)
+            {
+                entries.push_back(p);
+            }
         }
     }
 
