@@ -78,7 +78,7 @@ namespace {
     std::vector<std::string_view> usedTypes(const Struct& s) {
         std::vector<std::string_view> res;
         for (const Variable* var : s.variables) {
-            std::string_view type = var->type;
+            std::string_view type = var->typeString;
 
             if (startsWith(type, "std::optional<")) {
                 res.push_back("std::optional");
@@ -127,8 +127,8 @@ namespace {
                 res.push_back("std::string");
             }
 
-            if (isBasicType(var->type)) {
-                res.push_back(var->type);
+            if (isBasicType(var->typeString)) {
+                res.push_back(var->typeString);
             }
         }
 
@@ -288,9 +288,9 @@ std::string writeEnumDocumentation(Enum* e) {
 std::string writeVariableDocumentation(Struct* s, Variable* var) {
     var->comment = resolveComment(var->comment);
 
-    std::string_view type = var->type;
+    std::string_view type = var->typeString;
     bool isOptional;
-    if (startsWith(var->type, "std::optional<")) {
+    if (startsWith(var->typeString, "std::optional<")) {
         isOptional = true;
         type.remove_prefix("std::optional<"sv.size());
         type.remove_suffix(1);
@@ -343,8 +343,8 @@ std::string writeStructDocumentation(Struct* s) {
 
 std::string writeVariableConverter(Variable* var, std::vector<std::string>& converters) {
     std::string result;
-    if (const size_t p = var->type.find("std::variant"); p != std::string::npos) {
-        std::string subtypes = var->type.substr(p + "std::variant<"sv.size());
+    if (const size_t p = var->typeString.find("std::variant"); p != std::string::npos) {
+        std::string subtypes = var->typeString.substr(p + "std::variant<"sv.size());
 
         if (std::find(converters.begin(), converters.end(), subtypes) != converters.end())
         {
@@ -353,7 +353,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
 
         converters.push_back(subtypes);
 
-        std::string_view fullType = var->type;
+        std::string_view fullType = var->typeString;
         if (startsWith(fullType, "std::optional<")) {
             fullType.remove_prefix("std::optional<"sv.size());
             fullType.remove_suffix(">"sv.size());
@@ -378,7 +378,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             if (nVectorTypes > 1) {
                 throw SpecificationError(fmt::format(
                     "We can't have a variant containing multiple vector types, try a "
-                    "vector of variants instead\n{}", var->type
+                    "vector of variants instead\n{}", var->typeString
                 ));
             }
 
@@ -386,7 +386,8 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
 
             if (conv.empty()) {
                 throw SpecificationError(fmt::format(
-                    "Unsupported type '{}' found in variant list\n{}", subtype, var->type
+                    "Unsupported type '{}' found in variant list\n{}",
+                    subtype, var->typeString
                 ));
             }
 

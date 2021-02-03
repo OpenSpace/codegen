@@ -87,7 +87,7 @@ namespace attributes {
 } // namespace attributes
 
 struct Variable {
-    std::string type;
+    std::string typeString;
     std::string name;
     std::string key;
 

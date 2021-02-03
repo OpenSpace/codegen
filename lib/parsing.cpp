@@ -292,7 +292,7 @@ Variable* parseVariable(std::string_view line) {
 
     Variable* res = new Variable;
 
-    res->type = line.substr(0, p1);
+    res->typeString = line.substr(0, p1);
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
