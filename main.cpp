@@ -40,7 +40,6 @@
 //   - Name used for ReferencingVerifier has to be generated in a better way (including
 //     some more information to disambiguate)
 //   - Add support for glm::uvecX
-//   - Add support for glm::dmatX mapping to glm::dmatXxX
 
 long long totalTime = 0;
 int ChangedFiles = 0;

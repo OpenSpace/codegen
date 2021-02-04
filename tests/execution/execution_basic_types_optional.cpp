@@ -76,6 +76,9 @@ namespace {
         // mat2x2 value documentation
         std::optional<glm::mat2x2> mat2x2Value;
 
+        // mat2 value documentation
+        std::optional<glm::mat2> mat2Value;
+
         // mat2x3 value documentation
         std::optional<glm::mat2x3> mat2x3Value;
 
@@ -87,6 +90,9 @@ namespace {
 
         // mat3x3 value documentation
         std::optional<glm::mat3x3> mat3x3Value;
+
+        // mat3 value documentation
+        std::optional<glm::mat3> mat3Value;
 
         // mat3x4 value documentation
         std::optional<glm::mat3x4> mat3x4Value;
@@ -100,8 +106,14 @@ namespace {
         // mat4x4 value documentation
         std::optional<glm::mat4x4> mat4x4Value;
 
+        // mat4 value documentation
+        std::optional<glm::mat4> mat4Value;
+
         // dmat2x2 value documentation
         std::optional<glm::dmat2x2> dmat2x2Value;
+
+        // dmat2 value documentation
+        std::optional<glm::dmat2> dmat2Value;
 
         // dmat2x3 value documentation
         std::optional<glm::dmat2x3> dmat2x3Value;
@@ -115,6 +127,9 @@ namespace {
         // dmat3x3 value documentation
         std::optional<glm::dmat3x3> dmat3x3Value;
 
+        // dmat3 value documentation
+        std::optional<glm::dmat3> dmat3Value;
+
         // dmat3x4 value documentation
         std::optional<glm::dmat3x4> dmat3x4Value;
 
@@ -126,6 +141,9 @@ namespace {
 
         // dmat4x4 value documentation
         std::optional<glm::dmat4x4> dmat4x4Value;
+
+        // dmat4 value documentation
+        std::optional<glm::dmat4> dmat4Value;
     };
 #include "execution_basic_types_optional_codegen.cpp"
 } // namespace
@@ -147,6 +165,7 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     d.setValue("Vec3Value", glm::dvec3(18.1, 18.2, 18.3));
     d.setValue("Vec4Value", glm::dvec4(19.1, 19.2, 19.3, 19.4));
     d.setValue("Mat2x2Value", glm::dmat2x2(20.1, 20.2, 20.3, 20.4));
+    d.setValue("Mat2Value", glm::dmat2(120.1, 120.2, 120.3, 120.4));
     d.setValue("Mat2x3Value", glm::dmat2x3(21.1, 21.2, 21.3, 21.4, 21.5, 21.6));
     d.setValue(
         "Mat2x4Value",
@@ -156,6 +175,10 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     d.setValue(
         "Mat3x3Value",
         glm::dmat3x3(24.1, 24.2, 24.3, 24.4, 24.5, 24.6, 24.7, 24.8, 24.9)
+    );
+    d.setValue(
+        "Mat3Value",
+        glm::dmat3(124.1, 124.2, 124.3, 124.4, 124.5, 124.6, 124.7, 124.8, 124.9)
     );
     d.setValue(
         "Mat3x4Value",
@@ -180,7 +203,15 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
             28.9, 28.10, 28.11, 28.12, 28.13, 28.14, 28.15, 28.16
         )
     );
+    d.setValue(
+        "Mat4Value",
+        glm::dmat4(
+            128.1, 128.2, 128.3, 128.4, 128.5, 128.6, 128.7, 128.8,
+            128.9, 128.10, 128.11, 128.12, 128.13, 128.14, 128.15, 128.16
+        )
+    );
     d.setValue("Dmat2x2Value", glm::dmat2x2(29.1, 29.2, 29.3, 29.4));
+    d.setValue("Dmat2Value", glm::dmat2(129.1, 129.2, 129.3, 129.4));
     d.setValue("Dmat2x3Value", glm::dmat2x3(30.1, 30.2, 30.3, 30.4, 30.5, 30.6));
     d.setValue(
         "Dmat2x4Value",
@@ -190,6 +221,10 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     d.setValue(
         "Dmat3x3Value",
         glm::dmat3x3(33.1, 33.2, 33.3, 33.4, 33.5, 33.6, 33.7, 33.8, 33.9)
+    );
+    d.setValue(
+        "Dmat3Value",
+        glm::dmat3(133.1, 133.2, 133.3, 133.4, 133.5, 133.6, 133.7, 133.8, 133.9)
     );
     d.setValue(
         "Dmat3x4Value",
@@ -211,7 +246,14 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
         "Dmat4x4Value",
         glm::dmat4x4(
             37.1, 37.2, 37.3, 37.4, 37.5, 37.6, 37.7, 37.8,
-            3.9, 37.10, 37.11, 37.12, 37.13, 37.14, 37.15, 37.16
+            37.9, 37.10, 37.11, 37.12, 37.13, 37.14, 37.15, 37.16
+        )
+    );
+    d.setValue(
+        "Dmat4Value",
+        glm::dmat4(
+            137.1, 137.2, 137.3, 137.4, 137.5, 137.6, 137.7, 137.8,
+            137.9, 137.10, 137.11, 137.12, 137.13, 137.14, 137.15, 137.16
         )
     );
 
@@ -246,6 +288,8 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     CHECK(p.vec4Value == glm::vec4(19.1f, 19.2f, 19.3, 19.4f));
     REQUIRE(p.mat2x2Value.has_value());
     CHECK(p.mat2x2Value == glm::mat2x2(20.1f, 20.2f, 20.3f, 20.4f));
+    REQUIRE(p.mat2Value.has_value());
+    CHECK(p.mat2Value == glm::mat2(120.1f, 120.2f, 120.3f, 120.4f));
     REQUIRE(p.mat2x3Value.has_value());
     CHECK(p.mat2x3Value == glm::mat2x3(21.1f, 21.2f, 21.3f, 21.4f, 21.5f, 21.6f));
     REQUIRE(p.mat2x4Value.has_value());
@@ -259,6 +303,11 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     CHECK(
         p.mat3x3Value ==
         glm::mat3x3(24.1f, 24.2f, 24.3f, 24.4f, 24.5f, 24.6f, 24.7f, 24.8f, 24.9f)
+    );
+    REQUIRE(p.mat3Value.has_value());
+    CHECK(
+        p.mat3Value ==
+        glm::mat3(124.1f, 124.2f, 124.3f, 124.4f, 124.5f, 124.6f, 124.7f, 124.8f, 124.9f)
     );
     REQUIRE(p.mat3x4Value.has_value());
     CHECK(
@@ -289,8 +338,18 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
             28.9f, 28.10f, 28.11f, 28.12f, 28.13f, 28.14f, 28.15f, 28.16f
         )
     );
+    REQUIRE(p.mat4Value.has_value());
+    CHECK(
+        p.mat4Value ==
+        glm::mat4(
+            128.1f, 128.2f, 128.3f, 128.4f, 128.5f, 128.6f, 128.7f, 128.8f,
+            128.9f, 128.10f, 128.11f, 128.12f, 128.13f, 128.14f, 128.15f, 128.16f
+        )
+    );
     REQUIRE(p.dmat2x2Value.has_value());
     CHECK(p.dmat2x2Value == glm::dmat2x2(29.1, 29.2, 29.3, 29.4));
+    REQUIRE(p.dmat2Value.has_value());
+    CHECK(p.dmat2Value == glm::dmat2(129.1, 129.2, 129.3, 129.4));
     REQUIRE(p.dmat2x3Value.has_value());
     CHECK(p.dmat2x3Value == glm::dmat2x3(30.1, 30.2, 30.3, 30.4, 30.5, 30.6));
     REQUIRE(p.dmat2x4Value.has_value());
@@ -301,6 +360,11 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     CHECK(
         p.dmat3x3Value ==
         glm::dmat3x3(33.1, 33.2, 33.3, 33.4, 33.5, 33.6, 33.7, 33.8, 33.9)
+    );
+    REQUIRE(p.dmat3Value.has_value());
+    CHECK(
+        p.dmat3Value ==
+        glm::dmat3(133.1, 133.2, 133.3, 133.4, 133.5, 133.6, 133.7, 133.8, 133.9)
     );
     REQUIRE(p.dmat3x4Value.has_value());
     CHECK(
@@ -323,7 +387,15 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
         p.dmat4x4Value ==
         glm::dmat4x4(
             37.1, 37.2, 37.3, 37.4, 37.5, 37.6, 37.7, 37.8,
-            3.9, 37.10, 37.11, 37.12, 37.13, 37.14, 37.15, 37.16
+            37.9, 37.10, 37.11, 37.12, 37.13, 37.14, 37.15, 37.16
+        )
+    );
+    REQUIRE(p.dmat4Value.has_value());
+    CHECK(
+        p.dmat4Value ==
+        glm::dmat4(
+            137.1, 137.2, 137.3, 137.4, 137.5, 137.6, 137.7, 137.8,
+            137.9, 137.10, 137.11, 137.12, 137.13, 137.14, 137.15, 137.16
         )
     );
 
@@ -344,30 +416,36 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     CHECK(!p2.vec3Value.has_value());
     CHECK(!p2.vec4Value.has_value());
     CHECK(!p2.mat2x2Value.has_value());
+    CHECK(!p2.mat2Value.has_value());
     CHECK(!p2.mat2x3Value.has_value());
     CHECK(!p2.mat2x4Value.has_value());
     CHECK(!p2.mat3x2Value.has_value());
     CHECK(!p2.mat3x3Value.has_value());
+    CHECK(!p2.mat3Value.has_value());
     CHECK(!p2.mat3x4Value.has_value());
     CHECK(!p2.mat4x2Value.has_value());
     CHECK(!p2.mat4x3Value.has_value());
     CHECK(!p2.mat4x4Value.has_value());
+    CHECK(!p2.mat4Value.has_value());
     CHECK(!p2.dmat2x2Value.has_value());
+    CHECK(!p2.dmat2Value.has_value());
     CHECK(!p2.dmat2x3Value.has_value());
     CHECK(!p2.dmat2x4Value.has_value());
     CHECK(!p2.dmat3x2Value.has_value());
     CHECK(!p2.dmat3x3Value.has_value());
+    CHECK(!p2.dmat3Value.has_value());
     CHECK(!p2.dmat3x4Value.has_value());
     CHECK(!p2.dmat4x2Value.has_value());
     CHECK(!p2.dmat4x3Value.has_value());
     CHECK(!p2.dmat4x4Value.has_value());
+    CHECK(!p2.dmat4Value.has_value());
 }
 
 TEST_CASE("Basic Types Optional documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 32);
+    REQUIRE(doc.entries.size() == 38);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolValue");
@@ -490,6 +568,14 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
     }
     {
         DocumentationEntry e = doc.entries[15];
+        CHECK(e.key == "Mat2Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "mat2 value documentation");
+        CHECK(e.verifier->type() == "Matrix2x2<double>");
+        CHECK(dynamic_cast<DoubleMatrix2Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[16];
         CHECK(e.key == "Mat2x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2x3 value documentation");
@@ -497,7 +583,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[16];
+        DocumentationEntry e = doc.entries[17];
         CHECK(e.key == "Mat2x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2x4 value documentation");
@@ -505,7 +591,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[17];
+        DocumentationEntry e = doc.entries[18];
         CHECK(e.key == "Mat3x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x2 value documentation");
@@ -513,7 +599,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[18];
+        DocumentationEntry e = doc.entries[19];
         CHECK(e.key == "Mat3x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x3 value documentation");
@@ -521,7 +607,15 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[19];
+        DocumentationEntry e = doc.entries[20];
+        CHECK(e.key == "Mat3Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "mat3 value documentation");
+        CHECK(e.verifier->type() == "Matrix3x3<double>");
+        CHECK(dynamic_cast<DoubleMatrix3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[21];
         CHECK(e.key == "Mat3x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x4 value documentation");
@@ -529,7 +623,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[20];
+        DocumentationEntry e = doc.entries[22];
         CHECK(e.key == "Mat4x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x2 value documentation");
@@ -537,7 +631,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[21];
+        DocumentationEntry e = doc.entries[23];
         CHECK(e.key == "Mat4x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x3 value documentation");
@@ -545,7 +639,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[22];
+        DocumentationEntry e = doc.entries[24];
         CHECK(e.key == "Mat4x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x4 value documentation");
@@ -553,7 +647,15 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[23];
+        DocumentationEntry e = doc.entries[25];
+        CHECK(e.key == "Mat4Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "mat4 value documentation");
+        CHECK(e.verifier->type() == "Matrix4x4<double>");
+        CHECK(dynamic_cast<DoubleMatrix4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[26];
         CHECK(e.key == "Dmat2x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x2 value documentation");
@@ -561,7 +663,15 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[24];
+        DocumentationEntry e = doc.entries[27];
+        CHECK(e.key == "Dmat2Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dmat2 value documentation");
+        CHECK(e.verifier->type() == "Matrix2x2<double>");
+        CHECK(dynamic_cast<DoubleMatrix2Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[28];
         CHECK(e.key == "Dmat2x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x3 value documentation");
@@ -569,7 +679,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[25];
+        DocumentationEntry e = doc.entries[29];
         CHECK(e.key == "Dmat2x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x4 value documentation");
@@ -577,7 +687,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[26];
+        DocumentationEntry e = doc.entries[30];
         CHECK(e.key == "Dmat3x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x2 value documentation");
@@ -585,7 +695,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[27];
+        DocumentationEntry e = doc.entries[31];
         CHECK(e.key == "Dmat3x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x3 value documentation");
@@ -593,7 +703,15 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[28];
+        DocumentationEntry e = doc.entries[32];
+        CHECK(e.key == "Dmat3Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dmat3 value documentation");
+        CHECK(e.verifier->type() == "Matrix3x3<double>");
+        CHECK(dynamic_cast<DoubleMatrix3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[33];
         CHECK(e.key == "Dmat3x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x4 value documentation");
@@ -601,7 +719,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[29];
+        DocumentationEntry e = doc.entries[34];
         CHECK(e.key == "Dmat4x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x2 value documentation");
@@ -609,7 +727,7 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[30];
+        DocumentationEntry e = doc.entries[35];
         CHECK(e.key == "Dmat4x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x3 value documentation");
@@ -617,11 +735,19 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[31];
+        DocumentationEntry e = doc.entries[36];
         CHECK(e.key == "Dmat4x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x4 value documentation");
         CHECK(e.verifier->type() == "Matrix4x4<double>");
         CHECK(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[37];
+        CHECK(e.key == "Dmat4Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dmat4 value documentation");
+        CHECK(e.verifier->type() == "Matrix4x4<double>");
+        CHECK(dynamic_cast<DoubleMatrix4Verifier*>(e.verifier.get()));
     }
 }

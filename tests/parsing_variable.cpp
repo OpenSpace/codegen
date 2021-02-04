@@ -45,28 +45,34 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     glm::vec3 vec3Value;
     glm::vec4 vec4Value;
     glm::mat2x2 mat2x2Value;
+    glm::mat2 mat2Value;
     glm::mat2x3 mat2x3Value;
     glm::mat2x4 mat2x4Value;
     glm::mat3x2 mat3x2Value;
     glm::mat3x3 mat3x3Value;
+    glm::mat3 mat3Value;
     glm::mat3x4 mat3x4Value;
     glm::mat4x2 mat4x2Value;
     glm::mat4x3 mat4x3Value;
     glm::mat4x4 mat4x4Value;
+    glm::mat4 mat4Value;
     glm::dmat2x2 dmat2x2Value;
+    glm::dmat2 dmat2Value;
     glm::dmat2x3 dmat2x3Value;
     glm::dmat2x4 dmat2x4Value;
     glm::dmat3x2 dmat3x2Value;
     glm::dmat3x3 dmat3x3Value;
+    glm::dmat3 dmat3Value;
     glm::dmat3x4 dmat3x4Value;
     glm::dmat4x2 dmat4x2Value;
     glm::dmat4x3 dmat4x3Value;
     glm::dmat4x4 dmat4x4Value;
+    glm::dmat4 dmat4Value;
 };
 )");
 
     REQUIRE(s);
-    REQUIRE(s->variables.size() == 32);
+    REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -175,120 +181,162 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     {
         Variable* var = s->variables[15];
         REQUIRE(var);
+        CHECK(var->name == "mat2Value");
+        CHECK(var->key == "\"Mat2Value\"");
+        CHECK(generateTypename(var->type) == "glm::mat2x2");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var);
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x3");
     }
     {
-        Variable* var = s->variables[16];
+        Variable* var = s->variables[17];
         REQUIRE(var);
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x4");
     }
     {
-        Variable* var = s->variables[17];
+        Variable* var = s->variables[18];
         REQUIRE(var);
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x2");
     }
     {
-        Variable* var = s->variables[18];
+        Variable* var = s->variables[19];
         REQUIRE(var);
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x3");
     }
     {
-        Variable* var = s->variables[19];
+        Variable* var = s->variables[20];
+        REQUIRE(var);
+        CHECK(var->name == "mat3Value");
+        CHECK(var->key == "\"Mat3Value\"");
+        CHECK(generateTypename(var->type) == "glm::mat3x3");
+    }
+    {
+        Variable* var = s->variables[21];
         REQUIRE(var);
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x4");
     }
     {
-        Variable* var = s->variables[20];
+        Variable* var = s->variables[22];
         REQUIRE(var);
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x2");
     }
     {
-        Variable* var = s->variables[21];
+        Variable* var = s->variables[23];
         REQUIRE(var);
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x3");
     }
     {
-        Variable* var = s->variables[22];
+        Variable* var = s->variables[24];
         REQUIRE(var);
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x4");
     }
     {
-        Variable* var = s->variables[23];
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "mat4Value");
+        CHECK(var->key == "\"Mat4Value\"");
+        CHECK(generateTypename(var->type) == "glm::mat4x4");
+    }
+    {
+        Variable* var = s->variables[26];
         REQUIRE(var);
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x2");
     }
     {
-        Variable* var = s->variables[24];
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "dmat2Value");
+        CHECK(var->key == "\"Dmat2Value\"");
+        CHECK(generateTypename(var->type) == "glm::dmat2x2");
+    }
+    {
+        Variable* var = s->variables[28];
         REQUIRE(var);
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x3");
     }
     {
-        Variable* var = s->variables[25];
+        Variable* var = s->variables[29];
         REQUIRE(var);
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x4");
     }
     {
-        Variable* var = s->variables[26];
+        Variable* var = s->variables[30];
         REQUIRE(var);
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x2");
     }
     {
-        Variable* var = s->variables[27];
+        Variable* var = s->variables[31];
         REQUIRE(var);
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x3");
     }
     {
-        Variable* var = s->variables[28];
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "dmat3Value");
+        CHECK(var->key == "\"Dmat3Value\"");
+        CHECK(generateTypename(var->type) == "glm::dmat3x3");
+    }
+    {
+        Variable* var = s->variables[33];
         REQUIRE(var);
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x4");
     }
     {
-        Variable* var = s->variables[29];
+        Variable* var = s->variables[34];
         REQUIRE(var);
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x2");
     }
     {
-        Variable* var = s->variables[30];
+        Variable* var = s->variables[35];
         REQUIRE(var);
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x3");
     }
     {
-        Variable* var = s->variables[31];
+        Variable* var = s->variables[36];
         REQUIRE(var);
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
+        CHECK(generateTypename(var->type) == "glm::dmat4x4");
+    }
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "dmat4Value");
+        CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x4");
     }
 }
@@ -311,28 +359,34 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<glm::vec3> vec3Value;
     std::vector<glm::vec4> vec4Value;
     std::vector<glm::mat2x2> mat2x2Value;
+    std::vector<glm::mat2> mat2Value;
     std::vector<glm::mat2x3> mat2x3Value;
     std::vector<glm::mat2x4> mat2x4Value;
     std::vector<glm::mat3x2> mat3x2Value;
     std::vector<glm::mat3x3> mat3x3Value;
+    std::vector<glm::mat3> mat3Value;
     std::vector<glm::mat3x4> mat3x4Value;
     std::vector<glm::mat4x2> mat4x2Value;
     std::vector<glm::mat4x3> mat4x3Value;
     std::vector<glm::mat4x4> mat4x4Value;
+    std::vector<glm::mat4> mat4Value;
     std::vector<glm::dmat2x2> dmat2x2Value;
+    std::vector<glm::dmat2> dmat2Value;
     std::vector<glm::dmat2x3> dmat2x3Value;
     std::vector<glm::dmat2x4> dmat2x4Value;
     std::vector<glm::dmat3x2> dmat3x2Value;
     std::vector<glm::dmat3x3> dmat3x3Value;
+    std::vector<glm::dmat3> dmat3Value;
     std::vector<glm::dmat3x4> dmat3x4Value;
     std::vector<glm::dmat4x2> dmat4x2Value;
     std::vector<glm::dmat4x3> dmat4x3Value;
     std::vector<glm::dmat4x4> dmat4x4Value;
+    std::vector<glm::dmat4> dmat4Value;
 };
 )");
 
     REQUIRE(s);
-    REQUIRE(s->variables.size() == 32);
+    REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -441,120 +495,162 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     {
         Variable* var = s->variables[15];
         REQUIRE(var);
+        CHECK(var->name == "mat2Value");
+        CHECK(var->key == "\"Mat2Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::mat2x2>");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var);
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x3>");
     }
     {
-        Variable* var = s->variables[16];
+        Variable* var = s->variables[17];
         REQUIRE(var);
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x4>");
     }
     {
-        Variable* var = s->variables[17];
+        Variable* var = s->variables[18];
         REQUIRE(var);
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x2>");
     }
     {
-        Variable* var = s->variables[18];
+        Variable* var = s->variables[19];
         REQUIRE(var);
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x3>");
     }
     {
-        Variable* var = s->variables[19];
+        Variable* var = s->variables[20];
+        REQUIRE(var);
+        CHECK(var->name == "mat3Value");
+        CHECK(var->key == "\"Mat3Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::mat3x3>");
+    }
+    {
+        Variable* var = s->variables[21];
         REQUIRE(var);
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x4>");
     }
     {
-        Variable* var = s->variables[20];
+        Variable* var = s->variables[22];
         REQUIRE(var);
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x2>");
     }
     {
-        Variable* var = s->variables[21];
+        Variable* var = s->variables[23];
         REQUIRE(var);
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x3>");
     }
     {
-        Variable* var = s->variables[22];
+        Variable* var = s->variables[24];
         REQUIRE(var);
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x4>");
     }
     {
-        Variable* var = s->variables[23];
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "mat4Value");
+        CHECK(var->key == "\"Mat4Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::mat4x4>");
+    }
+    {
+        Variable* var = s->variables[26];
         REQUIRE(var);
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x2>");
     }
     {
-        Variable* var = s->variables[24];
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "dmat2Value");
+        CHECK(var->key == "\"Dmat2Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x2>");
+    }
+    {
+        Variable* var = s->variables[28];
         REQUIRE(var);
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x3>");
     }
     {
-        Variable* var = s->variables[25];
+        Variable* var = s->variables[29];
         REQUIRE(var);
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x4>");
     }
     {
-        Variable* var = s->variables[26];
+        Variable* var = s->variables[30];
         REQUIRE(var);
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x2>");
     }
     {
-        Variable* var = s->variables[27];
+        Variable* var = s->variables[31];
         REQUIRE(var);
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x3>");
     }
     {
-        Variable* var = s->variables[28];
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "dmat3Value");
+        CHECK(var->key == "\"Dmat3Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x3>");
+    }
+    {
+        Variable* var = s->variables[33];
         REQUIRE(var);
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x4>");
     }
     {
-        Variable* var = s->variables[29];
+        Variable* var = s->variables[34];
         REQUIRE(var);
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x2>");
     }
     {
-        Variable* var = s->variables[30];
+        Variable* var = s->variables[35];
         REQUIRE(var);
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x3>");
     }
     {
-        Variable* var = s->variables[31];
+        Variable* var = s->variables[36];
         REQUIRE(var);
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
+    }
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "dmat4Value");
+        CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
     }
 }
@@ -577,28 +673,34 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<glm::vec3> vec3Value;
     std::optional<glm::vec4> vec4Value;
     std::optional<glm::mat2x2> mat2x2Value;
+    std::optional<glm::mat2> mat2Value;
     std::optional<glm::mat2x3> mat2x3Value;
     std::optional<glm::mat2x4> mat2x4Value;
     std::optional<glm::mat3x2> mat3x2Value;
     std::optional<glm::mat3x3> mat3x3Value;
+    std::optional<glm::mat3> mat3Value;
     std::optional<glm::mat3x4> mat3x4Value;
     std::optional<glm::mat4x2> mat4x2Value;
     std::optional<glm::mat4x3> mat4x3Value;
     std::optional<glm::mat4x4> mat4x4Value;
+    std::optional<glm::mat4> mat4Value;
     std::optional<glm::dmat2x2> dmat2x2Value;
+    std::optional<glm::dmat2> dmat2Value;
     std::optional<glm::dmat2x3> dmat2x3Value;
     std::optional<glm::dmat2x4> dmat2x4Value;
     std::optional<glm::dmat3x2> dmat3x2Value;
     std::optional<glm::dmat3x3> dmat3x3Value;
+    std::optional<glm::dmat3> dmat3Value;
     std::optional<glm::dmat3x4> dmat3x4Value;
     std::optional<glm::dmat4x2> dmat4x2Value;
     std::optional<glm::dmat4x3> dmat4x3Value;
     std::optional<glm::dmat4x4> dmat4x4Value;
+    std::optional<glm::dmat4> dmat4Value;
 };
 )");
 
     REQUIRE(s);
-    REQUIRE(s->variables.size() == 32);
+    REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -707,120 +809,162 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     {
         Variable* var = s->variables[15];
         REQUIRE(var);
+        CHECK(var->name == "mat2Value");
+        CHECK(var->key == "\"Mat2Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::mat2x2>");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var);
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x3>");
     }
     {
-        Variable* var = s->variables[16];
+        Variable* var = s->variables[17];
         REQUIRE(var);
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x4>");
     }
     {
-        Variable* var = s->variables[17];
+        Variable* var = s->variables[18];
         REQUIRE(var);
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x2>");
     }
     {
-        Variable* var = s->variables[18];
+        Variable* var = s->variables[19];
         REQUIRE(var);
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x3>");
     }
     {
-        Variable* var = s->variables[19];
+        Variable* var = s->variables[20];
+        REQUIRE(var);
+        CHECK(var->name == "mat3Value");
+        CHECK(var->key == "\"Mat3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::mat3x3>");
+    }
+    {
+        Variable* var = s->variables[21];
         REQUIRE(var);
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x4>");
     }
     {
-        Variable* var = s->variables[20];
+        Variable* var = s->variables[22];
         REQUIRE(var);
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x2>");
     }
     {
-        Variable* var = s->variables[21];
+        Variable* var = s->variables[23];
         REQUIRE(var);
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x3>");
     }
     {
-        Variable* var = s->variables[22];
+        Variable* var = s->variables[24];
         REQUIRE(var);
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x4>");
     }
     {
-        Variable* var = s->variables[23];
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "mat4Value");
+        CHECK(var->key == "\"Mat4Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::mat4x4>");
+    }
+    {
+        Variable* var = s->variables[26];
         REQUIRE(var);
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x2>");
     }
     {
-        Variable* var = s->variables[24];
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "dmat2Value");
+        CHECK(var->key == "\"Dmat2Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x2>");
+    }
+    {
+        Variable* var = s->variables[28];
         REQUIRE(var);
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x3>");
     }
     {
-        Variable* var = s->variables[25];
+        Variable* var = s->variables[29];
         REQUIRE(var);
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x4>");
     }
     {
-        Variable* var = s->variables[26];
+        Variable* var = s->variables[30];
         REQUIRE(var);
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x2>");
     }
     {
-        Variable* var = s->variables[27];
+        Variable* var = s->variables[31];
         REQUIRE(var);
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x3>");
     }
     {
-        Variable* var = s->variables[28];
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "dmat3Value");
+        CHECK(var->key == "\"Dmat3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x3>");
+    }
+    {
+        Variable* var = s->variables[33];
         REQUIRE(var);
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x4>");
     }
     {
-        Variable* var = s->variables[29];
+        Variable* var = s->variables[34];
         REQUIRE(var);
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x2>");
     }
     {
-        Variable* var = s->variables[30];
+        Variable* var = s->variables[35];
         REQUIRE(var);
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x3>");
     }
     {
-        Variable* var = s->variables[31];
+        Variable* var = s->variables[36];
         REQUIRE(var);
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
+    }
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "dmat4Value");
+        CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
     }
 }

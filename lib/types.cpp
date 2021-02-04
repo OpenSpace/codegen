@@ -213,23 +213,29 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (type == "glm::vec3")      { t = newBasicType(BasicType::Type::Vec3); }
     else if (type == "glm::vec4")      { t = newBasicType(BasicType::Type::Vec4); }
     else if (type == "glm::mat2x2")    { t = newBasicType(BasicType::Type::Mat2x2); }
+    else if (type == "glm::mat2")      { t = newBasicType(BasicType::Type::Mat2x2); }
     else if (type == "glm::mat2x3")    { t = newBasicType(BasicType::Type::Mat2x3); }
     else if (type == "glm::mat2x4")    { t = newBasicType(BasicType::Type::Mat2x4); }
     else if (type == "glm::mat3x2")    { t = newBasicType(BasicType::Type::Mat3x2); }
     else if (type == "glm::mat3x3")    { t = newBasicType(BasicType::Type::Mat3x3); }
+    else if (type == "glm::mat3")      { t = newBasicType(BasicType::Type::Mat3x3); }
     else if (type == "glm::mat3x4")    { t = newBasicType(BasicType::Type::Mat3x4); }
     else if (type == "glm::mat4x2")    { t = newBasicType(BasicType::Type::Mat4x2); }
     else if (type == "glm::mat4x3")    { t = newBasicType(BasicType::Type::Mat4x3); }
-    else if (type == "glm::mat4x4")    { t = newBasicType(BasicType::Type::Mat4x4);}
+    else if (type == "glm::mat4x4")    { t = newBasicType(BasicType::Type::Mat4x4); }
+    else if (type == "glm::mat4")      { t = newBasicType(BasicType::Type::Mat4x4);}
     else if (type == "glm::dmat2x2")   { t = newBasicType(BasicType::Type::DMat2x2); }
+    else if (type == "glm::dmat2")     { t = newBasicType(BasicType::Type::DMat2x2); }
     else if (type == "glm::dmat2x3")   { t = newBasicType(BasicType::Type::DMat2x3); }
     else if (type == "glm::dmat2x4")   { t = newBasicType(BasicType::Type::DMat2x4); }
     else if (type == "glm::dmat3x2")   { t = newBasicType(BasicType::Type::DMat3x2); }
     else if (type == "glm::dmat3x3")   { t = newBasicType(BasicType::Type::DMat3x3); }
+    else if (type == "glm::dmat3")     { t = newBasicType(BasicType::Type::DMat3x3); }
     else if (type == "glm::dmat3x4")   { t = newBasicType(BasicType::Type::DMat3x4); }
     else if (type == "glm::dmat4x2")   { t = newBasicType(BasicType::Type::DMat4x2); }
     else if (type == "glm::dmat4x3")   { t = newBasicType(BasicType::Type::DMat4x3); }
     else if (type == "glm::dmat4x4")   { t = newBasicType(BasicType::Type::DMat4x4); }
+    else if (type == "glm::dmat4")     { t = newBasicType(BasicType::Type::DMat4x4); }
     else if (type == "std::monostate") { t = newBasicType(BasicType::Type::Monostate); }
     else if (startsWith(type, "std::vector<")) {
         type.remove_prefix("std::vector<"sv.size());
