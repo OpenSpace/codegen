@@ -33,6 +33,25 @@ namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
 } // namespace
 
+std::string_view extractLine(std::string_view sv, size_t* cursor) {
+    assert(!sv.empty());
+    assert(cursor);
+    assert(*cursor == 0 || sv[*cursor - 1] == '\n');
+
+    const size_t p = sv.find('\n', *cursor);
+
+    if (p != std::string_view::npos) {
+        std::string_view line = sv.substr(*cursor, p - *cursor);
+        *cursor = p + 1;
+        return strip(line);
+    }
+    else {
+        std::string_view line = sv.substr(*cursor);
+        *cursor = std::string_view::npos;
+        return strip(line);
+    }
+}
+
 struct ParseResult {
     std::string_view key;
     std::string_view value;
@@ -50,7 +69,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
 
     std::string_view name = block.substr(p + key.size(), beg - (p + key.size()) - 1);
     if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Attribute parameter has unterminated parameter list\n{}", block
         ));
     }
@@ -81,7 +100,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
         res.insert(res.end(), recRes.begin(), recRes.end());
     }
     else if (block[cursor] != ']') {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Parameter attribute was not terminated\n{}", block
         ));
     }
@@ -115,7 +134,7 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
         else if (p.key == attributes::Annotation)   { res.annotation = p.value; }
         else {
-            throw SpecificationError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line
             ));
         }
@@ -145,13 +164,13 @@ Struct* parseStruct(std::string_view line) {
                 s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
             }
             else {
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Unknown attribute '{}' in struct definition found\n{}", a.key, line
                 ));
             }
         }
         if (s->attributes.dictionary.empty()) {
-            throw SpecificationError(fmt::format(
+            throw CodegenError(fmt::format(
                 "No name specified for root struct\n{}", line
             ));
         }
@@ -160,7 +179,7 @@ Struct* parseStruct(std::string_view line) {
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Missing space or struct name before the closing {{ of a struct\n{}", line
         ));
     }
@@ -179,7 +198,7 @@ Enum* parseEnum(std::string_view line) {
 
     const size_t endStruct = line.find(' ', cursor);
     if (endStruct == std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Missing space before the closing {{ of a struct\n{}", line
         ));
     }
@@ -206,7 +225,7 @@ EnumElement* parseEnumElement(std::string_view line) {
                 e->attributes.key = a.value;
             }
             else {
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Unrecognized attribute '{}' found when parsing enum value\n{}",
                     a.key, line
                 ));
@@ -226,14 +245,14 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     line.remove_suffix(1);
 
     if (line.find('=') != std::string_view::npos) {
-        throw SpecificationError(fmt::format(
+        throw CodegenError(fmt::format(
             "Found '=' in variable definition but default parameters are not allowed\n{}",
             line
         ));
     }
 
     if (line.find(' ') == std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Variable definition does not contain any empty character\n{}", line
         ));
     }
@@ -258,13 +277,13 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     }
 
     if (nBrackets != 0) {
-        throw ParsingError(fmt::format("Unbalanced number of < > brackets\n{}", line));
+        throw CodegenError(fmt::format("Unbalanced number of < > brackets\n{}", line));
     }
 
     const size_t p1 = cursor;
     const size_t p2 = line.find(' ', p1 + 1);
     if (p1 == std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Too few spaces in variable definition\n{}", line
         ));
     }
@@ -301,7 +320,7 @@ std::string_view validCode(std::string_view code) {
     }
 
     if (code.find(AttributeDictionary, mainLoc + 1) != std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "We currently only support one struct per file annotated with {}, "
             "including commented out ones",
             AttributeDictionary
@@ -318,7 +337,7 @@ std::string_view validCode(std::string_view code) {
                 static_cast<size_t>(std::max(0, static_cast<int>(mainLoc) - 50)),
                 std::min<size_t>(50, code.size() - 1)
             );
-            throw ParsingError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Could not find 'struct' before '[[codegen::Dictionary' before reaching "
                 "the beginning of the file\n{}",
                 sb
@@ -333,7 +352,7 @@ std::string_view validCode(std::string_view code) {
     nameCheck.remove_prefix("struct"sv.size());
     for (char c : nameCheck) {
         if (::isspace(c) == 0) {
-            throw SpecificationError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Only 'struct' can appear directly before [[codegen::Dictionary\n{}",
                 code.substr(0, std::min<size_t>(code.size(), 50))
             ));
@@ -345,7 +364,7 @@ std::string_view validCode(std::string_view code) {
     cursor = code.find('{', lastNewLine) + 1;
     for (int counter = 1; counter > 0; cursor++) {
         if (cursor >= static_cast<int64_t>(code.size())) {
-            throw ParsingError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Could not find closing }} of root struct\n{}", code
             ));
         }
@@ -377,7 +396,7 @@ Struct* parseRootStruct(std::string_view code) {
     }
 
     if (size_t p = content.find("/*"); p != std::string_view::npos) {
-        throw ParsingError(fmt::format(
+        throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
@@ -393,7 +412,7 @@ Struct* parseRootStruct(std::string_view code) {
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
         std::string_view line = extractLine(content, &cursor);
-        if (strip(line).empty()) {
+        if (line.empty()) {
             continue;
         }
 
@@ -410,12 +429,12 @@ Struct* parseRootStruct(std::string_view code) {
                 structBuffer += line;
                 structBuffer += " ";
                 // Check if we have a continuation going on
-                if (strip(line).back() != '{') {
+                if (line.back() != '{') {
                     continue;
                 }
 
                 if (!stack.empty() && stack.back()->type != StackElement::Type::Struct) {
-                    throw ParsingError(fmt::format(
+                    throw CodegenError(fmt::format(
                         "Struct definition found outside a parent struct\n{}",
                         structBuffer
                     ));
@@ -447,6 +466,12 @@ Struct* parseRootStruct(std::string_view code) {
             if (startsWith(line, "enum class")) {
                 Enum* e = parseEnum(line);
                 assert(e);
+                if (stack.back()->type != StackElement::Type::Struct) {
+                    throw CodegenError(fmt::format(
+                        "Enum class definition found inside another enum definition\n{}",
+                        line
+                    ));
+                }
                 Struct* parent = static_cast<Struct*>(stack.back());
                 assert(parent);
                 assert(parent->type == StackElement::Type::Struct);
@@ -462,7 +487,7 @@ Struct* parseRootStruct(std::string_view code) {
             }
 
             if (startsWith(line, "enum")) {
-                throw ParsingError(
+                throw CodegenError(
                     "Old-style 'enum' not supported. Use 'enum class' instead"
                 );
             }
@@ -526,7 +551,7 @@ Struct* parseRootStruct(std::string_view code) {
                 continue;
             }
             case StackElement::Type::Enum: {
-                if (strip(line).back() != ',') {
+                if (line.back() != ',') {
                     // No comma at the end means that this line is not finished yet.
                     // Though this means that that the last value will be added to the
                     // buffer since it will not be finished

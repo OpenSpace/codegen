@@ -130,7 +130,7 @@ namespace {
             const size_t l = "codegen::verbatim"sv.size();
             it += l;
             if (comment[it] != '(') {
-                throw ParsingError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Malformed codegen::verbatim. Expected ( after token\n{}", comment
                 ));
             }
@@ -143,7 +143,7 @@ namespace {
             if (size_t it = comment.find('"');
                 it != std::string::npos && comment[it - 1] != '\\')
             {
-                throw ParsingError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Discovered unallowed unescaped \" in comment line\n{}", comment
                 ));
             }
@@ -331,7 +331,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
                 isVectorType = true;
             }
             if (nVectorTypes > 1) {
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "We can't have a variant containing multiple vector types, try a "
                     "vector of variants instead\n{}", typeString
                 ));
@@ -340,7 +340,7 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             std::string_view conv = variantConversionFunctionForType(subtype);
 
             if (conv.empty()) {
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Unsupported type '{}' found in variant list\n{}",
                     subtype, typeString
                 ));

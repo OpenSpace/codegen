@@ -30,8 +30,9 @@
 #include <functional>
 
 std::string_view strip(std::string_view sv) {
-    while (!sv.empty() && isspace(sv[0]) != 0) {
-        sv.remove_prefix(1);
+    size_t b = sv.find_first_not_of(" \t\n");
+    if (b != std::string_view::npos) {
+        sv.remove_prefix(b);
     }
 
     while (!sv.empty() && isspace(sv[sv.size() - 1]) != 0) {
@@ -46,49 +47,6 @@ bool startsWith(std::string_view base, std::string_view test) {
     assert(!test.empty());
 
     return base.size() >= test.size() && base.substr(0, test.size()) == test;
-}
-
-std::string join(const std::vector<std::string_view>& list, std::string_view sep) {
-    assert(std::none_of(list.begin(), list.end(), std::mem_fn(&std::string_view::empty)));
-    assert(!sep.empty());
-
-    size_t size = 0;
-    for (std::string_view l : list) {
-        size += l.size();
-    }
-    // this allocates space for one sep more than needed, but it simplifies the for loop
-    size += sep.size() * (list.size() - 1);
-
-    std::string res;
-    res.reserve(size);
-    for (std::string_view l : list) {
-        res.append(l.data(), l.size());
-        res.append(sep.data(), sep.size());
-    }
-    // Remove the last separator
-    for (size_t i = 0; i < sep.size(); ++i) {
-        res.pop_back();
-    }
-    return res;
-}
-
-std::string_view extractLine(std::string_view sv, size_t* cursor) {
-    assert(!sv.empty());
-    assert(cursor);
-    assert(*cursor == 0 || sv[*cursor - 1] == '\n');
-
-    const size_t p = sv.find('\n', *cursor);
-
-    if (p != std::string_view::npos) {
-        std::string_view line = sv.substr(*cursor, p - *cursor);
-        *cursor = p + 1;
-        return strip(line);
-    }
-    else {
-        std::string_view line = sv.substr(*cursor);
-        *cursor = std::string_view::npos;
-        return strip(line);
-    }
 }
 
 std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {

@@ -53,7 +53,6 @@ struct [[codegen::Dictionary(D)]] P {
 
     CHECK_THROWS_MATCHES(
         generateResult(s),
-        SpecificationError,
-        Catch::Matchers::Contains("can't have a variant containing multiple vector types")
+        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
     );
 }

@@ -24,7 +24,6 @@
 
 #include "verifier.h"
 
-#include "types.h"
 #include <fmt/format.h>
 #include <cassert>
 
@@ -32,10 +31,10 @@ namespace {
     void reportUnsupportedAttribute(BasicType::Type type,
                                     const Variable::Attributes& attributes)
     {
-        auto report = [type](const std::string& attr, std::string_view name) {
+        auto report = [type](std::string_view attr, std::string_view name) {
             if (!attr.empty()) {
                 std::string t = generateTypename(type);
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "Type '{}' does not support attribute '{}'", t, name
                 ));
             }
@@ -93,7 +92,6 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
         }
     }
-
 
     std::string addQualifier(std::string ver, std::string qual, std::string_view param) {
         assert(!ver.empty());
@@ -168,7 +166,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         }
         if (!attr.annotation.empty()) {
             if (!attr.inlist.empty() || !attr.unequal.empty()) {
-                throw SpecificationError(fmt::format(
+                throw CodegenError(fmt::format(
                     "With the annotation attribute, no other attribute can be used:\n{}",
                     type
                 ));
@@ -206,11 +204,10 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
     else if (type == Type::Mat4x4) { return "DoubleMatrix4x4Verifier"; }
     else if (type == Type::Monostate) {
         if (attr.reference.empty()) {
-            throw SpecificationError("A monostate must have a 'reference' attribute");
+            throw CodegenError("A monostate must have a 'reference' attribute");
         }
         return fmt::format("ReferencingVerifier({})", attr.reference);
     }
-    else {
-        return std::string();
-    }
+
+    throw std::logic_error("Missing case label");
 }

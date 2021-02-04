@@ -36,27 +36,13 @@
 // If this is defined, all types are declared with an empty virtual destructor, meaning
 // that they will properly disambiguate in the Visual Studio Watch window, making the
 // debugging of these types a bit easier.  No need to declare them otherwise
-#define TYPES_ADD_DEBUG_INFORMATION
-
-struct ParsingError : public std::runtime_error {
-    ParsingError(std::string e) : std::runtime_error(e) {}
-
-    // We don't really need this operator, but catch2 wants it for a string matcher -.-
-    operator std::string() const noexcept { return what(); }
-};
-
-struct SpecificationError : public std::runtime_error {
-    SpecificationError(std::string e) : std::runtime_error(e) {}
-
-    // We don't really need this operator, but catch2 wants it for a string matcher -.-
-    operator std::string() const noexcept { return what(); }
-};
+//#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
-    CodegenError(std::string e) : std::runtime_error(e) {}
+    CodegenError(std::string e);
 
     // We don't really need this operator, but catch2 wants it for a string matcher -.-
-    operator std::string() const noexcept { return what(); }
+    operator std::string() const noexcept;
 };
 
 namespace attributes {

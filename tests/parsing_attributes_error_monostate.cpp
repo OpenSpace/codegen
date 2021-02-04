@@ -36,8 +36,7 @@ std::monostate v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
     );
 }
 
@@ -47,8 +46,7 @@ std::vector<std::monostate> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
     );
 }
 
@@ -58,8 +56,7 @@ std::optional<std::monostate> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
     );
 }
 
@@ -69,8 +66,7 @@ std::monostate v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
     );
 }
 
@@ -80,8 +76,7 @@ std::vector<std::monostate> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
     );
 }
 
@@ -91,8 +86,7 @@ std::optional<std::monostate> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
     );
 }
 
@@ -102,8 +96,7 @@ std::monostate v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
     );
 }
 
@@ -113,8 +106,7 @@ std::vector<std::monostate> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
     );
 }
 
@@ -124,8 +116,7 @@ std::optional<std::monostate> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
     );
 }
 
@@ -135,8 +126,7 @@ std::monostate v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
     );
 }
 
@@ -146,8 +136,7 @@ std::vector<std::monostate> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
     );
 }
 
@@ -157,8 +146,7 @@ std::optional<std::monostate> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
     );
 }
 
@@ -168,8 +156,7 @@ std::monostate v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
     );
 }
 
@@ -179,8 +166,7 @@ std::vector<std::monostate> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
     );
 }
 
@@ -190,8 +176,7 @@ std::optional<std::monostate> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
     );
 }
 
@@ -201,8 +186,7 @@ std::monostate v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
     );
 }
 
@@ -212,8 +196,7 @@ std::vector<std::monostate> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
     );
 }
 
@@ -223,8 +206,7 @@ std::optional<std::monostate> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
     );
 }
 
@@ -234,8 +216,7 @@ std::monostate v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
     );
 }
 
@@ -245,8 +226,7 @@ std::vector<std::monostate> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
     );
 }
 
@@ -256,8 +236,7 @@ std::optional<std::monostate> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
     );
 }
 
@@ -267,8 +246,7 @@ std::monostate v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
     );
 }
 
@@ -278,8 +256,7 @@ std::vector<std::monostate> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
     );
 }
 
@@ -289,8 +266,7 @@ std::optional<std::monostate> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
     );
 }
 
@@ -300,8 +276,7 @@ std::monostate v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
     );
 }
 
@@ -311,8 +286,7 @@ std::vector<std::monostate> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
     );
 }
 
@@ -322,8 +296,7 @@ std::optional<std::monostate> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
     );
 }
 
@@ -333,7 +306,6 @@ std::monostate v;
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("A monostate must have a 'reference' attribute")
+        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
     );
 }

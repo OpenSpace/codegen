@@ -36,8 +36,7 @@ float v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
 
@@ -47,8 +46,7 @@ std::vector<float> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
 
@@ -58,8 +56,7 @@ std::optional<float> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
 
@@ -69,8 +66,7 @@ float v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
 
@@ -80,8 +76,7 @@ std::vector<float> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
 
@@ -91,8 +86,7 @@ std::optional<float> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
 
@@ -102,8 +96,7 @@ float v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
 
@@ -113,8 +106,7 @@ std::vector<float> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
 
@@ -124,8 +116,7 @@ std::optional<float> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
 
@@ -135,8 +126,7 @@ float v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
 
@@ -146,8 +136,7 @@ std::vector<float> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
 
@@ -157,7 +146,6 @@ std::optional<float> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'float' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }

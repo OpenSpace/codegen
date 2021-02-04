@@ -30,12 +30,40 @@
 #include <cassert>
 #include <functional>
 
+namespace {
+    std::string join(const std::vector<std::string_view>& list, std::string_view sep) {
+        assert(
+            std::none_of(list.begin(), list.end(), std::mem_fn(&std::string_view::empty))
+        );
+        assert(!sep.empty());
+
+        size_t size = 0;
+        for (std::string_view l : list) {
+            size += l.size();
+        }
+        // this allocates space for one sep more than needed, but it simplifies the loop
+        size += sep.size() * (list.size() - 1);
+
+        std::string res;
+        res.reserve(size);
+        for (std::string_view l : list) {
+            res.append(l.data(), l.size());
+            res.append(sep.data(), sep.size());
+        }
+        // Remove the last separator
+        for (size_t i = 0; i < sep.size(); ++i) {
+            res.pop_back();
+        }
+        return res;
+    }
+} // namespace
+
+CodegenError::CodegenError(std::string e) : std::runtime_error(std::move(e)) {}
+CodegenError::operator std::string() const noexcept { return what(); }
+
 bool operator==(const StackElement& lhs, const StackElement& rhs) {
-    return
-        lhs.type == rhs.type &&
-        lhs.name == rhs.name &&
-        lhs.comment == rhs.comment &&
-        lhs.parent == rhs.parent;
+    return lhs.type == rhs.type && lhs.name == rhs.name &&
+           lhs.comment == rhs.comment && lhs.parent == rhs.parent;
 }
 
 bool operator==(const VariableType& lhs, const VariableType& rhs) {
@@ -239,7 +267,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
             (mp->valueType->tag == VariableType::Tag::BasicType) &&
             (static_cast<BasicType*>(mp->valueType)->type != BasicType::Type::String))
         {
-            throw SpecificationError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Currently only std:map<std::string, std::string> is supported\n{}", type
             ));
         }
@@ -268,7 +296,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         const StackElement* el = resolveType(context, type);
         if (!el) {
-            throw ParsingError(fmt::format(
+            throw CodegenError(fmt::format(
                 "Type detected that codegen doesn't know how to handle: {}", type
             ));
         }

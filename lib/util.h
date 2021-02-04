@@ -25,22 +25,11 @@
 #ifndef __OPENSPACE_CODEGEN___UTIL___H__
 #define __OPENSPACE_CODEGEN___UTIL___H__
 
-#include "types.h"
-#include <mutex>
 #include <string_view>
 #include <vector>
 
-inline std::mutex consoleMutex;
-template <typename... Ts>
-void print(const char format[], Ts... ts) {
-    std::unique_lock lk(consoleMutex);
-    printf(format, ts...);
-}
-
 [[nodiscard]] std::string_view strip(std::string_view sv);
 [[nodiscard]] bool startsWith(std::string_view lhs, std::string_view rhs);
-[[nodiscard]] std::string join(const std::vector<std::string_view>& list, std::string_view sep);
-[[nodiscard]] std::string_view extractLine(std::string_view sv, size_t* cursor);
 [[nodiscard]] std::vector<std::string_view> extractTemplateTypeList(std::string_view types);
 
 #endif // __OPENSPACE_CODEGEN___UTIL___H__

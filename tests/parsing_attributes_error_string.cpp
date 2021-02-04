@@ -36,8 +36,7 @@ std::string v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -47,8 +46,7 @@ std::vector<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -58,8 +56,7 @@ std::optional<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -69,8 +66,7 @@ std::string v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
 
@@ -80,8 +76,7 @@ std::vector<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
 
@@ -91,8 +86,7 @@ std::optional<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
 
@@ -102,8 +96,7 @@ std::string v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -113,8 +106,7 @@ std::vector<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -124,8 +116,7 @@ std::optional<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -135,8 +126,7 @@ std::string v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -146,8 +136,7 @@ std::vector<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -157,8 +146,7 @@ std::optional<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -168,8 +156,7 @@ std::string v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -179,8 +166,7 @@ std::vector<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -190,8 +176,7 @@ std::optional<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -201,8 +186,7 @@ std::string v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -212,8 +196,7 @@ std::vector<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -223,8 +206,7 @@ std::optional<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -234,8 +216,7 @@ std::string v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
 
@@ -245,8 +226,7 @@ std::vector<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
 
@@ -256,7 +236,6 @@ std::optional<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }

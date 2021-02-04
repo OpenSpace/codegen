@@ -36,8 +36,7 @@ double v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
     );
 }
 
@@ -47,8 +46,7 @@ std::vector<double> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
     );
 }
 
@@ -58,8 +56,7 @@ std::optional<double> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
     );
 }
 
@@ -69,8 +66,7 @@ double v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
     );
 }
 
@@ -80,8 +76,7 @@ std::vector<double> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
     );
 }
 
@@ -91,8 +86,7 @@ std::optional<double> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
     );
 }
 
@@ -102,8 +96,7 @@ double v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -113,8 +106,7 @@ std::vector<double> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -124,8 +116,7 @@ std::optional<double> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -135,8 +126,7 @@ double v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
     );
 }
 
@@ -146,8 +136,7 @@ std::vector<double> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
     );
 }
 
@@ -157,7 +146,6 @@ std::optional<double> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
     );
 }

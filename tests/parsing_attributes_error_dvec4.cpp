@@ -36,8 +36,7 @@ glm::dvec4 v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
     );
 }
 
@@ -47,8 +46,7 @@ std::vector<glm::dvec4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
     );
 }
 
@@ -58,8 +56,7 @@ std::optional<glm::dvec4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'annotation'")
     );
 }
 
@@ -69,8 +66,7 @@ glm::dvec4 v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
     );
 }
 
@@ -80,8 +76,7 @@ std::vector<glm::dvec4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
     );
 }
 
@@ -91,8 +86,7 @@ std::optional<glm::dvec4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inlist'")
     );
 }
 
@@ -102,8 +96,7 @@ glm::dvec4 v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
     );
 }
 
@@ -113,8 +106,7 @@ std::vector<glm::dvec4> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
     );
 }
 
@@ -124,8 +116,7 @@ std::optional<glm::dvec4> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'inrange'")
     );
 }
 
@@ -135,8 +126,7 @@ glm::dvec4 v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'less'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'less'")
     );
 }
 
@@ -146,8 +136,7 @@ std::vector<glm::dvec4> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'less'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'less'")
     );
 }
 
@@ -157,8 +146,7 @@ std::optional<glm::dvec4> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'less'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'less'")
     );
 }
 
@@ -168,8 +156,7 @@ glm::dvec4 v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
     );
 }
 
@@ -179,8 +166,7 @@ std::vector<glm::dvec4> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
     );
 }
 
@@ -190,8 +176,7 @@ std::optional<glm::dvec4> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'lessequal'")
     );
 }
 
@@ -201,8 +186,7 @@ glm::dvec4 v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'greater'")
     );
 }
 
@@ -212,7 +196,7 @@ std::vector<glm::dvec4> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
+        CodegenError,
         CM::Contains("'glm::dvec4' does not support attribute 'greater'")
     );
 }
@@ -223,8 +207,7 @@ std::optional<glm::dvec4> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'greater'")
     );
 }
 
@@ -234,8 +217,7 @@ glm::dvec4 v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -245,8 +227,7 @@ std::vector<glm::dvec4> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -256,8 +237,7 @@ std::optional<glm::dvec4> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -267,8 +247,7 @@ glm::dvec4 v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
     );
 }
 
@@ -278,8 +257,7 @@ std::vector<glm::dvec4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
     );
 }
 
@@ -289,8 +267,7 @@ std::optional<glm::dvec4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'notinlist'")
     );
 }
 
@@ -300,8 +277,7 @@ glm::dvec4 v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'notinrange'")
     );
 }
 
@@ -311,8 +287,7 @@ std::vector<glm::dvec4> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'notinrange'")
     );
 }
 
@@ -322,7 +297,7 @@ std::optional<glm::dvec4> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
+        CodegenError,
         CM::Contains("'glm::dvec4' does not support attribute 'notinrange'")
     );
 }
@@ -333,8 +308,7 @@ glm::dvec4 v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'reference'")
     );
 }
 
@@ -344,8 +318,7 @@ std::vector<glm::dvec4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'reference'")
     );
 }
 
@@ -355,8 +328,7 @@ std::optional<glm::dvec4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'reference'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'reference'")
     );
 }
 
@@ -366,8 +338,7 @@ glm::dvec4 v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
     );
 }
 
@@ -377,8 +348,7 @@ std::vector<glm::dvec4> v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
     );
 }
 
@@ -388,7 +358,6 @@ std::optional<glm::dvec4> v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        SpecificationError,
-        CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
     );
 }
