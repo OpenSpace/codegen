@@ -223,7 +223,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (type == "glm::mat4x2")    { t = newBasicType(BasicType::Type::Mat4x2); }
     else if (type == "glm::mat4x3")    { t = newBasicType(BasicType::Type::Mat4x3); }
     else if (type == "glm::mat4x4")    { t = newBasicType(BasicType::Type::Mat4x4); }
-    else if (type == "glm::mat4")      { t = newBasicType(BasicType::Type::Mat4x4);}
+    else if (type == "glm::mat4")      { t = newBasicType(BasicType::Type::Mat4x4); }
     else if (type == "glm::dmat2x2")   { t = newBasicType(BasicType::Type::DMat2x2); }
     else if (type == "glm::dmat2")     { t = newBasicType(BasicType::Type::DMat2x2); }
     else if (type == "glm::dmat2x3")   { t = newBasicType(BasicType::Type::DMat2x3); }
@@ -257,7 +257,6 @@ VariableType* parseType(std::string_view type, Struct* context) {
     }
     else if (startsWith(type, "std::map<")) {
         type.remove_prefix("std::map<"sv.size());
-        //type.remove_suffix(">"sv.size());
 
         std::vector<std::string_view> list = extractTemplateTypeList(type);
         assert(list.size() == 2);
@@ -282,7 +281,6 @@ VariableType* parseType(std::string_view type, Struct* context) {
     }
     else if (startsWith(type, "std::variant<")) {
         type.remove_prefix("std::variant<"sv.size());
-        //type.remove_suffix(">"sv.size());
 
         std::vector<std::string_view> list = extractTemplateTypeList(type);
 
