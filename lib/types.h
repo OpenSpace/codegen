@@ -36,6 +36,7 @@
 // If this is defined, all types are declared with an empty virtual destructor, meaning
 // that they will properly disambiguate in the Visual Studio Watch window, making the
 // debugging of these types a bit easier.  No need to declare them otherwise
+
 //#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
@@ -85,7 +86,6 @@ struct VariableType {
 #ifdef TYPES_ADD_DEBUG_INFORMATION
     virtual ~VariableType() = default;
 #endif // TYPES_ADD_DEBUG_INFORMATION
-
 
     enum class Tag {
         BasicType,
@@ -155,7 +155,6 @@ bool operator==(const CustomType& lhs, const CustomType& rhs);
 
 struct Variable {
     VariableType* type = nullptr;
-    //std::string typeString;
     std::string name;
     std::string key;
 
