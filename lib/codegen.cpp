@@ -602,7 +602,7 @@ Result handleFile(std::filesystem::path path) {
     debugDestination.replace_extension();
     debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
 
-    if (shouldWriteFile) {
+    if (shouldWriteFile || ShouldAlwaysWriteFiles) {
         std::cout << fmt::format("Processed file '{}'\n", path.filename().string());
 
         std::ofstream r(destination);
