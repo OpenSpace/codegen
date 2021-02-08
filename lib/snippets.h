@@ -46,7 +46,7 @@ template <typename T> openspace::documentation::Documentation doc() {{
     static_assert(sizeof(T) == 0); // This should never be called
     return openspace::documentation::Documentation();
 }}
-template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>() {{
+template <> openspace::documentation::Documentation doc<{}>() {{
     using namespace openspace::documentation;
 
 )";

@@ -527,7 +527,7 @@ std::string generateResult(Struct* s) {
 }} // namespace internal
 
 template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
-template <> {0} [[maybe_unused]] bake<{0}>(const ghoul::Dictionary& dict) {{
+template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>(), dict, "{1}");
     {0} res;
 )",
