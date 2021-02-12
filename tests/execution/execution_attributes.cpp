@@ -216,6 +216,42 @@ namespace {
 
         // annotationVector documentation
         std::vector<std::string> annotationVector [[codegen::annotation("ghi")]];
+
+        // dcolor3Value documentation
+        glm::dvec3 dcolor3Value [[codegen::color()]];
+
+        // optionalDcolor3Value documentation
+        std::optional<glm::dvec3> optionalDcolor3Value [[codegen::color()]];
+
+        // vectorDcolor3Value documentation
+        std::vector<glm::dvec3> vectorDcolor3Value [[codegen::color()]];
+
+        // color3Value documentation
+        glm::vec3 color3Value [[codegen::color()]];
+
+        // optionalColor3Value documentation
+        std::optional<glm::vec3> optionalColor3Value [[codegen::color()]];
+
+        // vectorColor3Value documentation
+        std::vector<glm::vec3> vectorColor3Value [[codegen::color()]];
+
+        // dcolor4Value documentation
+        glm::dvec4 dcolor4Value [[codegen::color()]];
+
+        // optionalDcolor4Value documentation
+        std::optional<glm::dvec4> optionalDcolor4Value [[codegen::color()]];
+
+        // vectorDcolor4Value documentation
+        std::vector<glm::dvec4> vectorDcolor4Value [[codegen::color()]];
+
+        // color4Value documentation
+        glm::vec4 color4Value [[codegen::color()]];
+
+        // optionalColor4Value documentation
+        std::optional<glm::vec4> optionalColor4Value [[codegen::color()]];
+
+        // vectorColor4Value documentation
+        std::vector<glm::vec4> vectorColor4Value [[codegen::color()]];
     };
 #include "execution_attributes_codegen.cpp"
 } // namespace
@@ -395,6 +431,42 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         e.setValue("3", std::string("annotation_mno"));
         d.setValue("AnnotationVector", e);
     }
+    d.setValue("Dcolor3Value", glm::dvec3(0.0, 0.1, 0.2));
+    d.setValue("OptionalDcolor3Value", glm::dvec3(0.3, 0.4, 0.5));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", glm::dvec3(0.60, 0.61, 0.62));
+        e.setValue("2", glm::dvec3(0.63, 0.64, 0.65));
+        e.setValue("3", glm::dvec3(0.66, 0.67, 0.68));
+        d.setValue("VectorDcolor3Value", e);
+    }
+    d.setValue("Color3Value", glm::dvec3(0.70, 0.71, 0.72));
+    d.setValue("OptionalColor3Value", glm::dvec3(0.73, 0.74, 0.75));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", glm::dvec3(0.80, 0.81, 0.82));
+        e.setValue("2", glm::dvec3(0.83, 0.84, 0.85));
+        e.setValue("3", glm::dvec3(0.86, 0.87, 0.88));
+        d.setValue("VectorColor3Value", e);
+    }
+    d.setValue("Dcolor4Value", glm::dvec4(0.0, 0.1, 0.2, 0.3));
+    d.setValue("OptionalDcolor4Value", glm::dvec4(0.4, 0.5, 0.6, 0.7));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", glm::dvec4(0.60, 0.61, 0.62, 0.63));
+        e.setValue("2", glm::dvec4(0.64, 0.65, 0.66, 0.67));
+        e.setValue("3", glm::dvec4(0.68, 0.69, 0.70, 0.71));
+        d.setValue("VectorDcolor4Value", e);
+    }
+    d.setValue("Color4Value", glm::dvec4(0.80, 0.81, 0.82, 0.83));
+    d.setValue("OptionalColor4Value", glm::dvec4(0.84, 0.85, 0.86, 0.87));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", glm::dvec4(0.90, 0.91, 0.92, 0.93));
+        e.setValue("2", glm::dvec4(0.94, 0.95, 0.96, 0.97));
+        e.setValue("3", glm::dvec4(0.98, 0.99, 0.991, 0.992));
+        d.setValue("VectorColor4Value", e);
+    }
 
     const Parameters p = codegen::bake<Parameters>(d);
 
@@ -500,13 +572,45 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         p.annotationVector ==
         std::vector<std::string>{ "annotation_ghi", "annotation_jkl", "annotation_mno" }
     );
+
+    CHECK(p.dcolor3Value == glm::dvec3(0.0, 0.1, 0.2));
+    REQUIRE(p.optionalDcolor3Value.has_value());
+    CHECK(*p.optionalDcolor3Value == glm::dvec3(0.3, 0.4, 0.5));
+    REQUIRE(p.vectorDcolor3Value.size() == 3);
+    CHECK(p.vectorDcolor3Value[0] == glm::dvec3(0.60, 0.61, 0.62));
+    CHECK(p.vectorDcolor3Value[1] == glm::dvec3(0.63, 0.64, 0.65));
+    CHECK(p.vectorDcolor3Value[2] == glm::dvec3(0.66, 0.67, 0.68));
+
+    CHECK(p.color3Value == glm::vec3(0.70, 0.71, 0.72));
+    REQUIRE(p.optionalColor3Value.has_value());
+    CHECK(*p.optionalColor3Value == glm::vec3(0.73, 0.74, 0.75));
+    REQUIRE(p.vectorColor3Value.size() == 3);
+    CHECK(p.vectorColor3Value[0] == glm::vec3(0.80, 0.81, 0.82));
+    CHECK(p.vectorColor3Value[1] == glm::vec3(0.83, 0.84, 0.85));
+    CHECK(p.vectorColor3Value[2] == glm::vec3(0.86, 0.87, 0.88));
+
+    CHECK(p.dcolor4Value == glm::dvec4(0.0, 0.1, 0.2, 0.3));
+    REQUIRE(p.optionalDcolor4Value.has_value());
+    CHECK(*p.optionalDcolor4Value == glm::dvec4(0.4, 0.5, 0.6, 0.7));
+    REQUIRE(p.vectorDcolor4Value.size() == 3);
+    CHECK(p.vectorDcolor4Value[0] == glm::dvec4(0.60, 0.61, 0.62, 0.63));
+    CHECK(p.vectorDcolor4Value[1] == glm::dvec4(0.64, 0.65, 0.66, 0.67));
+    CHECK(p.vectorDcolor4Value[2] == glm::dvec4(0.68, 0.69, 0.70, 0.71));
+
+    CHECK(p.color4Value == glm::vec4(0.80, 0.81, 0.82, 0.83));
+    REQUIRE(p.optionalColor4Value.has_value());
+    CHECK(*p.optionalColor4Value == glm::vec4(0.84, 0.85, 0.86, 0.87));
+    REQUIRE(p.vectorColor4Value.size() == 3);
+    CHECK(p.vectorColor4Value[0] == glm::vec4(0.90, 0.91, 0.92, 0.93));
+    CHECK(p.vectorColor4Value[1] == glm::vec4(0.94, 0.95, 0.96, 0.97));
+    CHECK(p.vectorColor4Value[2] == glm::vec4(0.98, 0.99, 0.991, 0.992));
 }
 
 TEST_CASE("Attributes Documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 60);
+    REQUIRE(doc.entries.size() == 72);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -1291,5 +1395,117 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
             dynamic_cast<StringAnnotationVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         CHECK(w->annotation == "ghi");
+    }
+    {
+        DocumentationEntry e = doc.entries[60];
+        CHECK(e.key == "Dcolor3Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dcolor3Value documentation");
+        CHECK(e.verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[61];
+        CHECK(e.key == "OptionalDcolor3Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalDcolor3Value documentation");
+        CHECK(e.verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[62];
+        CHECK(e.key == "VectorDcolor3Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vectorDcolor3Value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[63];
+        CHECK(e.key == "Color3Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "color3Value documentation");
+        CHECK(e.verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[64];
+        CHECK(e.key == "OptionalColor3Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalColor3Value documentation");
+        CHECK(e.verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[65];
+        CHECK(e.key == "VectorColor3Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vectorColor3Value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Color3");
+        CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[66];
+        CHECK(e.key == "Dcolor4Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dcolor4Value documentation");
+        CHECK(e.verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[67];
+        CHECK(e.key == "OptionalDcolor4Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalDcolor4Value documentation");
+        CHECK(e.verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[68];
+        CHECK(e.key == "VectorDcolor4Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vectorDcolor4Value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[69];
+        CHECK(e.key == "Color4Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "color4Value documentation");
+        CHECK(e.verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[70];
+        CHECK(e.key == "OptionalColor4Value");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalColor4Value documentation");
+        CHECK(e.verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[71];
+        CHECK(e.key == "VectorColor4Value");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vectorColor4Value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Color4");
+        CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
 }

@@ -48,6 +48,7 @@ struct CodegenError : public std::runtime_error {
 
 namespace attributes {
     constexpr const char Annotation[] = "annotation";
+    constexpr const char Color[] = "color";
     constexpr const char InList[] = "inlist";
     constexpr const char InRange[] = "inrange";
     constexpr const char Less[] = "less";
@@ -173,6 +174,8 @@ struct Variable {
         std::string notinrange;
         std::string reference;
         std::string unequal;
+
+        bool isColor = false;
     };
     Attributes attributes;
 };

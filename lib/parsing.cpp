@@ -133,6 +133,9 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::InList)       { res.inlist = p.value; }
         else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
         else if (p.key == attributes::Annotation)   { res.annotation = p.value; }
+        else if (p.key == attributes::Color)        {
+            res.isColor = p.value == "true" || p.value.empty();
+        }
         else {
             throw CodegenError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line

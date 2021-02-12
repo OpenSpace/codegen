@@ -44,6 +44,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
  - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
  - `[[codegen::reference("foo")]]`:  Marks a `std::monostate` as a referencing verifier that will look up a different Documentation elsewhere in the code.  This attribute can only be used with a `std::monostate`.
+ - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
@@ -87,3 +88,7 @@ This is a complete list of variable types and attribute combinations.  We are **
  - `std::string` + `[[codegen::inlist]]` -> `InListVerifier<StringVerifier>`
  - `std::string` + `[[codegen::unequal]]` -> `UnequalVerifier<StringVerifier>`
  - `std::string` + `[[codegen::annotation]]` -> `AnnotationVerifier<StringVerifier>`
+ - `glm::vec3` + `[[codegen::color]]` -> `Color3Verifier`
+ - `glm::vec4` + `[[codegen::color]]` -> `Color4Verifier`
+ - `glm::dvec3` + `[[codegen::color]]` -> `Color3Verifier`
+ - `glm::dvec4` + `[[codegen::color]]` -> `Color4Verifier`

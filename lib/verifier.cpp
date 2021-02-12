@@ -39,12 +39,19 @@ namespace {
                 ));
             }
         };
+        auto reportBool = [type](bool attr, std::string_view name) {
+            if (attr) {
+                std::string t = generateTypename(type);
+                throw CodegenError(fmt::format(
+                    "Type '{}' does not support attribute '{}'", t, name
+                ));
+            }
+        };
 
         using Type = BasicType::Type;
         if (type == Type::Bool ||
             type == Type::Ivec2 || type == Type::Ivec3 || type == Type::Ivec4 ||
-            type == Type::Dvec2 || type == Type::Dvec3 || type == Type::Dvec4 ||
-            type == Type::Vec2 || type == Type::Vec3 || type == Type::Vec4 ||
+            type == Type::Dvec2 || type == Type::Vec2 ||
             type == Type::Mat2x2 || type == Type::Mat2x3 || type == Type::Mat2x4 ||
             type == Type::Mat3x2 || type == Type::Mat3x3 || type == Type::Mat3x4 ||
             type == Type::Mat4x2 || type == Type::Mat4x3 || type == Type::Mat4x4 ||
@@ -63,12 +70,30 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
+            reportBool(attributes.isColor, attributes::Color);
+        }
+        else if (
+            type == Type::Dvec3 || type == Type::Dvec4 ||
+            type == Type::Vec3 || type == Type::Vec4)
+        {
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inlist, attributes::InList);
+            report(attributes.inrange, attributes::InRange);
+            report(attributes.less, attributes::Less);
+            report(attributes.lessequal, attributes::LessEqual);
+            report(attributes.greater, attributes::Greater);
+            report(attributes.greaterequal, attributes::GreaterEqual);
+            report(attributes.notinlist, attributes::NotInList);
+            report(attributes.notinrange, attributes::NotInRange);
+            report(attributes.reference, attributes::Reference);
+            report(attributes.unequal, attributes::Unequal);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
             report(attributes.annotation, attributes::Annotation);
             report(attributes.inlist, attributes::InList);
             report(attributes.notinlist, attributes::NotInList);
             report(attributes.reference, attributes::Reference);
+            reportBool(attributes.isColor, attributes::Color);
         }
         else if (type == Type::String) {
             report(attributes.inrange, attributes::InRange);
@@ -78,6 +103,7 @@ namespace {
             report(attributes.greaterequal, attributes::GreaterEqual);
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.reference, attributes::Reference);
+            reportBool(attributes.isColor, attributes::Color);
         }
         else if (type == Type::Monostate) {
             report(attributes.annotation, attributes::Annotation);
@@ -90,6 +116,7 @@ namespace {
             report(attributes.notinlist, attributes::NotInList);
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.unequal, attributes::Unequal);
+            reportBool(attributes.isColor, attributes::Color);
         }
     }
 
@@ -178,12 +205,17 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
     else if (type == Type::Ivec2) { return "IntVector2Verifier"; }
     else if (type == Type::Ivec3) { return "IntVector3Verifier"; }
     else if (type == Type::Ivec4) { return "IntVector4Verifier"; }
-    else if (type == Type::Dvec2) { return "DoubleVector2Verifier"; }
-    else if (type == Type::Dvec3) { return "DoubleVector3Verifier"; }
-    else if (type == Type::Dvec4) { return "DoubleVector4Verifier"; }
-    else if (type == Type::Vec2) { return "DoubleVector2Verifier"; }
-    else if (type == Type::Vec3) { return "DoubleVector3Verifier"; }
-    else if (type == Type::Vec4) { return "DoubleVector4Verifier"; }
+    else if (type == Type::Dvec2 || type == Type::Vec2) {
+        return "DoubleVector2Verifier";
+    }
+    else if (type == Type::Dvec3 || type == Type::Vec3) {
+        if (attr.isColor) { return "Color3Verifier"; }
+        else { return "DoubleVector3Verifier"; }
+    }
+    else if (type == Type::Dvec4 || type == Type::Vec4) {
+        if (attr.isColor) { return "Color4Verifier"; }
+        else { return "DoubleVector4Verifier"; }
+    }
     else if (type == Type::DMat2x2) { return "DoubleMatrix2x2Verifier"; }
     else if (type == Type::DMat2x3) { return "DoubleMatrix2x3Verifier"; }
     else if (type == Type::DMat2x4) { return "DoubleMatrix2x4Verifier"; }

@@ -204,12 +204,21 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
         // referenceValueVector documentation
         std::vector<std::monostate> referenceValueVector [[codegen::reference("abc")]];
+
+        // dcolor3Value documentation
+        glm::dvec3 dcolor3Value [[codegen::color()]];
+
+        // optionalDcolor3Value documentation
+        std::optional<glm::dvec3> optionalDcolor3Value [[codegen::color()]];
+
+        // vectorDcolor3Value documentation
+        std::vector<glm::dvec3> vectorDcolor3Value [[codegen::color()]];
     };
 )";
     Struct* s = parseRootStruct(Source);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 58);
+    REQUIRE(s->variables.size() == 61);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -230,6 +239,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -252,6 +262,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -274,6 +285,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -295,6 +307,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -316,6 +329,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -337,6 +351,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -358,6 +373,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -379,6 +395,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -400,6 +417,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -421,6 +439,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -442,6 +461,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -463,6 +483,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -484,6 +505,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -505,6 +527,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -526,6 +549,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -547,6 +571,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -568,6 +593,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -589,6 +615,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -610,6 +637,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -631,6 +659,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -652,6 +681,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -673,6 +703,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -694,6 +725,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -715,6 +747,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -736,6 +769,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -757,6 +791,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -778,6 +813,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -799,6 +835,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -820,6 +857,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -841,6 +879,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -862,6 +901,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -883,6 +923,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -904,6 +945,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -925,6 +967,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -946,6 +989,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -967,6 +1011,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -988,6 +1033,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1009,6 +1055,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1030,6 +1077,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1051,6 +1099,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1072,6 +1121,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1093,6 +1143,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1114,6 +1165,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1135,6 +1187,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1156,6 +1209,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1177,6 +1231,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1198,6 +1253,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1219,6 +1275,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1240,6 +1297,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1261,6 +1319,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1282,6 +1341,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1303,6 +1363,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1324,6 +1385,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1345,6 +1407,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1366,6 +1429,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1387,6 +1451,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1408,6 +1473,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     {
@@ -1429,6 +1495,73 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.lessequal.empty());
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+    }
+
+    {
+        Variable* var = s->variables[58];
+        REQUIRE(var);
+        CHECK(var->name == "dcolor3Value");
+        CHECK(var->key == "\"Dcolor3Value\"");
+        CHECK(generateTypename(var->type) == "glm::dvec3");
+        CHECK(var->comment == "dcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+    }
+
+    {
+        Variable* var = s->variables[59];
+        REQUIRE(var);
+        CHECK(var->name == "optionalDcolor3Value");
+        CHECK(var->key == "\"OptionalDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dvec3>");
+        CHECK(var->comment == "optionalDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+    }
+
+    {
+        Variable* var = s->variables[60];
+        REQUIRE(var);
+        CHECK(var->name == "vectorDcolor3Value");
+        CHECK(var->key == "\"VectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dvec3>");
+        CHECK(var->comment == "vectorDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
     }
 
     std::string r = generateResult(s);
