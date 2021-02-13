@@ -37,6 +37,7 @@ namespace {
     constexpr const char BakeFunctionDouble[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }\n";
     constexpr const char BakeFunctionFloat[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }\n";
     constexpr const char BakeFunctionString[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }\n";
+    constexpr const char BakeFunctionPath[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::filesystem::path* val) { *val = d.value<std::string>(key); }\n";
     constexpr const char BakeFunctionIVec2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }\n";
     constexpr const char BakeFunctionIVec3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }\n";
     constexpr const char BakeFunctionIVec4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }\n";
@@ -109,6 +110,7 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
         case BasicType::Type::Double:    return BakeFunctionDouble;
         case BasicType::Type::Float:     return BakeFunctionFloat;
         case BasicType::Type::String:    return BakeFunctionString;
+        case BasicType::Type::Path:      return BakeFunctionPath;
         case BasicType::Type::Ivec2:     return BakeFunctionIVec2;
         case BasicType::Type::Ivec3:     return BakeFunctionIVec3;
         case BasicType::Type::Ivec4:     return BakeFunctionIVec4;

@@ -149,3 +149,63 @@ std::optional<double> v [[codegen::reference(1)]];
         CodegenError, CM::Contains("'double' does not support attribute 'reference'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: double color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+double v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector double color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<double> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional double color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<double> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: double directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+double v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector double directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<double> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional double directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<double> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+    );
+}

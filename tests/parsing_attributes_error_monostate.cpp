@@ -309,3 +309,83 @@ std::monostate v;
         CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
     );
 }
+
+TEST_CASE("Missing Attribute: vector monostate reference", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::monostate> v;
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
+    );
+}
+
+TEST_CASE("Missing Attribute: optional monostate reference", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::monostate> v;
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: std::monostate color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::monostate v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector std::monostate color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::monostate> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional std::monostate color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::monostate> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: std::monostate directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::monostate v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector std::monostate directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::monostate> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional std::monostate directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::monostate> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
+    );
+}

@@ -27,6 +27,8 @@
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <filesystem>
+#include <fstream>
 #include <optional>
 #include <vector>
 
@@ -46,6 +48,13 @@ namespace {
 
         // string value documentation
         std::optional<std::vector<std::string>> stringValue;
+
+        // path value documentation
+        std::optional<std::vector<std::filesystem::path>> pathValue;
+
+        // directory value documentation
+        std::optional<std::vector<std::filesystem::path>>
+            directoryValue [[codegen::directory()]];
 
         // ivec2 value documentation
         std::optional<std::vector<glm::ivec2>> ivec2Value;
@@ -150,6 +159,38 @@ namespace {
 } // namespace
 
 TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
+    std::filesystem::path path = std::filesystem::temp_directory_path();
+    std::string tmpFile1 =
+        (path / "codegen_execution_basic_types_optional_vector_1.txt").string();
+    {
+        std::ofstream f(tmpFile1);
+        f << "unit test";
+    }
+    std::string tmpFile2 =
+        (path / "codegen_execution_basic_types_optional_vector_2.txt").string();
+    {
+        std::ofstream f(tmpFile2);
+        f << "unit test";
+    }
+    std::string tmpFile3 =
+        (path / "codegen_execution_basic_types_optional_vector_3.txt").string();
+    {
+        std::ofstream f(tmpFile3);
+        f << "unit test";
+    }
+
+    std::string tmpFolder1 =
+        (path / "codegen_execution_basic_types_optional_vector_1").string();
+    std::filesystem::create_directories(tmpFolder1);
+
+    std::string tmpFolder2 =
+        (path / "codegen_execution_basic_types_optional_vector_2").string();
+    std::filesystem::create_directories(tmpFolder2);
+
+    std::string tmpFolder3 =
+        (path / "codegen_execution_basic_types_optional_vector_3").string();
+    std::filesystem::create_directories(tmpFolder3);
+
     ghoul::Dictionary d;
     {
         ghoul::Dictionary v;
@@ -185,6 +226,20 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
         v.setValue("2", std::string("def"));
         v.setValue("3", std::string("ghi"));
         d.setValue("StringValue", v);
+    }
+    {
+        ghoul::Dictionary v;
+        v.setValue("1", tmpFile1);
+        v.setValue("2", tmpFile2);
+        v.setValue("3", tmpFile3);
+        d.setValue("PathValue", v);
+    }
+    {
+        ghoul::Dictionary v;
+        v.setValue("1", tmpFolder1);
+        v.setValue("2", tmpFolder2);
+        v.setValue("3", tmpFolder3);
+        d.setValue("DirectoryValue", v);
     }
     {
         ghoul::Dictionary v;
@@ -605,6 +660,18 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
     REQUIRE(p.stringValue.has_value());
     CHECK(p.stringValue->size() == 3);
     CHECK(p.stringValue == std::vector<std::string>{ "abc", "def", "ghi" });
+    REQUIRE(p.pathValue.has_value());
+    CHECK(p.pathValue->size() == 3);
+    CHECK(
+        p.pathValue ==
+        std::vector<std::filesystem::path>{ tmpFile1, tmpFile2, tmpFile3 }
+    );
+    REQUIRE(p.directoryValue.has_value());
+    CHECK(p.directoryValue->size() == 3);
+    CHECK(
+        p.directoryValue ==
+        std::vector<std::filesystem::path>{ tmpFolder1, tmpFolder2, tmpFolder3 }
+    );
     REQUIRE(p.ivec2Value.has_value());
     CHECK(p.ivec2Value->size() == 3);
     CHECK(p.ivec2Value == std::vector<glm::ivec2>{ { 7, 8 }, { 9, 10 }, { 11, 12 } });
@@ -940,6 +1007,8 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
     CHECK(!p2.doubleValue.has_value());
     CHECK(!p2.floatValue.has_value());
     CHECK(!p2.stringValue.has_value());
+    CHECK(!p2.pathValue.has_value());
+    CHECK(!p2.directoryValue.has_value());
     CHECK(!p2.ivec2Value.has_value());
     CHECK(!p2.ivec3Value.has_value());
     CHECK(!p2.ivec4Value.has_value());
@@ -979,7 +1048,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 38);
+    REQUIRE(doc.entries.size() == 40);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolValue");
@@ -1047,6 +1116,30 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
     }
     {
         DocumentationEntry e = doc.entries[5];
+        CHECK(e.key == "PathValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "path value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(t->documentations.size() == 1);
+        CHECK(t->documentations[0].key == "*");
+        CHECK(t->documentations[0].verifier->type() == "File");
+        CHECK(dynamic_cast<FileVerifier*>(t->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[6];
+        CHECK(e.key == "DirectoryValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "directory value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(t->documentations.size() == 1);
+        CHECK(t->documentations[0].key == "*");
+        CHECK(t->documentations[0].verifier->type() == "Directory");
+        CHECK(dynamic_cast<DirectoryVerifier*>(t->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[7];
         CHECK(e.key == "Ivec2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "ivec2 value documentation");
@@ -1059,7 +1152,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<IntVector2Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[6];
+        DocumentationEntry e = doc.entries[8];
         CHECK(e.key == "Ivec3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "ivec3 value documentation");
@@ -1072,7 +1165,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<IntVector3Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[7];
+        DocumentationEntry e = doc.entries[9];
         CHECK(e.key == "Ivec4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "ivec4 value documentation");
@@ -1085,7 +1178,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<IntVector4Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[8];
+        DocumentationEntry e = doc.entries[10];
         CHECK(e.key == "Dvec2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dvec2 value documentation");
@@ -1098,7 +1191,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[9];
+        DocumentationEntry e = doc.entries[11];
         CHECK(e.key == "Dvec3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dvec3 value documentation");
@@ -1111,7 +1204,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[10];
+        DocumentationEntry e = doc.entries[12];
         CHECK(e.key == "Dvec4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dvec4 value documentation");
@@ -1124,7 +1217,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[11];
+        DocumentationEntry e = doc.entries[13];
         CHECK(e.key == "Vec2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "vec2 value documentation");
@@ -1137,7 +1230,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector2Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[12];
+        DocumentationEntry e = doc.entries[14];
         CHECK(e.key == "Vec3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "vec3 value documentation");
@@ -1150,7 +1243,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector3Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[13];
+        DocumentationEntry e = doc.entries[15];
         CHECK(e.key == "Vec4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "vec4 value documentation");
@@ -1163,7 +1256,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(dynamic_cast<DoubleVector4Verifier*>(t->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[14];
+        DocumentationEntry e = doc.entries[16];
         CHECK(e.key == "Mat2x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2x2 value documentation");
@@ -1178,7 +1271,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[15];
+        DocumentationEntry e = doc.entries[17];
         CHECK(e.key == "Mat2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2 value documentation");
@@ -1193,7 +1286,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[16];
+        DocumentationEntry e = doc.entries[18];
         CHECK(e.key == "Mat2x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2x3 value documentation");
@@ -1208,7 +1301,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[17];
+        DocumentationEntry e = doc.entries[19];
         CHECK(e.key == "Mat2x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat2x4 value documentation");
@@ -1223,7 +1316,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[18];
+        DocumentationEntry e = doc.entries[20];
         CHECK(e.key == "Mat3x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x2 value documentation");
@@ -1238,7 +1331,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[19];
+        DocumentationEntry e = doc.entries[21];
         CHECK(e.key == "Mat3x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x3 value documentation");
@@ -1253,7 +1346,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[20];
+        DocumentationEntry e = doc.entries[22];
         CHECK(e.key == "Mat3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3 value documentation");
@@ -1268,7 +1361,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[21];
+        DocumentationEntry e = doc.entries[23];
         CHECK(e.key == "Mat3x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat3x4 value documentation");
@@ -1283,7 +1376,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[22];
+        DocumentationEntry e = doc.entries[24];
         CHECK(e.key == "Mat4x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x2 value documentation");
@@ -1298,7 +1391,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[23];
+        DocumentationEntry e = doc.entries[25];
         CHECK(e.key == "Mat4x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x3 value documentation");
@@ -1313,7 +1406,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[24];
+        DocumentationEntry e = doc.entries[26];
         CHECK(e.key == "Mat4x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4x4 value documentation");
@@ -1328,7 +1421,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[25];
+        DocumentationEntry e = doc.entries[27];
         CHECK(e.key == "Mat4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "mat4 value documentation");
@@ -1343,7 +1436,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[26];
+        DocumentationEntry e = doc.entries[28];
         CHECK(e.key == "Dmat2x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x2 value documentation");
@@ -1358,7 +1451,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[27];
+        DocumentationEntry e = doc.entries[29];
         CHECK(e.key == "Dmat2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2 value documentation");
@@ -1373,7 +1466,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[28];
+        DocumentationEntry e = doc.entries[30];
         CHECK(e.key == "Dmat2x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x3 value documentation");
@@ -1388,7 +1481,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[29];
+        DocumentationEntry e = doc.entries[31];
         CHECK(e.key == "Dmat2x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat2x4 value documentation");
@@ -1403,7 +1496,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[30];
+        DocumentationEntry e = doc.entries[32];
         CHECK(e.key == "Dmat3x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x2 value documentation");
@@ -1418,7 +1511,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[31];
+        DocumentationEntry e = doc.entries[33];
         CHECK(e.key == "Dmat3x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x3 value documentation");
@@ -1433,7 +1526,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[32];
+        DocumentationEntry e = doc.entries[34];
         CHECK(e.key == "Dmat3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3 value documentation");
@@ -1448,7 +1541,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[33];
+        DocumentationEntry e = doc.entries[35];
         CHECK(e.key == "Dmat3x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat3x4 value documentation");
@@ -1463,7 +1556,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[34];
+        DocumentationEntry e = doc.entries[36];
         CHECK(e.key == "Dmat4x2Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x2 value documentation");
@@ -1478,7 +1571,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[35];
+        DocumentationEntry e = doc.entries[37];
         CHECK(e.key == "Dmat4x3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x3 value documentation");
@@ -1493,7 +1586,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[36];
+        DocumentationEntry e = doc.entries[38];
         CHECK(e.key == "Dmat4x4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4x4 value documentation");
@@ -1508,7 +1601,7 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         );
     }
     {
-        DocumentationEntry e = doc.entries[37];
+        DocumentationEntry e = doc.entries[39];
         CHECK(e.key == "Dmat4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "dmat4 value documentation");

@@ -359,3 +359,63 @@ std::optional<glm::dmat2x2> v [[codegen::unequal(1)]];
         CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'unequal'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: glm::dmat2x2 color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+glm::dmat2x2 v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector glm::dmat2x2 color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<glm::dmat2x2> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional glm::dmat2x2 color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<glm::dmat2x2> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: glm::dmat2x2 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+glm::dmat2x2 v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector glm::dmat2x2 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<glm::dmat2x2> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional glm::dmat2x2 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<glm::dmat2x2> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dmat2x2' does not support attribute 'directory'")
+    );
+}

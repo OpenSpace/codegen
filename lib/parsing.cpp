@@ -116,6 +116,15 @@ std::string_view parseCommentLine(std::string_view line) {
     return comment;
 }
 
+bool booleanValue(std::string_view v) {
+    if (v != "true" && v != "false" && !v.empty()) {
+        throw CodegenError(fmt::format(
+            "Boolean attribute needs to be empty, 'true', or 'false'. Got {}", v
+        ));
+    }
+    return (v == "true") || v.empty();
+}
+
 Variable::Attributes parseAttributes(std::string_view line) {
     Variable::Attributes res;
 
@@ -133,9 +142,10 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::InList)       { res.inlist = p.value; }
         else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
         else if (p.key == attributes::Annotation)   { res.annotation = p.value; }
-        else if (p.key == attributes::Color)        {
-            res.isColor = p.value == "true" || p.value.empty();
+        else if (p.key == attributes::Directory) {
+            res.isDirectory = booleanValue(p.value);
         }
+        else if (p.key == attributes::Color)      { res.isColor = booleanValue(p.value); }
         else {
             throw CodegenError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line

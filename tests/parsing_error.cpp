@@ -309,3 +309,13 @@ struct [[codegen::Dictionary(D)]] P {
         CodegenError, Catch::Matchers::Contains("Found '=' in variable definition")
     );
 }
+
+TEST_CASE("Parsing Error: Misshapen boolean value", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+int v [[codegen::color(1)]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, Catch::Matchers::Contains("Boolean attribute needs to be")
+    );
+}

@@ -361,3 +361,33 @@ std::optional<glm::dvec4> v [[codegen::unequal(1)]];
         CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'unequal'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: glm::dvec4 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+glm::dvec4 v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector glm::dvec4 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<glm::dvec4> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional glm::dvec4 directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<glm::dvec4> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'glm::dvec4' does not support attribute 'directory'")
+    );
+}

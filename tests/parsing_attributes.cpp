@@ -213,12 +213,30 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
         // vectorDcolor3Value documentation
         std::vector<glm::dvec3> vectorDcolor3Value [[codegen::color()]];
+
+        // file value documentation
+        std::filesystem::path fileValue;
+
+        // optional file value documentation
+        std::optional<std::filesystem::path> optionalFileValue;
+
+        // vector file value documentation
+        std::vector<std::filesystem::path> vectorFileValue;
+
+        // directory value documentation
+        std::filesystem::path directoryValue [[codegen::directory()]];
+
+        // optional directory value documentation
+        std::optional<std::filesystem::path> optionalDirectoryValue [[codegen::directory()]];
+
+        // vector directory value documentation
+        std::vector<std::filesystem::path> vectorDirectoryValue [[codegen::directory()]];
     };
 )";
     Struct* s = parseRootStruct(Source);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 61);
+    REQUIRE(s->variables.size() == 67);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -240,6 +258,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -263,6 +282,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -286,6 +306,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -308,6 +329,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -330,6 +352,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -352,6 +375,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -374,6 +398,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -396,6 +421,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -418,6 +444,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -440,6 +467,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -462,6 +490,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -484,6 +513,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -506,6 +536,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -528,6 +559,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -550,6 +582,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -572,6 +605,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -594,6 +628,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -616,6 +651,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -638,6 +674,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -660,6 +697,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -682,6 +720,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -704,6 +743,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -726,6 +766,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -748,6 +789,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -770,6 +812,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -792,6 +835,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -814,6 +858,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -836,6 +881,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -858,6 +904,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -880,6 +927,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -902,6 +950,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -924,6 +973,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -946,6 +996,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -968,6 +1019,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -990,6 +1042,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1012,6 +1065,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1034,6 +1088,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1056,6 +1111,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1078,6 +1134,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1100,6 +1157,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1122,6 +1180,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1144,6 +1203,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1166,6 +1226,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1188,6 +1249,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1210,6 +1272,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1232,6 +1295,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1254,6 +1318,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1276,6 +1341,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1298,6 +1364,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1320,6 +1387,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1342,6 +1410,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1364,6 +1433,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1386,6 +1456,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1408,6 +1479,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1430,6 +1502,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1452,6 +1525,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1474,6 +1548,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1496,6 +1571,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1518,6 +1594,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1540,6 +1617,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
     }
 
     {
@@ -1562,6 +1640,145 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[61];
+        REQUIRE(var);
+        CHECK(var->name == "fileValue");
+        CHECK(var->key == "\"FileValue\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "file value documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[62];
+        REQUIRE(var);
+        CHECK(var->name == "optionalFileValue");
+        CHECK(var->key == "\"OptionalFileValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "optional file value documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[63];
+        REQUIRE(var);
+        CHECK(var->name == "vectorFileValue");
+        CHECK(var->key == "\"VectorFileValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "vector file value documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[64];
+        REQUIRE(var);
+        CHECK(var->name == "directoryValue");
+        CHECK(var->key == "\"DirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+    }
+
+    {
+        Variable* var = s->variables[65];
+        REQUIRE(var);
+        CHECK(var->name == "optionalDirectoryValue");
+        CHECK(var->key == "\"OptionalDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "optional directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+    }
+
+    {
+        Variable* var = s->variables[66];
+        REQUIRE(var);
+        CHECK(var->name == "vectorDirectoryValue");
+        CHECK(var->key == "\"VectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "vector directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
     }
 
     std::string r = generateResult(s);

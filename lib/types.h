@@ -49,6 +49,7 @@ struct CodegenError : public std::runtime_error {
 namespace attributes {
     constexpr const char Annotation[] = "annotation";
     constexpr const char Color[] = "color";
+    constexpr const char Directory[] = "directory";
     constexpr const char InList[] = "inlist";
     constexpr const char InRange[] = "inrange";
     constexpr const char Less[] = "less";
@@ -112,6 +113,7 @@ struct BasicType : public VariableType {
         Double,
         Float,
         String,
+        Path,
         Ivec2, Ivec3, Ivec4,
         Dvec2, Dvec3, Dvec4,
         Vec2, Vec3, Vec4,
@@ -175,6 +177,7 @@ struct Variable {
         std::string reference;
         std::string unequal;
 
+        bool isDirectory = false;
         bool isColor = false;
     };
     Attributes attributes;

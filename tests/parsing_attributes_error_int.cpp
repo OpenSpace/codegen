@@ -149,3 +149,63 @@ CHECK_THROWS_MATCHES(
         CodegenError, CM::Contains("'int' does not support attribute 'reference'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: int color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+int v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector int color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<int> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional int color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<int> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: int directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+int v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector int directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<int> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional int directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<int> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'int' does not support attribute 'directory'")
+    );
+}

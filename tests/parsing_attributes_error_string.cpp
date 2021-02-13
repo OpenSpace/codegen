@@ -239,3 +239,63 @@ std::optional<std::string> v [[codegen::reference(1)]];
         CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: std::string color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector std::string color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional std::string color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: std::string directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector std::string directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional std::string directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+    );
+}

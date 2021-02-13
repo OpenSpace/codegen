@@ -24,7 +24,7 @@ All types and variable definitions can have comments defined directly before the
  - `[[codegen::verbatim(ID.description)]]` will be replaced with `ID.description` to be able to reuse descriptions from a PropertyInfo `ID` or any other parameter.  The only difference to writing `// ID.description` is that the latter will add " around the parameter which `codegen::verbatim` omits
 
 ## Supported types for member variables
- - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`, `std::variant`
+ - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`, `std::variant`, `std::string`, `std::filesystem::path`
  - `glm::ivec2`, `glm::ivec3`, `glm::ivec4`, `glm::dvec2`, `glm::dvec3`, `glm::dvec4`, `glm::vec2`, `glm::vec3`, `glm::vec4`, `glm::mat2x2`, `glm::mat2x3`, `glm::mat2x4`, `glm::mat3x2`, `glm::mat3x3`, `glm::mat3x4`, `glm::mat4x2`, `glm::mat4x3`, `glm::mat4x4`, `glm::dmat2x2`, `glm::dmat2x3`, `glm::dmat2x4`, `glm::dmat3x2`, `glm::dmat3x3`, `glm::dmat3x4`, `glm::dmat4x2`, `glm::dmat4x3`, `glm::dmat4x4`
  - `struct`s (must be defined inside the root struct)
  - `enum class` (must be defind inside the root struct)
@@ -44,7 +44,8 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
  - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
  - `[[codegen::reference("foo")]]`:  Marks a `std::monostate` as a referencing verifier that will look up a different Documentation elsewhere in the code.  This attribute can only be used with a `std::monostate`.
- - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`
+ - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`. The parameter must be either empty, `true`, or `false`
+ - `[[codegen::directory()]]`: Marks a `std::filesystem::path` to be allowed to be a directory. The parameter must be either empty, `true`, or `false`
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
@@ -92,3 +93,4 @@ This is a complete list of variable types and attribute combinations.  We are **
  - `glm::vec4` + `[[codegen::color]]` -> `Color4Verifier`
  - `glm::dvec3` + `[[codegen::color]]` -> `Color3Verifier`
  - `glm::dvec4` + `[[codegen::color]]` -> `Color4Verifier`
+ - `std::filesystem::path` + `[[codegen::directory()]]` -> `DirectoryVerifier`

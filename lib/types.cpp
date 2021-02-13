@@ -203,6 +203,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (type == "double")         { t = newBasicType(BasicType::Type::Double); }
     else if (type == "float")          { t = newBasicType(BasicType::Type::Float); }
     else if (type == "std::string")    { t = newBasicType(BasicType::Type::String); }
+    else if (type == "std::filesystem::path") { t = newBasicType(BasicType::Type::Path); }
     else if (type == "glm::ivec2")     { t = newBasicType(BasicType::Type::Ivec2); }
     else if (type == "glm::ivec3")     { t = newBasicType(BasicType::Type::Ivec3); }
     else if (type == "glm::ivec4")     { t = newBasicType(BasicType::Type::Ivec4); }
@@ -320,6 +321,7 @@ std::string generateTypename(BasicType::Type type) {
         case BasicType::Type::Double:  return "double";
         case BasicType::Type::Float:   return "float";
         case BasicType::Type::String:  return "std::string";
+        case BasicType::Type::Path:    return "std::filesystem::path";
         case BasicType::Type::Ivec2:   return "glm::ivec2";
         case BasicType::Type::Ivec3:   return "glm::ivec3";
         case BasicType::Type::Ivec4:   return "glm::ivec4";

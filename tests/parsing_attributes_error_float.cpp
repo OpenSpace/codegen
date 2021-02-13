@@ -149,3 +149,63 @@ std::optional<float> v [[codegen::reference(1)]];
         CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
+
+TEST_CASE("Unsupported Attributes: float color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+float v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector float color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<float> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional float color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<float> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: float directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+float v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector float directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<float> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional float directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<float> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'float' does not support attribute 'directory'")
+    );
+}

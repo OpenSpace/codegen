@@ -360,4 +360,62 @@ std::optional<bool> v [[codegen::unequal(1)]];
     );
 }
 
+TEST_CASE("Unsupported Attributes: Bool color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+bool v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'color'")
+    );
+}
 
+TEST_CASE("Unsupported Attributes: vector bool color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<bool> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional bool color", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<bool> v [[codegen::color()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'color'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: Bool directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+bool v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: vector bool directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<bool> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'directory'")
+    );
+}
+
+TEST_CASE("Unsupported Attributes: optional bool directory", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<bool> v [[codegen::directory()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError, CM::Contains("'bool' does not support attribute 'directory'")
+    );
+}

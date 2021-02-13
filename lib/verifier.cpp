@@ -71,6 +71,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.isDirectory, attributes::Directory);
         }
         else if (
             type == Type::Dvec3 || type == Type::Dvec4 ||
@@ -87,6 +88,7 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
+            reportBool(attributes.isDirectory, attributes::Directory);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
             report(attributes.annotation, attributes::Annotation);
@@ -94,6 +96,7 @@ namespace {
             report(attributes.notinlist, attributes::NotInList);
             report(attributes.reference, attributes::Reference);
             reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.isDirectory, attributes::Directory);
         }
         else if (type == Type::String) {
             report(attributes.inrange, attributes::InRange);
@@ -103,6 +106,20 @@ namespace {
             report(attributes.greaterequal, attributes::GreaterEqual);
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.reference, attributes::Reference);
+            reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.isDirectory, attributes::Directory);
+        }
+        else if (type == Type::Path) {
+            report(attributes.annotation, attributes::Annotation);
+            report(attributes.inlist, attributes::InList);
+            report(attributes.inrange, attributes::InRange);
+            report(attributes.less, attributes::Less);
+            report(attributes.lessequal, attributes::LessEqual);
+            report(attributes.greater, attributes::Greater);
+            report(attributes.greaterequal, attributes::GreaterEqual);
+            report(attributes.notinlist, attributes::NotInList);
+            report(attributes.notinrange, attributes::NotInRange);
+            report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
         }
         else if (type == Type::Monostate) {
@@ -117,6 +134,7 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.isDirectory, attributes::Directory);
         }
     }
 
@@ -130,6 +148,8 @@ namespace {
 std::string verifierForType(BasicType::Type type, const Variable::Attributes& attr) {
     using Type = BasicType::Type;
 
+    // @TODO (abock, 2021-02-12) Really the check for unsupported attributes should be
+    // done directly after parsing and not when we are trying to generate the verifiers
     reportUnsupportedAttribute(type, attr);
     if (type == Type::Bool) { return "BoolVerifier"; }
     else if (type == Type::Int) {
@@ -201,6 +221,14 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
             res = addQualifier(res, "AnnotationVerifier", attr.annotation);
         }
         return res;
+    }
+    else if (type == Type::Path)  {
+        if (attr.isDirectory) {
+            return "DirectoryVerifier";
+        }
+        else {
+            return "FileVerifier";
+        }
     }
     else if (type == Type::Ivec2) { return "IntVector2Verifier"; }
     else if (type == Type::Ivec3) { return "IntVector3Verifier"; }
