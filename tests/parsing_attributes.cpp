@@ -231,6 +231,15 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
         // vector directory value documentation
         std::vector<std::filesystem::path> vectorDirectoryValue [[codegen::directory()]];
+
+        // dateTime value documentation
+        std::string dateTimeValue [[codegen::dateTime()]];
+
+        // optional dateTime value documentation
+        std::optional<std::string> optionalDateTimeValue [[codegen::dateTime()]];
+
+        // vector dateTime value documentation
+        std::vector<std::string> vectorDateTimeValue [[codegen::dateTime()]];
     };
 )";
     Struct* s = parseRootStruct(Source);
@@ -259,6 +268,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -283,6 +293,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -307,6 +318,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -330,6 +342,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -353,6 +366,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -376,6 +390,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -399,6 +414,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -422,6 +438,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -445,6 +462,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -468,6 +486,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -491,6 +510,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -514,6 +534,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -537,6 +558,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -560,6 +582,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -583,6 +606,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -606,6 +630,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -629,6 +654,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -652,6 +678,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -675,6 +702,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -698,6 +726,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -721,6 +750,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -744,6 +774,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -767,6 +798,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -790,6 +822,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -813,6 +846,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -836,6 +870,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -859,6 +894,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -882,6 +918,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -905,6 +942,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -928,6 +966,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -951,6 +990,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -974,6 +1014,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -997,6 +1038,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1020,6 +1062,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1043,6 +1086,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1066,6 +1110,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1089,6 +1134,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1112,6 +1158,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1135,6 +1182,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1158,6 +1206,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1181,6 +1230,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1204,6 +1254,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1227,6 +1278,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1250,6 +1302,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1273,6 +1326,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1296,6 +1350,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1319,6 +1374,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1342,6 +1398,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1365,6 +1422,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1388,6 +1446,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1411,6 +1470,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1434,6 +1494,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1457,6 +1518,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1480,6 +1542,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1503,6 +1566,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1526,6 +1590,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1549,6 +1614,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1572,6 +1638,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1595,6 +1662,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1618,6 +1686,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1641,6 +1710,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1664,6 +1734,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1687,6 +1758,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1710,6 +1782,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1733,6 +1806,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1756,6 +1830,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
     }
 
     {
@@ -1779,6 +1854,79 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+    }
+
+    {
+        Variable* var = s->variables[67];
+        REQUIRE(var);
+        CHECK(var->name == "dateTimeValue");
+        CHECK(var->key == "\"DateTimeValue\"");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "dateTime value documentation");
+        CHECK(var->attributes.isDateTime);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[68];
+        REQUIRE(var);
+        CHECK(var->name == "optionalDateTimeValue");
+        CHECK(var->key == "\"OptionalDateTimeValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
+        CHECK(var->comment == "optional dateTime value documentation");
+        CHECK(var->attributes.isDateTime);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[69];
+        REQUIRE(var);
+        CHECK(var->name == "vectorDateTimeValue");
+        CHECK(var->key == "\"VectorDateTimeValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "vector dateTime value documentation");
+        CHECK(var->attributes.isDateTime);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
     }
 
     std::string r = generateResult(s);
