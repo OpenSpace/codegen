@@ -269,7 +269,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         // For now, we just want to support std::map<std::string, std::string>
         if ((mp->keyType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->keyType)->type != BasicType::Type::String) &&
+            (static_cast<BasicType*>(mp->keyType)->type != BasicType::Type::String) ||
             (mp->valueType->tag == VariableType::Tag::BasicType) &&
             (static_cast<BasicType*>(mp->valueType)->type != BasicType::Type::String))
         {
