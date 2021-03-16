@@ -66,6 +66,7 @@ namespace {
     constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
     constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
+    constexpr const char BakeFunctionDictionary[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, ghoul::Dictionary* val) { *val = d.value<ghoul::Dictionary>(key); }\n";
 
 
     constexpr const char VariantConverterBool[] = "   if (d.hasValue<bool>(key)) { bool v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -100,6 +101,7 @@ namespace {
     constexpr const char VariantConverterDMat4x2[] = "   if (d.hasValue<glm::dmat4x2>(key)) { glm::dmat4x2 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterDMat4x3[] = "   if (d.hasValue<glm::dmat4x3>(key)) { glm::dmat4x3 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterDMat4x4[] = "   if (d.hasValue<glm::dmat4x4>(key)) { glm::dmat4x4 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
+    constexpr const char VariantConverterDictionary[] = "   if (d.hasValue<ghoul::Dictionary>(key)) { ghoul::Dictionary v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
 
 } // namespace
 
@@ -139,6 +141,7 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
         case BasicType::Type::DMat4x3:   return BakeFunctionDMat4x3;
         case BasicType::Type::DMat4x4:   return BakeFunctionDMat4x4;
         case BasicType::Type::Monostate: return BakeFunctionMonostate;
+        case BasicType::Type::Dictionary: return BakeFunctionDictionary;
     }
     throw std::logic_error("Missing case label");
 }
@@ -153,38 +156,39 @@ std::string vectorBakeFunctionForType(std::string_view type) {
 std::string_view variantConversionFunctionForType(std::string_view type) {
     assert(!type.empty());
     static std::unordered_map<std::string_view, std::string_view> ConvertFunctions = {
-        { "bool",           VariantConverterBool },
-        { "int",            VariantConverterInt },
-        { "double",         VariantConverterDouble },
-        { "float",          VariantConverterFloat },
-        { "std::string",    VariantConverterString },
-        { "glm::ivec2",     VariantConverterIVec2 },
-        { "glm::ivec3",     VariantConverterIVec3 },
-        { "glm::ivec4",     VariantConverterIVec4 },
-        { "glm::dvec2",     VariantConverterDVec2 },
-        { "glm::dvec3",     VariantConverterDVec3 },
-        { "glm::dvec4",     VariantConverterDVec4 },
-        { "glm::vec2",      VariantConverterVec2 },
-        { "glm::vec3",      VariantConverterVec3 },
-        { "glm::vec4",      VariantConverterVec4 },
-        { "glm::mat2x2",    VariantConverterMat2x2 },
-        { "glm::mat2x3",    VariantConverterMat2x3 },
-        { "glm::mat2x4",    VariantConverterMat2x4 },
-        { "glm::mat3x2",    VariantConverterMat3x2 },
-        { "glm::mat3x3",    VariantConverterMat3x3 },
-        { "glm::mat3x4",    VariantConverterMat3x4 },
-        { "glm::mat4x2",    VariantConverterMat4x2 },
-        { "glm::mat4x3",    VariantConverterMat4x3 },
-        { "glm::mat4x4",    VariantConverterMat4x4 },
-        { "glm::dmat2x2",   VariantConverterDMat2x2 },
-        { "glm::dmat2x3",   VariantConverterDMat2x3 },
-        { "glm::dmat2x4",   VariantConverterDMat2x4 },
-        { "glm::dmat3x2",   VariantConverterDMat3x2 },
-        { "glm::dmat3x3",   VariantConverterDMat3x3 },
-        { "glm::dmat3x4",   VariantConverterDMat3x4 },
-        { "glm::dmat4x2",   VariantConverterDMat4x2 },
-        { "glm::dmat4x3",   VariantConverterDMat4x3 },
-        { "glm::dmat4x4",   VariantConverterDMat4x4 }
+        { "bool",              VariantConverterBool },
+        { "int",               VariantConverterInt },
+        { "double",            VariantConverterDouble },
+        { "float",             VariantConverterFloat },
+        { "std::string",       VariantConverterString },
+        { "glm::ivec2",        VariantConverterIVec2 },
+        { "glm::ivec3",        VariantConverterIVec3 },
+        { "glm::ivec4",        VariantConverterIVec4 },
+        { "glm::dvec2",        VariantConverterDVec2 },
+        { "glm::dvec3",        VariantConverterDVec3 },
+        { "glm::dvec4",        VariantConverterDVec4 },
+        { "glm::vec2",         VariantConverterVec2 },
+        { "glm::vec3",         VariantConverterVec3 },
+        { "glm::vec4",         VariantConverterVec4 },
+        { "glm::mat2x2",       VariantConverterMat2x2 },
+        { "glm::mat2x3",       VariantConverterMat2x3 },
+        { "glm::mat2x4",       VariantConverterMat2x4 },
+        { "glm::mat3x2",       VariantConverterMat3x2 },
+        { "glm::mat3x3",       VariantConverterMat3x3 },
+        { "glm::mat3x4",       VariantConverterMat3x4 },
+        { "glm::mat4x2",       VariantConverterMat4x2 },
+        { "glm::mat4x3",       VariantConverterMat4x3 },
+        { "glm::mat4x4",       VariantConverterMat4x4 },
+        { "glm::dmat2x2",      VariantConverterDMat2x2 },
+        { "glm::dmat2x3",      VariantConverterDMat2x3 },
+        { "glm::dmat2x4",      VariantConverterDMat2x4 },
+        { "glm::dmat3x2",      VariantConverterDMat3x2 },
+        { "glm::dmat3x3",      VariantConverterDMat3x3 },
+        { "glm::dmat3x4",      VariantConverterDMat3x4 },
+        { "glm::dmat4x2",      VariantConverterDMat4x2 },
+        { "glm::dmat4x3",      VariantConverterDMat4x3 },
+        { "glm::dmat4x4",      VariantConverterDMat4x4 },
+        { "ghoul::Dictionary", VariantConverterDictionary }
     };
 
     const auto it = ConvertFunctions.find(type);
