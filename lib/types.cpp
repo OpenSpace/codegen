@@ -314,7 +314,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         // Check for illegal types
         for (VariableType* t : vt->types) {
-            if (t->tag != VariableType::Tag::BasicType && t->tag != VariableType::Tag::VectorType) {
+            if (t->tag != VariableType::Tag::BasicType &&
+                t->tag != VariableType::Tag::VectorType)
+            {
                 throw CodegenError(fmt::format(
                     "Unsupported type '{}' found in variant list\n{}",
                     generateTypename(t), type
