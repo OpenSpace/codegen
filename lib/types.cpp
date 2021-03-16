@@ -314,9 +314,12 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         // Check for illegal types
         for (VariableType* t : vt->types) {
-            if (t->tag != VariableType::Tag::BasicType &&
-                t->tag != VariableType::Tag::VectorType)
-            {
+            const bool isBasicType = t->tag == VariableType::Tag::BasicType;
+            const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+            const bool isEnum =
+                t->tag == VariableType::Tag::CustomType &&
+                static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
+            if (!isBasicType && !isVectorType && !isEnum) {
                 throw CodegenError(fmt::format(
                     "Unsupported type '{}' found in variant list\n{}",
                     generateTypename(t), type
@@ -420,11 +423,16 @@ std::string generateTypename(const VectorType* type) {
     return fmt::format("std::vector<{}>", t1);
 }
 
-std::string generateTypename(const CustomType* type) {
-    return type->type->name;
+std::string generateTypename(const CustomType* type, bool fullyQualified) {
+    if (fullyQualified) {
+        return fqn(type->type, "::");
+    }
+    else {
+        return type->type->name;
+    }
 }
 
-std::string generateTypename(const VariableType* type) {
+std::string generateTypename(const VariableType* type, bool fullyQualified) {
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateTypename(static_cast<const BasicType*>(type));
@@ -437,7 +445,7 @@ std::string generateTypename(const VariableType* type) {
         case VariableType::Tag::VectorType:
             return generateTypename(static_cast<const VectorType*>(type));
         case VariableType::Tag::CustomType:
-            return generateTypename(static_cast<const CustomType*>(type));
+            return generateTypename(static_cast<const CustomType*>(type), fullyQualified);
     }
     throw std::logic_error("Missing case label");
 }

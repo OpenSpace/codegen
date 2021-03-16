@@ -306,7 +306,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     }
     VariantType* variantType = static_cast<VariantType*>(type);
 
-    std::string typeString = generateTypename(type);
+    std::string typeString = generateTypename(type, true);
     if (std::find(converters.begin(), converters.end(), typeString) != converters.end()) {
         // This check will trigger if we are using the same type of variant for multiple
         // variables in the same struct.  If that is the case, we only want to emit the
@@ -325,8 +325,16 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
         std::string type = generateTypename(t);
         
         const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+        const bool isEnumType =
+            t->tag == VariableType::Tag::CustomType &&
+            static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
         if (isVectorType) {
             std::string bakeFunction = vectorBakeFunctionForType(type);
+            result += bakeFunction;
+        }
+        else if (isEnumType) {
+            std::string fqnType = fqn(static_cast<CustomType*>(t)->type, "::");
+            std::string bakeFunction = enumBakeFunctionForType(fqnType);
             result += bakeFunction;
         }
         else {
@@ -369,10 +377,6 @@ std::string writeStructConverter(Struct* s) {
     assert(s);
     std::string result;
     std::vector<std::string> writtenVariantConverters;
-    for (Variable* var : s->variables) {
-        assert(var);
-        result += writeVariantConverter(var, writtenVariantConverters);
-    }
 
     for (StackElement* e : s->children) {
         assert(e);
@@ -383,6 +387,11 @@ std::string writeStructConverter(Struct* s) {
         if (e->type == StackElement::Type::Enum) {
             result += writeEnumConverter(static_cast<Enum*>(e));
         }
+    }
+
+    for (Variable* var : s->variables) {
+        assert(var);
+        result += writeVariantConverter(var, writtenVariantConverters);
     }
 
     if (s->parent == nullptr) {
