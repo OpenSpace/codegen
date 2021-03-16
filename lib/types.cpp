@@ -245,6 +245,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         VectorType* vt = new VectorType;
         vt->tag = VariableType::Tag::VectorType;
         vt->type = parseType(type, context);
+        assert(vt->type);
         t = vt;
     }
     else if (startsWith(type, "std::optional<")) {
@@ -254,6 +255,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         OptionalType* op = new OptionalType;
         op->tag = VariableType::Tag::OptionalType;
         op->type = parseType(type, context);
+        assert(op->type);
         t = op;
     }
     else if (startsWith(type, "std::map<")) {
@@ -265,7 +267,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
         MapType* mp = new MapType;
         mp->tag = VariableType::Tag::MapType;
         mp->keyType = parseType(list[0], context);
+        assert(mp->keyType);
         mp->valueType = parseType(list[1], context);
+        assert(mp->valueType);
 
         // For now, we just want to support std::map<std::string, std::string>
         if ((mp->keyType->tag == VariableType::Tag::BasicType) &&
@@ -287,11 +291,37 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         VariantType* vt = new VariantType;
         vt->tag = VariableType::Tag::VariantType;
-        
+
         for (std::string_view elem : list) {
             VariableType* t = parseType(elem, context);
+            assert(t);
             vt->types.push_back(t);
         }
+
+        // Check for multiple vector types
+        int nVectorTypes = 0;
+        for (VariableType* t : vt->types) {
+            if (t->tag == VariableType::Tag::VectorType) {
+                nVectorTypes += 1;
+            }
+        }
+        if (nVectorTypes > 1) {
+            throw CodegenError(fmt::format(
+                "We can't have a variant containing multiple vector types, try a "
+                "vector of variants instead\n{}", type
+            ));
+        }
+
+        // Check for illegal types
+        for (VariableType* t : vt->types) {
+            if (t->tag != VariableType::Tag::BasicType && t->tag != VariableType::Tag::VectorType) {
+                throw CodegenError(fmt::format(
+                    "Unsupported type '{}' found in variant list\n{}",
+                    generateTypename(t), type
+                ));
+            }
+        }
+
         t = vt;
     }
 

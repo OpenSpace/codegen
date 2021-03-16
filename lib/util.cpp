@@ -68,7 +68,7 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
             nBrackets -= 1;
         }
 
-        if (types[cursor] == ',' || ((types[cursor] == '>') && (nBrackets == 0))) {
+        if (((types[cursor] == ',') && (nBrackets == 1)) || ((types[cursor] == '>') && (nBrackets == 0))) {
             std::string_view subtype = types.substr(base, cursor - base);
             res.push_back(strip(subtype));
             base = cursor + 1;

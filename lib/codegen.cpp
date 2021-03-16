@@ -319,7 +319,6 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             fullType
         );
 
-        int nVectorTypes = 0;
         std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
         for (std::string_view subtype : ttypes) {
             std::string_view originalSubtype = subtype;
@@ -327,24 +326,11 @@ std::string writeVariableConverter(Variable* var, std::vector<std::string>& conv
             if (startsWith(subtype, "std::vector<")) {
                 subtype.remove_prefix("std::vector<"sv.size());
                 subtype.remove_suffix(">"sv.size());
-                nVectorTypes += 1;
                 isVectorType = true;
-            }
-            if (nVectorTypes > 1) {
-                throw CodegenError(fmt::format(
-                    "We can't have a variant containing multiple vector types, try a "
-                    "vector of variants instead\n{}", typeString
-                ));
             }
 
             std::string_view conv = variantConversionFunctionForType(subtype);
-
-            if (conv.empty()) {
-                throw CodegenError(fmt::format(
-                    "Unsupported type '{}' found in variant list\n{}",
-                    subtype, typeString
-                ));
-            }
+            assert(!conv.empty());
 
             if (isVectorType) {
                 result += vectorBakeFunctionForType(originalSubtype);
