@@ -375,7 +375,8 @@ std::string writeEnumConverter(Enum* e) {
         std::string type = fqn(e, "::");
         assert(!elem->attributes.key.empty());
         result += fmt::format(
-            "    if (v == {}) {{ *val = {}::{}; }}\n", elem->attributes.key, type, elem->name
+            "    if (v == {}) {{ *val = {}::{}; }}\n",
+            elem->attributes.key, type, elem->name
         );
     }
     result += "}\n";
@@ -460,7 +461,6 @@ std::string generateResult(Struct* s) {
 
     result += writeStructDocumentation(s);
     result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
-
 
 
     // For Linux, we need to delcare the functions in the following order or the overload
@@ -598,9 +598,9 @@ Result handleFile(std::filesystem::path path) {
         shouldWriteFile = true;
     }
 
-    std::filesystem::path debugDestination = destination;
-    debugDestination.replace_extension();
-    debugDestination.replace_filename(debugDestination.filename().string() + "_debug.cpp");
+    std::filesystem::path debugDest = destination;
+    debugDest.replace_extension();
+    debugDest.replace_filename(debugDest.filename().string() + "_debug.cpp");
 
     if (shouldWriteFile || ShouldAlwaysWriteFiles) {
         std::cout << fmt::format("Processed file '{}'\n", path.filename().string());
@@ -608,11 +608,11 @@ Result handleFile(std::filesystem::path path) {
         std::ofstream r(destination);
         r.write(content.data(), content.size());
 
-        std::filesystem::remove(debugDestination);
+        std::filesystem::remove(debugDest);
         return Result::Processed;
     }
     else {
-        std::filesystem::remove(debugDestination);
+        std::filesystem::remove(debugDest);
         return Result::Skipped;
     }
 }
