@@ -290,61 +290,56 @@ std::string writeStructDocumentation(Struct* s) {
     return result;
 }
 
-std::string writeVariableConverter(Variable* var, std::vector<std::string>& converters) {
-    // @TODO (abock, 2021-02-03) This function is really ugly and should really be
-    // overhauled.  This would include not generating the typename as a string and then
-    // reparsing it.  Instead, we can walk the type tree and take out the types directly
-    // instead.
-
-    std::string typeString = generateTypename(var->type);
-    std::string result;
-    if (const size_t p = typeString.find("std::variant"); p != std::string::npos) {
-        std::string subtypes = typeString.substr(p + "std::variant<"sv.size());
-
-        if (std::find(converters.begin(), converters.end(), subtypes) != converters.end())
-        {
-            return result;
-        }
-
-        converters.push_back(subtypes);
-
-        std::string_view fullType = typeString;
-        if (startsWith(fullType, "std::optional<")) {
-            fullType.remove_prefix("std::optional<"sv.size());
-            fullType.remove_suffix(">"sv.size());
-        }
-
-        result = fmt::format(
-            "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
-            fullType
-        );
-
-        std::vector<std::string_view> ttypes = extractTemplateTypeList(subtypes);
-        for (std::string_view subtype : ttypes) {
-            std::string_view originalSubtype = subtype;
-            bool isVectorType = false;
-            if (startsWith(subtype, "std::vector<")) {
-                subtype.remove_prefix("std::vector<"sv.size());
-                subtype.remove_suffix(">"sv.size());
-                isVectorType = true;
-            }
-
-            std::string_view conv = variantConversionFunctionForType(subtype);
-            assert(!conv.empty());
-
-            if (isVectorType) {
-                result += vectorBakeFunctionForType(originalSubtype);
-            }
-            else {
-                result += conv;
-            }
-        }
-
-        result += "    // Any of the previous values should have triggered and returned\n";
-        result += "    // If this assert triggers, something in the codegen went wrong\n";
-        result += "    assert(false);\n";
-        result += "}\n";
+std::string writeVariantConverter(Variable* var, std::vector<std::string>& converters) {
+    VariableType* type = var->type;
+    if (var->type->tag == VariableType::Tag::OptionalType) {
+        // For this case, we don't care about whether the variant is wrapped in an
+        // optional.  The converter code generated for the optional<T> will call the code
+        // generated here.  So we basically just unwrap the optional type here
+        OptionalType* ot = static_cast<OptionalType*>(var->type);
+        type = ot->type;
     }
+
+    if (type->tag != VariableType::Tag::VariantType) {
+        // No need to even look at non-variant types here
+        return "";
+    }
+    VariantType* variantType = static_cast<VariantType*>(type);
+
+    std::string typeString = generateTypename(type);
+    if (std::find(converters.begin(), converters.end(), typeString) != converters.end()) {
+        // This check will trigger if we are using the same type of variant for multiple
+        // variables in the same struct.  If that is the case, we only want to emit the
+        // conversion code once, or else we would get a multiply defined function
+        // definition compile error
+        return "";
+    }
+    converters.push_back(typeString);
+
+    std::string result = fmt::format(
+        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
+        typeString
+    );
+
+    for (VariableType* t : variantType->types) {
+        std::string type = generateTypename(t);
+        
+        const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+        if (isVectorType) {
+            std::string bakeFunction = vectorBakeFunctionForType(type);
+            result += bakeFunction;
+        }
+        else {
+            std::string_view conversionFunction = variantConversionFunctionForType(type);
+            assert(!conversionFunction.empty());
+            result += conversionFunction;
+        }
+    }
+
+    result += "    // Any of the previous values should have triggered and returned\n";
+    result += "    // If this assert triggers, something in the codegen went wrong\n";
+    result += "    assert(false);\n";
+    result += "}\n";
     return result;
 }
 
@@ -376,7 +371,7 @@ std::string writeStructConverter(Struct* s) {
     std::vector<std::string> writtenVariantConverters;
     for (Variable* var : s->variables) {
         assert(var);
-        result += writeVariableConverter(var, writtenVariantConverters);
+        result += writeVariantConverter(var, writtenVariantConverters);
     }
 
     for (StackElement* e : s->children) {

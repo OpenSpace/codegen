@@ -62,23 +62,36 @@ namespace {
         // variant vector 2 documentation
         std::variant<std::string, std::vector<std::string>> variantVector2;
 
-        enum class A {
-            Value1,
-            Value2,
-            Value3
-        };
-        // variant enum float documentation
-        std::variant<A, float> variantEnumFloat;
+        // multiple variant a documentation
+        std::variant<int, std::string> multipleVariantA;
 
-        enum class B {
-            Value1,
-            Value2,
-            Value3
-        };
-        // optional variant enum float documentation
-        std::optional<std::variant<A, float>> optionalVariantEnumFloat;
+        // multiple variant b documentation
+        std::variant<std::string, int> multipleVariantB;
+
+        // multiple variant a2 documentation
+        std::variant<int, std::string> multipleVariantA2;
+
+        // multiple variant b2 documentation
+        std::optional<std::variant<std::string, int>> multipleVariantB2;
     };
 #include "execution_variant_codegen.cpp"
+    /*
+    enum class A {
+    Value1,
+    Value2,
+    Value3
+    };
+    // variant enum float documentation
+    std::variant<A, float> variantEnumFloat;
+
+    enum class B {
+    Value1,
+    Value2,
+    Value3
+    };
+    // optional variant enum float documentation
+    std::optional<std::variant<B, float>> optionalVariantEnumFloat;
+    */
 } // namespace
 
 TEST_CASE("Variant bake", "[verifier]") {
@@ -96,8 +109,11 @@ TEST_CASE("Variant bake", "[verifier]") {
         d1.setValue("OptionalValue", 5.0);
         d1.setValue("VariantVector", std::string("abc"));
         d1.setValue("VariantVector2", std::string("def"));
-        d1.setValue("VariantEnumFloat", "Value2");
-        d1.setValue("OptionalVariantEnumFloat", "Value2");
+        d1.setValue("MultipleVariantA", 2.0);
+        d1.setValue("MultipleVariantB", 2.0);
+        d1.setValue("MultipleVariantA2", 2.0);
+        d1.setValue("VariantEnumFloat", std::string("Value2"));
+        d1.setValue("OptionalVariantEnumFloat", std::string("Value2"));
 
         const Parameters p1 = codegen::bake<Parameters>(d1);
         CHECK(std::get<bool>(p1.boolDoubleValue) == false);
@@ -118,14 +134,21 @@ TEST_CASE("Variant bake", "[verifier]") {
         CHECK(std::get<std::string>(p1.variantVector) == "abc");
         REQUIRE(std::holds_alternative<std::string>(p1.variantVector2));
         CHECK(std::get<std::string>(p1.variantVector2) == "def");
-        REQUIRE(std::holds_alternative<Parameters::A>(p1.variantEnumFloat));
-        CHECK(std::get<Parameters::A>(p1.variantEnumFloat) == Parameters::A::Value2);
-        REQUIRE(p1.optionalVariantEnumFloat.has_value());
-        REQUIRE(std::holds_alternative<Parameters::B>(*p1.optionalVariantEnumFloat));
-        CHECK(
-            std::get<Parameters::B>(*p1.optionalVariantEnumFloat) ==
-            Parameters::B::Value2
-        );
+        REQUIRE(std::holds_alternative<int>(p1.multipleVariantA));
+        CHECK(std::get<int>(p1.multipleVariantA) == 2);
+        REQUIRE(std::holds_alternative<int>(p1.multipleVariantB));
+        CHECK(std::get<int>(p1.multipleVariantB) == 2);
+        REQUIRE(std::holds_alternative<int>(p1.multipleVariantA2));
+        CHECK(std::get<int>(p1.multipleVariantA2) == 2);
+
+        //REQUIRE(std::holds_alternative<Parameters::A>(p1.variantEnumFloat));
+        //CHECK(std::get<Parameters::A>(p1.variantEnumFloat) == Parameters::A::Value2);
+        //REQUIRE(p1.optionalVariantEnumFloat.has_value());
+        //REQUIRE(std::holds_alternative<Parameters::B>(*p1.optionalVariantEnumFloat));
+        //CHECK(
+        //    std::get<Parameters::B>(*p1.optionalVariantEnumFloat) ==
+        //    Parameters::B::Value2
+        //);
     }
 
     {
@@ -161,6 +184,9 @@ TEST_CASE("Variant bake", "[verifier]") {
             e.setValue("4", std::string("vwx"));
             d2.setValue("VariantVector2", e);
         }
+        d2.setValue("MultipleVariantA", std::string("a"));
+        d2.setValue("MultipleVariantB", std::string("a"));
+        d2.setValue("MultipleVariantA2", std::string("a"));
         d2.setValue("VariantEnumFloat", 2.0);
         d2.setValue("OptionalVariantEnumFloat", 2.0);
 
@@ -191,11 +217,17 @@ TEST_CASE("Variant bake", "[verifier]") {
             std::get<std::vector<std::string>>(p2.variantVector2) ==
             std::vector<std::string>{ "mno", "pqr", "stu", "vwx" }
         );
-        REQUIRE(std::holds_alternative<float>(p2.variantEnumFloat));
-        CHECK(std::get<float>(p2.variantEnumFloat) == 2.f);
-        REQUIRE(p2.optionalVariantEnumFloat.has_value());
-        REQUIRE(std::holds_alternative<float>(*p2.optionalVariantEnumFloat));
-        CHECK(std::get<float>(*p2.optionalVariantEnumFloat) == 2.f);
+        REQUIRE(std::holds_alternative<std::string>(p2.multipleVariantA));
+        CHECK(std::get<std::string>(p2.multipleVariantA) == "a");
+        REQUIRE(std::holds_alternative<std::string>(p2.multipleVariantB));
+        CHECK(std::get<std::string>(p2.multipleVariantB) == "a");
+        REQUIRE(std::holds_alternative<std::string>(p2.multipleVariantA2));
+        CHECK(std::get<std::string>(p2.multipleVariantA2) == "a");
+        //REQUIRE(std::holds_alternative<float>(p2.variantEnumFloat));
+        //CHECK(std::get<float>(p2.variantEnumFloat) == 2.f);
+        //REQUIRE(p2.optionalVariantEnumFloat.has_value());
+        //REQUIRE(std::holds_alternative<float>(*p2.optionalVariantEnumFloat));
+        //CHECK(std::get<float>(*p2.optionalVariantEnumFloat) == 2.f);
     }
 
     {
@@ -212,8 +244,11 @@ TEST_CASE("Variant bake", "[verifier]") {
         d3.setValue("OptionalValue", true);
         d3.setValue("VariantVector", std::string("abc"));
         d3.setValue("VariantVector2", std::string("def"));
-        d3.setValue("VariantEnumFloat", "Value1");
-        d3.setValue("OptionalVariantEnumFloat", "Value1");
+        d3.setValue("MultipleVariantA", 1.0);
+        d3.setValue("MultipleVariantB", 1.0);
+        d3.setValue("MultipleVariantA2", 1.0);
+        d3.setValue("VariantEnumFloat", std::string("Value1"));
+        d3.setValue("OptionalVariantEnumFloat", std::string("Value1"));
 
         const Parameters p3 = codegen::bake<Parameters>(d3);
         CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
@@ -234,14 +269,20 @@ TEST_CASE("Variant bake", "[verifier]") {
         CHECK(std::get<std::string>(p3.variantVector) == "abc");
         REQUIRE(std::holds_alternative<std::string>(p3.variantVector2));
         CHECK(std::get<std::string>(p3.variantVector2) == "def");
-        REQUIRE(std::holds_alternative<Parameters::A>(p3.variantEnumFloat));
-        CHECK(std::get<Parameters::A>(p3.variantEnumFloat) == Parameters::A::Value1);
-        REQUIRE(p3.optionalVariantEnumFloat.has_value());
-        REQUIRE(std::holds_alternative<Parameters::B>(*p3.optionalVariantEnumFloat));
-        CHECK(
-            std::get<Parameters::B>(*p3.optionalVariantEnumFloat) ==
-            Parameters::B::Value1
-        );
+        REQUIRE(std::holds_alternative<int>(p3.multipleVariantA));
+        CHECK(std::get<int>(p3.multipleVariantA) == 1);
+        REQUIRE(std::holds_alternative<int>(p3.multipleVariantB));
+        CHECK(std::get<int>(p3.multipleVariantB) == 1);
+        REQUIRE(std::holds_alternative<int>(p3.multipleVariantA2));
+        CHECK(std::get<int>(p3.multipleVariantA2) == 1);
+        //REQUIRE(std::holds_alternative<Parameters::A>(p3.variantEnumFloat));
+        //CHECK(std::get<Parameters::A>(p3.variantEnumFloat) == Parameters::A::Value1);
+        //REQUIRE(p3.optionalVariantEnumFloat.has_value());
+        //REQUIRE(std::holds_alternative<Parameters::B>(*p3.optionalVariantEnumFloat));
+        //CHECK(
+        //    std::get<Parameters::B>(*p3.optionalVariantEnumFloat) ==
+        //    Parameters::B::Value1
+        //);
     }
 
     {
@@ -265,6 +306,9 @@ TEST_CASE("Variant bake", "[verifier]") {
         );
         d4.setValue("VariantVector", std::string("abc"));
         d4.setValue("VariantVector2", std::string("def"));
+        d4.setValue("MultipleVariantA", std::string("abc"));
+        d4.setValue("MultipleVariantB", std::string("def"));
+        d4.setValue("MultipleVariantA2", std::string("ghi"));
         d4.setValue("VariantEnumFloat", 5.0);
         d4.setValue("OptionalVariantEnumFloat", 5.0);
 
@@ -295,11 +339,17 @@ TEST_CASE("Variant bake", "[verifier]") {
         CHECK(std::get<std::string>(p4.variantVector) == "abc");
         REQUIRE(std::holds_alternative<std::string>(p4.variantVector2));
         CHECK(std::get<std::string>(p4.variantVector2) == "def");
-        REQUIRE(std::holds_alternative<float>(p4.variantEnumFloat));
-        CHECK(std::get<float>(p4.variantEnumFloat) == 5.f);
-        REQUIRE(p4.optionalVariantEnumFloat.has_value());
-        REQUIRE(std::holds_alternative<float>(*p4.optionalVariantEnumFloat));
-        CHECK(std::get<float>(*p4.optionalVariantEnumFloat) == 5.f);
+        REQUIRE(std::holds_alternative<std::string>(p4.multipleVariantA));
+        CHECK(std::get<std::string>(p4.multipleVariantA) == "abc");
+        REQUIRE(std::holds_alternative<std::string>(p4.multipleVariantB));
+        CHECK(std::get<std::string>(p4.multipleVariantB) == "def");
+        REQUIRE(std::holds_alternative<std::string>(p4.multipleVariantA2));
+        CHECK(std::get<std::string>(p4.multipleVariantA2) == "ghi");
+        //REQUIRE(std::holds_alternative<float>(p4.variantEnumFloat));
+        //CHECK(std::get<float>(p4.variantEnumFloat) == 5.f);
+        //REQUIRE(p4.optionalVariantEnumFloat.has_value());
+        //REQUIRE(std::holds_alternative<float>(*p4.optionalVariantEnumFloat));
+        //CHECK(std::get<float>(*p4.optionalVariantEnumFloat) == 5.f);
     }
 }
 
@@ -307,7 +357,7 @@ TEST_CASE("Variant documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 11);
+    REQUIRE(doc.entries.size() == 13);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
@@ -484,34 +534,90 @@ TEST_CASE("Variant documentation", "[verifier]") {
     }
     {
         DocumentationEntry e = doc.entries[9];
-        CHECK(e.key == "VariantEnumFloat");
+        CHECK(e.key == "MultipleVariantA");
         CHECK(!e.optional);
-        CHECK(e.documentation == "variant enum float documentation");
-        CHECK(e.verifier->type() == "String, or Double");
+        CHECK(e.documentation == "multiple variant a documentation");
+        CHECK(e.verifier->type() == "Integer, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
-        CHECK(v->values[0]->type() == "String");
-        StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(v->values[0].get());
-        REQUIRE(w);
-        CHECK(w->values == std::vector<std::string>{ "Value1", "Value2", "Value3" });
-        CHECK(v->values[1]->type() == "Double");
-        CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+        CHECK(v->values[0]->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[1].get()));
     }
     {
         DocumentationEntry e = doc.entries[10];
-        CHECK(e.key == "OptionalVariantEnumFloat");
-        CHECK(e.optional);
-        CHECK(e.documentation == "optional variant enum float documentation");
-        CHECK(e.verifier->type() == "String, or Double");
+        CHECK(e.key == "MultipleVariantB");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "multiple variant b documentation");
+        CHECK(e.verifier->type() == "String, or Integer");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
         CHECK(v->values[0]->type() == "String");
-        StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(v->values[0].get());
-        REQUIRE(w);
-        CHECK(w->values == std::vector<std::string>{ "Value1", "Value2", "Value3" });
-        CHECK(v->values[1]->type() == "Double");
-        CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+        CHECK(dynamic_cast<StringVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
+    {
+        DocumentationEntry e = doc.entries[11];
+        CHECK(e.key == "MultipleVariantA2");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "multiple variant a2 documentation");
+        CHECK(e.verifier->type() == "Integer, or String");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[1].get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[12];
+        CHECK(e.key == "MultipleVariantB2");
+        CHECK(e.optional);
+        CHECK(e.documentation == "multiple variant b2 documentation");
+        CHECK(e.verifier->type() == "String, or Integer");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->values[0].get()));
+        CHECK(v->values[1]->type() == "Integer");
+        CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
+    }
+    //{
+    //    DocumentationEntry e = doc.entries[9];
+    //    CHECK(e.key == "VariantEnumFloat");
+    //    CHECK(!e.optional);
+    //    CHECK(e.documentation == "variant enum float documentation");
+    //    CHECK(e.verifier->type() == "String, or Double");
+    //    OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+    //    REQUIRE(v);
+    //    REQUIRE(v->values.size() == 2);
+    //    CHECK(v->values[0]->type() == "String");
+    //    StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(v->values[0].get());
+    //    REQUIRE(w);
+    //    CHECK(w->values == std::vector<std::string>{ "Value1", "Value2", "Value3" });
+    //    CHECK(v->values[1]->type() == "Double");
+    //    CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+    //}
+    //{
+    //    DocumentationEntry e = doc.entries[10];
+    //    CHECK(e.key == "OptionalVariantEnumFloat");
+    //    CHECK(e.optional);
+    //    CHECK(e.documentation == "optional variant enum float documentation");
+    //    CHECK(e.verifier->type() == "String, or Double");
+    //    OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+    //    REQUIRE(v);
+    //    REQUIRE(v->values.size() == 2);
+    //    CHECK(v->values[0]->type() == "String");
+    //    StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(v->values[0].get());
+    //    REQUIRE(w);
+    //    CHECK(w->values == std::vector<std::string>{ "Value1", "Value2", "Value3" });
+    //    CHECK(v->values[1]->type() == "Double");
+    //    CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+    //}
 }

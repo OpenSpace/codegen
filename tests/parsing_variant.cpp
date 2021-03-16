@@ -81,3 +81,16 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(var->comment == "a comment");
     }
 }
+
+TEST_CASE("Parsing: Multiple instances variant", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<int, float> a;
+    std::variant<float, int> b;
+    std::variant<int, float> c;
+};
+)";
+
+    Struct* s = parseRootStruct(Source);
+    generateResult(s);
+}
