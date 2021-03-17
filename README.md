@@ -25,13 +25,12 @@ All types and variable definitions can have comments defined directly before the
 
 ## Supported types for member variables
  - C++ types: `bool`, `int`, `float`, `double`, `std::vector`, `std::optional`, `std::variant`, `std::string`, `std::filesystem::path`
- - `glm::ivec2`, `glm::ivec3`, `glm::ivec4`, `glm::dvec2`, `glm::dvec3`, `glm::dvec4`, `glm::vec2`, `glm::vec3`, `glm::vec4`, `glm::mat2x2`, `glm::mat2x3`, `glm::mat2x4`, `glm::mat3x2`, `glm::mat3x3`, `glm::mat3x4`, `glm::mat4x2`, `glm::mat4x3`, `glm::mat4x4`, `glm::dmat2x2`, `glm::dmat2x3`, `glm::dmat2x4`, `glm::dmat3x2`, `glm::dmat3x3`, `glm::dmat3x4`, `glm::dmat4x2`, `glm::dmat4x3`, `glm::dmat4x4`
+ - `glm::ivec2`, `glm::ivec3`, `glm::ivec4`, `glm::dvec2`, `glm::dvec3`, `glm::dvec4`, `glm::vec2`, `glm::vec3`, `glm::vec4`, `glm::mat2x2`, `glm::mat2x3`, `glm::mat2x4`, `glm::mat3x2`, `glm::mat3x3`, `glm::mat3x4`, `glm::mat4x2`, `glm::mat4x3`, `glm::mat4x4`, `glm::dmat2x2`, `glm::dmat2x3`, `glm::dmat2x4`, `glm::dmat3x2`, `glm::dmat3x3`, `glm::dmat3x4`, `glm::dmat4x2`, `glm::dmat4x3`, `glm::dmat4x4`, `ghoul::Dictionary`
  - `struct`s (must be defined inside the root struct)
  - `enum class` (must be defind inside the root struct)
  - `std::monostate`. In a rare case where you need to reference another documentation generated with a specific ID elsewhere within OpenSpace.  A variable of this attribute *must* be paired with a `[[codegen::reference("Foo")]]` attribute, where `Foo` is the `id` of a defined Documentation that has been registered with the `DocumentationEngine`
 
-
-The variable's name will be used to get a value out of the dictionary in the baking process.  The only transformation of the name is that the first letter is capitalized (`referenceName` will be looked up as `ReferenceName`)
+The variable's name will be used to get a value out of the dictionary in the baking process.  The only transformation of the name is that the first letter is capitalized (`referenceName` will be looked up as `ReferenceName`).
 
 ### Member Attributes
  - `[[codegen::key("Name")]]`:  Use the `Name` instead of the (first letter capitalized) variable name to look up a value in the Dictionary during the baking. This value has to be encapsulated in "" if it is a string literal.  If you want to use the return value of a function, the "" have to be omitted, like `[[codegen::key(unitList())]]`
@@ -43,7 +42,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::inlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is one of a finite list of values.  Example: `std::string foo [[codegen::inlist("v1", "v2", "v3")]];`
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
  - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
- - `[[codegen::reference("foo")]]`:  Marks a `std::monostate` as a referencing verifier that will look up a different Documentation elsewhere in the code.  This attribute can only be used with a `std::monostate`.
+ - `[[codegen::reference("foo")]]`:  Marks a `std::monostate` or `ghoul::Dictionary` as a referencing verifier that will look up a different Documentation elsewhere in the code.  This attribute can only be used with these two types.
  - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`. The parameter must be either empty, `true`, or `false`
  - `[[codegen::directory()]]`: Marks a `std::filesystem::path` to be allowed to be a directory. The parameter must be either empty, `true`, or `false`
 
@@ -94,3 +93,4 @@ This is a complete list of variable types and attribute combinations.  We are **
  - `glm::dvec3` + `[[codegen::color]]` -> `Color3Verifier`
  - `glm::dvec4` + `[[codegen::color]]` -> `Color4Verifier`
  - `std::filesystem::path` + `[[codegen::directory()]]` -> `DirectoryVerifier`
+ - `ghoul::Dictionary` + `[[codegen::reference()]]` -> `ReferencingVerifier`

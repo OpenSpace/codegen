@@ -394,21 +394,21 @@ std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
 }
 
-std::string generateTypename(const MapType* type) {
-    std::string t1 = generateTypename(type->keyType);
-    std::string t2 = generateTypename(type->valueType);
+std::string generateTypename(const MapType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->keyType, fullyQualified);
+    std::string t2 = generateTypename(type->valueType, fullyQualified);
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
-std::string generateTypename(const OptionalType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const OptionalType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::optional<{}>", t1);
 }
 
-std::string generateTypename(const VariantType* type) {
+std::string generateTypename(const VariantType* type, bool fullyQualified) {
     std::string res = "std::variant<";
     for (VariableType* v : type->types) {
-        res += generateTypename(v);
+        res += generateTypename(v, fullyQualified);
         res += ", ";
     }
     
@@ -418,8 +418,8 @@ std::string generateTypename(const VariantType* type) {
     return res;
 }
 
-std::string generateTypename(const VectorType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const VectorType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
 }
 
@@ -433,19 +433,20 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
 }
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {
+    const bool fq = fullyQualified;
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateTypename(static_cast<const BasicType*>(type));
         case VariableType::Tag::MapType:
-            return generateTypename(static_cast<const MapType*>(type));
+            return generateTypename(static_cast<const MapType*>(type), fq);
         case VariableType::Tag::OptionalType:
-            return generateTypename(static_cast<const OptionalType*>(type));
+            return generateTypename(static_cast<const OptionalType*>(type), fq);
         case VariableType::Tag::VariantType:
-            return generateTypename(static_cast<const VariantType*>(type));
+            return generateTypename(static_cast<const VariantType*>(type), fq);
         case VariableType::Tag::VectorType:
-            return generateTypename(static_cast<const VectorType*>(type));
+            return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
-            return generateTypename(static_cast<const CustomType*>(type), fullyQualified);
+            return generateTypename(static_cast<const CustomType*>(type), fq);
     }
     throw std::logic_error("Missing case label");
 }
