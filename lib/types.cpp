@@ -237,7 +237,6 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (type == "glm::dmat4x3")          { t = newType(BasicType::Type::DMat4x3); }
     else if (type == "glm::dmat4x4")          { t = newType(BasicType::Type::DMat4x4); }
     else if (type == "glm::dmat4")            { t = newType(BasicType::Type::DMat4x4); }
-    else if (type == "std::monostate")        { t = newType(BasicType::Type::Monostate); }
     else if (type == "ghoul::Dictionary")    { t = newType(BasicType::Type::Dictionary); }
     else if (startsWith(type, "std::vector<")) {
         type.remove_prefix("std::vector<"sv.size());
@@ -392,7 +391,6 @@ std::string generateTypename(BasicType::Type type) {
         case BasicType::Type::DMat4x2: return "glm::dmat4x2";
         case BasicType::Type::DMat4x3: return "glm::dmat4x3";
         case BasicType::Type::DMat4x4: return "glm::dmat4x4";
-        case BasicType::Type::Monostate: return "std::monostate";
         case BasicType::Type::Dictionary: return "ghoul::Dictionary";
     }
 

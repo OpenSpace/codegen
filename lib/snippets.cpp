@@ -68,7 +68,6 @@ namespace {
     constexpr const char BakeFunctionDMat4x2[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x2* val) { *val = d.value<glm::dmat4x2>(key); }\n";
     constexpr const char BakeFunctionDMat4x3[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x3* val) { *val = d.value<glm::dmat4x3>(key); }\n";
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
-    constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
     constexpr const char BakeFunctionDictionary[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, ghoul::Dictionary* val) { *val = d.value<ghoul::Dictionary>(key); }\n";
 
     constexpr const char VariantConverterBool[] = "   if (d.hasValue<bool>(key)) { bool v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -142,7 +141,6 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
         case BasicType::Type::DMat4x2:   return BakeFunctionDMat4x2;
         case BasicType::Type::DMat4x3:   return BakeFunctionDMat4x3;
         case BasicType::Type::DMat4x4:   return BakeFunctionDMat4x4;
-        case BasicType::Type::Monostate: return BakeFunctionMonostate;
         case BasicType::Type::Dictionary: return BakeFunctionDictionary;
     }
     throw std::logic_error("Missing case label");

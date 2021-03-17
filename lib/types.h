@@ -123,8 +123,7 @@ struct BasicType : public VariableType {
         DMat2x2, DMat2x3, DMat2x4,
         DMat3x2, DMat3x3, DMat3x4,
         DMat4x2, DMat4x3, DMat4x4,
-        Dictionary,
-        Monostate
+        Dictionary
     };
     Type type;
 };

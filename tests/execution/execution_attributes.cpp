@@ -204,10 +204,10 @@ namespace {
         std::vector<std::string> unequalValueStringVector [[codegen::unequal("abcdef")]];
 
         // referenceValueOptional documentation
-        std::optional<std::monostate> referenceValueOptional [[codegen::reference("abc")]];
+        std::optional<ghoul::Dictionary> referenceValueOptional [[codegen::reference("abc")]];
 
         // referenceValueVector documentation
-        std::optional<std::vector<std::monostate>> referenceValueVector [[codegen::reference("abc")]];
+        std::optional<std::vector<ghoul::Dictionary>> referenceValueVector [[codegen::reference("abc")]];
 
         // dictValue documentation
         ghoul::Dictionary dictValue [[codegen::reference("abc")]];
