@@ -105,7 +105,7 @@ struct VariableType {
 bool operator==(const VariableType& lhs, const VariableType& rhs);
 
 VariableType* parseType(std::string_view type, Struct* s);
-std::string generateTypename(const VariableType* type);
+std::string generateTypename(const VariableType* type, bool fullyQualified = false);
 
 struct BasicType : public VariableType {
     enum class Type {

@@ -36,23 +36,53 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
-    REQUIRE(s);
-    REQUIRE(s->variables.size() == 1);
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Source),
+        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
+    );
+}
 
-    {
-        Variable* var = s->variables[0];
-        REQUIRE(var);
-        CHECK(var->name == "a");
-        CHECK(
-            generateTypename(var->type) ==
-            "std::variant<std::vector<int>, std::vector<float>>"
-        );
-        CHECK(var->comment == "a comment");
-    }
+TEST_CASE("Variant Error: Custom substrct", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    struct A {
+        int a;
+    };
+    std::variant<A, float> v;
+};
+)";
 
     CHECK_THROWS_MATCHES(
-        generateResult(s),
-        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
+        parseRootStruct(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'A' found in variant list")
+    );
+}
+
+TEST_CASE("Variant Error: Internal optional", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<std::optional<int>, float> v;
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'std::optional<int>' found in variant list")
+    );
+}
+
+TEST_CASE("Variant Error: Nested variants", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<std::variant<int, float>, float> v;
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'std::variant<int, float>' found in variant list")
     );
 }
