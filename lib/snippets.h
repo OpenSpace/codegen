@@ -124,6 +124,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
 
 std::string_view bakeFunctionForType(BasicType::Type type);
 std::string vectorBakeFunctionForType(std::string_view type);
+std::string enumBakeFunctionForType(std::string_view type);
 std::string_view variantConversionFunctionForType(std::string_view type);
 
 #endif // __OPENSPACE_CODEGEN___SNIPPETS___H__

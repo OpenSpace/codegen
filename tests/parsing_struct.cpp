@@ -403,3 +403,31 @@ Parameters
     std::string r = generateResult(s);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing Struct: Substruct vector documentation", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    // struct a documentation
+    struct A {
+        int a;
+    };
+    // vector documentation
+    std::vector<A> aa;
+};
+)";
+
+    Struct* s = parseRootStruct(Source);
+    REQUIRE(s->children.size() == 1);
+    CHECK(s->children[0]->type == StackElement::Type::Struct);
+    CHECK(s->children[0]->name == "A");
+    CHECK(s->children[0]->comment == "struct a documentation");
+
+    REQUIRE(s->variables.size() == 1);
+    CHECK(s->variables[0]->type->tag == VariableType::Tag::VectorType);
+    CHECK(
+        static_cast<VectorType*>(s->variables[0]->type)->type->tag ==
+        VariableType::Tag::CustomType
+    );
+    CHECK(s->variables[0]->name == "aa");
+    CHECK(s->variables[0]->comment == "vector documentation");
+}

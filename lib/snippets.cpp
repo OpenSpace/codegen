@@ -32,6 +32,9 @@
 // a lot worse if we would break these everywhere or it would be unreadable
 
 namespace {
+    // All of these snippets can probably replaced by a fmt::format expression that takes
+    // two parameters;  one for the "internal" type and one for the baked-to type
+
     constexpr const char BakeFunctionBool[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n";
     constexpr const char BakeFunctionInt[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { *val = static_cast<int>(d.value<double>(key)); }\n";
     constexpr const char BakeFunctionDouble[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, double* val) { *val = d.value<double>(key); }\n";
@@ -67,7 +70,6 @@ namespace {
     constexpr const char BakeFunctionDMat4x4[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dmat4x4* val) { *val = d.value<glm::dmat4x4>(key); }\n";
     constexpr const char BakeFunctionMonostate[] = "void bakeTo(const ghoul::Dictionary&, std::string_view, std::monostate* val) { *val = std::monostate(); }\n";
     constexpr const char BakeFunctionDictionary[] = "void bakeTo(const ghoul::Dictionary& d, std::string_view key, ghoul::Dictionary* val) { *val = d.value<ghoul::Dictionary>(key); }\n";
-
 
     constexpr const char VariantConverterBool[] = "   if (d.hasValue<bool>(key)) { bool v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterInt[] = "   if (d.hasValue<double>(key)) { int v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -149,6 +151,13 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
 std::string vectorBakeFunctionForType(std::string_view type) {
     return fmt::format(
         "   if (d.hasValue<ghoul::Dictionary>(key)) {{ {} v; bakeTo(d, key, &v); *val = std::move(v); return; }}\n",
+        type
+    );
+}
+
+std::string enumBakeFunctionForType(std::string_view type) {
+    return fmt::format(
+        "   if (d.hasValue<std::string>(key)) {{ {} v; bakeTo(d, key, &v); *val = std::move(v); return; }}\n",
         type
     );
 }

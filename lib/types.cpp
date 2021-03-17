@@ -246,6 +246,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         VectorType* vt = new VectorType;
         vt->tag = VariableType::Tag::VectorType;
         vt->type = parseType(type, context);
+        assert(vt->type);
         t = vt;
     }
     else if (startsWith(type, "std::optional<")) {
@@ -255,6 +256,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         OptionalType* op = new OptionalType;
         op->tag = VariableType::Tag::OptionalType;
         op->type = parseType(type, context);
+        assert(op->type);
         t = op;
     }
     else if (startsWith(type, "std::map<")) {
@@ -266,7 +268,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
         MapType* mp = new MapType;
         mp->tag = VariableType::Tag::MapType;
         mp->keyType = parseType(list[0], context);
+        assert(mp->keyType);
         mp->valueType = parseType(list[1], context);
+        assert(mp->valueType);
 
         // only strings are allowed for keys in maps right now
         const bool isValidKey =
@@ -295,11 +299,42 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         VariantType* vt = new VariantType;
         vt->tag = VariableType::Tag::VariantType;
-        
+
         for (std::string_view elem : list) {
             VariableType* t = parseType(elem, context);
+            assert(t);
             vt->types.push_back(t);
         }
+
+        // Check for multiple vector types
+        int nVectorTypes = 0;
+        for (VariableType* t : vt->types) {
+            if (t->tag == VariableType::Tag::VectorType) {
+                nVectorTypes += 1;
+            }
+        }
+        if (nVectorTypes > 1) {
+            throw CodegenError(fmt::format(
+                "We can't have a variant containing multiple vector types, try a "
+                "vector of variants instead\n{}", type
+            ));
+        }
+
+        // Check for illegal types
+        for (VariableType* t : vt->types) {
+            const bool isBasicType = t->tag == VariableType::Tag::BasicType;
+            const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+            const bool isEnum =
+                t->tag == VariableType::Tag::CustomType &&
+                static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
+            if (!isBasicType && !isVectorType && !isEnum) {
+                throw CodegenError(fmt::format(
+                    "Unsupported type '{}' found in variant list\n{}",
+                    generateTypename(t), type
+                ));
+            }
+        }
+
         t = vt;
     }
 
@@ -368,21 +403,21 @@ std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
 }
 
-std::string generateTypename(const MapType* type) {
-    std::string t1 = generateTypename(type->keyType);
-    std::string t2 = generateTypename(type->valueType);
+std::string generateTypename(const MapType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->keyType, fullyQualified);
+    std::string t2 = generateTypename(type->valueType, fullyQualified);
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
-std::string generateTypename(const OptionalType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const OptionalType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::optional<{}>", t1);
 }
 
-std::string generateTypename(const VariantType* type) {
+std::string generateTypename(const VariantType* type, bool fullyQualified) {
     std::string res = "std::variant<";
     for (VariableType* v : type->types) {
-        res += generateTypename(v);
+        res += generateTypename(v, fullyQualified);
         res += ", ";
     }
     
@@ -392,29 +427,35 @@ std::string generateTypename(const VariantType* type) {
     return res;
 }
 
-std::string generateTypename(const VectorType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const VectorType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
 }
 
-std::string generateTypename(const CustomType* type) {
-    return type->type->name;
+std::string generateTypename(const CustomType* type, bool fullyQualified) {
+    if (fullyQualified) {
+        return fqn(type->type, "::");
+    }
+    else {
+        return type->type->name;
+    }
 }
 
-std::string generateTypename(const VariableType* type) {
+std::string generateTypename(const VariableType* type, bool fullyQualified) {
+    const bool fq = fullyQualified;
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateTypename(static_cast<const BasicType*>(type));
         case VariableType::Tag::MapType:
-            return generateTypename(static_cast<const MapType*>(type));
+            return generateTypename(static_cast<const MapType*>(type), fq);
         case VariableType::Tag::OptionalType:
-            return generateTypename(static_cast<const OptionalType*>(type));
+            return generateTypename(static_cast<const OptionalType*>(type), fq);
         case VariableType::Tag::VariantType:
-            return generateTypename(static_cast<const VariantType*>(type));
+            return generateTypename(static_cast<const VariantType*>(type), fq);
         case VariableType::Tag::VectorType:
-            return generateTypename(static_cast<const VectorType*>(type));
+            return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
-            return generateTypename(static_cast<const CustomType*>(type));
+            return generateTypename(static_cast<const CustomType*>(type), fq);
     }
     throw std::logic_error("Missing case label");
 }
