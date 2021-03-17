@@ -30,362 +30,332 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: std::monostate annotation", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::annotation(1)]];
+ghoul::Dictionary v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate annotation", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::annotation(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate annotation", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary annotation", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::annotation(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'annotation'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate inlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::inlist(1)]];
+ghoul::Dictionary v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate inlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::inlist(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate inlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::inlist(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate inrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::inrange(1)]];
+ghoul::Dictionary v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate inrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::inrange(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate inrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::inrange(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'inrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate less", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::less(1)]];
+ghoul::Dictionary v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate less", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::less(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate less", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary less", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::less(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'less'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate lessequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::lessequal(1)]];
+ghoul::Dictionary v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate lessequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::lessequal(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate lessequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary lessequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::lessequal(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'lessequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate greater", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::greater(1)]];
+ghoul::Dictionary v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate greater", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::greater(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate greater", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greater", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::greater(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greater'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate greaterequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary greaterequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::greaterequal(1)]];
+ghoul::Dictionary v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate greaterequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greaterequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::greaterequal(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate greaterequal", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greaterequal", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::greaterequal(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'greaterequal'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate notinlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::notinlist(1)]];
+ghoul::Dictionary v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate notinlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::notinlist(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate notinlist", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinlist", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::notinlist(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinlist'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate notinrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::notinrange(1)]];
+ghoul::Dictionary v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate notinrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::notinrange(1)]];
+std::vector<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate notinrange", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinrange", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::notinrange(1)]];
+std::optional<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'notinrange'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
 
-TEST_CASE("Missing Attribute: monostate reference", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary color", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v;
+ghoul::Dictionary v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
 
-TEST_CASE("Missing Attribute: vector monostate reference", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary color", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v;
+std::vector<ghoul::Dictionary> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
 
-TEST_CASE("Missing Attribute: optional monostate reference", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary color", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v;
+std::optional<ghoul::Dictionary> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("A monostate must have a 'reference' attribute")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::monostate color", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary directory", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::color()]];
+ghoul::Dictionary v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::monostate color", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary directory", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::color()]];
+std::vector<ghoul::Dictionary> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::monostate color", "[parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary directory", "[parsing_error]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::color()]];
+std::optional<ghoul::Dictionary> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'color'")
-    );
-}
-
-TEST_CASE("Unsupported Attributes: std::monostate directory", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::monostate v [[codegen::directory()]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
-    );
-}
-
-TEST_CASE("Unsupported Attributes: vector std::monostate directory", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::vector<std::monostate> v [[codegen::directory()]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
-    );
-}
-
-TEST_CASE("Unsupported Attributes: optional std::monostate directory", "[parsing_error]") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
-std::optional<std::monostate> v [[codegen::directory()]];
-};)";
-    CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
-        CodegenError, CM::Contains("'std::monostate' does not support attribute 'directory'")
+        CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }

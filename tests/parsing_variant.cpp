@@ -92,5 +92,5 @@ struct [[codegen::Dictionary(D)]] P {
 )";
 
     Struct* s = parseRootStruct(Source);
-    generateResult(s);
+    [[maybe_unused]] std::string res = generateResult(s);
 }

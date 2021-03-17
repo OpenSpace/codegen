@@ -197,13 +197,13 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         std::vector<std::string> unequalValueStringVector [[codegen::unequal("abcdef")]];
 
         // referenceValue documentation
-        std::monostate referenceValue [[codegen::reference("abc")]];
+        ghoul::Dictionary referenceValue [[codegen::reference("abc")]];
 
         // referenceValueOptional documentation
-        std::optional<std::monostate> referenceValueOptional [[codegen::reference("abc")]];
+        std::optional<ghoul::Dictionary> referenceValueOptional [[codegen::reference("abc")]];
 
         // referenceValueVector documentation
-        std::vector<std::monostate> referenceValueVector [[codegen::reference("abc")]];
+        std::vector<ghoul::Dictionary> referenceValueVector [[codegen::reference("abc")]];
 
         // dcolor3Value documentation
         glm::dvec3 dcolor3Value [[codegen::color()]];
@@ -1510,7 +1510,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValue");
         CHECK(var->key == "\"ReferenceValue\"");
-        CHECK(generateTypename(var->type) == "std::monostate");
+        CHECK(generateTypename(var->type) == "ghoul::Dictionary");
         CHECK(var->comment == "referenceValue documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
@@ -1533,7 +1533,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValueOptional");
         CHECK(var->key == "\"ReferenceValueOptional\"");
-        CHECK(generateTypename(var->type) == "std::optional<std::monostate>");
+        CHECK(generateTypename(var->type) == "std::optional<ghoul::Dictionary>");
         CHECK(var->comment == "referenceValueOptional documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
@@ -1556,7 +1556,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         REQUIRE(var);
         CHECK(var->name == "referenceValueVector");
         CHECK(var->key == "\"ReferenceValueVector\"");
-        CHECK(generateTypename(var->type) == "std::vector<std::monostate>");
+        CHECK(generateTypename(var->type) == "std::vector<ghoul::Dictionary>");
         CHECK(var->comment == "referenceValueVector documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 

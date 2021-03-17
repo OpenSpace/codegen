@@ -122,7 +122,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
         }
-        else if (type == Type::Monostate) {
+        else if (type == Type::Dictionary) {
             report(attributes.annotation, attributes::Annotation);
             report(attributes.inlist, attributes::InList);
             report(attributes.inrange, attributes::InRange);
@@ -262,11 +262,13 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
     else if (type == Type::Mat4x2) { return "DoubleMatrix4x2Verifier"; }
     else if (type == Type::Mat4x3) { return "DoubleMatrix4x3Verifier"; }
     else if (type == Type::Mat4x4) { return "DoubleMatrix4x4Verifier"; }
-    else if (type == Type::Monostate) {
+    else if (type == Type::Dictionary) {
         if (attr.reference.empty()) {
-            throw CodegenError("A monostate must have a 'reference' attribute");
+            return "TableVerifier";
         }
-        return fmt::format("ReferencingVerifier({})", attr.reference);
+        else {
+            return fmt::format("ReferencingVerifier({})", attr.reference);
+        }
     }
 
     throw std::logic_error("Missing case label");

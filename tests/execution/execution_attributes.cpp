@@ -25,6 +25,7 @@
 #include "catch2/catch.hpp"
 
 #include <openspace/documentation/documentation.h>
+#include <openspace/documentation/documentationengine.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
 #include <optional>
@@ -203,10 +204,31 @@ namespace {
         std::vector<std::string> unequalValueStringVector [[codegen::unequal("abcdef")]];
 
         // referenceValueOptional documentation
-        std::optional<std::monostate> referenceValueOptional [[codegen::reference("abc")]];
+        std::optional<ghoul::Dictionary> referenceValueOptional [[codegen::reference("abc")]];
 
         // referenceValueVector documentation
-        std::optional<std::vector<std::monostate>> referenceValueVector [[codegen::reference("abc")]];
+        std::optional<std::vector<ghoul::Dictionary>> referenceValueVector [[codegen::reference("abc")]];
+
+        // dictValue documentation
+        ghoul::Dictionary dictValue [[codegen::reference("abc")]];
+
+        // dictValueVector documentation
+        std::vector<ghoul::Dictionary> dictValueVector [[codegen::reference("abc")]];
+
+        // dictValueOptional documentation
+        std::optional<ghoul::Dictionary> dictValueOptional [[codegen::reference("abc")]];
+
+        // dictValueMap documentation
+        std::map<std::string, ghoul::Dictionary> dictValueMap [[codegen::reference("abc")]];
+
+        // vectorDictValueMap documentation
+        std::vector<std::map<std::string, ghoul::Dictionary>> vectorDictValueMap [[codegen::reference("abc")]];
+
+        // optionalDictValueMap documentation
+        std::optional<std::map<std::string, ghoul::Dictionary>> optionalDictValueMap [[codegen::reference("abc")]];
+
+        // optionalVectorDictValueMap documentation
+        std::optional<std::vector<std::map<std::string, ghoul::Dictionary>>> optionalVectorDictValueMap [[codegen::reference("abc")]];
 
         // annotation documentation
         std::string annotation [[codegen::annotation("abc")]];
@@ -257,6 +279,10 @@ namespace {
 } // namespace
 
 TEST_CASE("Attributes Bake", "[verifier]") {
+    openspace::documentation::Documentation doc;
+    doc.id = "abc";
+    DocEng.addDocumentation(doc);
+
     ghoul::Dictionary d;
     d.setValue("KeyKey", 2.1);
     d.setValue("KeyKeyOptional", 2.2);
@@ -420,6 +446,79 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         e.setValue("2", std::string("zyxwv2"));
         e.setValue("3", std::string("zyxwv3"));
         d.setValue("UnequalValueStringVector", e);
+    }
+    d.setValue("DictValue", ghoul::Dictionary());
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", ghoul::Dictionary());
+        e.setValue("2", ghoul::Dictionary());
+        e.setValue("3", ghoul::Dictionary());
+        d.setValue("DictValueVector", e);
+    }
+    d.setValue("DictValueOptional", ghoul::Dictionary());
+    {
+        ghoul::Dictionary e;
+        e.setValue("a", ghoul::Dictionary());
+        e.setValue("b", ghoul::Dictionary());
+        e.setValue("c", ghoul::Dictionary());
+        d.setValue("DictValueMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("1", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("2", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("3", f);
+        }
+        d.setValue("VectorDictValueMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("a", ghoul::Dictionary());
+        e.setValue("b", ghoul::Dictionary());
+        e.setValue("c", ghoul::Dictionary());
+        d.setValue("OptionalDictValueMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("1", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("2", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("3", f);
+        }
+        d.setValue("OptionalVectorDictValueMap", e);
     }
 
     d.setValue("Annotation", std::string("annotation_abc"));
@@ -610,7 +709,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 72);
+    REQUIRE(doc.entries.size() == 79);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -1361,6 +1460,125 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
     }
     {
         DocumentationEntry e = doc.entries[57];
+        CHECK(e.key == "DictValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dictValue documentation");
+        CHECK(e.verifier->type() == "Table");
+        ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[58];
+        CHECK(e.key == "DictValueVector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dictValueVector documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[59];
+        CHECK(e.key == "DictValueOptional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dictValueOptional documentation");
+        CHECK(e.verifier->type() == "Table");
+        ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[60];
+        CHECK(e.key == "DictValueMap");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dictValueMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[61];
+        CHECK(e.key == "VectorDictValueMap");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vectorDictValueMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+        );
+        REQUIRE(u);
+        CHECK(u->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[62];
+        CHECK(e.key == "OptionalDictValueMap");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalDictValueMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[63];
+        CHECK(e.key == "OptionalVectorDictValueMap");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optionalVectorDictValueMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+        );
+        REQUIRE(u);
+        CHECK(u->identifier == "abc");
+    }
+    {
+        DocumentationEntry e = doc.entries[64];
         CHECK(e.key == "Annotation");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotation documentation");
@@ -1371,7 +1589,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(v->annotation == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[58];
+        DocumentationEntry e = doc.entries[65];
         CHECK(e.key == "AnnotationOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "annotationOptional documentation");
@@ -1382,7 +1600,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(v->annotation == "def");
     }
     {
-        DocumentationEntry e = doc.entries[59];
+        DocumentationEntry e = doc.entries[66];
         CHECK(e.key == "AnnotationVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotationVector documentation");
@@ -1397,7 +1615,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(w->annotation == "ghi");
     }
     {
-        DocumentationEntry e = doc.entries[60];
+        DocumentationEntry e = doc.entries[67];
         CHECK(e.key == "Dcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor3Value documentation");
@@ -1405,7 +1623,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[61];
+        DocumentationEntry e = doc.entries[68];
         CHECK(e.key == "OptionalDcolor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor3Value documentation");
@@ -1413,7 +1631,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[62];
+        DocumentationEntry e = doc.entries[69];
         CHECK(e.key == "VectorDcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor3Value documentation");
@@ -1425,7 +1643,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[63];
+        DocumentationEntry e = doc.entries[70];
         CHECK(e.key == "Color3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color3Value documentation");
@@ -1433,7 +1651,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[64];
+        DocumentationEntry e = doc.entries[71];
         CHECK(e.key == "OptionalColor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor3Value documentation");
@@ -1441,7 +1659,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[65];
+        DocumentationEntry e = doc.entries[72];
         CHECK(e.key == "VectorColor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor3Value documentation");
@@ -1453,7 +1671,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[66];
+        DocumentationEntry e = doc.entries[73];
         CHECK(e.key == "Dcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor4Value documentation");
@@ -1461,7 +1679,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[67];
+        DocumentationEntry e = doc.entries[74];
         CHECK(e.key == "OptionalDcolor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor4Value documentation");
@@ -1469,7 +1687,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[68];
+        DocumentationEntry e = doc.entries[75];
         CHECK(e.key == "VectorDcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor4Value documentation");
@@ -1481,7 +1699,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[69];
+        DocumentationEntry e = doc.entries[76];
         CHECK(e.key == "Color4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color4Value documentation");
@@ -1489,7 +1707,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[70];
+        DocumentationEntry e = doc.entries[77];
         CHECK(e.key == "OptionalColor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor4Value documentation");
@@ -1497,7 +1715,7 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[71];
+        DocumentationEntry e = doc.entries[78];
         CHECK(e.key == "VectorColor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor4Value documentation");
