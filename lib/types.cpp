@@ -189,7 +189,7 @@ std::string fqn(const StackElement* s, std::string_view separator) {
 VariableType* parseType(std::string_view type, Struct* context) {
     using namespace std::literals;
 
-    auto newBasicType = [](BasicType::Type t) -> BasicType* {
+    auto newType = [](BasicType::Type t) -> BasicType* {
         BasicType* bt = new BasicType;
         bt->tag = VariableType::Tag::BasicType;
         bt->type = t;
@@ -198,46 +198,46 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
     VariableType* t = nullptr;
 
-    if (type == "bool")                {  t = newBasicType(BasicType::Type::Bool); }
-    else if (type == "int")            { t = newBasicType(BasicType::Type::Int); }
-    else if (type == "double")         { t = newBasicType(BasicType::Type::Double); }
-    else if (type == "float")          { t = newBasicType(BasicType::Type::Float); }
-    else if (type == "std::string")    { t = newBasicType(BasicType::Type::String); }
-    else if (type == "std::filesystem::path") { t = newBasicType(BasicType::Type::Path); }
-    else if (type == "glm::ivec2")     { t = newBasicType(BasicType::Type::Ivec2); }
-    else if (type == "glm::ivec3")     { t = newBasicType(BasicType::Type::Ivec3); }
-    else if (type == "glm::ivec4")     { t = newBasicType(BasicType::Type::Ivec4); }
-    else if (type == "glm::dvec2")     { t = newBasicType(BasicType::Type::Dvec2); }
-    else if (type == "glm::dvec3")     { t = newBasicType(BasicType::Type::Dvec3); }
-    else if (type == "glm::dvec4")     { t = newBasicType(BasicType::Type::Dvec4); }
-    else if (type == "glm::vec2")      { t = newBasicType(BasicType::Type::Vec2); }
-    else if (type == "glm::vec3")      { t = newBasicType(BasicType::Type::Vec3); }
-    else if (type == "glm::vec4")      { t = newBasicType(BasicType::Type::Vec4); }
-    else if (type == "glm::mat2x2")    { t = newBasicType(BasicType::Type::Mat2x2); }
-    else if (type == "glm::mat2")      { t = newBasicType(BasicType::Type::Mat2x2); }
-    else if (type == "glm::mat2x3")    { t = newBasicType(BasicType::Type::Mat2x3); }
-    else if (type == "glm::mat2x4")    { t = newBasicType(BasicType::Type::Mat2x4); }
-    else if (type == "glm::mat3x2")    { t = newBasicType(BasicType::Type::Mat3x2); }
-    else if (type == "glm::mat3x3")    { t = newBasicType(BasicType::Type::Mat3x3); }
-    else if (type == "glm::mat3")      { t = newBasicType(BasicType::Type::Mat3x3); }
-    else if (type == "glm::mat3x4")    { t = newBasicType(BasicType::Type::Mat3x4); }
-    else if (type == "glm::mat4x2")    { t = newBasicType(BasicType::Type::Mat4x2); }
-    else if (type == "glm::mat4x3")    { t = newBasicType(BasicType::Type::Mat4x3); }
-    else if (type == "glm::mat4x4")    { t = newBasicType(BasicType::Type::Mat4x4); }
-    else if (type == "glm::mat4")      { t = newBasicType(BasicType::Type::Mat4x4); }
-    else if (type == "glm::dmat2x2")   { t = newBasicType(BasicType::Type::DMat2x2); }
-    else if (type == "glm::dmat2")     { t = newBasicType(BasicType::Type::DMat2x2); }
-    else if (type == "glm::dmat2x3")   { t = newBasicType(BasicType::Type::DMat2x3); }
-    else if (type == "glm::dmat2x4")   { t = newBasicType(BasicType::Type::DMat2x4); }
-    else if (type == "glm::dmat3x2")   { t = newBasicType(BasicType::Type::DMat3x2); }
-    else if (type == "glm::dmat3x3")   { t = newBasicType(BasicType::Type::DMat3x3); }
-    else if (type == "glm::dmat3")     { t = newBasicType(BasicType::Type::DMat3x3); }
-    else if (type == "glm::dmat3x4")   { t = newBasicType(BasicType::Type::DMat3x4); }
-    else if (type == "glm::dmat4x2")   { t = newBasicType(BasicType::Type::DMat4x2); }
-    else if (type == "glm::dmat4x3")   { t = newBasicType(BasicType::Type::DMat4x3); }
-    else if (type == "glm::dmat4x4")   { t = newBasicType(BasicType::Type::DMat4x4); }
-    else if (type == "glm::dmat4")     { t = newBasicType(BasicType::Type::DMat4x4); }
-    else if (type == "std::monostate") { t = newBasicType(BasicType::Type::Monostate); }
+    if (type == "bool")                       {  t = newType(BasicType::Type::Bool); }
+    else if (type == "int")                   { t = newType(BasicType::Type::Int); }
+    else if (type == "double")                { t = newType(BasicType::Type::Double); }
+    else if (type == "float")                 { t = newType(BasicType::Type::Float); }
+    else if (type == "std::string")           { t = newType(BasicType::Type::String); }
+    else if (type == "std::filesystem::path") { t = newType(BasicType::Type::Path); }
+    else if (type == "glm::ivec2")            { t = newType(BasicType::Type::Ivec2); }
+    else if (type == "glm::ivec3")            { t = newType(BasicType::Type::Ivec3); }
+    else if (type == "glm::ivec4")            { t = newType(BasicType::Type::Ivec4); }
+    else if (type == "glm::dvec2")            { t = newType(BasicType::Type::Dvec2); }
+    else if (type == "glm::dvec3")            { t = newType(BasicType::Type::Dvec3); }
+    else if (type == "glm::dvec4")            { t = newType(BasicType::Type::Dvec4); }
+    else if (type == "glm::vec2")             { t = newType(BasicType::Type::Vec2); }
+    else if (type == "glm::vec3")             { t = newType(BasicType::Type::Vec3); }
+    else if (type == "glm::vec4")             { t = newType(BasicType::Type::Vec4); }
+    else if (type == "glm::mat2x2")           { t = newType(BasicType::Type::Mat2x2); }
+    else if (type == "glm::mat2")             { t = newType(BasicType::Type::Mat2x2); }
+    else if (type == "glm::mat2x3")           { t = newType(BasicType::Type::Mat2x3); }
+    else if (type == "glm::mat2x4")           { t = newType(BasicType::Type::Mat2x4); }
+    else if (type == "glm::mat3x2")           { t = newType(BasicType::Type::Mat3x2); }
+    else if (type == "glm::mat3x3")           { t = newType(BasicType::Type::Mat3x3); }
+    else if (type == "glm::mat3")             { t = newType(BasicType::Type::Mat3x3); }
+    else if (type == "glm::mat3x4")           { t = newType(BasicType::Type::Mat3x4); }
+    else if (type == "glm::mat4x2")           { t = newType(BasicType::Type::Mat4x2); }
+    else if (type == "glm::mat4x3")           { t = newType(BasicType::Type::Mat4x3); }
+    else if (type == "glm::mat4x4")           { t = newType(BasicType::Type::Mat4x4); }
+    else if (type == "glm::mat4")             { t = newType(BasicType::Type::Mat4x4); }
+    else if (type == "glm::dmat2x2")          { t = newType(BasicType::Type::DMat2x2); }
+    else if (type == "glm::dmat2")            { t = newType(BasicType::Type::DMat2x2); }
+    else if (type == "glm::dmat2x3")          { t = newType(BasicType::Type::DMat2x3); }
+    else if (type == "glm::dmat2x4")          { t = newType(BasicType::Type::DMat2x4); }
+    else if (type == "glm::dmat3x2")          { t = newType(BasicType::Type::DMat3x2); }
+    else if (type == "glm::dmat3x3")          { t = newType(BasicType::Type::DMat3x3); }
+    else if (type == "glm::dmat3")            { t = newType(BasicType::Type::DMat3x3); }
+    else if (type == "glm::dmat3x4")          { t = newType(BasicType::Type::DMat3x4); }
+    else if (type == "glm::dmat4x2")          { t = newType(BasicType::Type::DMat4x2); }
+    else if (type == "glm::dmat4x3")          { t = newType(BasicType::Type::DMat4x3); }
+    else if (type == "glm::dmat4x4")          { t = newType(BasicType::Type::DMat4x4); }
+    else if (type == "glm::dmat4")            { t = newType(BasicType::Type::DMat4x4); }
+    else if (type == "ghoul::Dictionary")    { t = newType(BasicType::Type::Dictionary); }
     else if (startsWith(type, "std::vector<")) {
         type.remove_prefix("std::vector<"sv.size());
         type.remove_suffix(">"sv.size());
@@ -271,14 +271,21 @@ VariableType* parseType(std::string_view type, Struct* context) {
         mp->valueType = parseType(list[1], context);
         assert(mp->valueType);
 
-        // For now, we just want to support std::map<std::string, std::string>
-        if ((mp->keyType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->keyType)->type != BasicType::Type::String) ||
+        // only strings are allowed for keys in maps right now
+        const bool isValidKey =
+            (mp->keyType->tag == VariableType::Tag::BasicType) &&
+            (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
+
+        // The value can be either a string or a dictionary
+        const bool isValidValue =
             (mp->valueType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->valueType)->type != BasicType::Type::String))
-        {
+            (static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::String ||
+             static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::Dictionary);
+
+        if (!isValidKey || !isValidValue) {
             throw CodegenError(fmt::format(
-                "Currently only std:map<std::string, std::string> is supported\n{}", type
+                "Currently only std::map<std::string, std::string> or "
+                "std::map<std::string, ghoul::Dictionary> is supported\n{}", type
             ));
         }
 
@@ -384,7 +391,7 @@ std::string generateTypename(BasicType::Type type) {
         case BasicType::Type::DMat4x2: return "glm::dmat4x2";
         case BasicType::Type::DMat4x3: return "glm::dmat4x3";
         case BasicType::Type::DMat4x4: return "glm::dmat4x4";
-        case BasicType::Type::Monostate: return "std::monostate";
+        case BasicType::Type::Dictionary: return "ghoul::Dictionary";
     }
 
     throw std::logic_error("Missing case label");
@@ -394,21 +401,21 @@ std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
 }
 
-std::string generateTypename(const MapType* type) {
-    std::string t1 = generateTypename(type->keyType);
-    std::string t2 = generateTypename(type->valueType);
+std::string generateTypename(const MapType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->keyType, fullyQualified);
+    std::string t2 = generateTypename(type->valueType, fullyQualified);
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
-std::string generateTypename(const OptionalType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const OptionalType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::optional<{}>", t1);
 }
 
-std::string generateTypename(const VariantType* type) {
+std::string generateTypename(const VariantType* type, bool fullyQualified) {
     std::string res = "std::variant<";
     for (VariableType* v : type->types) {
-        res += generateTypename(v);
+        res += generateTypename(v, fullyQualified);
         res += ", ";
     }
     
@@ -418,8 +425,8 @@ std::string generateTypename(const VariantType* type) {
     return res;
 }
 
-std::string generateTypename(const VectorType* type) {
-    std::string t1 = generateTypename(type->type);
+std::string generateTypename(const VectorType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
 }
 
@@ -433,19 +440,20 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
 }
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {
+    const bool fq = fullyQualified;
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateTypename(static_cast<const BasicType*>(type));
         case VariableType::Tag::MapType:
-            return generateTypename(static_cast<const MapType*>(type));
+            return generateTypename(static_cast<const MapType*>(type), fq);
         case VariableType::Tag::OptionalType:
-            return generateTypename(static_cast<const OptionalType*>(type));
+            return generateTypename(static_cast<const OptionalType*>(type), fq);
         case VariableType::Tag::VariantType:
-            return generateTypename(static_cast<const VariantType*>(type));
+            return generateTypename(static_cast<const VariantType*>(type), fq);
         case VariableType::Tag::VectorType:
-            return generateTypename(static_cast<const VectorType*>(type));
+            return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
-            return generateTypename(static_cast<const CustomType*>(type), fullyQualified);
+            return generateTypename(static_cast<const CustomType*>(type), fq);
     }
     throw std::logic_error("Missing case label");
 }

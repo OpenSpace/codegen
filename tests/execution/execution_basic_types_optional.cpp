@@ -152,6 +152,9 @@ namespace {
 
         // dmat4 value documentation
         std::optional<glm::dmat4> dmat4Value;
+
+        // dict value documentation
+        std::optional<ghoul::Dictionary> dictValue;
     };
 #include "execution_basic_types_optional_codegen.cpp"
 } // namespace
@@ -276,6 +279,12 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
             137.9, 137.10, 137.11, 137.12, 137.13, 137.14, 137.15, 137.16
         )
     );
+    {
+        ghoul::Dictionary e;
+        e.setValue("a", 1);
+        e.setValue("b", 2.0);
+        d.setValue("DictValue", e);
+    }
 
     const Parameters p = codegen::bake<Parameters>(d);
     REQUIRE(p.boolValue.has_value());
@@ -422,6 +431,13 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
             137.9, 137.10, 137.11, 137.12, 137.13, 137.14, 137.15, 137.16
         )
     );
+    REQUIRE(p.dictValue.has_value());
+    REQUIRE(p.dictValue->hasKey("a"));
+    REQUIRE(p.dictValue->hasValue<int>("a"));
+    CHECK(p.dictValue->value<int>("a") == 1);
+    REQUIRE(p.dictValue->hasKey("b"));
+    REQUIRE(p.dictValue->hasValue<double>("b"));
+    CHECK(p.dictValue->value<double>("b") == 2.0);
 
     ghoul::Dictionary e;
     const Parameters p2 = codegen::bake<Parameters>(e);
@@ -463,13 +479,14 @@ TEST_CASE("Basic Types Optional bake", "[verifier]") {
     CHECK(!p2.dmat4x3Value.has_value());
     CHECK(!p2.dmat4x4Value.has_value());
     CHECK(!p2.dmat4Value.has_value());
+    CHECK(!p2.dictValue.has_value());
 }
 
 TEST_CASE("Basic Types Optional documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 40);
+    REQUIRE(doc.entries.size() == 41);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolValue");
@@ -789,5 +806,13 @@ TEST_CASE("Basic Types Optional documentation", "[verifier]") {
         CHECK(e.documentation == "dmat4 value documentation");
         CHECK(e.verifier->type() == "Matrix4x4<double>");
         CHECK(dynamic_cast<DoubleMatrix4Verifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[40];
+        CHECK(e.key == "DictValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dict value documentation");
+        CHECK(e.verifier->type() == "Table");
+        CHECK(dynamic_cast<TableVerifier*>(e.verifier.get()));
     }
 }

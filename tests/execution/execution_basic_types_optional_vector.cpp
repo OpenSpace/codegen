@@ -154,6 +154,9 @@ namespace {
 
         // dmat4 value documentation
         std::optional<std::vector<glm::dmat4>> dmat4Value;
+
+        // dict value documentation
+        std::optional<std::vector<ghoul::Dictionary>> dictValue;
     };
 #include "execution_basic_types_optional_vector_codegen.cpp"
 } // namespace
@@ -643,6 +646,28 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
         );
         d.setValue("Dmat4Value", v);
     }
+    {
+        ghoul::Dictionary v;
+        {
+            ghoul::Dictionary d;
+            d.setValue("a", 1);
+            d.setValue("b", 2.0);
+            v.setValue("1", d);
+        }
+        {
+            ghoul::Dictionary d;
+            d.setValue("a", 3);
+            d.setValue("b", 4.0);
+            v.setValue("2", d);
+        }
+        {
+            ghoul::Dictionary d;
+            d.setValue("a", 5);
+            d.setValue("b", 6.0);
+            v.setValue("3", d);
+        }
+        d.setValue("DictValue", v);
+    }
 
     const Parameters p = codegen::bake<Parameters>(d);
     REQUIRE(p.boolValue.has_value());
@@ -996,8 +1021,28 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
               1104.9, 1104.10, 1104.11, 1104.12, 1104.13, 1104.14, 1104.15, 1104.16 },
             { 1105.1, 1105.2, 1105.3, 1105.4, 1105.5, 1105.6, 1105.7, 1105.8,
               1105.9, 1105.10, 1105.11, 1105.12, 1105.13, 1105.14, 1105.15, 1105.16 }
-    }
+        }
     );
+    REQUIRE(p.dictValue.has_value());
+    REQUIRE(p.dictValue->size() == 3);
+    REQUIRE(p.dictValue->at(0).hasKey("a"));
+    REQUIRE(p.dictValue->at(0).hasValue<int>("a"));
+    CHECK(p.dictValue->at(0).value<int>("a") == 1);
+    REQUIRE(p.dictValue->at(0).hasKey("b"));
+    REQUIRE(p.dictValue->at(0).hasValue<double>("b"));
+    CHECK(p.dictValue->at(0).value<double>("b") == 2.0);
+    REQUIRE(p.dictValue->at(1).hasKey("a"));
+    REQUIRE(p.dictValue->at(1).hasValue<int>("a"));
+    CHECK(p.dictValue->at(1).value<int>("a") == 3);
+    REQUIRE(p.dictValue->at(1).hasKey("b"));
+    REQUIRE(p.dictValue->at(1).hasValue<double>("b"));
+    CHECK(p.dictValue->at(1).value<double>("b") == 4.0);
+    REQUIRE(p.dictValue->at(2).hasKey("a"));
+    REQUIRE(p.dictValue->at(2).hasValue<int>("a"));
+    CHECK(p.dictValue->at(2).value<int>("a") == 5);
+    REQUIRE(p.dictValue->at(2).hasKey("b"));
+    REQUIRE(p.dictValue->at(2).hasValue<double>("b"));
+    CHECK(p.dictValue->at(2).value<double>("b") == 6.0);
 
 
     ghoul::Dictionary e;
@@ -1042,13 +1087,14 @@ TEST_CASE("Basic Types Optional Vector bake", "[verifier]") {
     CHECK(!p2.dmat4x3Value.has_value());
     CHECK(!p2.dmat4x4Value.has_value());
     CHECK(!p2.dmat4Value.has_value());
+    CHECK(!p2.dictValue.has_value());
 }
 
 TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 40);
+    REQUIRE(doc.entries.size() == 41);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "BoolValue");
@@ -1614,5 +1660,17 @@ TEST_CASE("Basic Types Optional Vector documentation", "[verifier]") {
         CHECK(
             dynamic_cast<DoubleMatrix4Verifier*>(t->documentations[0].verifier.get())
         );
+    }
+    {
+        DocumentationEntry e = doc.entries[40];
+        CHECK(e.key == "DictValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "dict value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(t->documentations.size() == 1);
+        CHECK(t->documentations[0].key == "*");
+        CHECK(t->documentations[0].verifier->type() == "Table");
+        CHECK(dynamic_cast<TableVerifier*>(t->documentations[0].verifier.get()));
     }
 }

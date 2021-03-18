@@ -206,10 +206,11 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         MapType* mt = static_cast<MapType*>(type);
         assert(mt->valueType->tag == VariableType::Tag::BasicType);
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
-        assert(valueType->type == BasicType::Type::String);
         const Struct* root = rootStruct(currentStruct);
         std::string valueVerifier = verifierForType(valueType->type, var.attributes);
-        return "new TableVerifier({{\"*\", new StringVerifier, Optional::No }})\n";
+        return fmt::format(
+            "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})\n", valueVerifier
+        );
     }
     else if (type->tag == VariableType::Tag::CustomType) {
         CustomType* ct = static_cast<CustomType*>(type);

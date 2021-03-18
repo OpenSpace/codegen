@@ -311,7 +311,10 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
-        res->attributes = parseAttributes(attributes);
+        std::string_view attr = strip(attributes);
+        if (!attr.empty()) {
+            res->attributes = parseAttributes(attributes);
+        }
     }
 
     if (!res->attributes.key.empty()) {
