@@ -48,7 +48,7 @@ namespace {
         std::string stringValue;
 
         // string not empty value documentation
-        std::string stringNotEmptyValue;
+        std::string stringNotEmptyValue [[codegen::notempty()]];
 
         // path value documentation
         std::filesystem::path pathValue;
@@ -463,7 +463,9 @@ TEST_CASE("Basic Types documentation", "[verifier]") {
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
         CHECK(e.verifier->type() == "String");
-        
+        StringVerifier* v = dynamic_cast<StringVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustBeNotEmpty() == true);
     }
     {
         DocumentationEntry e = doc.entries[6];
