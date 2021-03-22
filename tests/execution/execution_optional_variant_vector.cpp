@@ -84,12 +84,17 @@ TEST_CASE("Optional Variant Vector Documentation", "[verifier]") {
     REQUIRE(v);
     REQUIRE(v->values.size() == 2);
     CHECK(v->values[0]->type() == "String");
-    CHECK(dynamic_cast<StringVerifier*>(v->values[0].get()));
-    CHECK(v->values[1]->type() == "Table");
-    TableVerifier* w = dynamic_cast<TableVerifier*>(v->values[1].get());
+    StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
     REQUIRE(w);
-    REQUIRE(w->documentations.size() == 1);
-    CHECK(w->documentations[0].key == "*");
-    CHECK(w->documentations[0].verifier->type() == "String");
-    CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+    CHECK(w->mustBeNotEmpty() == false);
+    CHECK(v->values[1]->type() == "Table");
+    TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
+    REQUIRE(u);
+    REQUIRE(u->documentations.size() == 1);
+    CHECK(u->documentations[0].key == "*");
+    CHECK(u->documentations[0].verifier->type() == "String");
+    StringVerifier* x = 
+        dynamic_cast<StringVerifier*>(u->documentations[0].verifier.get());
+    REQUIRE(x);
+    CHECK(x->mustBeNotEmpty() == false);
 }
