@@ -299,3 +299,278 @@ std::optional<std::string> v [[codegen::directory()]];
         CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
     );
 }
+
+TEST_CASE("Attribute error: std::string annotation inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string annotation inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string annotation inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string annotation inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string annotation unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::annotation("abc"), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string annotation unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string annotation unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string annotation unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the annotation attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string annotation notempty", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::annotation("abc"), codegen::notempty()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string annotation notempty", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string annotation notempty", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string annotation notempty", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::notempty()]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string notempty inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string notempty inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string notempty inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string notempty inlist", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string notempty unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::notempty(), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string notempty unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string notempty unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string notempty unequal", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::unequal("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string notempty annotation", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::notempty(), codegen::annotation("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: vector std::string notempty annotation", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::vector<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional std::string notempty annotation", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: optional vector std::string notempty annotation", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::annotation("abc")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("With the notempty attribute, no other attribute can be used")
+    );
+}
+
+TEST_CASE("Attribute error: std::string notempty wrong parameter", "[parsing_error]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+std::string v [[codegen::notempty("bla")]];
+};)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parseRootStruct(S)),
+        CodegenError,
+        CM::Contains("Boolean attribute needs to be empty, 'true', or 'false'")
+    );
+}

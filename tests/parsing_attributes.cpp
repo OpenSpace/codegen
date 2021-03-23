@@ -196,6 +196,42 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // unequalValueStringVector documentation
         std::vector<std::string> unequalValueStringVector [[codegen::unequal("abcdef")]];
 
+        // string not empty value documentation
+        std::string notEmptyString [[codegen::notempty()]];
+
+        // string not empty optional value documentation
+        std::optional<std::string> notEmptyStringOptional [[codegen::notempty()]];
+
+        // string not empty vector value documentation
+        std::vector<std::string> notEmptyStringVector [[codegen::notempty()]];
+
+        // string not empty optional vector value documentation
+        std::optional<std::vector<std::string>> notEmptyStringOptionalVector [[codegen::notempty()]];
+
+        // string not not empty value documentation
+        std::string notNotEmptyString [[codegen::notempty(false)]];
+
+        // string not not empty optional value documentation
+        std::optional<std::string> notNotEmptyStringOptional [[codegen::notempty(false)]];
+
+        // string not not empty vector value documentation
+        std::vector<std::string> notNotEmptyStringVector [[codegen::notempty(false)]];
+
+        // string not not empty optional vector value documentation
+        std::optional<std::vector<std::string>> notNotEmptyStringOptionalVector [[codegen::notempty(false)]];
+
+        // string yes not empty value documentation
+        std::string yesNotEmptyString [[codegen::notempty(true)]];
+
+        // string yes not empty optional value documentation
+        std::optional<std::string> yesNotEmptyStringOptional [[codegen::notempty(true)]];
+
+        // string yes not empty vector value documentation
+        std::vector<std::string> yesNotEmptyStringVector [[codegen::notempty(true)]];
+
+        // string yes not empty optional vector value documentation
+        std::optional<std::vector<std::string>> yesNotEmptyStringOptionalVector [[codegen::notempty(true)]];
+
         // referenceValue documentation
         ghoul::Dictionary referenceValue [[codegen::reference("abc")]];
 
@@ -204,6 +240,9 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
         // referenceValueVector documentation
         std::vector<ghoul::Dictionary> referenceValueVector [[codegen::reference("abc")]];
+
+        // referenceValueOptionalVector documentation
+        std::optional<std::vector<ghoul::Dictionary>> referenceValueOptionalVector [[codegen::reference("abc")]];
 
         // dcolor3Value documentation
         glm::dvec3 dcolor3Value [[codegen::color()]];
@@ -214,6 +253,33 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // vectorDcolor3Value documentation
         std::vector<glm::dvec3> vectorDcolor3Value [[codegen::color()]];
 
+        // optionalVectorDcolor3Value documentation
+        std::optional<std::vector<glm::dvec3>> optionalVectorDcolor3Value [[codegen::color()]];
+
+        // not dcolor3Value documentation
+        glm::dvec3 notDcolor3Value [[codegen::color(false)]];
+
+        // not optionalDcolor3Value documentation
+        std::optional<glm::dvec3> notOptionalDcolor3Value [[codegen::color(false)]];
+
+        // not vectorDcolor3Value documentation
+        std::vector<glm::dvec3> notVectorDcolor3Value [[codegen::color(false)]];
+
+        // not optionalVectorDcolor3Value documentation
+        std::optional<std::vector<glm::dvec3>> notOptionalVectorDcolor3Value [[codegen::color(false)]];
+
+        // yes dcolor3Value documentation
+        glm::dvec3 yesDcolor3Value [[codegen::color(true)]];
+
+        // yes optionalDcolor3Value documentation
+        std::optional<glm::dvec3> yesOptionalDcolor3Value [[codegen::color(true)]];
+
+        // yes vectorDcolor3Value documentation
+        std::vector<glm::dvec3> yesVectorDcolor3Value [[codegen::color(true)]];
+
+        // yes optionalVectorDcolor3Value documentation
+        std::optional<std::vector<glm::dvec3>> yesOptionalVectorDcolor3Value [[codegen::color(true)]];
+
         // file value documentation
         std::filesystem::path fileValue;
 
@@ -223,6 +289,9 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // vector file value documentation
         std::vector<std::filesystem::path> vectorFileValue;
 
+        // optional vector file value documentation
+        std::optional<std::vector<std::filesystem::path>> optionalVectorFileValue;
+
         // directory value documentation
         std::filesystem::path directoryValue [[codegen::directory()]];
 
@@ -231,12 +300,39 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
         // vector directory value documentation
         std::vector<std::filesystem::path> vectorDirectoryValue [[codegen::directory()]];
+
+        // optional vector directory value documentation
+        std::optional<std::vector<std::filesystem::path>> optionalVectorDirectoryValue [[codegen::directory()]];
+
+        // not directory value documentation
+        std::filesystem::path notDirectoryValue [[codegen::directory(false)]];
+
+        // not optional directory value documentation
+        std::optional<std::filesystem::path> notOptionalDirectoryValue [[codegen::directory(false)]];
+
+        // not vector directory value documentation
+        std::vector<std::filesystem::path> notVectorDirectoryValue [[codegen::directory(false)]];
+
+        // not optional vector directory value documentation
+        std::optional<std::vector<std::filesystem::path>> notOptionalVectorDirectoryValue [[codegen::directory(false)]];
+
+        // yes directory value documentation
+        std::filesystem::path yesDirectoryValue [[codegen::directory(true)]];
+
+        // yes optional directory value documentation
+        std::optional<std::filesystem::path> yesOptionalDirectoryValue [[codegen::directory(true)]];
+
+        // yes vector directory value documentation
+        std::vector<std::filesystem::path> yesVectorDirectoryValue [[codegen::directory(true)]];
+
+        // yes optional vector directory value documentation
+        std::optional<std::vector<std::filesystem::path>> yesOptionalVectorDirectoryValue [[codegen::directory(true)]];
     };
 )";
     Struct* s = parseRootStruct(Source);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 67);
+    REQUIRE(s->variables.size() == 99);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -259,6 +355,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -283,6 +380,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -307,6 +405,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -330,6 +429,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -353,6 +453,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -376,6 +477,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -399,6 +501,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -422,6 +525,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -445,6 +549,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -468,6 +573,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -491,6 +597,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -514,6 +621,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -537,6 +645,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -560,6 +669,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -583,6 +693,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -606,6 +717,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -629,6 +741,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -652,6 +765,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -675,6 +789,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -698,6 +813,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -721,6 +837,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -744,6 +861,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -767,6 +885,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -790,6 +909,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -813,6 +933,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -836,6 +957,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -859,6 +981,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -882,6 +1005,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -905,6 +1029,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -928,6 +1053,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -951,6 +1077,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -974,6 +1101,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -997,6 +1125,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1020,6 +1149,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1043,6 +1173,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1066,6 +1197,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1089,6 +1221,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1112,6 +1245,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1135,6 +1269,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1158,6 +1293,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1181,6 +1317,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1204,6 +1341,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1227,6 +1365,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1250,6 +1389,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1273,6 +1413,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1296,6 +1437,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1319,6 +1461,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1342,6 +1485,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1365,6 +1509,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1388,6 +1533,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1411,6 +1557,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1434,6 +1581,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1457,6 +1605,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1480,6 +1629,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
@@ -1503,10 +1653,299 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
         Variable* var = s->variables[55];
+        REQUIRE(var);
+        CHECK(var->name == "notEmptyString");
+        CHECK(var->key == "\"NotEmptyString\"");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "string not empty value documentation");
+        CHECK(var->attributes.mustBeNotEmpty == true);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[56];
+        REQUIRE(var);
+        CHECK(var->name == "notEmptyStringOptional");
+        CHECK(var->key == "\"NotEmptyStringOptional\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
+        CHECK(var->comment == "string not empty optional value documentation");
+        CHECK(var->attributes.mustBeNotEmpty == true);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[57];
+        REQUIRE(var);
+        CHECK(var->name == "notEmptyStringVector");
+        CHECK(var->key == "\"NotEmptyStringVector\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "string not empty vector value documentation");
+        CHECK(var->attributes.mustBeNotEmpty == true);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+    
+    {
+        Variable* var = s->variables[58];
+        REQUIRE(var);
+        CHECK(var->name == "notEmptyStringOptionalVector");
+        CHECK(var->key == "\"NotEmptyStringOptionalVector\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::string>>");
+        CHECK(var->comment == "string not empty optional vector value documentation");
+        CHECK(var->attributes.mustBeNotEmpty == true);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[59];
+        REQUIRE(var);
+        CHECK(var->name == "notNotEmptyString");
+        CHECK(var->key == "\"NotNotEmptyString\"");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "string not not empty value documentation");
+        CHECK(!var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[60];
+        REQUIRE(var);
+        CHECK(var->name == "notNotEmptyStringOptional");
+        CHECK(var->key == "\"NotNotEmptyStringOptional\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
+        CHECK(var->comment == "string not not empty optional value documentation");
+        CHECK(!var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[61];
+        REQUIRE(var);
+        CHECK(var->name == "notNotEmptyStringVector");
+        CHECK(var->key == "\"NotNotEmptyStringVector\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "string not not empty vector value documentation");
+        CHECK(!var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[62];
+        REQUIRE(var);
+        CHECK(var->name == "notNotEmptyStringOptionalVector");
+        CHECK(var->key == "\"NotNotEmptyStringOptionalVector\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::string>>");
+        CHECK(var->comment == "string not not empty optional vector value documentation");
+        CHECK(!var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[63];
+        REQUIRE(var);
+        CHECK(var->name == "yesNotEmptyString");
+        CHECK(var->key == "\"YesNotEmptyString\"");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "string yes not empty value documentation");
+        CHECK(var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[64];
+        REQUIRE(var);
+        CHECK(var->name == "yesNotEmptyStringOptional");
+        CHECK(var->key == "\"YesNotEmptyStringOptional\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
+        CHECK(var->comment == "string yes not empty optional value documentation");
+        CHECK(var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[65];
+        REQUIRE(var);
+        CHECK(var->name == "yesNotEmptyStringVector");
+        CHECK(var->key == "\"YesNotEmptyStringVector\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "string yes not empty vector value documentation");
+        CHECK(var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[66];
+        REQUIRE(var);
+        CHECK(var->name == "yesNotEmptyStringOptionalVector");
+        CHECK(var->key == "\"YesNotEmptyStringOptionalVector\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::string>>");
+        CHECK(var->comment == "string yes not empty optional vector value documentation");
+        CHECK(var->attributes.mustBeNotEmpty);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+    }
+
+    {
+        Variable* var = s->variables[67];
         REQUIRE(var);
         CHECK(var->name == "referenceValue");
         CHECK(var->key == "\"ReferenceValue\"");
@@ -1526,10 +1965,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[56];
+        Variable* var = s->variables[68];
         REQUIRE(var);
         CHECK(var->name == "referenceValueOptional");
         CHECK(var->key == "\"ReferenceValueOptional\"");
@@ -1549,10 +1989,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[57];
+        Variable* var = s->variables[69];
         REQUIRE(var);
         CHECK(var->name == "referenceValueVector");
         CHECK(var->key == "\"ReferenceValueVector\"");
@@ -1572,10 +2013,35 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[58];
+        Variable* var = s->variables[70];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueOptionalVector");
+        CHECK(var->key == "\"ReferenceValueOptionalVector\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<ghoul::Dictionary>>");
+        CHECK(var->comment == "referenceValueOptionalVector documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[71];
         REQUIRE(var);
         CHECK(var->name == "dcolor3Value");
         CHECK(var->key == "\"Dcolor3Value\"");
@@ -1595,10 +2061,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[59];
+        Variable* var = s->variables[72];
         REQUIRE(var);
         CHECK(var->name == "optionalDcolor3Value");
         CHECK(var->key == "\"OptionalDcolor3Value\"");
@@ -1618,10 +2085,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[60];
+        Variable* var = s->variables[73];
         REQUIRE(var);
         CHECK(var->name == "vectorDcolor3Value");
         CHECK(var->key == "\"VectorDcolor3Value\"");
@@ -1641,10 +2109,228 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[61];
+        Variable* var = s->variables[74];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorDcolor3Value");
+        CHECK(var->key == "\"OptionalVectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<glm::dvec3>>");
+        CHECK(var->comment == "optionalVectorDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[75];
+        REQUIRE(var);
+        CHECK(var->name == "notDcolor3Value");
+        CHECK(var->key == "\"NotDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "glm::dvec3");
+        CHECK(var->comment == "not dcolor3Value documentation");
+        CHECK(!var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[76];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalDcolor3Value");
+        CHECK(var->key == "\"NotOptionalDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dvec3>");
+        CHECK(var->comment == "not optionalDcolor3Value documentation");
+        CHECK(!var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[77];
+        REQUIRE(var);
+        CHECK(var->name == "notVectorDcolor3Value");
+        CHECK(var->key == "\"NotVectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dvec3>");
+        CHECK(var->comment == "not vectorDcolor3Value documentation");
+        CHECK(!var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[78];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalVectorDcolor3Value");
+        CHECK(var->key == "\"NotOptionalVectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<glm::dvec3>>");
+        CHECK(var->comment == "not optionalVectorDcolor3Value documentation");
+        CHECK(!var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+
+    {
+        Variable* var = s->variables[79];
+        REQUIRE(var);
+        CHECK(var->name == "yesDcolor3Value");
+        CHECK(var->key == "\"YesDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "glm::dvec3");
+        CHECK(var->comment == "yes dcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[80];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalDcolor3Value");
+        CHECK(var->key == "\"YesOptionalDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::dvec3>");
+        CHECK(var->comment == "yes optionalDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[81];
+        REQUIRE(var);
+        CHECK(var->name == "yesVectorDcolor3Value");
+        CHECK(var->key == "\"YesVectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::dvec3>");
+        CHECK(var->comment == "yes vectorDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[82];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalVectorDcolor3Value");
+        CHECK(var->key == "\"YesOptionalVectorDcolor3Value\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<glm::dvec3>>");
+        CHECK(var->comment == "yes optionalVectorDcolor3Value documentation");
+        CHECK(var->attributes.isColor);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[83];
         REQUIRE(var);
         CHECK(var->name == "fileValue");
         CHECK(var->key == "\"FileValue\"");
@@ -1664,10 +2350,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[62];
+        Variable* var = s->variables[84];
         REQUIRE(var);
         CHECK(var->name == "optionalFileValue");
         CHECK(var->key == "\"OptionalFileValue\"");
@@ -1687,10 +2374,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[63];
+        Variable* var = s->variables[85];
         REQUIRE(var);
         CHECK(var->name == "vectorFileValue");
         CHECK(var->key == "\"VectorFileValue\"");
@@ -1710,10 +2398,35 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[64];
+        Variable* var = s->variables[86];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorFileValue");
+        CHECK(var->key == "\"OptionalVectorFileValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "optional vector file value documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[87];
         REQUIRE(var);
         CHECK(var->name == "directoryValue");
         CHECK(var->key == "\"DirectoryValue\"");
@@ -1733,10 +2446,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[65];
+        Variable* var = s->variables[88];
         REQUIRE(var);
         CHECK(var->name == "optionalDirectoryValue");
         CHECK(var->key == "\"OptionalDirectoryValue\"");
@@ -1756,10 +2470,11 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     {
-        Variable* var = s->variables[66];
+        Variable* var = s->variables[89];
         REQUIRE(var);
         CHECK(var->name == "vectorDirectoryValue");
         CHECK(var->key == "\"VectorDirectoryValue\"");
@@ -1779,6 +2494,223 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(var->attributes.unequal.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[90];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorDirectoryValue");
+        CHECK(var->key == "\"OptionalVectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "optional vector directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[91];
+        REQUIRE(var);
+        CHECK(var->name == "notDirectoryValue");
+        CHECK(var->key == "\"NotDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "not directory value documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[92];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalDirectoryValue");
+        CHECK(var->key == "\"NotOptionalDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "not optional directory value documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[93];
+        REQUIRE(var);
+        CHECK(var->name == "notVectorDirectoryValue");
+        CHECK(var->key == "\"NotVectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "not vector directory value documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[94];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalVectorDirectoryValue");
+        CHECK(var->key == "\"NotOptionalVectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "not optional vector directory value documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[95];
+        REQUIRE(var);
+        CHECK(var->name == "yesDirectoryValue");
+        CHECK(var->key == "\"YesDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "yes directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[96];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalDirectoryValue");
+        CHECK(var->key == "\"YesOptionalDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "yes optional directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[97];
+        REQUIRE(var);
+        CHECK(var->name == "yesVectorDirectoryValue");
+        CHECK(var->key == "\"YesVectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "yes vector directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[98];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalVectorDirectoryValue");
+        CHECK(var->key == "\"YesOptionalVectorDirectoryValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "yes optional vector directory value documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
     }
 
     std::string r = generateResult(s);
