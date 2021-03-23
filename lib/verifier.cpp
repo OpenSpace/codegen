@@ -72,6 +72,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (
             type == Type::Dvec3 || type == Type::Dvec4 ||
@@ -89,6 +90,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
             report(attributes.annotation, attributes::Annotation);
@@ -97,6 +99,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::String) {
             report(attributes.inrange, attributes::InRange);
@@ -121,6 +124,7 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Dictionary) {
             report(attributes.annotation, attributes::Annotation);
@@ -135,6 +139,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
     }
 
@@ -211,8 +216,20 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         if (!attr.unequal.empty()) {
             res = addQualifier(res, "UnequalVerifier", attr.unequal);
         }
+        if (attr.mustBeNotEmpty) {
+            if (!attr.inlist.empty() || !attr.unequal.empty() ||
+                !attr.annotation.empty())
+            {
+                throw CodegenError(fmt::format(
+                    "With the notempty attribute, no other attribute can be used:\n{}",
+                    type
+                ));
+            }
+
+            res = "StringVerifier(true)";
+        }
         if (!attr.annotation.empty()) {
-            if (!attr.inlist.empty() || !attr.unequal.empty()) {
+            if (!attr.inlist.empty() || !attr.unequal.empty() || attr.mustBeNotEmpty) {
                 throw CodegenError(fmt::format(
                     "With the annotation attribute, no other attribute can be used:\n{}",
                     type

@@ -44,6 +44,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::reference("foo")]]`:  Marks a `ghoul::Dictionary` as a referencing verifier that will look up a different Documentation elsewhere in the code.
  - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`. The parameter must be either empty, `true`, or `false`
  - `[[codegen::directory()]]`: Marks a `std::filesystem::path` to be allowed to be a directory. The parameter must be either empty, `true`, or `false`
+ - `[[codegen::notempty()]]`: Checks that a `std::string` that this attribute is attached to is not empty
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
@@ -87,6 +88,7 @@ This is a complete list of variable types and attribute combinations.  We are **
  - `std::string` + `[[codegen::inlist]]` -> `InListVerifier<StringVerifier>`
  - `std::string` + `[[codegen::unequal]]` -> `UnequalVerifier<StringVerifier>`
  - `std::string` + `[[codegen::annotation]]` -> `AnnotationVerifier<StringVerifier>`
+ - `std::string` + `[[codegen::notempty]]` -> `StringVerifier(true)`
  - `glm::vec3` + `[[codegen::color]]` -> `Color3Verifier`
  - `glm::vec4` + `[[codegen::color]]` -> `Color4Verifier`
  - `glm::dvec3` + `[[codegen::color]]` -> `Color3Verifier`
