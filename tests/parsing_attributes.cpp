@@ -245,7 +245,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     Struct* s = parseRootStruct(Source);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 67);
+    REQUIRE(s->variables.size() == 70);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
