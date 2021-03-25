@@ -89,7 +89,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
 
     std::string_view content = block.substr(beg, cursor - beg - 1);
     std::vector<ParseResult> res;
-    res.push_back({ name, content });
+    res.push_back({ name, strip(content) });
 
     // Skip over whitespaces
     while (cursor < block.size() && ::isspace(block[cursor])) {
@@ -148,7 +148,10 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::DateTime) {
             res.isDateTime = booleanValue(p.value);
         }
-        else if (p.key == attributes::Color)      { res.isColor = booleanValue(p.value); }
+        else if (p.key == attributes::Color) { res.isColor = booleanValue(p.value); }
+        else if (p.key == attributes::MustBeNotEmpty) {
+            res.mustBeNotEmpty = booleanValue(p.value);
+        }
         else {
             throw CodegenError(fmt::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line

@@ -66,6 +66,7 @@ namespace attributes {
 
     constexpr const char Dictionary[] = "Dictionary";
     constexpr const char NoExhaustive[] = "noexhaustive";
+    constexpr const char MustBeNotEmpty[] = "notempty";
 
 } // namespace attributes
 
@@ -181,6 +182,7 @@ struct Variable {
         bool isDirectory = false;
         bool isColor = false;
         bool isDateTime = false;
+        bool mustBeNotEmpty = false;
     };
     Attributes attributes;
 };

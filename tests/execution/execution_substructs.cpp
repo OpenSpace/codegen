@@ -206,7 +206,10 @@ TEST_CASE("Substruct Documentation", "[verifier]") {
         CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].documentation == "C::eulav documentation");
         CHECK(w->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        StringVerifier* u =
+            dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        CHECK(u->mustBeNotEmpty() == false);
 
         CHECK(w->documentations[1].key == "Lavlav");
         CHECK(!w->documentations[1].optional);
@@ -227,7 +230,10 @@ TEST_CASE("Substruct Documentation", "[verifier]") {
         CHECK(!v->documentations[0].optional);
         CHECK(v->documentations[0].documentation == "D::a documentation");
         CHECK(v->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        CHECK(w->mustBeNotEmpty() == false);
 
         CHECK(v->documentations[1].key == "B");
         CHECK(!v->documentations[1].optional);
@@ -258,7 +264,10 @@ TEST_CASE("Substruct Documentation", "[verifier]") {
         CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].documentation == "D::a documentation");
         CHECK(w->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        StringVerifier* u =
+            dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        CHECK(u->mustBeNotEmpty() == false);
 
         CHECK(w->documentations[1].key == "B");
         CHECK(!w->documentations[1].optional);
@@ -279,7 +288,10 @@ TEST_CASE("Substruct Documentation", "[verifier]") {
         CHECK(!v->documentations[0].optional);
         CHECK(v->documentations[0].documentation == "D::a documentation");
         CHECK(v->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        CHECK(w->mustBeNotEmpty() == false);
 
         CHECK(v->documentations[1].key == "B");
         CHECK(!v->documentations[1].optional);

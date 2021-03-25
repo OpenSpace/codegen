@@ -664,7 +664,10 @@ TEST_CASE("Map  Documentation", "[verifier]") {
         CHECK(!v->documentations[0].optional);
         CHECK(v->documentations[0].documentation.empty());
         CHECK(v->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        CHECK(w->mustBeNotEmpty() == false);
     }
     {
         DocumentationEntry e = doc.entries[1];
@@ -679,7 +682,10 @@ TEST_CASE("Map  Documentation", "[verifier]") {
         CHECK(!v->documentations[0].optional);
         CHECK(v->documentations[0].documentation.empty());
         CHECK(v->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        CHECK(w->mustBeNotEmpty() == false);
     }
     {
         DocumentationEntry e = doc.entries[2];
@@ -703,7 +709,10 @@ TEST_CASE("Map  Documentation", "[verifier]") {
         CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].documentation.empty());
         CHECK(w->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        StringVerifier* u =
+            dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        CHECK(u->mustBeNotEmpty() == false);
     }
     {
         DocumentationEntry e = doc.entries[3];
@@ -727,7 +736,10 @@ TEST_CASE("Map  Documentation", "[verifier]") {
         CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].documentation.empty());
         CHECK(w->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get()));
+        StringVerifier* u = 
+            dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        CHECK(u->mustBeNotEmpty() == false);
     }
     {
         DocumentationEntry e = doc.entries[4];
