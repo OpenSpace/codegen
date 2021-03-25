@@ -65,12 +65,17 @@ bool misalignedIndent;
     And, Span, Multiple,
 Lines, With, Weird,
                 Indentations)]];
+
+    std::string newLineAnnotation
+        [[codegen::annotation(
+            "some-annotation-that-is-very-long"
+        )]];
 };
 )";
 
     Struct* s = parseRootStruct(Source);
     REQUIRE(s);
-    REQUIRE(s->variables.size() == 6);
+    REQUIRE(s->variables.size() == 7);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -118,6 +123,14 @@ Lines, With, Weird,
             "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", "
             "That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations"
         );
+    }
+    {
+        Variable* var = s->variables[6];
+        REQUIRE(var);
+        CHECK(var->name == "newLineAnnotation");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment.empty());
+        CHECK(var->attributes.annotation == "\"some-annotation-that-is-very-long\"");
     }
 
     std::string r = generateResult(s);

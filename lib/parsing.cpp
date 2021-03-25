@@ -89,7 +89,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
 
     std::string_view content = block.substr(beg, cursor - beg - 1);
     std::vector<ParseResult> res;
-    res.push_back({ name, content });
+    res.push_back({ name, strip(content) });
 
     // Skip over whitespaces
     while (cursor < block.size() && ::isspace(block[cursor])) {
