@@ -70,12 +70,19 @@ Lines, With, Weird,
         [[codegen::annotation(
             "some-annotation-that-is-very-long"
         )]];
+
+    // newLine2Annotation documentation
+    std::string newLine2Annotation [[codegen::annotation("A long string that starts here"
+        "and covers"
+        "multiple lines breaks, because someone really has a"
+        "lot to say"
+    )]];
 };
 )";
 
     Struct* s = parseRootStruct(Source);
     REQUIRE(s);
-    REQUIRE(s->variables.size() == 7);
+    REQUIRE(s->variables.size() == 8);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -131,6 +138,14 @@ Lines, With, Weird,
         CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment.empty());
         CHECK(var->attributes.annotation == "\"some-annotation-that-is-very-long\"");
+    }
+    {
+        Variable* var = s->variables[7];
+        REQUIRE(var);
+        CHECK(var->name == "newLine2Annotation");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "newLine2Annotation documentation");
+        CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
     }
 
     std::string r = generateResult(s);
