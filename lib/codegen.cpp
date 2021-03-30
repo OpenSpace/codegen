@@ -165,7 +165,6 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 
     if (type->tag == VariableType::Tag::BasicType) {
         BasicType* bt = static_cast<BasicType*>(type);
-        const Struct* root = rootStruct(currentStruct);
         std::string v = verifierForType(bt->type, var.attributes);
         return "new " + v;
     }
@@ -206,7 +205,6 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         MapType* mt = static_cast<MapType*>(type);
         assert(mt->valueType->tag == VariableType::Tag::BasicType);
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
-        const Struct* root = rootStruct(currentStruct);
         std::string valueVerifier = verifierForType(valueType->type, var.attributes);
         return fmt::format(
             "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})\n", valueVerifier
