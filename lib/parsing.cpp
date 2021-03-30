@@ -141,7 +141,21 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::Unequal)      { res.unequal = p.value; }
         else if (p.key == attributes::InList)       { res.inlist = p.value; }
         else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
-        else if (p.key == attributes::Annotation)   { res.annotation = p.value; }
+        else if (p.key == attributes::Annotation)   {
+            // Remove \" characters in the middle of the string that users will have added
+            // to make it possible to have an annotation span multiple lines. We want to
+            // maintain the ones in the beginning and the end, so we don't check those
+            // characters
+            std::string v = std::string(p.value);
+            for (size_t i = 1; i < v.size() - 1; i += 1) {
+                if (v[i] == '\"') {
+                    v.erase(i, 1);
+                    i -= 1;
+                }
+            }
+
+            res.annotation = v;
+        }
         else if (p.key == attributes::Directory) {
             res.isDirectory = booleanValue(p.value);
         }
