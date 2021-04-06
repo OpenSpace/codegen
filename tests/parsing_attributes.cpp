@@ -329,16 +329,16 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         std::optional<std::vector<std::filesystem::path>> yesOptionalVectorDirectoryValue [[codegen::directory(true)]];
         
         // dateTime value documentation
-        std::string dateTimeValue [[codegen::dateTime()]];
+        std::string dateTimeValue [[codegen::datetime()]];
 
         // optional dateTime value documentation
-        std::optional<std::string> optionalDateTimeValue [[codegen::dateTime()]];
+        std::optional<std::string> optionalDateTimeValue [[codegen::datetime()]];
 
         // vector dateTime value documentation
-        std::vector<std::string> vectorDateTimeValue [[codegen::dateTime()]];
+        std::vector<std::string> vectorDateTimeValue [[codegen::datetime()]];
 
         // optional vector dateTime value documentation
-        std::optional<std::vector<std::string>> optionalVectorDateTimeValue [[codegen::dateTime()]];
+        std::optional<std::vector<std::string>> optionalVectorDateTimeValue [[codegen::datetime()]];
     
     };
 )";

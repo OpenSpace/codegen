@@ -286,6 +286,18 @@ namespace {
 
         // vectorColor4Value documentation
         std::vector<glm::vec4> vectorColor4Value [[codegen::color()]];
+
+        // dateTime value documentation
+        std::string dateTimeValue [[codegen::datetime()]];
+
+        // optional dateTime value documentation
+        std::optional<std::string> optionalDateTimeValue [[codegen::datetime()]];
+
+        // vector dateTime value documentation
+        std::vector<std::string> vectorDateTimeValue [[codegen::datetime()]];
+
+        // optional vector dateTime value documentation
+        std::optional<std::vector<std::string>> optionalVectorDateTimeValue [[codegen::datetime()]];
     };
 #include "execution_attributes_codegen.cpp"
 } // namespace
@@ -595,6 +607,23 @@ TEST_CASE("Attributes Bake", "[verifier]") {
         d.setValue("VectorColor4Value", e);
     }
 
+    d.setValue("DateTimeValue", std::string("1990 03 11 12:40:53"));
+    d.setValue("OptionalDateTimeValue", std::string("1991 03 11 12:40:53"));
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", std::string("1992 03 11 12:40:53"));
+        e.setValue("2", std::string("1993 03 11 12:40:53"));
+        e.setValue("3", std::string("1994 03 11 12:40:53"));
+        d.setValue("VectorDateTimeValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", std::string("1995 03 11 12:40:53"));
+        e.setValue("2", std::string("1996 03 11 12:40:53"));
+        e.setValue("3", std::string("1997 03 11 12:40:53"));
+        d.setValue("OptionalVectorDateTimeValue", e);
+    }
+
     const Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
@@ -741,13 +770,26 @@ TEST_CASE("Attributes Bake", "[verifier]") {
     CHECK(p.vectorColor4Value[0] == glm::vec4(0.90, 0.91, 0.92, 0.93));
     CHECK(p.vectorColor4Value[1] == glm::vec4(0.94, 0.95, 0.96, 0.97));
     CHECK(p.vectorColor4Value[2] == glm::vec4(0.98, 0.99, 0.991, 0.992));
+
+    CHECK(p.dateTimeValue == std::string("1990 03 11 12:40:53"));
+    REQUIRE(p.optionalDateTimeValue.has_value());
+    CHECK(*p.optionalDateTimeValue == std::string("1991 03 11 12:40:53"));
+    REQUIRE(p.vectorDateTimeValue.size() == 3);
+    CHECK(p.vectorDateTimeValue[0] == std::string("1992 03 11 12:40:53"));
+    CHECK(p.vectorDateTimeValue[1] == std::string("1993 03 11 12:40:53"));
+    CHECK(p.vectorDateTimeValue[2] == std::string("1994 03 11 12:40:53"));
+    REQUIRE(p.optionalVectorDateTimeValue.has_value());
+    REQUIRE((*p.optionalVectorDateTimeValue).size() == 3);
+    CHECK((*p.optionalVectorDateTimeValue)[0] == std::string("1995 03 11 12:40:53"));
+    CHECK((*p.optionalVectorDateTimeValue)[1] == std::string("1996 03 11 12:40:53"));
+    CHECK((*p.optionalVectorDateTimeValue)[2] == std::string("1997 03 11 12:40:53"));
 }
 
 TEST_CASE("Attributes Documentation", "[verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>();
 
-    REQUIRE(doc.entries.size() == 83);
+    REQUIRE(doc.entries.size() == 87);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -1817,5 +1859,46 @@ TEST_CASE("Attributes Documentation", "[verifier]") {
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Color4");
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[83];
+        CHECK(e.key == "DateTimeValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "dateTime value documentation");
+        CHECK(e.verifier->type() == "Date and time");
+        CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[84];
+        CHECK(e.key == "OptionalDateTimeValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optional dateTime value documentation");
+        CHECK(e.verifier->type() == "Date and time");
+        CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[85];
+        CHECK(e.key == "VectorDateTimeValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vector dateTime value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Date and time");
+        CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[86];
+        CHECK(e.key == "OptionalVectorDateTimeValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optional vector dateTime value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Date and time");
+        CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
 }
