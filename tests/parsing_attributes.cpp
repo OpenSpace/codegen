@@ -244,6 +244,9 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         // referenceValueOptionalVector documentation
         std::optional<std::vector<ghoul::Dictionary>> referenceValueOptionalVector [[codegen::reference("abc")]];
 
+        // referenceValueMap documentation
+        std::map<std::string, ghoul::Dictionary> referenceValueMap [[codegen::reference("abc")]];
+
         // dcolor3Value documentation
         glm::dvec3 dcolor3Value [[codegen::color()]];
 
@@ -345,7 +348,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     Struct* s = parseRootStruct(Source);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 103);
+    REQUIRE(s->variables.size() == 104);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -2127,6 +2130,30 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     {
         Variable* var = s->variables[71];
         REQUIRE(var);
+        CHECK(var->name == "referenceValueMap");
+        CHECK(var->key == "\"ReferenceValueMap\"");
+        CHECK(generateTypename(var->type) == "std::map<std::string, ghoul::Dictionary>");
+        CHECK(var->comment == "referenceValueMap documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[72];
+        REQUIRE(var);
         CHECK(var->name == "dcolor3Value");
         CHECK(var->key == "\"Dcolor3Value\"");
         CHECK(generateTypename(var->type) == "glm::dvec3");
@@ -2150,7 +2177,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[72];
+        Variable* var = s->variables[73];
         REQUIRE(var);
         CHECK(var->name == "optionalDcolor3Value");
         CHECK(var->key == "\"OptionalDcolor3Value\"");
@@ -2175,7 +2202,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[73];
+        Variable* var = s->variables[74];
         REQUIRE(var);
         CHECK(var->name == "vectorDcolor3Value");
         CHECK(var->key == "\"VectorDcolor3Value\"");
@@ -2200,7 +2227,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[74];
+        Variable* var = s->variables[75];
         REQUIRE(var);
         CHECK(var->name == "optionalVectorDcolor3Value");
         CHECK(var->key == "\"OptionalVectorDcolor3Value\"");
@@ -2225,7 +2252,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[75];
+        Variable* var = s->variables[76];
         REQUIRE(var);
         CHECK(var->name == "notDcolor3Value");
         CHECK(var->key == "\"NotDcolor3Value\"");
@@ -2250,7 +2277,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[76];
+        Variable* var = s->variables[77];
         REQUIRE(var);
         CHECK(var->name == "notOptionalDcolor3Value");
         CHECK(var->key == "\"NotOptionalDcolor3Value\"");
@@ -2275,7 +2302,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[77];
+        Variable* var = s->variables[78];
         REQUIRE(var);
         CHECK(var->name == "notVectorDcolor3Value");
         CHECK(var->key == "\"NotVectorDcolor3Value\"");
@@ -2300,7 +2327,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[78];
+        Variable* var = s->variables[79];
         REQUIRE(var);
         CHECK(var->name == "notOptionalVectorDcolor3Value");
         CHECK(var->key == "\"NotOptionalVectorDcolor3Value\"");
@@ -2326,7 +2353,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
 
 
     {
-        Variable* var = s->variables[79];
+        Variable* var = s->variables[80];
         REQUIRE(var);
         CHECK(var->name == "yesDcolor3Value");
         CHECK(var->key == "\"YesDcolor3Value\"");
@@ -2351,7 +2378,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[80];
+        Variable* var = s->variables[81];
         REQUIRE(var);
         CHECK(var->name == "yesOptionalDcolor3Value");
         CHECK(var->key == "\"YesOptionalDcolor3Value\"");
@@ -2376,7 +2403,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[81];
+        Variable* var = s->variables[82];
         REQUIRE(var);
         CHECK(var->name == "yesVectorDcolor3Value");
         CHECK(var->key == "\"YesVectorDcolor3Value\"");
@@ -2401,7 +2428,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[82];
+        Variable* var = s->variables[83];
         REQUIRE(var);
         CHECK(var->name == "yesOptionalVectorDcolor3Value");
         CHECK(var->key == "\"YesOptionalVectorDcolor3Value\"");
@@ -2426,7 +2453,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[83];
+        Variable* var = s->variables[84];
         REQUIRE(var);
         CHECK(var->name == "fileValue");
         CHECK(var->key == "\"FileValue\"");
@@ -2451,7 +2478,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[84];
+        Variable* var = s->variables[85];
         REQUIRE(var);
         CHECK(var->name == "optionalFileValue");
         CHECK(var->key == "\"OptionalFileValue\"");
@@ -2476,7 +2503,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[85];
+        Variable* var = s->variables[86];
         REQUIRE(var);
         CHECK(var->name == "vectorFileValue");
         CHECK(var->key == "\"VectorFileValue\"");
@@ -2501,7 +2528,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[86];
+        Variable* var = s->variables[87];
         REQUIRE(var);
         CHECK(var->name == "optionalVectorFileValue");
         CHECK(var->key == "\"OptionalVectorFileValue\"");
@@ -2526,7 +2553,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[87];
+        Variable* var = s->variables[88];
         REQUIRE(var);
         CHECK(var->name == "directoryValue");
         CHECK(var->key == "\"DirectoryValue\"");
@@ -2551,7 +2578,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[88];
+        Variable* var = s->variables[89];
         REQUIRE(var);
         CHECK(var->name == "optionalDirectoryValue");
         CHECK(var->key == "\"OptionalDirectoryValue\"");
@@ -2576,7 +2603,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[89];
+        Variable* var = s->variables[90];
         REQUIRE(var);
         CHECK(var->name == "vectorDirectoryValue");
         CHECK(var->key == "\"VectorDirectoryValue\"");
@@ -2601,7 +2628,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[90];
+        Variable* var = s->variables[91];
         REQUIRE(var);
         CHECK(var->name == "optionalVectorDirectoryValue");
         CHECK(var->key == "\"OptionalVectorDirectoryValue\"");
@@ -2626,7 +2653,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[91];
+        Variable* var = s->variables[92];
         REQUIRE(var);
         CHECK(var->name == "notDirectoryValue");
         CHECK(var->key == "\"NotDirectoryValue\"");
@@ -2651,7 +2678,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[92];
+        Variable* var = s->variables[93];
         REQUIRE(var);
         CHECK(var->name == "notOptionalDirectoryValue");
         CHECK(var->key == "\"NotOptionalDirectoryValue\"");
@@ -2676,7 +2703,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[93];
+        Variable* var = s->variables[94];
         REQUIRE(var);
         CHECK(var->name == "notVectorDirectoryValue");
         CHECK(var->key == "\"NotVectorDirectoryValue\"");
@@ -2701,7 +2728,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[94];
+        Variable* var = s->variables[95];
         REQUIRE(var);
         CHECK(var->name == "notOptionalVectorDirectoryValue");
         CHECK(var->key == "\"NotOptionalVectorDirectoryValue\"");
@@ -2726,7 +2753,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[95];
+        Variable* var = s->variables[96];
         REQUIRE(var);
         CHECK(var->name == "yesDirectoryValue");
         CHECK(var->key == "\"YesDirectoryValue\"");
@@ -2751,7 +2778,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[96];
+        Variable* var = s->variables[97];
         REQUIRE(var);
         CHECK(var->name == "yesOptionalDirectoryValue");
         CHECK(var->key == "\"YesOptionalDirectoryValue\"");
@@ -2776,7 +2803,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[97];
+        Variable* var = s->variables[98];
         REQUIRE(var);
         CHECK(var->name == "yesVectorDirectoryValue");
         CHECK(var->key == "\"YesVectorDirectoryValue\"");
@@ -2801,7 +2828,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[98];
+        Variable* var = s->variables[99];
         REQUIRE(var);
         CHECK(var->name == "yesOptionalVectorDirectoryValue");
         CHECK(var->key == "\"YesOptionalVectorDirectoryValue\"");
@@ -2826,7 +2853,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[99];
+        Variable* var = s->variables[100];
         REQUIRE(var);
         CHECK(var->name == "dateTimeValue");
         CHECK(var->key == "\"DateTimeValue\"");
@@ -2851,7 +2878,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[100];
+        Variable* var = s->variables[101];
         REQUIRE(var);
         CHECK(var->name == "optionalDateTimeValue");
         CHECK(var->key == "\"OptionalDateTimeValue\"");
@@ -2876,7 +2903,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[101];
+        Variable* var = s->variables[102];
         REQUIRE(var);
         CHECK(var->name == "vectorDateTimeValue");
         CHECK(var->key == "\"VectorDateTimeValue\"");
@@ -2901,7 +2928,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     }
 
     {
-        Variable* var = s->variables[102];
+        Variable* var = s->variables[103];
         REQUIRE(var);
         CHECK(var->name == "optionalVectorDateTimeValue");
         CHECK(var->key == "\"OptionalVectorDateTimeValue\"");
