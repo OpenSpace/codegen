@@ -72,6 +72,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (
@@ -90,6 +91,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
@@ -99,6 +101,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::String) {
@@ -124,6 +127,7 @@ namespace {
             report(attributes.notinrange, attributes::NotInRange);
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
+            reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Dictionary) {
@@ -139,6 +143,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
+            reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
     }
@@ -236,6 +241,9 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 ));
             }
             res = addQualifier(res, "AnnotationVerifier", attr.annotation);
+        }
+        if (attr.isDateTime) {
+            return "DateTimeVerifier";
         }
         return res;
     }

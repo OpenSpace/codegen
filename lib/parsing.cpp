@@ -159,6 +159,9 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::Directory) {
             res.isDirectory = booleanValue(p.value);
         }
+        else if (p.key == attributes::DateTime) {
+            res.isDateTime = booleanValue(p.value);
+        }
         else if (p.key == attributes::Color) { res.isColor = booleanValue(p.value); }
         else if (p.key == attributes::MustBeNotEmpty) {
             res.mustBeNotEmpty = booleanValue(p.value);

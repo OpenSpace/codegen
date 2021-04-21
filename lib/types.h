@@ -49,6 +49,7 @@ struct CodegenError : public std::runtime_error {
 namespace attributes {
     constexpr const char Annotation[] = "annotation";
     constexpr const char Color[] = "color";
+    constexpr const char DateTime[] = "datetime";
     constexpr const char Directory[] = "directory";
     constexpr const char InList[] = "inlist";
     constexpr const char InRange[] = "inrange";
@@ -180,6 +181,7 @@ struct Variable {
 
         bool isDirectory = false;
         bool isColor = false;
+        bool isDateTime = false;
         bool mustBeNotEmpty = false;
     };
     Attributes attributes;
