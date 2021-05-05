@@ -211,7 +211,7 @@ Struct* parseStruct(std::string_view line) {
     }
 
     const size_t endStruct = line.find(' ', cursor);
-    if (endStruct == std::string_view::npos) {
+    if ((endStruct == std::string_view::npos) || (endStruct == line.size() - 1)) {
         throw CodegenError(fmt::format(
             "Missing space or struct name before the closing {{ of a struct\n{}", line
         ));

@@ -42,6 +42,16 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
+TEST_CASE("Parsing Struct: Missing space", "[parsing]") {
+    constexpr const char Sources[] = R"(struct [[codegen::Dictionary(Name)]] Parameters{
+};)";
+
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Sources),
+        CodegenError, Catch::Matchers::Contains("Missing space or struct name before")
+    );
+}
+
 TEST_CASE("Parsing Error: Illegal \" in description", "[parsing_error]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
