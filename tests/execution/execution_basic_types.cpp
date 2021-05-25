@@ -412,7 +412,7 @@ TEST_CASE("Basic Types bake", "[verifier]") {
 
 TEST_CASE("Basic Types documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>();
+    Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 42);
     {

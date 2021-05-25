@@ -787,7 +787,7 @@ TEST_CASE("Attributes Bake", "[verifier]") {
 
 TEST_CASE("Attributes Documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>();
+    Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 87);
     {

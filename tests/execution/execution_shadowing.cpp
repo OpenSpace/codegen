@@ -108,7 +108,7 @@ TEST_CASE("Shadowing Bake", "[verifier]") {
 
 TEST_CASE("Shadowing Documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<P>();
+    Documentation doc = codegen::doc<P>("");
 
     REQUIRE(doc.entries.size() == 4);
     {

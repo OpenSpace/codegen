@@ -121,7 +121,7 @@ TEST_CASE("Enum Bake", "[verifier]") {
 
 TEST_CASE("Enum Documentation", "[verifier]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>();
+    Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 4);
     {

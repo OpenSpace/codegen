@@ -42,17 +42,17 @@ template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*)
 
     constexpr const char DocumentationPreamble[] = R"(
 namespace codegen {{
-template <typename T> openspace::documentation::Documentation doc() {{
+template <typename T> openspace::documentation::Documentation doc(std::string) {{
     static_assert(sizeof(T) == 0); // This should never be called
     return openspace::documentation::Documentation();
 }}
-template <> openspace::documentation::Documentation doc<{}>() {{
+template <> openspace::documentation::Documentation doc<{}>(std::string id) {{
     using namespace openspace::documentation;
 
 )";
 
     constexpr const char DocumentationEpilog[] = R"(
-    openspace::documentation::Documentation d = {{ "{0}", "{0}", std::move(codegen_{1}->documentations) }};
+    openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
     return d;
 }}
 }} // namespace codegen

@@ -34,6 +34,7 @@ add_executable(
   execution/execution_enums.cpp
   execution/execution_map.cpp
   execution/execution_optional_variant_vector.cpp
+  execution/execution_other.cpp
   execution/execution_shadowing.cpp
   execution/execution_simple.cpp
   execution/execution_substructs.cpp

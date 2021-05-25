@@ -517,7 +517,7 @@ std::string generateResult(Struct* s) {
 
 template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
 template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>(), dict, "{1}");
+    openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
 )",
         s->name, s->attributes.dictionary

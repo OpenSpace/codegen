@@ -32,69 +32,17 @@
 #include <vector>
 
 namespace {
-    struct [[codegen::Dictionary(Variant)]] Parameters {
-        // optional variant vector documentation
-        std::optional<std::variant<std::string, std::vector<std::string>>> ovv;
+    struct [[codegen::Dictionary(Other)]] Parameters {
+        int abc;
     };
-#include "execution_optional_variant_vector_codegen.cpp"
+#include "execution_other_codegen.cpp"
 } // namespace
 
-TEST_CASE("Optional Variant Vector Bake", "[verifier]") {
-    {
-        ghoul::Dictionary d;
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(!p.ovv.has_value());
-    }
-
-    {
-        ghoul::Dictionary d;
-        d.setValue("Ovv", std::string("abc"));
-        const Parameters p = codegen::bake<Parameters>(d);
-        REQUIRE(p.ovv.has_value());
-        REQUIRE(std::holds_alternative<std::string>(*p.ovv));
-        CHECK(std::get<std::string>(*p.ovv) == "abc");
-    }
-    {
-        ghoul::Dictionary d;
-        ghoul::Dictionary e;
-        e.setValue("1", std::string("def"));
-        e.setValue("2", std::string("ghi"));
-        d.setValue("Ovv", e);
-        const Parameters p = codegen::bake<Parameters>(d);
-        REQUIRE(p.ovv.has_value());
-        REQUIRE(std::holds_alternative<std::vector<std::string>>(*p.ovv));
-        CHECK(
-            std::get<std::vector<std::string>>(*p.ovv) ==
-            std::vector<std::string>{ "def", "ghi" }
-        );
-    }
-}
-
-TEST_CASE("Optional Variant Vector Documentation", "[verifier]") {
+TEST_CASE("Documentation id", "[other]") {
     using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
+    Documentation doc1 = codegen::doc<Parameters>("");
+    CHECK(doc1.id == "");
 
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Ovv");
-    CHECK(e.optional);
-    CHECK(e.documentation == "optional variant vector documentation");
-    CHECK(e.verifier->type() == "String, or Table");
-    OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
-    REQUIRE(v);
-    REQUIRE(v->values.size() == 2);
-    CHECK(v->values[0]->type() == "String");
-    StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
-    REQUIRE(w);
-    CHECK(w->mustBeNotEmpty() == false);
-    CHECK(v->values[1]->type() == "Table");
-    TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
-    REQUIRE(u);
-    REQUIRE(u->documentations.size() == 1);
-    CHECK(u->documentations[0].key == "*");
-    CHECK(u->documentations[0].verifier->type() == "String");
-    StringVerifier* x = 
-        dynamic_cast<StringVerifier*>(u->documentations[0].verifier.get());
-    REQUIRE(x);
-    CHECK(x->mustBeNotEmpty() == false);
+    Documentation doc2 = codegen::doc<Parameters>("abc");
+    CHECK(doc2.id == "abc");
 }
