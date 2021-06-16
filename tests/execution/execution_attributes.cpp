@@ -747,13 +747,13 @@ TEST_CASE("Attributes Bake", "[verifier]") {
     CHECK(p.vectorDcolor3Value[1] == glm::dvec3(0.63, 0.64, 0.65));
     CHECK(p.vectorDcolor3Value[2] == glm::dvec3(0.66, 0.67, 0.68));
 
-    CHECK(p.color3Value == glm::vec3(0.70, 0.71, 0.72));
+    CHECK(p.color3Value == glm::vec3(0.70f, 0.71f, 0.72f));
     REQUIRE(p.optionalColor3Value.has_value());
-    CHECK(*p.optionalColor3Value == glm::vec3(0.73, 0.74, 0.75));
+    CHECK(*p.optionalColor3Value == glm::vec3(0.73f, 0.74f, 0.75f));
     REQUIRE(p.vectorColor3Value.size() == 3);
-    CHECK(p.vectorColor3Value[0] == glm::vec3(0.80, 0.81, 0.82));
-    CHECK(p.vectorColor3Value[1] == glm::vec3(0.83, 0.84, 0.85));
-    CHECK(p.vectorColor3Value[2] == glm::vec3(0.86, 0.87, 0.88));
+    CHECK(p.vectorColor3Value[0] == glm::vec3(0.80f, 0.81f, 0.82f));
+    CHECK(p.vectorColor3Value[1] == glm::vec3(0.83f, 0.84f, 0.85f));
+    CHECK(p.vectorColor3Value[2] == glm::vec3(0.86f, 0.87f, 0.88f));
 
     CHECK(p.dcolor4Value == glm::dvec4(0.0, 0.1, 0.2, 0.3));
     REQUIRE(p.optionalDcolor4Value.has_value());
@@ -763,13 +763,13 @@ TEST_CASE("Attributes Bake", "[verifier]") {
     CHECK(p.vectorDcolor4Value[1] == glm::dvec4(0.64, 0.65, 0.66, 0.67));
     CHECK(p.vectorDcolor4Value[2] == glm::dvec4(0.68, 0.69, 0.70, 0.71));
 
-    CHECK(p.color4Value == glm::vec4(0.80, 0.81, 0.82, 0.83));
+    CHECK(p.color4Value == glm::vec4(0.80f, 0.81f, 0.82f, 0.83f));
     REQUIRE(p.optionalColor4Value.has_value());
-    CHECK(*p.optionalColor4Value == glm::vec4(0.84, 0.85, 0.86, 0.87));
+    CHECK(*p.optionalColor4Value == glm::vec4(0.84f, 0.85f, 0.86f, 0.87f));
     REQUIRE(p.vectorColor4Value.size() == 3);
-    CHECK(p.vectorColor4Value[0] == glm::vec4(0.90, 0.91, 0.92, 0.93));
-    CHECK(p.vectorColor4Value[1] == glm::vec4(0.94, 0.95, 0.96, 0.97));
-    CHECK(p.vectorColor4Value[2] == glm::vec4(0.98, 0.99, 0.991, 0.992));
+    CHECK(p.vectorColor4Value[0] == glm::vec4(0.90f, 0.91f, 0.92f, 0.93f));
+    CHECK(p.vectorColor4Value[1] == glm::vec4(0.94f, 0.95f, 0.96f, 0.97f));
+    CHECK(p.vectorColor4Value[2] == glm::vec4(0.98f, 0.99f, 0.991f, 0.992f));
 
     CHECK(p.dateTimeValue == std::string("1990 03 11 12:40:53"));
     REQUIRE(p.optionalDateTimeValue.has_value());
