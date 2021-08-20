@@ -88,7 +88,7 @@ target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-mo
 if (MSVC)
   target_compile_options(codegentest PRIVATE "/wd5030")
 else ()
-  target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes")
+  target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
 endif ()
 
 if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
