@@ -37,7 +37,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::notinrange(min, max)]]`:  Makes sure that the `int`, `float`, or `double` value is outside the `min` and `max` values.  Example: `float foo [[codegen::notinrange(0.0, 1.0)]];`
  - `[[codegen::less(val)]]`:  Makes sure that the `int`, `float`, or `double` value is less than the `val` value.  Example: `float foo [[codegen::less(0.0)]];`
  - `[[codegen::lessequal(val)]]`:  Makes sure that the `int`, `float`, or `double` value is less than or equal to the `val` value.  Example: `float foo [[codegen::lessequal(0.0)]];`
- - `[[codegen::greater(val)]]`, `[[codegen:greaterequal(val)]]`, `[[codegen:unequal(val)]]` likewise
+ - `[[codegen::greater(val)]]`, `[[codegen::greaterequal(val)]]`, `[[codegen:unequal(val)]]` likewise
  - `[[codegen::inlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is one of a finite list of values.  Example: `std::string foo [[codegen::inlist("v1", "v2", "v3")]];`
  - `[[codegen::notinlist("v1", "v2", "v3")]]`:  Checks whether a `std::string` variable is not one of a finite list of values.  Example: `std::string foo [[codegen::notinlist("v1", "v2", "v3")]];`
  - `[[codegen::annotation(text)]]`:  Adds an annotation decorator to the member.  Currently only supported for `std::string` and it cannot be used together with other attributes.  Example: `std::string foo [[codegen::annotation(Must be a valid bar)]]`
