@@ -44,6 +44,7 @@
 long long totalTime = 0;
 int ChangedFiles = 0;
 int AllFiles = 0;
+bool isVerbose = false;
 
 namespace fs = std::filesystem;
 
@@ -54,16 +55,20 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-
     std::cout << fmt::format("codegen");
     std::vector<std::string_view> srcs;
     for (int i = 1; i < argc; ++i) {
         std::string_view src = argv[i];
+        if (src == "--verbose") {
+            isVerbose = true;
+            continue;
+        }
+
         std::cout << " " << src;
 
         if (!fs::is_directory(src)) {
             std::cerr << fmt::format(
-                "All parameters has to name a folder. '{}' is not\n", src
+                "All non-dashed parameters have to be folders. '{}' is not\n", src
             );
             exit(EXIT_FAILURE);
         }
@@ -88,6 +93,17 @@ int main(int argc, char** argv) {
             {
                 entries.push_back(p);
             }
+            else {
+                if (isVerbose) {
+                    std::cout << fmt::format(
+                        "Rejecting {}. Extension: {}; Codegen-ness: {}; Ext-ness: {}\n",
+                        path.string(),
+                        path.extension().string(),
+                        path.string().find("_codegen.cpp") == std::string::npos,
+                        path.string().find(extFolder) == std::string::npos
+                    );
+                }
+            }
         }
     }
 
@@ -95,6 +111,10 @@ int main(int argc, char** argv) {
         entries.cbegin(), entries.cend(),
         [](const fs::directory_entry& p) {
             try {
+                if (isVerbose) {
+                    std::cout << "Processing: " << p.path() << '\n';
+                }
+
                 auto begin = std::chrono::high_resolution_clock::now();
                 Result res = handleFile(p.path());
                 auto end = std::chrono::high_resolution_clock::now();
