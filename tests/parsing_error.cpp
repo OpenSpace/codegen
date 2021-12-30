@@ -28,6 +28,19 @@
 #include "parsing.h"
 #include "types.h"
 
+TEST_CASE("Parsing Error: Extra \" in root name", "[parsing_error]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary("Wrong")]] Parameters {
+    int dummy;
+}
+)";
+
+    CHECK_THROWS_MATCHES(
+        parseRootStruct(Source),
+        CodegenError, Catch::Matchers::Contains("Root struct name must not be enclosed")
+    );
+}
+
 TEST_CASE("Parsing Error: Missing description", "[parsing_error]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
@@ -43,11 +56,11 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 }
 
 TEST_CASE("Parsing Struct: Missing space", "[parsing]") {
-    constexpr const char Sources[] = R"(struct [[codegen::Dictionary(Name)]] Parameters{
+    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters{
 };)";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Sources),
+        parseRootStruct(Source),
         CodegenError, Catch::Matchers::Contains("Missing space or struct name before")
     );
 }
@@ -244,7 +257,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 //TEST_CASE("Parsing Error: Illegal characters", "[parsing_error]") {
 //    constexpr const char Source[] = R"(
 //struct [[codegen::Dictionary(abc)]] Parameters {
-//    // smörgåstårta
+//    // smÃ¶rgÃ¥stÃ¥rta
 //    int value;
 //};
 //)";

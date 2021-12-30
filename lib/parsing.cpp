@@ -207,6 +207,13 @@ Struct* parseStruct(std::string_view line) {
                 "No name specified for root struct\n{}", line
             ));
         }
+        char firstChar = s->attributes.dictionary[0];
+        char lastChar = s->attributes.dictionary[s->attributes.dictionary.size() - 1];
+        if (firstChar == '"' && lastChar == '"') {
+            throw CodegenError(fmt::format(
+                "Root struct name must not be enclosed by \"\n{}", line
+            ));
+        }
         cursor = endAttr + 1;
     }
 
