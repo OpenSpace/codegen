@@ -125,6 +125,26 @@ namespace {
         return res;
     }
 
+    std::vector<Enum*> mappedEnums(const Struct& s) {
+        std::vector<Enum*> res;
+        for (StackElement* se : s.children) {
+            if (se->type == StackElement::Type::Enum) {
+                Enum* e = static_cast<Enum*>(se);
+                if (!e->mappedTo.empty()) {
+                    res.push_back(e);
+                }
+            }
+
+            if (se->type == StackElement::Type::Struct) {
+                Struct* s = static_cast<Struct*>(se);
+                std::vector<Enum*> subRes = mappedEnums(*s);
+                res.insert(res.end(), subRes.begin(), subRes.end());
+            }
+        }
+
+        return res;
+    }
+
     std::string resolveComment(std::string comment) {
         if (size_t it = comment.find("codegen::verbatim"); it != std::string::npos) {
             const size_t l = "codegen::verbatim"sv.size();
@@ -468,7 +488,9 @@ std::string generateResult(Struct* s) {
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    result += BakeFunctionPreamble;
+    result += "\nnamespace codegen {\nnamespace internal {\n";
+    result += BakeFunctionFallback;
+    result += '\n';
 
     std::vector<const VariableType*> types = usedTypes(*s);
     bool hasOptionalType = false;
@@ -529,7 +551,47 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
         );
     }
 
-    result += "    return res;\n}\n} // namespace codegen\n";
+    result += "    return res;\n}\n";
+
+    std::vector<Enum*> enums = mappedEnums(*s);
+    if (!enums.empty()) {
+        result += MapFunctionFallback;
+        result += '\n';
+    }
+
+    for (Enum* e : enums) {
+        assert(!e->mappedTo.empty());
+        std::string fullyQualifiedName = fqn(e, "::");
+        result += fmt::format(R"(
+template<> {0} map<{0}, {1}>({1} value) {{
+    switch (value) {{
+        // If you end up here following a compiler error saying something about 
+        // 'illegal qualified name in member declaration' or such nonsense, then you tried
+        // to map an enum A to another enum B and A has an enum value that B does not
+        // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};
+        // would trigger that error on trying to access B::Value2 wich is an illegal
+        // qualified name. Make the enums match each other and run codegen again)",
+            e->mappedTo, fullyQualifiedName
+        );
+
+        for (EnumElement* ee : e->elements) {
+            result += fmt::format(R"(
+        case {0}::{2}:  return {1}::{2};)",
+                fullyQualifiedName, e->mappedTo, ee->name
+            );
+        }
+
+        result += fmt::format(R"(
+        default:
+            throw "This default label is not necessary since the case labels are "
+                  "exhaustive, but not having it makes Visual Studio cranky";
+    }}
+}}
+)"
+        );
+    }
+    
+    result += "\n}// namespace codegen\n";
     return result;
 }
 

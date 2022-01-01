@@ -32,6 +32,7 @@ add_executable(
   execution/execution_basic_types_optional_vector.cpp
   execution/execution_basic_types_vector.cpp
   execution/execution_enums.cpp
+  execution/execution_enummapping.cpp
   execution/execution_map.cpp
   execution/execution_optional_variant_vector.cpp
   execution/execution_other.cpp

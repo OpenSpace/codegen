@@ -220,7 +220,7 @@ Struct* parseStruct(std::string_view line) {
     const size_t endStruct = line.find(' ', cursor);
     if ((endStruct == std::string_view::npos) || (endStruct == line.size() - 1)) {
         throw CodegenError(fmt::format(
-            "Missing space or struct name before the closing {{ of a struct\n{}", line
+            "Missing space or struct name before the opening {{ of a struct\n{}", line
         ));
     }
     s->name = line.substr(cursor, endStruct - cursor);
@@ -236,13 +236,28 @@ Enum* parseEnum(std::string_view line) {
     assert(line.substr(0, cursor) == "enum class");
     cursor++;
 
-    const size_t endStruct = line.find(' ', cursor);
-    if (endStruct == std::string_view::npos) {
+    if (const size_t begin = line.find("[[", cursor); begin != std::string_view::npos) {
+        const size_t endAttr = line.find("]]", begin) + 2;
+        std::string_view block = line.substr(begin, endAttr - begin);
+        std::vector<ParseResult> attrs = parseAttribute(block);
+
+        for (const ParseResult& a : attrs) {
+            if (a.key == attributes::Map) {
+                if (a.value.empty()) {
+                    throw CodegenError("The `map` attribute must have a string argument");
+                }
+                e->mappedTo = a.value;
+            }
+        }
+        cursor = endAttr + 1;
+    }
+    const size_t endEnum = line.find(' ', cursor);
+    if (endEnum == std::string_view::npos) {
         throw CodegenError(fmt::format(
-            "Missing space before the closing {{ of a struct\n{}", line
+            "Missing space before the opening {{ of an enum\n{}", line
         ));
     }
-    e->name = line.substr(cursor, endStruct - cursor);
+    e->name = line.substr(cursor, endEnum - cursor);
     return e;
 }
 

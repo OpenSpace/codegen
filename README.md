@@ -55,7 +55,29 @@ enum class E {
     V3
 };
 ```
-When baking, a Dictionary containing a string "V1" will result in the `E::V1` enum to be selected
+When baking, a Dictionary containing a string "V1" will result in the `E::V1` enum to be selected.
+
+It is also possible to automatically generate the code to map an enum to an external enum automatically by adding the `[[codegen::map(OTHER_NAME)]]` attribute to the enum class.  For example if you have:
+```
+namespace myspace {
+enum class External {
+  ValueA,
+  ValueB,
+  ValueC
+};
+}
+```
+somewhere in the code an you define a codegen:ed struct with:
+```
+struct [[codegen::Dictionary(Name)]] {
+  enum class [[codegen::map(myspace::External)]] Internal {
+    ValueA,
+    ValueB,
+    ValueC
+  };
+}
+```
+then there is a function `codegen::map<myspace::External>` available that takes an `Internal` enum and returns the `External` with the same name.  NB: This matching is done purely on a name-to-name basis, so the enum values of `External` and `Internal` have to be **exactly** the same.
 
 ### Enum Attributes
  - `[[codegen::key(Name)]]`: Use the "Name" instead of the enum values name

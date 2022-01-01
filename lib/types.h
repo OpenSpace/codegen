@@ -68,6 +68,8 @@ namespace attributes {
     constexpr const char NoExhaustive[] = "noexhaustive";
     constexpr const char MustBeNotEmpty[] = "notempty";
 
+    constexpr const char Map[] = "map";
+
 } // namespace attributes
 
 
@@ -214,6 +216,7 @@ struct EnumElement {
 struct Enum : public StackElement {
     Enum() { type = StackElement::Type::Enum; }
 
+    std::string mappedTo; // another FQ enum that values of this should be mapped to
     std::vector<EnumElement*> elements;
 };
 
