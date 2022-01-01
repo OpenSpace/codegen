@@ -66,9 +66,10 @@ int main(int argc, char** argv) {
 
         std::cout << " " << src;
 
-        if (!fs::is_directory(src)) {
+        if (!fs::is_directory(src) && !fs::is_regular_file(src)) {
             std::cerr << fmt::format(
-                "All non-dashed parameters have to be folders. '{}' is not\n", src
+                "All non-dashed parameters have to be files or folders. '{}' is not\n",
+                src
             );
             exit(EXIT_FAILURE);
         }
@@ -79,11 +80,17 @@ int main(int argc, char** argv) {
 
     auto beg = std::chrono::high_resolution_clock::now();
 
-    std::vector<fs::directory_entry> entries;
+    std::vector<fs::path> entries;
     std::string extFolder = fmt::format(
         "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
     );
     for (std::string_view src : srcs) {
+        if (fs::is_regular_file(src)) {
+            entries.push_back(src);
+            continue;
+        }
+
+        // It's a folder then
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
             std::filesystem::path path = p.path();
 
@@ -109,14 +116,14 @@ int main(int argc, char** argv) {
 
     std::for_each(
         entries.cbegin(), entries.cend(),
-        [](const fs::directory_entry& p) {
+        [](const fs::path& p) {
             try {
                 if (isVerbose) {
-                    std::cout << "Processing: " << p.path() << '\n';
+                    std::cout << "Processing: " << p << '\n';
                 }
 
                 auto begin = std::chrono::high_resolution_clock::now();
-                Result res = handleFile(p.path());
+                Result res = handleFile(p);
                 auto end = std::chrono::high_resolution_clock::now();
                 if (res == Result::Processed) {
                     ChangedFiles++;
@@ -128,7 +135,7 @@ int main(int argc, char** argv) {
             }
             catch (const std::runtime_error& e) {
                 std::cerr << fmt::format(
-                    "\n\n{}: error: {}\n\n\n", p.path().string(), e.what()
+                    "\n\n{}: error: {}\n\n\n", p.string(), e.what()
                 );
                 exit(EXIT_FAILURE);
             }
