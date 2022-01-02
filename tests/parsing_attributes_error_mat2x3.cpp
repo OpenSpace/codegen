@@ -35,7 +35,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 annotation", "[parsing_error]") {
 glm::mat2x3 v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'annotation'")
     );
 }
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 annotation", "[parsing_err
 std::vector<glm::mat2x3> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'annotation'")
     );
 }
@@ -55,7 +55,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 annotation", "[parsing_e
 std::optional<glm::mat2x3> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'annotation'")
     );
 }
@@ -65,7 +65,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 inlist", "[parsing_error]") {
 glm::mat2x3 v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inlist'")
     );
 }
@@ -75,7 +75,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 inlist", "[parsing_error]"
 std::vector<glm::mat2x3> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inlist'")
     );
 }
@@ -85,7 +85,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 inlist", "[parsing_error
 std::optional<glm::mat2x3> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inlist'")
     );
 }
@@ -97,7 +97,7 @@ glm::mat2x3 v [[codegen::inrange(1, 2)]];
 };
 )";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inrange'")
     );
 }
@@ -107,7 +107,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 inrange", "[parsing_error]
 std::vector<glm::mat2x3> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inrange'")
     );
 }
@@ -117,7 +117,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 inrange", "[parsing_erro
 std::optional<glm::mat2x3> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'inrange'")
     );
 }
@@ -127,7 +127,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 less", "[parsing_error]") {
 glm::mat2x3 v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'less'")
     );
 }
@@ -137,7 +137,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 less", "[parsing_error]") 
 std::vector<glm::mat2x3> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'less'")
     );
 }
@@ -147,7 +147,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 less", "[parsing_error]"
 std::optional<glm::mat2x3> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'less'")
     );
 }
@@ -157,7 +157,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 lessequal", "[parsing_error]") {
 glm::mat2x3 v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'lessequal'")
     );
 }
@@ -167,7 +167,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 lessequal", "[parsing_erro
 std::vector<glm::mat2x3> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'lessequal'")
     );
 }
@@ -177,7 +177,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 lessequal", "[parsing_er
 std::optional<glm::mat2x3> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'lessequal'")
     );
 }
@@ -187,7 +187,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 greater", "[parsing_error]") {
 glm::mat2x3 v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greater'")
     );
 }
@@ -197,7 +197,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 greater", "[parsing_error]
 std::vector<glm::mat2x3> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greater'")
     );
 }
@@ -207,7 +207,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 greater", "[parsing_erro
 std::optional<glm::mat2x3> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greater'")
     );
 }
@@ -217,7 +217,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 greaterequal", "[parsing_error]")
 glm::mat2x3 v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greaterequal'")
     );
 }
@@ -227,7 +227,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 greaterequal", "[parsing_e
 std::vector<glm::mat2x3> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greaterequal'")
     );
 }
@@ -237,7 +237,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 greaterequal", "[parsing
 std::optional<glm::mat2x3> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'greaterequal'")
     );
 }
@@ -247,7 +247,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 notinlist", "[parsing_error]") {
 glm::mat2x3 v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinlist'")
     );
 }
@@ -257,7 +257,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 notinlist", "[parsing_erro
 std::vector<glm::mat2x3> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinlist'")
     );
 }
@@ -267,7 +267,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 notinlist", "[parsing_er
 std::optional<glm::mat2x3> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinlist'")
     );
 }
@@ -277,7 +277,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 notinrange", "[parsing_error]") {
 glm::mat2x3 v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinrange'")
     );
 }
@@ -287,7 +287,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 notinrange", "[parsing_err
 std::vector<glm::mat2x3> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinrange'")
     );
 }
@@ -297,7 +297,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 notinrange", "[parsing_e
 std::optional<glm::mat2x3> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'notinrange'")
     );
 }
@@ -307,7 +307,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 reference", "[parsing_error]") {
 glm::mat2x3 v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'reference'")
     );
 }
@@ -317,7 +317,7 @@ TEST_CASE("Unsupported Attributes: vector glm::mat2x3 reference", "[parsing_erro
 std::vector<glm::mat2x3> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'reference'")
     );
 }
@@ -327,7 +327,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 reference", "[parsing_er
 std::optional<glm::mat2x3> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'reference'")
     );
 }
@@ -337,7 +337,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 unequal", "[parsing_error]") {
 glm::mat2x3 v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'unequal'")
     );
 }
@@ -349,7 +349,7 @@ std::vector<glm::mat2x3> v [[codegen::unequal(1)]];
 };
 )";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'unequal'")
     );
 }
@@ -359,7 +359,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 unequal", "[parsing_erro
 std::optional<glm::mat2x3> v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'unequal'")
     );
 }
@@ -369,7 +369,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 color", "[parsing_error]") {
 glm::mat2x3 v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'color'")
     );
 }
@@ -381,7 +381,7 @@ std::vector<glm::mat2x3> v [[codegen::color()]];
 };
 )";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'color'")
     );
 }
@@ -391,7 +391,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 color", "[parsing_error]
 std::optional<glm::mat2x3> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'color'")
     );
 }
@@ -401,7 +401,7 @@ TEST_CASE("Unsupported Attributes: glm::mat2x3 directory", "[parsing_error]") {
 glm::mat2x3 v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'directory'")
     );
 }
@@ -413,7 +413,7 @@ std::vector<glm::mat2x3> v [[codegen::directory()]];
 };
 )";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'directory'")
     );
 }
@@ -423,7 +423,7 @@ TEST_CASE("Unsupported Attributes: optional glm::mat2x3 directory", "[parsing_er
 std::optional<glm::mat2x3> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'glm::mat2x3' does not support attribute 'directory'")
     );
 }

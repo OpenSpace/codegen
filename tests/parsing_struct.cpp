@@ -32,7 +32,9 @@ TEST_CASE("Parsing Struct: Minimal", "[parsing]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -41,14 +43,16 @@ TEST_CASE("Parsing Struct: Minimal", "[parsing]") {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -57,14 +61,16 @@ TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[parsing]") {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[parsing]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(true)]] Parameters {
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -73,14 +79,16 @@ TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[parsing]") {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[parsing]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(false)]] Parameters {
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -89,7 +97,7 @@ TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[parsing]") {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -97,7 +105,9 @@ TEST_CASE("Parsing Struct: Comment Ignored", "[parsing]") {
     constexpr const char Source[] = R"(// Test documentation
 struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -107,7 +117,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -116,7 +126,9 @@ TEST_CASE("Parsing Struct: Substruct", "[parsing]") {
 struct A {
 };
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -136,7 +148,7 @@ struct A {
         CHECK(a->attributes.noExhaustive);
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     REQUIRE(!r.empty());
 }
 
@@ -147,7 +159,9 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
     struct B {
     };
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -179,7 +193,7 @@ TEST_CASE("Parsing Struct: Double Substruct", "[parsing]") {
         CHECK(b->variables.empty());
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -188,7 +202,9 @@ TEST_CASE("Parsing Struct: Variable", "[parsing]") {
     // variable documentation
     int variable;
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -205,7 +221,7 @@ TEST_CASE("Parsing Struct: Variable", "[parsing]") {
         CHECK(var->comment == "variable documentation");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -217,7 +233,9 @@ TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
     // variable2 documentation
     float variable2;
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -240,7 +258,7 @@ TEST_CASE("Parsing Struct: Double Variable", "[parsing]") {
         CHECK(var->comment == "variable2 documentation");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -250,7 +268,9 @@ TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
     enum class Name {
     };
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -266,7 +286,7 @@ TEST_CASE("Parsing Struct: Empty Enum", "[parsing]") {
         CHECK(e->comment == "enum documentation");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -278,7 +298,9 @@ TEST_CASE("Parsing Struct: Enum", "[parsing]") {
         Value2
     };
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -298,7 +320,7 @@ TEST_CASE("Parsing Struct: Enum", "[parsing]") {
         CHECK(ee->elements[1]->name == "Value2");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -310,7 +332,9 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
         Value2
     };
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -332,7 +356,7 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[parsing]") {
         CHECK(ee->elements[1]->attributes.key == "\"Value2\"");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -344,7 +368,9 @@ Parameters
 {
     int value;
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -359,7 +385,7 @@ Parameters
         CHECK(generateTypename(var->type) == "int");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -385,7 +411,9 @@ Parameters
 
 
 };)";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -400,7 +428,7 @@ Parameters
         CHECK(generateTypename(var->type) == "int");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -416,7 +444,10 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
+
     REQUIRE(s->children.size() == 1);
     CHECK(s->children[0]->type == StackElement::Type::Struct);
     CHECK(s->children[0]->name == "A");

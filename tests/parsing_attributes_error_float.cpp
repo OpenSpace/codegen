@@ -35,7 +35,7 @@ TEST_CASE("Unsupported Attributes: float annotation", "[parsing_error]") {
 float v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector float annotation", "[parsing_error]") 
 std::vector<float> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
@@ -55,7 +55,7 @@ TEST_CASE("Unsupported Attributes: optional float annotation", "[parsing_error]"
 std::optional<float> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'annotation'")
     );
 }
@@ -65,7 +65,7 @@ TEST_CASE("Unsupported Attributes: float inlist", "[parsing_error]") {
 float v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
@@ -75,7 +75,7 @@ TEST_CASE("Unsupported Attributes: vector float inlist", "[parsing_error]") {
 std::vector<float> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
@@ -85,7 +85,7 @@ TEST_CASE("Unsupported Attributes: optional float inlist", "[parsing_error]") {
 std::optional<float> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'inlist'")
     );
 }
@@ -95,7 +95,7 @@ TEST_CASE("Unsupported Attributes: float notinlist", "[parsing_error]") {
 float v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
@@ -105,7 +105,7 @@ TEST_CASE("Unsupported Attributes: vector float notinlist", "[parsing_error]") {
 std::vector<float> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
@@ -115,7 +115,7 @@ TEST_CASE("Unsupported Attributes: optional float notinlist", "[parsing_error]")
 std::optional<float> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'notinlist'")
     );
 }
@@ -125,7 +125,7 @@ TEST_CASE("Unsupported Attributes: float reference", "[parsing_error]") {
 float v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
@@ -135,7 +135,7 @@ TEST_CASE("Unsupported Attributes: vector float reference", "[parsing_error]") {
 std::vector<float> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
@@ -145,7 +145,7 @@ TEST_CASE("Unsupported Attributes: optional float reference", "[parsing_error]")
 std::optional<float> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'reference'")
     );
 }
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: float color", "[parsing_error]") {
 float v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'color'")
     );
 }
@@ -165,7 +165,7 @@ TEST_CASE("Unsupported Attributes: vector float color", "[parsing_error]") {
 std::vector<float> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'color'")
     );
 }
@@ -175,7 +175,7 @@ TEST_CASE("Unsupported Attributes: optional float color", "[parsing_error]") {
 std::optional<float> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'color'")
     );
 }
@@ -185,7 +185,7 @@ TEST_CASE("Unsupported Attributes: float directory", "[parsing_error]") {
 float v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'directory'")
     );
 }
@@ -195,7 +195,7 @@ TEST_CASE("Unsupported Attributes: vector float directory", "[parsing_error]") {
 std::vector<float> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'directory'")
     );
 }
@@ -205,7 +205,7 @@ TEST_CASE("Unsupported Attributes: optional float directory", "[parsing_error]")
 std::optional<float> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'float' does not support attribute 'directory'")
     );
 }

@@ -345,7 +345,9 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     
     };
 )";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 104);
@@ -2952,7 +2954,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 }
 
@@ -2967,7 +2969,9 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
     REQUIRE(s->variables.size() == 2);
     
     {
@@ -3020,7 +3024,9 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(s->attributes.noExhaustive);
@@ -3038,7 +3044,9 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(s->attributes.noExhaustive);
@@ -3056,7 +3064,9 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(!s->attributes.noExhaustive);

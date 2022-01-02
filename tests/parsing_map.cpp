@@ -34,7 +34,9 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::map<std::string, std::string> p;
 };)";
 
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
     REQUIRE(s);
     CHECK(s->name == "Parameters");
@@ -44,7 +46,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(s->variables[0]->name == "p");
     CHECK(s->variables[0]->key == "\"P\"");
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
 
 }

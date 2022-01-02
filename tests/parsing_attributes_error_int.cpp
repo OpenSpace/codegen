@@ -35,7 +35,7 @@ TEST_CASE("Unsupported Attributes: int annotation", "[parsing_error]") {
 int v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'annotation'")
     );
 }
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector int annotation", "[parsing_error]") {
 std::vector<int> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'annotation'")
     );
 }
@@ -55,7 +55,7 @@ TEST_CASE("Unsupported Attributes: optional int annotation", "[parsing_error]") 
 std::optional<int> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'annotation'")
     );
 }
@@ -65,7 +65,7 @@ TEST_CASE("Unsupported Attributes: int inlist", "[parsing_error]") {
 int v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'inlist'")
     );
 }
@@ -75,7 +75,7 @@ TEST_CASE("Unsupported Attributes: vector int inlist", "[parsing_error]") {
 std::vector<int> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'inlist'")
     );
 }
@@ -85,7 +85,7 @@ TEST_CASE("Unsupported Attributes: optional int inlist", "[parsing_error]") {
 std::optional<int> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'inlist'")
     );
 }
@@ -95,7 +95,7 @@ TEST_CASE("Unsupported Attributes: int notinlist", "[parsing_error]") {
 int notinlist [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'notinlist'")
     );
 }
@@ -105,7 +105,7 @@ TEST_CASE("Unsupported Attributes: vector int notinlist", "[parsing_error]") {
 std::vector<int> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'notinlist'")
     );
 }
@@ -115,7 +115,7 @@ TEST_CASE("Unsupported Attributes: optional int notinlist", "[parsing_error]") {
 std::optional<int> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'notinlist'")
     );
 }
@@ -125,7 +125,7 @@ TEST_CASE("Unsupported Attributes: int reference", "[parsing_error]") {
 int v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'reference'")
     );
 }
@@ -135,7 +135,7 @@ TEST_CASE("Unsupported Attributes: vector int reference", "[parsing_error]") {
 std::vector<int> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'reference'")
     );
 }
@@ -145,7 +145,7 @@ TEST_CASE("Unsupported Attributes: optional int reference", "[parsing_error]") {
 std::optional<int> v [[codegen::reference(1)]];
 };)";
 CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'reference'")
     );
 }
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: int color", "[parsing_error]") {
 int v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'color'")
     );
 }
@@ -165,7 +165,7 @@ TEST_CASE("Unsupported Attributes: vector int color", "[parsing_error]") {
 std::vector<int> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'color'")
     );
 }
@@ -175,7 +175,7 @@ TEST_CASE("Unsupported Attributes: optional int color", "[parsing_error]") {
 std::optional<int> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'color'")
     );
 }
@@ -185,7 +185,7 @@ TEST_CASE("Unsupported Attributes: int directory", "[parsing_error]") {
 int v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'directory'")
     );
 }
@@ -195,7 +195,7 @@ TEST_CASE("Unsupported Attributes: vector int directory", "[parsing_error]") {
 std::vector<int> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'directory'")
     );
 }
@@ -205,7 +205,7 @@ TEST_CASE("Unsupported Attributes: optional int directory", "[parsing_error]") {
 std::optional<int> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'int' does not support attribute 'directory'")
     );
 }

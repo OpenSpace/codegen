@@ -39,8 +39,10 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
-    REQUIRE(s);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
+
     REQUIRE(s->variables.size() == 2);
 
     {
@@ -69,8 +71,10 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<std::variant<bool, int>> ov;
 })";
 
-    Struct* s = parseRootStruct(Source);
-    REQUIRE(s);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
+
     REQUIRE(s->variables.size() == 1);
 
     {
@@ -91,6 +95,6 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
-    [[maybe_unused]] std::string res = generateResult(s);
+    std::vector<Struct*> structs = parse(Source);
+    [[maybe_unused]] std::string res = generateResult(structs);
 }

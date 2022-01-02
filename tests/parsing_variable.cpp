@@ -28,7 +28,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing Variable: Basic Types", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+    constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     bool boolVariable;
     int intVariable;
@@ -69,9 +69,11 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     glm::dmat4x4 dmat4x4Value;
     glm::dmat4 dmat4Value;
 };
-)");
+)";
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
-    REQUIRE(s);
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -342,7 +344,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 }
 
 TEST_CASE("Parsing Variable: Vector Base Types", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+    constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<bool> boolVariable;
     std::vector<int> intVariable;
@@ -383,9 +385,11 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<glm::dmat4x4> dmat4x4Value;
     std::vector<glm::dmat4> dmat4Value;
 };
-)");
+)";
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
-    REQUIRE(s);
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -656,7 +660,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 }
 
 TEST_CASE("Parsing Variable: Optional Base Types", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+    constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<bool> boolVariable;
     std::optional<int> intVariable;
@@ -697,9 +701,11 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<glm::dmat4x4> dmat4x4Value;
     std::optional<glm::dmat4> dmat4Value;
 };
-)");
+)";
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
-    REQUIRE(s);
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -970,27 +976,32 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 }
 
 TEST_CASE("Parsing Variable: Variable attributes", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+    constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::key(Var)]];
 
 };
-)");
+)";
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
-    REQUIRE(s);
+
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->key == "Var");
 }
 
 TEST_CASE("Variable attribute: reference", "[parsing]") {
-    Struct* s = parseRootStruct(R"(
+    constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::reference(Ref)]];
 };
-)");
+)";
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
 
-    REQUIRE(s);
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->attributes.reference == "Ref");

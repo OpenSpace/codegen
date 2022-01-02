@@ -111,6 +111,18 @@ namespace {
             res.insert(res.end(), t.begin(), t.end());
         }
 
+
+        return res;
+    }
+    
+    std::vector<const VariableType*> usedTypes(const std::vector<Struct*> structs) {
+        std::vector<const VariableType*> res;
+
+        for (Struct* s : structs) {
+            std::vector<const VariableType*> r = usedTypes(*s);
+            res.insert(res.end(), r.begin(), r.end());
+        }
+
         // Remove duplicates
         for (int i = 0; i < static_cast<int>(res.size()); ++i) {
             for (int j = i + 1; j < static_cast<int>(res.size()); ++j) {
@@ -457,19 +469,24 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s) {
     return res;
 }
 
-std::string generateResult(Struct* s) {
-    assert(s);
+std::string generateResult(std::vector<Struct*> structs) {
+    assert(!structs.empty());
 
     std::string result = fmt::format(FileHeader);
+    result += "namespace codegen {\n";
+    result += DocumentationFallback;
 
-    result += fmt::format(DocumentationPreamble, s->name);
+    for (Struct* s : structs) {
+        result += fmt::format(DocumentationPreamble, s->name);
 
-    if (GenerateWarningsForDocumentationLessTypes) {
-        result += emitWarningsForDocumentationLessTypes(s);
+        if (GenerateWarningsForDocumentationLessTypes) {
+            result += emitWarningsForDocumentationLessTypes(s);
+        }
+
+        result += writeStructDocumentation(s);
+        result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
     }
-
-    result += writeStructDocumentation(s);
-    result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
+    result += "} // namespace codegen\n";
 
 
     // For Linux, we need to delcare the functions in the following order or the overload
@@ -492,7 +509,7 @@ std::string generateResult(Struct* s) {
     result += BakeFunctionFallback;
     result += '\n';
 
-    std::vector<const VariableType*> types = usedTypes(*s);
+    std::vector<const VariableType*> types = usedTypes(structs);
     bool hasOptionalType = false;
     bool hasVectorType = false;
     bool hasMapType = false;
@@ -519,8 +536,9 @@ std::string generateResult(Struct* s) {
         }
     }
 
-
-    result += writeStructConverter(s);
+    for (Struct* s : structs) {
+        result += writeStructConverter(s);
+    }
 
 
     if (hasOptionalType) {
@@ -533,36 +551,40 @@ std::string generateResult(Struct* s) {
         result += BakeFunctionMap;
     }
 
-    result += fmt::format(
-        R"(
-}} // namespace internal
+    result += R"(
+} // namespace internal
 
-template <typename T> T bake(const ghoul::Dictionary&) {{ static_assert(sizeof(T) == 0); }}
+template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
+)";
+
+    for (Struct* s : structs) {
+        result += fmt::format(
+            R"(
 template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
 )",
-        s->name, s->attributes.dictionary
+s->name, s->attributes.dictionary
 );
 
-    for (Variable* var : s->variables) {
-        result += fmt::format(
-            "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
-        );
-    }
+        for (Variable* var : s->variables) {
+            result += fmt::format(
+                "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
+            );
+        }
 
-    result += "    return res;\n}\n";
+        result += "    return res;\n}\n";
 
-    std::vector<Enum*> enums = mappedEnums(*s);
-    if (!enums.empty()) {
-        result += MapFunctionFallback;
-        result += '\n';
-    }
+        std::vector<Enum*> enums = mappedEnums(*s);
+        if (!enums.empty()) {
+            result += MapFunctionFallback;
+            result += '\n';
+        }
 
-    for (Enum* e : enums) {
-        assert(!e->mappedTo.empty());
-        std::string fullyQualifiedName = fqn(e, "::");
-        result += fmt::format(R"(
+        for (Enum* e : enums) {
+            assert(!e->mappedTo.empty());
+            std::string fullyQualifiedName = fqn(e, "::");
+            result += fmt::format(R"(
 template<> {0} map<{0}, {1}>({1} value) {{
     switch (value) {{
         // If you end up here following a compiler error saying something about 
@@ -571,24 +593,25 @@ template<> {0} map<{0}, {1}>({1} value) {{
         // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};
         // would trigger that error on trying to access B::Value2 wich is an illegal
         // qualified name. Make the enums match each other and run codegen again)",
-            e->mappedTo, fullyQualifiedName
-        );
-
-        for (EnumElement* ee : e->elements) {
-            result += fmt::format(R"(
-        case {0}::{2}:  return {1}::{2};)",
-                fullyQualifiedName, e->mappedTo, ee->name
+                e->mappedTo, fullyQualifiedName
             );
-        }
 
-        result += fmt::format(R"(
+            for (EnumElement* ee : e->elements) {
+                result += fmt::format(R"(
+        case {0}::{2}:  return {1}::{2};)",
+                    fullyQualifiedName, e->mappedTo, ee->name
+                );
+            }
+
+            result += fmt::format(R"(
         default:
             throw "This default label is not necessary since the case labels are "
                   "exhaustive, but not having it makes Visual Studio cranky";
     }}
 }}
 )"
-        );
+            );
+        }
     }
     
     result += "\n}// namespace codegen\n";
@@ -605,18 +628,6 @@ std::string createClickableFileName(std::string filename) {
     return filename;
 }
 
-std::string handleCode(std::string_view code, std::string_view path) {
-    Struct* rootStruct = parseRootStruct(code);
-    if (rootStruct) {
-        rootStruct->sourceFile = createClickableFileName(std::string(path));
-        std::string genContent = generateResult(rootStruct);
-        return genContent;
-    }
-    else {
-        return std::string();
-    }
-}
-
 Result handleFile(std::filesystem::path path) {
     std::ifstream f(path);
     std::string res = std::string(std::istreambuf_iterator<char>{f}, {});
@@ -624,13 +635,15 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    Struct* rootStruct = parseRootStruct(res);
-    if (!rootStruct) {
+    std::vector<Struct*> rootStructs = parse(res);
+    if (rootStructs.empty()) {
         return Result::NotProcessed;
     }
-    rootStruct->sourceFile = createClickableFileName(path.string());
+    for (Struct* s : rootStructs) {
+        s->sourceFile = createClickableFileName(path.string());
+    }
 
-    std::string content = generateResult(rootStruct);
+    std::string content = generateResult(rootStructs);
     if (content.empty()) {
         return Result::NotProcessed;
     }

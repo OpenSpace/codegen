@@ -36,7 +36,7 @@ struct [[codegen::Dictionary("Wrong")]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Root struct name must not be enclosed")
     );
 }
@@ -48,9 +48,9 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int error;
 };
 )";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
     CHECK_THROWS_MATCHES(
-        generateResult(s),
+        generateResult(structs),
         CodegenError, Catch::Matchers::Contains("Malformed codegen::verbatim")
     );
 }
@@ -60,7 +60,7 @@ TEST_CASE("Parsing Struct: Missing space", "[parsing]") {
 };)";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Missing space or struct name before")
     );
 }
@@ -72,9 +72,9 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int error;
 };
 )";
-    Struct* s = parseRootStruct(Source);
+    std::vector<Struct*> structs = parse(Source);
     CHECK_THROWS_MATCHES(
-        generateResult(s),
+        generateResult(structs),
         CodegenError, Catch::Matchers::Contains("Discovered unallowed unescaped")
     );
 }
@@ -87,10 +87,10 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
     CHECK_THROWS_MATCHES(
         [&](){
-            Struct* s = parseRootStruct(Source);
-            std::string r = generateResult(s);
+            std::vector<Struct*> structs = parse(Source);
+            std::string r = generateResult(structs);
         }(),
-            CodegenError, Catch::Matchers::Contains("Unbalanced number of < > brackets")
+        CodegenError, Catch::Matchers::Contains("Unbalanced number of < > brackets")
     );
 }
 
@@ -101,7 +101,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Type detected that codegen doesn't know how to handle")
     );
 }
@@ -114,7 +114,7 @@ Type [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Could not find 'struct' before '[[codegen")
     );
 }
@@ -127,7 +127,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
     );
 }
@@ -140,7 +140,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Unknown attribute 'unknown_key' in attribute")
     );
 }
@@ -153,7 +153,7 @@ struct [[codegen::Dictionary(Error]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
     );
 }
@@ -167,7 +167,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Unknown attribute 'unknown_key' in struct definition")
     );
 }
@@ -183,7 +183,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Unrecognized attribute 'unknown_key' found")
     );
 }
@@ -196,7 +196,7 @@ struct [[codegen::Dictionary()]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("No name specified for root struct")
     );
 }
@@ -209,7 +209,7 @@ struct [[codegen::Dictionary]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
     );
 }
@@ -221,7 +221,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Could not find closing } of root struct")
     );
 }
@@ -234,7 +234,7 @@ struct Parameters [[codegen::Dictionary(abc)]] {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Only 'struct' can appear directly before [[codegen::Dictionary")
     );
 }
@@ -248,26 +248,10 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Block comments are not allowed")
     );
 }
-
-// Let's see if we can live without this exception
-//TEST_CASE("Parsing Error: Illegal characters", "[parsing_error]") {
-//    constexpr const char Source[] = R"(
-//struct [[codegen::Dictionary(abc)]] Parameters {
-//    // smörgåstårta
-//    int value;
-//};
-//)";
-//
-//    CHECK_THROWS_MATCHES(
-//        parseRootStruct(Source),
-//        ParsingError,
-//        Catch::Matchers::Contains("Illegal character")
-//    );
-//}
 
 TEST_CASE("Parsing Error: Duplicate root struct", "[parsing_error]") {
     constexpr const char Source[] = R"(
@@ -280,8 +264,8 @@ struct [[codegen::Dictionary(S1)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
-        CodegenError, Catch::Matchers::Contains("We currently only support one struct per file annotated")
+        parse(Source),
+        CodegenError, Catch::Matchers::Contains("Found nested structs annotated with the Dictionary attribute.")
     );
 }
 
@@ -297,25 +281,8 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Old-style 'enum' not supported. Use 'enum class' instead")
-    );
-}
-
-TEST_CASE("Parsing Error: Multiple structs", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(abc)]] Parameters1 {
-    int value1;
-};
-
-struct [[codegen::Dictionary(def)]] Parameters2 {
-    int value2;
-};
-)";
-
-    CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
-        CodegenError, Catch::Matchers::Contains("We currently only support one struct per file annotated")
     );
 }
 
@@ -328,7 +295,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
 
     CHECK_THROWS_MATCHES(
-        parseRootStruct(Source),
+        parse(Source),
         CodegenError, Catch::Matchers::Contains("Found '=' in variable definition")
     );
 }
@@ -338,7 +305,7 @@ TEST_CASE("Parsing Error: Misshapen boolean value", "[parsing_error]") {
 int v [[codegen::color(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, Catch::Matchers::Contains("Boolean attribute needs to be")
     );
 }

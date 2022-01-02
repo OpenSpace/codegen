@@ -26,9 +26,10 @@
 #define __OPENSPACE_CODEGEN___PARSING___H__
 
 #include <string_view>
+#include <vector>
 
 struct Struct;
 
-[[nodiscard]] Struct* parseRootStruct(std::string_view code);
+[[nodiscard]] std::vector<Struct*> parse(std::string_view code);
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

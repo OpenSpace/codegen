@@ -36,6 +36,6 @@ enum class Result {
 struct Struct;
 
 [[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(Struct* s);
+[[nodiscard]] std::string generateResult(std::vector<Struct*> structs);
 
 #endif // __OPENSPACE_CODEGEN___CODEGEN___H__

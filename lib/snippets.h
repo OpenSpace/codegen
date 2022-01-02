@@ -34,16 +34,14 @@ namespace {
     constexpr const char BakeFunctionOptionalDeclaration[] = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
 
 
-    constexpr const char BakeFunctionFallback[] = "template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); } // This should never be called";
-    
+    constexpr const char BakeFunctionFallback[] = "template<typename T> void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
     constexpr const char MapFunctionFallback[] = "template<typename T, typename U> T map(U) { static_assert(sizeof(T) == 0); } // This should never be called";
+    constexpr const char DocumentationFallback[] = R"(template<typename T> openspace::documentation::Documentation doc(std::string) {
+    static_assert(sizeof(T) == 0);
+    return openspace::documentation::Documentation();
+})";
 
     constexpr const char DocumentationPreamble[] = R"(
-namespace codegen {{
-template <typename T> openspace::documentation::Documentation doc(std::string) {{
-    static_assert(sizeof(T) == 0); // This should never be called
-    return openspace::documentation::Documentation();
-}}
 template <> openspace::documentation::Documentation doc<{}>(std::string id) {{
     using namespace openspace::documentation;
 
@@ -53,7 +51,6 @@ template <> openspace::documentation::Documentation doc<{}>(std::string id) {{
     openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
     return d;
 }}
-}} // namespace codegen
 
 )";
 

@@ -35,7 +35,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary annotation", "[parsing_erro
 ghoul::Dictionary v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary annotation", "[parsi
 std::vector<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
@@ -55,7 +55,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary annotation", "[par
 std::optional<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'annotation'")
     );
 }
@@ -65,7 +65,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary inlist", "[parsing_error]")
 ghoul::Dictionary v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
@@ -75,7 +75,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inlist", "[parsing_e
 std::vector<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
@@ -85,7 +85,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inlist", "[parsing
 std::optional<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inlist'")
     );
 }
@@ -95,7 +95,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary inrange", "[parsing_error]"
 ghoul::Dictionary v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
@@ -105,7 +105,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inrange", "[parsing_
 std::vector<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
@@ -115,7 +115,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inrange", "[parsin
 std::optional<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'inrange'")
     );
 }
@@ -125,7 +125,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary less", "[parsing_error]") {
 ghoul::Dictionary v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
@@ -135,7 +135,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary less", "[parsing_err
 std::vector<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
@@ -145,7 +145,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary less", "[parsing_e
 std::optional<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'less'")
     );
 }
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary lessequal", "[parsing_error
 ghoul::Dictionary v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
@@ -165,7 +165,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary lessequal", "[parsin
 std::vector<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
@@ -175,7 +175,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary lessequal", "[pars
 std::optional<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'lessequal'")
     );
 }
@@ -185,7 +185,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary greater", "[parsing_error]"
 ghoul::Dictionary v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
@@ -195,7 +195,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greater", "[parsing_
 std::vector<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
@@ -205,7 +205,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greater", "[parsin
 std::optional<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greater'")
     );
 }
@@ -215,7 +215,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary greaterequal", "[parsing_er
 ghoul::Dictionary v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
@@ -225,7 +225,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greaterequal", "[par
 std::vector<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
@@ -235,7 +235,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greaterequal", "[p
 std::optional<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'greaterequal'")
     );
 }
@@ -245,7 +245,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinlist", "[parsing_error
 ghoul::Dictionary v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
@@ -255,7 +255,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinlist", "[parsin
 std::vector<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
@@ -265,7 +265,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinlist", "[pars
 std::optional<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinlist'")
     );
 }
@@ -275,7 +275,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinrange", "[parsing_erro
 ghoul::Dictionary v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
@@ -285,7 +285,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinrange", "[parsi
 std::vector<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
@@ -295,7 +295,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinrange", "[par
 std::optional<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'notinrange'")
     );
 }
@@ -305,7 +305,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary color", "[parsing_error]") 
 ghoul::Dictionary v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
@@ -315,7 +315,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary color", "[parsing_er
 std::vector<ghoul::Dictionary> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
@@ -325,7 +325,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary color", "[parsing_
 std::optional<ghoul::Dictionary> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'color'")
     );
 }
@@ -335,7 +335,7 @@ TEST_CASE("Unsupported Attributes: ghoul::Dictionary directory", "[parsing_error
 ghoul::Dictionary v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }
@@ -345,7 +345,7 @@ TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary directory", "[parsin
 std::vector<ghoul::Dictionary> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }
@@ -355,7 +355,7 @@ TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary directory", "[pars
 std::optional<ghoul::Dictionary> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'ghoul::Dictionary' does not support attribute 'directory'")
     );
 }

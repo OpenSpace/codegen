@@ -80,8 +80,10 @@ Lines, With, Weird,
 };
 )";
 
-    Struct* s = parseRootStruct(Source);
-    REQUIRE(s);
+    std::vector<Struct*> structs = parse(Source);
+    CHECK(structs.size() == 1);
+    Struct* s = structs.front();
+
     REQUIRE(s->variables.size() == 8);
     {
         Variable* var = s->variables[0];
@@ -148,6 +150,50 @@ Lines, With, Weird,
         CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
     }
 
-    std::string r = generateResult(s);
+    std::string r = generateResult(structs);
     CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing: Multiple", "[parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(P1)]] Param1 {
+    int abc;
+};
+struct [[codegen::Dictionary(P2)]] Param2 {
+    std::string def;
+};
+struct [[codegen::Dictionary(P3)]] Param3 {
+    double ghi;
+};
+struct [[codegen::Dictionary(P4)]] Param4 {
+    ghoul::Dictionary jkl;
+};
+)";
+
+    std::vector<Struct*> structs = parse(Source);
+    REQUIRE(structs.size() == 4);
+
+    {
+        Struct* s = structs[0];
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "abc");
+    }
+
+    {
+        Struct* s = structs[1];
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "def");
+    }
+
+    {
+        Struct* s = structs[2];
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "ghi");
+    }
+
+    {
+        Struct* s = structs[3];
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "jkl");
+    }
 }

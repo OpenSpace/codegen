@@ -367,21 +367,13 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     return res;
 }
 
-std::string_view validCode(std::string_view code) {
+std::pair<size_t, size_t> validCode(std::string_view code) {
     assert(!code.empty());
 
     const size_t mainLoc = code.find(AttributeDictionary);
     if (mainLoc == std::string_view::npos) {
         // We did't find the attrbute
-        return std::string_view();
-    }
-
-    if (code.find(AttributeDictionary, mainLoc + 1) != std::string_view::npos) {
-        throw CodegenError(fmt::format(
-            "We currently only support one struct per file annotated with {}, "
-            "including commented out ones",
-            AttributeDictionary
-        ));
+        return { std::string_view::npos, std::string_view::npos };
     }
 
     int64_t cursor = mainLoc;
@@ -434,27 +426,13 @@ std::string_view validCode(std::string_view code) {
         }
     }
 
-    return code.substr(lastNewLine, cursor - lastNewLine + 1);
+    return { lastNewLine, cursor - lastNewLine + 1 };
 }
 
 Struct* parseRootStruct(std::string_view code) {
-    // I really would prefer not to have this code as it basically makes any UTF-8
-    // character invalid, which would be a shame
-    //for (char c : code) {
-    //    // This only should really happen when a UTF-8 character is encountered
-    //    if (c < 0) {
-    //        throw ParsingError(fmt::format("Illegal character '{}' detected", c));
-    //    }
-    //}
-
-    std::string_view content = strip(validCode(code));
-    if (content.empty()) {
-        return nullptr;
-    }
-
-    if (size_t p = content.find("/*"); p != std::string_view::npos) {
+    if (size_t p = code.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
-            "Block comments are not allowed\n{}", content.substr(p, 50)
+            "Block comments are not allowed\n{}", code.substr(p, 50)
         ));
     }
 
@@ -468,7 +446,7 @@ Struct* parseRootStruct(std::string_view code) {
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(content, &cursor);
+        std::string_view line = extractLine(code, &cursor);
         if (line.empty()) {
             continue;
         }
@@ -513,6 +491,14 @@ Struct* parseRootStruct(std::string_view code) {
                 commentBuffer.clear();
 
                 if (!s->attributes.dictionary.empty()) {
+                    if (rootStruct) {
+                        throw CodegenError(fmt::format(
+                            "Found nested structs annotated with the Dictionary "
+                            "attribute. It is not allowed to nest these top level "
+                            "structs\n\n{} -> {}",
+                            rootStruct->name, s->attributes.dictionary
+                        ));
+                    }
                     assert(rootStruct == nullptr);
                     rootStruct = s;
                 }
@@ -637,4 +623,22 @@ Struct* parseRootStruct(std::string_view code) {
     assert(rootStruct);
     assert(!rootStruct->attributes.dictionary.empty());
     return rootStruct;
+}
+
+[[nodiscard]] std::vector<Struct*> parse(std::string_view code) {
+    std::vector<Struct*> res;
+
+    while (!code.empty()) {
+        std::pair<size_t, size_t> cursors = validCode(code);
+        if (cursors.first == std::string_view::npos) {
+            return res;
+        }
+        std::string_view content = strip(code.substr(cursors.first, cursors.second));
+
+        Struct* s = parseRootStruct(content);
+        res.push_back(s);
+        code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
+    }
+
+    return res;
 }

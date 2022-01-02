@@ -24,65 +24,34 @@
 
 #include "catch2/catch.hpp"
 
-#include "codegen.h"
-#include "parsing.h"
-#include "types.h"
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-TEST_CASE("Variant Error: Multiple Vectors", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(D)]] P {
-    // a comment
-    std::variant<std::vector<int>, std::vector<float>> a;
-};
-)";
-
-    CHECK_THROWS_MATCHES(
-        parse(Source),
-        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
-    );
-}
-
-TEST_CASE("Variant Error: Custom substrct", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(D)]] P {
-    struct A {
-        int a;
+namespace {
+    struct [[codegen::Dictionary(D1)]] Parameters1 {
+        int abc;
     };
-    std::variant<A, float> v;
-};
-)";
 
-    CHECK_THROWS_MATCHES(
-        parse(Source),
-        CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'A' found in variant list")
-    );
-}
+    struct [[codegen::Dictionary(D2)]] Parameters2 {
+        int def;
+    };
+#include "execution_multiple_codegen.cpp"
+} // namespace
 
-TEST_CASE("Variant Error: Internal optional", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(D)]] P {
-    std::variant<std::optional<int>, float> v;
-};
-)";
+TEST_CASE("Multiple Parameters", "[other]") {
+    using namespace openspace::documentation;
 
-    CHECK_THROWS_MATCHES(
-        parse(Source),
-        CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'std::optional<int>' found in variant list")
-    );
-}
+    ghoul::Dictionary d;
+    d.setValue("Abc", 1);
+    d.setValue("Def", 2);
 
-TEST_CASE("Variant Error: Nested variants", "[parsing_error]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(D)]] P {
-    std::variant<std::variant<int, float>, float> v;
-};
-)";
+    const Parameters1 p1 = codegen::bake<Parameters1>(d);
+    CHECK(p1.abc == 1);
 
-    CHECK_THROWS_MATCHES(
-        parse(Source),
-        CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'std::variant<int, float>' found in variant list")
-    );
+    const Parameters2 p2 = codegen::bake<Parameters2>(d);
+    CHECK(p2.def == 2);
 }

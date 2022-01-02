@@ -35,7 +35,7 @@ TEST_CASE("Unsupported Attributes: std::string inrange", "[parsing_error]") {
 std::string v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
@@ -45,7 +45,7 @@ TEST_CASE("Unsupported Attributes: vector std::string inrange", "[parsing_error]
 std::vector<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
@@ -55,7 +55,7 @@ TEST_CASE("Unsupported Attributes: optional std::string inrange", "[parsing_erro
 std::optional<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
     );
 }
@@ -65,7 +65,7 @@ TEST_CASE("Unsupported Attributes: std::string less", "[parsing_error]") {
 std::string v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
@@ -75,7 +75,7 @@ TEST_CASE("Unsupported Attributes: vector std::string less", "[parsing_error]") 
 std::vector<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
@@ -85,7 +85,7 @@ TEST_CASE("Unsupported Attributes: optional std::string less", "[parsing_error]"
 std::optional<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
     );
 }
@@ -95,7 +95,7 @@ TEST_CASE("Unsupported Attributes: std::string lessequal", "[parsing_error]") {
 std::string v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
@@ -105,7 +105,7 @@ TEST_CASE("Unsupported Attributes: vector std::string lessequal", "[parsing_erro
 std::vector<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
@@ -115,7 +115,7 @@ TEST_CASE("Unsupported Attributes: optional std::string lessequal", "[parsing_er
 std::optional<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
     );
 }
@@ -125,7 +125,7 @@ TEST_CASE("Unsupported Attributes: std::string greater", "[parsing_error]") {
 std::string v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
@@ -135,7 +135,7 @@ TEST_CASE("Unsupported Attributes: vector std::string greater", "[parsing_error]
 std::vector<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
@@ -145,7 +145,7 @@ TEST_CASE("Unsupported Attributes: optional std::string greater", "[parsing_erro
 std::optional<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
     );
 }
@@ -155,7 +155,7 @@ TEST_CASE("Unsupported Attributes: std::string greaterequal", "[parsing_error]")
 std::string v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
@@ -165,7 +165,7 @@ TEST_CASE("Unsupported Attributes: vector std::string greaterequal", "[parsing_e
 std::vector<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
@@ -175,7 +175,7 @@ TEST_CASE("Unsupported Attributes: optional std::string greaterequal", "[parsing
 std::optional<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
     );
 }
@@ -185,7 +185,7 @@ TEST_CASE("Unsupported Attributes: std::string notinrange", "[parsing_error]") {
 std::string v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
@@ -195,7 +195,7 @@ TEST_CASE("Unsupported Attributes: vector std::string notinrange", "[parsing_err
 std::vector<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
@@ -205,7 +205,7 @@ TEST_CASE("Unsupported Attributes: optional std::string notinrange", "[parsing_e
 std::optional<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
     );
 }
@@ -215,7 +215,7 @@ TEST_CASE("Unsupported Attributes: std::string reference", "[parsing_error]") {
 std::string v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
@@ -225,7 +225,7 @@ TEST_CASE("Unsupported Attributes: vector std::string reference", "[parsing_erro
 std::vector<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
@@ -235,7 +235,7 @@ TEST_CASE("Unsupported Attributes: optional std::string reference", "[parsing_er
 std::optional<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
     );
 }
@@ -245,7 +245,7 @@ TEST_CASE("Unsupported Attributes: std::string color", "[parsing_error]") {
 std::string v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
     );
 }
@@ -255,7 +255,7 @@ TEST_CASE("Unsupported Attributes: vector std::string color", "[parsing_error]")
 std::vector<std::string> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
     );
 }
@@ -265,7 +265,7 @@ TEST_CASE("Unsupported Attributes: optional std::string color", "[parsing_error]
 std::optional<std::string> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
     );
 }
@@ -275,7 +275,7 @@ TEST_CASE("Unsupported Attributes: std::string directory", "[parsing_error]") {
 std::string v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
     );
 }
@@ -285,7 +285,7 @@ TEST_CASE("Unsupported Attributes: vector std::string directory", "[parsing_erro
 std::vector<std::string> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
     );
 }
@@ -295,7 +295,7 @@ TEST_CASE("Unsupported Attributes: optional std::string directory", "[parsing_er
 std::optional<std::string> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
     );
 }
@@ -305,7 +305,7 @@ TEST_CASE("Attribute error: std::string annotation inlist", "[parsing_error]") {
 std::string v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -316,7 +316,7 @@ TEST_CASE("Attribute error: vector std::string annotation inlist", "[parsing_err
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -327,7 +327,7 @@ TEST_CASE("Attribute error: optional std::string annotation inlist", "[parsing_e
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -338,7 +338,7 @@ TEST_CASE("Attribute error: optional vector std::string annotation inlist", "[pa
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -349,7 +349,7 @@ TEST_CASE("Attribute error: std::string annotation unequal", "[parsing_error]") 
 std::string v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -360,7 +360,7 @@ TEST_CASE("Attribute error: vector std::string annotation unequal", "[parsing_er
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -371,7 +371,7 @@ TEST_CASE("Attribute error: optional std::string annotation unequal", "[parsing_
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -382,7 +382,7 @@ TEST_CASE("Attribute error: optional vector std::string annotation unequal", "[p
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the annotation attribute, no other attribute can be used")
     );
@@ -393,7 +393,7 @@ TEST_CASE("Attribute error: std::string annotation notempty", "[parsing_error]")
 std::string v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -404,7 +404,7 @@ TEST_CASE("Attribute error: vector std::string annotation notempty", "[parsing_e
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -415,7 +415,7 @@ TEST_CASE("Attribute error: optional std::string annotation notempty", "[parsing
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -426,7 +426,7 @@ TEST_CASE("Attribute error: optional vector std::string annotation notempty", "[
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -437,7 +437,7 @@ TEST_CASE("Attribute error: std::string notempty inlist", "[parsing_error]") {
 std::string v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -448,7 +448,7 @@ TEST_CASE("Attribute error: vector std::string notempty inlist", "[parsing_error
 std::vector<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -459,7 +459,7 @@ TEST_CASE("Attribute error: optional std::string notempty inlist", "[parsing_err
 std::optional<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -470,7 +470,7 @@ TEST_CASE("Attribute error: optional vector std::string notempty inlist", "[pars
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -481,7 +481,7 @@ TEST_CASE("Attribute error: std::string notempty unequal", "[parsing_error]") {
 std::string v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -492,7 +492,7 @@ TEST_CASE("Attribute error: vector std::string notempty unequal", "[parsing_erro
 std::vector<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -503,7 +503,7 @@ TEST_CASE("Attribute error: optional std::string notempty unequal", "[parsing_er
 std::optional<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -514,7 +514,7 @@ TEST_CASE("Attribute error: optional vector std::string notempty unequal", "[par
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -525,7 +525,7 @@ TEST_CASE("Attribute error: std::string notempty annotation", "[parsing_error]")
 std::string v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -536,7 +536,7 @@ TEST_CASE("Attribute error: vector std::string notempty annotation", "[parsing_e
 std::vector<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -547,7 +547,7 @@ TEST_CASE("Attribute error: optional std::string notempty annotation", "[parsing
 std::optional<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -558,7 +558,7 @@ TEST_CASE("Attribute error: optional vector std::string notempty annotation", "[
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("With the notempty attribute, no other attribute can be used")
     );
@@ -569,7 +569,7 @@ TEST_CASE("Attribute error: std::string notempty wrong parameter", "[parsing_err
 std::string v [[codegen::notempty("bla")]];
 };)";
     CHECK_THROWS_MATCHES(
-        generateResult(parseRootStruct(S)),
+        generateResult(parse(S)),
         CodegenError,
         CM::Contains("Boolean attribute needs to be empty, 'true', or 'false'")
     );
