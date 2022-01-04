@@ -93,7 +93,7 @@ namespace {
 #include "execution_structs_variant_codegen.cpp"
 } // namespace
 
-TEST_CASE("Variant bake", "[verifier]") {
+TEST_CASE("Variant bake", "[structs][execution][verifier]") {
     {
         ghoul::Dictionary d1;
         d1.setValue("BoolDoubleValue", false);
@@ -351,7 +351,7 @@ TEST_CASE("Variant bake", "[verifier]") {
     }
 }
 
-TEST_CASE("Variant documentation", "[verifier]") {
+TEST_CASE("Variant documentation", "[structs][execution][verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

@@ -36,7 +36,7 @@ namespace {
 #include "execution_structs_simple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Simple bake", "[verifier]") {
+TEST_CASE("Simple bake", "[structs][execution][verifier]") {
     {
         ghoul::Dictionary d;
         d.setValue("Value", 5.0);
@@ -46,7 +46,7 @@ TEST_CASE("Simple bake", "[verifier]") {
     }
 }
 
-TEST_CASE("Simple documentation", "[verifier]") {
+TEST_CASE("Simple documentation", "[structs][execution][verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

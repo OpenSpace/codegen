@@ -40,7 +40,7 @@ namespace {
 #include "execution_enums_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("From String", "[enum, ]") {
+TEST_CASE("From String", "[enums][execution][basic]") {
 
 
 }

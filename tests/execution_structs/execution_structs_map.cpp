@@ -60,7 +60,7 @@ namespace {
 #include "execution_structs_map_codegen.cpp"
 } // namespace
 
-TEST_CASE("Map Bake", "[verifier]") {
+TEST_CASE("Map Bake", "[structs][execution][verifier]") {
     using namespace std::literals;
     ghoul::Dictionary d;
     {
@@ -646,7 +646,7 @@ TEST_CASE("Map Bake", "[verifier]") {
     REQUIRE(p.optionalVectorDictMap->at(2).at("c").value<std::string>("I") == "9"s);
 }
 
-TEST_CASE("Map  Documentation", "[verifier]") {
+TEST_CASE("Map  Documentation", "[structs][execution][verifier]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
