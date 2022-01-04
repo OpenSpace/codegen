@@ -28,174 +28,19 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Multiline", "[structs][parsing]") {
+TEST_CASE("Parsing: Basic", "[enums][parsing]") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Multiline)]] Parameters {
-    // multi
-    // line
-    // commenting
-    int multiLineCommenting;
-
-    // multi line simple variable def
-    float
-    multiLineSimpleVariableDef;
-
-    // multi
-    // line
-    // commenting
-    // and
-    // multi line variable def
-    std::string
-    multiLineCommentAndDef;
-
-    // misaligned
-// commenting
-        // all over
-    // the place
-bool misalignedIndent;
-
-    // multiline
-    // comment with
-    // attribute
-    int multiLineCommentAttribute
-    [[codegen::inrange(2, 3)]];
-
-    std::string multilineinlist [[codegen::inlist(A, "Very", Long, "List", Of, Variables,
-"And", "String Literals", That, Will, Cover,
-    And, Span, Multiple,
-Lines, With, Weird,
-                Indentations)]];
-
-    std::string newLineAnnotation
-        [[codegen::annotation(
-            "some-annotation-that-is-very-long"
-        )]];
-
-    // newLine2Annotation documentation
-    std::string newLine2Annotation [[codegen::annotation("A long string that starts here"
-        "and covers"
-        "multiple lines breaks, because someone really has a"
-        "lot to say"
-    )]];
-};
+    enum class [[codegen::stringify()]] Enum {
+        Value1,
+        value2,
+        Value3
+    };
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    Struct* s = code.structs.front();
+    CHECK(code.structs.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
 
-    REQUIRE(s->variables.size() == 8);
-    {
-        Variable* var = s->variables[0];
-        REQUIRE(var);
-        CHECK(var->name == "multiLineCommenting");
-        CHECK(generateTypename(var->type) == "int");
-        CHECK(var->comment == "multi line commenting");
-    }
-    {
-        Variable* var = s->variables[1];
-        REQUIRE(var);
-        CHECK(var->name == "multiLineSimpleVariableDef");
-        CHECK(generateTypename(var->type) == "float");
-        CHECK(var->comment == "multi line simple variable def");
-    }
-    {
-        Variable* var = s->variables[2];
-        REQUIRE(var);
-        CHECK(var->name == "multiLineCommentAndDef");
-        CHECK(generateTypename(var->type) == "std::string");
-        CHECK(var->comment == "multi line commenting and multi line variable def");
-    }
-    {
-        Variable* var = s->variables[3];
-        REQUIRE(var);
-        CHECK(var->name == "misalignedIndent");
-        CHECK(generateTypename(var->type) == "bool");
-        CHECK(var->comment == "misaligned commenting all over the place");
-    }
-    {
-        Variable* var = s->variables[4];
-        REQUIRE(var);
-        CHECK(var->name == "multiLineCommentAttribute");
-        CHECK(generateTypename(var->type) == "int");
-        CHECK(var->comment == "multiline comment with attribute");
-        CHECK(var->attributes.inrange == "2, 3");
-    }
-    {
-        Variable* var = s->variables[5];
-        REQUIRE(var);
-        CHECK(var->name == "multilineinlist");
-        CHECK(generateTypename(var->type) == "std::string");
-        CHECK(var->comment.empty());
-        CHECK(
-            var->attributes.inlist ==
-            "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", "
-            "That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations"
-        );
-    }
-    {
-        Variable* var = s->variables[6];
-        REQUIRE(var);
-        CHECK(var->name == "newLineAnnotation");
-        CHECK(generateTypename(var->type) == "std::string");
-        CHECK(var->comment.empty());
-        CHECK(var->attributes.annotation == "\"some-annotation-that-is-very-long\"");
-    }
-    {
-        Variable* var = s->variables[7];
-        REQUIRE(var);
-        CHECK(var->name == "newLine2Annotation");
-        CHECK(generateTypename(var->type) == "std::string");
-        CHECK(var->comment == "newLine2Annotation documentation");
-        CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing: Multiple", "[structs][parsing]") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(P1)]] Param1 {
-    int abc;
-};
-struct [[codegen::Dictionary(P2)]] Param2 {
-    std::string def;
-};
-struct [[codegen::Dictionary(P3)]] Param3 {
-    double ghi;
-};
-struct [[codegen::Dictionary(P4)]] Param4 {
-    ghoul::Dictionary jkl;
-};
-)";
-
-    Code code = parse(Source);
-    REQUIRE(code.structs.size() == 4);
-    REQUIRE(code.enums.size() == 0);
-
-    {
-        Struct* s = code.structs[0];
-        REQUIRE(s->variables.size() == 1);
-        CHECK(s->variables[0]->name == "abc");
-    }
-
-    {
-        Struct* s = code.structs[1];
-        REQUIRE(s->variables.size() == 1);
-        CHECK(s->variables[0]->name == "def");
-    }
-
-    {
-        Struct* s = code.structs[2];
-        REQUIRE(s->variables.size() == 1);
-        CHECK(s->variables[0]->name == "ghi");
-    }
-
-    {
-        Struct* s = code.structs[3];
-        REQUIRE(s->variables.size() == 1);
-        CHECK(s->variables[0]->name == "jkl");
-    }
+    CHECK(e->mappedTo.empty());
 }

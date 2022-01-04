@@ -32,7 +32,7 @@
 #include <vector>
 
 namespace {
-    enum class [[codegen::stringify()]] Enum {
+    enum class [[codegen::stringify()]] Enum1 {
         Value1,
         value2,
         Value3
@@ -41,6 +41,18 @@ namespace {
 } // namespace
 
 TEST_CASE("From String", "[enums][execution][basic]") {
+    Enum1 v1 = codegen::fromString<Enum1>("Value1");
+    CHECK(v1 == Enum1::Value1);
+    Enum1 v2 = codegen::fromString<Enum1>("value2");
+    CHECK(v2 == Enum1::value2);
+    Enum1 v3 = codegen::fromString<Enum1>("Value3");
+    CHECK(v3 == Enum1::Value3);
 
 
+    std::string_view sv1 = codegen::toString(Enum1::Value1);
+    CHECK(sv1 == "Value1");
+    std::string_view sv2 = codegen::toString(Enum1::value2);
+    CHECK(sv2 == "value2");
+    std::string_view sv3 = codegen::toString(Enum1::Value3);
+    CHECK(sv3 == "Value3");
 }
