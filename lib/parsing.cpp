@@ -625,8 +625,8 @@ Struct* parseRootStruct(std::string_view code) {
     return rootStruct;
 }
 
-[[nodiscard]] std::vector<Struct*> parse(std::string_view code) {
-    std::vector<Struct*> res;
+[[nodiscard]] Code parse(std::string_view code) {
+    Code res;
 
     while (!code.empty()) {
         std::pair<size_t, size_t> cursors = validCode(code);
@@ -636,7 +636,7 @@ Struct* parseRootStruct(std::string_view code) {
         std::string_view content = strip(code.substr(cursors.first, cursors.second));
 
         Struct* s = parseRootStruct(content);
-        res.push_back(s);
+        res.structs.push_back(s);
         code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
     }
 

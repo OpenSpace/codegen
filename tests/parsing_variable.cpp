@@ -70,9 +70,10 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     glm::dmat4 dmat4Value;
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -386,9 +387,10 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<glm::dmat4> dmat4Value;
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -702,9 +704,10 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<glm::dmat4> dmat4Value;
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -982,9 +985,10 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
 
     REQUIRE(s->variables.size() == 1);
@@ -998,9 +1002,10 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::reference(Ref)]];
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);

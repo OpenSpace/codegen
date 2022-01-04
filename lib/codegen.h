@@ -33,9 +33,9 @@ enum class Result {
     Skipped
 };
 
-struct Struct;
+struct Code;
 
 [[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(std::vector<Struct*> structs);
+[[nodiscard]] std::string generateResult(const Code& structs);
 
 #endif // __OPENSPACE_CODEGEN___CODEGEN___H__

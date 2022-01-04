@@ -345,9 +345,10 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
     
     };
 )";
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 104);
@@ -2954,7 +2955,7 @@ TEST_CASE("Parsing Attribute: Attributes (success)", "[parsing]") {
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
-    std::string r = generateResult(structs);
+    std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -2969,9 +2970,10 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[parsing]") {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
     REQUIRE(s->variables.size() == 2);
     
     {
@@ -3024,9 +3026,10 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(s->attributes.noExhaustive);
@@ -3044,9 +3047,10 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(s->attributes.noExhaustive);
@@ -3064,9 +3068,10 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
     CHECK(!s->attributes.noExhaustive);

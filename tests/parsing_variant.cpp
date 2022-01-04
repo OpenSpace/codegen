@@ -39,9 +39,10 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 2);
 
@@ -62,6 +63,9 @@ struct [[codegen::Dictionary(D)]] P {
         );
         CHECK(var->comment == "b comment");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing: Optional Variant", "[parsing]") {
@@ -71,9 +75,10 @@ struct [[codegen::Dictionary(D)]] P {
     std::optional<std::variant<bool, int>> ov;
 })";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 1);
 
@@ -84,6 +89,9 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(generateTypename(var->type) == "std::optional<std::variant<bool, int>>");
         CHECK(var->comment == "a comment");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing: Multiple instances variant", "[parsing]") {
@@ -95,6 +103,9 @@ struct [[codegen::Dictionary(D)]] P {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    [[maybe_unused]] std::string res = generateResult(structs);
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    CHECK(code.structs.front()->variables.size() == 3);
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

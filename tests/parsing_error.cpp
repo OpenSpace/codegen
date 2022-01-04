@@ -48,9 +48,9 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int error;
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
+    Code code = parse(Source);
     CHECK_THROWS_MATCHES(
-        generateResult(structs),
+        generateResult(code),
         CodegenError, Catch::Matchers::Contains("Malformed codegen::verbatim")
     );
 }
@@ -72,9 +72,9 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int error;
 };
 )";
-    std::vector<Struct*> structs = parse(Source);
+    Code code = parse(Source);
     CHECK_THROWS_MATCHES(
-        generateResult(structs),
+        generateResult(code),
         CodegenError, Catch::Matchers::Contains("Discovered unallowed unescaped")
     );
 }
@@ -87,8 +87,8 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
     CHECK_THROWS_MATCHES(
         [&](){
-            std::vector<Struct*> structs = parse(Source);
-            std::string r = generateResult(structs);
+            Code code = parse(Source);
+            std::string r = generateResult(code);
         }(),
         CodegenError, Catch::Matchers::Contains("Unbalanced number of < > brackets")
     );

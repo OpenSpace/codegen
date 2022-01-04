@@ -469,14 +469,14 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s) {
     return res;
 }
 
-std::string generateResult(std::vector<Struct*> structs) {
-    assert(!structs.empty());
+std::string generateResult(const Code& code) {
+    assert(!code.structs.empty());
 
     std::string result = fmt::format(FileHeader);
     result += "namespace codegen {\n";
     result += DocumentationFallback;
 
-    for (Struct* s : structs) {
+    for (Struct* s : code.structs) {
         result += fmt::format(DocumentationPreamble, s->name);
 
         if (GenerateWarningsForDocumentationLessTypes) {
@@ -509,7 +509,7 @@ std::string generateResult(std::vector<Struct*> structs) {
     result += BakeFunctionFallback;
     result += '\n';
 
-    std::vector<const VariableType*> types = usedTypes(structs);
+    std::vector<const VariableType*> types = usedTypes(code.structs);
     bool hasOptionalType = false;
     bool hasVectorType = false;
     bool hasMapType = false;
@@ -536,7 +536,7 @@ std::string generateResult(std::vector<Struct*> structs) {
         }
     }
 
-    for (Struct* s : structs) {
+    for (Struct* s : code.structs) {
         result += writeStructConverter(s);
     }
 
@@ -557,7 +557,7 @@ std::string generateResult(std::vector<Struct*> structs) {
 template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
 )";
 
-    for (Struct* s : structs) {
+    for (Struct* s : code.structs) {
         result += fmt::format(
             R"(
 template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
@@ -635,15 +635,15 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    std::vector<Struct*> rootStructs = parse(res);
-    if (rootStructs.empty()) {
+    Code code = parse(res);
+    if (code.structs.empty()) {
         return Result::NotProcessed;
     }
-    for (Struct* s : rootStructs) {
+    for (Struct* s : code.structs) {
         s->sourceFile = createClickableFileName(path.string());
     }
 
-    std::string content = generateResult(rootStructs);
+    std::string content = generateResult(code);
     if (content.empty()) {
         return Result::NotProcessed;
     }

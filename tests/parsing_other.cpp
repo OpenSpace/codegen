@@ -80,9 +80,10 @@ Lines, With, Weird,
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    CHECK(structs.size() == 1);
-    Struct* s = structs.front();
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
     REQUIRE(s->variables.size() == 8);
     {
@@ -150,7 +151,7 @@ Lines, With, Weird,
         CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
     }
 
-    std::string r = generateResult(structs);
+    std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -170,29 +171,30 @@ struct [[codegen::Dictionary(P4)]] Param4 {
 };
 )";
 
-    std::vector<Struct*> structs = parse(Source);
-    REQUIRE(structs.size() == 4);
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 4);
+    REQUIRE(code.enums.size() == 0);
 
     {
-        Struct* s = structs[0];
+        Struct* s = code.structs[0];
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "abc");
     }
 
     {
-        Struct* s = structs[1];
+        Struct* s = code.structs[1];
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "def");
     }
 
     {
-        Struct* s = structs[2];
+        Struct* s = code.structs[2];
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "ghi");
     }
 
     {
-        Struct* s = structs[3];
+        Struct* s = code.structs[3];
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "jkl");
     }
