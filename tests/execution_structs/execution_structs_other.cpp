@@ -22,20 +22,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    struct [[codegen::Dictionary(Other)]] Parameters {
+        int abc;
+    };
+#include "execution_structs_other_codegen.cpp"
+} // namespace
 
-struct Code;
+TEST_CASE("Documentation id", "[structs][execution]") {
+    using namespace openspace::documentation;
+    Documentation doc1 = codegen::doc<Parameters>("");
+    CHECK(doc1.id == "");
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
-
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    Documentation doc2 = codegen::doc<Parameters>("abc");
+    CHECK(doc2.id == "abc");
+}

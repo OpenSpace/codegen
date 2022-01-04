@@ -22,20 +22,33 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+TEST_CASE("Parsing Map: Minimal", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Name)]] Parameters {
+    std::map<std::string, std::string> p;
+};)";
 
-struct Code;
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.size() == 0);
+    Struct* s = code.structs.front();
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->children.empty());
+    REQUIRE(s->variables.size() == 1);
+    CHECK(s->variables[0]->name == "p");
+    CHECK(s->variables[0]->key == "\"P\"");
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+
+}
+

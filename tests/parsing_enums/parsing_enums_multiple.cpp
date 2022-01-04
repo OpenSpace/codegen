@@ -22,20 +22,82 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+TEST_CASE("Parsing: Enum Multiple", "[enums][parsing]") {
+    constexpr const char Source[] = R"(
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1,
+        value2,
+        Value3
+    };
 
-struct Code;
+    enum class [[codegen::stringify()]] Enum2 {
+        Val4,
+        Val5
+    };
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+    enum class [[codegen::stringify()]] Enum3 {
+        Val6
+    };
+)";
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    REQUIRE(code.enums.size() == 3);
+
+    {
+        Enum* e = code.enums[0];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo.empty());
+        REQUIRE(e->elements.size() == 3);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Value1");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "value2");
+        }
+        {
+            EnumElement* ee = e->elements[2];
+            REQUIRE(ee);
+            CHECK(ee->name == "Value3");
+        }
+    }
+
+    {
+        Enum* e = code.enums[1];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo.empty());
+        REQUIRE(e->elements.size() == 2);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val4");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val5");
+        }
+    }
+
+    {
+        Enum* e = code.enums[2];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo.empty());
+        REQUIRE(e->elements.size() == 1);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val6");
+        }
+    }
+}

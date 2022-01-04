@@ -22,20 +22,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace CM = Catch::Matchers;
 
-struct Code;
-
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
-
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+//TEST_CASE("Parsing: Enum Error stringify-map", "[enums][parsing]") {
+//    constexpr const char S[] = R"(
+//    enum class [[codegen::stringify(), codegen::map(Abc)]] Enum1 {
+//        Value1,
+//        value2,
+//        Value3
+//    };
+//)";
+//    CHECK_THROWS_MATCHES(
+//        parse(S),
+//        CodegenError, CM::Contains("Cannot map a root enum")
+//    );
+//}

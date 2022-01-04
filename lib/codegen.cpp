@@ -382,7 +382,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     return result;
 }
 
-std::string writeEnumConverter(Enum* e) {
+std::string writeInnerEnumConverter(Enum* e) {
     std::string type = fqn(e, "::");
     std::string result = fmt::format(
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
@@ -416,7 +416,7 @@ std::string writeStructConverter(Struct* s) {
         }
 
         if (e->type == StackElement::Type::Enum) {
-            result += writeEnumConverter(static_cast<Enum*>(e));
+            result += writeInnerEnumConverter(static_cast<Enum*>(e));
         }
     }
 
@@ -469,25 +469,65 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s) {
     return res;
 }
 
-std::string generateResult(std::vector<Struct*> structs) {
-    assert(!structs.empty());
+std::string writeRootEnumConverter(Enum* e) {
+    assert(e);
+    assert(e->parent == nullptr);
+
+    std::string res;
+
+    // toString
+    res += fmt::format(R"(
+template <> std::string_view toString<{0}>({0} t) {{
+    switch (t) {{ 
+)",
+        e->name
+    );
+    for (EnumElement* elem : e->elements) {
+        res += fmt::format(
+            "        case {0}::{1}: return {2};\n", e->name, elem->name, elem->attributes.key
+        );
+    }
+    res += R"(        default: throw "This default label is not necessary since the case labels are "
+                       "exhaustive, but not having it makes Visual Studio cranky";)";
+    res += "\n    }\n}\n";
+
+    // fromString
+    res += fmt::format(
+        "template <> {0} fromString<{0}>(std::string_view sv) {{\n", e->name
+    );
+    for (EnumElement* elem : e->elements) {
+        res += fmt::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
+            elem->attributes.key, e->name, elem->name
+        );
+    }
+    res += "    throw std::runtime_error(\"Could not find value in enum\");\n";
+    res += "}\n";
+
+    return res;
+}
+
+std::string generateResult(const Code& code) {
+    assert(!code.structs.empty() || !code.enums.empty());
 
     std::string result = fmt::format(FileHeader);
-    result += "namespace codegen {\n";
-    result += DocumentationFallback;
 
-    for (Struct* s : structs) {
-        result += fmt::format(DocumentationPreamble, s->name);
 
-        if (GenerateWarningsForDocumentationLessTypes) {
-            result += emitWarningsForDocumentationLessTypes(s);
+    if (!code.structs.empty()) {
+        result += "namespace codegen {\n";
+        result += DocumentationFallback;
+
+        for (Struct* s : code.structs) {
+            result += fmt::format(DocumentationPreamble, s->name);
+
+            if (GenerateWarningsForDocumentationLessTypes) {
+                result += emitWarningsForDocumentationLessTypes(s);
+            }
+
+            result += writeStructDocumentation(s);
+            result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
         }
-
-        result += writeStructDocumentation(s);
-        result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
+        result += "} // namespace codegen\n";
     }
-    result += "} // namespace codegen\n";
-
 
     // For Linux, we need to delcare the functions in the following order or the overload
     // resolution picks the top fall back implentation and triggers a static_assert:
@@ -505,61 +545,66 @@ std::string generateResult(std::vector<Struct*> structs) {
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    result += "\nnamespace codegen {\nnamespace internal {\n";
-    result += BakeFunctionFallback;
-    result += '\n';
+    result += "\nnamespace codegen {\n";
 
-    std::vector<const VariableType*> types = usedTypes(structs);
-    bool hasOptionalType = false;
-    bool hasVectorType = false;
-    bool hasMapType = false;
-    for (const VariableType* t : types) {
-        assert(t);
-        hasOptionalType |= (t->tag == VariableType::Tag::OptionalType);
-        hasVectorType |= (t->tag == VariableType::Tag::VectorType);
-        hasMapType |= (t->tag == VariableType::Tag::MapType);
-    }
+    bool hasWrittenMappingFallback = false;
+    
+    if (!code.structs.empty()) {
+        result += "namespace internal { \n";
+        result += BakeFunctionFallback;
+        result += '\n';
 
-    if (hasOptionalType) {
-        result += BakeFunctionOptionalDeclaration;
-    }
-    if (hasVectorType) {
-        result += BakeFunctionVectorDeclaration;
-    }
-    if (hasMapType) {
-        result += BakeFunctionMapDeclaration;
-    }
-    for (const VariableType* t : types) {
-        if (t->tag == VariableType::Tag::BasicType) {
-            const BasicType* bt = static_cast<const BasicType*>(t);
-            result += bakeFunctionForType(bt->type);
+        std::vector<const VariableType*> types = usedTypes(code.structs);
+        bool hasOptionalType = false;
+        bool hasVectorType = false;
+        bool hasMapType = false;
+        for (const VariableType* t : types) {
+            assert(t);
+            hasOptionalType |= (t->tag == VariableType::Tag::OptionalType);
+            hasVectorType |= (t->tag == VariableType::Tag::VectorType);
+            hasMapType |= (t->tag == VariableType::Tag::MapType);
         }
-    }
 
-    for (Struct* s : structs) {
-        result += writeStructConverter(s);
-    }
+        if (hasOptionalType) {
+            result += BakeFunctionOptionalDeclaration;
+        }
+        if (hasVectorType) {
+            result += BakeFunctionVectorDeclaration;
+        }
+        if (hasMapType) {
+            result += BakeFunctionMapDeclaration;
+        }
+        for (const VariableType* t : types) {
+            if (t->tag == VariableType::Tag::BasicType) {
+                const BasicType* bt = static_cast<const BasicType*>(t);
+                result += bakeFunctionForType(bt->type);
+            }
+        }
+
+        for (Struct* s : code.structs) {
+            result += writeStructConverter(s);
+        }
 
 
-    if (hasOptionalType) {
-        result += BakeFunctionOptional;
-    }
-    if (hasVectorType) {
-        result += BakeFunctionVector;
-    }
-    if (hasMapType) {
-        result += BakeFunctionMap;
-    }
+        if (hasOptionalType) {
+            result += BakeFunctionOptional;
+        }
+        if (hasVectorType) {
+            result += BakeFunctionVector;
+        }
+        if (hasMapType) {
+            result += BakeFunctionMap;
+        }
 
-    result += R"(
+        result += R"(
 } // namespace internal
 
 template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
 )";
 
-    for (Struct* s : structs) {
-        result += fmt::format(
-            R"(
+        for (Struct* s : code.structs) {
+            result += fmt::format(
+                R"(
 template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
@@ -567,54 +612,51 @@ template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
 s->name, s->attributes.dictionary
 );
 
-        for (Variable* var : s->variables) {
-            result += fmt::format(
-                "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
-            );
-        }
-
-        result += "    return res;\n}\n";
-
-        std::vector<Enum*> enums = mappedEnums(*s);
-        if (!enums.empty()) {
-            result += MapFunctionFallback;
-            result += '\n';
-        }
-
-        for (Enum* e : enums) {
-            assert(!e->mappedTo.empty());
-            std::string fullyQualifiedName = fqn(e, "::");
-            result += fmt::format(R"(
-template<> {0} map<{0}, {1}>({1} value) {{
-    switch (value) {{
-        // If you end up here following a compiler error saying something about 
-        // 'illegal qualified name in member declaration' or such nonsense, then you tried
-        // to map an enum A to another enum B and A has an enum value that B does not
-        // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};
-        // would trigger that error on trying to access B::Value2 wich is an illegal
-        // qualified name. Make the enums match each other and run codegen again)",
-                e->mappedTo, fullyQualifiedName
-            );
-
-            for (EnumElement* ee : e->elements) {
-                result += fmt::format(R"(
-        case {0}::{2}:  return {1}::{2};)",
-                    fullyQualifiedName, e->mappedTo, ee->name
+            for (Variable* var : s->variables) {
+                result += fmt::format(
+                    "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
                 );
             }
 
-            result += fmt::format(R"(
-        default:
-            throw "This default label is not necessary since the case labels are "
-                  "exhaustive, but not having it makes Visual Studio cranky";
-    }}
-}}
-)"
-            );
+            result += "    return res;\n}\n";
+
+            std::vector<Enum*> enums = mappedEnums(*s);
+            if (!enums.empty() && !hasWrittenMappingFallback) {
+                result += MapFunctionFallback;
+                result += '\n';
+                hasWrittenMappingFallback = true;
+            }
+
+            for (Enum* e : enums) {
+                result += enumToEnumMapping(e);
+            }
+        }
+
+        result += '\n';
+    }
+
+    if (!code.enums.empty()) {
+        result += ToStringFallback;
+        result += '\n';
+        result += FromStringFallback;
+        result += '\n';
+
+        for (Enum* e : code.enums) {
+            result += writeRootEnumConverter(e);
+
+            if (!e->mappedTo.empty()) {
+                if (!hasWrittenMappingFallback) {
+                    result += MapFunctionFallback;
+                    result += '\n';
+                    hasWrittenMappingFallback = true;
+                }
+                result += enumToEnumMapping(e);
+            }
         }
     }
-    
-    result += "\n}// namespace codegen\n";
+
+
+    result += "}// namespace codegen\n";
     return result;
 }
 
@@ -635,15 +677,15 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    std::vector<Struct*> rootStructs = parse(res);
-    if (rootStructs.empty()) {
+    Code code = parse(res);
+    if (code.structs.empty() && code.enums.empty()) {
         return Result::NotProcessed;
     }
-    for (Struct* s : rootStructs) {
+    for (Struct* s : code.structs) {
         s->sourceFile = createClickableFileName(path.string());
     }
 
-    std::string content = generateResult(rootStructs);
+    std::string content = generateResult(code);
     if (content.empty()) {
         return Result::NotProcessed;
     }

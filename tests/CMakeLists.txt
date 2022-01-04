@@ -26,63 +26,73 @@ add_executable(
   codegentest
   main.cpp
 
-  execution/execution_attributes.cpp
-  execution/execution_basic_types.cpp
-  execution/execution_basic_types_optional.cpp
-  execution/execution_basic_types_optional_vector.cpp
-  execution/execution_basic_types_vector.cpp
-  execution/execution_enums.cpp
-  execution/execution_enummapping.cpp
-  execution/execution_map.cpp
-  execution/execution_multiple.cpp
-  execution/execution_optional_variant_vector.cpp
-  execution/execution_other.cpp
-  execution/execution_shadowing.cpp
-  execution/execution_simple.cpp
-  execution/execution_substructs.cpp
-  execution/execution_variant.cpp
+  execution_structs/execution_structs_attributes.cpp
+  execution_structs/execution_structs_basic_types.cpp
+  execution_structs/execution_structs_basic_types_optional.cpp
+  execution_structs/execution_structs_basic_types_optional_vector.cpp
+  execution_structs/execution_structs_basic_types_vector.cpp
+  execution_structs/execution_structs_enums.cpp
+  execution_structs/execution_structs_enummapping.cpp
+  execution_structs/execution_structs_map.cpp
+  execution_structs/execution_structs_multiple.cpp
+  execution_structs/execution_structs_optional_variant_vector.cpp
+  execution_structs/execution_structs_other.cpp
+  execution_structs/execution_structs_shadowing.cpp
+  execution_structs/execution_structs_simple.cpp
+  execution_structs/execution_structs_substructs.cpp
+  execution_structs/execution_structs_variant.cpp
+  execution_enums/execution_enums_basic.cpp
+  execution_enums/execution_enums_mapping.cpp
+  execution_enums/execution_enums_multiple.cpp
+  execution_enums/execution_enums_keys.cpp
 
-  parsing_attributes.cpp
-  parsing_attributes_error_bool.cpp
-  parsing_attributes_error_dmat2x2.cpp
-  parsing_attributes_error_dmat2x3.cpp
-  parsing_attributes_error_dmat2x4.cpp
-  parsing_attributes_error_dmat3x2.cpp
-  parsing_attributes_error_dmat3x3.cpp
-  parsing_attributes_error_dmat3x4.cpp
-  parsing_attributes_error_dmat4x2.cpp
-  parsing_attributes_error_dmat4x3.cpp
-  parsing_attributes_error_dmat4x4.cpp
-  parsing_attributes_error_double.cpp
-  parsing_attributes_error_dvec2.cpp
-  parsing_attributes_error_dvec3.cpp
-  parsing_attributes_error_dvec4.cpp
-  parsing_attributes_error_float.cpp
-  parsing_attributes_error_int.cpp
-  parsing_attributes_error_ivec2.cpp
-  parsing_attributes_error_ivec3.cpp
-  parsing_attributes_error_ivec4.cpp
-  parsing_attributes_error_mat2x2.cpp
-  parsing_attributes_error_mat2x3.cpp
-  parsing_attributes_error_mat2x4.cpp
-  parsing_attributes_error_mat3x2.cpp
-  parsing_attributes_error_mat3x3.cpp
-  parsing_attributes_error_mat3x4.cpp
-  parsing_attributes_error_mat4x2.cpp
-  parsing_attributes_error_mat4x3.cpp
-  parsing_attributes_error_mat4x4.cpp
-  parsing_attributes_error_monostate.cpp
-  parsing_attributes_error_string.cpp
-  parsing_attributes_error_vec2.cpp
-  parsing_attributes_error_vec3.cpp
-  parsing_attributes_error_vec4.cpp
-  parsing_error.cpp
-  parsing_map.cpp
-  parsing_other.cpp
-  parsing_struct.cpp
-  parsing_variable.cpp
-  parsing_variant.cpp
-  parsing_variant_error.cpp
+  parsing_structs/parsing_structs_attributes.cpp
+  parsing_structs/parsing_structs_attributes_error_bool.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat2x2.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat2x3.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat2x4.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat3x2.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat3x3.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat3x4.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat4x2.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat4x3.cpp
+  parsing_structs/parsing_structs_attributes_error_dmat4x4.cpp
+  parsing_structs/parsing_structs_attributes_error_double.cpp
+  parsing_structs/parsing_structs_attributes_error_dvec2.cpp
+  parsing_structs/parsing_structs_attributes_error_dvec3.cpp
+  parsing_structs/parsing_structs_attributes_error_dvec4.cpp
+  parsing_structs/parsing_structs_attributes_error_float.cpp
+  parsing_structs/parsing_structs_attributes_error_int.cpp
+  parsing_structs/parsing_structs_attributes_error_ivec2.cpp
+  parsing_structs/parsing_structs_attributes_error_ivec3.cpp
+  parsing_structs/parsing_structs_attributes_error_ivec4.cpp
+  parsing_structs/parsing_structs_attributes_error_mat2x2.cpp
+  parsing_structs/parsing_structs_attributes_error_mat2x3.cpp
+  parsing_structs/parsing_structs_attributes_error_mat2x4.cpp
+  parsing_structs/parsing_structs_attributes_error_mat3x2.cpp
+  parsing_structs/parsing_structs_attributes_error_mat3x3.cpp
+  parsing_structs/parsing_structs_attributes_error_mat3x4.cpp
+  parsing_structs/parsing_structs_attributes_error_mat4x2.cpp
+  parsing_structs/parsing_structs_attributes_error_mat4x3.cpp
+  parsing_structs/parsing_structs_attributes_error_mat4x4.cpp
+  parsing_structs/parsing_structs_attributes_error_monostate.cpp
+  parsing_structs/parsing_structs_attributes_error_string.cpp
+  parsing_structs/parsing_structs_attributes_error_vec2.cpp
+  parsing_structs/parsing_structs_attributes_error_vec3.cpp
+  parsing_structs/parsing_structs_attributes_error_vec4.cpp
+  parsing_structs/parsing_structs_enums.cpp
+  parsing_structs/parsing_structs_error.cpp
+  parsing_structs/parsing_structs_map.cpp
+  parsing_structs/parsing_structs_other.cpp
+  parsing_structs/parsing_structs_struct.cpp
+  parsing_structs/parsing_structs_variable.cpp
+  parsing_structs/parsing_structs_variant.cpp
+  parsing_structs/parsing_structs_variant_error.cpp
+  parsing_enums/parsing_enums_basic.cpp
+  parsing_enums/parsing_enums_error.cpp
+  parsing_enums/parsing_enums_mapping.cpp
+  parsing_enums/parsing_enums_multiple.cpp
+  parsing_enums/parsing_enums_keys.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
@@ -119,6 +129,6 @@ add_dependencies(run_test_codegen codegen)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution"
+  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs" "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums"
   VERBATIM
 )

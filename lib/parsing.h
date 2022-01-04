@@ -28,8 +28,14 @@
 #include <string_view>
 #include <vector>
 
+struct Enum;
 struct Struct;
 
-[[nodiscard]] std::vector<Struct*> parse(std::string_view code);
+struct Code {
+    std::vector<Struct*> structs;
+    std::vector<Enum*> enums;
+};
+
+[[nodiscard]] Code parse(std::string_view code);
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

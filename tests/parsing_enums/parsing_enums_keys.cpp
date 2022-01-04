@@ -22,20 +22,44 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+TEST_CASE("Parsing: Enum Keys", "[enums][parsing]") {
+    constexpr const char Source[] = R"(
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1 [[codegen::key("KeyForValue1")]],
+        value2,
+        Value3 [[codegen::key("KeyForValue3")]]
+    };
+)";
 
-struct Code;
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
-
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    CHECK(e->parent == nullptr);
+    CHECK(e->mappedTo.empty());
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+        CHECK(ee->attributes.key == "\"KeyForValue1\"");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+        CHECK(ee->attributes.key == "\"KeyForValue3\"");
+    }
+}

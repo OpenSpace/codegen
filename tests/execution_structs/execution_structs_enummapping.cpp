@@ -22,20 +22,61 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    enum class MappedEnumA {
+        Value1,
+        value2,
+        Value3
+    };
 
-struct Code;
+    struct [[codegen::Dictionary(EnumMapping)]] Parameters {
+        // enum A documentation
+        enum class [[codegen::map(MappedEnumA)]] A {
+            Value1,
+            value2,
+            Value3
+        };
+        // variable enumAValue documentation
+        A enumAValue;
+    };
+#include "execution_structs_enummapping_codegen.cpp"
+} // namespace
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+TEST_CASE("Enum Mapping 1", "[structs][execution]") {
+    ghoul::Dictionary d;
+    d.setValue("EnumAValue", std::string("Value1"));
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    const Parameters p = codegen::bake<Parameters>(d);
+    CHECK(p.enumAValue == Parameters::A::Value1);
+
+    MappedEnumA ma = codegen::map<MappedEnumA>(p.enumAValue);
+    CHECK(ma == MappedEnumA::Value1);
+}
+
+TEST_CASE("Enum Mapping 2", "[structs][execution]") {
+    ghoul::Dictionary d;
+    d.setValue("EnumAValue", std::string("value2"));
+
+    const Parameters p = codegen::bake<Parameters>(d);
+    CHECK(p.enumAValue == Parameters::A::value2);
+
+    MappedEnumA ma = codegen::map<MappedEnumA>(p.enumAValue);
+    CHECK(ma == MappedEnumA::value2);
+}
+
+TEST_CASE("Enum Mapping 3", "[structs][execution]") {
+    ghoul::Dictionary d;
+    d.setValue("EnumAValue", std::string("Value3"));
+
+    const Parameters p = codegen::bake<Parameters>(d);
+    CHECK(p.enumAValue == Parameters::A::Value3);
+
+    MappedEnumA ma = codegen::map<MappedEnumA>(p.enumAValue);
+    CHECK(ma == MappedEnumA::Value3);
+}

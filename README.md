@@ -84,6 +84,20 @@ then there is a function `codegen::map<myspace::External>` available that takes 
 ### Enum Attributes
  - `[[codegen::key(Name)]]`: Use the "Name" instead of the enum values name
 
+## Root enums
+`enum class` definitions can also happen on the root level.  Codegen will create code for these if they are marked with either the `codegen::stringify` or `codegen::map` attributes.  For the usage of the `codegen::map` attribute, see the relevant section above.  Any root enum that is marked with the `codegen::stringify` attribute will cause two functions to appear in the `_codegen.cpp` file: `codegen::toString` and `codegen::fromString`.  These functions can be used to convert between string representations of the enum values and the enum values.  Please note that the `codegen::key` value is used if an enum value uses one.  For example:
+```
+enum class [[codegen::stringify()]] TestEnum {
+  Value1,
+  Value2 [[codegen::key("Different key")]]
+};
+
+assert(codegen::fromString<TestEnum>("Value1") == TestEnum::Value1);
+assert(codegen::toString(TestEnum::Value1) == "Value1");
+
+assert(codegen::fromString<TestEnum>("Different key") == TestEnum::Value2);
+assert(codegen::toString(TestEnum::Value2) == "Different key");
+```
 
 ## Verifier Mappings
 This is a complete list of variable types and attribute combinations.  We are **not** listing the `[[codegen::key(...)]]` attribute here, as this is allowed with *every* variable.

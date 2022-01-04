@@ -22,20 +22,38 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1 [[codegen::key("KeyForValue1")]],
+        value2,
+        Value3 [[codegen::key("KeyForValue3")]]
+    };
+#include "execution_enums_keys_codegen.cpp"
+} // namespace
 
-struct Code;
+TEST_CASE("Enums Keys From String", "[enums][execution]") {
+    Enum1 v1 = codegen::fromString<Enum1>("KeyForValue1");
+    CHECK(v1 == Enum1::Value1);
+    Enum1 v2 = codegen::fromString<Enum1>("value2");
+    CHECK(v2 == Enum1::value2);
+    Enum1 v3 = codegen::fromString<Enum1>("KeyForValue3");
+    CHECK(v3 == Enum1::Value3);
+}
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
-
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+TEST_CASE("Enums Keys To String", "[enums][execution]") {
+    std::string_view sv1 = codegen::toString(Enum1::Value1);
+    CHECK(sv1 == "KeyForValue1");
+    std::string_view sv2 = codegen::toString(Enum1::value2);
+    CHECK(sv2 == "value2");
+    std::string_view sv3 = codegen::toString(Enum1::Value3);
+    CHECK(sv3 == "KeyForValue3");
+}

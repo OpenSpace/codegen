@@ -31,6 +31,8 @@
 
 namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
+    constexpr const char AttributeStringify[] = "[[codegen::stringify";
+    constexpr const char AttributeMap[] = "[[codegen::map";
 } // namespace
 
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
@@ -367,34 +369,34 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     return res;
 }
 
-std::pair<size_t, size_t> validCode(std::string_view code) {
+std::pair<size_t, size_t> validStructCode(std::string_view code) {
     assert(!code.empty());
 
-    const size_t mainLoc = code.find(AttributeDictionary);
-    if (mainLoc == std::string_view::npos) {
+    const size_t loc = code.find(AttributeDictionary);
+    if (loc == std::string_view::npos) {
         // We did't find the attrbute
         return { std::string_view::npos, std::string_view::npos };
     }
 
-    int64_t cursor = mainLoc;
-    while (code.substr(cursor, mainLoc - cursor).find("struct") == std::string_view::npos)
+    int64_t cursor = loc;
+    while (code.substr(cursor, loc - cursor).find("struct") == std::string_view::npos)
     {
         cursor--;
 
         if (cursor < 0) {
             std::string_view sb = code.substr(
-                static_cast<size_t>(std::max(0, static_cast<int>(mainLoc) - 50)),
+                static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
                 std::min<size_t>(50, code.size() - 1)
             );
             throw CodegenError(fmt::format(
                 "Could not find 'struct' before '[[codegen::Dictionary' before reaching "
-                "the beginning of the file\n{}",
+                "the end of the file\n{}",
                 sb
             ));
         }
     }
 
-    std::string_view nameCheck = code.substr(cursor, mainLoc - cursor);
+    std::string_view nameCheck = code.substr(cursor, loc - cursor);
     assert(startsWith(nameCheck, "struct"));
 
     using namespace std::literals;
@@ -409,7 +411,6 @@ std::pair<size_t, size_t> validCode(std::string_view code) {
     }
 
     const size_t lastNewLine = static_cast<size_t>(cursor);
-
     cursor = code.find('{', lastNewLine) + 1;
     for (int counter = 1; counter > 0; cursor++) {
         if (cursor >= static_cast<int64_t>(code.size())) {
@@ -429,7 +430,70 @@ std::pair<size_t, size_t> validCode(std::string_view code) {
     return { lastNewLine, cursor - lastNewLine + 1 };
 }
 
-Struct* parseRootStruct(std::string_view code) {
+std::pair<size_t, size_t> validEnumCode(std::string_view code) {
+    assert(!code.empty());
+
+    const size_t locStringify = code.find(AttributeStringify);
+    const size_t locMap = code.find(AttributeMap);
+    const size_t loc = std::min(locStringify, locMap);
+    if (loc == std::string_view::npos) {
+        // We did't find the attrbute
+        return { std::string_view::npos, std::string_view::npos };
+    }
+
+    int64_t cursor = loc;
+    while (code.substr(cursor, loc - cursor).find("enum class") == std::string_view::npos)
+    {
+        cursor--;
+
+        if (cursor < 0) {
+            std::string_view sb = code.substr(
+                static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
+                std::min<size_t>(50, code.size() - 1)
+            );
+            throw CodegenError(fmt::format(
+                "Could not find 'enum class' before '[[codegen::stringify' before "
+                "reaching the end of the file\n{}",
+                sb
+            ));
+        }
+    }
+
+    std::string_view nameCheck = code.substr(cursor, loc - cursor);
+    assert(startsWith(nameCheck, "enum class"));
+
+    using namespace std::literals;
+    nameCheck.remove_prefix("enum class"sv.size());
+    for (char c : nameCheck) {
+        if (::isspace(c) == 0) {
+            throw CodegenError(fmt::format(
+                "Only 'enum class' can appear directly before [[codegen::stringify\n{}",
+                code.substr(0, std::min<size_t>(code.size(), 50))
+            ));
+        }
+    }
+
+    const size_t lastNewLine = static_cast<size_t>(cursor);
+    cursor = code.find('{', lastNewLine) + 1;
+    for (int counter = 1; counter > 0; cursor++) {
+        if (cursor >= static_cast<int64_t>(code.size())) {
+            throw CodegenError(fmt::format(
+                "Could not find closing }} of root enum\n{}", code
+            ));
+        }
+
+        if (code[cursor] == '{') {
+            counter++;
+        }
+        if (code[cursor] == '}') {
+            counter--;
+        }
+    }
+
+    return { lastNewLine, cursor - lastNewLine + 1 };
+}
+
+[[nodiscard]] Struct* parseRootStruct(std::string_view code) {
     if (size_t p = code.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", code.substr(p, 50)
@@ -625,19 +689,107 @@ Struct* parseRootStruct(std::string_view code) {
     return rootStruct;
 }
 
-[[nodiscard]] std::vector<Struct*> parse(std::string_view code) {
-    std::vector<Struct*> res;
+[[nodiscard]] Enum* parseRootEnum(std::string_view code) {
+    assert(!code.empty());
+
+    if (size_t p = code.find("/*"); p != std::string_view::npos) {
+        throw CodegenError(fmt::format(
+            "Block comments are not allowed\n{}", code.substr(p, 50)
+        ));
+    }
+
+    Enum* rootEnum = nullptr;
+    std::string enumBuffer;
+
+    size_t cursor = 0;
+    while (cursor != std::string_view::npos) {
+        std::string_view line = extractLine(code, &cursor);
+        if (line.empty()) {
+            continue;
+        }
+
+        if (startsWith(line, "enum class")) {
+            assert(!rootEnum);
+            rootEnum = parseEnum(line);
+            assert(rootEnum);
+            continue;
+        }
+
+        if (startsWith(line, "};")) {
+            // A bit of a special case for enums.  Since we want to support multiple
+            // lines for enum value we have to store the line in a buffer to check
+            // when we are finished.  We use a finalizing , for it, which does not
+            // have to exist and it would also be annoying to force people to enter
+            // that for every enum and it is error prone.  So we need to check here if
+            // we still have an enum in the buffer and add that if it is so
+
+            if (!enumBuffer.empty()) {
+                enumBuffer += line;
+                EnumElement* el = parseEnumElement(enumBuffer);
+                assert(el);
+                enumBuffer.clear();
+                rootEnum->elements.push_back(el);
+            }
+            continue;
+        }
+
+        if (line.back() != ',') {
+            // No comma at the end means that this line is not finished yet.
+            // Though this means that that the last value will be added to the
+            // buffer since it will not be finished
+            enumBuffer += line;
+            enumBuffer += " ";
+            continue;
+        }
+
+        EnumElement* el;
+        if (enumBuffer.empty()) {
+            el = parseEnumElement(line);
+        }
+        else {
+            enumBuffer += line;
+            el = parseEnumElement(enumBuffer);
+            enumBuffer.clear();
+        }
+        assert(el);
+        rootEnum->elements.push_back(el);
+        continue;
+    }
+
+    return rootEnum;
+}
+
+[[nodiscard]] Code parse(std::string_view code) {
+    Code res;
 
     while (!code.empty()) {
-        std::pair<size_t, size_t> cursors = validCode(code);
-        if (cursors.first == std::string_view::npos) {
-            return res;
-        }
-        std::string_view content = strip(code.substr(cursors.first, cursors.second));
+        
+        if (std::pair<size_t, size_t> cursors = validStructCode(code);
+            cursors.first != std::string_view::npos)
+        {
+            std::string_view content = strip(code.substr(cursors.first, cursors.second));
 
-        Struct* s = parseRootStruct(content);
-        res.push_back(s);
-        code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
+            Struct* s = parseRootStruct(content);
+            assert(s);
+            res.structs.push_back(s);
+            code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
+            continue;
+        }
+
+        
+        if (std::pair<size_t, size_t> cursors = validEnumCode(code);
+            cursors.first != std::string_view::npos)
+        {
+            std::string_view content = strip(code.substr(cursors.first, cursors.second));
+
+            Enum* e = parseRootEnum(content);
+            assert(e);
+            res.enums.push_back(e);
+            code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
+            continue;
+        }
+
+        return res;
     }
 
     return res;

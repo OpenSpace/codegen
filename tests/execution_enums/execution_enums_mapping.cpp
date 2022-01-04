@@ -22,20 +22,74 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    enum class Mapped2 {
+        Val4,
+        Val5
+    };
 
-struct Code;
+    enum class Mapped3 {
+        Val6
+    };
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1,
+        value2,
+        Value3
+    };
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    enum class [[codegen::stringify(), codegen::map(Mapped2)]] Enum2 {
+        Val4,
+        Val5
+    };
+
+    enum class [[codegen::map(Mapped3)]] Enum3 {
+        Val6
+    };
+#include "execution_enums_mapping_codegen.cpp"
+} // namespace
+
+TEST_CASE("Mapping From String", "[enums][execution][basic]") {
+    Enum1 v1 = codegen::fromString<Enum1>("Value1");
+    CHECK(v1 == Enum1::Value1);
+    Enum1 v2 = codegen::fromString<Enum1>("value2");
+    CHECK(v2 == Enum1::value2);
+    Enum1 v3 = codegen::fromString<Enum1>("Value3");
+    CHECK(v3 == Enum1::Value3);
+
+    Enum2 v4 = codegen::fromString<Enum2>("Val4");
+    CHECK(v4 == Enum2::Val4);
+    Mapped2 mv4 = codegen::map<Mapped2>(v4);
+    CHECK(mv4 == Mapped2::Val4);
+    Enum2 v5 = codegen::fromString<Enum2>("Val5");
+    CHECK(v5 == Enum2::Val5);
+    Mapped2 mv5 = codegen::map<Mapped2>(v5);
+    CHECK(mv5 == Mapped2::Val5);
+
+    Mapped3 mv6 = codegen::map<Mapped3>(Enum3::Val6);
+    CHECK(mv6 == Mapped3::Val6);
+
+}
+
+TEST_CASE("Mapping To String", "[enums][execution]") {
+    std::string_view v1 = codegen::toString(Enum1::Value1);
+    CHECK(v1 == "Value1");
+    std::string_view v2 = codegen::toString(Enum1::value2);
+    CHECK(v2 == "value2");
+    std::string_view v3 = codegen::toString(Enum1::Value3);
+    CHECK(v3 == "Value3");
+
+    std::string_view v4 = codegen::toString(Enum2::Val4);
+    CHECK(v4 == "Val4");
+    std::string_view v5 = codegen::toString(Enum2::Val5);
+    CHECK(v5 == "Val5");
+}

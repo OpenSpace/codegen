@@ -22,20 +22,67 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
+TEST_CASE("Variant Error: Multiple Vectors", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    // a comment
+    std::variant<std::vector<int>, std::vector<float>> a;
 };
+)";
 
-struct Code;
+    CHECK_THROWS_MATCHES(
+        parse(Source),
+        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
+    );
+}
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+TEST_CASE("Variant Error: Custom substrct", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    struct A {
+        int a;
+    };
+    std::variant<A, float> v;
+};
+)";
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    CHECK_THROWS_MATCHES(
+        parse(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'A' found in variant list")
+    );
+}
+
+TEST_CASE("Variant Error: Internal optional", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<std::optional<int>, float> v;
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parse(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'std::optional<int>' found in variant list")
+    );
+}
+
+TEST_CASE("Variant Error: Nested variants", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<std::variant<int, float>, float> v;
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parse(Source),
+        CodegenError,
+        Catch::Matchers::Contains("Unsupported type 'std::variant<int, float>' found in variant list")
+    );
+}

@@ -22,20 +22,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    struct [[codegen::Dictionary(D1)]] Parameters1 {
+        int abc;
+    };
 
-struct Code;
+    struct [[codegen::Dictionary(D2)]] Parameters2 {
+        int def;
+    };
+#include "execution_structs_multiple_codegen.cpp"
+} // namespace
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+TEST_CASE("Multiple Parameters", "[structs][execution]") {
+    using namespace openspace::documentation;
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+    ghoul::Dictionary d;
+    d.setValue("Abc", 1);
+    d.setValue("Def", 2);
+
+    const Parameters1 p1 = codegen::bake<Parameters1>(d);
+    CHECK(p1.abc == 1);
+
+    const Parameters2 p2 = codegen::bake<Parameters2>(d);
+    CHECK(p2.def == 2);
+}

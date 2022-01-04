@@ -201,3 +201,38 @@ std::string_view variantConversionFunctionForType(std::string_view type) {
     const auto it = ConvertFunctions.find(type);
     return it != ConvertFunctions.end() ? it->second : std::string_view();
 }
+
+std::string enumToEnumMapping(Enum* e) {
+    assert(e);
+    assert(!e->mappedTo.empty());
+    std::string fullyQualifiedName = fqn(e, "::");
+    std::string result = fmt::format(R"(
+template<> {0} map<{0}, {1}>({1} value) {{
+    switch (value) {{
+        // If you end up here following a compiler error saying something about 
+        // 'illegal qualified name in member declaration' or such nonsense, then you tried
+        // to map an enum A to another enum B and A has an enum value that B does not
+        // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};
+        // would trigger that error on trying to access B::Value2 wich is an illegal
+        // qualified name. Make the enums match each other and run codegen again)",
+        e->mappedTo, fullyQualifiedName
+    );
+
+    for (EnumElement* ee : e->elements) {
+        result += fmt::format(R"(
+        case {0}::{2}:  return {1}::{2};)",
+            fullyQualifiedName, e->mappedTo, ee->name
+        );
+    }
+
+    result += fmt::format(R"(
+        default:
+            throw "This default label is not necessary since the case labels are "
+                  "exhaustive, but not having it makes Visual Studio cranky";
+    }}
+}}
+)"
+    );
+
+    return result;
+}

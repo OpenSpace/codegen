@@ -22,20 +22,39 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#ifndef __OPENSPACE_CODEGEN___CODEGEN___H__
-#define __OPENSPACE_CODEGEN___CODEGEN___H__
+#include "catch2/catch.hpp"
 
-#include <filesystem>
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
 
-enum class Result {
-    NotProcessed,
-    Processed,
-    Skipped
-};
+namespace {
+    struct [[codegen::Dictionary(Simple)]] Parameters {
+        // value documentation
+        float value;
+    };
+#include "execution_structs_simple_codegen.cpp"
+} // namespace
 
-struct Code;
+TEST_CASE("Simple bake", "[structs][execution]") {
+    {
+        ghoul::Dictionary d;
+        d.setValue("Value", 5.0);
 
-[[nodiscard]] Result handleFile(std::filesystem::path path);
-[[nodiscard]] std::string generateResult(const Code& structs);
+        const Parameters p = codegen::bake<Parameters>(d);
+        CHECK(p.value == 5.f);
+    }
+}
 
-#endif // __OPENSPACE_CODEGEN___CODEGEN___H__
+TEST_CASE("Simple documentation", "[structs][execution]") {
+    using namespace openspace::documentation;
+    Documentation doc = codegen::doc<Parameters>("");
+
+    REQUIRE(doc.entries.size() == 1);
+    DocumentationEntry e = doc.entries[0];
+    CHECK(e.key == "Value");
+    CHECK(!e.optional);
+    CHECK(e.documentation == "value documentation");
+    CHECK(e.verifier->type() == "Double");
+    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+}
