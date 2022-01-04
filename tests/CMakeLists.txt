@@ -77,6 +77,7 @@ add_executable(
   parsing_structs/parsing_structs_attributes_error_vec2.cpp
   parsing_structs/parsing_structs_attributes_error_vec3.cpp
   parsing_structs/parsing_structs_attributes_error_vec4.cpp
+  parsing_structs/parsing_structs_enums.cpp
   parsing_structs/parsing_structs_error.cpp
   parsing_structs/parsing_structs_map.cpp
   parsing_structs/parsing_structs_other.cpp
