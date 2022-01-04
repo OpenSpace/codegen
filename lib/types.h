@@ -201,7 +201,6 @@ struct Struct : public StackElement {
         bool noExhaustive = true; // @TODO change to false once OpenSpace works with it
     };
     Attributes attributes;
-    std::string sourceFile;
 };
 
 struct EnumElement {
@@ -224,5 +223,13 @@ struct Enum : public StackElement {
 const Struct* rootStruct(const Struct* s);
 const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
+
+
+struct Code {
+    std::vector<Struct*> structs;
+    std::vector<Enum*> enums;
+
+    std::string sourceFile;
+};
 
 #endif // __OPENSPACE_CODEGEN___TYPES___H__

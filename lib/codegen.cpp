@@ -447,7 +447,8 @@ std::string writeStructConverter(Struct* s) {
     return result;
 }
 
-std::string emitWarningsForDocumentationLessTypes(Struct* s) {
+std::string emitWarningsForDocumentationLessTypes(Struct* s, std::string_view sourceFile)
+{
     assert(s);
 
     std::string res;
@@ -457,7 +458,7 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s) {
         if (var->comment.empty()) {
             std::string identifier = fmt::format("{}.{}", fqn(s, "."), var->name);
             std::string message = fmt::format(
-                "\"{}: [CODEGEN] {} is not documented\"", root->sourceFile, identifier
+                "\"{}: [CODEGEN] {} is not documented\"", sourceFile, identifier
             );
 #ifdef WIN32
             res += fmt::format("#pragma message({})\n", message);
@@ -520,7 +521,7 @@ std::string generateResult(const Code& code) {
             result += fmt::format(DocumentationPreamble, s->name);
 
             if (GenerateWarningsForDocumentationLessTypes) {
-                result += emitWarningsForDocumentationLessTypes(s);
+                result += emitWarningsForDocumentationLessTypes(s, code.sourceFile);
             }
 
             result += writeStructDocumentation(s);
@@ -681,9 +682,7 @@ Result handleFile(std::filesystem::path path) {
     if (code.structs.empty() && code.enums.empty()) {
         return Result::NotProcessed;
     }
-    for (Struct* s : code.structs) {
-        s->sourceFile = createClickableFileName(path.string());
-    }
+    code.sourceFile = createClickableFileName(path.string());
 
     std::string content = generateResult(code);
     if (content.empty()) {

@@ -25,16 +25,9 @@
 #ifndef __OPENSPACE_CODEGEN___PARSING___H__
 #define __OPENSPACE_CODEGEN___PARSING___H__
 
+#include "types.h"
 #include <string_view>
 #include <vector>
-
-struct Enum;
-struct Struct;
-
-struct Code {
-    std::vector<Struct*> structs;
-    std::vector<Enum*> enums;
-};
 
 [[nodiscard]] Code parse(std::string_view code);
 
