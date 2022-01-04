@@ -97,7 +97,10 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
     while (cursor < block.size() && ::isspace(block[cursor])) {
         cursor++;
     }
-    if (block[cursor] == ',') {
+    if (cursor == block.size()) {
+        throw CodegenError(fmt::format("Unterminated attribute brackets\n{}", block));
+    }
+    else if (block[cursor] == ',') {
         std::vector<ParseResult> recRes = parseAttribute(block.substr(cursor));
         res.insert(res.end(), recRes.begin(), recRes.end());
     }
@@ -718,7 +721,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
         if (startsWith(line, "};")) {
             // A bit of a special case for enums.  Since we want to support multiple
             // lines for enum value we have to store the line in a buffer to check
-            // when we are finished.  We use a finalizing , for it, which does not
+            // when we are finished.  We use a finalizing `,` for it, which does not
             // have to exist and it would also be annoying to force people to enter
             // that for every enum and it is error prone.  So we need to check here if
             // we still have an enum in the buffer and add that if it is so

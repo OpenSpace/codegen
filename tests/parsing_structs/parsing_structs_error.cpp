@@ -158,6 +158,22 @@ struct [[codegen::Dictionary(Error]] Parameters {
     );
 }
 
+TEST_CASE("Parsing Error: Unterminated attribute brackets", "[structs][parsing]") {
+    constexpr const char Source[] = R"(
+struct [[codegen::Dictionary(Error)]] Parameters {
+    enum class A {
+        Value1 [[codegen::key("KeyA"),
+        Value2
+    };
+};
+)";
+
+    CHECK_THROWS_MATCHES(
+        parse(Source),
+        CodegenError, Catch::Matchers::Contains("Unterminated attribute brackets")
+    );
+}
+
 TEST_CASE("Parsing Error: Unknown attribute (struct)", "[structs][parsing]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {

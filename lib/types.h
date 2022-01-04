@@ -35,7 +35,7 @@
 
 // If this is defined, all types are declared with an empty virtual destructor, meaning
 // that they will properly disambiguate in the Visual Studio Watch window, making the
-// debugging of these types a bit easier.  No need to declare them otherwise
+// debugging of these types a bit easier.  No need to declare this define otherwise
 
 //#define TYPES_ADD_DEBUG_INFORMATION
 
