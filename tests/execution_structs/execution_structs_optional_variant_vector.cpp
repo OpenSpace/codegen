@@ -39,7 +39,7 @@ namespace {
 #include "execution_structs_optional_variant_vector_codegen.cpp"
 } // namespace
 
-TEST_CASE("Optional Variant Vector Bake", "[structs][execution][verifier]") {
+TEST_CASE("Optional Variant Vector Bake", "[structs][execution]") {
     {
         ghoul::Dictionary d;
         const Parameters p = codegen::bake<Parameters>(d);
@@ -70,7 +70,7 @@ TEST_CASE("Optional Variant Vector Bake", "[structs][execution][verifier]") {
     }
 }
 
-TEST_CASE("Optional Variant Vector Documentation", "[structs][execution][verifier]") {
+TEST_CASE("Optional Variant Vector Documentation", "[structs][execution]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

@@ -24,37 +24,42 @@
 
 #include "catch2/catch.hpp"
 
-#include <openspace/documentation/documentation.h>
-#include <openspace/documentation/verifier.h>
-#include <ghoul/misc/dictionary.h>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-namespace {
-    struct [[codegen::Dictionary(Simple)]] Parameters {
-        // value documentation
-        float value;
+TEST_CASE("Parsing: Enum Keys", "[enums][parsing]") {
+    constexpr const char Source[] = R"(
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1 [[codegen::key("KeyForValue1")]],
+        value2,
+        Value3 [[codegen::key("KeyForValue3")]]
     };
-#include "execution_structs_simple_codegen.cpp"
-} // namespace
+)";
 
-TEST_CASE("Simple bake", "[structs][execution]") {
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->mappedTo.empty());
+    REQUIRE(e->elements.size() == 3);
     {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
-
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+        CHECK(ee->attributes.key == "\"KeyForValue1\"");
     }
-}
-
-TEST_CASE("Simple documentation", "[structs][execution]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Value");
-    CHECK(!e.optional);
-    CHECK(e.documentation == "value documentation");
-    CHECK(e.verifier->type() == "Double");
-    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+        CHECK(ee->attributes.key == "\"KeyForValue3\"");
+    }
 }

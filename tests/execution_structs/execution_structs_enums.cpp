@@ -72,7 +72,7 @@ namespace {
 #include "execution_structs_enums_codegen.cpp"
 } // namespace
 
-TEST_CASE("Enum Bake", "[structs][execution][verifier]") {
+TEST_CASE("Enum Bake", "[structs][execution]") {
     ghoul::Dictionary d;
     d.setValue("EnumAValue", std::string("Value1"));
     d.setValue("EnumBValue", std::string("value2"));
@@ -119,7 +119,7 @@ TEST_CASE("Enum Bake", "[structs][execution][verifier]") {
     );
 }
 
-TEST_CASE("Enum Documentation", "[structs][execution][verifier]") {
+TEST_CASE("Enum Documentation", "[structs][execution]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

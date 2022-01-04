@@ -73,7 +73,7 @@ namespace {
 #include "execution_structs_shadowing_codegen.cpp"
 } // namespace
 
-TEST_CASE("Shadowing Bake", "[structs][execution][verifier]") {
+TEST_CASE("Shadowing Bake", "[structs][execution]") {
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
@@ -106,7 +106,7 @@ TEST_CASE("Shadowing Bake", "[structs][execution][verifier]") {
     CHECK(p.c.t == P::C::T::Type8);
 }
 
-TEST_CASE("Shadowing Documentation", "[structs][execution][verifier]") {
+TEST_CASE("Shadowing Documentation", "[structs][execution]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<P>("");
 

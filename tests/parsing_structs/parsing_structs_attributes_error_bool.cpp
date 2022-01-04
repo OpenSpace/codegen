@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: Bool annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::annotation(ABC)]];
 };)";
@@ -40,7 +40,7 @@ bool v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::annotation(ABC)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<bool> v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::annotation(ABC)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<bool> v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inlist(1, 2)]];
 };)";
@@ -70,7 +70,7 @@ bool v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inlist(1, 2)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<bool> v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inlist(1, 2)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<bool> v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inrange(1, 2)]];
 };)";
@@ -100,7 +100,7 @@ bool v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inrange(1, 2)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<bool> v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inrange(1, 2)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<bool> v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::less(1)]];
 };)";
@@ -130,7 +130,7 @@ bool v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::less(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<bool> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::less(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<bool> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::lessequal(1)]];
 };)";
@@ -160,7 +160,7 @@ bool v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::lessequal(1)]];
 };)";
@@ -170,7 +170,7 @@ std::vector<bool> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::lessequal(1)]];
 };)";
@@ -180,7 +180,7 @@ std::optional<bool> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greater(1)]];
 };)";
@@ -190,7 +190,7 @@ bool v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greater(1)]];
 };)";
@@ -200,7 +200,7 @@ std::vector<bool> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greater(1)]];
 };)";
@@ -210,7 +210,7 @@ std::optional<bool> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greaterequal(1)]];
 };)";
@@ -220,7 +220,7 @@ bool v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greaterequal(1)]];
 };)";
@@ -230,7 +230,7 @@ std::vector<bool> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greaterequal(1)]];
 };)";
@@ -240,7 +240,7 @@ std::optional<bool> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinlist(1, 2)]];
 };)";
@@ -250,7 +250,7 @@ bool v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -260,7 +260,7 @@ std::vector<bool> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -270,7 +270,7 @@ std::optional<bool> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinrange(1, 2)]];
 };)";
@@ -280,7 +280,7 @@ bool v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinrange(1, 2)]];
 };)";
@@ -290,7 +290,7 @@ std::vector<bool> v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinrange(1, 2)]];
 };)";
@@ -300,7 +300,7 @@ std::optional<bool> v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::reference(1)]];
 };)";
@@ -310,7 +310,7 @@ bool v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::reference(1)]];
 };)";
@@ -320,7 +320,7 @@ std::vector<bool> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::reference(1)]];
 };)";
@@ -330,7 +330,7 @@ std::optional<bool> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::unequal(1)]];
 };)";
@@ -340,7 +340,7 @@ bool v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::unequal(1)]];
 };)";
@@ -350,7 +350,7 @@ std::vector<bool> v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::unequal(1)]];
 };)";
@@ -360,7 +360,7 @@ std::optional<bool> v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::color()]];
 };)";
@@ -370,7 +370,7 @@ bool v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::color()]];
 };)";
@@ -380,7 +380,7 @@ std::vector<bool> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::color()]];
 };)";
@@ -390,7 +390,7 @@ std::optional<bool> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: Bool directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: Bool directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::directory()]];
 };)";
@@ -400,7 +400,7 @@ bool v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector bool directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector bool directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::directory()]];
 };)";
@@ -410,7 +410,7 @@ std::vector<bool> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional bool directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional bool directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::directory()]];
 };)";

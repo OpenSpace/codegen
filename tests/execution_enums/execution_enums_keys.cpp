@@ -27,34 +27,33 @@
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
 namespace {
-    struct [[codegen::Dictionary(Simple)]] Parameters {
-        // value documentation
-        float value;
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1 [[codegen::key("KeyForValue1")]],
+        value2,
+        Value3 [[codegen::key("KeyForValue3")]]
     };
-#include "execution_structs_simple_codegen.cpp"
+#include "execution_enums_keys_codegen.cpp"
 } // namespace
 
-TEST_CASE("Simple bake", "[structs][execution]") {
-    {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
-
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
-    }
+TEST_CASE("Enums Keys From String", "[enums][execution]") {
+    Enum1 v1 = codegen::fromString<Enum1>("KeyForValue1");
+    CHECK(v1 == Enum1::Value1);
+    Enum1 v2 = codegen::fromString<Enum1>("value2");
+    CHECK(v2 == Enum1::value2);
+    Enum1 v3 = codegen::fromString<Enum1>("KeyForValue3");
+    CHECK(v3 == Enum1::Value3);
 }
 
-TEST_CASE("Simple documentation", "[structs][execution]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Value");
-    CHECK(!e.optional);
-    CHECK(e.documentation == "value documentation");
-    CHECK(e.verifier->type() == "Double");
-    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+TEST_CASE("Enums Keys To String", "[enums][execution]") {
+    std::string_view sv1 = codegen::toString(Enum1::Value1);
+    CHECK(sv1 == "KeyForValue1");
+    std::string_view sv2 = codegen::toString(Enum1::value2);
+    CHECK(sv2 == "value2");
+    std::string_view sv3 = codegen::toString(Enum1::Value3);
+    CHECK(sv3 == "KeyForValue3");
 }

@@ -164,7 +164,7 @@ namespace {
 #include "execution_structs_basic_types_codegen.cpp"
 } // namespace
 
-TEST_CASE("Basic Types bake", "[structs][execution][verifier]") {
+TEST_CASE("Basic Types bake", "[structs][execution]") {
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types.txt").string();
     {
@@ -415,7 +415,7 @@ TEST_CASE("Basic Types bake", "[structs][execution][verifier]") {
     CHECK(p.dictValue.value<double>("b") == 2.0);
 }
 
-TEST_CASE("Basic Types documentation", "[structs][execution][verifier]") {
+TEST_CASE("Basic Types documentation", "[structs][execution]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

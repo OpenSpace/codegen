@@ -40,15 +40,16 @@ namespace {
 #include "execution_enums_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("From String", "[enums][execution][basic]") {
+TEST_CASE("Single From String", "[enums][execution]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");
     CHECK(v1 == Enum1::Value1);
     Enum1 v2 = codegen::fromString<Enum1>("value2");
     CHECK(v2 == Enum1::value2);
     Enum1 v3 = codegen::fromString<Enum1>("Value3");
     CHECK(v3 == Enum1::Value3);
+}
 
-
+TEST_CASE("Single To String", "[enums][execution]") {
     std::string_view sv1 = codegen::toString(Enum1::Value1);
     CHECK(sv1 == "Value1");
     std::string_view sv2 = codegen::toString(Enum1::value2);

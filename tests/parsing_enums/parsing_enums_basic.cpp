@@ -42,5 +42,22 @@ TEST_CASE("Parsing: Basic", "[enums][parsing]") {
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
 
+    CHECK(e->parent == nullptr);
     CHECK(e->mappedTo.empty());
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
 }

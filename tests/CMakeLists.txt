@@ -42,6 +42,9 @@ add_executable(
   execution_structs/execution_structs_substructs.cpp
   execution_structs/execution_structs_variant.cpp
   execution_enums/execution_enums_basic.cpp
+  execution_enums/execution_enums_mapping.cpp
+  execution_enums/execution_enums_multiple.cpp
+  execution_enums/execution_enums_keys.cpp
 
   parsing_structs/parsing_structs_attributes.cpp
   parsing_structs/parsing_structs_attributes_error_bool.cpp
@@ -86,6 +89,10 @@ add_executable(
   parsing_structs/parsing_structs_variant.cpp
   parsing_structs/parsing_structs_variant_error.cpp
   parsing_enums/parsing_enums_basic.cpp
+  parsing_enums/parsing_enums_error.cpp
+  parsing_enums/parsing_enums_mapping.cpp
+  parsing_enums/parsing_enums_multiple.cpp
+  parsing_enums/parsing_enums_keys.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")

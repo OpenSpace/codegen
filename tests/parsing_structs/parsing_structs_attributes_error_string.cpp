@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: std::string inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::inrange(1)]];
 };)";
@@ -40,7 +40,7 @@ std::string v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::inrange(1)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<std::string> v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::inrange(1)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<std::string> v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::less(1)]];
 };)";
@@ -70,7 +70,7 @@ std::string v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::less(1)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<std::string> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::less(1)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<std::string> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::lessequal(1)]];
 };)";
@@ -100,7 +100,7 @@ std::string v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::lessequal(1)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<std::string> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::lessequal(1)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<std::string> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::greater(1)]];
 };)";
@@ -130,7 +130,7 @@ std::string v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::greater(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<std::string> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::greater(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<std::string> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::greaterequal(1)]];
 };)";
@@ -160,7 +160,7 @@ std::string v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::greaterequal(1)]];
 };)";
@@ -170,7 +170,7 @@ std::vector<std::string> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::greaterequal(1)]];
 };)";
@@ -180,7 +180,7 @@ std::optional<std::string> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notinrange(1)]];
 };)";
@@ -190,7 +190,7 @@ std::string v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::notinrange(1)]];
 };)";
@@ -200,7 +200,7 @@ std::vector<std::string> v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::notinrange(1)]];
 };)";
@@ -210,7 +210,7 @@ std::optional<std::string> v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::reference(1)]];
 };)";
@@ -220,7 +220,7 @@ std::string v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::reference(1)]];
 };)";
@@ -230,7 +230,7 @@ std::vector<std::string> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string reference", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::reference(1)]];
 };)";
@@ -240,7 +240,7 @@ std::optional<std::string> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::color()]];
 };)";
@@ -250,7 +250,7 @@ std::string v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::color()]];
 };)";
@@ -260,7 +260,7 @@ std::vector<std::string> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::color()]];
 };)";
@@ -270,7 +270,7 @@ std::optional<std::string> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: std::string directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: std::string directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::directory()]];
 };)";
@@ -280,7 +280,7 @@ std::string v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector std::string directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector std::string directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::directory()]];
 };)";
@@ -290,7 +290,7 @@ std::vector<std::string> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional std::string directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional std::string directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::directory()]];
 };)";
@@ -300,7 +300,7 @@ std::optional<std::string> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Attribute error: std::string annotation inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string annotation inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
@@ -311,7 +311,7 @@ std::string v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string annotation inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string annotation inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
@@ -322,7 +322,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc",
     );
 }
 
-TEST_CASE("Attribute error: optional std::string annotation inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string annotation inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
@@ -333,7 +333,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string annotation inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string annotation inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
 };)";
@@ -344,7 +344,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     );
 }
 
-TEST_CASE("Attribute error: std::string annotation unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string annotation unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
@@ -355,7 +355,7 @@ std::string v [[codegen::annotation("abc"), codegen::unequal("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string annotation unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string annotation unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
@@ -366,7 +366,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")
     );
 }
 
-TEST_CASE("Attribute error: optional std::string annotation unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string annotation unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
@@ -377,7 +377,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string annotation unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string annotation unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::unequal("abc")]];
 };)";
@@ -388,7 +388,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     );
 }
 
-TEST_CASE("Attribute error: std::string annotation notempty", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string annotation notempty", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
@@ -399,7 +399,7 @@ std::string v [[codegen::annotation("abc"), codegen::notempty()]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string annotation notempty", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string annotation notempty", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
@@ -410,7 +410,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
     );
 }
 
-TEST_CASE("Attribute error: optional std::string annotation notempty", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string annotation notempty", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
@@ -421,7 +421,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::notempty()]]
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string annotation notempty", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string annotation notempty", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen::notempty()]];
 };)";
@@ -432,7 +432,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     );
 }
 
-TEST_CASE("Attribute error: std::string notempty inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string notempty inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
@@ -443,7 +443,7 @@ std::string v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string notempty inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string notempty inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
@@ -454,7 +454,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"}
     );
 }
 
-TEST_CASE("Attribute error: optional std::string notempty inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string notempty inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
@@ -465,7 +465,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string notempty inlist", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string notempty inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
 };)";
@@ -476,7 +476,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::inlist
     );
 }
 
-TEST_CASE("Attribute error: std::string notempty unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string notempty unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
@@ -487,7 +487,7 @@ std::string v [[codegen::notempty(), codegen::unequal("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string notempty unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string notempty unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
@@ -498,7 +498,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: optional std::string notempty unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string notempty unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
@@ -509,7 +509,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string notempty unequal", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string notempty unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::unequal("abc")]];
 };)";
@@ -520,7 +520,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::unequa
     );
 }
 
-TEST_CASE("Attribute error: std::string notempty annotation", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string notempty annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
@@ -531,7 +531,7 @@ std::string v [[codegen::notempty(), codegen::annotation("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: vector std::string notempty annotation", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: vector std::string notempty annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
@@ -542,7 +542,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
     );
 }
 
-TEST_CASE("Attribute error: optional std::string notempty annotation", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional std::string notempty annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
@@ -553,7 +553,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::annotation("abc")]]
     );
 }
 
-TEST_CASE("Attribute error: optional vector std::string notempty annotation", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: optional vector std::string notempty annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::annotation("abc")]];
 };)";
@@ -564,7 +564,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::annota
     );
 }
 
-TEST_CASE("Attribute error: std::string notempty wrong parameter", "[structs][parsing_error]") {
+TEST_CASE("Attribute error: std::string notempty wrong parameter", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::string v [[codegen::notempty("bla")]];
 };)";

@@ -165,7 +165,7 @@ namespace {
 #include "execution_structs_basic_types_optional_vector_codegen.cpp"
 } // namespace
 
-TEST_CASE("Basic Types Optional Vector bake", "[structs][execution][verifier]") {
+TEST_CASE("Basic Types Optional Vector bake", "[structs][execution]") {
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile1 =
         (path / "codegen_execution_basic_types_optional_vector_1.txt").string();
@@ -1104,7 +1104,7 @@ TEST_CASE("Basic Types Optional Vector bake", "[structs][execution][verifier]") 
     CHECK(!p2.dictValue.has_value());
 }
 
-TEST_CASE("Basic Types Optional Vector documentation", "[structs][execution][verifier]") {
+TEST_CASE("Basic Types Optional Vector documentation", "[structs][execution]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

@@ -128,4 +128,6 @@ std::string vectorBakeFunctionForType(std::string_view type);
 std::string enumBakeFunctionForType(std::string_view type);
 std::string_view variantConversionFunctionForType(std::string_view type);
 
+std::string enumToEnumMapping(Enum* e);
+
 #endif // __OPENSPACE_CODEGEN___SNIPPETS___H__

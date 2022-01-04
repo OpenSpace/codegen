@@ -27,34 +27,58 @@
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
 namespace {
-    struct [[codegen::Dictionary(Simple)]] Parameters {
-        // value documentation
-        float value;
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1,
+        value2,
+        Value3
     };
-#include "execution_structs_simple_codegen.cpp"
+
+    enum class [[codegen::stringify()]] Enum2 {
+        Val4,
+        Val5
+    };
+
+    enum class [[codegen::stringify()]] Enum3 {
+        Val6
+    };
+#include "execution_enums_multiple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Simple bake", "[structs][execution]") {
-    {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
+TEST_CASE("Multiple From String", "[enums][execution][basic]") {
+    Enum1 v1 = codegen::fromString<Enum1>("Value1");
+    CHECK(v1 == Enum1::Value1);
+    Enum1 v2 = codegen::fromString<Enum1>("value2");
+    CHECK(v2 == Enum1::value2);
+    Enum1 v3 = codegen::fromString<Enum1>("Value3");
+    CHECK(v3 == Enum1::Value3);
 
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
-    }
+    Enum2 v4 = codegen::fromString<Enum2>("Val4");
+    CHECK(v4 == Enum2::Val4);
+    Enum2 v5 = codegen::fromString<Enum2>("Val5");
+    CHECK(v5 == Enum2::Val5);
+
+    Enum3 v6 = codegen::fromString<Enum3>("Val6");
+    CHECK(v6 == Enum3::Val6);
 }
 
-TEST_CASE("Simple documentation", "[structs][execution]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
+TEST_CASE("Multiple To String", "[enums][execution]") {
+    std::string_view v1 = codegen::toString(Enum1::Value1);
+    CHECK(v1 == "Value1");
+    std::string_view v2 = codegen::toString(Enum1::value2);
+    CHECK(v2 == "value2");
+    std::string_view v3 = codegen::toString(Enum1::Value3);
+    CHECK(v3 == "Value3");
 
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Value");
-    CHECK(!e.optional);
-    CHECK(e.documentation == "value documentation");
-    CHECK(e.verifier->type() == "Double");
-    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+    std::string_view v4 = codegen::toString(Enum2::Val4);
+    CHECK(v4 == "Val4");
+    std::string_view v5 = codegen::toString(Enum2::Val5);
+    CHECK(v5 == "Val5");
+
+    std::string_view v6 = codegen::toString(Enum3::Val6);
+    CHECK(v6 == "Val6");
 }

@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dmat3x4 v [[codegen::annotation(ABC)]];
 };)";
@@ -40,7 +40,7 @@ glm::dmat3x4 v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::annotation(ABC)]];
@@ -52,7 +52,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::annotation(ABC)]];
@@ -64,7 +64,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::inlist(1, 2)]];
@@ -76,7 +76,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::inlist(1, 2)]];
@@ -88,7 +88,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::inlist(1, 2)]];
@@ -100,7 +100,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::inrange(1, 2)]];
@@ -112,7 +112,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::inrange(1, 2)]];
@@ -124,7 +124,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::inrange(1, 2)]];
@@ -136,7 +136,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 less", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::less(1)]];
@@ -148,7 +148,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 less", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::less(1)]];
@@ -160,7 +160,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 less", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::less(1)]];
@@ -172,7 +172,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::lessequal(1)]];
@@ -184,7 +184,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::lessequal(1)]];
@@ -196,7 +196,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::lessequal(1)]];
@@ -208,7 +208,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 greater", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::greater(1)]];
@@ -220,7 +220,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 greater", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::greater(1)]];
@@ -232,7 +232,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 greater", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::greater(1)]];
@@ -244,7 +244,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::greaterequal(1)]];
@@ -256,7 +256,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::greaterequal(1)]];
@@ -268,7 +268,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::greaterequal(1)]];
@@ -280,7 +280,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::notinlist(1, 2)]];
@@ -292,7 +292,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::notinlist(1, 2)]];
@@ -304,7 +304,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::notinlist(1, 2)]];
@@ -316,7 +316,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::notinrange(1, 2)]];
@@ -328,7 +328,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::notinrange(1, 2)]];
@@ -340,7 +340,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::notinrange(1, 2)]];
@@ -352,7 +352,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 reference", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::reference(1)]];
@@ -364,7 +364,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 reference", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::reference(1)]];
@@ -376,7 +376,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 reference", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 reference", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::reference(1)]];
@@ -388,7 +388,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::unequal(1)]];
@@ -400,7 +400,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::unequal(1)]];
@@ -412,7 +412,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 unequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 unequal", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::unequal(1)]];
@@ -424,7 +424,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 color", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::color()]];
@@ -436,7 +436,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 color", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::color()]];
@@ -448,7 +448,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 color", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::color()]];
@@ -460,7 +460,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dmat3x4 directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: glm::dmat3x4 directory", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     glm::dmat3x4 v [[codegen::directory()]];
@@ -472,7 +472,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector glm::dmat3x4 directory", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::vector<glm::dmat3x4> v [[codegen::directory()]];
@@ -484,7 +484,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional glm::dmat3x4 directory", "[structs][parsing]") {
     constexpr const char S[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::optional<glm::dmat3x4> v [[codegen::directory()]];

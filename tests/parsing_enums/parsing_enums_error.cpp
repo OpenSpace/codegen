@@ -24,37 +24,22 @@
 
 #include "catch2/catch.hpp"
 
-#include <openspace/documentation/documentation.h>
-#include <openspace/documentation/verifier.h>
-#include <ghoul/misc/dictionary.h>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-namespace {
-    struct [[codegen::Dictionary(Simple)]] Parameters {
-        // value documentation
-        float value;
-    };
-#include "execution_structs_simple_codegen.cpp"
-} // namespace
+namespace CM = Catch::Matchers;
 
-TEST_CASE("Simple bake", "[structs][execution]") {
-    {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
-
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
-    }
-}
-
-TEST_CASE("Simple documentation", "[structs][execution]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Value");
-    CHECK(!e.optional);
-    CHECK(e.documentation == "value documentation");
-    CHECK(e.verifier->type() == "Double");
-    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
-}
+//TEST_CASE("Parsing: Enum Error stringify-map", "[enums][parsing]") {
+//    constexpr const char S[] = R"(
+//    enum class [[codegen::stringify(), codegen::map(Abc)]] Enum1 {
+//        Value1,
+//        value2,
+//        Value3
+//    };
+//)";
+//    CHECK_THROWS_MATCHES(
+//        parse(S),
+//        CodegenError, CM::Contains("Cannot map a root enum")
+//    );
+//}

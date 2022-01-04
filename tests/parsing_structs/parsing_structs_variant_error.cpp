@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Variant Error: Multiple Vectors", "[structs][parsing_error]") {
+TEST_CASE("Variant Error: Multiple Vectors", "[structs][parsing]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
@@ -42,7 +42,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Variant Error: Custom substrct", "[structs][parsing_error]") {
+TEST_CASE("Variant Error: Custom substrct", "[structs][parsing]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     struct A {
@@ -59,7 +59,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Variant Error: Internal optional", "[structs][parsing_error]") {
+TEST_CASE("Variant Error: Internal optional", "[structs][parsing]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::optional<int>, float> v;
@@ -73,7 +73,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Variant Error: Nested variants", "[structs][parsing_error]") {
+TEST_CASE("Variant Error: Nested variants", "[structs][parsing]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::variant<int, float>, float> v;

@@ -24,37 +24,80 @@
 
 #include "catch2/catch.hpp"
 
-#include <openspace/documentation/documentation.h>
-#include <openspace/documentation/verifier.h>
-#include <ghoul/misc/dictionary.h>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-namespace {
-    struct [[codegen::Dictionary(Simple)]] Parameters {
-        // value documentation
-        float value;
+TEST_CASE("Parsing: Enum Mapping", "[enums][parsing]") {
+    constexpr const char Source[] = R"(
+    enum class [[codegen::stringify()]] Enum1 {
+        Value1,
+        value2,
+        Value3
     };
-#include "execution_structs_simple_codegen.cpp"
-} // namespace
 
-TEST_CASE("Simple bake", "[structs][execution]") {
+    enum class [[codegen::stringify(), codegen::map(Mapped2)]] Enum2 {
+        Val4,
+        Val5
+    };
+
+    enum class [[codegen::map(Mapped3)]] Enum3 {
+        Val6
+    };
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    REQUIRE(code.enums.size() == 3);
+
     {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
-
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
+        Enum* e = code.enums[0];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo.empty());
+        REQUIRE(e->elements.size() == 3);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Value1");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "value2");
+        }
+        {
+            EnumElement* ee = e->elements[2];
+            REQUIRE(ee);
+            CHECK(ee->name == "Value3");
+        }
     }
-}
 
-TEST_CASE("Simple documentation", "[structs][execution]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
+    {
+        Enum* e = code.enums[1];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo == "Mapped2");
+        REQUIRE(e->elements.size() == 2);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val4");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val5");
+        }
+    }
 
-    REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
-    CHECK(e.key == "Value");
-    CHECK(!e.optional);
-    CHECK(e.documentation == "value documentation");
-    CHECK(e.verifier->type() == "Double");
-    CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
+    {
+        Enum* e = code.enums[2];
+        CHECK(e->parent == nullptr);
+        CHECK(e->mappedTo == "Mapped3");
+        REQUIRE(e->elements.size() == 1);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Val6");
+        }
+    }
 }

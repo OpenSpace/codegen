@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::annotation(1)]];
 };)";
@@ -40,7 +40,7 @@ ghoul::Dictionary v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<ghoul::Dictionary> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary annotation", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary annotation", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::annotation(1)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<ghoul::Dictionary> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::inlist(1)]];
 };)";
@@ -70,7 +70,7 @@ ghoul::Dictionary v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<ghoul::Dictionary> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::inlist(1)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<ghoul::Dictionary> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::inrange(1)]];
 };)";
@@ -100,7 +100,7 @@ ghoul::Dictionary v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<ghoul::Dictionary> v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary inrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::inrange(1)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<ghoul::Dictionary> v [[codegen::inrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::less(1)]];
 };)";
@@ -130,7 +130,7 @@ ghoul::Dictionary v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<ghoul::Dictionary> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary less", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary less", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::less(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<ghoul::Dictionary> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::lessequal(1)]];
 };)";
@@ -160,7 +160,7 @@ ghoul::Dictionary v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
@@ -170,7 +170,7 @@ std::vector<ghoul::Dictionary> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary lessequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary lessequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::lessequal(1)]];
 };)";
@@ -180,7 +180,7 @@ std::optional<ghoul::Dictionary> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::greater(1)]];
 };)";
@@ -190,7 +190,7 @@ ghoul::Dictionary v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
@@ -200,7 +200,7 @@ std::vector<ghoul::Dictionary> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greater", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greater", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::greater(1)]];
 };)";
@@ -210,7 +210,7 @@ std::optional<ghoul::Dictionary> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::greaterequal(1)]];
 };)";
@@ -220,7 +220,7 @@ ghoul::Dictionary v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
@@ -230,7 +230,7 @@ std::vector<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greaterequal", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary greaterequal", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
 };)";
@@ -240,7 +240,7 @@ std::optional<ghoul::Dictionary> v [[codegen::greaterequal(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::notinlist(1)]];
 };)";
@@ -250,7 +250,7 @@ ghoul::Dictionary v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
@@ -260,7 +260,7 @@ std::vector<ghoul::Dictionary> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinlist", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinlist", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::notinlist(1)]];
 };)";
@@ -270,7 +270,7 @@ std::optional<ghoul::Dictionary> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::notinrange(1)]];
 };)";
@@ -280,7 +280,7 @@ ghoul::Dictionary v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
@@ -290,7 +290,7 @@ std::vector<ghoul::Dictionary> v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinrange", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary notinrange", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::notinrange(1)]];
 };)";
@@ -300,7 +300,7 @@ std::optional<ghoul::Dictionary> v [[codegen::notinrange(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::color()]];
 };)";
@@ -310,7 +310,7 @@ ghoul::Dictionary v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::color()]];
 };)";
@@ -320,7 +320,7 @@ std::vector<ghoul::Dictionary> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary color", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary color", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::color()]];
 };)";
@@ -330,7 +330,7 @@ std::optional<ghoul::Dictionary> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: ghoul::Dictionary directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: ghoul::Dictionary directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 ghoul::Dictionary v [[codegen::directory()]];
 };)";
@@ -340,7 +340,7 @@ ghoul::Dictionary v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: vector ghoul::Dictionary directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<ghoul::Dictionary> v [[codegen::directory()]];
 };)";
@@ -350,7 +350,7 @@ std::vector<ghoul::Dictionary> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary directory", "[structs][parsing_error]") {
+TEST_CASE("Unsupported Attributes: optional ghoul::Dictionary directory", "[structs][parsing]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<ghoul::Dictionary> v [[codegen::directory()]];
 };)";

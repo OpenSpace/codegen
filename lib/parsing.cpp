@@ -32,6 +32,7 @@
 namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
     constexpr const char AttributeStringify[] = "[[codegen::stringify";
+    constexpr const char AttributeMap[] = "[[codegen::map";
 } // namespace
 
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
@@ -432,7 +433,9 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
 std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     assert(!code.empty());
 
-    const size_t loc = code.find(AttributeStringify);
+    const size_t locStringify = code.find(AttributeStringify);
+    const size_t locMap = code.find(AttributeMap);
+    const size_t loc = std::min(locStringify, locMap);
     if (loc == std::string_view::npos) {
         // We did't find the attrbute
         return { std::string_view::npos, std::string_view::npos };
@@ -687,6 +690,8 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
 }
 
 [[nodiscard]] Enum* parseRootEnum(std::string_view code) {
+    assert(!code.empty());
+
     if (size_t p = code.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", code.substr(p, 50)
@@ -750,6 +755,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
         rootEnum->elements.push_back(el);
         continue;
     }
+
     return rootEnum;
 }
 
