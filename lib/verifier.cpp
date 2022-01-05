@@ -227,7 +227,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
             {
                 throw CodegenError(fmt::format(
                     "With the notempty attribute, no other attribute can be used:\n{}",
-                    type
+                    generateTypename(type)
                 ));
             }
 
@@ -237,7 +237,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
             if (!attr.inlist.empty() || !attr.unequal.empty() || attr.mustBeNotEmpty) {
                 throw CodegenError(fmt::format(
                     "With the annotation attribute, no other attribute can be used:\n{}",
-                    type
+                    generateTypename(type)
                 ));
             }
             res = addQualifier(res, "AnnotationVerifier", attr.annotation);
