@@ -31,6 +31,7 @@
 #include "verifier.h"
 
 #include <fmt/format.h>
+#include <algorithm>
 #include <array>
 #include <filesystem>
 #include <iostream>
