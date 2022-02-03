@@ -127,6 +127,48 @@ This is a complete list of variable types and attribute combinations.  We are **
  - `std::string` + `[[codegen::unequal]]` -> `UnequalVerifier<StringVerifier>`
  - `std::string` + `[[codegen::annotation]]` -> `AnnotationVerifier<StringVerifier>`
  - `std::string` + `[[codegen::notempty]]` -> `StringVerifier(true)`
+ - `glm::vec2` + `[[codegen::inrange]]` -> `InRangeVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::inrange]]` -> `InRangeVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::inrange]]` -> `InRangeVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::inrange]]` -> `InRangeVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::inrange]]` -> `InRangeVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::inrange]]` -> `InRangeVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::notinrange]]` -> `NotInRangeVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::less]]` -> `LessVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::less]]` -> `LessVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::less]]` -> `LessVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::less]]` -> `LessVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::less]]` -> `LessVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::less]]` -> `LessVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::lessequal]]` -> `LessEqualVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::lessequal]]` -> `LessEqualVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::lessequal]]` -> `LessEqualVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::lessequal]]` -> `LessEqualVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::lessequal]]` -> `LessEqualVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::lessequal]]` -> `LessEqualVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::greater]]` -> `GreaterVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::greater]]` -> `GreaterVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::greater]]` -> `GreaterVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::greater]]` -> `GreaterVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::greater]]` -> `GreaterVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::greater]]` -> `GreaterVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::greaterequal]]` -> `GreaterEqualVerifier<IntVec4Verifier>`
+ - `glm::vec2` + `[[codegen::unequal]]` -> `UnequalVerifier<DoubleVec2Verifier>`
+ - `glm::vec3` + `[[codegen::unequal]]` -> `UnequalVerifier<DoubleVec3Verifier>`
+ - `glm::vec4` + `[[codegen::unequal]]` -> `UnequalVerifier<DoubleVec4Verifier>`
+ - `glm::ivec2` + `[[codegen::unequal]]` -> `UnequalVerifier<IntVec2Verifier>`
+ - `glm::ivec3` + `[[codegen::unequal]]` -> `UnequalVerifier<IntVec3Verifier>`
+ - `glm::ivec4` + `[[codegen::unequal]]` -> `UnequalVerifier<IntVec4Verifier>`
  - `glm::vec3` + `[[codegen::color]]` -> `Color3Verifier`
  - `glm::vec4` + `[[codegen::color]]` -> `Color4Verifier`
  - `glm::dvec3` + `[[codegen::color]]` -> `Color3Verifier`

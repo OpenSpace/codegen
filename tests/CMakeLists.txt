@@ -46,7 +46,18 @@ add_executable(
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
 
-  parsing_structs/parsing_structs_attributes.cpp
+  parsing_structs/parsing_structs_attributes_bool.cpp
+  parsing_structs/parsing_structs_attributes_dictionary.cpp
+  parsing_structs/parsing_structs_attributes_float.cpp
+  parsing_structs/parsing_structs_attributes_int.cpp
+  parsing_structs/parsing_structs_attributes_ivec2.cpp
+  parsing_structs/parsing_structs_attributes_ivec3.cpp
+  parsing_structs/parsing_structs_attributes_ivec4.cpp
+  parsing_structs/parsing_structs_attributes_path.cpp
+  parsing_structs/parsing_structs_attributes_string.cpp
+  parsing_structs/parsing_structs_attributes_vec2.cpp
+  parsing_structs/parsing_structs_attributes_vec3.cpp
+  parsing_structs/parsing_structs_attributes_vec4.cpp
   parsing_structs/parsing_structs_attributes_error_bool.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x2.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x3.cpp

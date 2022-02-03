@@ -27,58 +27,226 @@ template <> openspace::documentation::Documentation doc<Parameters>(std::string 
     codegen_Parameters->documentations.push_back({"InRangeValueIntOptional",new InRangeVerifier<IntVerifier>(-2, 8),Optional::Yes,"inRangeValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"InRangeValueIntVector",new TableVerifier({{"*",new InRangeVerifier<IntVerifier>(-2, 8),Optional::Yes, }})
 ,Optional::No,"inRangeValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"InRangeValueFloat",new InRangeVerifier<DoubleVerifier>(8.0, 9.0),Optional::No,"inRangeValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"InRangeValueFloatOptional",new InRangeVerifier<DoubleVerifier>(8.0, 9.0),Optional::Yes,"inRangeValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"InRangeValueFloatVector",new TableVerifier({{"*",new InRangeVerifier<DoubleVerifier>(8.0, 9.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"InRangeValueFloat",new InRangeVerifier<DoubleVerifier>(8.f, 9.f),Optional::No,"inRangeValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueFloatOptional",new InRangeVerifier<DoubleVerifier>(8.f, 9.f),Optional::Yes,"inRangeValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueFloatVector",new TableVerifier({{"*",new InRangeVerifier<DoubleVerifier>(8.f, 9.f),Optional::Yes, }})
 ,Optional::No,"inRangeValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec2",new InRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::No,"inRangeValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec2Optional",new InRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::Yes,"inRangeValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec2Vector",new TableVerifier({{"*",new InRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::Yes, }})
+,Optional::No,"inRangeValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec3",new InRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::No,"inRangeValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec3Optional",new InRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::Yes,"inRangeValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec3Vector",new TableVerifier({{"*",new InRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::Yes, }})
+,Optional::No,"inRangeValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec4",new InRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::No,"inRangeValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec4Optional",new InRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::Yes,"inRangeValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueVec4Vector",new TableVerifier({{"*",new InRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::Yes, }})
+,Optional::No,"inRangeValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec2",new InRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::No,"inRangeValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec2Optional",new InRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::Yes,"inRangeValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec2Vector",new TableVerifier({{"*",new InRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::Yes, }})
+,Optional::No,"inRangeValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec3",new InRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::No,"inRangeValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec3Optional",new InRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::Yes,"inRangeValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec3Vector",new TableVerifier({{"*",new InRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::Yes, }})
+,Optional::No,"inRangeValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec4",new InRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::No,"inRangeValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec4Optional",new InRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::Yes,"inRangeValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"InRangeValueIVec4Vector",new TableVerifier({{"*",new InRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::Yes, }})
+,Optional::No,"inRangeValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"NotInRangeValueInt",new NotInRangeVerifier<IntVerifier>(5, 7),Optional::No,"notInRangeValueInt documentation"});
     codegen_Parameters->documentations.push_back({"NotInRangeValueIntOptional",new NotInRangeVerifier<IntVerifier>(5, 7),Optional::Yes,"notInRangeValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"NotInRangeValueIntVector",new TableVerifier({{"*",new NotInRangeVerifier<IntVerifier>(5, 7),Optional::Yes, }})
 ,Optional::No,"notInRangeValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"NotInRangeValueFloat",new NotInRangeVerifier<DoubleVerifier>(-0.5, 0.5),Optional::No,"notInRangeValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"NotInRangeValueFloatOptional",new NotInRangeVerifier<DoubleVerifier>(-0.5, 0.5),Optional::Yes,"notInRangeValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"NotInRangeValueFloatVector",new TableVerifier({{"*",new NotInRangeVerifier<DoubleVerifier>(-0.5, 0.5),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"NotInRangeValueFloat",new NotInRangeVerifier<DoubleVerifier>(-0.5f, 0.5f),Optional::No,"notInRangeValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueFloatOptional",new NotInRangeVerifier<DoubleVerifier>(-0.5f, 0.5f),Optional::Yes,"notInRangeValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueFloatVector",new TableVerifier({{"*",new NotInRangeVerifier<DoubleVerifier>(-0.5f, 0.5f),Optional::Yes, }})
 ,Optional::No,"notInRangeValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec2",new NotInRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::No,"notInRangeValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec2Optional",new NotInRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::Yes,"notInRangeValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec2Vector",new TableVerifier({{"*",new NotInRangeVerifier<DoubleVector2Verifier>(glm::vec2(1.f), glm::vec2(2.f)),Optional::Yes, }})
+,Optional::No,"notInRangeValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec3",new NotInRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::No,"notInRangeValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec3Optional",new NotInRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::Yes,"notInRangeValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec3Vector",new TableVerifier({{"*",new NotInRangeVerifier<DoubleVector3Verifier>(glm::vec3(1.f), glm::vec3(2.f)),Optional::Yes, }})
+,Optional::No,"notInRangeValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec4",new NotInRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::No,"notInRangeValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec4Optional",new NotInRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::Yes,"notInRangeValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueVec4Vector",new TableVerifier({{"*",new NotInRangeVerifier<DoubleVector4Verifier>(glm::vec4(1.f), glm::vec4(2.f)),Optional::Yes, }})
+,Optional::No,"notInRangeValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec2",new NotInRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::No,"notInRangeValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec2Optional",new NotInRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::Yes,"notInRangeValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec2Vector",new TableVerifier({{"*",new NotInRangeVerifier<IntVector2Verifier>(glm::ivec2(1), glm::ivec2(3)),Optional::Yes, }})
+,Optional::No,"notInRangeValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec3",new NotInRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::No,"notInRangeValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec3Optional",new NotInRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::Yes,"notInRangeValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec3Vector",new TableVerifier({{"*",new NotInRangeVerifier<IntVector3Verifier>(glm::ivec3(1), glm::ivec3(3)),Optional::Yes, }})
+,Optional::No,"notInRangeValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec4",new NotInRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::No,"notInRangeValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec4Optional",new NotInRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::Yes,"notInRangeValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"NotInRangeValueIVec4Vector",new TableVerifier({{"*",new NotInRangeVerifier<IntVector4Verifier>(glm::ivec4(1), glm::ivec4(3)),Optional::Yes, }})
+,Optional::No,"notInRangeValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"LessValueInt",new LessVerifier<IntVerifier>(20),Optional::No,"lessValueInt documentation"});
     codegen_Parameters->documentations.push_back({"LessValueIntOptional",new LessVerifier<IntVerifier>(20),Optional::Yes,"lessValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"LessValueIntVector",new TableVerifier({{"*",new LessVerifier<IntVerifier>(20),Optional::Yes, }})
 ,Optional::No,"lessValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"LessValueFloat",new LessVerifier<DoubleVerifier>(21.0),Optional::No,"lessValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"LessValueFloatOptional",new LessVerifier<DoubleVerifier>(22.0),Optional::Yes,"lessValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"LessValueFloatVector",new TableVerifier({{"*",new LessVerifier<DoubleVerifier>(23.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"LessValueFloat",new LessVerifier<DoubleVerifier>(21.f),Optional::No,"lessValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueFloatOptional",new LessVerifier<DoubleVerifier>(22.f),Optional::Yes,"lessValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueFloatVector",new TableVerifier({{"*",new LessVerifier<DoubleVerifier>(23.f),Optional::Yes, }})
 ,Optional::No,"lessValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec2",new LessVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::No,"lessValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec2Optional",new LessVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes,"lessValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec2Vector",new TableVerifier({{"*",new LessVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes, }})
+,Optional::No,"lessValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec3",new LessVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::No,"lessValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec3Optional",new LessVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes,"lessValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec3Vector",new TableVerifier({{"*",new LessVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes, }})
+,Optional::No,"lessValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec4",new LessVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::No,"lessValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec4Optional",new LessVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes,"lessValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueVec4Vector",new TableVerifier({{"*",new LessVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes, }})
+,Optional::No,"lessValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec2",new LessVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::No,"lessValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec2Optional",new LessVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes,"lessValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec2Vector",new TableVerifier({{"*",new LessVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes, }})
+,Optional::No,"lessValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec3",new LessVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::No,"lessValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec3Optional",new LessVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes,"lessValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec3Vector",new TableVerifier({{"*",new LessVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes, }})
+,Optional::No,"lessValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec4",new LessVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::No,"lessValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec4Optional",new LessVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes,"lessValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessValueIVec4Vector",new TableVerifier({{"*",new LessVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes, }})
+,Optional::No,"lessValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"LessEqualValueInt",new LessEqualVerifier<IntVerifier>(25),Optional::No,"lessEqualValueInt documentation"});
     codegen_Parameters->documentations.push_back({"LessEqualValueIntOptional",new LessEqualVerifier<IntVerifier>(25),Optional::Yes,"lessEqualValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"LessEqualValueIntVector",new TableVerifier({{"*",new LessEqualVerifier<IntVerifier>(25),Optional::Yes, }})
 ,Optional::No,"lessEqualValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"LessEqualValueFloat",new LessEqualVerifier<DoubleVerifier>(27.0),Optional::No,"lessEqualValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"LessEqualValueFloatOptional",new LessEqualVerifier<DoubleVerifier>(27.0),Optional::Yes,"lessEqualValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"LessEqualValueFloatVector",new TableVerifier({{"*",new LessEqualVerifier<DoubleVerifier>(27.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"LessEqualValueFloat",new LessEqualVerifier<DoubleVerifier>(27.f),Optional::No,"lessEqualValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueFloatOptional",new LessEqualVerifier<DoubleVerifier>(27.f),Optional::Yes,"lessEqualValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueFloatVector",new TableVerifier({{"*",new LessEqualVerifier<DoubleVerifier>(27.f),Optional::Yes, }})
 ,Optional::No,"lessEqualValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec2",new LessEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::No,"lessEqualValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec2Optional",new LessEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes,"lessEqualValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec2Vector",new TableVerifier({{"*",new LessEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes, }})
+,Optional::No,"lessEqualValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec3",new LessEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::No,"lessEqualValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec3Optional",new LessEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes,"lessEqualValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec3Vector",new TableVerifier({{"*",new LessEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes, }})
+,Optional::No,"lessEqualValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec4",new LessEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::No,"lessEqualValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec4Optional",new LessEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes,"lessEqualValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueVec4Vector",new TableVerifier({{"*",new LessEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes, }})
+,Optional::No,"lessEqualValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec2",new LessEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::No,"lessEqualValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec2Optional",new LessEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes,"lessEqualValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec2Vector",new TableVerifier({{"*",new LessEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes, }})
+,Optional::No,"lessEqualValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec3",new LessEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::No,"lessEqualValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec3Optional",new LessEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes,"lessEqualValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec3Vector",new TableVerifier({{"*",new LessEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes, }})
+,Optional::No,"lessEqualValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec4",new LessEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::No,"lessEqualValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec4Optional",new LessEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes,"lessEqualValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"LessEqualValueIVec4Vector",new TableVerifier({{"*",new LessEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes, }})
+,Optional::No,"lessEqualValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"GreaterValueInt",new GreaterVerifier<IntVerifier>(25),Optional::No,"greaterValueInt documentation"});
     codegen_Parameters->documentations.push_back({"GreaterValueIntOptional",new GreaterVerifier<IntVerifier>(25),Optional::Yes,"greaterValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"GreaterValueIntVector",new TableVerifier({{"*",new GreaterVerifier<IntVerifier>(25),Optional::Yes, }})
 ,Optional::No,"greaterValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterValueFloat",new GreaterVerifier<DoubleVerifier>(-5.0),Optional::No,"greaterValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterValueFloatOptional",new GreaterVerifier<DoubleVerifier>(-5.0),Optional::Yes,"greaterValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterValueFloatVector",new TableVerifier({{"*",new GreaterVerifier<DoubleVerifier>(-5.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"GreaterValueFloat",new GreaterVerifier<DoubleVerifier>(-5.f),Optional::No,"greaterValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueFloatOptional",new GreaterVerifier<DoubleVerifier>(-5.f),Optional::Yes,"greaterValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueFloatVector",new TableVerifier({{"*",new GreaterVerifier<DoubleVerifier>(-5.f),Optional::Yes, }})
 ,Optional::No,"greaterValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec2",new GreaterVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::No,"greaterValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec2Optional",new GreaterVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes,"greaterValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec2Vector",new TableVerifier({{"*",new GreaterVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes, }})
+,Optional::No,"greaterValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec3",new GreaterVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::No,"greaterValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec3Optional",new GreaterVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes,"greaterValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec3Vector",new TableVerifier({{"*",new GreaterVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes, }})
+,Optional::No,"greaterValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec4",new GreaterVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::No,"greaterValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec4Optional",new GreaterVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes,"greaterValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueVec4Vector",new TableVerifier({{"*",new GreaterVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes, }})
+,Optional::No,"greaterValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec2",new GreaterVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::No,"greaterValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec2Optional",new GreaterVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes,"greaterValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec2Vector",new TableVerifier({{"*",new GreaterVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes, }})
+,Optional::No,"greaterValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec3",new GreaterVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::No,"greaterValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec3Optional",new GreaterVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes,"greaterValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec3Vector",new TableVerifier({{"*",new GreaterVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes, }})
+,Optional::No,"greaterValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec4",new GreaterVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::No,"greaterValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec4Optional",new GreaterVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes,"greaterValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterValueIVec4Vector",new TableVerifier({{"*",new GreaterVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes, }})
+,Optional::No,"greaterValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"GreaterEqualValueInt",new GreaterEqualVerifier<IntVerifier>(33),Optional::No,"greaterEqualValueInt documentation"});
     codegen_Parameters->documentations.push_back({"GreaterEqualValueIntOptional",new GreaterEqualVerifier<IntVerifier>(33),Optional::Yes,"greaterEqualValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"GreaterEqualValueIntVector",new TableVerifier({{"*",new GreaterEqualVerifier<IntVerifier>(33),Optional::Yes, }})
 ,Optional::No,"greaterEqualValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloat",new GreaterEqualVerifier<DoubleVerifier>(-25.0),Optional::No,"greaterEqualValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloatOptional",new GreaterEqualVerifier<DoubleVerifier>(-25.0),Optional::Yes,"greaterEqualValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloatVector",new TableVerifier({{"*",new GreaterEqualVerifier<DoubleVerifier>(-25.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloat",new GreaterEqualVerifier<DoubleVerifier>(-25.f),Optional::No,"greaterEqualValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloatOptional",new GreaterEqualVerifier<DoubleVerifier>(-25.f),Optional::Yes,"greaterEqualValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueFloatVector",new TableVerifier({{"*",new GreaterEqualVerifier<DoubleVerifier>(-25.f),Optional::Yes, }})
 ,Optional::No,"greaterEqualValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec2",new GreaterEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::No,"greaterEqualValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec2Optional",new GreaterEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes,"greaterEqualValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec2Vector",new TableVerifier({{"*",new GreaterEqualVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec3",new GreaterEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::No,"greaterEqualValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec3Optional",new GreaterEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes,"greaterEqualValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec3Vector",new TableVerifier({{"*",new GreaterEqualVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec4",new GreaterEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::No,"greaterEqualValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec4Optional",new GreaterEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes,"greaterEqualValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueVec4Vector",new TableVerifier({{"*",new GreaterEqualVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec2",new GreaterEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::No,"greaterEqualValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec2Optional",new GreaterEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes,"greaterEqualValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec2Vector",new TableVerifier({{"*",new GreaterEqualVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec3",new GreaterEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::No,"greaterEqualValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec3Optional",new GreaterEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes,"greaterEqualValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec3Vector",new TableVerifier({{"*",new GreaterEqualVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec4",new GreaterEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::No,"greaterEqualValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec4Optional",new GreaterEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes,"greaterEqualValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"GreaterEqualValueIVec4Vector",new TableVerifier({{"*",new GreaterEqualVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes, }})
+,Optional::No,"greaterEqualValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"UnequalValueInt",new UnequalVerifier<IntVerifier>(1),Optional::No,"unequalValueInt documentation"});
     codegen_Parameters->documentations.push_back({"UnequalValueIntOptional",new UnequalVerifier<IntVerifier>(1),Optional::Yes,"unequalValueIntOptional documentation"});
     codegen_Parameters->documentations.push_back({"UnequalValueIntVector",new TableVerifier({{"*",new UnequalVerifier<IntVerifier>(1),Optional::Yes, }})
 ,Optional::No,"unequalValueIntVector documentation"});
-    codegen_Parameters->documentations.push_back({"UnequalValueFloat",new UnequalVerifier<DoubleVerifier>(123.0),Optional::No,"unequalValueFloat documentation"});
-    codegen_Parameters->documentations.push_back({"UnequalValueFloatOptional",new UnequalVerifier<DoubleVerifier>(123.0),Optional::Yes,"unequalValueFloatOptional documentation"});
-    codegen_Parameters->documentations.push_back({"UnequalValueFloatVector",new TableVerifier({{"*",new UnequalVerifier<DoubleVerifier>(123.0),Optional::Yes, }})
+    codegen_Parameters->documentations.push_back({"UnequalValueFloat",new UnequalVerifier<DoubleVerifier>(123.f),Optional::No,"unequalValueFloat documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueFloatOptional",new UnequalVerifier<DoubleVerifier>(123.f),Optional::Yes,"unequalValueFloatOptional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueFloatVector",new TableVerifier({{"*",new UnequalVerifier<DoubleVerifier>(123.f),Optional::Yes, }})
 ,Optional::No,"unequalValueFloatVector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec2",new UnequalVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::No,"unequalValueVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec2Optional",new UnequalVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes,"unequalValueVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec2Vector",new TableVerifier({{"*",new UnequalVerifier<DoubleVector2Verifier>(glm::vec2(1.f)),Optional::Yes, }})
+,Optional::No,"unequalValueVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec3",new UnequalVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::No,"unequalValueVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec3Optional",new UnequalVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes,"unequalValueVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec3Vector",new TableVerifier({{"*",new UnequalVerifier<DoubleVector3Verifier>(glm::vec3(1.f)),Optional::Yes, }})
+,Optional::No,"unequalValueVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec4",new UnequalVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::No,"unequalValueVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec4Optional",new UnequalVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes,"unequalValueVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueVec4Vector",new TableVerifier({{"*",new UnequalVerifier<DoubleVector4Verifier>(glm::vec4(1.f)),Optional::Yes, }})
+,Optional::No,"unequalValueVec4Vector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec2",new UnequalVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::No,"unequalValueIVec2 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec2Optional",new UnequalVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes,"unequalValueIVec2Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec2Vector",new TableVerifier({{"*",new UnequalVerifier<IntVector2Verifier>(glm::ivec2(1)),Optional::Yes, }})
+,Optional::No,"unequalValueIVec2Vector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec3",new UnequalVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::No,"unequalValueIVec3 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec3Optional",new UnequalVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes,"unequalValueIVec3Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec3Vector",new TableVerifier({{"*",new UnequalVerifier<IntVector3Verifier>(glm::ivec3(1)),Optional::Yes, }})
+,Optional::No,"unequalValueIVec3Vector documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec4",new UnequalVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::No,"unequalValueIVec4 documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec4Optional",new UnequalVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes,"unequalValueIVec4Optional documentation"});
+    codegen_Parameters->documentations.push_back({"UnequalValueIVec4Vector",new TableVerifier({{"*",new UnequalVerifier<IntVector4Verifier>(glm::ivec4(1)),Optional::Yes, }})
+,Optional::No,"unequalValueIVec4Vector documentation"});
     codegen_Parameters->documentations.push_back({"DescValue",new BoolVerifier,Optional::No,description});
     codegen_Parameters->documentations.push_back({"InListValue1",new InListVerifier<StringVerifier>({"A", "B", "C", "D", "E"}),Optional::No,"inListValue1 documentation"});
     codegen_Parameters->documentations.push_back({"InListValue1Optional",new InListVerifier<StringVerifier>({"A", "B", "C", "D", "E"}),Optional::Yes,"inListValue1Optional documentation"});
@@ -156,13 +324,17 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val);
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, float* val) { *val = static_cast<float>(d.value<double>(key)); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, int* val) { if (d.hasValue<double>(key)) { *val = static_cast<int>(d.value<double>(key)); } else if (d.hasValue<int>(key)) { *val = d.value<int>(key); } else { throw std::logic_error("Unexpected type"); } }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec2* val) { *val = d.value<glm::dvec2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec2* val) { *val = d.value<glm::dvec2>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec3* val) { *val = d.value<glm::dvec3>(key); }
+void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::ivec4* val) { *val = d.value<glm::dvec4>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::string* val) { *val = d.value<std::string>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, ghoul::Dictionary* val) { *val = d.value<ghoul::Dictionary>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec3* val) { *val = d.value<glm::dvec3>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec3* val) { *val = d.value<glm::dvec3>(key); }
 void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::dvec4* val) { *val = d.value<glm::dvec4>(key); }
-void bakeTo(const ghoul::Dictionary& d, std::string_view key, glm::vec4* val) { *val = d.value<glm::dvec4>(key); }
 
 template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
@@ -224,42 +396,168 @@ template <> Parameters bake<Parameters>(const ghoul::Dictionary& dict) {
     internal::bakeTo(dict, "InRangeValueFloat", &res.inRangeValueFloat);
     internal::bakeTo(dict, "InRangeValueFloatOptional", &res.inRangeValueFloatOptional);
     internal::bakeTo(dict, "InRangeValueFloatVector", &res.inRangeValueFloatVector);
+    internal::bakeTo(dict, "InRangeValueVec2", &res.inRangeValueVec2);
+    internal::bakeTo(dict, "InRangeValueVec2Optional", &res.inRangeValueVec2Optional);
+    internal::bakeTo(dict, "InRangeValueVec2Vector", &res.inRangeValueVec2Vector);
+    internal::bakeTo(dict, "InRangeValueVec3", &res.inRangeValueVec3);
+    internal::bakeTo(dict, "InRangeValueVec3Optional", &res.inRangeValueVec3Optional);
+    internal::bakeTo(dict, "InRangeValueVec3Vector", &res.inRangeValueVec3Vector);
+    internal::bakeTo(dict, "InRangeValueVec4", &res.inRangeValueVec4);
+    internal::bakeTo(dict, "InRangeValueVec4Optional", &res.inRangeValueVec4Optional);
+    internal::bakeTo(dict, "InRangeValueVec4Vector", &res.inRangeValueVec4Vector);
+    internal::bakeTo(dict, "InRangeValueIVec2", &res.inRangeValueIVec2);
+    internal::bakeTo(dict, "InRangeValueIVec2Optional", &res.inRangeValueIVec2Optional);
+    internal::bakeTo(dict, "InRangeValueIVec2Vector", &res.inRangeValueIVec2Vector);
+    internal::bakeTo(dict, "InRangeValueIVec3", &res.inRangeValueIVec3);
+    internal::bakeTo(dict, "InRangeValueIVec3Optional", &res.inRangeValueIVec3Optional);
+    internal::bakeTo(dict, "InRangeValueIVec3Vector", &res.inRangeValueIVec3Vector);
+    internal::bakeTo(dict, "InRangeValueIVec4", &res.inRangeValueIVec4);
+    internal::bakeTo(dict, "InRangeValueIVec4Optional", &res.inRangeValueIVec4Optional);
+    internal::bakeTo(dict, "InRangeValueIVec4Vector", &res.inRangeValueIVec4Vector);
     internal::bakeTo(dict, "NotInRangeValueInt", &res.notInRangeValueInt);
     internal::bakeTo(dict, "NotInRangeValueIntOptional", &res.notInRangeValueIntOptional);
     internal::bakeTo(dict, "NotInRangeValueIntVector", &res.notInRangeValueIntVector);
     internal::bakeTo(dict, "NotInRangeValueFloat", &res.notInRangeValueFloat);
     internal::bakeTo(dict, "NotInRangeValueFloatOptional", &res.notInRangeValueFloatOptional);
     internal::bakeTo(dict, "NotInRangeValueFloatVector", &res.notInRangeValueFloatVector);
+    internal::bakeTo(dict, "NotInRangeValueVec2", &res.notInRangeValueVec2);
+    internal::bakeTo(dict, "NotInRangeValueVec2Optional", &res.notInRangeValueVec2Optional);
+    internal::bakeTo(dict, "NotInRangeValueVec2Vector", &res.notInRangeValueVec2Vector);
+    internal::bakeTo(dict, "NotInRangeValueVec3", &res.notInRangeValueVec3);
+    internal::bakeTo(dict, "NotInRangeValueVec3Optional", &res.notInRangeValueVec3Optional);
+    internal::bakeTo(dict, "NotInRangeValueVec3Vector", &res.notInRangeValueVec3Vector);
+    internal::bakeTo(dict, "NotInRangeValueVec4", &res.notInRangeValueVec4);
+    internal::bakeTo(dict, "NotInRangeValueVec4Optional", &res.notInRangeValueVec4Optional);
+    internal::bakeTo(dict, "NotInRangeValueVec4Vector", &res.notInRangeValueVec4Vector);
+    internal::bakeTo(dict, "NotInRangeValueIVec2", &res.notInRangeValueIVec2);
+    internal::bakeTo(dict, "NotInRangeValueIVec2Optional", &res.notInRangeValueIVec2Optional);
+    internal::bakeTo(dict, "NotInRangeValueIVec2Vector", &res.notInRangeValueIVec2Vector);
+    internal::bakeTo(dict, "NotInRangeValueIVec3", &res.notInRangeValueIVec3);
+    internal::bakeTo(dict, "NotInRangeValueIVec3Optional", &res.notInRangeValueIVec3Optional);
+    internal::bakeTo(dict, "NotInRangeValueIVec3Vector", &res.notInRangeValueIVec3Vector);
+    internal::bakeTo(dict, "NotInRangeValueIVec4", &res.notInRangeValueIVec4);
+    internal::bakeTo(dict, "NotInRangeValueIVec4Optional", &res.notInRangeValueIVec4Optional);
+    internal::bakeTo(dict, "NotInRangeValueIVec4Vector", &res.notInRangeValueIVec4Vector);
     internal::bakeTo(dict, "LessValueInt", &res.lessValueInt);
     internal::bakeTo(dict, "LessValueIntOptional", &res.lessValueIntOptional);
     internal::bakeTo(dict, "LessValueIntVector", &res.lessValueIntVector);
     internal::bakeTo(dict, "LessValueFloat", &res.lessValueFloat);
     internal::bakeTo(dict, "LessValueFloatOptional", &res.lessValueFloatOptional);
     internal::bakeTo(dict, "LessValueFloatVector", &res.lessValueFloatVector);
+    internal::bakeTo(dict, "LessValueVec2", &res.lessValueVec2);
+    internal::bakeTo(dict, "LessValueVec2Optional", &res.lessValueVec2Optional);
+    internal::bakeTo(dict, "LessValueVec2Vector", &res.lessValueVec2Vector);
+    internal::bakeTo(dict, "LessValueVec3", &res.lessValueVec3);
+    internal::bakeTo(dict, "LessValueVec3Optional", &res.lessValueVec3Optional);
+    internal::bakeTo(dict, "LessValueVec3Vector", &res.lessValueVec3Vector);
+    internal::bakeTo(dict, "LessValueVec4", &res.lessValueVec4);
+    internal::bakeTo(dict, "LessValueVec4Optional", &res.lessValueVec4Optional);
+    internal::bakeTo(dict, "LessValueVec4Vector", &res.lessValueVec4Vector);
+    internal::bakeTo(dict, "LessValueIVec2", &res.lessValueIVec2);
+    internal::bakeTo(dict, "LessValueIVec2Optional", &res.lessValueIVec2Optional);
+    internal::bakeTo(dict, "LessValueIVec2Vector", &res.lessValueIVec2Vector);
+    internal::bakeTo(dict, "LessValueIVec3", &res.lessValueIVec3);
+    internal::bakeTo(dict, "LessValueIVec3Optional", &res.lessValueIVec3Optional);
+    internal::bakeTo(dict, "LessValueIVec3Vector", &res.lessValueIVec3Vector);
+    internal::bakeTo(dict, "LessValueIVec4", &res.lessValueIVec4);
+    internal::bakeTo(dict, "LessValueIVec4Optional", &res.lessValueIVec4Optional);
+    internal::bakeTo(dict, "LessValueIVec4Vector", &res.lessValueIVec4Vector);
     internal::bakeTo(dict, "LessEqualValueInt", &res.lessEqualValueInt);
     internal::bakeTo(dict, "LessEqualValueIntOptional", &res.lessEqualValueIntOptional);
     internal::bakeTo(dict, "LessEqualValueIntVector", &res.lessEqualValueIntVector);
     internal::bakeTo(dict, "LessEqualValueFloat", &res.lessEqualValueFloat);
     internal::bakeTo(dict, "LessEqualValueFloatOptional", &res.lessEqualValueFloatOptional);
     internal::bakeTo(dict, "LessEqualValueFloatVector", &res.lessEqualValueFloatVector);
+    internal::bakeTo(dict, "LessEqualValueVec2", &res.lessEqualValueVec2);
+    internal::bakeTo(dict, "LessEqualValueVec2Optional", &res.lessEqualValueVec2Optional);
+    internal::bakeTo(dict, "LessEqualValueVec2Vector", &res.lessEqualValueVec2Vector);
+    internal::bakeTo(dict, "LessEqualValueVec3", &res.lessEqualValueVec3);
+    internal::bakeTo(dict, "LessEqualValueVec3Optional", &res.lessEqualValueVec3Optional);
+    internal::bakeTo(dict, "LessEqualValueVec3Vector", &res.lessEqualValueVec3Vector);
+    internal::bakeTo(dict, "LessEqualValueVec4", &res.lessEqualValueVec4);
+    internal::bakeTo(dict, "LessEqualValueVec4Optional", &res.lessEqualValueVec4Optional);
+    internal::bakeTo(dict, "LessEqualValueVec4Vector", &res.lessEqualValueVec4Vector);
+    internal::bakeTo(dict, "LessEqualValueIVec2", &res.lessEqualValueIVec2);
+    internal::bakeTo(dict, "LessEqualValueIVec2Optional", &res.lessEqualValueIVec2Optional);
+    internal::bakeTo(dict, "LessEqualValueIVec2Vector", &res.lessEqualValueIVec2Vector);
+    internal::bakeTo(dict, "LessEqualValueIVec3", &res.lessEqualValueIVec3);
+    internal::bakeTo(dict, "LessEqualValueIVec3Optional", &res.lessEqualValueIVec3Optional);
+    internal::bakeTo(dict, "LessEqualValueIVec3Vector", &res.lessEqualValueIVec3Vector);
+    internal::bakeTo(dict, "LessEqualValueIVec4", &res.lessEqualValueIVec4);
+    internal::bakeTo(dict, "LessEqualValueIVec4Optional", &res.lessEqualValueIVec4Optional);
+    internal::bakeTo(dict, "LessEqualValueIVec4Vector", &res.lessEqualValueIVec4Vector);
     internal::bakeTo(dict, "GreaterValueInt", &res.greaterValueInt);
     internal::bakeTo(dict, "GreaterValueIntOptional", &res.greaterValueIntOptional);
     internal::bakeTo(dict, "GreaterValueIntVector", &res.greaterValueIntVector);
     internal::bakeTo(dict, "GreaterValueFloat", &res.greaterValueFloat);
     internal::bakeTo(dict, "GreaterValueFloatOptional", &res.greaterValueFloatOptional);
     internal::bakeTo(dict, "GreaterValueFloatVector", &res.greaterValueFloatVector);
+    internal::bakeTo(dict, "GreaterValueVec2", &res.greaterValueVec2);
+    internal::bakeTo(dict, "GreaterValueVec2Optional", &res.greaterValueVec2Optional);
+    internal::bakeTo(dict, "GreaterValueVec2Vector", &res.greaterValueVec2Vector);
+    internal::bakeTo(dict, "GreaterValueVec3", &res.greaterValueVec3);
+    internal::bakeTo(dict, "GreaterValueVec3Optional", &res.greaterValueVec3Optional);
+    internal::bakeTo(dict, "GreaterValueVec3Vector", &res.greaterValueVec3Vector);
+    internal::bakeTo(dict, "GreaterValueVec4", &res.greaterValueVec4);
+    internal::bakeTo(dict, "GreaterValueVec4Optional", &res.greaterValueVec4Optional);
+    internal::bakeTo(dict, "GreaterValueVec4Vector", &res.greaterValueVec4Vector);
+    internal::bakeTo(dict, "GreaterValueIVec2", &res.greaterValueIVec2);
+    internal::bakeTo(dict, "GreaterValueIVec2Optional", &res.greaterValueIVec2Optional);
+    internal::bakeTo(dict, "GreaterValueIVec2Vector", &res.greaterValueIVec2Vector);
+    internal::bakeTo(dict, "GreaterValueIVec3", &res.greaterValueIVec3);
+    internal::bakeTo(dict, "GreaterValueIVec3Optional", &res.greaterValueIVec3Optional);
+    internal::bakeTo(dict, "GreaterValueIVec3Vector", &res.greaterValueIVec3Vector);
+    internal::bakeTo(dict, "GreaterValueIVec4", &res.greaterValueIVec4);
+    internal::bakeTo(dict, "GreaterValueIVec4Optional", &res.greaterValueIVec4Optional);
+    internal::bakeTo(dict, "GreaterValueIVec4Vector", &res.greaterValueIVec4Vector);
     internal::bakeTo(dict, "GreaterEqualValueInt", &res.greaterEqualValueInt);
     internal::bakeTo(dict, "GreaterEqualValueIntOptional", &res.greaterEqualValueIntOptional);
     internal::bakeTo(dict, "GreaterEqualValueIntVector", &res.greaterEqualValueIntVector);
     internal::bakeTo(dict, "GreaterEqualValueFloat", &res.greaterEqualValueFloat);
     internal::bakeTo(dict, "GreaterEqualValueFloatOptional", &res.greaterEqualValueFloatOptional);
     internal::bakeTo(dict, "GreaterEqualValueFloatVector", &res.greaterEqualValueFloatVector);
+    internal::bakeTo(dict, "GreaterEqualValueVec2", &res.greaterEqualValueVec2);
+    internal::bakeTo(dict, "GreaterEqualValueVec2Optional", &res.greaterEqualValueVec2Optional);
+    internal::bakeTo(dict, "GreaterEqualValueVec2Vector", &res.greaterEqualValueVec2Vector);
+    internal::bakeTo(dict, "GreaterEqualValueVec3", &res.greaterEqualValueVec3);
+    internal::bakeTo(dict, "GreaterEqualValueVec3Optional", &res.greaterEqualValueVec3Optional);
+    internal::bakeTo(dict, "GreaterEqualValueVec3Vector", &res.greaterEqualValueVec3Vector);
+    internal::bakeTo(dict, "GreaterEqualValueVec4", &res.greaterEqualValueVec4);
+    internal::bakeTo(dict, "GreaterEqualValueVec4Optional", &res.greaterEqualValueVec4Optional);
+    internal::bakeTo(dict, "GreaterEqualValueVec4Vector", &res.greaterEqualValueVec4Vector);
+    internal::bakeTo(dict, "GreaterEqualValueIVec2", &res.greaterEqualValueIVec2);
+    internal::bakeTo(dict, "GreaterEqualValueIVec2Optional", &res.greaterEqualValueIVec2Optional);
+    internal::bakeTo(dict, "GreaterEqualValueIVec2Vector", &res.greaterEqualValueIVec2Vector);
+    internal::bakeTo(dict, "GreaterEqualValueIVec3", &res.greaterEqualValueIVec3);
+    internal::bakeTo(dict, "GreaterEqualValueIVec3Optional", &res.greaterEqualValueIVec3Optional);
+    internal::bakeTo(dict, "GreaterEqualValueIVec3Vector", &res.greaterEqualValueIVec3Vector);
+    internal::bakeTo(dict, "GreaterEqualValueIVec4", &res.greaterEqualValueIVec4);
+    internal::bakeTo(dict, "GreaterEqualValueIVec4Optional", &res.greaterEqualValueIVec4Optional);
+    internal::bakeTo(dict, "GreaterEqualValueIVec4Vector", &res.greaterEqualValueIVec4Vector);
     internal::bakeTo(dict, "UnequalValueInt", &res.unequalValueInt);
     internal::bakeTo(dict, "UnequalValueIntOptional", &res.unequalValueIntOptional);
     internal::bakeTo(dict, "UnequalValueIntVector", &res.unequalValueIntVector);
     internal::bakeTo(dict, "UnequalValueFloat", &res.unequalValueFloat);
     internal::bakeTo(dict, "UnequalValueFloatOptional", &res.unequalValueFloatOptional);
     internal::bakeTo(dict, "UnequalValueFloatVector", &res.unequalValueFloatVector);
+    internal::bakeTo(dict, "UnequalValueVec2", &res.unequalValueVec2);
+    internal::bakeTo(dict, "UnequalValueVec2Optional", &res.unequalValueVec2Optional);
+    internal::bakeTo(dict, "UnequalValueVec2Vector", &res.unequalValueVec2Vector);
+    internal::bakeTo(dict, "UnequalValueVec3", &res.unequalValueVec3);
+    internal::bakeTo(dict, "UnequalValueVec3Optional", &res.unequalValueVec3Optional);
+    internal::bakeTo(dict, "UnequalValueVec3Vector", &res.unequalValueVec3Vector);
+    internal::bakeTo(dict, "UnequalValueVec4", &res.unequalValueVec4);
+    internal::bakeTo(dict, "UnequalValueVec4Optional", &res.unequalValueVec4Optional);
+    internal::bakeTo(dict, "UnequalValueVec4Vector", &res.unequalValueVec4Vector);
+    internal::bakeTo(dict, "UnequalValueIVec2", &res.unequalValueIVec2);
+    internal::bakeTo(dict, "UnequalValueIVec2Optional", &res.unequalValueIVec2Optional);
+    internal::bakeTo(dict, "UnequalValueIVec2Vector", &res.unequalValueIVec2Vector);
+    internal::bakeTo(dict, "UnequalValueIVec3", &res.unequalValueIVec3);
+    internal::bakeTo(dict, "UnequalValueIVec3Optional", &res.unequalValueIVec3Optional);
+    internal::bakeTo(dict, "UnequalValueIVec3Vector", &res.unequalValueIVec3Vector);
+    internal::bakeTo(dict, "UnequalValueIVec4", &res.unequalValueIVec4);
+    internal::bakeTo(dict, "UnequalValueIVec4Optional", &res.unequalValueIVec4Optional);
+    internal::bakeTo(dict, "UnequalValueIVec4Vector", &res.unequalValueIVec4Vector);
     internal::bakeTo(dict, "DescValue", &res.descValue);
     internal::bakeTo(dict, "InListValue1", &res.inListValue1);
     internal::bakeTo(dict, "InListValue1Optional", &res.inListValue1Optional);
