@@ -41,7 +41,7 @@ namespace {
     return openspace::documentation::Documentation();
 })";
     
-    constexpr const char ToStringFallback[] = "template<typename T> std::string_view toString(T t) { static_assert(sizeof(T) == 0); return ""; }";
+    constexpr const char ToStringFallback[] = "template<typename T> std::string_view toString(T t) { static_assert(sizeof(T) == 0); return \"\"; }";
     constexpr const char FromStringFallback[] = "template<typename T> T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
 
     constexpr const char DocumentationPreamble[] = R"(
