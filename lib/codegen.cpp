@@ -348,6 +348,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     converters.push_back(typeString);
 
     std::string result = fmt::format(
+        "[[maybe_unused]] "
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
         typeString
     );
@@ -385,7 +386,8 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
 std::string writeInnerEnumConverter(Enum* e) {
     std::string type = fqn(e, "::");
     std::string result = fmt::format(
-        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
+        "[[maybe_unused]] "
+        "void bakeTo(const ghoul::Dictionary & d, std::string_view key, {}*val) {{\n"
         "    std::string v = d.value<std::string>(key);\n",
         type
     );
@@ -430,7 +432,7 @@ std::string writeStructConverter(Struct* s) {
     }
 
     std::string name = fqn(s, "::");
-    result += fmt::format(R"(template <> void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
+    result += fmt::format(R"(template <> [[maybe_unused]] void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
     {0}& res = *val;
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
 )",
@@ -478,7 +480,7 @@ std::string writeRootEnumConverter(Enum* e) {
 
     // toString
     res += fmt::format(R"(
-template <> std::string_view toString<{0}>({0} t) {{
+template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     switch (t) {{ 
 )",
         e->name
@@ -494,7 +496,8 @@ template <> std::string_view toString<{0}>({0} t) {{
 
     // fromString
     res += fmt::format(
-        "template <> {0} fromString<{0}>(std::string_view sv) {{\n", e->name
+        "template <> [[maybe_unused]] {0} fromString<{0}>(std::string_view sv) {{\n",
+        e->name
     );
     for (EnumElement* elem : e->elements) {
         res += fmt::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
@@ -600,13 +603,13 @@ std::string generateResult(const Code& code) {
         result += R"(
 } // namespace internal
 
-template <typename T> T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
+template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
 )";
 
         for (Struct* s : code.structs) {
             result += fmt::format(
                 R"(
-template <> {0} bake<{0}>(const ghoul::Dictionary& dict) {{
+template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
 )",

@@ -103,7 +103,6 @@ namespace {
     constexpr const char VariantConverterDMat4x3[] = "   if (d.hasValue<glm::dmat4x3>(key)) { glm::dmat4x3 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterDMat4x4[] = "   if (d.hasValue<glm::dmat4x4>(key)) { glm::dmat4x4 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr const char VariantConverterDictionary[] = "   if (d.hasValue<ghoul::Dictionary>(key)) { ghoul::Dictionary v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
-
 } // namespace
 
 std::string_view bakeFunctionForType(BasicType::Type type) {
