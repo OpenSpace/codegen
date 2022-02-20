@@ -1,4 +1,4 @@
-﻿build
+build
 tests/execution/*_codegen.cpp
 tests/execution_enums/*_codegen.cpp
 tests/execution_structs/*_codegen.cpp
