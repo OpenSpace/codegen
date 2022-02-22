@@ -26,6 +26,11 @@ add_executable(
   codegentest
   main.cpp
 
+  execution_enums/execution_enums_basic.cpp
+  execution_enums/execution_enums_mapping.cpp
+  execution_enums/execution_enums_multiple.cpp
+  execution_enums/execution_enums_keys.cpp
+  execution_misc/execution_misc_parentdoc.cpp
   execution_structs/execution_structs_attributes.cpp
   execution_structs/execution_structs_basic_types.cpp
   execution_structs/execution_structs_basic_types_optional.cpp
@@ -41,10 +46,6 @@ add_executable(
   execution_structs/execution_structs_simple.cpp
   execution_structs/execution_structs_substructs.cpp
   execution_structs/execution_structs_variant.cpp
-  execution_enums/execution_enums_basic.cpp
-  execution_enums/execution_enums_mapping.cpp
-  execution_enums/execution_enums_multiple.cpp
-  execution_enums/execution_enums_keys.cpp
 
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp
@@ -140,6 +141,6 @@ add_dependencies(run_test_codegen codegen)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs" "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums"
+  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
   VERBATIM
 )

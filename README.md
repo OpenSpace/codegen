@@ -11,7 +11,19 @@ struct [[codegen::Dictionary(RenderableExample)]] Params {
 #include "renderabletest_codegen.cpp"
 ```
 
-Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed
+Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed.
+
+## Generated functions
+Running the codegen will create a number of functions in the generated `_codegen.cpp` file that can be used by including the file in the main `.cpp` file.
+
+If a struct  was marked with `codegen::Dictionary` the following functions will exist (this example assumes that the name of the marked struct was `P`):
+ - `P bake(const ghoul::Dictionary&)`:  Will extract the parameters used to create `P` out of the passed Dictionary and will also verify that all parameters that are non-optional do exist and that all parameters have the correct type
+ - `openspace::documentation::Documentation doc(std::string, openspace::documentation::Documentation)`:  Returns the documentation object that describes the parameters that a `Dictionary` need to fulfill to be successfully passed into the `bake` function.  The first parameter is the identifier of the documentation which needs to be unique. The optional second argument is a parent Documentation whose entires will be copied
+
+If any enum in the file was marked with the `codegen::map(abc)` attribute the function `codegen::map<myspace::ABC>` is available that returns the corresponding type to the passed in value.
+
+If any enum is marked with with `codegen::stringify()` attribute, the `toString` and `fromString` methods are created with allow the enum values to be converted to and from std representations repectively.
+
 
 ## Root struct
 The root struct needs to be marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name.  Every struct not marked as such will be ignored by the codegen program.  The root struct (and the following include) **must** be declared in an anonymous namespace or else the resulting code might produce violations of the ODR rule.

@@ -36,7 +36,7 @@ namespace {
 
     constexpr const char BakeFunctionFallback[] = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
     constexpr const char MapFunctionFallback[] = "template<typename T, typename U> [[maybe_unused]] T map(U) { static_assert(sizeof(T) == 0); }";
-    constexpr const char DocumentationFallback[] = R"(template<typename T> [[maybe_unused]] openspace::documentation::Documentation doc(std::string) {
+    constexpr const char DocumentationFallback[] = R"(template<typename T> [[maybe_unused]] openspace::documentation::Documentation doc(std::string, [[maybe_unused]] openspace::documentation::Documentation parentDoc = openspace::documentation::Documentation()) {
     static_assert(sizeof(T) == 0);
     return openspace::documentation::Documentation();
 })";
@@ -45,13 +45,17 @@ namespace {
     constexpr const char FromStringFallback[] = "template<typename T> [[maybe_unused]] T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
 
     constexpr const char DocumentationPreamble[] = R"(
-template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std::string id) {{
+template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std::string id, openspace::documentation::Documentation parentDoc) {{
     using namespace openspace::documentation;
 
 )";
 
     constexpr const char DocumentationEpilog[] = R"(
     openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
+    
+    // Move the entries from the parent doc into this one
+    d.entries.insert(d.entries.begin(), parentDoc.entries.begin(), parentDoc.entries.end());
+
     return d;
 }}
 
