@@ -152,6 +152,7 @@ TEST_CASE("Parsing Attribute: Attributes Vec3 (success)", "[structs][parsing]") 
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 33);

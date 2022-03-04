@@ -92,6 +92,7 @@ TEST_CASE("Parsing Attribute: Attributes Path (success)", "[structs][parsing]") 
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 16);

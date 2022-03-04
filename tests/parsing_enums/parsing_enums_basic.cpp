@@ -41,6 +41,7 @@ TEST_CASE("Parsing: Basic", "[enums][parsing]") {
     CHECK(code.structs.size() == 0);
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
+    REQUIRE(e);
 
     CHECK(e->parent == nullptr);
     CHECK(e->mappedTo.empty());

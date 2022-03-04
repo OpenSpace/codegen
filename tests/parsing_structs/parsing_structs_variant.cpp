@@ -43,9 +43,9 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 2);
-
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -79,9 +79,9 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 1);
-
     {
         Variable* var = s->variables[0];
         REQUIRE(var);

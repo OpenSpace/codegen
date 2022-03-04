@@ -39,6 +39,7 @@ TEST_CASE("Parsing Attribute: Attributes Bool (success)", "[structs][parsing]") 
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 1);
@@ -65,7 +66,6 @@ TEST_CASE("Parsing Attribute: Attributes Bool (success)", "[structs][parsing]") 
     CHECK(!var->attributes.isDirectory);
     CHECK(!var->attributes.isDateTime);
     CHECK(!var->attributes.mustBeNotEmpty);
-
 
     std::string r = generateResult(code);
     CHECK(!r.empty());

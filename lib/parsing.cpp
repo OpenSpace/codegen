@@ -766,10 +766,35 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     Code res;
 
     while (!code.empty()) {
-        
-        if (std::pair<size_t, size_t> cursors = validStructCode(code);
-            cursors.first != std::string_view::npos)
-        {
+        // Check of all of the potential code places, we have to pick the first one of all
+        // these options and handle this one first. Handling the first one also handles
+        // the case when these are nested, fortunately
+        std::pair<size_t, size_t> structCursors = validStructCode(code);
+        bool hasStruct = structCursors.first != std::string_view::npos;
+        std::pair<size_t, size_t> enumCursors = validEnumCode(code);
+        bool hasEnum = enumCursors.first != std::string_view::npos;
+
+        // Find the next piece of code that we need to handle
+        enum class Next {
+            Struct,
+            Enum,
+            None
+        };
+        Next next;
+        std::pair<size_t, size_t> cursors;
+        if (hasStruct && structCursors.first < enumCursors.first) {
+            next = Next::Struct;
+            cursors = structCursors;
+        }
+        else if (hasEnum) {
+            next = Next::Enum;
+            cursors = enumCursors;
+        }
+        else {
+            break;
+        }
+
+        if (next == Next::Struct) {
             std::string_view content = strip(code.substr(cursors.first, cursors.second));
 
             Struct* s = parseRootStruct(content);
@@ -780,9 +805,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
         }
 
         
-        if (std::pair<size_t, size_t> cursors = validEnumCode(code);
-            cursors.first != std::string_view::npos)
-        {
+        if (enumCursors.first != std::string_view::npos) {
             std::string_view content = strip(code.substr(cursors.first, cursors.second));
 
             Enum* e = parseRootEnum(content);
@@ -791,8 +814,6 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
             code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
             continue;
         }
-
-        return res;
     }
 
     return res;

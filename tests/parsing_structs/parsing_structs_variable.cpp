@@ -74,6 +74,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -391,6 +392,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -708,6 +710,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 38);
     {
@@ -989,7 +992,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
-
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
@@ -1006,6 +1009,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);

@@ -52,6 +52,7 @@ TEST_CASE("Parsing: Enum Mapping", "[enums][parsing]") {
 
     {
         Enum* e = code.enums[0];
+        REQUIRE(e);
         CHECK(e->parent == nullptr);
         CHECK(e->mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
@@ -74,6 +75,7 @@ TEST_CASE("Parsing: Enum Mapping", "[enums][parsing]") {
 
     {
         Enum* e = code.enums[1];
+        REQUIRE(e);
         CHECK(e->parent == nullptr);
         CHECK(e->mappedTo == "Mapped2");
         REQUIRE(e->elements.size() == 2);
@@ -91,6 +93,7 @@ TEST_CASE("Parsing: Enum Mapping", "[enums][parsing]") {
 
     {
         Enum* e = code.enums[2];
+        REQUIRE(e);
         CHECK(e->parent == nullptr);
         CHECK(e->mappedTo == "Mapped3");
         REQUIRE(e->elements.size() == 1);

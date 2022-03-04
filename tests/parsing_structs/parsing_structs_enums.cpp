@@ -74,6 +74,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->children.size() == 4);
     {

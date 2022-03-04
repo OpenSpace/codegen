@@ -84,6 +84,7 @@ Lines, With, Weird,
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
+    REQUIRE(s);
 
     REQUIRE(s->variables.size() == 8);
     {
@@ -177,24 +178,28 @@ struct [[codegen::Dictionary(P4)]] Param4 {
 
     {
         Struct* s = code.structs[0];
+        REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "abc");
     }
 
     {
         Struct* s = code.structs[1];
+        REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "def");
     }
 
     {
         Struct* s = code.structs[2];
+        REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "ghi");
     }
 
     {
         Struct* s = code.structs[3];
+        REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "jkl");
     }
