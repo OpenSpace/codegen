@@ -115,9 +115,51 @@ TEST_CASE("Parsing LuaWrapper: 2 Arguments", "[luawrapper][parsing]") {
     }
 }
 
-TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional)", "[luawrapper][parsing]") {
+TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/1)", "[luawrapper][parsing]") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo(int arg1, std::optional<double> arg2) {
+    }
+};
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 2);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = dynamic_cast<BasicType*>(v->type);
+        REQUIRE(bt);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+    {
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = dynamic_cast<OptionalType*>(v->type);
+        REQUIRE(ot);
+        REQUIRE(ot->type);
+        BasicType* bt = dynamic_cast<BasicType*>(ot->type);
+        REQUIRE(bt);
+        CHECK(bt->type == BasicType::Type::Double);
+    }
+
+}
+
+TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/2)", "[luawrapper][parsing]") {
+    constexpr const char Source[] = R"(
+    [[codegen::wraplua]] void foo(int arg1, double arg2 = 2.0) {
     }
 };
 )";

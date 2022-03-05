@@ -32,25 +32,39 @@
 #include <numeric>
 
 namespace {
-    constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
-    constexpr const char AttributeStringify[] = "[[codegen::stringify";
-    constexpr const char AttributeMap[] = "[[codegen::map";
-    constexpr const char AttributeWrapLua[] = "[[codegen::wraplua]]";
+    constexpr std::string_view AttributeDictionary = "[[codegen::Dictionary";
+    constexpr std::string_view AttributeStringify = "[[codegen::stringify";
+    constexpr std::string_view AttributeMap = "[[codegen::map";
+    constexpr std::string_view AttributeWrapLua = "[[codegen::wraplua]]";
 } // namespace
 
+/**
+ * Extracts everything until the next newline character and updates the \param cursor to
+ * the following character. Any whitespaces from the extracted line are trimmed from
+ * either end.
+ * 
+ * \param sv The string from which the line is extracted
+ * \param cursor The location inside \p sv that is the beginning of the line extraction
+ */
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
     assert(!sv.empty());
     assert(cursor);
     assert(*cursor == 0 || sv[*cursor - 1] == '\n');
+    assert(*cursor < sv.size());
 
+    // Find the next newline character
     const size_t p = sv.find('\n', *cursor);
 
     if (p != std::string_view::npos) {
+        // If there was a newline character, extract everything until then and update the
+        // cursor to the following character
         std::string_view line = sv.substr(*cursor, p - *cursor);
         *cursor = p + 1;
         return strip(line);
     }
     else {
+        // If there was no newline character, extract the remainder of the string and set
+        // the cursor to the npos position
         std::string_view line = sv.substr(*cursor);
         *cursor = std::string_view::npos;
         return strip(line);
@@ -73,7 +87,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
     const size_t beg = block.find('(', p) + 1;
 
     std::string_view name = block.substr(p + key.size(), beg - (p + key.size()) - 1);
-    if (const size_t end = block.find(')', beg); end == std::string_view::npos) {
+    if (const size_t end = block.find(')', beg);  end == std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Attribute parameter has unterminated parameter list\n{}", block
         ));
@@ -134,6 +148,8 @@ bool booleanValue(std::string_view v) {
 }
 
 Variable::Attributes parseAttributes(std::string_view line) {
+    assert(!line.empty());
+
     Variable::Attributes res;
 
     std::vector<ParseResult> attributes = parseAttribute(line);
@@ -170,7 +186,9 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::DateTime) {
             res.isDateTime = booleanValue(p.value);
         }
-        else if (p.key == attributes::Color) { res.isColor = booleanValue(p.value); }
+        else if (p.key == attributes::Color) {
+            res.isColor = booleanValue(p.value);
+        }
         else if (p.key == attributes::MustBeNotEmpty) {
             res.mustBeNotEmpty = booleanValue(p.value);
         }
@@ -193,7 +211,7 @@ Struct* parseStruct(std::string_view line) {
     assert(line.substr(0, cursor) == "struct");
     cursor++;
 
-    if (const size_t begin = line.find("[[", cursor); begin != std::string_view::npos) {
+    if (const size_t begin = line.find("[[", cursor);  begin != std::string_view::npos) {
         const size_t endAttr = line.find("]]", begin) + 2;
         std::string_view block = line.substr(begin, endAttr - begin);
         std::vector<ParseResult> attrs = parseAttribute(block);
@@ -244,7 +262,7 @@ Enum* parseEnum(std::string_view line) {
     assert(line.substr(0, cursor) == "enum class");
     cursor++;
 
-    if (const size_t begin = line.find("[[", cursor); begin != std::string_view::npos) {
+    if (const size_t begin = line.find("[[", cursor);  begin != std::string_view::npos) {
         const size_t endAttr = line.find("]]", begin) + 2;
         std::string_view block = line.substr(begin, endAttr - begin);
         std::vector<ParseResult> attrs = parseAttribute(block);
@@ -380,13 +398,12 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
 
     const size_t loc = code.find(AttributeDictionary);
     if (loc == std::string_view::npos) {
-        // We did't find the attrbute
+        // We did't find the attribute
         return { std::string_view::npos, std::string_view::npos };
     }
 
     int64_t cursor = loc;
-    while (code.substr(cursor, loc - cursor).find("struct") == std::string_view::npos)
-    {
+    while (code.substr(cursor, loc - cursor).find("struct") == std::string_view::npos) {
         cursor--;
 
         if (cursor < 0) {
@@ -443,7 +460,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     const size_t locMap = code.find(AttributeMap);
     const size_t loc = std::min(locStringify, locMap);
     if (loc == std::string_view::npos) {
-        // We did't find the attribute
+        // We didn't find the attribute
         return { std::string_view::npos, std::string_view::npos };
     }
 
@@ -508,7 +525,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         return { std::string_view::npos, std::string_view::npos };
     }
 
-    const size_t start = locWrapLua + strlen(AttributeWrapLua);
+    const size_t start = locWrapLua + AttributeWrapLua.size();
     const size_t end = code.find('{', start);
     return { start, end - start };
 }
@@ -655,7 +672,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                     // No semicolon on this line but we are looking for a variable, so we
                     // are in a definition line that spans multiple lines
                     variableBuffer += line;
-                    variableBuffer += " ";
+                    variableBuffer += ' ';
                     continue;
                 }
                 Struct* s = static_cast<Struct*>(e);
@@ -684,7 +701,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                     // Though this means that that the last value will be added to the
                     // buffer since it will not be finished
                     enumBuffer += line;
-                    enumBuffer += " ";
+                    enumBuffer += ' ';
                     continue;
                 }
                 
@@ -760,7 +777,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
             // Though this means that that the last value will be added to the
             // buffer since it will not be finished
             enumBuffer += line;
-            enumBuffer += " ";
+            enumBuffer += ' ';
             continue;
         }
 
@@ -836,9 +853,11 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         }
 
         loc.first = cursor;
+        // The name of the variable is all characters until the first separator which is
+        // one of these four characters
         while (true) {
             if (content[cursor] == ' ' || content[cursor] == ',' ||
-                content[cursor] == ')')
+                content[cursor] == '=' || content[cursor] == ')')
             {
                 break;
             }
@@ -856,7 +875,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     // optional and we don't want to accidentally pick up some other documentation higher
     // up in the file, so we have to be a bit conservative with what we try to pick up
     {
-        size_t b = begin - strlen(AttributeWrapLua);
+        size_t b = begin - AttributeWrapLua.size();
         // Try to find the last closing brace for the comments
         size_t endComment = code.rfind("*/", b);
 
@@ -963,18 +982,66 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         v->type = parseType(
             content.substr(locType.first, locType.second - locType.first), nullptr
         );
-        // @TODO:  Check that the argument is no a tuple in the argument list
+
+        if (v->type->tag == VariableType::Tag::TupleType) {
+            throw CodegenError(fmt::format(
+                "Tuples are not supported in parameter arguments\n{}",
+                content.substr(cursor, 50)
+            ));
+        }
 
         std::pair<size_t, size_t> locName = eatName(cursor);
         v->name = std::string(
             content.substr(locName.first, locName.second - locName.first)
         );
 
+        // There are a few options for characters that follow the name;  either it can be
+        // a , meaning that there are more arguments coming, a = representing a default
+        // parameter which we don't want to parse (but mark the type as an optional type)
+        // or ) which means that we are done parsing the parameter list. The first and
+        // third case are handled at the top of this loop, so we only need to care about
+        // the = case
+        size_t equalLoc = content.find('=', cursor);
+        size_t commaLoc = content.find(',', cursor);
+        size_t paranLoc = content.find(')', cursor);
+
+        if (equalLoc != std::string_view::npos &&  // -> there is an equal sign
+            equalLoc < commaLoc && equalLoc < paranLoc) // -> it comes before the next , )
+        {
+            OptionalType* ot = new OptionalType;
+            ot->tag = VariableType::Tag::OptionalType;
+            ot->type = v->type;
+            v->type = ot;
+
+            // Skip over the actual value for the default parameter as it would confuse
+            // everyone otherwise
+            cursor = std::min(commaLoc, paranLoc);
+        }
+
         f->arguments.push_back(v);
     }
 
-    // @TODO:  There should be a two-phase part where there are non-optional values first
-    //         follow by only std::optional
+    // Verify that the arguments are ordered correctly, meaning that there are required
+    // arguments first and then optionals. And as soon as we see the first optional
+    // argument we can't transition back to required ones
+    bool isInOptionalPhase = false;
+    for (Variable* var : f->arguments) {
+        bool isOptional = var->type->tag == VariableType::Tag::OptionalType;
+        if (isOptional && !isInOptionalPhase) {
+            // This is the first optional parameter that we are seeing
+            isInOptionalPhase = true;
+        }
+
+        if (!isOptional && isInOptionalPhase) {
+            // We have seen the first optional parameter but now there is a not-optional
+            // one, so we have a wrong ordering of parameters
+            throw CodegenError(fmt::format(
+                "It is not supported to have non-optional parameters after optional "
+                "ones\n{}",
+                content.substr(cursor, 50)
+            ));
+        }
+    }
 
     return f;
 }
