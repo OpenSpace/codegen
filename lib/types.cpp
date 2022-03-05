@@ -86,6 +86,9 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
         case Tag::VariantType:
             return static_cast<const VariantType&>(lhs) ==
                    static_cast<const VariantType&>(rhs);
+        case Tag::TupleType:
+            return static_cast<const TupleType&>(lhs) ==
+                   static_cast<const TupleType&>(rhs);
         case Tag::VectorType:
             return static_cast<const VectorType&>(lhs) ==
                    static_cast<const VectorType&>(rhs);
@@ -109,6 +112,19 @@ bool operator==(const OptionalType& lhs, const OptionalType& rhs) {
 }
 
 bool operator==(const VariantType& lhs, const VariantType& rhs) {
+    if (lhs.types.size() != rhs.types.size()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < lhs.types.size(); ++i) {
+        if (!(*lhs.types[i] == *rhs.types[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool operator==(const TupleType& lhs, const TupleType& rhs) {
     if (lhs.types.size() != rhs.types.size()) {
         return false;
     }
@@ -189,6 +205,10 @@ std::string fqn(const StackElement* s, std::string_view separator) {
 VariableType* parseType(std::string_view type, Struct* context) {
     using namespace std::literals;
 
+    if (type == "void") {
+        return nullptr;
+    }
+
     auto newType = [](BasicType::Type t) -> BasicType* {
         BasicType* bt = new BasicType;
         bt->tag = VariableType::Tag::BasicType;
@@ -197,8 +217,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     };
 
     VariableType* t = nullptr;
-
-    if (type == "bool")                       {  t = newType(BasicType::Type::Bool); }
+    if (type == "bool")                       { t = newType(BasicType::Type::Bool); }
     else if (type == "int")                   { t = newType(BasicType::Type::Int); }
     else if (type == "double")                { t = newType(BasicType::Type::Double); }
     else if (type == "float")                 { t = newType(BasicType::Type::Float); }
@@ -336,10 +355,56 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         t = vt;
     }
+    else if (startsWith(type, "std::tuple<")) {
+        type.remove_prefix("std::tuple<"sv.size());
+
+        std::vector<std::string_view> list = extractTemplateTypeList(type);
+
+        TupleType* tt = new TupleType;
+        tt->tag = VariableType::Tag::TupleType;
+
+        for (std::string_view elem : list) {
+            VariableType* t = parseType(elem, context);
+            assert(t);
+            tt->types.push_back(t);
+        }
+
+        t = tt;
+
+        // Check for multiple vector types
+        //int nVectorTypes = 0;
+        //for (VariableType* t : vt->types) {
+        //    if (t->tag == VariableType::Tag::VectorType) {
+        //        nVectorTypes += 1;
+        //    }
+        //}
+        //if (nVectorTypes > 1) {
+        //    throw CodegenError(fmt::format(
+        //        "We can't have a variant containing multiple vector types, try a "
+        //        "vector of variants instead\n{}", type
+        //    ));
+        //}
+
+        //// Check for illegal types
+        //for (VariableType* t : vt->types) {
+        //    const bool isBasicType = t->tag == VariableType::Tag::BasicType;
+        //    const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+        //    const bool isEnum =
+        //        t->tag == VariableType::Tag::CustomType &&
+        //        static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
+        //    if (!isBasicType && !isVectorType && !isEnum) {
+        //        throw CodegenError(fmt::format(
+        //            "Unsupported type '{}' found in variant list\n{}",
+        //            generateTypename(t), type
+        //        ));
+        //    }
+        //}
+    }
 
     if (!t) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
         // visible in the variable's context
+        assert(context);
 
         const StackElement* el = resolveType(context, type);
         if (!el) {
@@ -425,6 +490,19 @@ std::string generateTypename(const VariantType* type, bool fullyQualified) {
     return res;
 }
 
+std::string generateTypename(const TupleType* type, bool fullyQualified) {
+    std::string res = "std::tuple<";
+    for (VariableType* v : type->types) {
+        res += generateTypename(v, fullyQualified);
+        res += ", ";
+    }
+
+    res.pop_back();   // Remove the final ' '
+    res.back() = '>'; // Replace the final , with the >
+
+    return res;
+}
+
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
@@ -450,6 +528,8 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
             return generateTypename(static_cast<const OptionalType*>(type), fq);
         case VariableType::Tag::VariantType:
             return generateTypename(static_cast<const VariantType*>(type), fq);
+        case VariableType::Tag::TupleType:
+            return generateTypename(static_cast<const TupleType*>(type), fq);
         case VariableType::Tag::VectorType:
             return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:

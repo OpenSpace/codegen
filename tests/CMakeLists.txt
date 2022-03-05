@@ -30,6 +30,7 @@ add_executable(
   execution_enums/execution_enums_mapping.cpp
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
+  execution_luawrapper/execution_luawrapper_basic.cpp
   execution_misc/execution_misc_parentdoc.cpp
   execution_structs/execution_structs_attributes.cpp
   execution_structs/execution_structs_basic_types.cpp
@@ -52,6 +53,7 @@ add_executable(
   parsing_enums/parsing_enums_mapping.cpp
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp
+  parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp
@@ -142,6 +144,6 @@ add_dependencies(run_test_codegen codegen)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
+  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
   VERBATIM
 )

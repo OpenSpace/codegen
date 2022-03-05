@@ -98,12 +98,12 @@ struct VariableType {
         MapType,
         OptionalType,
         VariantType,
+        TupleType,
         VectorType,
         CustomType
     };
 
     Tag tag;
-
 };
 bool operator==(const VariableType& lhs, const VariableType& rhs);
 
@@ -149,6 +149,11 @@ struct VariantType : public VariableType {
     std::vector<VariableType*> types;
 };
 bool operator==(const VariantType& lhs, const VariantType& rhs);
+
+struct TupleType : public VariableType {
+    std::vector<VariableType*> types;
+};
+bool operator==(const TupleType& lhs, const TupleType& rhs);
 
 struct VectorType : public VariableType {
     VariableType* type = nullptr;
@@ -224,10 +229,19 @@ const Struct* rootStruct(const Struct* s);
 const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
+struct Function {
+    std::string name;
+    std::string documentation;
+
+    VariableType* returnValue = nullptr;
+    std::vector<Variable*> arguments;
+};
+
 
 struct Code {
     std::vector<Struct*> structs;
     std::vector<Enum*> enums;
+    std::vector<Function*> luaWrapperFunctions;
 
     std::string sourceFile;
 };

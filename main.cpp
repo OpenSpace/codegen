@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    std::cout << fmt::format("codegen");
+    std::cout << "codegen";
     std::vector<std::string_view> srcs;
     for (int i = 1; i < argc; ++i) {
         std::string_view src = argv[i];

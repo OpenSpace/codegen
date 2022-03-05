@@ -36,6 +36,7 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 
@@ -511,9 +512,13 @@ template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
 }
 
 std::string generateResult(const Code& code) {
-    assert(!code.structs.empty() || !code.enums.empty());
+    assert(
+        !code.structs.empty() ||
+        !code.enums.empty() ||
+        !code.luaWrapperFunctions.empty()
+    );
 
-    std::string result = fmt::format(FileHeader);
+    std::string result = FileHeader;
 
 
     if (!code.structs.empty()) {
@@ -659,8 +664,95 @@ s->name, s->attributes.dictionary
         }
     }
 
+    if (!code.luaWrapperFunctions.empty()) {
+        result += "namespace lua {\n\n";
 
-    result += "}// namespace codegen\n";
+        for (Function* f : code.luaWrapperFunctions) {
+            result += fmt::format("int {}(lua_State* L) {{\n", f->name);
+
+            int nRequiredArguments = 0;
+            for (Variable* var : f->arguments) {
+                if (var->type->tag == VariableType::Tag::OptionalType) {
+                    // We passed into the optional phase
+                    break;
+                }
+                nRequiredArguments += 1;
+            }
+
+            // Adding the check for number of variables
+            int nTotalArguments = static_cast<int>(f->arguments.size());
+            if (nRequiredArguments == nTotalArguments) {
+                result += fmt::format(
+                    "    ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
+                    nTotalArguments, f->name
+                );
+            }
+            else {
+                result += fmt::format(
+                    "    ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
+                    nRequiredArguments, nTotalArguments, f->name
+                );
+            }
+
+            std::string names;
+            std::string types;
+            for (Variable* var : f->arguments) {
+                names += var->name + ", ";
+                types += generateTypename(var->type) + ", ";
+            }
+
+            // Remove the final ", " from both strings if we have added anything
+            if (!f->arguments.empty()) {
+                names.pop_back();
+                names.pop_back();
+                types.pop_back();
+                types.pop_back();
+
+                result += fmt::format(
+                    "    const auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
+                );
+            }
+
+
+            if (f->returnValue) {
+                result += fmt::format(
+                    "    const {} res = ::{}({});\n",
+                    generateTypename(f->returnValue), f->name, names
+                );
+
+                int nArguments = 0;
+                if (f->returnValue->tag == VariableType::Tag::TupleType) {
+                    TupleType* tt = static_cast<TupleType*>(f->returnValue);
+                    assert(!tt->types.empty());
+                    for (size_t i = 0; i < tt->types.size(); i += 1) {
+                        result += fmt::format(
+                            "    ghoul::lua::push(L, std::get<{}>(res));\n", i
+                        );
+                    }
+                    nArguments = static_cast<int>(tt->types.size());
+                }
+                else {
+                    result += "    ghoul::lua::push(L, res);\n";
+                    nArguments = 1;
+                }
+
+                // @TODO: Should check if the return value is a tuple and then set the
+                // correct number of arguments
+                result += fmt::format("    return {};\n", nArguments);
+            }
+            else {
+                result += fmt::format("    ::{}({});\n", f->name, names);
+                result += "    return 0;\n";
+            }
+
+            result += "}\n\n";
+        }
+
+        result += "} // namespace lua\n";
+    }
+
+
+    result += "} // namespace codegen\n";
     return result;
 }
 
@@ -682,7 +774,7 @@ Result handleFile(std::filesystem::path path) {
 
     std::string p = path.string();
     Code code = parse(res);
-    if (code.structs.empty() && code.enums.empty()) {
+    if (code.structs.empty() && code.enums.empty() && code.luaWrapperFunctions.empty()) {
         return Result::NotProcessed;
     }
     code.sourceFile = createClickableFileName(path.string());

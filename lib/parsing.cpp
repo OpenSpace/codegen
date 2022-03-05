@@ -27,12 +27,14 @@
 #include "types.h"
 #include "util.h"
 #include <fmt/format.h>
+#include <algorithm>
 #include <cassert>
 
 namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
     constexpr const char AttributeStringify[] = "[[codegen::stringify";
     constexpr const char AttributeMap[] = "[[codegen::map";
+    constexpr const char AttributeWrapLua[] = "[[codegen::wraplua]]";
 } // namespace
 
 std::string_view extractLine(std::string_view sv, size_t* cursor) {
@@ -440,7 +442,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     const size_t locMap = code.find(AttributeMap);
     const size_t loc = std::min(locStringify, locMap);
     if (loc == std::string_view::npos) {
-        // We did't find the attrbute
+        // We did't find the attribute
         return { std::string_view::npos, std::string_view::npos };
     }
 
@@ -496,13 +498,26 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     return { lastNewLine, cursor - lastNewLine + 1 };
 }
 
+std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
+    assert(!code.empty());
+
+    const size_t locWrapLua = code.find(AttributeWrapLua);
+    if (locWrapLua == std::string_view::npos) {
+        // We didn't find the attribute
+        return { std::string_view::npos, std::string_view::npos };
+    }
+
+    const size_t start = locWrapLua + strlen(AttributeWrapLua);
+    const size_t end = code.find('{', start);
+    return { start, end - start };
+}
+
 [[nodiscard]] Struct* parseRootStruct(std::string_view code) {
     if (size_t p = code.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", code.substr(p, 50)
         ));
     }
-
 
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
@@ -762,58 +777,204 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     return rootEnum;
 }
 
+Function* parseRootFunction(std::string_view code) {
+    assert(!code.empty());
+
+    auto eatType = [code](size_t& cursor) -> std::pair<size_t, size_t> {
+        bool foundBeginningOfReturnValue = false;
+        int nOpenBrackets = 0;
+
+        std::pair<size_t, size_t> loc = { 0, 0 };
+        while (true) {
+            if (cursor == code.size()) {
+                throw CodegenError(fmt::format(
+                    "Error detecting end of return value\n{}", code.substr(cursor, 50)
+                ));
+            }
+
+            // Find the first non-space character as the start of the return value
+            if (code[cursor] != ' ' && !foundBeginningOfReturnValue) {
+                loc.first = cursor;
+                foundBeginningOfReturnValue = true;
+            }
+
+            if (code[cursor] == '<') {
+                nOpenBrackets += 1;
+            }
+
+            if (code[cursor] == '>') {
+                nOpenBrackets -= 1;
+            }
+
+            if (code[cursor] == ' ' && nOpenBrackets == 0) {
+                // We have reached the space that separates the return value from the
+                // function name
+                loc.second = cursor;
+                break;
+            }
+
+            cursor += 1;
+        }
+
+        return loc;
+    };
+
+    auto eatName = [code](size_t& cursor) -> std::pair<size_t, size_t> {
+        std::pair<size_t, size_t> loc = { 0, 0 };
+
+        // Skip the first whitespace
+        while (true) {
+            if (code[cursor] != ' ') {
+                break;
+            }
+            cursor += 1;
+        }
+
+        loc.first = cursor;
+        while (true) {
+            if (code[cursor] == ' ' || code[cursor] == ',' || code[cursor] == ')') {
+                break;
+            }
+
+            cursor += 1;
+        }
+        loc.second = cursor;
+
+        return loc;
+    };
+
+    Function* f = new Function;
+
+    // Find and parse the return value
+    size_t cursor = 0;
+    std::pair<size_t, size_t> retValueLoc = eatType(cursor);
+    std::string_view returnValueStr = code.substr(retValueLoc.first, retValueLoc.second);
+    f->returnValue = parseType(returnValueStr, nullptr);
+
+    // Extract the function name
+    cursor += 1;
+    std::pair<size_t, size_t> functionNameLoc = { cursor, 0 };
+    while (true) {
+        if (code[cursor] == ' ' || code[cursor] == '(') {
+            functionNameLoc.second = cursor;
+            break;
+        }
+
+        cursor += 1;
+    }
+    cursor += 1;
+
+    f->name = std::string(
+        code.substr(functionNameLoc.first, functionNameLoc.second - functionNameLoc.first)
+    );
+
+    // Parse the parameters
+    while (true) {
+        if (code[cursor] == ' ' || code[cursor] == ',') {
+            cursor += 1;
+            continue;
+        }
+        if (code[cursor] == ')') {
+            break;
+        }
+
+        std::pair<size_t, size_t> locType = eatType(cursor);
+        Variable* v = new Variable;
+        v->type = parseType(
+            code.substr(locType.first, locType.second - locType.first), nullptr
+        );
+        // @TODO:  Check that the argument is no a tuple in the argument list
+
+        std::pair<size_t, size_t> locName = eatName(cursor);
+        v->name = std::string(code.substr(locName.first, locName.second - locName.first));
+
+        f->arguments.push_back(v);
+    }
+
+    // @TODO:  There should be a two-phase part where there are non-optional values first
+    //         follow by only std::optional
+
+    return f;
+}
+
 [[nodiscard]] Code parse(std::string_view code) {
     Code res;
 
     while (!code.empty()) {
-        // Check of all of the potential code places, we have to pick the first one of all
-        // these options and handle this one first. Handling the first one also handles
-        // the case when these are nested, fortunately
-        std::pair<size_t, size_t> structCursors = validStructCode(code);
-        bool hasStruct = structCursors.first != std::string_view::npos;
-        std::pair<size_t, size_t> enumCursors = validEnumCode(code);
-        bool hasEnum = enumCursors.first != std::string_view::npos;
-
-        // Find the next piece of code that we need to handle
-        enum class Next {
+        enum class Type {
             Struct,
             Enum,
+            Function,
             None
         };
-        Next next;
-        std::pair<size_t, size_t> cursors;
-        if (hasStruct && structCursors.first < enumCursors.first) {
-            next = Next::Struct;
-            cursors = structCursors;
-        }
-        else if (hasEnum) {
-            next = Next::Enum;
-            cursors = enumCursors;
-        }
-        else {
+        struct NextCode {
+            Type type;
+            std::pair<size_t, size_t> cursors;
+        };
+        std::vector<NextCode> nextCodes;
+
+        // Collect all of the possible next code blocks
+        nextCodes.push_back({ Type::Struct, validStructCode(code) });
+        nextCodes.push_back({ Type::Enum, validEnumCode(code) });
+        nextCodes.push_back({ Type::Function, validFunctionCode(code) });
+
+        // Sort so that we can find the one that is coming up next
+        std::sort(
+            nextCodes.begin(),
+            nextCodes.end(),
+            [](const NextCode& lhs, const NextCode& rhs) {
+                return lhs.cursors.first < rhs.cursors.first;
+            }
+        );
+
+        NextCode next = nextCodes.front();
+        if (next.cursors.first == std::string_view::npos) {
+            // If the closest cursor is already the npos, then there is no more code left
             break;
         }
 
-        if (next == Next::Struct) {
-            std::string_view content = strip(code.substr(cursors.first, cursors.second));
+        // Extract next code piece
+        std::string_view content = strip(
+            code.substr(next.cursors.first, next.cursors.second)
+        );
 
-            Struct* s = parseRootStruct(content);
-            assert(s);
-            res.structs.push_back(s);
-            code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
-            continue;
+        switch (next.type) {
+            case Type::Struct: {
+                Struct* s = parseRootStruct(content);
+                assert(s);
+                res.structs.push_back(s);
+                break;
+            }
+            case Type::Enum: {
+                Enum* e = parseRootEnum(content);
+                assert(e);
+                res.enums.push_back(e);
+                break;
+            }
+            case Type::Function: {
+                Function* f = parseRootFunction(content);
+                assert(f);
+
+                for (Function* func : res.luaWrapperFunctions) {
+                    if (f->name == func->name) {
+                        throw CodegenError(fmt::format(
+                            "Cannot define multiple functions with the same name\n{}",
+                            code.substr(next.cursors.first, 50)
+                        ));
+                    }
+                }
+
+                res.luaWrapperFunctions.push_back(f);
+                break;
+            }
+            default:
+                throw std::logic_error("Missing case exception");
         }
 
-        
-        if (enumCursors.first != std::string_view::npos) {
-            std::string_view content = strip(code.substr(cursors.first, cursors.second));
-
-            Enum* e = parseRootEnum(content);
-            assert(e);
-            res.enums.push_back(e);
-            code.remove_prefix(std::min(cursors.first + cursors.second, code.size()));
-            continue;
-        }
+        // Remove the code that we just handled
+        code.remove_prefix(
+            std::min(next.cursors.first + next.cursors.second, code.size())
+        );
     }
 
     return res;
