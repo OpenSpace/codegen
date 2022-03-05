@@ -668,7 +668,17 @@ s->name, s->attributes.dictionary
         result += "namespace lua {\n\n";
 
         for (Function* f : code.luaWrapperFunctions) {
-            result += fmt::format("int {}(lua_State* L) {{\n", f->name);
+            // Open the Function object declaration
+            result += fmt::format(
+                "static const openspace::scripting::LuaLibrary::Function {} = {{\n",
+                f->name
+            );
+
+            // Name of the function
+            result += fmt::format("    \"{}\",\n", f->name);
+
+            // The lambda that is executed
+            result += "    [](lua_State* L) -> int {\n";
 
             int nRequiredArguments = 0;
             for (Variable* var : f->arguments) {
@@ -683,13 +693,13 @@ s->name, s->attributes.dictionary
             int nTotalArguments = static_cast<int>(f->arguments.size());
             if (nRequiredArguments == nTotalArguments) {
                 result += fmt::format(
-                    "    ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
+                    "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
                     nTotalArguments, f->name
                 );
             }
             else {
                 result += fmt::format(
-                    "    ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
+                    "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
                     nRequiredArguments, nTotalArguments, f->name
                 );
             }
@@ -709,14 +719,14 @@ s->name, s->attributes.dictionary
                 types.pop_back();
 
                 result += fmt::format(
-                    "    const auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
+                    "        const auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
                 );
             }
 
 
             if (f->returnValue) {
                 result += fmt::format(
-                    "    const {} res = ::{}({});\n",
+                    "        const {} res = ::{}({});\n",
                     generateTypename(f->returnValue), f->name, names
                 );
 
@@ -726,26 +736,44 @@ s->name, s->attributes.dictionary
                     assert(!tt->types.empty());
                     for (size_t i = 0; i < tt->types.size(); i += 1) {
                         result += fmt::format(
-                            "    ghoul::lua::push(L, std::get<{}>(res));\n", i
+                            "        ghoul::lua::push(L, std::get<{}>(res));\n", i
                         );
                     }
                     nArguments = static_cast<int>(tt->types.size());
                 }
                 else {
-                    result += "    ghoul::lua::push(L, res);\n";
+                    result += "        ghoul::lua::push(L, res);\n";
                     nArguments = 1;
                 }
 
-                // @TODO: Should check if the return value is a tuple and then set the
-                // correct number of arguments
-                result += fmt::format("    return {};\n", nArguments);
+                result += fmt::format("        return {};\n", nArguments);
             }
             else {
-                result += fmt::format("    ::{}({});\n", f->name, names);
-                result += "    return 0;\n";
+                result += fmt::format("        ::{}({});\n", f->name, names);
+                result += "        return 0;\n";
             }
 
-            result += "}\n\n";
+            result += "    },\n";
+
+
+            // Argument description
+            std::string arguments;
+            for (Variable* var : f->arguments) {
+                arguments += fmt::format(
+                    "{} ({}), ",
+                    var->name, generateDescriptiveTypename(var->type)
+                );
+            }
+            if (!f->arguments.empty()) {
+                // Remove the closing ", "
+                arguments = arguments.substr(0, arguments.size() - 2);
+            }
+            result += "    \"" + arguments + "\",\n";
+
+            // Documentation
+            result += "    \"" + f->documentation + "\"\n";
+
+            result += "};\n\n";
         }
 
         result += "} // namespace lua\n";

@@ -462,8 +462,53 @@ std::string generateTypename(BasicType::Type type) {
     throw std::logic_error("Missing case label");
 }
 
+std::string generateDescriptiveTypename(BasicType::Type type) {
+    switch (type) {
+        case BasicType::Type::Bool:    return "Boolean";
+        case BasicType::Type::Int:     return "Integer";
+        case BasicType::Type::Double:  return "Number";
+        case BasicType::Type::Float:   return "Number";
+        case BasicType::Type::String:  return "String";
+        case BasicType::Type::Path:    return "Path";
+        case BasicType::Type::Ivec2:   return "ivec2";
+        case BasicType::Type::Ivec3:   return "ivec3";
+        case BasicType::Type::Ivec4:   return "ivec4";
+        case BasicType::Type::Dvec2:   return "vec2";
+        case BasicType::Type::Dvec3:   return "vec3";
+        case BasicType::Type::Dvec4:   return "vec4";
+        case BasicType::Type::Vec2:    return "vec2";
+        case BasicType::Type::Vec3:    return "vec3";
+        case BasicType::Type::Vec4:    return "vec4";
+        case BasicType::Type::Mat2x2:  return "mat2x2";
+        case BasicType::Type::Mat2x3:  return "mat2x3";
+        case BasicType::Type::Mat2x4:  return "mat2x4";
+        case BasicType::Type::Mat3x2:  return "mat3x2";
+        case BasicType::Type::Mat3x3:  return "mat3x3";
+        case BasicType::Type::Mat3x4:  return "mat3x4";
+        case BasicType::Type::Mat4x2:  return "mat4x2";
+        case BasicType::Type::Mat4x3:  return "mat4x3";
+        case BasicType::Type::Mat4x4:  return "mat4x4";
+        case BasicType::Type::DMat2x2: return "mat2x2";
+        case BasicType::Type::DMat2x3: return "mat2x3";
+        case BasicType::Type::DMat2x4: return "mat2x4";
+        case BasicType::Type::DMat3x2: return "mat3x2";
+        case BasicType::Type::DMat3x3: return "mat3x3";
+        case BasicType::Type::DMat3x4: return "mat3x4";
+        case BasicType::Type::DMat4x2: return "mat4x2";
+        case BasicType::Type::DMat4x3: return "mat4x3";
+        case BasicType::Type::DMat4x4: return "mat4x4";
+        case BasicType::Type::Dictionary: return "Dictionary";
+    }
+
+    throw std::logic_error("Missing case label");
+}
+
 std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
+}
+
+std::string generateDescriptiveTypename(const BasicType* type) {
+    return generateDescriptiveTypename(type->type);
 }
 
 std::string generateTypename(const MapType* type, bool fullyQualified) {
@@ -472,9 +517,20 @@ std::string generateTypename(const MapType* type, bool fullyQualified) {
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
+std::string generateDescriptiveTypename(const MapType* type) {
+    std::string t1 = generateDescriptiveTypename(type->keyType);
+    std::string t2 = generateDescriptiveTypename(type->valueType);
+    return fmt::format("{} -> {}", t1, t2);
+}
+
 std::string generateTypename(const OptionalType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::optional<{}>", t1);
+}
+
+std::string generateDescriptiveTypename(const OptionalType* type) {
+    std::string t1 = generateDescriptiveTypename(type->type);
+    return fmt::format("{} [Optional]", t1);
 }
 
 std::string generateTypename(const VariantType* type, bool fullyQualified) {
@@ -487,6 +543,18 @@ std::string generateTypename(const VariantType* type, bool fullyQualified) {
     res.pop_back();   // Remove the final ' '
     res.back() = '>'; // Replace the final , with the >
 
+    return res;
+}
+
+std::string generateDescriptiveTypename(const VariantType* type) {
+    std::string res;
+    for (size_t i = 0; i < type->types.size(); i += 1) {
+        res += generateDescriptiveTypename(type->types[i]);
+
+        if (i != type->types.size() - 1) {
+            res += "or ";
+        }
+    }
     return res;
 }
 
@@ -518,6 +586,8 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
 }
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {
+    assert(type);
+
     const bool fq = fullyQualified;
     switch (type->tag) {
         case VariableType::Tag::BasicType:
@@ -537,3 +607,26 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
     }
     throw std::logic_error("Missing case label");
 }
+
+std::string generateDescriptiveTypename(const VariableType* type) {
+    assert(type);
+
+    switch (type->tag) {
+    case VariableType::Tag::BasicType:
+        return generateDescriptiveTypename(static_cast<const BasicType*>(type));
+    case VariableType::Tag::MapType:
+        return generateDescriptiveTypename(static_cast<const MapType*>(type));
+    case VariableType::Tag::OptionalType:
+        return generateDescriptiveTypename(static_cast<const OptionalType*>(type));
+    case VariableType::Tag::VariantType:
+        return generateDescriptiveTypename(static_cast<const VariantType*>(type));
+    case VariableType::Tag::TupleType:
+        return generateDescriptiveTypename(static_cast<const TupleType*>(type));
+    case VariableType::Tag::VectorType:
+        return generateDescriptiveTypename(static_cast<const VectorType*>(type));
+    case VariableType::Tag::CustomType:
+        return generateDescriptiveTypename(static_cast<const CustomType*>(type));
+    }
+    throw std::logic_error("Missing case label");
+}
+
