@@ -94,7 +94,7 @@ namespace {
 #include "execution_luawrapper_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("LuaWrapper/Basic/TestFunc", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc", "[luawrapper][execution]") {
     resetTestRuns();
     
     lua_State* state = luaL_newstate();
@@ -105,7 +105,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc", "[luawrapper][execution]") {
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc2", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc2", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();
@@ -118,7 +118,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc2", "[luawrapper][execution]") {
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc3", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc3", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();
@@ -132,7 +132,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc3", "[luawrapper][execution]") {
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc4/All Arguments", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/All Arguments", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();
@@ -146,7 +146,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc4/All Arguments", "[luawrapper][execution]")
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc4/No Optional", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/No Optional", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();
@@ -159,7 +159,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc4/No Optional", "[luawrapper][execution]") {
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc5", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc5", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();
@@ -173,7 +173,7 @@ TEST_CASE("LuaWrapper/Basic/TestFunc5", "[luawrapper][execution]") {
     lua_close(state);
 }
 
-TEST_CASE("LuaWrapper/Basic/TestFunc6", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper/Basic/TestFunc6", "[luawrapper][execution]") {
     resetTestRuns();
 
     lua_State* state = luaL_newstate();

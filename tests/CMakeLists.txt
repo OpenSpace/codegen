@@ -54,6 +54,7 @@ add_executable(
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
+  parsing_luawrapper/parsing_luawrapper_comments.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp

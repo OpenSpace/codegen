@@ -29,6 +29,7 @@
 #include <fmt/format.h>
 #include <algorithm>
 #include <cassert>
+#include <numeric>
 
 namespace {
     constexpr const char AttributeDictionary[] = "[[codegen::Dictionary";
@@ -512,10 +513,12 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     return { start, end - start };
 }
 
-[[nodiscard]] Struct* parseRootStruct(std::string_view code) {
-    if (size_t p = code.find("/*"); p != std::string_view::npos) {
+[[nodiscard]] Struct* parseRootStruct(std::string_view code, size_t begin, size_t end) {
+    std::string_view content = strip(code.substr(begin, end));
+
+    if (size_t p = content.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
-            "Block comments are not allowed\n{}", code.substr(p, 50)
+            "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
 
@@ -528,7 +531,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(code, &cursor);
+        std::string_view line = extractLine(content, &cursor);
         if (line.empty()) {
             continue;
         }
@@ -707,12 +710,13 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     return rootStruct;
 }
 
-[[nodiscard]] Enum* parseRootEnum(std::string_view code) {
-    assert(!code.empty());
+[[nodiscard]] Enum* parseRootEnum(std::string_view code, size_t begin, size_t end) {
+    std::string_view content = strip(code.substr(begin, end));
+    assert(!content.empty());
 
-    if (size_t p = code.find("/*"); p != std::string_view::npos) {
+    if (size_t p = content.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
-            "Block comments are not allowed\n{}", code.substr(p, 50)
+            "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
 
@@ -721,7 +725,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(code, &cursor);
+        std::string_view line = extractLine(content, &cursor);
         if (line.empty()) {
             continue;
         }
@@ -777,36 +781,37 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     return rootEnum;
 }
 
-Function* parseRootFunction(std::string_view code) {
-    assert(!code.empty());
+Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
+    std::string_view content = strip(code.substr(begin, end));
+    assert(!content.empty());
 
-    auto eatType = [code](size_t& cursor) -> std::pair<size_t, size_t> {
+    auto eatType = [content](size_t& cursor) -> std::pair<size_t, size_t> {
         bool foundBeginningOfReturnValue = false;
         int nOpenBrackets = 0;
 
         std::pair<size_t, size_t> loc = { 0, 0 };
         while (true) {
-            if (cursor == code.size()) {
+            if (cursor == content.size()) {
                 throw CodegenError(fmt::format(
-                    "Error detecting end of return value\n{}", code.substr(cursor, 50)
+                    "Error detecting end of return value\n{}", content.substr(cursor, 50)
                 ));
             }
 
             // Find the first non-space character as the start of the return value
-            if (code[cursor] != ' ' && !foundBeginningOfReturnValue) {
+            if (content[cursor] != ' ' && !foundBeginningOfReturnValue) {
                 loc.first = cursor;
                 foundBeginningOfReturnValue = true;
             }
 
-            if (code[cursor] == '<') {
+            if (content[cursor] == '<') {
                 nOpenBrackets += 1;
             }
 
-            if (code[cursor] == '>') {
+            if (content[cursor] == '>') {
                 nOpenBrackets -= 1;
             }
 
-            if (code[cursor] == ' ' && nOpenBrackets == 0) {
+            if (content[cursor] == ' ' && nOpenBrackets == 0) {
                 // We have reached the space that separates the return value from the
                 // function name
                 loc.second = cursor;
@@ -819,12 +824,12 @@ Function* parseRootFunction(std::string_view code) {
         return loc;
     };
 
-    auto eatName = [code](size_t& cursor) -> std::pair<size_t, size_t> {
+    auto eatName = [content](size_t& cursor) -> std::pair<size_t, size_t> {
         std::pair<size_t, size_t> loc = { 0, 0 };
 
         // Skip the first whitespace
         while (true) {
-            if (code[cursor] != ' ') {
+            if (content[cursor] != ' ') {
                 break;
             }
             cursor += 1;
@@ -832,7 +837,9 @@ Function* parseRootFunction(std::string_view code) {
 
         loc.first = cursor;
         while (true) {
-            if (code[cursor] == ' ' || code[cursor] == ',' || code[cursor] == ')') {
+            if (content[cursor] == ' ' || content[cursor] == ',' ||
+                content[cursor] == ')')
+            {
                 break;
             }
 
@@ -845,17 +852,87 @@ Function* parseRootFunction(std::string_view code) {
 
     Function* f = new Function;
 
+    // Let's see if there is a documentation entry just following this function. It is
+    // optional and we don't want to accidentally pick up some other documentation higher
+    // up in the file, so we have to be a bit conservative with what we try to pick up
+    {
+        size_t b = begin - strlen(AttributeWrapLua);
+        // Try to find the last closing brace for the comments
+        size_t endComment = code.rfind("*/", b);
+
+        // Verify that there are only spaces or newlines between the documentation and the
+        // starting point
+        bool hasValidComment = true;
+        if (endComment == std::string_view::npos) {
+            hasValidComment = false;
+        }
+        endComment += 2;
+        size_t cursor = endComment;
+        while (hasValidComment && cursor < b) {
+            if (code[cursor] != ' ' && code[cursor] != '\n') {
+                // There is something in between the closing comment and the beginning of
+                // this function definition, so we assume that the comment belongs to
+                // something else and ignore it
+                hasValidComment = false;
+                break;
+            }
+
+            cursor += 1;
+        }
+
+        if (hasValidComment) {
+            // Find the beginning /* for that comment
+            size_t beginComment = code.rfind("/*", endComment);
+
+            std::string_view cmnt = code.substr(beginComment, endComment - beginComment);
+            using namespace std::literals;
+            cmnt.remove_prefix("/*"sv.size());
+            cmnt.remove_suffix("*/"sv.size());
+
+            std::vector<std::string_view> lines;
+            size_t c = 0;
+            size_t p = cmnt.find('\n', 1);
+            while (p != std::string_view::npos) {
+                std::string_view line = cmnt.substr(c, p - c);
+                std::string_view stripLine = strip(line);
+
+                if (stripLine[0] == '*') {
+                    stripLine.remove_prefix(1);
+                }
+
+                stripLine = strip(stripLine);
+
+                lines.push_back(stripLine);
+                c = p;
+                p = cmnt.find('\n', c + 1);
+            }
+
+            f->documentation = std::accumulate(
+                lines.begin(),
+                lines.end(),
+                std::string(),
+                [](std::string a, std::string_view b) { return a + std::string(b) + ' '; }
+            );
+
+            // There is an empty character at the end which we should remove
+            f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
+        }
+    }
+
     // Find and parse the return value
     size_t cursor = 0;
     std::pair<size_t, size_t> retValueLoc = eatType(cursor);
-    std::string_view returnValueStr = code.substr(retValueLoc.first, retValueLoc.second);
+    std::string_view returnValueStr = content.substr(
+        retValueLoc.first,
+        retValueLoc.second
+    );
     f->returnValue = parseType(returnValueStr, nullptr);
 
     // Extract the function name
     cursor += 1;
     std::pair<size_t, size_t> functionNameLoc = { cursor, 0 };
     while (true) {
-        if (code[cursor] == ' ' || code[cursor] == '(') {
+        if (content[cursor] == ' ' || content[cursor] == '(') {
             functionNameLoc.second = cursor;
             break;
         }
@@ -865,28 +942,33 @@ Function* parseRootFunction(std::string_view code) {
     cursor += 1;
 
     f->name = std::string(
-        code.substr(functionNameLoc.first, functionNameLoc.second - functionNameLoc.first)
+        content.substr(
+            functionNameLoc.first,
+            functionNameLoc.second - functionNameLoc.first
+        )
     );
 
     // Parse the parameters
     while (true) {
-        if (code[cursor] == ' ' || code[cursor] == ',') {
+        if (content[cursor] == ' ' || content[cursor] == ',') {
             cursor += 1;
             continue;
         }
-        if (code[cursor] == ')') {
+        if (content[cursor] == ')') {
             break;
         }
 
         std::pair<size_t, size_t> locType = eatType(cursor);
         Variable* v = new Variable;
         v->type = parseType(
-            code.substr(locType.first, locType.second - locType.first), nullptr
+            content.substr(locType.first, locType.second - locType.first), nullptr
         );
         // @TODO:  Check that the argument is no a tuple in the argument list
 
         std::pair<size_t, size_t> locName = eatName(cursor);
-        v->name = std::string(code.substr(locName.first, locName.second - locName.first));
+        v->name = std::string(
+            content.substr(locName.first, locName.second - locName.first)
+        );
 
         f->arguments.push_back(v);
     }
@@ -933,26 +1015,33 @@ Function* parseRootFunction(std::string_view code) {
             break;
         }
 
-        // Extract next code piece
-        std::string_view content = strip(
-            code.substr(next.cursors.first, next.cursors.second)
-        );
-
         switch (next.type) {
             case Type::Struct: {
-                Struct* s = parseRootStruct(content);
+                Struct* s = parseRootStruct(
+                    code,
+                    next.cursors.first,
+                    next.cursors.second
+                );
                 assert(s);
                 res.structs.push_back(s);
                 break;
             }
             case Type::Enum: {
-                Enum* e = parseRootEnum(content);
+                Enum* e = parseRootEnum(
+                    code,
+                    next.cursors.first,
+                    next.cursors.second
+                );
                 assert(e);
                 res.enums.push_back(e);
                 break;
             }
             case Type::Function: {
-                Function* f = parseRootFunction(content);
+                Function* f = parseRootFunction(
+                    code,
+                    next.cursors.first,
+                    next.cursors.second
+                );
                 assert(f);
 
                 for (Function* func : res.luaWrapperFunctions) {
