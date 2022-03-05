@@ -37,7 +37,7 @@
 // that they will properly disambiguate in the Visual Studio Watch window, making the
 // debugging of these types a bit easier.  No need to declare this define otherwise
 
-//#define TYPES_ADD_DEBUG_INFORMATION
+#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
     CodegenError(std::string e);

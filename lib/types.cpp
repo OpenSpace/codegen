@@ -571,9 +571,25 @@ std::string generateTypename(const TupleType* type, bool fullyQualified) {
     return res;
 }
 
+std::string generateDescriptiveTypename(const TupleType* type) {
+    std::string res;
+    for (size_t i = 0; i < type->types.size(); i += 1) {
+        res += generateDescriptiveTypename(type->types[i]);
+
+        if (i != type->types.size() - 1) {
+            res += "and ";
+        }
+    }
+    return res;
+}
+
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
+}
+
+std::string generateDescriptiveTypename(const VectorType* type) {
+    return "Vector of " + generateDescriptiveTypename(type->type);
 }
 
 std::string generateTypename(const CustomType* type, bool fullyQualified) {
@@ -583,6 +599,10 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
     else {
         return type->type->name;
     }
+}
+
+std::string generateDescriptiveTypename(const CustomType* type) {
+    return type->type->name;
 }
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {

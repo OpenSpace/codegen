@@ -31,6 +31,7 @@ add_executable(
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
   execution_luawrapper/execution_luawrapper_basic.cpp
+  execution_luawrapper/execution_luawrapper_comments.cpp
   execution_misc/execution_misc_parentdoc.cpp
   execution_structs/execution_structs_attributes.cpp
   execution_structs/execution_structs_basic_types.cpp

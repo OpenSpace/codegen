@@ -760,7 +760,7 @@ s->name, s->attributes.dictionary
             std::string arguments;
             for (Variable* var : f->arguments) {
                 arguments += fmt::format(
-                    "{} ({}), ",
+                    "{}: {}, ",
                     var->name, generateDescriptiveTypename(var->type)
                 );
             }
@@ -768,6 +768,11 @@ s->name, s->attributes.dictionary
                 // Remove the closing ", "
                 arguments = arguments.substr(0, arguments.size() - 2);
             }
+
+            if (f->returnValue) {
+                arguments += " -> " + generateDescriptiveTypename(f->returnValue);
+            }
+
             result += "    \"" + arguments + "\",\n";
 
             // Documentation
