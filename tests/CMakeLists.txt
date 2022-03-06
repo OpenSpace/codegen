@@ -56,6 +56,7 @@ add_executable(
   parsing_enums/parsing_enums_keys.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_luawrapper/parsing_luawrapper_comments.cpp
+  parsing_luawrapper/parsing_luawrapper_types.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp
@@ -70,6 +71,7 @@ add_executable(
   parsing_structs/parsing_structs_attributes_vec3.cpp
   parsing_structs/parsing_structs_attributes_vec4.cpp
   parsing_structs/parsing_structs_attributes_error_bool.cpp
+  parsing_structs/parsing_structs_attributes_error_dictionary.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x2.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x3.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x4.cpp
@@ -97,7 +99,6 @@ add_executable(
   parsing_structs/parsing_structs_attributes_error_mat4x2.cpp
   parsing_structs/parsing_structs_attributes_error_mat4x3.cpp
   parsing_structs/parsing_structs_attributes_error_mat4x4.cpp
-  parsing_structs/parsing_structs_attributes_error_monostate.cpp
   parsing_structs/parsing_structs_attributes_error_string.cpp
   parsing_structs/parsing_structs_attributes_error_vec2.cpp
   parsing_structs/parsing_structs_attributes_error_vec3.cpp

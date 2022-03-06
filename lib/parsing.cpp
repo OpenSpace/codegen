@@ -871,44 +871,70 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
 
     Function* f = new Function;
 
-    // Let's see if there is a documentation entry just following this function. It is
+    // Let's see if there is a documentation entry just preceding this function. It is
     // optional and we don't want to accidentally pick up some other documentation higher
     // up in the file, so we have to be a bit conservative with what we try to pick up
     {
-        size_t b = begin - AttributeWrapLua.size();
-        // Try to find the last closing brace for the comments
-        size_t endComment = code.rfind("*/", b);
+        using namespace std::literals;
+        
+        // We want to check for both regular one-line comments as well as block-style
+        // comments
 
-        // Verify that there are only spaces or newlines between the documentation and the
-        // starting point
-        bool hasValidComment = true;
-        if (endComment == std::string_view::npos) {
-            hasValidComment = false;
-        }
-        endComment += 2;
-        size_t cursor = endComment;
-        while (hasValidComment && cursor < b) {
-            if (code[cursor] != ' ' && code[cursor] != '\n') {
+        size_t b = begin - AttributeWrapLua.size();
+
+        // Try to find the last closing brace for the comments
+        size_t endBlockComment = code.rfind("*/", b);
+        bool hasValidBlockComment = endBlockComment != std::string_view::npos;
+
+        // Check that there are only empty character between the end of the block and the
+        // beginning of the function.
+        endBlockComment += "*/"sv.size();
+        size_t blockCursor = endBlockComment;
+        while (hasValidBlockComment && blockCursor < b) {
+            if (code[blockCursor] != ' ' && code[blockCursor] != '\n') {
                 // There is something in between the closing comment and the beginning of
                 // this function definition, so we assume that the comment belongs to
                 // something else and ignore it
-                hasValidComment = false;
+                hasValidBlockComment = false;
                 break;
             }
 
-            cursor += 1;
+            blockCursor += 1;
         }
 
-        if (hasValidComment) {
-            // Find the beginning /* for that comment
-            size_t beginComment = code.rfind("/*", endComment);
+        size_t endRegularComment = code.rfind("//", b);
+        bool hasValidRegularComment = endRegularComment != std::string_view::npos;
+        // Both can't be true at the same time
 
-            std::string_view cmnt = code.substr(beginComment, endComment - beginComment);
+        endRegularComment += "//"sv.size();
+        // The // is at the beginning of the line, so we have to offset our search by the
+        // first \n character following that
+        size_t regularCursor = code.find('\n', endRegularComment);
+        while (hasValidRegularComment && regularCursor < b) {
+            if (code[regularCursor] != ' ' && code[regularCursor] != '\n') {
+                // There is something in between the closing comment and the beginning of
+                // this function definition, so we assume that the comment belongs to
+                // something else and ignore it
+                hasValidRegularComment = false;
+                break;
+            }
+
+            regularCursor += 1;
+        }
+
+        assert(!(hasValidBlockComment && hasValidRegularComment));
+
+
+        std::vector<std::string_view> lines;
+        if (hasValidBlockComment) {
+            // Find the beginning /* for that comment
+            size_t beginBlockComment = code.rfind("/*", endBlockComment);
+
+            std::string_view cmnt = code.substr(beginBlockComment, endBlockComment - beginBlockComment);
             using namespace std::literals;
             cmnt.remove_prefix("/*"sv.size());
             cmnt.remove_suffix("*/"sv.size());
 
-            std::vector<std::string_view> lines;
             size_t c = 0;
             size_t p = cmnt.find('\n', 1);
             while (p != std::string_view::npos) {
@@ -925,17 +951,42 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 c = p;
                 p = cmnt.find('\n', c + 1);
             }
-
-            f->documentation = std::accumulate(
-                lines.begin(),
-                lines.end(),
-                std::string(),
-                [](std::string a, std::string_view b) { return a + std::string(b) + ' '; }
-            );
-
-            // There is an empty character at the end which we should remove
-            f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
         }
+
+        if (hasValidRegularComment) {
+            // Extract lines backwards until we find the first non-commented line and then
+            // abort
+            size_t cursor = code.find('\n', endRegularComment);
+            assert(cursor != std::string_view::npos);
+            while (true) {
+                size_t lineBegin = code.rfind('\n', cursor - 1);
+
+                std::string_view line = code.substr(lineBegin, cursor - lineBegin);
+                std::string_view stripLine = strip(line);
+                if (stripLine.substr(0, 2) != "//") {
+                    // The line did not start with a comment, therefore we have reached
+                    // the end of the comment block
+                    break;
+                }
+
+                stripLine.remove_prefix("//"sv.size());
+                stripLine = strip(stripLine);
+                lines.push_back(stripLine);
+                cursor = lineBegin;
+            }
+
+            std::reverse(lines.begin(), lines.end());
+        }
+
+        f->documentation = std::accumulate(
+            lines.begin(),
+            lines.end(),
+            std::string(),
+            [](std::string a, std::string_view b) { return a + std::string(b) + ' '; }
+        );
+
+        // There is an empty character at the end which we should remove
+        f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
     }
 
     // Find and parse the return value
@@ -1008,13 +1059,15 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         if (equalLoc != std::string_view::npos &&  // -> there is an equal sign
             equalLoc < commaLoc && equalLoc < paranLoc) // -> it comes before the next , )
         {
+            // If the variable has a default value allocated with it, we wrap the type in
+            // an optional type to represent that
             OptionalType* ot = new OptionalType;
             ot->tag = VariableType::Tag::OptionalType;
             ot->type = v->type;
             v->type = ot;
 
-            // Skip over the actual value for the default parameter as it would confuse
-            // everyone otherwise
+            // Skip over the actual value for the default parameter as it would otherwise
+            // confuse the rest of this function 
             cursor = std::min(commaLoc, paranLoc);
         }
 

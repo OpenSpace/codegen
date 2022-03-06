@@ -95,12 +95,12 @@ namespace {
 #include "execution_luawrapper_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc", "[luawrapper][execution]") {
+TEST_CASE("Execution/LuaWrapper:  Basic") {
     resetTestRuns();
-    
-    CHECK(codegen::lua::testFunc.name == "testFunc");
-    CHECK(codegen::lua::testFunc.function);
-    {
+
+    SECTION("TestFunc") {
+        CHECK(codegen::lua::testFunc.name == "testFunc");
+        CHECK(codegen::lua::testFunc.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         codegen::lua::testFunc.function(state);
@@ -109,14 +109,9 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc", "[luawrapper][execution]") {
         lua_close(state);
     }
 
-}
-
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc2", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc2.name == "testFunc2");
-    CHECK(codegen::lua::testFunc2.function);
-    {
+    SECTION("TestFunc2") {
+        CHECK(codegen::lua::testFunc2.name == "testFunc2");
+        CHECK(codegen::lua::testFunc2.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2);
@@ -126,14 +121,10 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc2", "[luawrapper][execution]") {
         CHECK(lua_gettop(state) == 0);
         lua_close(state);
     }
-}
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc3", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc3.name == "testFunc3");
-    CHECK(codegen::lua::testFunc3.function);
-    {
+    SECTION("TestFunc3") {
+        CHECK(codegen::lua::testFunc3.name == "testFunc3");
+        CHECK(codegen::lua::testFunc3.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2, std::string("test"));
@@ -144,14 +135,10 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc3", "[luawrapper][execution]") {
         CHECK(lua_gettop(state) == 0);
         lua_close(state);
     }
-}
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/All Arguments", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc4.name == "testFunc4");
-    CHECK(codegen::lua::testFunc4.function);
-    {
+    SECTION("TestFunc4/All Arguments") {
+        CHECK(codegen::lua::testFunc4.name == "testFunc4");
+        CHECK(codegen::lua::testFunc4.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2, 3.0);
@@ -162,14 +149,10 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/All Arguments", "[luawrapper][ex
         CHECK(lua_gettop(state) == 0);
         lua_close(state);
     }
-}
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/No Optional", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc4.name == "testFunc4");
-    CHECK(codegen::lua::testFunc4.function);
-    {
+    SECTION("TestFunc4/No Optional") {
+        CHECK(codegen::lua::testFunc4.name == "testFunc4");
+        CHECK(codegen::lua::testFunc4.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2);
@@ -179,14 +162,10 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc4/No Optional", "[luawrapper][exec
         CHECK(testFunc4Value2 == -1.0);
         lua_close(state);
     }
-}
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc5", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc5.name == "testFunc5");
-    CHECK(codegen::lua::testFunc5.function);
-    {
+    SECTION("Basic/TestFunc5") {
+        CHECK(codegen::lua::testFunc5.name == "testFunc5");
+        CHECK(codegen::lua::testFunc5.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         const int nResult = codegen::lua::testFunc5.function(state);
@@ -197,14 +176,10 @@ TEST_CASE("Execution/LuaWrapper/Basic/TestFunc5", "[luawrapper][execution]") {
         CHECK(value == 5);
         lua_close(state);
     }
-}
 
-TEST_CASE("Execution/LuaWrapper/Basic/TestFunc6", "[luawrapper][execution]") {
-    resetTestRuns();
-
-    CHECK(codegen::lua::testFunc6.name == "testFunc6");
-    CHECK(codegen::lua::testFunc6.function);
-    {
+    SECTION("Basic/TestFunc6") {
+        CHECK(codegen::lua::testFunc6.name == "testFunc6");
+        CHECK(codegen::lua::testFunc6.function);
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         const int nResult = codegen::lua::testFunc6.function(state);

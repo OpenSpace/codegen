@@ -24,32 +24,25 @@
 
 #include "catch2/catch.hpp"
 
-#include <openspace/documentation/documentation.h>
-#include <openspace/documentation/verifier.h>
-#include <openspace/scripting/lualibrary.h>
-#include <ghoul/lua/lua_helper.h>
-#include <ghoul/misc/dictionary.h>
-#include <optional>
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
 
-namespace {
-    /*
-     * Some example documentation
-     * that covers a few lines.
-     * And another one for good measure
-     */
-    [[codegen::wraplua]] double foo(int arg) {
-        return arg * 2.0;
+TEST_CASE("Parsing/LuaWrapper/Types:  void", "[luawrapper][parsing]") {
+    constexpr const char Source[] = R"(
+    [[codegen::wraplua]] void func() {
     }
-#include "execution_luawrapper_comments_codegen.cpp"
-} // namespace
+)";
 
-TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
-    CHECK(codegen::lua::foo.name == "foo");
-    CHECK(codegen::lua::foo.function);
-    CHECK(codegen::lua::foo.argumentText == "arg: Integer -> Number");
-    CHECK(
-        codegen::lua::foo.helpText ==
-        "Some example documentation that covers a few lines. "
-        "And another one for good measure"
-    );
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "func");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
 }

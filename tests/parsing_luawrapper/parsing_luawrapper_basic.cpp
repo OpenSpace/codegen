@@ -28,11 +28,10 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing LuaWrapper: No Arguments", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo() {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -48,11 +47,10 @@ TEST_CASE("Parsing LuaWrapper: No Arguments", "[luawrapper][parsing]") {
     CHECK(f->arguments.size() == 0);
 }
 
-TEST_CASE("Parsing LuaWrapper: 1 Argument", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo(int arg) {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -77,11 +75,40 @@ TEST_CASE("Parsing LuaWrapper: 1 Argument", "[luawrapper][parsing]") {
     }
 }
 
-TEST_CASE("Parsing LuaWrapper: 2 Arguments", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
+    constexpr const char Source[] = R"(
+    [[codegen::wraplua]] void foo(int arg = 1) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 1);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = dynamic_cast<OptionalType*>(v->type);
+        REQUIRE(ot);
+        BasicType* bt = dynamic_cast<BasicType*>(ot->type);
+        REQUIRE(bt);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo(int arg1, std::string arg2) {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -115,11 +142,10 @@ TEST_CASE("Parsing LuaWrapper: 2 Arguments", "[luawrapper][parsing]") {
     }
 }
 
-TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/1)", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo(int arg1, std::optional<double> arg2) {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -157,11 +183,10 @@ TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/1)", "[luawrapper][parsing]
 
 }
 
-TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/2)", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo(int arg1, double arg2 = 2.0) {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -199,12 +224,11 @@ TEST_CASE("Parsing LuaWrapper: 2 Arguments (optional/2)", "[luawrapper][parsing]
 
 }
 
-TEST_CASE("Parsing LuaWrapper: Return value", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] int foo() {
         return 1;
     }
-};
 )";
 
     Code code = parse(Source);
@@ -226,11 +250,10 @@ TEST_CASE("Parsing LuaWrapper: Return value", "[luawrapper][parsing]") {
     }
 }
 
-TEST_CASE("Parsing LuaWrapper: No Arguments, Multiple return values", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] std::tuple<int, double> foo() {
     }
-};
 )";
 
     Code code = parse(Source);

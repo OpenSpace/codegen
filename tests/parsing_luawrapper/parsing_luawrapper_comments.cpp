@@ -28,11 +28,10 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/No Comments", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void foo() {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -48,8 +47,7 @@ TEST_CASE("Parsing/LuaWrapper/No Comments", "[luawrapper][parsing]") {
     CHECK(f->arguments.size() == 0);
 }
 
-
-TEST_CASE("Parsing/LuaWrapper/Direct Comments", "[luawrapper][parsing]") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
     constexpr const char Source[] = R"(
     /*
      * Some example documentation
@@ -58,7 +56,6 @@ TEST_CASE("Parsing/LuaWrapper/Direct Comments", "[luawrapper][parsing]") {
      */
     [[codegen::wraplua]] void foo() {
     }
-};
 )";
 
     Code code = parse(Source);
@@ -69,7 +66,92 @@ TEST_CASE("Parsing/LuaWrapper/Direct Comments", "[luawrapper][parsing]") {
     REQUIRE(f);
 
     CHECK(f->name == "foo");
-    CHECK(f->documentation == "Some example documentation that covers a few lines. And another one for good measure");
+    CHECK(
+        f->documentation ==
+        "Some example documentation that covers a few lines. "
+        "And another one for good measure"
+    );
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
+    constexpr const char Source[] = R"(
+    // Some example documentation
+    // that covers a few lines.
+    // And another one for good measure
+    [[codegen::wraplua]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(
+        f->documentation ==
+        "Some example documentation that covers a few lines. "
+        "And another one for good measure"
+    );
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
+    constexpr const char Source[] = R"(
+    /*
+     * Some example documentation
+     * that covers a few lines.
+     * And another one for good measure
+     */
+    void someOtherFunction();
+
+    [[codegen::wraplua]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
+    constexpr const char Source[] = R"(
+    // First lines that shouldn't be included
+    // in the documentation
+
+    // Some example documentation
+    // that covers a few lines.
+    // And another one for good measure
+    [[codegen::wraplua]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(
+        f->documentation ==
+        "Some example documentation that covers a few lines. "
+        "And another one for good measure"
+    );
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
 }
