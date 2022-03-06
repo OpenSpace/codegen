@@ -107,6 +107,9 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum") {
         REQUIRE(ee);
         CHECK(ee->name == "Value3");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs") {
@@ -188,4 +191,7 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs") {
         REQUIRE(ee);
         CHECK(ee->name == "Value3");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

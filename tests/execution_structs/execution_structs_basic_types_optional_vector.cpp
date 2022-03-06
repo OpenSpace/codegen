@@ -166,6 +166,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
+    using namespace std::string_literals;
+    
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile1 =
         (path / "codegen_execution_basic_types_optional_vector_1.txt").string();
@@ -229,16 +231,16 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("abc"));
-        v.setValue("2", std::string("def"));
-        v.setValue("3", std::string("ghi"));
+        v.setValue("1", "abc"s);
+        v.setValue("2", "def"s);
+        v.setValue("3", "ghi"s);
         d.setValue("StringValue", v);
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("jkl"));
-        v.setValue("2", std::string("mno"));
-        v.setValue("3", std::string("pqr"));
+        v.setValue("1", "jkl"s);
+        v.setValue("2", "mno"s);
+        v.setValue("3", "pqr"s);
         d.setValue("StringNotEmptyValue", v);
     }
     {
@@ -683,46 +685,46 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     const Parameters p = codegen::bake<Parameters>(d);
     REQUIRE(p.boolValue.has_value());
     CHECK(p.boolValue->size() == 3);
-    CHECK(p.boolValue == std::vector<bool>{ true, false, true });
+    CHECK(*p.boolValue == std::vector<bool>{ true, false, true });
     REQUIRE(p.intValue.has_value());
     CHECK(p.intValue->size() == 3);
-    CHECK(p.intValue == std::vector<int>{ 2, 3, 4 });
+    CHECK(*p.intValue == std::vector<int>{ 2, 3, 4 });
     REQUIRE(p.doubleValue.has_value());
     CHECK(p.doubleValue->size() == 3);
-    CHECK(p.doubleValue == std::vector<double>{ 5.1, 5.2, 5.3 });
+    CHECK(*p.doubleValue == std::vector<double>{ 5.1, 5.2, 5.3 });
     REQUIRE(p.floatValue.has_value());
     CHECK(p.floatValue->size() == 3);
-    CHECK(p.floatValue == std::vector<float>{ 6.1f, 6.2f, 6.3f });
+    CHECK(*p.floatValue == std::vector<float>{ 6.1f, 6.2f, 6.3f });
     REQUIRE(p.stringValue.has_value());
     CHECK(p.stringValue->size() == 3);
-    CHECK(p.stringValue == std::vector<std::string>{ "abc", "def", "ghi" });
+    CHECK(*p.stringValue == std::vector<std::string>{ "abc", "def", "ghi" });
     CHECK(p.stringNotEmptyValue->size() == 3);
-    CHECK(p.stringNotEmptyValue == std::vector<std::string>{ "jkl", "mno", "pqr" });
+    CHECK(*p.stringNotEmptyValue == std::vector<std::string>{ "jkl", "mno", "pqr" });
     REQUIRE(p.pathValue.has_value());
     CHECK(p.pathValue->size() == 3);
     CHECK(
-        p.pathValue ==
+        *p.pathValue ==
         std::vector<std::filesystem::path>{ tmpFile1, tmpFile2, tmpFile3 }
     );
     REQUIRE(p.directoryValue.has_value());
     CHECK(p.directoryValue->size() == 3);
     CHECK(
-        p.directoryValue ==
+        *p.directoryValue ==
         std::vector<std::filesystem::path>{ tmpFolder1, tmpFolder2, tmpFolder3 }
     );
     REQUIRE(p.ivec2Value.has_value());
     CHECK(p.ivec2Value->size() == 3);
-    CHECK(p.ivec2Value == std::vector<glm::ivec2>{ { 7, 8 }, { 9, 10 }, { 11, 12 } });
+    CHECK(*p.ivec2Value == std::vector<glm::ivec2>{ { 7, 8 }, { 9, 10 }, { 11, 12 } });
     REQUIRE(p.ivec3Value.has_value());
     CHECK(p.ivec3Value->size() == 3);
     CHECK(
-        p.ivec3Value ==
+        *p.ivec3Value ==
         std::vector<glm::ivec3>{ { 13, 14, 15 }, { 16, 17, 18 }, { 19, 20, 21 } }
     );
     REQUIRE(p.ivec4Value.has_value());
     CHECK(p.ivec4Value->size() == 3);
     CHECK(
-        p.ivec4Value ==
+        *p.ivec4Value ==
         std::vector<glm::ivec4>{
             { 22, 23, 24, 25 }, { 26, 27, 28, 29 }, { 30, 31, 32, 33 }
         }
@@ -730,13 +732,13 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dvec2Value.has_value());
     CHECK(p.dvec2Value->size() == 3);
     CHECK(
-        p.dvec2Value ==
+        *p.dvec2Value ==
         std::vector<glm::dvec2>{ { 34.1, 34.2 }, { 35.1, 35.2 }, { 36.1, 36.2 }}
     );
     REQUIRE(p.dvec3Value.has_value());
     CHECK(p.dvec3Value->size() == 3);
     CHECK(
-        p.dvec3Value ==
+        *p.dvec3Value ==
         std::vector<glm::dvec3>{
             { 37.1, 37.2, 37.3 }, { 38.1, 38.2, 38.3 }, { 39.1, 39.2, 39.3 }
         }
@@ -744,23 +746,23 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dvec4Value.has_value());
     CHECK(p.dvec4Value->size() == 3);
     CHECK(
-            p.dvec4Value ==
-            std::vector<glm::dvec4>{
-                { 40.1, 40.2, 40.3, 40.4 },
-                { 41.1, 41.2, 41.3, 41.4 },
-                { 42.1, 42.2, 42.3, 42.4 }
+        *p.dvec4Value ==
+        std::vector<glm::dvec4>{
+            { 40.1, 40.2, 40.3, 40.4 },
+            { 41.1, 41.2, 41.3, 41.4 },
+            { 42.1, 42.2, 42.3, 42.4 }
         }
     );
     REQUIRE(p.vec2Value.has_value());
     CHECK(p.vec2Value->size() == 3);
     CHECK(
-        p.vec2Value ==
+        *p.vec2Value ==
         std::vector<glm::vec2>{ { 43.1f, 43.2f }, { 44.1f, 44.2f }, { 45.1f, 45.2f }}
     );
     REQUIRE(p.vec3Value.has_value());
     CHECK(p.vec3Value->size() == 3);
     CHECK(
-        p.vec3Value ==
+        *p.vec3Value ==
         std::vector<glm::vec3>{
             { 46.1f, 46.2f, 46.3f }, { 47.1f, 47.2f, 47.3f }, { 48.1f, 48.2f, 48.3f }
     }
@@ -768,7 +770,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.vec4Value.has_value());
     CHECK(p.vec4Value->size() == 3);
     CHECK(
-        p.vec4Value ==
+        *p.vec4Value ==
         std::vector<glm::vec4>{
             { 49.1f, 49.2f, 49.3f, 49.4f },
             { 50.1f, 50.2f, 50.3f, 50.4f },
@@ -778,7 +780,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat2x2Value.has_value());
     CHECK(p.mat2x2Value->size() == 3);
     CHECK(
-        p.mat2x2Value ==
+        *p.mat2x2Value ==
         std::vector<glm::mat2x2>{
             { 52.1f, 52.2f, 52.3f, 52.4f },
             { 53.1f, 53.2f, 53.3f, 53.4f },
@@ -788,7 +790,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat2Value.has_value());
     CHECK(p.mat2Value->size() == 3);
     CHECK(
-        p.mat2Value ==
+        *p.mat2Value ==
         std::vector<glm::mat2>{
             { 152.1f, 152.2f, 152.3f, 152.4f },
             { 153.1f, 153.2f, 153.3f, 153.4f },
@@ -798,7 +800,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat2x3Value.has_value());
     CHECK(p.mat2x3Value->size() == 3);
     CHECK(
-        p.mat2x3Value ==
+        *p.mat2x3Value ==
         std::vector<glm::mat2x3>{
             { 55.1f, 55.2f, 55.3f, 55.4f, 55.5f, 55.6f },
             { 56.1f, 56.2f, 56.3f, 56.4f, 56.5f, 56.6f },
@@ -808,7 +810,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat2x4Value.has_value());
     CHECK(p.mat2x4Value->size() == 3);
     CHECK(
-        p.mat2x4Value ==
+        *p.mat2x4Value ==
         std::vector<glm::mat2x4>{
             { 58.1f, 58.2f, 58.3f, 58.4f, 58.5f, 58.6f, 58.7f, 58.8f },
             { 59.1f, 59.2f, 59.3f, 59.4f, 59.5f, 59.6f, 59.7f, 59.8f },
@@ -818,7 +820,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat3x2Value.has_value());
     CHECK(p.mat3x2Value->size() == 3);
     CHECK(
-        p.mat3x2Value ==
+        *p.mat3x2Value ==
         std::vector<glm::mat3x2>{
             { 61.1f, 61.2f, 61.3f, 61.4f, 61.5f, 61.6f },
             { 62.1f, 62.2f, 62.3f, 62.4f, 62.5f, 62.6f },
@@ -828,7 +830,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat3x3Value.has_value());
     CHECK(p.mat3x3Value->size() == 3);
     CHECK(
-        p.mat3x3Value ==
+        *p.mat3x3Value ==
         std::vector<glm::mat3x3>{
             { 64.1f, 64.2f, 64.3f, 64.4f, 64.5f, 64.6f, 64.7f, 64.8f, 64.9f },
             { 65.1f, 65.2f, 65.3f, 65.4f, 65.5f, 65.6f, 65.7f, 65.8f, 65.9f },
@@ -838,7 +840,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat3Value.has_value());
     CHECK(p.mat3Value->size() == 3);
     CHECK(
-        p.mat3Value ==
+        *p.mat3Value ==
         std::vector<glm::mat3>{
             { 164.1f, 164.2f, 164.3f, 164.4f, 164.5f, 164.6f, 164.7f, 164.8f, 164.9f },
             { 165.1f, 165.2f, 165.3f, 165.4f, 165.5f, 165.6f, 165.7f, 165.8f, 165.9f },
@@ -848,7 +850,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat3x4Value.has_value());
     CHECK(p.mat3x4Value->size() == 3);
     CHECK(
-        p.mat3x4Value ==
+        *p.mat3x4Value ==
         std::vector<glm::mat3x4>{
             { 67.1f, 67.2f, 67.3f, 67.4f, 67.5f, 67.6f,
               67.7f, 67.8f, 67.9f, 67.10f, 67.11f, 67.12f },
@@ -861,7 +863,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat4x2Value.has_value());
     CHECK(p.mat4x2Value->size() == 3);
     CHECK(
-        p.mat4x2Value ==
+        *p.mat4x2Value ==
         std::vector<glm::mat4x2>{
             { 70.1f, 70.2f, 70.3f, 70.4f, 70.5f, 70.6f, 70.7f, 70.8f },
             { 71.1f, 71.2f, 71.3f, 71.4f, 71.5f, 71.6f, 71.7f, 71.8f },
@@ -871,7 +873,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat4x3Value.has_value());
     CHECK(p.mat4x3Value->size() == 3);
     CHECK(
-        p.mat4x3Value ==
+        *p.mat4x3Value ==
         std::vector<glm::mat4x3>{
             { 73.1f, 73.2f, 73.3f, 73.4f, 73.5f, 73.6f,
               73.7f, 73.8f, 73.9f, 73.10f, 73.11f, 73.12f },
@@ -884,7 +886,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat4x4Value.has_value());
     CHECK(p.mat4x4Value->size() == 3);
     CHECK(
-        p.mat4x4Value ==
+        *p.mat4x4Value ==
         std::vector<glm::mat4x4>{
             { 76.1f, 76.2f, 76.3f, 76.4f, 76.5f, 76.6f, 76.7f, 76.8f,
               76.9f, 76.10f, 76.11f, 76.12f, 76.13f, 76.14f, 76.15f, 76.16f },
@@ -897,7 +899,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.mat4Value.has_value());
     CHECK(p.mat4Value->size() == 3);
     CHECK(
-        p.mat4Value ==
+        *p.mat4Value ==
         std::vector<glm::mat4>{
             { 176.1f, 176.2f, 176.3f, 176.4f, 176.5f, 176.6f, 176.7f, 176.8f,
                 176.9f, 176.10f, 176.11f, 176.12f, 176.13f, 176.14f, 176.15f, 176.16f },
@@ -910,7 +912,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat2x2Value.has_value());
     CHECK(p.dmat2x2Value->size() == 3);
     CHECK(
-        p.dmat2x2Value ==
+        *p.dmat2x2Value ==
         std::vector<glm::dmat2x2>{
             { 79.1, 79.2, 79.3, 79.4 },
             { 80.1, 80.2, 80.3, 80.4 },
@@ -920,7 +922,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat2Value.has_value());
     CHECK(p.dmat2Value->size() == 3);
     CHECK(
-        p.dmat2Value ==
+        *p.dmat2Value ==
         std::vector<glm::dmat2>{
             { 179.1, 179.2, 179.3, 179.4 },
             { 180.1, 180.2, 180.3, 180.4 },
@@ -930,7 +932,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat2x3Value.has_value());
     CHECK(p.dmat2x3Value->size() == 3);
     CHECK(
-        p.dmat2x3Value ==
+        *p.dmat2x3Value ==
         std::vector<glm::dmat2x3>{
             { 82.1, 82.2, 82.3, 82.4, 82.5, 82.6 },
             { 83.1, 83.2, 83.3, 83.4, 83.5, 83.6 },
@@ -940,7 +942,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat2x4Value.has_value());
     CHECK(p.dmat2x4Value->size() == 3);
     CHECK(
-        p.dmat2x4Value ==
+        *p.dmat2x4Value ==
         std::vector<glm::dmat2x4>{
             { 85.1, 85.2, 85.3, 85.4, 85.5, 85.6, 85.7, 85.8 },
             { 86.1, 86.2, 86.3, 86.4, 86.5, 86.6, 86.7, 86.8 },
@@ -950,7 +952,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat3x2Value.has_value());
     CHECK(p.dmat3x2Value->size() == 3);
     CHECK(
-        p.dmat3x2Value ==
+        *p.dmat3x2Value ==
         std::vector<glm::dmat3x2>{
             { 88.1, 88.2, 88.3, 88.4, 88.5, 88.6 },
             { 89.1, 89.2, 89.3, 89.4, 89.5, 89.6 },
@@ -960,7 +962,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat3x3Value.has_value());
     CHECK(p.dmat3x3Value->size() == 3);
     CHECK(
-        p.dmat3x3Value ==
+        *p.dmat3x3Value ==
         std::vector<glm::dmat3x3>{
             { 91.1, 91.2, 91.3, 91.4, 91.5, 91.6, 91.7, 91.8, 91.9 },
             { 92.1, 92.2, 92.3, 92.4, 92.5, 92.6, 92.7, 92.8, 92.9 },
@@ -970,7 +972,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat3Value.has_value());
     CHECK(p.dmat3Value->size() == 3);
     CHECK(
-        p.dmat3Value ==
+        *p.dmat3Value ==
         std::vector<glm::dmat3>{
             { 191.1, 191.2, 191.3, 191.4, 191.5, 191.6, 191.7, 191.8, 191.9 },
             { 192.1, 192.2, 192.3, 192.4, 192.5, 192.6, 192.7, 192.8, 192.9 },
@@ -980,7 +982,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat3x4Value.has_value());
     CHECK(p.dmat3x4Value->size() == 3);
     CHECK(
-        p.dmat3x4Value ==
+        *p.dmat3x4Value ==
         std::vector<glm::dmat3x4>{
             { 94.1, 94.2, 94.3, 94.4, 94.5, 94.6, 94.7, 94.8, 94.9, 94.10, 94.11, 94.12 },
             { 95.1, 95.2, 95.3, 95.4, 95.5, 95.6, 95.7, 95.8, 95.9, 95.10, 95.11, 95.12 },
@@ -990,7 +992,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat4x2Value.has_value());
     CHECK(p.dmat4x2Value->size() == 3);
     CHECK(
-        p.dmat4x2Value ==
+        *p.dmat4x2Value ==
         std::vector<glm::dmat4x2>{
             { 97.1, 97.2, 97.3, 97.4, 97.5, 97.6, 97.7, 97.8 },
             { 98.1, 98.2, 98.3, 98.4, 98.5, 98.6, 98.7, 98.8 },
@@ -1000,7 +1002,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat4x3Value.has_value());
     CHECK(p.dmat4x3Value->size() == 3);
     CHECK(
-        p.dmat4x3Value ==
+        *p.dmat4x3Value ==
         std::vector<glm::dmat4x3>{
             { 100.1, 100.2, 100.3, 100.4, 100.5, 100.6,
               100.7, 100.8, 100.9, 100.10, 100.11, 100.12 },
@@ -1013,7 +1015,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat4x4Value.has_value());
     CHECK(p.dmat4x4Value->size() == 3);
     CHECK(
-        p.dmat4x4Value ==
+        *p.dmat4x4Value ==
         std::vector<glm::dmat4x4>{
             { 103.1, 103.2, 103.3, 103.4, 103.5, 103.6, 103.7, 103.8,
               103.9, 103.10, 103.11, 103.12, 103.13, 103.14, 103.15, 103.16 },
@@ -1026,7 +1028,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     REQUIRE(p.dmat4Value.has_value());
     CHECK(p.dmat4Value->size() == 3);
     CHECK(
-        p.dmat4Value ==
+        *p.dmat4Value ==
         std::vector<glm::dmat4>{
             { 1103.1, 1103.2, 1103.3, 1103.4, 1103.5, 1103.6, 1103.7, 1103.8,
                 1103.9, 1103.10, 1103.11, 1103.12, 1103.13, 1103.14, 1103.15, 1103.16 },

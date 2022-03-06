@@ -63,4 +63,7 @@ TEST_CASE("Parsing/Enums/Keys:  Keys") {
         CHECK(ee->name == "Value3");
         CHECK(ee->attributes.key == "\"KeyForValue3\"");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

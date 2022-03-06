@@ -114,8 +114,9 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
 })";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -746,4 +747,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

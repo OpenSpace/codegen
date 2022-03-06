@@ -163,6 +163,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
+    using namespace std::string_literals;
+    
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types_optional.txt").string();
     {
@@ -178,8 +180,8 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
     d.setValue("IntValue", 2.0);
     d.setValue("DoubleValue", 3.1);
     d.setValue("FloatValue", 4.1);
-    d.setValue("StringValue", std::string("abc"));
-    d.setValue("StringNotEmptyValue", std::string("def"));
+    d.setValue("StringValue", "abc"s);
+    d.setValue("StringNotEmptyValue", "def"s);
     d.setValue("PathValue", tmpFile);
     d.setValue("DirectoryValue", tmpFolder);
     d.setValue("Ivec2Value", glm::dvec2(5.0, 6.0));
@@ -292,65 +294,65 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
 
     const Parameters p = codegen::bake<Parameters>(d);
     REQUIRE(p.boolValue.has_value());
-    CHECK(p.boolValue == true);
+    CHECK(*p.boolValue == true);
     REQUIRE(p.intValue.has_value());
-    CHECK(p.intValue == 2);
+    CHECK(*p.intValue == 2);
     REQUIRE(p.doubleValue.has_value());
-    CHECK(p.doubleValue == 3.1);
+    CHECK(*p.doubleValue == 3.1);
     REQUIRE(p.floatValue.has_value());
-    CHECK(p.floatValue == 4.1f);
+    CHECK(*p.floatValue == 4.1f);
     REQUIRE(p.stringValue.has_value());
-    CHECK(p.stringValue == "abc");
+    CHECK(*p.stringValue == "abc");
     REQUIRE(p.stringNotEmptyValue.has_value());
-    CHECK(p.stringNotEmptyValue == "def");
+    CHECK(*p.stringNotEmptyValue == "def");
     REQUIRE(p.pathValue.has_value());
-    CHECK(p.pathValue == tmpFile);
+    CHECK(*p.pathValue == tmpFile);
     REQUIRE(p.directoryValue.has_value());
-    CHECK(p.directoryValue == tmpFolder);
+    CHECK(*p.directoryValue == tmpFolder);
     REQUIRE(p.ivec2Value.has_value());
-    CHECK(p.ivec2Value == glm::ivec2(5, 6));
+    CHECK(*p.ivec2Value == glm::ivec2(5, 6));
     REQUIRE(p.ivec3Value.has_value());
-    CHECK(p.ivec3Value == glm::ivec3(7, 8, 9));
+    CHECK(*p.ivec3Value == glm::ivec3(7, 8, 9));
     REQUIRE(p.ivec4Value.has_value());
-    CHECK(p.ivec4Value == glm::ivec4(10, 11, 12, 13));
+    CHECK(*p.ivec4Value == glm::ivec4(10, 11, 12, 13));
     REQUIRE(p.dvec2Value.has_value());
-    CHECK(p.dvec2Value == glm::dvec2(14.1, 14.2));
+    CHECK(*p.dvec2Value == glm::dvec2(14.1, 14.2));
     REQUIRE(p.dvec3Value.has_value());
-    CHECK(p.dvec3Value == glm::dvec3(15.1, 15.2, 15.3));
+    CHECK(*p.dvec3Value == glm::dvec3(15.1, 15.2, 15.3));
     REQUIRE(p.dvec4Value.has_value());
-    CHECK(p.dvec4Value == glm::dvec4(16.1, 16.2, 16.3, 16.4));
+    CHECK(*p.dvec4Value == glm::dvec4(16.1, 16.2, 16.3, 16.4));
     REQUIRE(p.vec2Value.has_value());
-    CHECK(p.vec2Value == glm::vec2(17.1f, 17.2f));
+    CHECK(*p.vec2Value == glm::vec2(17.1f, 17.2f));
     REQUIRE(p.vec3Value.has_value());
-    CHECK(p.vec3Value == glm::vec3(18.1f, 18.2f, 18.3f));
+    CHECK(*p.vec3Value == glm::vec3(18.1f, 18.2f, 18.3f));
     REQUIRE(p.vec4Value.has_value());
-    CHECK(p.vec4Value == glm::vec4(19.1f, 19.2f, 19.3, 19.4f));
+    CHECK(*p.vec4Value == glm::vec4(19.1f, 19.2f, 19.3, 19.4f));
     REQUIRE(p.mat2x2Value.has_value());
-    CHECK(p.mat2x2Value == glm::mat2x2(20.1f, 20.2f, 20.3f, 20.4f));
+    CHECK(*p.mat2x2Value == glm::mat2x2(20.1f, 20.2f, 20.3f, 20.4f));
     REQUIRE(p.mat2Value.has_value());
-    CHECK(p.mat2Value == glm::mat2(120.1f, 120.2f, 120.3f, 120.4f));
+    CHECK(*p.mat2Value == glm::mat2(120.1f, 120.2f, 120.3f, 120.4f));
     REQUIRE(p.mat2x3Value.has_value());
-    CHECK(p.mat2x3Value == glm::mat2x3(21.1f, 21.2f, 21.3f, 21.4f, 21.5f, 21.6f));
+    CHECK(*p.mat2x3Value == glm::mat2x3(21.1f, 21.2f, 21.3f, 21.4f, 21.5f, 21.6f));
     REQUIRE(p.mat2x4Value.has_value());
     CHECK(
-        p.mat2x4Value ==
+        *p.mat2x4Value ==
         glm::mat2x4(22.1f, 22.2f, 22.3f, 22.4f, 22.5f, 22.6f, 22.7f, 22.8f)
     );
     REQUIRE(p.mat3x2Value.has_value());
-    CHECK(p.mat3x2Value == glm::mat3x2(23.1f, 23.2f, 23.3f, 23.4f, 23.5f, 23.6f));
+    CHECK(*p.mat3x2Value == glm::mat3x2(23.1f, 23.2f, 23.3f, 23.4f, 23.5f, 23.6f));
     REQUIRE(p.mat3x3Value.has_value());
     CHECK(
-        p.mat3x3Value ==
+        *p.mat3x3Value ==
         glm::mat3x3(24.1f, 24.2f, 24.3f, 24.4f, 24.5f, 24.6f, 24.7f, 24.8f, 24.9f)
     );
     REQUIRE(p.mat3Value.has_value());
     CHECK(
-        p.mat3Value ==
+        *p.mat3Value ==
         glm::mat3(124.1f, 124.2f, 124.3f, 124.4f, 124.5f, 124.6f, 124.7f, 124.8f, 124.9f)
     );
     REQUIRE(p.mat3x4Value.has_value());
     CHECK(
-        p.mat3x4Value ==
+        *p.mat3x4Value ==
         glm::mat3x4(
             25.1f, 25.2f, 25.3f, 25.4f, 25.5f, 25.6f,
             25.7f, 25.8f, 25.9f, 25.10f, 25.11f, 25.12f
@@ -358,12 +360,12 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
     );
     REQUIRE(p.mat4x2Value.has_value());
     CHECK(
-        p.mat4x2Value ==
+        *p.mat4x2Value ==
         glm::mat4x2(26.1f, 26.2f, 26.3f, 26.4f, 26.5f, 26.6f, 26.7f, 26.8f)
     );
     REQUIRE(p.mat4x3Value.has_value());
     CHECK(
-        p.mat4x3Value ==
+        *p.mat4x3Value ==
         glm::mat4x3(
             27.1f, 27.2f, 27.3f, 27.4f, 27.5f, 27.6f,
             27.7f, 27.8f, 27.9f, 27.10f, 27.11f, 27.12f
@@ -371,7 +373,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
     );
     REQUIRE(p.mat4x4Value.has_value());
     CHECK(
-        p.mat4x4Value ==
+        *p.mat4x4Value ==
         glm::mat4x4(
             28.1f, 28.2f, 28.3f, 28.4f, 28.5f, 28.6f, 28.7f, 28.8f,
             28.9f, 28.10f, 28.11f, 28.12f, 28.13f, 28.14f, 28.15f, 28.16f
@@ -379,51 +381,51 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
     );
     REQUIRE(p.mat4Value.has_value());
     CHECK(
-        p.mat4Value ==
+        *p.mat4Value ==
         glm::mat4(
             128.1f, 128.2f, 128.3f, 128.4f, 128.5f, 128.6f, 128.7f, 128.8f,
             128.9f, 128.10f, 128.11f, 128.12f, 128.13f, 128.14f, 128.15f, 128.16f
         )
     );
     REQUIRE(p.dmat2x2Value.has_value());
-    CHECK(p.dmat2x2Value == glm::dmat2x2(29.1, 29.2, 29.3, 29.4));
+    CHECK(*p.dmat2x2Value == glm::dmat2x2(29.1, 29.2, 29.3, 29.4));
     REQUIRE(p.dmat2Value.has_value());
-    CHECK(p.dmat2Value == glm::dmat2(129.1, 129.2, 129.3, 129.4));
+    CHECK(*p.dmat2Value == glm::dmat2(129.1, 129.2, 129.3, 129.4));
     REQUIRE(p.dmat2x3Value.has_value());
-    CHECK(p.dmat2x3Value == glm::dmat2x3(30.1, 30.2, 30.3, 30.4, 30.5, 30.6));
+    CHECK(*p.dmat2x3Value == glm::dmat2x3(30.1, 30.2, 30.3, 30.4, 30.5, 30.6));
     REQUIRE(p.dmat2x4Value.has_value());
-    CHECK(p.dmat2x4Value == glm::dmat2x4(31.1, 31.2, 31.3, 31.4, 31.5, 31.6, 31.7, 31.8));
+    CHECK(*p.dmat2x4Value == glm::dmat2x4(31.1, 31.2, 31.3, 31.4, 31.5, 31.6, 31.7, 31.8));
     REQUIRE(p.dmat3x2Value.has_value());
-    CHECK(p.dmat3x2Value == glm::dmat3x2(32.1, 32.2, 32.3, 32.4, 32.5, 32.6));
+    CHECK(*p.dmat3x2Value == glm::dmat3x2(32.1, 32.2, 32.3, 32.4, 32.5, 32.6));
     REQUIRE(p.dmat3x3Value.has_value());
     CHECK(
-        p.dmat3x3Value ==
+        *p.dmat3x3Value ==
         glm::dmat3x3(33.1, 33.2, 33.3, 33.4, 33.5, 33.6, 33.7, 33.8, 33.9)
     );
     REQUIRE(p.dmat3Value.has_value());
     CHECK(
-        p.dmat3Value ==
+        *p.dmat3Value ==
         glm::dmat3(133.1, 133.2, 133.3, 133.4, 133.5, 133.6, 133.7, 133.8, 133.9)
     );
     REQUIRE(p.dmat3x4Value.has_value());
     CHECK(
-        p.dmat3x4Value ==
+        *p.dmat3x4Value ==
         glm::dmat3x4(
             34.1, 34.2, 34.3, 34.4, 34.5, 34.6, 34.7, 34.8, 34.9, 34.10, 34.11, 34.12
         )
     );
     REQUIRE(p.dmat4x2Value.has_value());
-    CHECK(p.dmat4x2Value == glm::dmat4x2(35.1, 35.2, 35.3, 35.4, 35.5, 35.6, 35.7, 35.8));
+    CHECK(*p.dmat4x2Value == glm::dmat4x2(35.1, 35.2, 35.3, 35.4, 35.5, 35.6, 35.7, 35.8));
     REQUIRE(p.dmat4x3Value.has_value());
     CHECK(
-        p.dmat4x3Value ==
+        *p.dmat4x3Value ==
         glm::dmat4x3(
             36.1, 36.2, 36.3, 36.4, 36.5, 36.6, 36.7, 36.8, 36.9, 36.10, 36.11, 36.12
         )
     );
     REQUIRE(p.dmat4x4Value.has_value());
     CHECK(
-        p.dmat4x4Value ==
+        *p.dmat4x4Value ==
         glm::dmat4x4(
             37.1, 37.2, 37.3, 37.4, 37.5, 37.6, 37.7, 37.8,
             37.9, 37.10, 37.11, 37.12, 37.13, 37.14, 37.15, 37.16
@@ -431,7 +433,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake") {
     );
     REQUIRE(p.dmat4Value.has_value());
     CHECK(
-        p.dmat4Value ==
+        *p.dmat4Value ==
         glm::dmat4(
             137.1, 137.2, 137.3, 137.4, 137.5, 137.6, 137.7, 137.8,
             137.9, 137.10, 137.11, 137.12, 137.13, 137.14, 137.15, 137.16

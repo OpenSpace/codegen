@@ -45,6 +45,9 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
@@ -73,6 +76,9 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
     );
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
@@ -99,6 +105,9 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
     );
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
@@ -125,6 +134,9 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
@@ -154,4 +166,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
     );
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

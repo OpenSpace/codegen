@@ -40,6 +40,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
+    using namespace std::string_literals;
+    
     {
         ghoul::Dictionary d;
         const Parameters p = codegen::bake<Parameters>(d);
@@ -48,7 +50,7 @@ TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
 
     {
         ghoul::Dictionary d;
-        d.setValue("Ovv", std::string("abc"));
+        d.setValue("Ovv", "abc"s);
         const Parameters p = codegen::bake<Parameters>(d);
         REQUIRE(p.ovv.has_value());
         REQUIRE(std::holds_alternative<std::string>(*p.ovv));
@@ -57,8 +59,8 @@ TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
     {
         ghoul::Dictionary d;
         ghoul::Dictionary e;
-        e.setValue("1", std::string("def"));
-        e.setValue("2", std::string("ghi"));
+        e.setValue("1", "def"s);
+        e.setValue("2", "ghi"s);
         d.setValue("Ovv", e);
         const Parameters p = codegen::bake<Parameters>(d);
         REQUIRE(p.ovv.has_value());

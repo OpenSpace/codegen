@@ -81,8 +81,9 @@ Lines, With, Weird,
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -203,4 +204,7 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "jkl");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

@@ -39,6 +39,7 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup") {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -61,4 +62,7 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup") {
         REQUIRE(ee);
         CHECK(ee->name == "Value3");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

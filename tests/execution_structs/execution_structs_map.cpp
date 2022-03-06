@@ -62,6 +62,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Map:  Bake") {
     using namespace std::literals;
+    
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;

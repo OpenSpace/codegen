@@ -163,6 +163,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake") {
+    using namespace std::string_literals;
+    
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile1 = (path / "codegen_execution_basic_types_vector_1.txt").string();
     {
@@ -239,16 +241,16 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake") {
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("abc"));
-        v.setValue("2", std::string("def"));
-        v.setValue("3", std::string("ghi"));
+        v.setValue("1", "abc"s);
+        v.setValue("2", "def"s);
+        v.setValue("3", "ghi"s);
         d.setValue("StringValue", v);
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("jkl"));
-        v.setValue("2", std::string("mno"));
-        v.setValue("3", std::string("pqr"));
+        v.setValue("1", "jkl"s);
+        v.setValue("2", "mno"s);
+        v.setValue("3", "pqr"s);
         d.setValue("StringNotEmptyValue", v);
     }
     {

@@ -165,6 +165,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Basic/Types:  Bake") {
+    using namespace std::string_literals;
+    
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types.txt").string();
     {
@@ -182,8 +184,8 @@ TEST_CASE("Execution/Structs/Basic/Types:  Bake") {
     d.setValue("IntValue2", 2);
     d.setValue("DoubleValue", 3.0);
     d.setValue("FloatValue", 4.0);
-    d.setValue("StringValue", std::string("abc"));
-    d.setValue("StringNotEmptyValue", std::string("def"));
+    d.setValue("StringValue", "abc"s);
+    d.setValue("StringNotEmptyValue", "def"s);
     d.setValue("PathValue", tmpFile);
     d.setValue("DirectoryValue", tmpFolder);
     d.setValue("Ivec2Value", glm::dvec2(5.0, 6.0));

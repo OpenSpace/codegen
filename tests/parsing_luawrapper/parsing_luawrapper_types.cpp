@@ -38,11 +38,14 @@ TEST_CASE("Parsing/LuaWrapper/Types:  void", "[luawrapper][parsing]") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

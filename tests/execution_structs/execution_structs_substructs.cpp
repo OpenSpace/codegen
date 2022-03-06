@@ -80,6 +80,8 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Substruct:  Bake") {
+    using namespace std::string_literals;
+    
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
@@ -95,13 +97,13 @@ TEST_CASE("Execution/Structs/Substruct:  Bake") {
         ghoul::Dictionary e;
         {
             ghoul::Dictionary f;
-            f.setValue("Eulav", std::string("text"));
+            f.setValue("Eulav", "text"s);
             f.setValue("Lavlav", true);
             e.setValue("1", f);
         }
         {
             ghoul::Dictionary f;
-            f.setValue("Eulav", std::string("text2"));
+            f.setValue("Eulav", "text2"s);
             f.setValue("Lavlav", false);
             e.setValue("2", f);
         }
@@ -109,11 +111,11 @@ TEST_CASE("Execution/Structs/Substruct:  Bake") {
     }
     {
         ghoul::Dictionary e;
-        e.setValue("A", std::string("abc"));
+        e.setValue("A", "abc"s);
         e.setValue("B", 2.0);
         
         ghoul::Dictionary f;
-        f.setValue("A", std::string("def"));
+        f.setValue("A", "def"s);
         f.setValue("B", 3.0);
         
         d.setValue("StructDValue", e);

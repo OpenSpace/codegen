@@ -48,6 +48,7 @@ TEST_CASE("Parsing/Enums/Mapping:  Mapping") {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     REQUIRE(code.enums.size() == 3);
 
     {
@@ -103,4 +104,7 @@ TEST_CASE("Parsing/Enums/Mapping:  Mapping") {
             CHECK(ee->name == "Val6");
         }
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

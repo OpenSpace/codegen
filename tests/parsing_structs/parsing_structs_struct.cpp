@@ -33,8 +33,9 @@ TEST_CASE("Parsing/Structs/Struct:  Minimal") {
 };)";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -52,8 +53,9 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
 };)";
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
 
     REQUIRE(s);

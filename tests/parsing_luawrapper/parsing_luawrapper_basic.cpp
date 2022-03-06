@@ -38,13 +38,16 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
@@ -57,7 +60,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -73,6 +76,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
         REQUIRE(bt);
         CHECK(bt->type == BasicType::Type::Int);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
@@ -85,7 +91,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -103,6 +109,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
         REQUIRE(bt);
         CHECK(bt->type == BasicType::Type::Int);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
@@ -115,7 +124,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -140,6 +149,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
         REQUIRE(bt);
         CHECK(bt->type == BasicType::Type::String);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
@@ -152,7 +164,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -181,6 +193,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
         CHECK(bt->type == BasicType::Type::Double);
     }
 
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
@@ -193,7 +207,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -222,6 +236,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
         CHECK(bt->type == BasicType::Type::Double);
     }
 
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
@@ -235,7 +251,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -248,6 +264,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
         REQUIRE(bt);
         CHECK(bt->type == BasicType::Type::Int);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
@@ -260,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     CHECK(code.structs.size() == 0);
     CHECK(code.enums.size() == 0);
     REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions[0];
+    Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->name == "foo");
@@ -287,4 +306,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
             CHECK(bt->type == BasicType::Type::Double);
         }
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

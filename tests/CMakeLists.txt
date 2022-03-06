@@ -50,7 +50,6 @@ add_executable(
   execution_structs/execution_structs_variant.cpp
 
   parsing_enums/parsing_enums_basic.cpp
-  parsing_enums/parsing_enums_error.cpp
   parsing_enums/parsing_enums_mapping.cpp
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp

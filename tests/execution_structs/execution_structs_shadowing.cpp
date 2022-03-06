@@ -74,18 +74,20 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Shadowing:  Bake") {
+    using namespace std::string_literals;
+    
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
-        e.setValue("T", std::string("Type1"));
+        e.setValue("T", "Type1"s);
         d.setValue("A", e);
     }
     {
         ghoul::Dictionary e;
-        e.setValue("T", std::string("Type4"));
+        e.setValue("T", "Type4"s);
         d.setValue("B", e);
     }
-    d.setValue("T", std::string("Type5"));
+    d.setValue("T", "Type5"s);
     {
         ghoul::Dictionary e;
         {
@@ -93,7 +95,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Bake") {
             f.setValue("Ca", 2.0);
             e.setValue("A", f);
         }
-        e.setValue("T", std::string("Type8"));
+        e.setValue("T", "Type8"s);
         d.setValue("C", e);
     }
 

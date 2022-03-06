@@ -71,8 +71,9 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -129,4 +130,6 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->elements[2]->name == "SecondVeryLongValueThatWillCheckIfWeDetectPropertyThatWeHave");
     }
 
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

@@ -73,15 +73,17 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Enums:  Bake") {
+    using namespace std::string_literals;
+    
     ghoul::Dictionary d;
-    d.setValue("EnumAValue", std::string("Value1"));
-    d.setValue("EnumBValue", std::string("value2"));
+    d.setValue("EnumAValue", "Value1"s);
+    d.setValue("EnumBValue", "value2"s);
 
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("Value3"));
-        e.setValue("2", std::string("value2"));
-        e.setValue("3", std::string("Value1"));
+        e.setValue("1", "Value3"s);
+        e.setValue("2", "value2"s);
+        e.setValue("3", "Value1"s);
         d.setValue("EnumCValue", e);
     }
     d.setValue(
@@ -96,7 +98,7 @@ TEST_CASE("Execution/Structs/Enums:  Bake") {
     CHECK(p.enumCValue.size() == 3);
     CHECK(
         p.enumCValue ==
-        std::vector{
+        std::vector {
             Parameters::C::Value3,
             Parameters::C::value2,
             Parameters::C::Value1
