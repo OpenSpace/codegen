@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Map: Minimal", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Map: Minimal") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::map<std::string, std::string> p;

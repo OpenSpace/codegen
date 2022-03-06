@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: float annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::annotation(1)]];
 };)";
@@ -40,7 +40,7 @@ float v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::annotation(1)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<float> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::annotation(1)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<float> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: float inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::inlist(1)]];
 };)";
@@ -70,7 +70,7 @@ float v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::inlist(1)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<float> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::inlist(1)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<float> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: float notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::notinlist(1)]];
 };)";
@@ -100,7 +100,7 @@ float v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::notinlist(1)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<float> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::notinlist(1)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<float> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: float reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::reference(1)]];
 };)";
@@ -130,7 +130,7 @@ float v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::reference(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<float> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::reference(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<float> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: float color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::color()]];
 };)";
@@ -160,7 +160,7 @@ float v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::color()]];
 };)";
@@ -170,7 +170,7 @@ std::vector<float> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::color()]];
 };)";
@@ -180,7 +180,7 @@ std::optional<float> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: float directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 float v [[codegen::directory()]];
 };)";
@@ -190,7 +190,7 @@ float v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector float directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  vector directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<float> v [[codegen::directory()]];
 };)";
@@ -200,7 +200,7 @@ std::vector<float> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional float directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Float:  optional directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<float> v [[codegen::directory()]];
 };)";

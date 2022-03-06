@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Error: Extra \" in root name", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Extra \" in root name") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary("Wrong")]] Parameters {
     int dummy;
@@ -41,7 +41,7 @@ struct [[codegen::Dictionary("Wrong")]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Missing description", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Missing description") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     // [[codegen::verbatim]]
@@ -55,7 +55,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Struct: Missing space", "[parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Missing space") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters{
 };)";
 
@@ -65,7 +65,7 @@ TEST_CASE("Parsing Struct: Missing space", "[parsing]") {
     );
 }
 
-TEST_CASE("Parsing Error: Illegal \" in description", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Illegal \" in description") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     // description " with character
@@ -79,7 +79,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Missing variant closing", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Missing variant closing") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     std::variant<int, float error;
@@ -94,7 +94,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unknown type", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unknown type") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     std::list<int> error;
@@ -106,7 +106,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Missing struct", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Missing struct") {
     constexpr const char Source[] = R"(
 Type [[codegen::Dictionary(Error)]] Parameters {
     std::string str;
@@ -119,7 +119,7 @@ Type [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unterminated attribute", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated attribute") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val [[codegen::inrange(1.0, 2.0]];
@@ -132,7 +132,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unknown attribute (variable)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (variable)") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val [[codegen::unknown_key(parameter)]];
@@ -145,7 +145,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unterminated dictionary", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated dictionary") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error]] Parameters {
     int val;
@@ -158,7 +158,7 @@ struct [[codegen::Dictionary(Error]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unterminated attribute brackets", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated attribute brackets") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     enum class A {
@@ -174,7 +174,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unknown attribute (struct)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (struct)") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     struct [[codegen::unknown_key()]] P {
@@ -188,7 +188,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Unknown attribute (enum)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (enum)") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     enum class E {
@@ -204,7 +204,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Empty root name 1", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Empty root name 1") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary()]] Parameters {
     int val;
@@ -217,7 +217,7 @@ struct [[codegen::Dictionary()]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Empty root name 2", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Empty root name 2") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary]] Parameters {
     int val;
@@ -230,7 +230,7 @@ struct [[codegen::Dictionary]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Missing closing }", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Missing closing }") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val;
@@ -242,7 +242,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Wrong order", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Wrong order") {
     constexpr const char Source[] = R"(
 struct Parameters [[codegen::Dictionary(abc)]] {
     int value;
@@ -255,7 +255,7 @@ struct Parameters [[codegen::Dictionary(abc)]] {
     );
 }
 
-TEST_CASE("Parsing Error: Block comments", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Block comments") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(abc)]] Parameters {
     /* evil block comment */
@@ -269,7 +269,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Duplicate root struct", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Duplicate root struct") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(S1)]] Parameters {
     struct [[codegen::Dictionary(S2)]] Sub {
@@ -285,7 +285,7 @@ struct [[codegen::Dictionary(S1)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Old-style enum", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Old-style enum") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(abc)]] Parameters {
     enum ABC {
@@ -302,7 +302,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing Error: Default argument in variable", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Default argument in variable") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
    int value1;
@@ -316,7 +316,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Parsing Error: Misshapen boolean value", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Error:  Misshapen boolean value") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::color(1)]];
 };)";

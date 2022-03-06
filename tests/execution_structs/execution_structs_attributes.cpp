@@ -789,7 +789,7 @@ namespace {
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
 
-TEST_CASE("Attributes Bake", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Attributes:  Bake") {
     openspace::documentation::Documentation doc;
     doc.id = "abc";
     DocEng.addDocumentation(doc);
@@ -1567,7 +1567,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(2), glm::ivec4(2), glm::ivec4(2) }
     );
 
-    
     CHECK(p.notInRangeValueInt == 9);
     REQUIRE(p.notInRangeValueIntOptional.has_value());
     CHECK(p.notInRangeValueIntOptional == 10);
@@ -1685,7 +1684,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
 
-
     CHECK(p.lessEqualValueInt == 21);
     REQUIRE(p.lessEqualValueIntOptional.has_value());
     CHECK(p.lessEqualValueIntOptional == 22);
@@ -1743,7 +1741,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         p.lessEqualValueIVec4Vector ==
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
-
 
     CHECK(p.greaterValueInt == 27);
     REQUIRE(p.greaterValueIntOptional.has_value());
@@ -1803,7 +1800,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(2), glm::ivec4(3), glm::ivec4(4) }
     );
 
-
     CHECK(p.greaterEqualValueInt == 33);
     REQUIRE(p.greaterEqualValueIntOptional.has_value());
     CHECK(p.greaterEqualValueIntOptional == 34);
@@ -1862,7 +1858,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(2), glm::ivec4(3), glm::ivec4(4) }
     );
 
-
     CHECK(p.unequalValueInt == 39);
     REQUIRE(p.unequalValueIntOptional.has_value());
     CHECK(p.unequalValueIntOptional == 40);
@@ -1920,7 +1915,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         p.unequalValueIVec4Vector ==
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
-
 
     CHECK(p.descValue == true);
 
@@ -2006,7 +2000,7 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     CHECK((*p.optionalVectorDateTimeValue)[2] == std::string("1997 03 11 12:40:53"));
 }
 
-TEST_CASE("Attributes Documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

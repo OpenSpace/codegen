@@ -79,7 +79,7 @@ namespace {
 #include "execution_structs_substructs_codegen.cpp"
 } // namespace
 
-TEST_CASE("Substruct Bake", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Substruct:  Bake") {
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
@@ -149,7 +149,7 @@ TEST_CASE("Substruct Bake", "[structs][execution]") {
     CHECK(p.structDOptionalValue->b == 2);
 }
 
-TEST_CASE("Substruct Documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Substruct:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-//TEST_CASE("Parsing: Enum Error stringify-map", "[enums][parsing]") {
+//TEST_CASE("Parsing/Enums/Error stringify-map", "[enums][parsing]") {
 //    constexpr const char S[] = R"(
 //    enum class [[codegen::stringify(), codegen::map(Abc)]] Enum1 {
 //        Value1,

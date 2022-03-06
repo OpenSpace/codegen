@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Attribute: Attributes Vec2 (success)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Vec2") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // inRangeValueVec2 documentation

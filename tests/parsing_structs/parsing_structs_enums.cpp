@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Enums", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Enums") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Multiline)]] Parameters {
     // enum A documentation

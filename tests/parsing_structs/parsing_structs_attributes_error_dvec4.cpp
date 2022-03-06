@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: glm::dvec4 annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dvec4 v [[codegen::annotation(ABC)]];
 };)";
@@ -40,7 +40,7 @@ glm::dvec4 v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dvec4 annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  vector annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dvec4> v [[codegen::annotation(ABC)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<glm::dvec4> v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dvec4 annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  optional annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dvec4> v [[codegen::annotation(ABC)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<glm::dvec4> v [[codegen::annotation(ABC)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dvec4 inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dvec4 v [[codegen::inlist(1, 2)]];
 };)";
@@ -70,7 +70,7 @@ glm::dvec4 v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dvec4 inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  vector inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dvec4> v [[codegen::inlist(1, 2)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<glm::dvec4> v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dvec4 inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  optional inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dvec4> v [[codegen::inlist(1, 2)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<glm::dvec4> v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dvec4 notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dvec4 v [[codegen::notinlist(1, 2)]];
 };)";
@@ -100,7 +100,7 @@ glm::dvec4 v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dvec4 notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  vector notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dvec4> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<glm::dvec4> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dvec4 notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  optional notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dvec4> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<glm::dvec4> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dvec4 reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dvec4 v [[codegen::reference(1)]];
 };)";
@@ -130,7 +130,7 @@ glm::dvec4 v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dvec4 reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  vector reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dvec4> v [[codegen::reference(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<glm::dvec4> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dvec4 reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  optional reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dvec4> v [[codegen::reference(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<glm::dvec4> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: glm::dvec4 directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 glm::dvec4 v [[codegen::directory()]];
 };)";
@@ -160,7 +160,7 @@ glm::dvec4 v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector glm::dvec4 directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  vector directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::dvec4> v [[codegen::directory()]];
 };)";
@@ -170,7 +170,7 @@ std::vector<glm::dvec4> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional glm::dvec4 directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/DVec4:  optional directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::dvec4> v [[codegen::directory()]];
 };)";

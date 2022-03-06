@@ -27,7 +27,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Variable: Basic Types", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variable:  Basic Types") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     bool boolVariable;
@@ -345,7 +345,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     }
 }
 
-TEST_CASE("Parsing Variable: Vector Base Types", "[structs][parsing]") {
+TEST_CASE("Parsing Variable: Vector Base Types") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<bool> boolVariable;
@@ -663,7 +663,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     }
 }
 
-TEST_CASE("Parsing Variable: Optional Base Types", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variable:  Optional Base Types") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<bool> boolVariable;
@@ -981,7 +981,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     }
 }
 
-TEST_CASE("Parsing Variable: Variable attributes", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variable:  Variable attributes") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::key(Var)]];
@@ -999,7 +999,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(s->variables[0]->key == "Var");
 }
 
-TEST_CASE("Variable attribute: reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variable:  Reference") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::reference(Ref)]];

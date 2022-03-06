@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Struct: Minimal", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Minimal") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
 
@@ -48,7 +48,7 @@ TEST_CASE("Parsing Struct: Minimal", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
 };)";
     Code code = parse(Source);
@@ -67,7 +67,7 @@ TEST_CASE("Parsing Struct: NoExhaustive no parameter", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  NoExhaustive true parameter") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(true)]] Parameters {
 };)";
     Code code = parse(Source);
@@ -86,7 +86,7 @@ TEST_CASE("Parsing Struct: NoExhaustive true parameter", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(false)]] Parameters {
 };)";
     Code code = parse(Source);
@@ -105,7 +105,7 @@ TEST_CASE("Parsing Struct: NoExhaustive false parameter", "[structs][parsing]") 
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Comment Ignored", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Comment Ignored") {
     constexpr const char Source[] = R"(// Test documentation
 struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
@@ -126,7 +126,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Substruct", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Substruct") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 struct A {
 };
@@ -158,7 +158,7 @@ struct A {
     REQUIRE(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Double Substruct", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Double Substruct") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
     };
@@ -204,7 +204,7 @@ TEST_CASE("Parsing Struct: Double Substruct", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Variable", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Variable") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // variable documentation
     int variable;
@@ -233,7 +233,7 @@ TEST_CASE("Parsing Struct: Variable", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Double Variable", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Double Variable") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // variable1 documentation
     int variable;
@@ -271,7 +271,7 @@ TEST_CASE("Parsing Struct: Double Variable", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Empty Enum", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Empty Enum") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
@@ -300,7 +300,7 @@ TEST_CASE("Parsing Struct: Empty Enum", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Enum", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Enum") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
@@ -335,7 +335,7 @@ TEST_CASE("Parsing Struct: Enum", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Enum Key Attribute", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
@@ -372,7 +372,7 @@ TEST_CASE("Parsing Struct: Enum Key Attribute", "[structs][parsing]") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: New lines", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  New lines") {
     constexpr const char Source[] = R"(struct
 [[codegen::Dictionary(Dictionary),
 codegen::noexhaustive(false)]]
@@ -402,7 +402,7 @@ Parameters
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: New lines go nuts", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  New lines go nuts") {
     constexpr const char Source[] = R"(
 
 struct
@@ -446,7 +446,7 @@ Parameters
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing Struct: Substruct vector documentation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Struct:  Substruct vector documentation") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     // struct a documentation

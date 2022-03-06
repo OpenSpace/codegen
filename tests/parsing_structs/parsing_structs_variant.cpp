@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Variant", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variant:  Variant") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
@@ -68,7 +68,7 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing: Optional Variant", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variant:  Optional Variant") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
@@ -94,7 +94,7 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing: Multiple instances variant", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Variant:  Multiple instances variant") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<int, float> a;

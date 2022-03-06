@@ -162,7 +162,7 @@ namespace {
 #include "execution_structs_basic_types_vector_codegen.cpp"
 } // namespace
 
-TEST_CASE("Basic Types Vector bake", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake") {
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile1 = (path / "codegen_execution_basic_types_vector_1.txt").string();
     {
@@ -1034,7 +1034,7 @@ TEST_CASE("Basic Types Vector bake", "[structs][execution]") {
     CHECK(p.dictValue[2].value<double>("b") == 6.0);
 }
 
-TEST_CASE("Basic Types Vector documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Multiline", "[structs][parsing]") {
+TEST_CASE("Parsing: Multiline") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Multiline)]] Parameters {
     // multi
@@ -156,7 +156,7 @@ Lines, With, Weird,
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing: Multiple", "[structs][parsing]") {
+TEST_CASE("Parsing: Multiple") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(P1)]] Param1 {
     int abc;

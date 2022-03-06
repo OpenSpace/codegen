@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Enum Multiple", "[enums][parsing]") {
+TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1,

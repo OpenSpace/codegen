@@ -35,7 +35,7 @@ namespace {
 #include "execution_misc_parentdoc_codegen.cpp"
 } // namespace
 
-TEST_CASE("Parenting", "[misc][execution][basic]") {
+TEST_CASE("Execution/Misc:  Parenting") {
     using namespace openspace::documentation;
 
     Documentation parent;

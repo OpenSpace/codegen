@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Attribute: Attributes Float (success)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Float") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // keyValue documentation

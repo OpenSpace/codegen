@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Enum Keys", "[enums][parsing]") {
+TEST_CASE("Parsing/Enums/Keys:  Keys") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1 [[codegen::key("KeyForValue1")]],
