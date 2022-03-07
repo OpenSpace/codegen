@@ -723,13 +723,31 @@ s->name, s->attributes.dictionary
                 );
             }
 
-
             if (f->returnValue) {
                 result += fmt::format(
-                    "        const {} res = ::{}({});\n",
-                    generateTypename(f->returnValue), f->name, names
+                    "        const {} res = ", generateTypename(f->returnValue)
                 );
+            }
+            else {
+                result += "        ";
+            }
 
+            if (f->arguments.empty()) {
+                result += fmt::format("::{}();\n", f->name);
+            }
+            else {
+                result += fmt::format("::{}(\n", f->name);
+                for (size_t i = 0; i < f->arguments.size(); i += 1) {
+                    Variable* var = f->arguments[i];
+
+                    if (i != f->arguments.size() - 1) {
+                        result += ",\n";
+                    }
+                }
+                result += "        );\n";
+            }
+
+            if (f->returnValue) {
                 int nArguments = 0;
                 if (f->returnValue->tag == VariableType::Tag::TupleType) {
                     TupleType* tt = static_cast<TupleType*>(f->returnValue);
@@ -749,7 +767,6 @@ s->name, s->attributes.dictionary
                 result += fmt::format("        return {};\n", nArguments);
             }
             else {
-                result += fmt::format("        ::{}({});\n", f->name, names);
                 result += "        return 0;\n";
             }
 

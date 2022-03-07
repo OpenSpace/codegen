@@ -143,6 +143,9 @@ bool operator==(const MapType& lhs, const MapType& rhs);
 
 struct OptionalType : public VariableType {
     VariableType* type = nullptr;
+    // If this is true, we generated this OptionalType because someone requested a default
+    // initialized variable in a function definition
+    bool isDefaultedType = false;
 };
 bool operator==(const OptionalType& lhs, const OptionalType& rhs);
 

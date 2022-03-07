@@ -1090,6 +1090,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             OptionalType* ot = new OptionalType;
             ot->tag = VariableType::Tag::OptionalType;
             ot->type = v->type;
+            ot->isDefaultedType = true;
             v->type = ot;
 
             // Skip over the actual value for the default parameter as it would otherwise
