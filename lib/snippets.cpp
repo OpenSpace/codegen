@@ -204,6 +204,7 @@ std::string_view variantConversionFunctionForType(std::string_view type) {
 std::string enumToEnumMapping(Enum* e) {
     assert(e);
     assert(!e->mappedTo.empty());
+    std::string mappedTo = e->mappedTo;
     std::string fullyQualifiedName = fqn(e, "::");
     std::string result = fmt::format(R"(
 template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
@@ -214,7 +215,7 @@ template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
         // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};
         // would trigger that error on trying to access B::Value2 wich is an illegal
         // qualified name. Make the enums match each other and run codegen again)",
-        e->mappedTo, fullyQualifiedName
+        mappedTo, fullyQualifiedName
     );
 
     for (EnumElement* ee : e->elements) {

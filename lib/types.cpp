@@ -295,16 +295,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
             (mp->keyType->tag == VariableType::Tag::BasicType) &&
             (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
 
-        // The value can be either a string or a dictionary
-        const bool isValidValue =
-            (mp->valueType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::String ||
-             static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::Dictionary);
-
-        if (!isValidKey || !isValidValue) {
+        if (!isValidKey) {
             throw CodegenError(fmt::format(
-                "Currently only std::map<std::string, std::string> or "
-                "std::map<std::string, ghoul::Dictionary> is supported\n{}", type
+                "Currently only std::string as key is supported\n{}", type
             ));
         }
 

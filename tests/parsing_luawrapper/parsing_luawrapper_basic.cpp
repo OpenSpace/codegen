@@ -72,8 +72,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
         REQUIRE(v);
         CHECK(v->name == "arg");
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(v->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
     }
 
@@ -103,10 +102,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
         REQUIRE(v);
         CHECK(v->name == "arg");
         REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = dynamic_cast<OptionalType*>(v->type);
-        REQUIRE(ot);
-        BasicType* bt = dynamic_cast<BasicType*>(ot->type);
-        REQUIRE(bt);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Int);
     }
 
@@ -136,8 +133,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
         REQUIRE(v);
         CHECK(v->name == "arg1");
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(v->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
     }
     {
@@ -145,8 +141,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
         REQUIRE(v);
         CHECK(v->name == "arg2");
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(v->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::String);
     }
 
@@ -176,8 +171,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
         REQUIRE(v);
         CHECK(v->name == "arg1");
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(v->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
     }
     {
@@ -185,11 +179,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
         REQUIRE(v);
         CHECK(v->name == "arg2");
         REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = dynamic_cast<OptionalType*>(v->type);
-        REQUIRE(ot);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
         REQUIRE(ot->type);
-        BasicType* bt = dynamic_cast<BasicType*>(ot->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
     }
 
@@ -219,8 +211,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
         REQUIRE(v);
         CHECK(v->name == "arg1");
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(v->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
     }
     {
@@ -228,11 +219,9 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
         REQUIRE(v);
         CHECK(v->name == "arg2");
         REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = dynamic_cast<OptionalType*>(v->type);
-        REQUIRE(ot);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
         REQUIRE(ot->type);
-        BasicType* bt = dynamic_cast<BasicType*>(ot->type);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
     }
 
@@ -260,8 +249,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
         VariableType* ret = f->returnValue;
         REQUIRE(ret);
         REQUIRE(ret->tag == VariableType::Tag::BasicType);
-        BasicType* bt = dynamic_cast<BasicType*>(ret);
-        REQUIRE(bt);
+        BasicType* bt = static_cast<BasicType*>(ret);
         CHECK(bt->type == BasicType::Type::Int);
     }
 
@@ -288,21 +276,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
         VariableType* ret = f->returnValue;
         REQUIRE(ret);
         REQUIRE(ret->tag == VariableType::Tag::TupleType);
-        TupleType* tt = dynamic_cast<TupleType*>(ret);
-        REQUIRE(tt);
+        TupleType* tt = static_cast<TupleType*>(ret);
         REQUIRE(tt->types.size() == 2);
         {
             VariableType* vt = tt->types[0];
             REQUIRE(vt->tag == VariableType::Tag::BasicType);
-            BasicType* bt = dynamic_cast<BasicType*>(vt);
-            REQUIRE(bt);
+            BasicType* bt = static_cast<BasicType*>(vt);
             CHECK(bt->type == BasicType::Type::Int);
         }
         {
             VariableType* vt = tt->types[1];
             REQUIRE(vt->tag == VariableType::Tag::BasicType);
-            BasicType* bt = dynamic_cast<BasicType*>(vt);
-            REQUIRE(bt);
+            BasicType* bt = static_cast<BasicType*>(vt);
             CHECK(bt->type == BasicType::Type::Double);
         }
     }

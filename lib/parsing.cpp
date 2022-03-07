@@ -526,8 +526,34 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     }
 
     const size_t start = locWrapLua + AttributeWrapLua.size();
-    const size_t end = code.find('{', start);
-    return { start, end - start };
+
+    // We have to iterate until we find the first { character that is not contained in
+    // any parantheses. { } pairs in parantheses might be used for default initializing a
+    // function parameter
+    size_t cursor = start;
+    int nParantheses = 0;
+    while (true) {
+        if (cursor >= code.size()) {
+            throw CodegenError(fmt::format(
+                "Illformed function definition at {}", code.substr(start, 50)
+            ));
+        }
+
+        if (code[cursor] == '(') {
+            nParantheses += 1;
+        }
+        if (code[cursor] == ')') {
+            nParantheses -= 1;
+        }
+
+        if (code[cursor] == '{' && nParantheses == 0) {
+            break;
+        }
+
+        cursor += 1;
+    }
+
+    return { start, cursor - start };
 }
 
 [[nodiscard]] Struct* parseRootStruct(std::string_view code, size_t begin, size_t end) {
@@ -1067,8 +1093,54 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             v->type = ot;
 
             // Skip over the actual value for the default parameter as it would otherwise
-            // confuse the rest of this function 
-            cursor = std::min(commaLoc, paranLoc);
+            // confuse the rest of this function. This can be a bit tricky since the
+            // default value can take a few different forms. The tricky ones would be
+            // 1. int a = int(2)  or 2. int a = { 2 }  where we have to iterate and keep
+            // track of the brackets opening and closing
+            //cursor = std::min(commaLoc, paranLoc);
+
+            int nOpenParans = 0;
+            int nOpenCurlys = 0;
+            cursor = equalLoc;
+            while (true) {
+                if (cursor >= content.size()) {
+                    throw CodegenError(fmt::format(
+                        "Illformed function definition at {}", content
+                    ));
+                }
+
+                if (content[cursor] == '(') {
+                    nOpenParans += 1;
+                }
+                if (content[cursor] == '{') {
+                    nOpenCurlys += 1;
+                }
+                if (content[cursor] == '}') {
+                    assert(nOpenCurlys > 0);
+                    nOpenCurlys -= 1;
+                }
+                if (content[cursor] == ')') {
+                    if (nOpenParans == 0) {
+                        // There are no open parantheses left, so we are done as this
+                        // closing parantheis is the end of the function declaration.
+                        // There can't be any open curlys left or the code would be
+                        // illformed C++
+                        assert(nOpenCurlys == 0);
+                        break;
+                    }
+                    else {
+                        nOpenParans -= 1;
+                    }
+                }
+                if (content[cursor] == ',' && nOpenParans == 0 && nOpenCurlys == 0) {
+                    // No open parantheses or curlies means that this command is the
+                    // separator to the next argument
+                    break;
+                }
+
+                cursor += 1;
+
+            }
         }
 
         f->arguments.push_back(v);
