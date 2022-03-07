@@ -43,7 +43,7 @@ namespace {
 #include "execution_luawrapper_comments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
+TEST_CASE("Execution/LuaWrapper/Return:  Simple") {
     CHECK(codegen::lua::foo.name == "foo");
     CHECK(codegen::lua::foo.function);
     CHECK(codegen::lua::foo.argumentText == "arg: Integer -> Number");

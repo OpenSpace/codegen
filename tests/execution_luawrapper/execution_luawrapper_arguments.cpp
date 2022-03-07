@@ -47,10 +47,7 @@ namespace {
     [[codegen::wraplua]] void funcBool(bool arg) {
     }
 
-    [[codegen::wraplua]] void funcBoolDefaulted1(bool arg = true) {
-    }
-
-    [[codegen::wraplua]] void funcBoolDefaulted2(bool arg = { true }) {
+    [[codegen::wraplua]] void funcBoolDefaulted(bool arg = true) {
     }
 
     [[codegen::wraplua]] void funcBoolMap(std::map<std::string, bool> arg) {
@@ -65,10 +62,7 @@ namespace {
     [[codegen::wraplua]] void funcInt(int arg) {
     }
 
-    [[codegen::wraplua]] void funcIntDefaulted1(int arg = 2) {
-    }
-
-    [[codegen::wraplua]] void funcIntDefaulted2(int arg = { 2 }) {
+    [[codegen::wraplua]] void funcIntDefaulted(int arg = 2) {
     }
 
     [[codegen::wraplua]] void funcIntMap(std::map<std::string, int> arg) {
@@ -83,10 +77,7 @@ namespace {
     [[codegen::wraplua]] void funcDouble(double arg) {
     }
 
-    [[codegen::wraplua]] void funcDoubleDefaulted1(double arg = 2.0) {
-    }
-
-    [[codegen::wraplua]] void funcDoubleDefaulted2(double arg = { 2.0 }) {
+    [[codegen::wraplua]] void funcDoubleDefaulted(double arg = 2.0) {
     }
 
     [[codegen::wraplua]] void funcDoubleMap(std::map<std::string, double> arg) {
@@ -101,10 +92,7 @@ namespace {
     [[codegen::wraplua]] void funcFloat(float arg) {
     }
 
-    [[codegen::wraplua]] void funcFloatDefaulted1(float arg = 2.f) {
-    }
-
-    [[codegen::wraplua]] void funcFloatDefaulted2(float arg = { 2.f }) {
+    [[codegen::wraplua]] void funcFloatDefaulted(float arg = 2.f) {
     }
 
     [[codegen::wraplua]] void funcFloatMap(std::map<std::string, float> arg) {
@@ -119,10 +107,7 @@ namespace {
     [[codegen::wraplua]] void funcString(std::string arg) {
     }
 
-    [[codegen::wraplua]] void funcStringDefaulted1(std::string arg = "abc") {
-    }
-
-    [[codegen::wraplua]] void funcStringDefaulted2(std::string arg = { "abc" }) {
+    [[codegen::wraplua]] void funcStringDefaulted(std::string arg = "abc") {
     }
 
     [[codegen::wraplua]] void funcStringMap(std::map<std::string, std::string> arg) {
@@ -137,10 +122,7 @@ namespace {
     [[codegen::wraplua]] void funcPath(std::filesystem::path arg) {
     }
 
-    [[codegen::wraplua]] void funcPathDefaulted1(std::filesystem::path arg = std::filesystem::path()) {
-    }
-
-    [[codegen::wraplua]] void funcPathDefaulted2(std::filesystem::path arg = std::filesystem::path()) {
+    [[codegen::wraplua]] void funcPathDefaulted(std::filesystem::path arg = std::filesystem::path()) {
     }
 
     [[codegen::wraplua]] void funcPathMap(std::map<std::string, std::filesystem::path> arg) {
@@ -155,10 +137,7 @@ namespace {
     [[codegen::wraplua]] void funcIvec2(glm::ivec2 arg) {
     }
 
-    [[codegen::wraplua]] void funcIvec2Defaulted1(glm::ivec2 arg = glm::ivec2(1, 2)) {
-    }
-
-    [[codegen::wraplua]] void funcIvec2Defaulted2(glm::ivec2 arg = { 1, 2 }) {
+    [[codegen::wraplua]] void funcIvec2Defaulted(glm::ivec2 arg = glm::ivec2(1, 2)) {
     }
 
     [[codegen::wraplua]] void funcIvec2Map(std::map<std::string, glm::ivec2> arg) {
@@ -173,10 +152,7 @@ namespace {
     [[codegen::wraplua]] void funcIvec3(glm::ivec3 arg) {
     }
 
-    [[codegen::wraplua]] void funcIvec3Defaulted1(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
-    }
-
-    [[codegen::wraplua]] void funcIvec3Defaulted2(glm::ivec3 arg = { 1, 2, 3 }) {
+    [[codegen::wraplua]] void funcIvec3Defaulted(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
     }
 
     [[codegen::wraplua]] void funcIvec3Map(std::map<std::string, glm::ivec3> arg) {
@@ -191,10 +167,7 @@ namespace {
     [[codegen::wraplua]] void funcIvec4(glm::ivec4 arg) {
     }
 
-    [[codegen::wraplua]] void funcIvec4Defaulted1(glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
-    }
-
-    [[codegen::wraplua]] void funcIvec4Defaulted2(glm::ivec4 arg = { 1, 2, 3, 4 }) {
+    [[codegen::wraplua]] void funcIvec4Defaulted(glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
     }
 
     [[codegen::wraplua]] void funcIvec4Map(std::map<std::string, glm::ivec4> arg) {
@@ -209,10 +182,7 @@ namespace {
     [[codegen::wraplua]] void funcDvec2(glm::dvec2 arg) {
     }
 
-    [[codegen::wraplua]] void funcDvec2Defaulted1(glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDvec2Defaulted2(glm::dvec2 arg = { 1.0, 2.0 }) {
+    [[codegen::wraplua]] void funcDvec2Defaulted(glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
     }
 
     [[codegen::wraplua]] void funcDvec2Map(std::map<std::string, glm::dvec2> arg) {
@@ -227,10 +197,7 @@ namespace {
     [[codegen::wraplua]] void funcDVec3(glm::dvec3 arg) {
     }
 
-    [[codegen::wraplua]] void funcDVec3Defaulted1(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDVec3Defaulted2(glm::dvec3 arg = { 1.0, 2.0, 3.0 }) {
+    [[codegen::wraplua]] void funcDVec3Defaulted(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
     }
 
     [[codegen::wraplua]] void funcDVec3Map(std::map<std::string, glm::dvec3> arg) {
@@ -245,10 +212,7 @@ namespace {
     [[codegen::wraplua]] void funcDVec4(glm::dvec4 arg) {
     }
 
-    [[codegen::wraplua]] void funcDVec4Defaulted1(glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDVec4Defaulted2(glm::dvec4 arg = { 1.0, 2.0, 3.0, 4.0 }) {
+    [[codegen::wraplua]] void funcDVec4Defaulted(glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
     }
 
     [[codegen::wraplua]] void funcDVec4Map(std::map<std::string, glm::dvec4> arg) {
@@ -263,10 +227,7 @@ namespace {
     [[codegen::wraplua]] void funcVec2(glm::vec2 arg) {
     }
 
-    [[codegen::wraplua]] void funcVec2Defaulted1(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
-    }
-
-    [[codegen::wraplua]] void funcVec2Defaulted2(glm::vec2 arg = { 1.f, 2.f }) {
+    [[codegen::wraplua]] void funcVec2Defaulted(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
     }
 
     [[codegen::wraplua]] void funcVec2Map(std::map<std::string, glm::vec2> arg) {
@@ -281,10 +242,7 @@ namespace {
     [[codegen::wraplua]] void funcVec3(glm::vec3 arg) {
     }
 
-    [[codegen::wraplua]] void funcVec3Defaulted1(glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
-    }
-
-    [[codegen::wraplua]] void funcVec3Defaulted2(glm::vec3 arg = { 1.f, 2.f, 3.f }) {
+    [[codegen::wraplua]] void funcVec3Defaulted(glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
     }
 
     [[codegen::wraplua]] void funcVec3Map(std::map<std::string, glm::vec3> arg) {
@@ -299,10 +257,7 @@ namespace {
     [[codegen::wraplua]] void funcVec4(glm::vec4 arg) {
     }
 
-    [[codegen::wraplua]] void funcVec4Defaulted1(glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
-    }
-
-    [[codegen::wraplua]] void funcVec4Defaulted2(glm::vec4 arg = { 1.f, 2.f, 3.f, 4.f }) {
+    [[codegen::wraplua]] void funcVec4Defaulted(glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
     }
 
     [[codegen::wraplua]] void funcVec4Map(std::map<std::string, glm::vec4> arg) {
@@ -317,10 +272,7 @@ namespace {
     [[codegen::wraplua]] void funcMat2x2(glm::mat2x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat2x2Defaulted1(glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat2x2Defaulted2(glm::mat2x2 arg = { 1.f, 2.f, 3.f, 4.f }) {
+    [[codegen::wraplua]] void funcMat2x2Defaulted(glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
     }
 
     [[codegen::wraplua]] void funcMat2x2Map(std::map<std::string, glm::mat2x2> arg) {
@@ -335,10 +287,7 @@ namespace {
     [[codegen::wraplua]] void funcMat2x3(glm::mat2x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat2x3Defaulted1(glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat2x3Defaulted2(glm::mat2x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f }) {
+    [[codegen::wraplua]] void funcMat2x3Defaulted(glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
     }
 
     [[codegen::wraplua]] void funcMat2x3Map(std::map<std::string, glm::mat2x3> arg) {
@@ -353,10 +302,7 @@ namespace {
     [[codegen::wraplua]] void funcMat2x4(glm::mat2x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat2x4Defaulted1(glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat2x4Defaulted2(glm::mat2x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f }) {
+    [[codegen::wraplua]] void funcMat2x4Defaulted(glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
     }
 
     [[codegen::wraplua]] void funcMat2x4Map(std::map<std::string, glm::mat2x4> arg) {
@@ -371,10 +317,7 @@ namespace {
     [[codegen::wraplua]] void funcMat3x2(glm::mat3x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat3x2Defaulted1(glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat3x2Defaulted2(glm::mat3x2 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f }) {
+    [[codegen::wraplua]] void funcMat3x2Defaulted(glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
     }
 
     [[codegen::wraplua]] void funcMat3x2Map(std::map<std::string, glm::mat3x2> arg) {
@@ -389,10 +332,7 @@ namespace {
     [[codegen::wraplua]] void funcMat3x3(glm::mat3x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat3x3Defaulted1(glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat3x3Defaulted2(glm::mat3x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f }) {
+    [[codegen::wraplua]] void funcMat3x3Defaulted(glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
     }
 
     [[codegen::wraplua]] void funcMat3x3Map(std::map<std::string, glm::mat3x3> arg) {
@@ -407,10 +347,7 @@ namespace {
     [[codegen::wraplua]] void funcMat3x4(glm::mat3x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat3x4Defaulted1(glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat3x4Defaulted2(glm::mat3x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f }) {
+    [[codegen::wraplua]] void funcMat3x4Defaulted(glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
     }
 
     [[codegen::wraplua]] void funcMat3x4Map(std::map<std::string, glm::mat3x4> arg) {
@@ -425,10 +362,7 @@ namespace {
     [[codegen::wraplua]] void funcMat4x2(glm::mat4x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat4x2Defaulted1(glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat4x2Defaulted2(glm::mat4x2 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f }) {
+    [[codegen::wraplua]] void funcMat4x2Defaulted(glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
     }
 
     [[codegen::wraplua]] void funcMat4x2Map(std::map<std::string, glm::mat4x2> arg) {
@@ -443,10 +377,7 @@ namespace {
     [[codegen::wraplua]] void funcMat4x3(glm::mat4x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat4x3Defaulted1(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat4x3Defaulted2(glm::mat4x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f }) {
+    [[codegen::wraplua]] void funcMat4x3Defaulted(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
     }
 
     [[codegen::wraplua]] void funcMat4x3Map(std::map<std::string, glm::mat4x3> arg) {
@@ -461,10 +392,7 @@ namespace {
     [[codegen::wraplua]] void funcMat4x4(glm::mat4x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcMat4x4Defaulted1(glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
-    }
-
-    [[codegen::wraplua]] void funcMat4x4Defaulted2(glm::mat4x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f }) {
+    [[codegen::wraplua]] void funcMat4x4Defaulted(glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
     }
 
     [[codegen::wraplua]] void funcMat4x4Map(std::map<std::string, glm::mat4x4> arg) {
@@ -479,10 +407,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat2x2(glm::dmat2x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat2x2Defaulted1(glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat2x2Defaulted2(glm::dmat2x2 arg = { 1.0, 2.0, 3.0, 4.0 }) {
+    [[codegen::wraplua]] void funcDMat2x2Defaulted(glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat2x2Map(std::map<std::string, glm::dmat2x2> arg) {
@@ -497,10 +422,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat2x3(glm::dmat2x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat2x3Defaulted1(glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat2x3Defaulted2(glm::dmat2x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 }) {
+    [[codegen::wraplua]] void funcDMat2x3Defaulted(glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat2x3Map(std::map<std::string, glm::dmat2x3> arg) {
@@ -515,10 +437,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat2x4(glm::dmat2x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat2x4Defaulted1(glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat2x4Defaulted2(glm::dmat2x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 }) {
+    [[codegen::wraplua]] void funcDMat2x4Defaulted(glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat2x4Map(std::map<std::string, glm::dmat2x4> arg) {
@@ -533,10 +452,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat3x2(glm::dmat3x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat3x2Defaulted1(glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat3x2Defaulted2(glm::dmat3x2 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 }) {
+    [[codegen::wraplua]] void funcDMat3x2Defaulted(glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat3x2Map(std::map<std::string, glm::dmat3x2> arg) {
@@ -551,10 +467,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat3x3(glm::dmat3x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat3x3Defaulted1(glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat3x3Defaulted2(glm::dmat3x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 }) {
+    [[codegen::wraplua]] void funcDMat3x3Defaulted(glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat3x3Map(std::map<std::string, glm::dmat3x3> arg) {
@@ -569,10 +482,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat3x4(glm::dmat3x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat3x4Defaulted1(glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat3x4Defaulted2(glm::dmat3x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 }) {
+    [[codegen::wraplua]] void funcDMat3x4Defaulted(glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat3x4Map(std::map<std::string, glm::dmat3x4> arg) {
@@ -587,10 +497,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat4x2(glm::dmat4x2 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat4x2Defaulted1(glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat4x2Defaulted2(glm::dmat4x2 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 }) {
+    [[codegen::wraplua]] void funcDMat4x2Defaulted(glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat4x2Map(std::map<std::string, glm::dmat4x2> arg) {
@@ -605,10 +512,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat4x3(glm::dmat4x3 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat4x3Defaulted1(glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat4x3Defaulted2(glm::dmat4x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 }) {
+    [[codegen::wraplua]] void funcDMat4x3Defaulted(glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat4x3Map(std::map<std::string, glm::dmat4x3> arg) {
@@ -623,10 +527,7 @@ namespace {
     [[codegen::wraplua]] void funcDMat4x4(glm::dmat4x4 arg) {
     }
 
-    [[codegen::wraplua]] void funcDMat4x4Defaulted1(glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
-    }
-
-    [[codegen::wraplua]] void funcDMat4x4Defaulted2(glm::dmat4x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 }) {
+    [[codegen::wraplua]] void funcDMat4x4Defaulted(glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
     }
 
     [[codegen::wraplua]] void funcDMat4x4Map(std::map<std::string, glm::dmat4x4> arg) {
@@ -641,10 +542,7 @@ namespace {
     [[codegen::wraplua]] void funcDictionary(ghoul::Dictionary arg) {
     }
 
-    [[codegen::wraplua]] void funcDictionaryDefaulted1(ghoul::Dictionary arg = ghoul::Dictionary()) {
-    }
-
-    [[codegen::wraplua]] void funcDictionaryDefaulted2(ghoul::Dictionary arg = {}) {
+    [[codegen::wraplua]] void funcDictionaryDefaulted(ghoul::Dictionary arg = ghoul::Dictionary()) {
     }
 
     [[codegen::wraplua]] void funcDictionaryMap(std::map<std::string, ghoul::Dictionary> arg) {
@@ -665,7 +563,7 @@ namespace {
 #include "execution_luawrapper_arguments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  Simple") {
     CHECK(codegen::lua::foo.name == "foo");
     CHECK(codegen::lua::foo.function);
     CHECK(codegen::lua::foo.argumentText == "arg: Integer -> Number");

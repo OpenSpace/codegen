@@ -723,6 +723,8 @@ s->name, s->attributes.dictionary
                 );
             }
 
+            // Depending on if we have a return value at all, we want to be able to
+            // capture that value or not
             if (f->returnValue) {
                 result += fmt::format(
                     "        const {} res = ", generateTypename(f->returnValue)
@@ -733,16 +735,48 @@ s->name, s->attributes.dictionary
             }
 
             if (f->arguments.empty()) {
+                // If there are no arguments to the function, it's pretty simple to just
+                // call it
                 result += fmt::format("::{}();\n", f->name);
             }
             else {
+                // If there are arguments it might get a bit more complicated since we
+                // want to support default initialized arguments.
                 result += fmt::format("::{}(\n", f->name);
                 for (size_t i = 0; i < f->arguments.size(); i += 1) {
                     Variable* var = f->arguments[i];
 
-                    if (i != f->arguments.size() - 1) {
-                        result += ",\n";
+                    result += "            ";
+                    bool hasWrittenValue = false;
+                    if (var->type->tag == VariableType::Tag::OptionalType) {
+                        OptionalType* ot = static_cast<OptionalType*>(var->type);
+                        if (ot->defaultArgument.has_value()) {
+                            // If there is a default argument, the function actually wants
+                            // the underlying value, not the std::optional type. We
+                            // basically check if the original optional value was set; if
+                            // it was, we derefence it and use it. Otherwise we paste in
+                            // the stored default value instead.
+                            //
+                            // An alternative way would be to not provide the optional
+                            // argument at all, but that turned out to be much more code
+                            // and more complicated than just storing the default value
+
+                            result += fmt::format(
+                                "{0}.has_value() ? *{0} : {1}",
+                                var->name, *ot->defaultArgument
+                            );
+                            hasWrittenValue = true;
+                        }
                     }
+
+                    if (!hasWrittenValue) {
+                        result += var->name;
+                    }
+
+                    if (i != f->arguments.size() - 1) {
+                        result += ',';
+                    }
+                    result += '\n';
                 }
                 result += "        );\n";
             }

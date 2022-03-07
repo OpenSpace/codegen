@@ -81,42 +81,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  bool defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  bool defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(bool arg = true) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Bool);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  bool defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(bool arg = { true }) {
     }
 )";
 
@@ -279,42 +246,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  int defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  int defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(int arg = 2) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Int);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  int defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(int arg = { 2 }) {
     }
 )";
 
@@ -477,42 +411,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(double arg = 2.0) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Double);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(double arg = { 2.0 }) {
     }
 )";
 
@@ -675,42 +576,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  float defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  float defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(float arg = 2.f) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Float);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  float defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(float arg = { 2.f }) {
     }
 )";
 
@@ -873,42 +741,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(std::string arg = "abc") {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::String);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(std::string arg = { "abc" }) {
     }
 )";
 
@@ -1071,40 +906,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted/1") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(std::filesystem::path arg = std::filesystem::path()) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Path);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted/2") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(std::filesystem::path arg = std::filesystem::path()) {
     }
@@ -1269,42 +1071,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::ivec2 arg = glm::ivec2(1, 2)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Ivec2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::ivec2 arg = { 1, 2 }) {
     }
 )";
 
@@ -1467,42 +1236,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Ivec3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::ivec3 arg = { 1, 2, 3 }) {
     }
 )";
 
@@ -1665,42 +1401,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Ivec4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::ivec4 arg = { 1, 2, 3, 4 }) {
     }
 )";
 
@@ -1863,42 +1566,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Dvec2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dvec2 arg = { 1.0, 2.0 }) {
     }
 )";
 
@@ -2061,42 +1731,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Dvec3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dvec3 arg = { 1.0, 2.0, 3.0 }) {
     }
 )";
 
@@ -2259,42 +1896,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Dvec4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dvec4 arg = { 1.0, 2.0, 3.0, 4.0 }) {
     }
 )";
 
@@ -2457,42 +2061,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Vec2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::vec2 arg = { 1.f, 2.f }) {
     }
 )";
 
@@ -2655,42 +2226,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Vec3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::vec3 arg = { 1.f, 2.f, 3.f }) {
     }
 )";
 
@@ -2853,42 +2391,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Vec4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::vec4 arg = { 1.f, 2.f, 3.f, 4.f }) {
     }
 )";
 
@@ -3051,42 +2556,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat2x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat2x2 arg = { 1.f, 2.f, 3.f, 4.f }) {
     }
 )";
 
@@ -3249,42 +2721,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  glm::mat2x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  glm::mat2x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat2x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  glm::mat2x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat2x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f }) {
     }
 )";
 
@@ -3447,42 +2886,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat2x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat2x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f }) {
     }
 )";
 
@@ -3645,42 +3051,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat3x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat3x2 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f }) {
     }
 )";
 
@@ -3843,42 +3216,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat3x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat3x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f }) {
     }
 )";
 
@@ -4041,42 +3381,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat3x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat3x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f }) {
     }
 )";
 
@@ -4239,42 +3546,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat4x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat4x2 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f }) {
     }
 )";
 
@@ -4437,42 +3711,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat4x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat4x3 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f }) {
     }
 )";
 
@@ -4635,42 +3876,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Mat4x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::mat4x4 arg = { 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f }) {
     }
 )";
 
@@ -4833,42 +4041,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat2x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat2x2 arg = { 1.0, 2.0, 3.0, 4.0 }) {
     }
 )";
 
@@ -5031,42 +4206,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat2x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat2x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 }) {
     }
 )";
 
@@ -5229,42 +4371,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat2x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat2x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 }) {
     }
 )";
 
@@ -5427,42 +4536,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat3x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat3x2 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 }) {
     }
 )";
 
@@ -5625,42 +4701,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat3x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat3x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 }) {
     }
 )";
 
@@ -5823,42 +4866,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat3x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat3x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 }) {
     }
 )";
 
@@ -6021,42 +5031,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat4x2);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat4x2 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 }) {
     }
 )";
 
@@ -6219,42 +5196,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat4x3);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat4x3 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 }) {
     }
 )";
 
@@ -6417,42 +5361,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::DMat4x4);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(glm::dmat4x4 arg = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 }) {
     }
 )";
 
@@ -6615,42 +5526,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted/1") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted") {
     constexpr const char Source[] = R"(
     [[codegen::wraplua]] void func(ghoul::Dictionary arg = ghoul::Dictionary()) {
-    }
-)";
-
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
-    REQUIRE(code.luaWrapperFunctions.size() == 1);
-    Function* f = code.luaWrapperFunctions.front();
-    REQUIRE(f);
-
-    CHECK(f->name == "func");
-    CHECK(f->documentation == "");
-    CHECK(f->returnValue == nullptr);
-    REQUIRE(f->arguments.size() == 1);
-    {
-        Variable* v = f->arguments[0];
-        REQUIRE(v);
-        CHECK(v->name == "arg");
-        REQUIRE(v->type);
-        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
-        CHECK(bt->type == BasicType::Type::Dictionary);
-    }
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted/2") {
-    constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void func(ghoul::Dictionary arg = {}) {
     }
 )";
 

@@ -1090,8 +1090,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             OptionalType* ot = new OptionalType;
             ot->tag = VariableType::Tag::OptionalType;
             ot->type = v->type;
-            ot->isDefaultedType = true;
-            v->type = ot;
 
             // Skip over the actual value for the default parameter as it would otherwise
             // confuse the rest of this function. This can be a bit tricky since the
@@ -1101,7 +1099,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             //cursor = std::min(commaLoc, paranLoc);
 
             int nOpenParans = 0;
-            int nOpenCurlys = 0;
             cursor = equalLoc;
             while (true) {
                 if (cursor >= content.size()) {
@@ -1110,15 +1107,15 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                     ));
                 }
 
+                if (content[cursor] == '{' || content[cursor] == '}') {
+                    throw CodegenError(fmt::format(
+                        "Default initialization of function parameters using the "
+                        "initializer list syntax is not supported", content
+                    ));
+                }
+
                 if (content[cursor] == '(') {
                     nOpenParans += 1;
-                }
-                if (content[cursor] == '{') {
-                    nOpenCurlys += 1;
-                }
-                if (content[cursor] == '}') {
-                    assert(nOpenCurlys > 0);
-                    nOpenCurlys -= 1;
                 }
                 if (content[cursor] == ')') {
                     if (nOpenParans == 0) {
@@ -1126,22 +1123,30 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                         // closing parantheis is the end of the function declaration.
                         // There can't be any open curlys left or the code would be
                         // illformed C++
-                        assert(nOpenCurlys == 0);
                         break;
                     }
                     else {
                         nOpenParans -= 1;
                     }
                 }
-                if (content[cursor] == ',' && nOpenParans == 0 && nOpenCurlys == 0) {
+                if (content[cursor] == ',' && nOpenParans == 0) {
                     // No open parantheses or curlies means that this command is the
                     // separator to the next argument
                     break;
                 }
 
                 cursor += 1;
-
             }
+
+            // Jump over the = sign
+            equalLoc += 1;
+            while (content[equalLoc] == ' ') {
+                equalLoc += 1;
+            }
+            
+            std::string_view defaultValue = content.substr(equalLoc, cursor - equalLoc);
+            ot->defaultArgument = std::string(defaultValue);
+            v->type = ot;
         }
 
         f->arguments.push_back(v);
