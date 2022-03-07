@@ -808,23 +808,30 @@ s->name, s->attributes.dictionary
 
 
             // Argument description
-            std::string arguments;
+            std::string arguments = "{\n";
             for (Variable* var : f->arguments) {
                 arguments += fmt::format(
-                    "{}: {}, ",
+                    "        {{ \"{}\" }}, {{ \"{}\" }},\n",
                     var->name, generateDescriptiveTypename(var->type)
                 );
             }
             if (!f->arguments.empty()) {
                 // Remove the closing ", "
-                arguments = arguments.substr(0, arguments.size() - 2);
+                arguments = arguments.substr(0, arguments.size() - 1);
             }
+
+
+            result += "    " + arguments + "\n    },\n";
 
             if (f->returnValue) {
-                arguments += " -> " + generateDescriptiveTypename(f->returnValue);
+                result += fmt::format(
+                    "    \"{}\",\n", generateDescriptiveTypename(f->returnValue)
+                );
+            }
+            else {
+                result += "    \"\",\n";
             }
 
-            result += "    \"" + arguments + "\",\n";
 
             // Documentation
             result += "    \"" + f->documentation + "\"\n";
