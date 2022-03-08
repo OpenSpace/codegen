@@ -811,7 +811,7 @@ s->name, s->attributes.dictionary
             std::string arguments = "{\n";
             for (Variable* var : f->arguments) {
                 arguments += fmt::format(
-                    "        {{ \"{}\" }}, {{ \"{}\" }},\n",
+                    "        {{ {{ \"{}\" }}, {{ \"{}\" }} }},\n",
                     var->name, generateDescriptiveTypename(var->type)
                 );
             }

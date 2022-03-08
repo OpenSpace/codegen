@@ -523,7 +523,7 @@ std::string generateTypename(const OptionalType* type, bool fullyQualified) {
 
 std::string generateDescriptiveTypename(const OptionalType* type) {
     std::string t1 = generateDescriptiveTypename(type->type);
-    return fmt::format("{} [Optional]", t1);
+    return fmt::format("{}?", t1);
 }
 
 std::string generateTypename(const VariantType* type, bool fullyQualified) {
@@ -545,7 +545,7 @@ std::string generateDescriptiveTypename(const VariantType* type) {
         res += generateDescriptiveTypename(type->types[i]);
 
         if (i != type->types.size() - 1) {
-            res += "or ";
+            res += " | ";
         }
     }
     return res;
@@ -570,7 +570,7 @@ std::string generateDescriptiveTypename(const TupleType* type) {
         res += generateDescriptiveTypename(type->types[i]);
 
         if (i != type->types.size() - 1) {
-            res += "and ";
+            res += ", ";
         }
     }
     return res;
@@ -582,7 +582,7 @@ std::string generateTypename(const VectorType* type, bool fullyQualified) {
 }
 
 std::string generateDescriptiveTypename(const VectorType* type) {
-    return "Vector of " + generateDescriptiveTypename(type->type);
+    return "[" + generateDescriptiveTypename(type->type) + "]";
 }
 
 std::string generateTypename(const CustomType* type, bool fullyQualified) {

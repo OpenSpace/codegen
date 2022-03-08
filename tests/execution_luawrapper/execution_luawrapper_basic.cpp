@@ -33,13 +33,13 @@
 
 namespace {
     bool ranTestFunc = false;
-    [[codegen::wraplua]] void testFunc() {
+    [[codegen::luawrap]] void testFunc() {
         ranTestFunc = true;
     }
 
     bool ranTestFunc2 = false;
     int testFunc2Value = -1;
-    [[codegen::wraplua]] void testFunc2(int arg) {
+    [[codegen::luawrap]] void testFunc2(int arg) {
         testFunc2Value = arg;
         ranTestFunc2 = true;
     }
@@ -47,7 +47,7 @@ namespace {
     bool ranTestFunc3 = false;
     int testFunc3Value1 = -1;
     std::string testFunc3Value2 = "";
-    [[codegen::wraplua]] void testFunc3(int arg1, std::string arg2) {
+    [[codegen::luawrap]] void testFunc3(int arg1, std::string arg2) {
         testFunc3Value1 = arg1;
         testFunc3Value2 = std::move(arg2);
         ranTestFunc3 = true;
@@ -56,20 +56,20 @@ namespace {
     bool ranTestFunc4 = false;
     int testFunc4Value1 = -1;
     double testFunc4Value2 = -1.0;
-    [[codegen::wraplua]] void testFunc4(int arg1, std::optional<double> arg2) {
+    [[codegen::luawrap]] void testFunc4(int arg1, std::optional<double> arg2) {
         testFunc4Value1 = arg1;
         testFunc4Value2 = arg2.value_or(testFunc4Value2);
         ranTestFunc4 = true;
     }
 
     bool ranTestFunc5 = false;
-    [[codegen::wraplua]] int testFunc5() {
+    [[codegen::luawrap]] int testFunc5() {
         ranTestFunc5 = true;
         return 5;
     }
 
     bool ranTestFunc6 = false;
-    [[codegen::wraplua]] std::tuple<int, double> testFunc6() {
+    [[codegen::luawrap]] std::tuple<int, double> testFunc6() {
         ranTestFunc6 = true;
         return { 5, 6.0 };
     }
@@ -96,26 +96,41 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/LuaWrapper:  Basic") {
+    using namespace openspace::scripting;
     resetTestRuns();
 
     SECTION("TestFunc") {
-        CHECK(codegen::lua::testFunc.name == "testFunc");
-        CHECK(codegen::lua::testFunc.function);
+        LuaLibrary::Function func = codegen::lua::testFunc;
+        CHECK(func.name == "testFunc");
+        CHECK(func.arguments.size() == 0);
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+
         lua_State* state = luaL_newstate();
         REQUIRE(state);
-        codegen::lua::testFunc.function(state);
+        REQUIRE(func.function);
+        func.function(state);
         CHECK(ranTestFunc);
         CHECK(lua_gettop(state) == 0);
         lua_close(state);
     }
 
     SECTION("TestFunc2") {
-        CHECK(codegen::lua::testFunc2.name == "testFunc2");
-        CHECK(codegen::lua::testFunc2.function);
+        LuaLibrary::Function func = codegen::lua::testFunc2;
+        CHECK(func.name == "testFunc2");
+        REQUIRE(func.arguments.size() == 1);
+        {
+            CHECK(func.arguments[0].name == "arg");
+            CHECK(func.arguments[0].type == "Integer");
+        }
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2);
-        codegen::lua::testFunc2.function(state);
+        REQUIRE(func.function);
+        func.function(state);
         CHECK(ranTestFunc2);
         CHECK(testFunc2Value == 2);
         CHECK(lua_gettop(state) == 0);
@@ -123,12 +138,25 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc3") {
-        CHECK(codegen::lua::testFunc3.name == "testFunc3");
-        CHECK(codegen::lua::testFunc3.function);
+        LuaLibrary::Function func = codegen::lua::testFunc3;
+        CHECK(func.name == "testFunc3");
+        REQUIRE(func.arguments.size() == 2);
+        {
+            CHECK(func.arguments[0].name == "arg1");
+            CHECK(func.arguments[0].type == "Integer");
+        }
+        {
+            CHECK(func.arguments[1].name == "arg2");
+            CHECK(func.arguments[1].type == "String");
+        }
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+        
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2, std::string("test"));
-        codegen::lua::testFunc3.function(state);
+        REQUIRE(func.function);
+        func.function(state);
         CHECK(ranTestFunc3);
         CHECK(testFunc3Value1 == 2);
         CHECK(testFunc3Value2 == "test");
@@ -137,12 +165,25 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc4/All Arguments") {
-        CHECK(codegen::lua::testFunc4.name == "testFunc4");
-        CHECK(codegen::lua::testFunc4.function);
+        LuaLibrary::Function func = codegen::lua::testFunc4;
+        CHECK(func.name == "testFunc4");
+        REQUIRE(func.arguments.size() == 2);
+        {
+            CHECK(func.arguments[0].name == "arg1");
+            CHECK(func.arguments[0].type == "Integer");
+        }
+        {
+            CHECK(func.arguments[1].name == "arg2");
+            CHECK(func.arguments[1].type == "Number?");
+        }
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+        
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2, 3.0);
-        codegen::lua::testFunc4.function(state);
+        REQUIRE(func.function);
+        func.function(state);
         CHECK(ranTestFunc4);
         CHECK(testFunc4Value1 == 2);
         CHECK(testFunc4Value2 == 3.0);
@@ -151,12 +192,25 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc4/No Optional") {
-        CHECK(codegen::lua::testFunc4.name == "testFunc4");
-        CHECK(codegen::lua::testFunc4.function);
+        LuaLibrary::Function func = codegen::lua::testFunc4;
+        CHECK(func.name == "testFunc4");
+        REQUIRE(func.arguments.size() == 2);
+        {
+            CHECK(func.arguments[0].name == "arg1");
+            CHECK(func.arguments[0].type == "Integer");
+        }
+        {
+            CHECK(func.arguments[1].name == "arg2");
+            CHECK(func.arguments[1].type == "Number?");
+        }
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+        
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         ghoul::lua::push(state, 2);
-        codegen::lua::testFunc4.function(state);
+        REQUIRE(func.function);
+        func.function(state);
         CHECK(ranTestFunc4);
         CHECK(testFunc4Value1 == 2);
         CHECK(testFunc4Value2 == -1.0);
@@ -164,11 +218,16 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("Basic/TestFunc5") {
-        CHECK(codegen::lua::testFunc5.name == "testFunc5");
-        CHECK(codegen::lua::testFunc5.function);
+        LuaLibrary::Function func = codegen::lua::testFunc5;
+        CHECK(func.name == "testFunc5");
+        CHECK(func.arguments.size() == 0);
+        CHECK(func.returnType == "Integer");
+        CHECK(func.helpText == "");
+        
         lua_State* state = luaL_newstate();
         REQUIRE(state);
-        const int nResult = codegen::lua::testFunc5.function(state);
+        REQUIRE(func.function);
+        const int nResult = func.function(state);
         CHECK(ranTestFunc5);
         CHECK(lua_gettop(state) == 1);
         REQUIRE(nResult == 1);
@@ -178,11 +237,16 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("Basic/TestFunc6") {
-        CHECK(codegen::lua::testFunc6.name == "testFunc6");
-        CHECK(codegen::lua::testFunc6.function);
+        LuaLibrary::Function func = codegen::lua::testFunc6;
+        CHECK(func.name == "testFunc6");
+        CHECK(func.arguments.size() == 0);
+        CHECK(func.returnType == "Integer, Number");
+        CHECK(func.helpText == "");
+        
         lua_State* state = luaL_newstate();
         REQUIRE(state);
-        const int nResult = codegen::lua::testFunc6.function(state);
+        REQUIRE(func.function);
+        const int nResult = func.function(state);
         CHECK(ranTestFunc6);
         CHECK(lua_gettop(state) == 2);
         REQUIRE(nResult == 2);

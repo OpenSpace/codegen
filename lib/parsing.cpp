@@ -35,7 +35,7 @@ namespace {
     constexpr std::string_view AttributeDictionary = "[[codegen::Dictionary";
     constexpr std::string_view AttributeStringify = "[[codegen::stringify";
     constexpr std::string_view AttributeMap = "[[codegen::map";
-    constexpr std::string_view AttributeWrapLua = "[[codegen::wraplua]]";
+    constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap]]";
 } // namespace
 
 /**
@@ -519,13 +519,13 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
 std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     assert(!code.empty());
 
-    const size_t locWrapLua = code.find(AttributeWrapLua);
+    const size_t locWrapLua = code.find(AttributeLuaWrap);
     if (locWrapLua == std::string_view::npos) {
         // We didn't find the attribute
         return { std::string_view::npos, std::string_view::npos };
     }
 
-    const size_t start = locWrapLua + AttributeWrapLua.size();
+    const size_t start = locWrapLua + AttributeLuaWrap.size();
 
     // We have to iterate until we find the first { character that is not contained in
     // any parantheses. { } pairs in parantheses might be used for default initializing a
@@ -906,7 +906,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         // We want to check for both regular one-line comments as well as block-style
         // comments
 
-        size_t b = begin - AttributeWrapLua.size();
+        size_t b = begin - AttributeLuaWrap.size();
 
         // Try to find the last closing brace for the comments
         size_t endBlockComment = code.rfind("*/", b);

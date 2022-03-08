@@ -31,6 +31,7 @@ add_executable(
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
   execution_luawrapper/execution_luawrapper_arguments.cpp
+  execution_luawrapper/execution_luawrapper_arguments_readback.cpp
   execution_luawrapper/execution_luawrapper_basic.cpp
   execution_luawrapper/execution_luawrapper_comments.cpp
   execution_luawrapper/execution_luawrapper_return.cpp

@@ -37,7 +37,7 @@ namespace {
      * that covers a few lines.
      * And another one for good measure
      */
-    [[codegen::wraplua]] double foo(int arg) {
+    [[codegen::luawrap]] double foo(int arg) {
         return arg * 2.0;
     }
 #include "execution_luawrapper_comments_codegen.cpp"

@@ -30,26 +30,3 @@
 #include <ghoul/lua/lua_helper.h>
 #include <ghoul/misc/dictionary.h>
 #include <optional>
-
-namespace {
-    /*
-     * Some example documentation
-     * that covers a few lines.
-     * And another one for good measure
-     */
-    [[codegen::luawrap]] double foo(int arg) {
-        return arg * 2.0;
-    }
-#include "execution_luawrapper_comments_codegen.cpp"
-} // namespace
-
-TEST_CASE("Execution/LuaWrapper/Return:  Simple") {
-    CHECK(codegen::lua::foo.name == "foo");
-    CHECK(codegen::lua::foo.function);
-    //CHECK(codegen::lua::foo.argumentText == "arg: Integer -> Number");
-    CHECK(
-        codegen::lua::foo.helpText ==
-        "Some example documentation that covers a few lines. "
-        "And another one for good measure"
-    );
-}

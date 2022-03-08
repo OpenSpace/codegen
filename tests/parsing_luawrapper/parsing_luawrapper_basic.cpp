@@ -30,7 +30,7 @@
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
@@ -52,7 +52,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo(int arg) {
+    [[codegen::luawrap]] void foo(int arg) {
     }
 )";
 
@@ -82,7 +82,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo(int arg = 1) {
+    [[codegen::luawrap]] void foo(int arg = 1) {
     }
 )";
 
@@ -113,7 +113,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo(int arg1, std::string arg2) {
+    [[codegen::luawrap]] void foo(int arg1, std::string arg2) {
     }
 )";
 
@@ -151,7 +151,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo(int arg1, std::optional<double> arg2) {
+    [[codegen::luawrap]] void foo(int arg1, std::optional<double> arg2) {
     }
 )";
 
@@ -191,7 +191,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo(int arg1, double arg2 = 2.0) {
+    [[codegen::luawrap]] void foo(int arg1, double arg2 = 2.0) {
     }
 )";
 
@@ -231,7 +231,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] int foo() {
+    [[codegen::luawrap]] int foo() {
         return 1;
     }
 )";
@@ -259,7 +259,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
 
 TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] std::tuple<int, double> foo() {
+    [[codegen::luawrap]] std::tuple<int, double> foo() {
     }
 )";
 

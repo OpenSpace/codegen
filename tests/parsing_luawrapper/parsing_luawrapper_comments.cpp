@@ -30,7 +30,7 @@
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
     constexpr const char Source[] = R"(
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
@@ -57,7 +57,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
      * that covers a few lines.
      * And another one for good measure
      */
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
@@ -86,7 +86,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
     // Some example documentation
     // that covers a few lines.
     // And another one for good measure
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
@@ -119,7 +119,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
      */
     void someOtherFunction();
 
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
@@ -147,7 +147,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
     // Some example documentation
     // that covers a few lines.
     // And another one for good measure
-    [[codegen::wraplua]] void foo() {
+    [[codegen::luawrap]] void foo() {
     }
 )";
 
