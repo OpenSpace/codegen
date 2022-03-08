@@ -6628,7 +6628,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted with value") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -6657,7 +6657,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted w/o value") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDictionaryDefaulted;
