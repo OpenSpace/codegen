@@ -3300,7 +3300,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map") {
     ghoul::lua::push(
         state,
         "key3",
-        glm::mat2x3(13.13f, 14.14f, 15.15, 16.16f, 17.17f, 18.18f)
+        glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
     );
     lua_rawset(state, -3);
     REQUIRE(func.function);
@@ -3368,11 +3368,23 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector") {
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     lua_newtable(state);
-    ghoul::lua::push(state, 1, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)
+    );
     lua_rawset(state, -3);
-    ghoul::lua::push(state, 2, glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)
+    );
     lua_rawset(state, -3);
-    ghoul::lua::push(state, 3, glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
     lua_rawset(state, -3);
     REQUIRE(func.function);
     func.function(state);
@@ -3395,7 +3407,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f, 7.7f, 8.8f));
+    ghoul::lua::push(state, glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3470,7 +3482,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map") {
     ghoul::lua::push(
         state,
         "key2",
-        glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15, 16.16f)
+        glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
     );
     lua_rawset(state, -3);
     ghoul::lua::push(
@@ -3852,13 +3864,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map") {
     ghoul::lua::push(
         state,
         "key2",
-        glm::mat3x3(10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+        glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+            15.15f, 16.16f, 17.17f, 18.18f
+        )
     );
     lua_rawset(state, -3);
     ghoul::lua::push(
         state,
         "key3",
-        glm::mat3x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f)
+        glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
+            24.24f, 25.25f, 26.26f, 27.27f
+        )
     );
     lua_rawset(state, -3);
     REQUIRE(func.function);
@@ -3938,13 +3956,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector") {
     ghoul::lua::push(
         state,
         2,
-        glm::mat3x3(10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+        glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+            15.15f, 16.16f, 17.17f, 18.18f
+        )
     );
     lua_rawset(state, -3);
     ghoul::lua::push(
         state,
         3,
-        glm::mat3x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f)
+        glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
+            24.24f, 25.25f, 26.26f, 27.27f
+        )
     );
     lua_rawset(state, -3);
     REQUIRE(func.function);
@@ -3971,7 +3995,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4") {
     ghoul::lua::push(
         state,
         glm::mat3x4(
-            1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f,
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
@@ -4384,7 +4408,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3") {
     ghoul::lua::push(
         state,
         glm::mat4x3(
-            1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f,
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
@@ -4607,7 +4631,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4") {
     ghoul::lua::push(
         state,
         glm::mat4x4(
-            1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f, 7.7f, 8.8f,
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
             9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
         )
     );
@@ -6569,6 +6593,360 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector") {
         )
     );
     lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionary;
+    CHECK(func.name == "funcDictionary");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Table");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary with value") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryDefaulted;
+    CHECK(func.name == "funcDictionaryDefaulted");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Table?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryDefaulted;
+    CHECK(func.name == "funcDictionaryDefaulted");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Table?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryMap;
+    CHECK(func.name == "funcDictionaryMap");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "String -> Table");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    {
+        ghoul::lua::push(state, "key1");
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 1.1);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "abc"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    {
+        ghoul::lua::push(state, "key2");
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 5.5);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "def"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(6.6, 7.7, 8.8));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    {
+        ghoul::lua::push(state, "key3");
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 9.9);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "ghi"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(10.10, 11.11, 12.12));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional with value") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryOptional;
+    CHECK(func.name == "funcDictionaryOptional");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Table?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    {
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 1.1);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "abc"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+        lua_rawset(state, -3);
+    }
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x4Optional;
+    CHECK(func.name == "funcDMat4x4Optional");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "mat4x4?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryVector;
+    CHECK(func.name == "funcDictionaryVector");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "[Table]");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    {
+        ghoul::lua::push(state, 1);
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 1.1);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "abc"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    {
+        ghoul::lua::push(state, 2);
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 5.5);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "def"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(6.6, 7.7, 8.8));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    {
+        ghoul::lua::push(state, 3);
+        lua_newtable(state);
+        ghoul::lua::push(state, "a"s, 9.9);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "b"s, "ghi"s);
+        lua_rawset(state, -3);
+        ghoul::lua::push(state, "c"s, glm::dvec3(10.10, 11.11, 12.12));
+        lua_rawset(state, -3);
+    }
+    lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / bool") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVariant;
+    CHECK(func.name == "funcVariant");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Boolean | Integer");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / int") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVariant;
+    CHECK(func.name == "funcVariant");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Boolean | Integer");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, 2);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / double") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
+    CHECK(func.name == "funcVariantDoubleFloatString");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Number | Number | String");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, 2.0);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / float") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
+    CHECK(func.name == "funcVariantDoubleFloatString");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Number | Number | String");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, 2.f);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / string") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
+    CHECK(func.name == "funcVariantDoubleFloatString");
+    REQUIRE(func.arguments.size() == 1);
+    {
+        CHECK(func.arguments[0].name == "arg");
+        CHECK(func.arguments[0].type == "Number | Number | String");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, "abc"s);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
