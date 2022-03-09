@@ -36,24 +36,63 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcBool(bool arg) {
+        CHECK(arg == true);
     }
 
     [[codegen::luawrap]] void funcBoolDefaulted(bool arg = true) {
+        CHECK(arg == true);
+    }
+
+    [[codegen::luawrap]] void funcBoolDefaultedCheck(bool isDefaulted, bool arg = true) {
+        if (isDefaulted) {
+            CHECK(arg == true);
+        }
+        else {
+            CHECK(arg == false);
+        }
     }
 
     [[codegen::luawrap]] void funcBoolMap(std::map<std::string, bool> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == true);
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == false);
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == false);
     }
 
     [[codegen::luawrap]] void funcBoolOptional(std::optional<bool> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == true);
+    }
+
+    [[codegen::luawrap]] void funcBoolOptionalNullopt(std::optional<bool> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcBoolVector(std::vector<bool> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == true);
+        CHECK(arg[1] == false);
+        CHECK(arg[2] == false);
     }
 
     [[codegen::luawrap]] void funcInt(int arg) {
+        CHECK(arg == 1);
     }
 
     [[codegen::luawrap]] void funcIntDefaulted(int arg = 2) {
+        CHECK(arg == 2);
+    }
+
+    [[codegen::luawrap]] void funcIntDefaultedCheck(bool isDefaulted, int arg = 2) {
+        if (isDefaulted) {
+            CHECK(arg == 2);
+        }
+        else {
+            CHECK(arg == 3);
+        }
     }
 
     [[codegen::luawrap]] void funcIntMap(std::map<std::string, int> arg) {
@@ -69,6 +108,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDoubleDefaulted(double arg = 2.0) {
+        CHECK(arg == 2.0);
+    }
+
+    [[codegen::luawrap]] void funcDoubleDefaultedCheck(bool isDefaulted, double arg = 2.0) {
+        if (isDefaulted) {
+            CHECK(arg == 2.0);
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDoubleMap(std::map<std::string, double> arg) {
@@ -84,6 +133,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcFloatDefaulted(float arg = 2.f) {
+        CHECK(arg == 2.f);
+    }
+
+    [[codegen::luawrap]] void funcFloatDefaultedCheck(bool isDefaulted, float arg = 2.f) {
+        if (isDefaulted) {
+            CHECK(arg == 2.f);
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcFloatMap(std::map<std::string, float> arg) {
@@ -99,6 +158,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcStringDefaulted(std::string arg = "abc") {
+        CHECK(arg == "abc");
+    }
+
+    [[codegen::luawrap]] void funcStringDefaultedCheck(bool isDefaulted, std::string arg = "abc") {
+        if (isDefaulted) {
+            CHECK(arg == "abc");
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcStringMap(std::map<std::string, std::string> arg) {
@@ -113,7 +182,17 @@ namespace {
     [[codegen::luawrap]] void funcPath(std::filesystem::path arg) {
     }
 
-    [[codegen::luawrap]] void funcPathDefaulted(std::filesystem::path arg = std::filesystem::path()) {
+    [[codegen::luawrap]] void funcPathDefaulted(std::filesystem::path arg = std::filesystem::path("abc")) {
+        CHECK(arg == std::filesystem::path("abc"));
+    }
+
+    [[codegen::luawrap]] void funcPathDefaultedCheck(bool isDefaulted, std::filesystem::path arg = std::filesystem::path("abc")) {
+        if (isDefaulted) {
+            CHECK(arg == std::filesystem::path("abc"));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcPathMap(std::map<std::string, std::filesystem::path> arg) {
@@ -129,6 +208,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcIvec2Defaulted(glm::ivec2 arg = glm::ivec2(1, 2)) {
+        CHECK(arg == glm::ivec2(1, 2));
+    }
+
+    [[codegen::luawrap]] void funcIvec2DefaultedCheck(bool isDefaulted, glm::ivec2 arg = glm::ivec2(1, 2)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::ivec2(1, 2));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcIvec2Map(std::map<std::string, glm::ivec2> arg) {
@@ -144,6 +233,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcIvec3Defaulted(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
+        CHECK(arg == glm::ivec3(1, 2, 3));
+    }
+
+    [[codegen::luawrap]] void funcIvec3DefaultedCheck(bool isDefaulted, glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::ivec3(1, 2, 3));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcIvec3Map(std::map<std::string, glm::ivec3> arg) {
@@ -159,6 +258,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcIvec4Defaulted(glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
+        CHECK(arg == glm::ivec4(1, 2, 3, 4));
+    }
+
+    [[codegen::luawrap]] void funcIvec4DefaultedCheck(bool isDefaulted, glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::ivec4(1, 2, 3, 4));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcIvec4Map(std::map<std::string, glm::ivec4> arg) {
@@ -174,6 +283,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDvec2Defaulted(glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
+        CHECK(arg == glm::dvec2(1.0, 2.0));
+    }
+
+    [[codegen::luawrap]] void funcDvec2DefaultedCheck(bool isDefaulted, glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dvec2(1.0, 2.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDvec2Map(std::map<std::string, glm::dvec2> arg) {
@@ -189,6 +308,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDvec3Defaulted(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
+        CHECK(arg == glm::dvec3(1.0, 2.0, 3.0));
+    }
+
+    [[codegen::luawrap]] void funcDvec3DefaultedCheck(bool isDefaulted, glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dvec3(1.0, 2.0, 3.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDvec3Map(std::map<std::string, glm::dvec3> arg) {
@@ -204,6 +333,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDvec4Defaulted(glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
+        CHECK(arg == glm::dvec4(1.0, 2.0, 3.0, 4.0));
+    }
+
+    [[codegen::luawrap]] void funcDvec4DefaultedCheck(bool isDefaulted, glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dvec4(1.0, 2.0, 3.0, 4.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDvec4Map(std::map<std::string, glm::dvec4> arg) {
@@ -219,6 +358,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcVec2Defaulted(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
+        CHECK(arg == glm::vec2(1.f, 2.f));
+    }
+
+    [[codegen::luawrap]] void funcVec2DefaultedCheck(bool isDefaulted, glm::vec2 arg = glm::vec2(1.f, 2.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::vec2(1.f, 2.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcVec2Map(std::map<std::string, glm::vec2> arg) {
@@ -234,6 +383,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcVec3Defaulted(glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
+        CHECK(arg == glm::vec3(1.f, 2.f, 3.f));
+    }
+
+    [[codegen::luawrap]] void funcVec3DefaultedCheck(bool isDefaulted, glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::vec3(1.f, 2.f, 3.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcVec3Map(std::map<std::string, glm::vec3> arg) {
@@ -249,6 +408,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcVec4Defaulted(glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
+        CHECK(arg == glm::vec4(1.f, 2.f, 3.f, 4.f));
+    }
+
+    [[codegen::luawrap]] void funcVec4DefaultedCheck(bool isDefaulted, glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::vec4(1.f, 2.f, 3.f, 4.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcVec4Map(std::map<std::string, glm::vec4> arg) {
@@ -264,6 +433,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat2x2Defaulted(glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
+        CHECK(arg == glm::mat2x2(1.f, 2.f, 3.f, 4.f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x2DefaultedCheck(bool isDefaulted, glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat2x2(1.f, 2.f, 3.f, 4.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat2x2Map(std::map<std::string, glm::mat2x2> arg) {
@@ -279,6 +458,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat2x3Defaulted(glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+        CHECK(arg == glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x3DefaultedCheck(bool isDefaulted, glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat2x3Map(std::map<std::string, glm::mat2x3> arg) {
@@ -294,6 +483,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat2x4Defaulted(glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+        CHECK(arg == glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x4DefaultedCheck(bool isDefaulted, glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat2x4Map(std::map<std::string, glm::mat2x4> arg) {
@@ -309,6 +508,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat3x2Defaulted(glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+        CHECK(arg == glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x2DefaultedCheck(bool isDefaulted, glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat3x2Map(std::map<std::string, glm::mat3x2> arg) {
@@ -324,6 +533,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat3x3Defaulted(glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
+        CHECK(arg == glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x3DefaultedCheck(bool isDefaulted, glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat3x3Map(std::map<std::string, glm::mat3x3> arg) {
@@ -339,6 +558,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat3x4Defaulted(glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+        CHECK(arg == glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x4DefaultedCheck(bool isDefaulted, glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat3x4Map(std::map<std::string, glm::mat3x4> arg) {
@@ -354,6 +583,13 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat4x2Defaulted(glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+        CHECK(arg == glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+    }
+
+    [[codegen::luawrap]] void funcMat4x2DefaultedCheck(bool isDefaulted, glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+        }
     }
 
     [[codegen::luawrap]] void funcMat4x2Map(std::map<std::string, glm::mat4x2> arg) {
@@ -369,6 +605,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat4x3Defaulted(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+        CHECK(arg == glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+    }
+
+    [[codegen::luawrap]] void funcMat4x3DefaultedCheck(bool isDefaulted, glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat4x3Map(std::map<std::string, glm::mat4x3> arg) {
@@ -384,6 +630,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcMat4x4Defaulted(glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
+        CHECK(arg == glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f));
+    }
+
+    [[codegen::luawrap]] void funcMat4x4DefaultedCheck(bool isDefaulted, glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcMat4x4Map(std::map<std::string, glm::mat4x4> arg) {
@@ -399,6 +655,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat2x2Defaulted(glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
+        CHECK(arg == glm::dmat2x2(1.0, 2.0, 3.0, 4.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x2DefaultedCheck(bool isDefaulted, glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat2x2(1.0, 2.0, 3.0, 4.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat2x2Map(std::map<std::string, glm::dmat2x2> arg) {
@@ -414,6 +680,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat2x3Defaulted(glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+        CHECK(arg == glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x3DefaultedCheck(bool isDefaulted, glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat2x3Map(std::map<std::string, glm::dmat2x3> arg) {
@@ -429,6 +705,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat2x4Defaulted(glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+        CHECK(arg == glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x4DefaultedCheck(bool isDefaulted, glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat2x4Map(std::map<std::string, glm::dmat2x4> arg) {
@@ -444,6 +730,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat3x2Defaulted(glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+        CHECK(arg == glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x2DefaultedCheck(bool isDefaulted, glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat3x2Map(std::map<std::string, glm::dmat3x2> arg) {
@@ -459,6 +755,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat3x3Defaulted(glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
+        CHECK(arg == glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x3DefaultedCheck(bool isDefaulted, glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat3x3Map(std::map<std::string, glm::dmat3x3> arg) {
@@ -474,6 +780,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat3x4Defaulted(glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+        CHECK(arg == glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x4DefaultedCheck(bool isDefaulted, glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat3x4Map(std::map<std::string, glm::dmat3x4> arg) {
@@ -489,6 +805,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat4x2Defaulted(glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+        CHECK(arg == glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x2DefaultedCheck(bool isDefaulted, glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat4x2Map(std::map<std::string, glm::dmat4x2> arg) {
@@ -504,6 +830,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat4x3Defaulted(glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+        CHECK(arg == glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x3DefaultedCheck(bool isDefaulted, glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat4x3Map(std::map<std::string, glm::dmat4x3> arg) {
@@ -519,6 +855,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDMat4x4Defaulted(glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
+        CHECK(arg == glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x4DefaultedCheck(bool isDefaulted, glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
+        if (isDefaulted) {
+            CHECK(arg == glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0));
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDMat4x4Map(std::map<std::string, glm::dmat4x4> arg) {
@@ -534,6 +880,16 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcDictionaryDefaulted(ghoul::Dictionary arg = ghoul::Dictionary()) {
+        CHECK(arg == ghoul::Dictionary());
+    }
+
+    [[codegen::luawrap]] void funcDictionaryDefaultedCheck(bool isDefaulted, ghoul::Dictionary arg = ghoul::Dictionary()) {
+        if (isDefaulted) {
+            CHECK(arg == ghoul::Dictionary());
+        }
+        else {
+
+        }
     }
 
     [[codegen::luawrap]] void funcDictionaryMap(std::map<std::string, ghoul::Dictionary> arg) {
@@ -636,6 +992,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted w/o value") {
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcBoolDefaultedCheck;
+    CHECK(func.name == "funcBoolDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    {
+        CHECK(func.arguments[0].name == "isDefaulted");
+        CHECK(func.arguments[0].type == "Boolean");
+        CHECK(func.arguments[1].name == "arg");
+        CHECK(func.arguments[1].type == "Boolean?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, false);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcBoolDefaultedCheck;
+    CHECK(func.name == "funcBoolDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    {
+        CHECK(func.arguments[0].name == "isDefaulted");
+        CHECK(func.arguments[0].type == "Boolean");
+        CHECK(func.arguments[1].name == "arg");
+        CHECK(func.arguments[1].type == "Boolean?");
+    }
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap") {
     using namespace openspace::scripting;
 
@@ -664,7 +1068,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcBoolOptional;
@@ -686,11 +1090,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  funcBoolOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBoolOptional;
-    CHECK(func.name == "funcBoolOptional");
+    LuaLibrary::Function func = codegen::lua::funcBoolOptionalNullopt;
+    CHECK(func.name == "funcBoolOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
