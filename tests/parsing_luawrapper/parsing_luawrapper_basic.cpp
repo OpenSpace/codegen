@@ -295,3 +295,174 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline function definition") {
+    constexpr const char Source[] = R"(
+[[codegen::luawrap]]
+std::tuple<int, double>
+foo()
+{
+}
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    {
+        VariableType* ret = f->returnValue;
+        REQUIRE(ret);
+        REQUIRE(ret->tag == VariableType::Tag::TupleType);
+        TupleType* tt = static_cast<TupleType*>(ret);
+        REQUIRE(tt->types.size() == 2);
+        {
+            VariableType* vt = tt->types[0];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Int);
+        }
+        {
+            VariableType* vt = tt->types[1];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Double);
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition") {
+    constexpr const char Source[] = R"(
+[[codegen::luawrap]]
+std::tuple<
+int,
+double
+>
+foo
+()
+{
+}
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    {
+        VariableType* ret = f->returnValue;
+        REQUIRE(ret);
+        REQUIRE(ret->tag == VariableType::Tag::TupleType);
+        TupleType* tt = static_cast<TupleType*>(ret);
+        REQUIRE(tt->types.size() == 2);
+        {
+            VariableType* vt = tt->types[0];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Int);
+        }
+        {
+            VariableType* vt = tt->types[1];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Double);
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition with spaces") {
+    constexpr const char Source[] = R"(
+[[codegen::luawrap]]
+   std::tuple<
+ int,
+       double
+                                 > foo
+(    )
+ {
+      }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    {
+        VariableType* ret = f->returnValue;
+        REQUIRE(ret);
+        REQUIRE(ret->tag == VariableType::Tag::TupleType);
+        TupleType* tt = static_cast<TupleType*>(ret);
+        REQUIRE(tt->types.size() == 2);
+        {
+            VariableType* vt = tt->types[0];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Int);
+        }
+        {
+            VariableType* vt = tt->types[1];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Double);
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Minimalistic function definition") {
+    constexpr const char Source[] = R"(
+[[codegen::luawrap]] std::tuple<int, double> foo(){}
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->name == "foo");
+    CHECK(f->documentation == "");
+    {
+        VariableType* ret = f->returnValue;
+        REQUIRE(ret);
+        REQUIRE(ret->tag == VariableType::Tag::TupleType);
+        TupleType* tt = static_cast<TupleType*>(ret);
+        REQUIRE(tt->types.size() == 2);
+        {
+            VariableType* vt = tt->types[0];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Int);
+        }
+        {
+            VariableType* vt = tt->types[1];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Double);
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}

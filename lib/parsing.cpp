@@ -553,6 +553,8 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         cursor += 1;
     }
 
+    cursor += 1;
+
     return { start, cursor - start };
 }
 
@@ -841,7 +843,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             }
 
             // Find the first non-space character as the start of the return value
-            if (content[cursor] != ' ' && !foundBeginningOfReturnValue) {
+            if (content[cursor] != ' ' && content[cursor] != '\n' &&
+                !foundBeginningOfReturnValue)
+            {
                 loc.first = cursor;
                 foundBeginningOfReturnValue = true;
             }
@@ -854,7 +858,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 nOpenBrackets -= 1;
             }
 
-            if (content[cursor] == ' ' && nOpenBrackets == 0) {
+            if ((content[cursor] == ' ' || content[cursor] == '\n') &&
+                nOpenBrackets == 0)
+            {
                 // We have reached the space that separates the return value from the
                 // function name
                 loc.second = cursor;
@@ -1037,12 +1043,12 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     }
     cursor += 1;
 
-    f->name = std::string(
-        content.substr(
-            functionNameLoc.first,
-            functionNameLoc.second - functionNameLoc.first
-        )
+    std::string_view name = content.substr(
+        functionNameLoc.first,
+        functionNameLoc.second - functionNameLoc.first
     );
+
+    f->name = std::string(strip(name));
 
     // Parse the parameters
     while (true) {
