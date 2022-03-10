@@ -1069,7 +1069,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
 
     // Parse the parameters
     while (true) {
-        if (content[cursor] == ' ' || content[cursor] == ',') {
+        if (content[cursor] == ' ' || content[cursor] == ',' || content[cursor] == '\n') {
             cursor += 1;
             continue;
         }
