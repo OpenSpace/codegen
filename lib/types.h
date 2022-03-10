@@ -166,6 +166,7 @@ struct VectorType : public VariableType {
 bool operator==(const VectorType& lhs, const VectorType& rhs);
 
 struct CustomType : public VariableType {
+    std::string name;
     const StackElement* type = nullptr;
 };
 bool operator==(const CustomType& lhs, const CustomType& rhs);

@@ -58,6 +58,7 @@ add_executable(
   parsing_luawrapper/parsing_luawrapper_arguments.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_luawrapper/parsing_luawrapper_comments.cpp
+  parsing_luawrapper/parsing_luawrapper_error.cpp
   parsing_luawrapper/parsing_luawrapper_return.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp

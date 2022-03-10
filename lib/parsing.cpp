@@ -858,9 +858,11 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 nOpenBrackets -= 1;
             }
 
-            if ((content[cursor] == ' ' || content[cursor] == '\n') &&
-                nOpenBrackets == 0)
-            {
+            bool isEndCharacter =
+                content[cursor] == ' ' || content[cursor] == '\n' ||
+                content[cursor] == ')' || content[cursor] == ',';
+
+            if (isEndCharacter && nOpenBrackets == 0) {
                 // We have reached the space that separates the return value from the
                 // function name
                 loc.second = cursor;
@@ -1061,10 +1063,30 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         }
 
         std::pair<size_t, size_t> locType = eatType(cursor);
+        std::string_view typeStr =
+            content.substr(locType.first, locType.second - locType.first);
+
+        if (strip(typeStr) == "const") {
+            cursor += 1;
+            std::pair<size_t, size_t> locType2 = eatType(cursor);
+            std::string_view typeStr2 =
+                content.substr(locType2.first, locType2.second - locType2.first);
+            std::string t;
+            assert(!typeStr2.empty());
+            if (typeStr2[typeStr2.size() - 1] == '*') {
+                t = "pointer";
+            }
+            else if (typeStr2[typeStr2.size() - 1] == '&') {
+                t = "reference";
+            }
+            throw CodegenError(fmt::format(
+                "Illegal {} type '{} {}' found in function '{}'\n{}",
+                t, typeStr, typeStr2, f->name, content
+            ));
+        }
+
         Variable* v = new Variable;
-        v->type = parseType(
-            content.substr(locType.first, locType.second - locType.first), nullptr
-        );
+        v->type = parseType(typeStr, nullptr);
 
         if (v->type->tag == VariableType::Tag::TupleType) {
             throw CodegenError(fmt::format(
@@ -1077,6 +1099,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         v->name = std::string(
             content.substr(locName.first, locName.second - locName.first)
         );
+
+        if (v->name.empty()) {
+            throw CodegenError(fmt::format(
+                "Parameter {} of function '{}' has no name, which is not allowed",
+                f->arguments.size(), f->name
+            ));
+        }
 
         // There are a few options for characters that follow the name;  either it can be
         // a , meaning that there are more arguments coming, a = representing a default
@@ -1176,6 +1205,23 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 "It is not supported to have non-optional parameters after optional "
                 "ones\n{}",
                 content.substr(cursor, 50)
+            ));
+        }
+    }
+
+    // Verify that we haven't received any custom types for either the return value or any
+    // of the arguments as we don't currently know how to handle them
+    if (f->returnValue && f->returnValue->tag == VariableType::Tag::CustomType) {
+        throw CodegenError(fmt::format(
+            "Illegal type '{}' for return value of function '{}' found",
+            static_cast<CustomType*>(f->returnValue)->name, f->name
+        ));
+    }
+    for (Variable* var : f->arguments) {
+        if (var->type->tag == VariableType::Tag::CustomType) {
+            throw CodegenError(fmt::format(
+                "Illegal type '{}' for argument '{}' value of function '{}' found",
+                static_cast<CustomType*>(var->type)->name, var->name, f->name
             ));
         }
     }

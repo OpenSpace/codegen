@@ -209,6 +209,15 @@ VariableType* parseType(std::string_view type, Struct* context) {
         return nullptr;
     }
 
+    assert(!type.empty());
+
+    if (type[type.size() - 1] == '&') {
+        throw CodegenError(fmt::format("Illegal reference type found: {}", type));
+    }
+    if (type[type.size() - 1] == '*') {
+        throw CodegenError(fmt::format("Illegal pointer type found: {}", type));
+    }
+
     auto newType = [](BasicType::Type t) -> BasicType* {
         BasicType* bt = new BasicType;
         bt->tag = VariableType::Tag::BasicType;
@@ -363,51 +372,23 @@ VariableType* parseType(std::string_view type, Struct* context) {
         }
 
         t = tt;
-
-        // Check for multiple vector types
-        //int nVectorTypes = 0;
-        //for (VariableType* t : vt->types) {
-        //    if (t->tag == VariableType::Tag::VectorType) {
-        //        nVectorTypes += 1;
-        //    }
-        //}
-        //if (nVectorTypes > 1) {
-        //    throw CodegenError(fmt::format(
-        //        "We can't have a variant containing multiple vector types, try a "
-        //        "vector of variants instead\n{}", type
-        //    ));
-        //}
-
-        //// Check for illegal types
-        //for (VariableType* t : vt->types) {
-        //    const bool isBasicType = t->tag == VariableType::Tag::BasicType;
-        //    const bool isVectorType = t->tag == VariableType::Tag::VectorType;
-        //    const bool isEnum =
-        //        t->tag == VariableType::Tag::CustomType &&
-        //        static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
-        //    if (!isBasicType && !isVectorType && !isEnum) {
-        //        throw CodegenError(fmt::format(
-        //            "Unsupported type '{}' found in variant list\n{}",
-        //            generateTypename(t), type
-        //        ));
-        //    }
-        //}
     }
 
     if (!t) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
         // visible in the variable's context
-        assert(context);
-
-        const StackElement* el = resolveType(context, type);
-        if (!el) {
-            throw CodegenError(fmt::format(
-                "Type detected that codegen doesn't know how to handle: {}", type
-            ));
-        }
         CustomType* ct = new CustomType;
         ct->tag = VariableType::Tag::CustomType;
-        ct->type = el;
+        ct->name = std::string(type);
+        if (context) {
+            const StackElement* el = resolveType(context, type);
+            if (!el) {
+                throw CodegenError(fmt::format(
+                    "Type detected that codegen doesn't know how to handle: {}", type
+                ));
+            }
+            ct->type = el;
+        }
         t = ct;
     }
     assert(t);
