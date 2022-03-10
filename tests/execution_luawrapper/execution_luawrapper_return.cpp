@@ -1631,7 +1631,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleOptional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -1734,7 +1734,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  floatOptional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -1841,7 +1841,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringOptional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -1945,7 +1945,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathOptional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2049,7 +2049,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2068,6 +2068,10 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Vector") {
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
     std::vector val = ghoul::lua::value<std::vector<glm::ivec2>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(val[0] == glm::ivec2(1, 2));
+    CHECK(val[1] == glm::ivec2(3, 4));
+    CHECK(val[2] == glm::ivec2(5, 6));
     lua_close(state);
 }
 
@@ -2148,7 +2152,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2251,7 +2255,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2353,7 +2357,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2456,7 +2460,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2559,7 +2563,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2662,7 +2666,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2765,7 +2769,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2868,7 +2872,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -2971,7 +2975,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3079,7 +3083,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3191,7 +3195,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3306,7 +3310,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3424,7 +3428,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3569,7 +3573,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3700,7 +3704,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3839,7 +3843,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -3990,7 +3994,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4111,7 +4115,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4217,7 +4221,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4329,7 +4333,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4450,7 +4454,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4562,7 +4566,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4704,7 +4708,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4834,7 +4838,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -4967,7 +4971,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -5118,7 +5122,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Optional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -5276,7 +5280,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryOptional w/o value") {
     REQUIRE(state);
     REQUIRE(func.function);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 0);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 

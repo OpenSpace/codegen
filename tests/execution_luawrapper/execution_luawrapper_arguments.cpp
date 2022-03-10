@@ -96,65 +96,119 @@ namespace {
     }
 
     [[codegen::luawrap]] void funcIntMap(std::map<std::string, int> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == 1);
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == 2);
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == 3);
     }
 
     [[codegen::luawrap]] void funcIntOptional(std::optional<int> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == 1);
+    }
+
+    [[codegen::luawrap]] void funcIntOptionalNullopt(std::optional<int> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcIntVector(std::vector<int> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == 1);
+        CHECK(arg[1] == 2);
+        CHECK(arg[2] == 3);
     }
 
     [[codegen::luawrap]] void funcDouble(double arg) {
+        CHECK(arg == 1.1);
     }
 
-    [[codegen::luawrap]] void funcDoubleDefaulted(double arg = 2.0) {
-        CHECK(arg == 2.0);
+    [[codegen::luawrap]] void funcDoubleDefaulted(double arg = 2.2) {
+        CHECK(arg == 2.2);
     }
 
-    [[codegen::luawrap]] void funcDoubleDefaultedCheck(bool isDefaulted, double arg = 2.0) {
+    [[codegen::luawrap]] void funcDoubleDefaultedCheck(bool isDefaulted, double arg = 2.2) {
         if (isDefaulted) {
-            CHECK(arg == 2.0);
+            CHECK(arg == 2.2);
         }
         else {
-
+            CHECK(arg == 3.3);
         }
     }
 
     [[codegen::luawrap]] void funcDoubleMap(std::map<std::string, double> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == 1.1);
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == 2.2);
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == 3.3);
     }
 
     [[codegen::luawrap]] void funcDoubleOptional(std::optional<double> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == 1.1);
+    }
+
+    [[codegen::luawrap]] void funcDoubleOptionalNullopt(std::optional<double> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDoubleVector(std::vector<double> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == 1.1);
+        CHECK(arg[1] == 2.2);
+        CHECK(arg[2] == 3.3);
     }
 
     [[codegen::luawrap]] void funcFloat(float arg) {
+        CHECK(arg == 1.1f);
     }
 
-    [[codegen::luawrap]] void funcFloatDefaulted(float arg = 2.f) {
-        CHECK(arg == 2.f);
+    [[codegen::luawrap]] void funcFloatDefaulted(float arg = 1.1f) {
+        CHECK(arg == 1.1f);
     }
 
-    [[codegen::luawrap]] void funcFloatDefaultedCheck(bool isDefaulted, float arg = 2.f) {
+    [[codegen::luawrap]] void funcFloatDefaultedCheck(bool isDefaulted, float arg = 2.2f) {
         if (isDefaulted) {
-            CHECK(arg == 2.f);
+            CHECK(arg == 2.2f);
         }
         else {
-
+            CHECK(arg == 3.3f);
         }
     }
 
     [[codegen::luawrap]] void funcFloatMap(std::map<std::string, float> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == 1.1f);
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == 2.2f);
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == 3.3f);
     }
 
     [[codegen::luawrap]] void funcFloatOptional(std::optional<float> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == 1.1f);
+    }
+
+    [[codegen::luawrap]] void funcFloatOptionalNullopt(std::optional<float> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcFloatVector(std::vector<float> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == 1.1f);
+        CHECK(arg[1] == 2.2f);
+        CHECK(arg[2] == 3.3f);
     }
 
     [[codegen::luawrap]] void funcString(std::string arg) {
+        CHECK(arg == "abc");
     }
 
     [[codegen::luawrap]] void funcStringDefaulted(std::string arg = "abc") {
@@ -166,20 +220,38 @@ namespace {
             CHECK(arg == "abc");
         }
         else {
-
+            CHECK(arg == "def");
         }
     }
 
     [[codegen::luawrap]] void funcStringMap(std::map<std::string, std::string> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == "abc");
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == "def");
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == "ghi");
     }
 
     [[codegen::luawrap]] void funcStringOptional(std::optional<std::string> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == "abc");
+    }
+
+    [[codegen::luawrap]] void funcStringOptionalNullopt(std::optional<std::string> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcStringVector(std::vector<std::string> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == "abc");
+        CHECK(arg[1] == "def");
+        CHECK(arg[2] == "ghi");
     }
 
     [[codegen::luawrap]] void funcPath(std::filesystem::path arg) {
+        CHECK(arg == std::filesystem::path("abc"));
     }
 
     [[codegen::luawrap]] void funcPathDefaulted(std::filesystem::path arg = std::filesystem::path("abc")) {
@@ -191,20 +263,38 @@ namespace {
             CHECK(arg == std::filesystem::path("abc"));
         }
         else {
-
+            CHECK(arg == std::filesystem::path("def"));
         }
     }
 
     [[codegen::luawrap]] void funcPathMap(std::map<std::string, std::filesystem::path> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == std::filesystem::path("abc"));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == std::filesystem::path("def"));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == std::filesystem::path("ghi"));
     }
 
     [[codegen::luawrap]] void funcPathOptional(std::optional<std::filesystem::path> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == "abc");
+    }
+
+    [[codegen::luawrap]] void funcPathOptionalNullopt(std::optional<std::filesystem::path> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcPathVector(std::vector<std::filesystem::path> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == std::filesystem::path("abc"));
+        CHECK(arg[1] == std::filesystem::path("def"));
+        CHECK(arg[2] == std::filesystem::path("ghi"));
     }
 
     [[codegen::luawrap]] void funcIvec2(glm::ivec2 arg) {
+        CHECK(arg == glm::ivec2(1, 2));
     }
 
     [[codegen::luawrap]] void funcIvec2Defaulted(glm::ivec2 arg = glm::ivec2(1, 2)) {
@@ -216,20 +306,38 @@ namespace {
             CHECK(arg == glm::ivec2(1, 2));
         }
         else {
-
+            CHECK(arg == glm::ivec2(2, 3));
         }
     }
 
     [[codegen::luawrap]] void funcIvec2Map(std::map<std::string, glm::ivec2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::ivec2(1, 2));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::ivec2(3, 4));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::ivec2(5, 6));
     }
 
     [[codegen::luawrap]] void funcIvec2Optional(std::optional<glm::ivec2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::ivec2(1, 2));
+    }
+
+    [[codegen::luawrap]] void funcIvec2OptionalNullopt(std::optional<glm::ivec2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcIvec2Vector(std::vector<glm::ivec2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::ivec2(1, 2));
+        CHECK(arg[1] == glm::ivec2(3, 4));
+        CHECK(arg[2] == glm::ivec2(5, 6));
     }
 
     [[codegen::luawrap]] void funcIvec3(glm::ivec3 arg) {
+        CHECK(arg == glm::ivec3(1, 2, 3));
     }
 
     [[codegen::luawrap]] void funcIvec3Defaulted(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
@@ -241,20 +349,38 @@ namespace {
             CHECK(arg == glm::ivec3(1, 2, 3));
         }
         else {
-
+            CHECK(arg == glm::ivec3(4, 5, 6));
         }
     }
 
     [[codegen::luawrap]] void funcIvec3Map(std::map<std::string, glm::ivec3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::ivec3(1, 2, 3));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::ivec3(4, 5, 6));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::ivec3(7, 8, 9));
     }
 
     [[codegen::luawrap]] void funcIvec3Optional(std::optional<glm::ivec3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::ivec3(1, 2, 3));
+    }
+
+    [[codegen::luawrap]] void funcIvec3OptionalNullopt(std::optional<glm::ivec3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcIvec3Vector(std::vector<glm::ivec3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::ivec3(1, 2, 3));
+        CHECK(arg[1] == glm::ivec3(4, 5, 6));
+        CHECK(arg[2] == glm::ivec3(7, 8, 9));
     }
 
     [[codegen::luawrap]] void funcIvec4(glm::ivec4 arg) {
+        CHECK(arg == glm::ivec4(1, 2, 3, 4));
     }
 
     [[codegen::luawrap]] void funcIvec4Defaulted(glm::ivec4 arg = glm::ivec4(1, 2, 3, 4)) {
@@ -266,617 +392,1648 @@ namespace {
             CHECK(arg == glm::ivec4(1, 2, 3, 4));
         }
         else {
-
+            CHECK(arg == glm::ivec4(5, 6, 7, 8));
         }
     }
 
     [[codegen::luawrap]] void funcIvec4Map(std::map<std::string, glm::ivec4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::ivec4(1, 2, 3, 4));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::ivec4(5, 6, 7, 8));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::ivec4(9, 10, 11, 12));
     }
 
     [[codegen::luawrap]] void funcIvec4Optional(std::optional<glm::ivec4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::ivec4(1, 2, 3, 4));
+    }
+
+    [[codegen::luawrap]] void funcIvec4OptionalNullopt(std::optional<glm::ivec4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcIvec4Vector(std::vector<glm::ivec4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::ivec4(1, 2, 3, 4));
+        CHECK(arg[1] == glm::ivec4(5, 6, 7, 8));
+        CHECK(arg[2] == glm::ivec4(9, 10, 11, 12));
     }
 
     [[codegen::luawrap]] void funcDvec2(glm::dvec2 arg) {
+        CHECK(arg == glm::dvec2(1.1, 2.2));
     }
 
-    [[codegen::luawrap]] void funcDvec2Defaulted(glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
-        CHECK(arg == glm::dvec2(1.0, 2.0));
+    [[codegen::luawrap]] void funcDvec2Defaulted(glm::dvec2 arg = glm::dvec2(1.1, 2.2)) {
+        CHECK(arg == glm::dvec2(1.1, 2.2));
     }
 
-    [[codegen::luawrap]] void funcDvec2DefaultedCheck(bool isDefaulted, glm::dvec2 arg = glm::dvec2(1.0, 2.0)) {
+    [[codegen::luawrap]] void funcDvec2DefaultedCheck(bool isDefaulted, glm::dvec2 arg = glm::dvec2(1.1, 2.2)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dvec2(1.0, 2.0));
+            CHECK(arg == glm::dvec2(1.1, 2.2));
         }
         else {
-
+            CHECK(arg == glm::dvec2(3.3, 4.4));
         }
     }
 
     [[codegen::luawrap]] void funcDvec2Map(std::map<std::string, glm::dvec2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::dvec2(1.1, 2.2));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::dvec2(3.3, 4.4));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::dvec2(5.5, 6.6));
     }
 
     [[codegen::luawrap]] void funcDvec2Optional(std::optional<glm::dvec2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dvec2(1.1, 2.2));
+    }
+
+    [[codegen::luawrap]] void funcDvec2OptionalNullopt(std::optional<glm::dvec2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDvec2Vector(std::vector<glm::dvec2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dvec2(1.1, 2.2));
+        CHECK(arg[1] == glm::dvec2(3.3, 4.4));
+        CHECK(arg[2] == glm::dvec2(5.5, 6.6));
     }
 
     [[codegen::luawrap]] void funcDvec3(glm::dvec3 arg) {
+        CHECK(arg == glm::dvec3(1.1, 2.2, 3.3));
     }
 
-    [[codegen::luawrap]] void funcDvec3Defaulted(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
-        CHECK(arg == glm::dvec3(1.0, 2.0, 3.0));
+    [[codegen::luawrap]] void funcDvec3Defaulted(glm::dvec3 arg = glm::dvec3(1.1, 2.2, 3.3)) {
+        CHECK(arg == glm::dvec3(1.1, 2.2, 3.3));
     }
 
-    [[codegen::luawrap]] void funcDvec3DefaultedCheck(bool isDefaulted, glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
+    [[codegen::luawrap]] void funcDvec3DefaultedCheck(bool isDefaulted, glm::dvec3 arg = glm::dvec3(1.1, 2.2, 3.3)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dvec3(1.0, 2.0, 3.0));
+            CHECK(arg == glm::dvec3(1.1, 2.2, 3.3));
         }
         else {
+            CHECK(arg == glm::dvec3(4.4, 5.5, 6.6));
 
         }
     }
 
     [[codegen::luawrap]] void funcDvec3Map(std::map<std::string, glm::dvec3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::dvec3(1.1, 2.2, 3.3));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::dvec3(4.4, 5.5, 6.6));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::dvec3(7.7, 8.8, 9.9));
     }
 
     [[codegen::luawrap]] void funcDvec3Optional(std::optional<glm::dvec3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dvec3(1.1, 2.2, 3.3));
+    }
+
+    [[codegen::luawrap]] void funcDvec3OptionalNullopt(std::optional<glm::dvec3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDvec3Vector(std::vector<glm::dvec3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dvec3(1.1, 2.2, 3.3));
+        CHECK(arg[1] == glm::dvec3(4.4, 5.5, 6.6));
+        CHECK(arg[2] == glm::dvec3(7.7, 8.8, 9.9));
     }
 
     [[codegen::luawrap]] void funcDvec4(glm::dvec4 arg) {
+        CHECK(arg == glm::dvec4(1.1, 2.2, 3.3, 4.4));
     }
 
-    [[codegen::luawrap]] void funcDvec4Defaulted(glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
-        CHECK(arg == glm::dvec4(1.0, 2.0, 3.0, 4.0));
+    [[codegen::luawrap]] void funcDvec4Defaulted(glm::dvec4 arg = glm::dvec4(1.1, 2.2, 3.3, 4.4)) {
+        CHECK(arg == glm::dvec4(1.1, 2.2, 3.3, 4.4));
     }
 
-    [[codegen::luawrap]] void funcDvec4DefaultedCheck(bool isDefaulted, glm::dvec4 arg = glm::dvec4(1.0, 2.0, 3.0, 4.0)) {
+    [[codegen::luawrap]] void funcDvec4DefaultedCheck(bool isDefaulted, glm::dvec4 arg = glm::dvec4(1.1, 2.2, 3.3, 4.4)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dvec4(1.0, 2.0, 3.0, 4.0));
+            CHECK(arg == glm::dvec4(1.1, 2.2, 3.3, 4.4));
         }
         else {
+            CHECK(arg == glm::dvec4(5.5, 6.6, 7.7, 8.8));
 
         }
     }
 
     [[codegen::luawrap]] void funcDvec4Map(std::map<std::string, glm::dvec4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::dvec4(5.5, 6.6, 7.7, 8.8));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::dvec4(9.9, 10.10, 11.11, 12.12));
     }
 
     [[codegen::luawrap]] void funcDvec4Optional(std::optional<glm::dvec4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDvec4OptionalNullopt(std::optional<glm::dvec4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDvec4Vector(std::vector<glm::dvec4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dvec4(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dvec4(9.9, 10.10, 11.11, 12.12));
     }
 
     [[codegen::luawrap]] void funcVec2(glm::vec2 arg) {
+        CHECK(arg == glm::vec2(1.1f, 2.2f));
     }
 
-    [[codegen::luawrap]] void funcVec2Defaulted(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
-        CHECK(arg == glm::vec2(1.f, 2.f));
+    [[codegen::luawrap]] void funcVec2Defaulted(glm::vec2 arg = glm::vec2(1.1f, 2.2f)) {
+        CHECK(arg == glm::vec2(1.1f, 2.2f));
     }
 
-    [[codegen::luawrap]] void funcVec2DefaultedCheck(bool isDefaulted, glm::vec2 arg = glm::vec2(1.f, 2.f)) {
+    [[codegen::luawrap]] void funcVec2DefaultedCheck(bool isDefaulted, glm::vec2 arg = glm::vec2(1.1f, 2.2f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::vec2(1.f, 2.f));
+            CHECK(arg == glm::vec2(1.1f, 2.2f));
         }
         else {
-
+            CHECK(arg == glm::vec2(3.3f, 4.4f));
         }
     }
 
     [[codegen::luawrap]] void funcVec2Map(std::map<std::string, glm::vec2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::vec2(1.1f, 2.2f));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::vec2(3.3f, 4.4f));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::vec2(5.5f, 6.6f));
     }
 
     [[codegen::luawrap]] void funcVec2Optional(std::optional<glm::vec2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::vec2(1.1f, 2.2f));
+    }
+
+    [[codegen::luawrap]] void funcVec2OptionalNullopt(std::optional<glm::vec2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcVec2Vector(std::vector<glm::vec2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::vec2(1.1f, 2.2f));
+        CHECK(arg[1] == glm::vec2(3.3f, 4.4f));
+        CHECK(arg[2] == glm::vec2(5.5f, 6.6f));
     }
 
     [[codegen::luawrap]] void funcVec3(glm::vec3 arg) {
+        CHECK(arg == glm::vec3(1.1f, 2.2f, 3.3f));
     }
 
-    [[codegen::luawrap]] void funcVec3Defaulted(glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
-        CHECK(arg == glm::vec3(1.f, 2.f, 3.f));
+    [[codegen::luawrap]] void funcVec3Defaulted(glm::vec3 arg = glm::vec3(1.1f, 2.2f, 3.3f)) {
+        CHECK(arg == glm::vec3(1.1f, 2.2f, 3.3f));
     }
 
-    [[codegen::luawrap]] void funcVec3DefaultedCheck(bool isDefaulted, glm::vec3 arg = glm::vec3(1.f, 2.f, 3.f)) {
+    [[codegen::luawrap]] void funcVec3DefaultedCheck(bool isDefaulted, glm::vec3 arg = glm::vec3(1.1f, 2.2f, 3.3f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::vec3(1.f, 2.f, 3.f));
+            CHECK(arg == glm::vec3(1.1f, 2.2f, 3.3f));
         }
         else {
-
+            CHECK(arg == glm::vec3(4.4f, 5.5f, 6.6f));
         }
     }
 
     [[codegen::luawrap]] void funcVec3Map(std::map<std::string, glm::vec3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::vec3(1.1f, 2.2f, 3.3f));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::vec3(4.4f, 5.5f, 6.6f));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::vec3(7.7f, 8.8f, 9.9f));
     }
 
     [[codegen::luawrap]] void funcVec3Optional(std::optional<glm::vec3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::vec3(1.1f, 2.2f, 3.3f));
+    }
+
+    [[codegen::luawrap]] void funcVec3OptionalNullopt(std::optional<glm::vec3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcVec3Vector(std::vector<glm::vec3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::vec3(1.1f, 2.2f, 3.3f));
+        CHECK(arg[1] == glm::vec3(4.4f, 5.5f, 6.6f));
+        CHECK(arg[2] == glm::vec3(7.7f, 8.8f, 9.9f));
     }
 
     [[codegen::luawrap]] void funcVec4(glm::vec4 arg) {
+        CHECK(arg == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
     }
 
-    [[codegen::luawrap]] void funcVec4Defaulted(glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
-        CHECK(arg == glm::vec4(1.f, 2.f, 3.f, 4.f));
+    [[codegen::luawrap]] void funcVec4Defaulted(glm::vec4 arg = glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)) {
+        CHECK(arg == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
     }
 
-    [[codegen::luawrap]] void funcVec4DefaultedCheck(bool isDefaulted, glm::vec4 arg = glm::vec4(1.f, 2.f, 3.f, 4.f)) {
+    [[codegen::luawrap]] void funcVec4DefaultedCheck(bool isDefaulted, glm::vec4 arg = glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::vec4(1.f, 2.f, 3.f, 4.f));
+            CHECK(arg == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
         }
         else {
-
+            CHECK(arg == glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
         }
     }
 
     [[codegen::luawrap]] void funcVec4Map(std::map<std::string, glm::vec4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
     }
 
     [[codegen::luawrap]] void funcVec4Optional(std::optional<glm::vec4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+    }
+
+    [[codegen::luawrap]] void funcVec4OptionalNullopt(std::optional<glm::vec4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcVec4Vector(std::vector<glm::vec4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
     }
 
     [[codegen::luawrap]] void funcMat2x2(glm::mat2x2 arg) {
+        CHECK(arg == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
     }
 
-    [[codegen::luawrap]] void funcMat2x2Defaulted(glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
-        CHECK(arg == glm::mat2x2(1.f, 2.f, 3.f, 4.f));
+    [[codegen::luawrap]] void funcMat2x2Defaulted(glm::mat2x2 arg = glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)) {
+        CHECK(arg == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
     }
 
-    [[codegen::luawrap]] void funcMat2x2DefaultedCheck(bool isDefaulted, glm::mat2x2 arg = glm::mat2x2(1.f, 2.f, 3.f, 4.f)) {
+    [[codegen::luawrap]] void funcMat2x2DefaultedCheck(bool isDefaulted, glm::mat2x2 arg = glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat2x2(1.f, 2.f, 3.f, 4.f));
+            CHECK(arg == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
         }
         else {
-
+            CHECK(arg == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
         }
     }
 
     [[codegen::luawrap]] void funcMat2x2Map(std::map<std::string, glm::mat2x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
     }
 
     [[codegen::luawrap]] void funcMat2x2Optional(std::optional<glm::mat2x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x2OptionalNullopt(std::optional<glm::mat2x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat2x2Vector(std::vector<glm::mat2x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
     }
 
     [[codegen::luawrap]] void funcMat2x3(glm::mat2x3 arg) {
+        CHECK(arg == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
     }
 
-    [[codegen::luawrap]] void funcMat2x3Defaulted(glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-        CHECK(arg == glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+    [[codegen::luawrap]] void funcMat2x3Defaulted(glm::mat2x3 arg = glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)) {
+        CHECK(arg == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
     }
 
-    [[codegen::luawrap]] void funcMat2x3DefaultedCheck(bool isDefaulted, glm::mat2x3 arg = glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+    [[codegen::luawrap]] void funcMat2x3DefaultedCheck(bool isDefaulted, glm::mat2x3 arg = glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat2x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+            CHECK(arg == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
         }
         else {
-
+            CHECK(arg == glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
         }
     }
 
     [[codegen::luawrap]] void funcMat2x3Map(std::map<std::string, glm::mat2x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat2x3Optional(std::optional<glm::mat2x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x3OptionalNullopt(std::optional<glm::mat2x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat2x3Vector(std::vector<glm::mat2x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
     }
 
     [[codegen::luawrap]] void funcMat2x4(glm::mat2x4 arg) {
+        CHECK(arg == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     }
 
-    [[codegen::luawrap]] void funcMat2x4Defaulted(glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-        CHECK(arg == glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+    [[codegen::luawrap]] void funcMat2x4Defaulted(glm::mat2x4 arg = glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)) {
+        CHECK(arg == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     }
 
-    [[codegen::luawrap]] void funcMat2x4DefaultedCheck(bool isDefaulted, glm::mat2x4 arg = glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+    [[codegen::luawrap]] void funcMat2x4DefaultedCheck(bool isDefaulted, glm::mat2x4 arg = glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat2x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+            CHECK(arg == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat2x4Map(std::map<std::string, glm::mat2x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat2x4Optional(std::optional<glm::mat2x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x4OptionalNullopt(std::optional<glm::mat2x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat2x4Vector(std::vector<glm::mat2x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(
+            arg[1] ==
+            glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat3x2(glm::mat3x2 arg) {
+        CHECK(arg == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
     }
 
-    [[codegen::luawrap]] void funcMat3x2Defaulted(glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
-        CHECK(arg == glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+    [[codegen::luawrap]] void funcMat3x2Defaulted(glm::mat3x2 arg = glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)) {
+        CHECK(arg == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
     }
 
-    [[codegen::luawrap]] void funcMat3x2DefaultedCheck(bool isDefaulted, glm::mat3x2 arg = glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f)) {
+    [[codegen::luawrap]] void funcMat3x2DefaultedCheck(bool isDefaulted, glm::mat3x2 arg = glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat3x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f));
+            CHECK(arg == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
         }
         else {
-
+            CHECK(arg == glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
         }
     }
 
     [[codegen::luawrap]] void funcMat3x2Map(std::map<std::string, glm::mat3x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat3x2Optional(std::optional<glm::mat3x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x2OptionalNullopt(std::optional<glm::mat3x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat3x2Vector(std::vector<glm::mat3x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
     }
 
     [[codegen::luawrap]] void funcMat3x3(glm::mat3x3 arg) {
+        CHECK(arg == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f, 7.7f, 8.8f, 9.9f));
     }
 
-    [[codegen::luawrap]] void funcMat3x3Defaulted(glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
-        CHECK(arg == glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+    [[codegen::luawrap]] void funcMat3x3Defaulted(glm::mat3x3 arg = glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)) {
+        CHECK(arg == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
     }
 
-    [[codegen::luawrap]] void funcMat3x3DefaultedCheck(bool isDefaulted, glm::mat3x3 arg = glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f)) {
+    [[codegen::luawrap]] void funcMat3x3DefaultedCheck(bool isDefaulted, glm::mat3x3 arg = glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat3x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+            CHECK(
+                arg ==
+                glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::mat3x3(
+                    10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+                    15.15f, 16.16f, 17.17f, 18.18f
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat3x3Map(std::map<std::string, glm::mat3x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat3x3(
+                10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+                15.15f, 16.16f, 17.17f, 18.18f
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat3x3(
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
+                24.24f, 25.25f, 26.26f, 27.27f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat3x3Optional(std::optional<glm::mat3x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x3OptionalNullopt(std::optional<glm::mat3x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat3x3Vector(std::vector<glm::mat3x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+        );
+        CHECK(
+            arg[1] ==
+            glm::mat3x3(
+                10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+                15.15f, 16.16f, 17.17f, 18.18f
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat3x3(
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
+                24.24f, 25.25f, 26.26f, 27.27f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat3x4(glm::mat3x4 arg) {
+        CHECK(
+            arg ==
+            glm::mat3x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat3x4Defaulted(glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-        CHECK(arg == glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+    [[codegen::luawrap]] void funcMat3x4Defaulted(glm::mat3x4 arg = glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)) {
+        CHECK(
+            arg ==
+            glm::mat3x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat3x4DefaultedCheck(bool isDefaulted, glm::mat3x4 arg = glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+    [[codegen::luawrap]] void funcMat3x4DefaultedCheck(bool isDefaulted, glm::mat3x4 arg = glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat3x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+            CHECK(
+                arg ==
+                glm::mat3x4(
+                    1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                    7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::mat3x4(
+                    13.13f, 14.14f, 15.15, 16.16f, 17.17f, 18.18f,
+                    19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat3x4Map(std::map<std::string, glm::mat3x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat3x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat3x4(
+                13.13f, 14.14f, 15.15, 16.16f, 17.17f, 18.18f,
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat3x4(
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+                31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat3x4Optional(std::optional<glm::mat3x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::mat3x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcMat3x4OptionalNullopt(std::optional<glm::mat3x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat3x4Vector(std::vector<glm::mat3x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::mat3x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::mat3x4(
+                13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat3x4(
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+                31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x2(glm::mat4x2 arg) {
+        CHECK(arg == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     }
 
-    [[codegen::luawrap]] void funcMat4x2Defaulted(glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
-        CHECK(arg == glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+    [[codegen::luawrap]] void funcMat4x2Defaulted(glm::mat4x2 arg = glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)) {
+        CHECK(arg == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     }
 
-    [[codegen::luawrap]] void funcMat4x2DefaultedCheck(bool isDefaulted, glm::mat4x2 arg = glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f)) {
+    [[codegen::luawrap]] void funcMat4x2DefaultedCheck(bool isDefaulted, glm::mat4x2 arg = glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat4x2(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f));
+            CHECK(arg == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        }
+        else {
+            CHECK(
+                arg ==
+                glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat4x2Map(std::map<std::string, glm::mat4x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x2Optional(std::optional<glm::mat4x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+        );
+    }
+
+    [[codegen::luawrap]] void funcMat4x2OptionalNullopt(std::optional<glm::mat4x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat4x2Vector(std::vector<glm::mat4x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(
+            arg[1] ==
+            glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x3(glm::mat4x3 arg) {
+        CHECK(
+            arg ==
+            glm::mat4x3(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat4x3Defaulted(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
-        CHECK(arg == glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+    [[codegen::luawrap]] void funcMat4x3Defaulted(glm::mat4x3 arg = glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)) {
+        CHECK(
+            arg ==
+            glm::mat4x3(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat4x3DefaultedCheck(bool isDefaulted, glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
+    [[codegen::luawrap]] void funcMat4x3DefaultedCheck(bool isDefaulted, glm::mat4x3 arg = glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f));
+            CHECK(
+                arg ==
+                glm::mat4x3(
+                    1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                    7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+                )
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::mat4x3(
+                    13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+                    19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat4x3Map(std::map<std::string, glm::mat4x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat4x3(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat4x3(
+                13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat4x3(
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+                31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x3Optional(std::optional<glm::mat4x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::mat4x3(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcMat4x3OptionalNullopt(std::optional<glm::mat4x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat4x3Vector(std::vector<glm::mat4x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::mat4x3(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
+                7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::mat4x3(
+                13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+                19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat4x3(
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+                31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x4(glm::mat4x4 arg) {
+        CHECK(
+            arg ==
+            glm::mat4x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat4x4Defaulted(glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
-        CHECK(arg == glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f));
+    [[codegen::luawrap]] void funcMat4x4Defaulted(glm::mat4x4 arg = glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)) {
+        CHECK(
+            arg ==
+            glm::mat4x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcMat4x4DefaultedCheck(bool isDefaulted, glm::mat4x4 arg = glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f)) {
+    [[codegen::luawrap]] void funcMat4x4DefaultedCheck(bool isDefaulted, glm::mat4x4 arg = glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)) {
         if (isDefaulted) {
-            CHECK(arg == glm::mat4x4(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f));
+            CHECK(
+                arg ==
+                glm::mat4x4(
+                    1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                    9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+                )
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::mat4x4(
+                    17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f,
+                    25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcMat4x4Map(std::map<std::string, glm::mat4x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::mat4x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::mat4x4(
+                17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f,
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::mat4x4(
+                33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38, 39.39f, 40.40f,
+                41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcMat4x4Optional(std::optional<glm::mat4x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::mat4x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcMat4x4OptionalNullopt(std::optional<glm::mat4x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcMat4x4Vector(std::vector<glm::mat4x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::mat4x4(
+                1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
+                9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::mat4x4(
+                17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f,
+                25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::mat4x4(
+                33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f,
+                41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat2x2(glm::dmat2x2 arg) {
+        CHECK(arg == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
     }
 
-    [[codegen::luawrap]] void funcDMat2x2Defaulted(glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
-        CHECK(arg == glm::dmat2x2(1.0, 2.0, 3.0, 4.0));
+    [[codegen::luawrap]] void funcDMat2x2Defaulted(glm::dmat2x2 arg = glm::dmat2x2(1.1, 2.2, 3.3, 4.4)) {
+        CHECK(arg == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
     }
 
-    [[codegen::luawrap]] void funcDMat2x2DefaultedCheck(bool isDefaulted, glm::dmat2x2 arg = glm::dmat2x2(1.0, 2.0, 3.0, 4.0)) {
+    [[codegen::luawrap]] void funcDMat2x2DefaultedCheck(bool isDefaulted, glm::dmat2x2 arg = glm::dmat2x2(1.1, 2.2, 3.3, 4.4)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat2x2(1.0, 2.0, 3.0, 4.0));
+            CHECK(arg == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
         }
         else {
-
+            CHECK(arg == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
         }
     }
 
     [[codegen::luawrap]] void funcDMat2x2Map(std::map<std::string, glm::dmat2x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(arg.find("key2")->second == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(arg.find("key3")->second == glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
     }
 
     [[codegen::luawrap]] void funcDMat2x2Optional(std::optional<glm::dmat2x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x2OptionalNullopt(std::optional<glm::dmat2x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat2x2Vector(std::vector<glm::dmat2x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
     }
 
     [[codegen::luawrap]] void funcDMat2x3(glm::dmat2x3 arg) {
+        CHECK(arg == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
     }
 
-    [[codegen::luawrap]] void funcDMat2x3Defaulted(glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-        CHECK(arg == glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+    [[codegen::luawrap]] void funcDMat2x3Defaulted(glm::dmat2x3 arg = glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)) {
+        CHECK(arg == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
     }
 
-    [[codegen::luawrap]] void funcDMat2x3DefaultedCheck(bool isDefaulted, glm::dmat2x3 arg = glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+    [[codegen::luawrap]] void funcDMat2x3DefaultedCheck(bool isDefaulted, glm::dmat2x3 arg = glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat2x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+            CHECK(arg == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
         }
         else {
-
+            CHECK(arg == glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
         }
     }
 
     [[codegen::luawrap]] void funcDMat2x3Map(std::map<std::string, glm::dmat2x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(arg.find("key1")->second == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat2x3Optional(std::optional<glm::dmat2x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x3OptionalNullopt(std::optional<glm::dmat2x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat2x3Vector(std::vector<glm::dmat2x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
     }
 
     [[codegen::luawrap]] void funcDMat2x4(glm::dmat2x4 arg) {
+        CHECK(arg == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
     }
 
-    [[codegen::luawrap]] void funcDMat2x4Defaulted(glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-        CHECK(arg == glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+    [[codegen::luawrap]] void funcDMat2x4Defaulted(glm::dmat2x4 arg = glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)) {
+        CHECK(arg == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
     }
 
-    [[codegen::luawrap]] void funcDMat2x4DefaultedCheck(bool isDefaulted, glm::dmat2x4 arg = glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+    [[codegen::luawrap]] void funcDMat2x4DefaultedCheck(bool isDefaulted, glm::dmat2x4 arg = glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat2x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+            CHECK(arg == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat2x4Map(std::map<std::string, glm::dmat2x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat2x4Optional(std::optional<glm::dmat2x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x4OptionalNullopt(std::optional<glm::dmat2x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat2x4Vector(std::vector<glm::dmat2x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+        );
+        CHECK(
+            arg[1] ==
+            glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat3x2(glm::dmat3x2 arg) {
+        CHECK(arg == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
     }
 
-    [[codegen::luawrap]] void funcDMat3x2Defaulted(glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
-        CHECK(arg == glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+    [[codegen::luawrap]] void funcDMat3x2Defaulted(glm::dmat3x2 arg = glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)) {
+        CHECK(arg == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
     }
 
-    [[codegen::luawrap]] void funcDMat3x2DefaultedCheck(bool isDefaulted, glm::dmat3x2 arg = glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)) {
+    [[codegen::luawrap]] void funcDMat3x2DefaultedCheck(bool isDefaulted, glm::dmat3x2 arg = glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat3x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0));
+            CHECK(arg == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
         }
         else {
-
+            CHECK(arg == glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
         }
     }
 
     [[codegen::luawrap]] void funcDMat3x2Map(std::map<std::string, glm::dmat3x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat3x2Optional(std::optional<glm::dmat3x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x2OptionalNullopt(std::optional<glm::dmat3x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat3x2Vector(std::vector<glm::dmat3x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
     }
 
     [[codegen::luawrap]] void funcDMat3x3(glm::dmat3x3 arg) {
+        CHECK(arg == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
     }
 
-    [[codegen::luawrap]] void funcDMat3x3Defaulted(glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
-        CHECK(arg == glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0));
+    [[codegen::luawrap]] void funcDMat3x3Defaulted(glm::dmat3x3 arg = glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)) {
+        CHECK(arg == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
     }
 
-    [[codegen::luawrap]] void funcDMat3x3DefaultedCheck(bool isDefaulted, glm::dmat3x3 arg = glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)) {
+    [[codegen::luawrap]] void funcDMat3x3DefaultedCheck(bool isDefaulted, glm::dmat3x3 arg = glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat3x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0));
+            CHECK(arg == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat3x3(
+                    10.10, 11.11, 12.12, 13.13, 14.14,
+                    15.15, 16.16, 17.17, 18.18
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat3x3Map(std::map<std::string, glm::dmat3x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat3x3(10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat3x3Optional(std::optional<glm::dmat3x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(*arg == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x3OptionalNullopt(std::optional<glm::dmat3x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat3x3Vector(std::vector<glm::dmat3x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
+        );
+        CHECK(
+            arg[1] ==
+            glm::dmat3x3(10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat3x4(glm::dmat3x4 arg) {
+        CHECK(
+            arg ==
+            glm::dmat3x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat3x4Defaulted(glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-        CHECK(arg == glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+    [[codegen::luawrap]] void funcDMat3x4Defaulted(glm::dmat3x4 arg = glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)) {
+        CHECK(
+            arg ==
+            glm::dmat3x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat3x4DefaultedCheck(bool isDefaulted, glm::dmat3x4 arg = glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+    [[codegen::luawrap]] void funcDMat3x4DefaultedCheck(bool isDefaulted, glm::dmat3x4 arg = glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat3x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+            CHECK(
+                arg ==
+                glm::dmat3x4(
+                    1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                    7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+                )
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat3x4(
+                    13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                    19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat3x4Map(std::map<std::string, glm::dmat3x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat3x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat3x4(
+                13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat3x4(
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+                31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat3x4Optional(std::optional<glm::dmat3x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::dmat3x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcDMat3x4OptionalNullopt(std::optional<glm::dmat3x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat3x4Vector(std::vector<glm::dmat3x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::dmat3x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::dmat3x4(
+                13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat3x4(
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+                31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x2(glm::dmat4x2 arg) {
+        CHECK(arg == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
     }
 
-    [[codegen::luawrap]] void funcDMat4x2Defaulted(glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
-        CHECK(arg == glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+    [[codegen::luawrap]] void funcDMat4x2Defaulted(glm::dmat4x2 arg = glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)) {
+        CHECK(arg == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
     }
 
-    [[codegen::luawrap]] void funcDMat4x2DefaultedCheck(bool isDefaulted, glm::dmat4x2 arg = glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)) {
+    [[codegen::luawrap]] void funcDMat4x2DefaultedCheck(bool isDefaulted, glm::dmat4x2 arg = glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat4x2(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0));
+            CHECK(arg == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat4x2Map(std::map<std::string, glm::dmat4x2> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x2Optional(std::optional<glm::dmat4x2> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+        );
+    }
+
+    [[codegen::luawrap]] void funcDMat4x2OptionalNullopt(std::optional<glm::dmat4x2> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat4x2Vector(std::vector<glm::dmat4x2> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0] == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+        CHECK(
+            arg[1] ==
+            glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x3(glm::dmat4x3 arg) {
+        CHECK(
+            arg ==
+            glm::dmat4x3(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat4x3Defaulted(glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
-        CHECK(arg == glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+    [[codegen::luawrap]] void funcDMat4x3Defaulted(glm::dmat4x3 arg = glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)) {
+        CHECK(
+            arg ==
+            glm::dmat4x3(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat4x3DefaultedCheck(bool isDefaulted, glm::dmat4x3 arg = glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0)) {
+    [[codegen::luawrap]] void funcDMat4x3DefaultedCheck(bool isDefaulted, glm::dmat4x3 arg = glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat4x3(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0));
+            CHECK(
+                arg ==
+                glm::dmat4x3(
+                    1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                    7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+                )
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat4x3(
+                    13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                    19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat4x3Map(std::map<std::string, glm::dmat4x3> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat4x3(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat4x3(
+                13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat4x3(
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+                31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x3Optional(std::optional<glm::dmat4x3> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::dmat4x3(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcDMat4x3OptionalNullopt(std::optional<glm::dmat4x3> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat4x3Vector(std::vector<glm::dmat4x3> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::dmat4x3(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
+                7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::dmat4x3(
+                13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+                19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat4x3(
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+                31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x4(glm::dmat4x4 arg) {
+        CHECK(
+            arg ==
+            glm::dmat4x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat4x4Defaulted(glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
-        CHECK(arg == glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0));
+    [[codegen::luawrap]] void funcDMat4x4Defaulted(glm::dmat4x4 arg = glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)) {
+        CHECK(
+            arg ==
+            glm::dmat4x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+            )
+        );
     }
 
-    [[codegen::luawrap]] void funcDMat4x4DefaultedCheck(bool isDefaulted, glm::dmat4x4 arg = glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)) {
+    [[codegen::luawrap]] void funcDMat4x4DefaultedCheck(bool isDefaulted, glm::dmat4x4 arg = glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)) {
         if (isDefaulted) {
-            CHECK(arg == glm::dmat4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0));
+            CHECK(
+                arg ==
+                glm::dmat4x4(
+                    1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                    9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+                )
+            );
         }
         else {
-
+            CHECK(
+                arg ==
+                glm::dmat4x4(
+                    17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24,
+                    25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32
+                )
+            );
         }
     }
 
     [[codegen::luawrap]] void funcDMat4x4Map(std::map<std::string, glm::dmat4x4> arg) {
+        CHECK(arg.size() == 3);
+        REQUIRE(arg.find("key1") != arg.end());
+        CHECK(
+            arg.find("key1")->second ==
+            glm::dmat4x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+            )
+        );
+        REQUIRE(arg.find("key2") != arg.end());
+        CHECK(
+            arg.find("key2")->second ==
+            glm::dmat4x4(
+                17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24,
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32
+            )
+        );
+        REQUIRE(arg.find("key3") != arg.end());
+        CHECK(
+            arg.find("key3")->second ==
+            glm::dmat4x4(
+                33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40,
+                41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDMat4x4Optional(std::optional<glm::dmat4x4> arg) {
+        REQUIRE(arg.has_value());
+        CHECK(
+            *arg ==
+            glm::dmat4x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+            )
+        );
+    }
+
+    [[codegen::luawrap]] void funcDMat4x4OptionalNullopt(std::optional<glm::dmat4x4> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDMat4x4Vector(std::vector<glm::dmat4x4> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(
+            arg[0] ==
+            glm::dmat4x4(
+                1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8,
+                9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
+            )
+        );
+        CHECK(
+            arg[1] ==
+            glm::dmat4x4(
+                17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24,
+                25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32
+            )
+        );
+        CHECK(
+            arg[2] ==
+            glm::dmat4x4(
+                33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40,
+                41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+            )
+        );
     }
 
     [[codegen::luawrap]] void funcDictionary(ghoul::Dictionary arg) {
+        REQUIRE(arg.hasValue<double>("a"));
+        CHECK(arg.value<double>("a") == 1.1);
+        REQUIRE(arg.hasValue<std::string>("b"));
+        CHECK(arg.value<std::string>("b") == "abc");
+        REQUIRE(arg.hasValue<glm::dvec3>("c"));
+        CHECK(arg.value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
     }
 
     [[codegen::luawrap]] void funcDictionaryDefaulted(ghoul::Dictionary arg = ghoul::Dictionary()) {
@@ -888,23 +2045,108 @@ namespace {
             CHECK(arg == ghoul::Dictionary());
         }
         else {
-
+            REQUIRE(arg.hasValue<double>("a"));
+            CHECK(arg.value<double>("a") == 1.1);
+            REQUIRE(arg.hasValue<std::string>("b"));
+            CHECK(arg.value<std::string>("b") == "abc");
+            REQUIRE(arg.hasValue<glm::dvec3>("c"));
+            CHECK(arg.value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
         }
     }
 
     [[codegen::luawrap]] void funcDictionaryMap(std::map<std::string, ghoul::Dictionary> arg) {
+        CHECK(arg.size() == 3);
+        {
+            auto it = arg.find("key1");
+            REQUIRE(it != arg.end());
+            CHECK(it->second.hasValue<double>("a"));
+            CHECK(it->second.value<double>("a") == 1.1);
+            REQUIRE(it->second.hasValue<std::string>("b"));
+            CHECK(it->second.value<std::string>("b") == "abc");
+            REQUIRE(it->second.hasValue<glm::dvec3>("c"));
+            CHECK(it->second.value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+        }
+        {
+            auto it = arg.find("key2");
+            REQUIRE(it != arg.end());
+            CHECK(it->second.hasValue<double>("a"));
+            CHECK(it->second.value<double>("a") == 5.5);
+            REQUIRE(it->second.hasValue<std::string>("b"));
+            CHECK(it->second.value<std::string>("b") == "def");
+            REQUIRE(it->second.hasValue<glm::dvec3>("c"));
+            CHECK(it->second.value<glm::dvec3>("c") == glm::dvec3(6.6, 7.7, 8.8));
+        }
+        {
+            auto it = arg.find("key3");
+            REQUIRE(it != arg.end());
+            CHECK(it->second.hasValue<double>("a"));
+            CHECK(it->second.value<double>("a") == 9.9);
+            REQUIRE(it->second.hasValue<std::string>("b"));
+            CHECK(it->second.value<std::string>("b") == "ghi");
+            REQUIRE(it->second.hasValue<glm::dvec3>("c"));
+            CHECK(it->second.value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
+        }
     }
 
     [[codegen::luawrap]] void funcDictionaryOptional(std::optional<ghoul::Dictionary> arg) {
+        REQUIRE(arg.has_value());
+        REQUIRE(arg->hasValue<double>("a"));
+        CHECK(arg->value<double>("a") == 1.1);
+        REQUIRE(arg->hasValue<std::string>("b"));
+        CHECK(arg->value<std::string>("b") == "abc");
+        REQUIRE(arg->hasValue<glm::dvec3>("c"));
+        CHECK(arg->value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDictionaryOptionalNullopt(std::optional<ghoul::Dictionary> arg) {
+        CHECK(!arg.has_value());
     }
 
     [[codegen::luawrap]] void funcDictionaryVector(std::vector<ghoul::Dictionary> arg) {
+        REQUIRE(arg.size() == 3);
+        CHECK(arg[0].hasValue<double>("a"));
+        CHECK(arg[0].value<double>("a") == 1.1);
+        REQUIRE(arg[0].hasValue<std::string>("b"));
+        CHECK(arg[0].value<std::string>("b") == "abc");
+        REQUIRE(arg[0].hasValue<glm::dvec3>("c"));
+        CHECK(arg[0].value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+        CHECK(arg[1].hasValue<double>("a"));
+        CHECK(arg[1].value<double>("a") == 5.5);
+        REQUIRE(arg[1].hasValue<std::string>("b"));
+        CHECK(arg[1].value<std::string>("b") == "def");
+        REQUIRE(arg[1].hasValue<glm::dvec3>("c"));
+        CHECK(arg[1].value<glm::dvec3>("c") == glm::dvec3(6.6, 7.7, 8.8));
+        CHECK(arg[2].hasValue<double>("a"));
+        CHECK(arg[2].value<double>("a") == 9.9);
+        REQUIRE(arg[2].hasValue<std::string>("b"));
+        CHECK(arg[2].value<std::string>("b") == "ghi");
+        REQUIRE(arg[2].hasValue<glm::dvec3>("c"));
+        CHECK(arg[2].value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
     }
 
-    [[codegen::luawrap]] void funcVariant(std::variant<bool, int> arg) {
+    [[codegen::luawrap]] void funcVariantBool(std::variant<bool, int> arg) {
+        REQUIRE(std::holds_alternative<bool>(arg));
+        CHECK(std::get<bool>(arg) == true);
     }
 
-    [[codegen::luawrap]] void funcVariantDoubleFloatString(std::variant<double, float, std::string> arg) {
+    [[codegen::luawrap]] void funcVariantInt(std::variant<bool, int> arg) {
+        REQUIRE(std::holds_alternative<int>(arg));
+        CHECK(std::get<int>(arg) == 2);
+    }
+
+    [[codegen::luawrap]] void funcVariantDoubleDvec3StringDouble(std::variant<double, glm::dvec3, std::string> arg) {
+        REQUIRE(std::holds_alternative<double>(arg));
+        CHECK(std::get<double>(arg) == 2.2);
+    }
+
+    [[codegen::luawrap]] void funcVariantDoubleDvec3StringDvec3(std::variant<double, glm::dvec3, std::string> arg) {
+        REQUIRE(std::holds_alternative<glm::dvec3>(arg));
+        CHECK(std::get<glm::dvec3>(arg) == glm::dvec3(1.1, 2.2, 3.3));
+    }
+
+    [[codegen::luawrap]] void funcVariantDoubleDvec3StringString(std::variant<double, glm::dvec3, std::string> arg) {
+        REQUIRE(std::holds_alternative<std::string>(arg));
+        CHECK(std::get<std::string>(arg) == "abc");
     }
 
 #include "execution_luawrapper_arguments_codegen.cpp"
@@ -955,10 +2197,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcBoolDefaulted;
     CHECK(func.name == "funcBoolDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -998,12 +2238,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck with value") {
     LuaLibrary::Function func = codegen::lua::funcBoolDefaultedCheck;
     CHECK(func.name == "funcBoolDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
-    {
-        CHECK(func.arguments[0].name == "isDefaulted");
-        CHECK(func.arguments[0].type == "Boolean");
-        CHECK(func.arguments[1].name == "arg");
-        CHECK(func.arguments[1].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1022,12 +2260,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck w/o value") {
     LuaLibrary::Function func = codegen::lua::funcBoolDefaultedCheck;
     CHECK(func.name == "funcBoolDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
-    {
-        CHECK(func.arguments[0].name == "isDefaulted");
-        CHECK(func.arguments[0].type == "Boolean");
-        CHECK(func.arguments[1].name == "arg");
-        CHECK(func.arguments[1].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1096,10 +2332,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  funcBoolOptionalNullopt") {
     LuaLibrary::Function func = codegen::lua::funcBoolOptionalNullopt;
     CHECK(func.name == "funcBoolOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1167,10 +2401,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcIntDefaulted;
     CHECK(func.name == "funcIntDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Integer?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1198,6 +2430,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIntDefaultedCheck;
+    CHECK(func.name == "funcIntDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Integer?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, 3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIntDefaultedCheck;
+    CHECK(func.name == "funcIntDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Integer?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1233,7 +2509,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcIntOptional;
@@ -1255,16 +2531,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  intOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIntOptional;
-    CHECK(func.name == "funcIntOptional");
+    LuaLibrary::Function func = codegen::lua::funcIntOptionalNullopt;
+    CHECK(func.name == "funcIntOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Integer?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1332,16 +2606,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDoubleDefaulted;
     CHECK(func.name == "funcDoubleDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 2.1);
+    ghoul::lua::push(state, 2.2);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1363,6 +2635,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDoubleDefaultedCheck;
+    CHECK(func.name == "funcDoubleDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, 3.3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDoubleDefaultedCheck;
+    CHECK(func.name == "funcDoubleDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1397,7 +2713,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDoubleOptional;
@@ -1419,16 +2735,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDoubleOptional;
-    CHECK(func.name == "funcDoubleOptional");
+    LuaLibrary::Function func = codegen::lua::funcDoubleOptionalNullopt;
+    CHECK(func.name == "funcDoubleOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1496,16 +2810,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcFloatDefaulted;
     CHECK(func.name == "funcFloatDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 2.1f);
+    ghoul::lua::push(state, 1.1f);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1527,6 +2839,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcFloatDefaultedCheck;
+    CHECK(func.name == "funcFloatDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, 3.3f);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcFloatDefaultedCheck;
+    CHECK(func.name == "funcFloatDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1561,7 +2917,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcFloatOptional;
@@ -1583,16 +2939,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloatOptional;
-    CHECK(func.name == "funcFloatOptional");
+    LuaLibrary::Function func = codegen::lua::funcFloatOptionalNullopt;
+    CHECK(func.name == "funcFloatOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1663,10 +3017,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcStringDefaulted;
     CHECK(func.name == "funcStringDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1695,6 +3047,52 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck with value") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcStringDefaultedCheck;
+    CHECK(func.name == "funcStringDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "String?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, "def"s);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcStringDefaultedCheck;
+    CHECK(func.name == "funcStringDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "String?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1730,7 +3128,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -1753,17 +3151,15 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptionalNullopt") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcStringOptional;
-    CHECK(func.name == "funcStringOptional");
+    LuaLibrary::Function func = codegen::lua::funcStringOptionalNullopt;
+    CHECK(func.name == "funcStringOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1832,10 +3228,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcPathDefaulted;
     CHECK(func.name == "funcPathDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Path?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1863,6 +3257,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcPathDefaultedCheck;
+    CHECK(func.name == "funcPathDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Path?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, std::filesystem::path("def"));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcPathDefaultedCheck;
+    CHECK(func.name == "funcPathDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Path?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1897,7 +3335,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcPathOptional;
@@ -1919,16 +3357,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPathOptional;
-    CHECK(func.name == "funcPathOptional");
+    LuaLibrary::Function func = codegen::lua::funcPathOptionalNullopt;
+    CHECK(func.name == "funcPathOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Path?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -1996,10 +3432,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcIvec2Defaulted;
     CHECK(func.name == "funcIvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2027,6 +3461,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec2DefaultedCheck;
+    CHECK(func.name == "funcIvec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::ivec2(2, 3));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec2DefaultedCheck;
+    CHECK(func.name == "funcIvec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2061,7 +3539,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcIvec2Optional;
@@ -2083,16 +3561,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2Optional;
-    CHECK(func.name == "funcIvec2Optional");
+    LuaLibrary::Function func = codegen::lua::funcIvec2OptionalNullopt;
+    CHECK(func.name == "funcIvec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2160,10 +3636,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcIvec3Defaulted;
     CHECK(func.name == "funcIvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2191,6 +3665,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec3DefaultedCheck;
+    CHECK(func.name == "funcIvec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::ivec3(4, 5, 6));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec3DefaultedCheck;
+    CHECK(func.name == "funcIvec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2225,7 +3743,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcIvec3Optional;
@@ -2247,16 +3765,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3Optional;
-    CHECK(func.name == "funcIvec3Optional");
+    LuaLibrary::Function func = codegen::lua::funcIvec3OptionalNullopt;
+    CHECK(func.name == "funcIvec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2324,10 +3840,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcIvec4Defaulted;
     CHECK(func.name == "funcIvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2355,6 +3869,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec4DefaultedCheck;
+    CHECK(func.name == "funcIvec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::ivec4(5, 6, 7, 8));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcIvec4DefaultedCheck;
+    CHECK(func.name == "funcIvec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "ivec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2389,7 +3947,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcIvec4Optional;
@@ -2411,16 +3969,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4Optional;
-    CHECK(func.name == "funcIvec4Optional");
+    LuaLibrary::Function func = codegen::lua::funcIvec4OptionalNullopt;
+    CHECK(func.name == "funcIvec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2488,10 +4044,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDvec2Defaulted;
     CHECK(func.name == "funcDvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2519,6 +4073,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec2DefaultedCheck;
+    CHECK(func.name == "funcDvec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dvec2(3.3, 4.4));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec2DefaultedCheck;
+    CHECK(func.name == "funcDvec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2553,7 +4151,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDvec2Optional;
@@ -2575,16 +4173,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2Optional;
-    CHECK(func.name == "funcDvec2Optional");
+    LuaLibrary::Function func = codegen::lua::funcDvec2OptionalNullopt;
+    CHECK(func.name == "funcDvec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2652,10 +4248,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDvec3Defaulted;
     CHECK(func.name == "funcDvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2683,6 +4277,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec3DefaultedCheck;
+    CHECK(func.name == "funcDvec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dvec3(4.4, 5.5, 6.6));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec3DefaultedCheck;
+    CHECK(func.name == "funcDvec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2717,7 +4355,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDvec3Optional;
@@ -2739,16 +4377,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3Optional;
-    CHECK(func.name == "funcDvec3Optional");
+    LuaLibrary::Function func = codegen::lua::funcDvec3OptionalNullopt;
+    CHECK(func.name == "funcDvec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2816,10 +4452,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDvec4Defaulted;
     CHECK(func.name == "funcDvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2847,6 +4481,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec4DefaultedCheck;
+    CHECK(func.name == "funcDvec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dvec4(5.5, 6.6, 7.7, 8.8));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDvec4DefaultedCheck;
+    CHECK(func.name == "funcDvec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2881,7 +4559,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDvec4Optional;
@@ -2903,16 +4581,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4Optional;
-    CHECK(func.name == "funcDvec4Optional");
+    LuaLibrary::Function func = codegen::lua::funcDvec4OptionalNullopt;
+    CHECK(func.name == "funcDvec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2980,10 +4656,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcVec2Defaulted;
     CHECK(func.name == "funcVec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3011,6 +4685,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec2DefaultedCheck;
+    CHECK(func.name == "funcVec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::vec2(3.3f, 4.4f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec2DefaultedCheck;
+    CHECK(func.name == "funcVec2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3045,7 +4763,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcVec2Optional;
@@ -3067,16 +4785,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2Optional;
-    CHECK(func.name == "funcVec2Optional");
+    LuaLibrary::Function func = codegen::lua::funcVec2OptionalNullopt;
+    CHECK(func.name == "funcVec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3144,10 +4860,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcVec3Defaulted;
     CHECK(func.name == "funcVec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3175,6 +4889,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec3DefaultedCheck;
+    CHECK(func.name == "funcVec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::vec3(4.4f, 5.5f, 6.6f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec3DefaultedCheck;
+    CHECK(func.name == "funcVec3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3209,7 +4967,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcVec3Optional;
@@ -3231,16 +4989,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3Optional;
-    CHECK(func.name == "funcVec3Optional");
+    LuaLibrary::Function func = codegen::lua::funcVec3OptionalNullopt;
+    CHECK(func.name == "funcVec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3308,10 +5064,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcVec4Defaulted;
     CHECK(func.name == "funcVec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3339,6 +5093,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec4DefaultedCheck;
+    CHECK(func.name == "funcVec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcVec4DefaultedCheck;
+    CHECK(func.name == "funcVec4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3373,7 +5171,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcVec4Optional;
@@ -3395,16 +5193,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4Optional;
-    CHECK(func.name == "funcVec4Optional");
+    LuaLibrary::Function func = codegen::lua::funcVec4OptionalNullopt;
+    CHECK(func.name == "funcVec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3472,10 +5268,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat2x2Defaulted;
     CHECK(func.name == "funcMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3503,6 +5297,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x2DefaultedCheck;
+    CHECK(func.name == "funcMat2x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x2DefaultedCheck;
+    CHECK(func.name == "funcMat2x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3537,7 +5375,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat2x2Optional;
@@ -3559,16 +5397,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2Optional;
-    CHECK(func.name == "funcMat2x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat2x2OptionalNullopt;
+    CHECK(func.name == "funcMat2x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3636,10 +5472,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat2x3Defaulted;
     CHECK(func.name == "funcMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3667,6 +5501,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x3DefaultedCheck;
+    CHECK(func.name == "funcMat2x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x3DefaultedCheck;
+    CHECK(func.name == "funcMat2x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3713,7 +5591,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat2x3Optional;
@@ -3735,16 +5613,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3Optional;
-    CHECK(func.name == "funcMat2x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat2x3OptionalNullopt;
+    CHECK(func.name == "funcMat2x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3824,10 +5700,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat2x4Defaulted;
     CHECK(func.name == "funcMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3855,6 +5729,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x4DefaultedCheck;
+    CHECK(func.name == "funcMat2x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat2x4DefaultedCheck;
+    CHECK(func.name == "funcMat2x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3901,7 +5823,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat2x4Optional;
@@ -3923,16 +5845,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4Optional;
-    CHECK(func.name == "funcMat2x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat2x4OptionalNullopt;
+    CHECK(func.name == "funcMat2x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4012,10 +5932,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat3x2Defaulted;
     CHECK(func.name == "funcMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4043,6 +5961,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x2DefaultedCheck;
+    CHECK(func.name == "funcMat3x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x2DefaultedCheck;
+    CHECK(func.name == "funcMat3x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -4089,7 +6051,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat3x2Optional;
@@ -4111,16 +6073,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2Optional;
-    CHECK(func.name == "funcMat3x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat3x2OptionalNullopt;
+    CHECK(func.name == "funcMat3x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4203,10 +6163,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat3x3Defaulted;
     CHECK(func.name == "funcMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4237,6 +6195,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x3DefaultedCheck;
+    CHECK(func.name == "funcMat3x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
+            15.15f, 16.16f, 17.17f, 18.18f
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x3DefaultedCheck;
+    CHECK(func.name == "funcMat3x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -4289,7 +6298,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat3x3Optional;
@@ -4314,16 +6323,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3Optional;
-    CHECK(func.name == "funcMat3x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat3x3OptionalNullopt;
+    CHECK(func.name == "funcMat3x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4415,10 +6422,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat3x4Defaulted;
     CHECK(func.name == "funcMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4452,6 +6457,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x4DefaultedCheck;
+    CHECK(func.name == "funcMat3x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat3x4(
+            13.13f, 14.14f, 15.15, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat3x4DefaultedCheck;
+    CHECK(func.name == "funcMat3x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -4507,7 +6563,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat3x4Optional;
@@ -4535,16 +6591,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4Optional;
-    CHECK(func.name == "funcMat3x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat3x4OptionalNullopt;
+    CHECK(func.name == "funcMat3x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4634,10 +6688,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat4x2Defaulted;
     CHECK(func.name == "funcMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4665,6 +6717,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x2DefaultedCheck;
+    CHECK(func.name == "funcMat4x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x2DefaultedCheck;
+    CHECK(func.name == "funcMat4x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -4711,7 +6811,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat4x2Optional;
@@ -4733,16 +6833,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2Optional;
-    CHECK(func.name == "funcMat4x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat4x2OptionalNullopt;
+    CHECK(func.name == "funcMat4x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4828,10 +6926,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat4x3Defaulted;
     CHECK(func.name == "funcMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4865,6 +6961,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x3DefaultedCheck;
+    CHECK(func.name == "funcMat4x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat4x3(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x3DefaultedCheck;
+    CHECK(func.name == "funcMat4x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -4909,8 +7056,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map") {
         state,
         "key3",
         glm::mat4x3(
-            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f,
-            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f)
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
     );
     lua_rawset(state, -3);
     REQUIRE(func.function);
@@ -4919,7 +7067,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat4x3Optional;
@@ -4947,16 +7095,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3Optional;
-    CHECK(func.name == "funcMat4x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat4x3OptionalNullopt;
+    CHECK(func.name == "funcMat4x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5051,10 +7197,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcMat4x4Defaulted;
     CHECK(func.name == "funcMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5088,6 +7232,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x4DefaultedCheck;
+    CHECK(func.name == "funcMat4x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::mat4x4(
+            17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f,
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcMat4x4DefaultedCheck;
+    CHECK(func.name == "funcMat4x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5143,7 +7338,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcMat4x4Optional;
@@ -5171,16 +7366,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4Optional;
-    CHECK(func.name == "funcMat4x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcMat4x4OptionalNullopt;
+    CHECK(func.name == "funcMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5269,10 +7462,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat2x2Defaulted;
     CHECK(func.name == "funcDMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5300,6 +7491,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x2DefaultedCheck;
+    CHECK(func.name == "funcDMat2x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x2DefaultedCheck;
+    CHECK(func.name == "funcDMat2x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5334,7 +7569,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat2x2Optional;
@@ -5356,16 +7591,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2Optional;
-    CHECK(func.name == "funcDMat2x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat2x2OptionalNullopt;
+    CHECK(func.name == "funcDMat2x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5433,10 +7666,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat2x3Defaulted;
     CHECK(func.name == "funcDMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5470,6 +7701,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted w/o value") {
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x3DefaultedCheck;
+    CHECK(func.name == "funcDMat2x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x3DefaultedCheck;
+    CHECK(func.name == "funcDMat2x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
     using namespace openspace::scripting;
 
@@ -5490,7 +7765,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key2", glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
-    ghoul::lua::push(state, "key3", glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+    ghoul::lua::push(
+        state,
+        "key3",
+        glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
     lua_rawset(state, -3);
     REQUIRE(func.function);
     func.function(state);
@@ -5498,7 +7777,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat2x3Optional;
@@ -5520,16 +7799,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3Optional;
-    CHECK(func.name == "funcDMat2x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat2x3OptionalNullopt;
+    CHECK(func.name == "funcDMat2x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5597,10 +7874,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat2x4Defaulted;
     CHECK(func.name == "funcDMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5628,6 +7903,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x4DefaultedCheck;
+    CHECK(func.name == "funcDMat2x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat2x4DefaultedCheck;
+    CHECK(func.name == "funcDMat2x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5674,7 +7993,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat2x4Optional;
@@ -5696,16 +8015,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4Optional;
-    CHECK(func.name == "funcDMat2x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat2x4OptionalNullopt;
+    CHECK(func.name == "funcDMat2x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5785,10 +8102,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat3x2Defaulted;
     CHECK(func.name == "funcDMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5816,6 +8131,50 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x2DefaultedCheck;
+    CHECK(func.name == "funcDMat3x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false, glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x2DefaultedCheck;
+    CHECK(func.name == "funcDMat3x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5862,7 +8221,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat3x2Optional;
@@ -5884,16 +8243,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2Optional;
-    CHECK(func.name == "funcDMat3x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat3x2OptionalNullopt;
+    CHECK(func.name == "funcDMat3x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5976,10 +8333,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat3x3Defaulted;
     CHECK(func.name == "funcDMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6010,6 +8365,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x3DefaultedCheck;
+    CHECK(func.name == "funcDMat3x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::dmat3x3(10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x3DefaultedCheck;
+    CHECK(func.name == "funcDMat3x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6056,7 +8459,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat3x3Optional;
@@ -6081,16 +8484,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3Optional;
-    CHECK(func.name == "funcDMat3x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat3x3OptionalNullopt;
+    CHECK(func.name == "funcDMat3x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6160,7 +8561,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4") {
     ghoul::lua::push(
         state,
         glm::dmat3x4(
-            1.1, 2.2, 3.3, 4.4, 5., 6.6,
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6,
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
@@ -6176,10 +8577,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat3x4Defaulted;
     CHECK(func.name == "funcDMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6213,6 +8612,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x4DefaultedCheck;
+    CHECK(func.name == "funcDMat3x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::dmat3x4(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat3x4DefaultedCheck;
+    CHECK(func.name == "funcDMat3x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6268,7 +8718,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat3x4Optional;
@@ -6296,16 +8746,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4Optional;
-    CHECK(func.name == "funcDMat3x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat3x4OptionalNullopt;
+    CHECK(func.name == "funcDMat3x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6395,10 +8843,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat4x2Defaulted;
     CHECK(func.name == "funcDMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6426,6 +8872,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x2DefaultedCheck;
+    CHECK(func.name == "funcDMat4x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x2DefaultedCheck;
+    CHECK(func.name == "funcDMat4x2DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6472,7 +8966,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat4x2Optional;
@@ -6494,16 +8988,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2Optional;
-    CHECK(func.name == "funcDMat4x2Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat4x2OptionalNullopt;
+    CHECK(func.name == "funcDMat4x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6589,10 +9081,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat4x3Defaulted;
     CHECK(func.name == "funcDMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6626,6 +9116,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x3DefaultedCheck;
+    CHECK(func.name == "funcDMat4x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::dmat4x3(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x3DefaultedCheck;
+    CHECK(func.name == "funcDMat4x3DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6670,8 +9211,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map") {
         state,
         "key3",
         glm::dmat4x3(
-            19.19, 20.20, 21.21, 22.22, 23.23, 24.24,
-            25.25, 26.26, 27.27, 28.28, 29.29, 30.0
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
         )
     );
     lua_rawset(state, -3);
@@ -6681,7 +9222,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat4x3Optional;
@@ -6709,16 +9250,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3Optional;
-    CHECK(func.name == "funcDMat4x3Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat4x3OptionalNullopt;
+    CHECK(func.name == "funcDMat4x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6813,10 +9352,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDMat4x4Defaulted;
     CHECK(func.name == "funcDMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6850,6 +9387,57 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck with value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x4DefaultedCheck;
+    CHECK(func.name == "funcDMat4x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(
+        state,
+        false,
+        glm::dmat4x4(
+            17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24,
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32
+        )
+    );
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDMat4x4DefaultedCheck;
+    CHECK(func.name == "funcDMat4x4DefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6905,7 +9493,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::funcDMat4x4Optional;
@@ -6933,16 +9521,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4OptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4Optional;
-    CHECK(func.name == "funcDMat4x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat4x4OptionalNullopt;
+    CHECK(func.name == "funcDMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7039,22 +9625,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted with value") {
     LuaLibrary::Function func = codegen::lua::funcDictionaryDefaulted;
     CHECK(func.name == "funcDictionaryDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Table?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     lua_newtable(state);
-    ghoul::lua::push(state, "a"s, 1.1);
-    lua_rawset(state, -3);
-    ghoul::lua::push(state, "b"s, "abc"s);
-    lua_rawset(state, -3);
-    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
-    lua_rawset(state, -3);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -7076,6 +9654,58 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted w/o value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck with value") {
+    using namespace openspace::scripting;
+    using namespace std::string_literals;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryDefaultedCheck;
+    CHECK(func.name == "funcDictionaryDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Table?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, false);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    REQUIRE(func.function);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck w/o value") {
+    using namespace openspace::scripting;
+
+    LuaLibrary::Function func = codegen::lua::funcDictionaryDefaultedCheck;
+    CHECK(func.name == "funcDictionaryDefaultedCheck");
+    REQUIRE(func.arguments.size() == 2);
+    CHECK(func.arguments[0].name == "isDefaulted");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.arguments[1].name == "arg");
+    CHECK(func.arguments[1].type == "Table?");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    ghoul::lua::push(state, true);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -7138,7 +9768,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional with value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -7169,16 +9799,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional with value") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional w/o value") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptionalNullopt") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4Optional;
-    CHECK(func.name == "funcDMat4x4Optional");
+    LuaLibrary::Function func = codegen::lua::funcDMat4x4OptionalNullopt;
+    CHECK(func.name == "funcDMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7249,8 +9877,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
 TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / bool") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariant;
-    CHECK(func.name == "funcVariant");
+    LuaLibrary::Function func = codegen::lua::funcVariantBool;
+    CHECK(func.name == "funcVariantBool");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
@@ -7271,8 +9899,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / bool") {
 TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / int") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariant;
-    CHECK(func.name == "funcVariant");
+    LuaLibrary::Function func = codegen::lua::funcVariantInt;
+    CHECK(func.name == "funcVariantInt");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
@@ -7290,60 +9918,60 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / int") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / double") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / double") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
-    CHECK(func.name == "funcVariantDoubleFloatString");
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleDvec3StringDouble;
+    CHECK(func.name == "funcVariantDoubleDvec3StringDouble");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | Number | String");
+        CHECK(func.arguments[0].type == "Number | vec3 | String");
     }
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 2.0);
+    ghoul::lua::push(state, 2.2);
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / float") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / vec3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
-    CHECK(func.name == "funcVariantDoubleFloatString");
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleDvec3StringDvec3;
+    CHECK(func.name == "funcVariantDoubleDvec3StringDvec3");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | Number | String");
+        CHECK(func.arguments[0].type == "Number | vec3 | String");
     }
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 2.f);
+    ghoul::lua::push(state, glm::dvec3(1.1, 2.2, 3.3));
     REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, float, string) / string") {
+TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / string") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDoubleFloatString;
-    CHECK(func.name == "funcVariantDoubleFloatString");
+    LuaLibrary::Function func = codegen::lua::funcVariantDoubleDvec3StringString;
+    CHECK(func.name == "funcVariantDoubleDvec3StringString");
     REQUIRE(func.arguments.size() == 1);
     {
         CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | Number | String");
+        CHECK(func.arguments[0].type == "Number | vec3 | String");
     }
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
