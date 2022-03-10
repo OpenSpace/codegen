@@ -723,15 +723,17 @@ s->name, s->attributes.dictionary
                 );
             }
 
+            result += "        try {\n";
+
             // Depending on if we have a return value at all, we want to be able to
             // capture that value or not
             if (f->returnValue) {
                 result += fmt::format(
-                    "        const {} res = ", generateTypename(f->returnValue)
+                    "            const {} res = ", generateTypename(f->returnValue)
                 );
             }
             else {
-                result += "        ";
+                result += "            ";
             }
 
             if (f->arguments.empty()) {
@@ -746,7 +748,7 @@ s->name, s->attributes.dictionary
                 for (size_t i = 0; i < f->arguments.size(); i += 1) {
                     Variable* var = f->arguments[i];
 
-                    result += "            ";
+                    result += "                ";
                     bool hasWrittenValue = false;
                     if (var->type->tag == VariableType::Tag::OptionalType) {
                         OptionalType* ot = static_cast<OptionalType*>(var->type);
@@ -778,64 +780,69 @@ s->name, s->attributes.dictionary
                     }
                     result += '\n';
                 }
-                result += "        );\n";
+                result += "            );\n";
             }
 
             if (f->returnValue) {
                 if (f->returnValue->tag == VariableType::Tag::TupleType) {
-                    result += "        int nArguments = 0;\n";
+                    result += "            int nArguments = 0;\n";
                     TupleType* tt = static_cast<TupleType*>(f->returnValue);
                     assert(!tt->types.empty());
                     for (size_t i = 0; i < tt->types.size(); i += 1) {
                         if (tt->types[i]->tag == VariableType::Tag::OptionalType) {
                             result += fmt::format(
-                                "        if (std::get<{}>(res).has_value()) {\n"
-                                "            ghoul::lua::push(L, *std::get<{}>(res));\n"
-                                "            nArguments++;\n"
-                                "        }\n",
+                                "            if (std::get<{}>(res).has_value()) {\n"
+                                "                ghoul::lua::push(L, *std::get<{}>(res));\n"
+                                "                nArguments++;\n"
+                                "            }\n",
                                 i
                             );
                         }
                         else {
                             result += fmt::format(
-                                "        ghoul::lua::push(L, std::get<{}>(res));\n"
-                                "        nArguments++;\n",
+                                "            ghoul::lua::push(L, std::get<{}>(res));\n"
+                                "            nArguments++;\n",
                                 i
                             );
                         }
                     }
-                    result += "        return nArguments;\n";
+                    result += "            return nArguments;\n";
                 }
                 else if (f->returnValue->tag == VariableType::Tag::OptionalType) {
                     result +=
-                        "        if (res.has_value()) {\n"
-                        "            ghoul::lua::push(L, *res);\n"
-                        "            return 1;\n"
-                        "        }\n"
-                        "        else {\n"
-                        "            return 0;\n"
-                        "        }\n";
+                        "            if (res.has_value()) {\n"
+                        "                ghoul::lua::push(L, *res);\n"
+                        "                return 1;\n"
+                        "            }\n"
+                        "            else {\n"
+                        "                return 0;\n"
+                        "            }\n";
                 }
                 else if (f->returnValue->tag == VariableType::Tag::VariantType) {
                     VariantType* vt = static_cast<VariantType*>(f->returnValue);
                     for (VariableType* v : vt->types) {
                         result += fmt::format(
-                            "        if (std::holds_alternative<{0}>(res)) {{\n"
-                            "            ghoul::lua::push(L, std::get<{0}>(res));\n"
-                            "        }}\n",
+                            "            if (std::holds_alternative<{0}>(res)) {{\n"
+                            "                ghoul::lua::push(L, std::get<{0}>(res));\n"
+                            "            }}\n",
                             generateTypename(v)
                         );
                     }
-                    result += "        return 1;\n";
+                    result += "            return 1;\n";
                 }
                 else {
-                    result += "        ghoul::lua::push(L, res);\n";
-                    result += "        return 1;\n";
+                    result += "            ghoul::lua::push(L, res);\n";
+                    result += "            return 1;\n";
                 }
             }
             else {
-                result += "        return 0;\n";
+                result += "            return 0;\n";
             }
+
+            result += "        }\n";
+            result += "        catch (const ghoul::lua::LuaError& e) {\n";
+            result += "            return ghoul::lua::luaError(L, e.message);\n";
+            result += "        }\n";
 
             result += "    },\n";
 

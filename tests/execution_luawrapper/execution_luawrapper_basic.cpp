@@ -74,6 +74,12 @@ namespace {
         return { 5, 6.0 };
     }
 
+    bool ranTestFunc7 = false;
+    [[codegen::luawrap]] void testFunc7() {
+        ranTestFunc7 = true;
+        throw ghoul::lua::LuaError("Thrown Lua error message");
+    }
+
     void resetTestRuns() {
         ranTestFunc = false;
 
@@ -90,6 +96,7 @@ namespace {
 
         ranTestFunc5 = false;
         ranTestFunc6 = false;
+        ranTestFunc7 = false;
     }
 
 #include "execution_luawrapper_basic_codegen.cpp"
@@ -254,5 +261,32 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
         CHECK(res1 == 5);
         CHECK(res2 == 6.0);
         lua_close(state);
+    }
+
+    SECTION("Basic/TestFunc7") {
+        auto panicFunc = [](lua_State* L) -> int {
+            CHECK(ranTestFunc7);
+            int n = lua_gettop(L);
+            std::string msg = lua_tostring(L, -1);
+            CHECK(msg == "Thrown Lua error message");
+            lua_close(L);
+            throw std::runtime_error("excepted exception");
+        };
+
+        LuaLibrary::Function func = codegen::lua::testFunc7;
+        CHECK(func.name == "testFunc7");
+        CHECK(func.arguments.size() == 0);
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+
+        lua_State* state = luaL_newstate();
+        REQUIRE(state);
+        lua_atpanic(state, panicFunc);
+        REQUIRE(func.function);
+        
+        CHECK_THROWS_MATCHES(
+            func.function(state),
+            std::runtime_error, Catch::Matchers::Message("excepted exception")
+        );
     }
 }

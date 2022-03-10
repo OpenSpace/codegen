@@ -1016,8 +1016,23 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             lines.begin(),
             lines.end(),
             std::string(),
-            [](std::string a, std::string_view b) { return a + std::string(b) + ' '; }
+            [](std::string a, std::string_view b) {
+                if (b.empty()) {
+                    return a;
+                }
+                else {
+                    return a + std::string(strip(b)) + ' ';
+                }
+            }
         );
+        // People might be using \ in the documentation which we should replace with 
+        // \\ characters
+        for (size_t i = 0; i < f->documentation.size(); i += 1) {
+            if (f->documentation[i] == '\\') {
+                f->documentation.insert(f->documentation.begin() + i, '\\');
+                i += 1;
+            }
+        }
 
         // There is an empty character at the end which we should remove
         f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
