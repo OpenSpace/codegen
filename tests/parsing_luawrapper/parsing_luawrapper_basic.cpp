@@ -537,3 +537,107 @@ float arg2,
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline tuple return value") {
+    constexpr const char Source[] = R"(
+[[codegen::luawrap]] std::tuple<std::string, bool, std::string, bool, double,
+    std::string, float, float, bool>
+    functionName
+(std::string arg1, int arg2)
+{
+}
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->name == "functionName");
+    CHECK(f->documentation == "");
+    {
+        VariableType* ret = f->returnValue;
+        REQUIRE(ret);
+        REQUIRE(ret->tag == VariableType::Tag::TupleType);
+        TupleType* tt = static_cast<TupleType*>(ret);
+        REQUIRE(tt->types.size() == 9);
+        {
+            VariableType* vt = tt->types[0];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* vt = tt->types[1];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Bool);
+        }
+        {
+            VariableType* vt = tt->types[2];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* vt = tt->types[3];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Bool);
+        }
+        {
+            VariableType* vt = tt->types[4];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Double);
+        }
+        {
+            VariableType* vt = tt->types[5];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* vt = tt->types[6];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* vt = tt->types[7];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* vt = tt->types[8];
+            REQUIRE(vt->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(vt);
+            CHECK(bt->type == BasicType::Type::Bool);
+        }
+    }
+
+    REQUIRE(f->arguments.size() == 2);
+    {
+        Variable* var = f->arguments[0];
+        REQUIRE(var);
+        CHECK(var->name == "arg1");
+        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(var->type);
+        CHECK(bt->type == BasicType::Type::String);
+    }
+    {
+        Variable* var = f->arguments[1];
+        REQUIRE(var);
+        CHECK(var->name == "arg2");
+        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(var->type);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+

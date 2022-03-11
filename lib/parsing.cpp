@@ -1047,8 +1047,14 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     );
     f->returnValue = parseType(returnValueStr, nullptr);
 
+    //
     // Extract the function name
-    cursor += 1;
+    //
+
+    do {
+        // Move the cursor forward as long as there are space characters
+        cursor += 1;
+    } while (content[cursor] == ' ' || content[cursor] == '\n');
     std::pair<size_t, size_t> functionNameLoc = { cursor, 0 };
     while (true) {
         if (content[cursor] == ' ' || content[cursor] == '(') {
