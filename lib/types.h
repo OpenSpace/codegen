@@ -237,6 +237,7 @@ std::string fqn(const StackElement* s, std::string_view separator);
 
 struct Function {
     std::string name;
+    std::string customName;
     std::string documentation;
 
     VariableType* returnValue = nullptr;

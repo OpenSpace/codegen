@@ -35,7 +35,7 @@ namespace {
     constexpr std::string_view AttributeDictionary = "[[codegen::Dictionary";
     constexpr std::string_view AttributeStringify = "[[codegen::stringify";
     constexpr std::string_view AttributeMap = "[[codegen::map";
-    constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap]]";
+    constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap";
 } // namespace
 
 /**
@@ -527,10 +527,15 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     const size_t start = locWrapLua + AttributeLuaWrap.size();
 
+    size_t cursor = start;
+    while (code[cursor] != ']') {
+        cursor += 1;
+    }
+    cursor += 2; // ]]
+
     // We have to iterate until we find the first { character that is not contained in
     // any parantheses. { } pairs in parantheses might be used for default initializing a
     // function parameter
-    size_t cursor = start;
     int nParantheses = 0;
     while (true) {
         if (cursor >= code.size()) {
@@ -830,7 +835,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     std::string_view content = strip(code.substr(begin, end));
     assert(!content.empty());
 
-    auto eatType = [content](size_t& cursor) -> std::pair<size_t, size_t> {
+    auto eatType = [&content](size_t& cursor) -> std::pair<size_t, size_t> {
         bool foundBeginningOfReturnValue = false;
         int nOpenBrackets = 0;
 
@@ -875,7 +880,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         return loc;
     };
 
-    auto eatName = [content](size_t& cursor) -> std::pair<size_t, size_t> {
+    auto eatName = [&content](size_t& cursor) -> std::pair<size_t, size_t> {
         std::pair<size_t, size_t> loc = { 0, 0 };
 
         // Skip the first whitespace
@@ -1038,8 +1043,51 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
     }
 
-    // Find and parse the return value
+    // Check if there are any arguments to the luawrap attribute, which would be the
+    // custom name that we should use
+    size_t precursor = 0;
+    size_t beginName = std::string_view::npos;
+    size_t endName = std::string_view::npos;
+    while (content[precursor] != ']') {
+        if (content[precursor] == '(') {
+            beginName = precursor + 1;
+        }
+        if (content[precursor] == ')') {
+            endName = precursor;
+        }
+
+        precursor += 1;
+    }
+    precursor += 2; // ]]
+    while (content[precursor] == ' ' || content[precursor] == '\n') {
+        precursor += 1;
+    }
+
+    if (beginName != std::string_view::npos && endName != std::string_view::npos) {
+        std::string_view cn = content.substr(beginName, endName - beginName);
+
+        if (cn.empty() || cn.size() == 2) {
+            throw CodegenError(fmt::format(
+                "Error in custom name for luawrap function. Provided name was empty\n{}",
+                content
+            ));
+        }
+        if (cn[0] != '"' || cn[cn.size() - 1] != '"') {
+            throw CodegenError(fmt::format(
+                "Error in custom name for luawrap function. Provided name must be "
+                "enclosed by \"\n{}", content
+            ));
+        }
+
+        cn.remove_prefix(1);
+        cn.remove_suffix(1);
+        f->customName = std::string(cn);
+    }
+
+    content.remove_prefix(precursor);
     size_t cursor = 0;
+
+    // Find and parse the return value
     std::pair<size_t, size_t> retValueLoc = eatType(cursor);
     std::string_view returnValueStr = content.substr(
         retValueLoc.first,
@@ -1065,6 +1113,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         cursor += 1;
     }
     cursor += 1;
+
 
     std::string_view name = content.substr(
         functionNameLoc.first,

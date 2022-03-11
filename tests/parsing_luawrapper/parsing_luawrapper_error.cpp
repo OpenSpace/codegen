@@ -152,7 +152,6 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
     );
 }
 
-
 TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(std::variant<float, unsigned int> arg) {
@@ -166,4 +165,43 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
     );
 }
 
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap()]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
 
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap("")]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap(abc)]] void foo(std::variant<float, int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "Error in custom name for luawrap function. Provided name must be enclosed"
+        )
+    );
+}

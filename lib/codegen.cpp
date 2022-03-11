@@ -678,7 +678,10 @@ s->name, s->attributes.dictionary
             );
 
             // Name of the function
-            result += fmt::format("    \"{}\",\n", f->name);
+            result += fmt::format(
+                "    \"{}\",\n",
+                f->customName.empty() ? f->name : f->customName
+            );
 
             // The lambda that is executed
             result += "    [](lua_State* L) -> int {\n";

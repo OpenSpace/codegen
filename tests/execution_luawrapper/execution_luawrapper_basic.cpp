@@ -80,6 +80,11 @@ namespace {
         throw ghoul::lua::LuaError("Thrown Lua error message");
     }
 
+    bool ranTestFunc8 = false;
+    [[codegen::luawrap("abcFunc")]] void testFunc8() {
+        ranTestFunc8 = true;
+    }
+
     void resetTestRuns() {
         ranTestFunc = false;
 
@@ -97,6 +102,7 @@ namespace {
         ranTestFunc5 = false;
         ranTestFunc6 = false;
         ranTestFunc7 = false;
+        ranTestFunc8 = false;
     }
 
 #include "execution_luawrapper_basic_codegen.cpp"
@@ -288,5 +294,19 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
             func.function(state),
             std::runtime_error, Catch::Matchers::Message("excepted exception")
         );
+    }
+
+    SECTION("Basic/TestFunc8") {
+        LuaLibrary::Function func = codegen::lua::TestFunc8;
+        CHECK(func.name == "abcFunc");
+        CHECK(func.arguments.size() == 0);
+        CHECK(func.returnType == "");
+        CHECK(func.helpText == "");
+
+        lua_State* state = luaL_newstate();
+        REQUIRE(state);
+        REQUIRE(func.function);
+        func.function(state);
+        lua_close(state);
     }
 }
