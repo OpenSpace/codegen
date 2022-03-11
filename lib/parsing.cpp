@@ -1026,9 +1026,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             }
         );
         // People might be using \ in the documentation which we should replace with 
-        // \\ characters
+        // \\ characters. Similarly we want to replace " with \"
         for (size_t i = 0; i < f->documentation.size(); i += 1) {
-            if (f->documentation[i] == '\\') {
+            if (f->documentation[i] == '\\' || f->documentation[i] == '"') {
                 f->documentation.insert(f->documentation.begin() + i, '\\');
                 i += 1;
             }
