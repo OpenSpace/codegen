@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
             std::filesystem::path path = p.path();
 
-            if (path.extension() == ".cpp" &&
+            if ((path.extension() == ".cpp" || path.extension() == ".inl") &&
                 path.string().find("_codegen.cpp") == std::string::npos &&
                 path.string().find(extFolder) == std::string::npos)
             {

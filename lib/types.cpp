@@ -346,6 +346,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
             const bool isVectorType = t->tag == VariableType::Tag::VectorType;
             const bool isEnum =
                 t->tag == VariableType::Tag::CustomType &&
+                static_cast<CustomType*>(t)->type &&
                 static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
             if (!isBasicType && !isVectorType && !isEnum) {
                 throw CodegenError(fmt::format(
@@ -571,7 +572,11 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
         return fqn(type->type, "::");
     }
     else {
-        return type->type->name;
+        return
+            type->type ?
+            type->type->name : // If we have a type, we can return its proper name
+            type->name;        // If we don't have a type, we failed where no context for
+                               // this custom type was available
     }
 }
 

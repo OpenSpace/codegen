@@ -138,3 +138,32 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
         CM::Contains("Marked functions must not start with an uppercase letter")
     );
 }
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::variant<unsigned int, float> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+    );
+}
+
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+    );
+}
+
+
