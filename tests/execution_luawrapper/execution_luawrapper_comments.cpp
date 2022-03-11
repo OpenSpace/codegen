@@ -44,11 +44,10 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
-    CHECK(codegen::lua::foo.name == "foo");
-    CHECK(codegen::lua::foo.function);
-    //CHECK(codegen::lua::foo.argumentText == "arg: Integer -> Number");
+    CHECK(codegen::lua::Foo.name == "foo");
+    CHECK(codegen::lua::Foo.function);
     CHECK(
-        codegen::lua::foo.helpText ==
+        codegen::lua::Foo.helpText ==
         "Some example documentation that covers a few lines. "
         "And another one for good measure"
     );

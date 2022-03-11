@@ -107,7 +107,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     resetTestRuns();
 
     SECTION("TestFunc") {
-        LuaLibrary::Function func = codegen::lua::testFunc;
+        LuaLibrary::Function func = codegen::lua::TestFunc;
         CHECK(func.name == "testFunc");
         CHECK(func.arguments.size() == 0);
         CHECK(func.returnType == "");
@@ -123,7 +123,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc2") {
-        LuaLibrary::Function func = codegen::lua::testFunc2;
+        LuaLibrary::Function func = codegen::lua::TestFunc2;
         CHECK(func.name == "testFunc2");
         REQUIRE(func.arguments.size() == 1);
         {
@@ -145,7 +145,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc3") {
-        LuaLibrary::Function func = codegen::lua::testFunc3;
+        LuaLibrary::Function func = codegen::lua::TestFunc3;
         CHECK(func.name == "testFunc3");
         REQUIRE(func.arguments.size() == 2);
         {
@@ -172,7 +172,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc4/All Arguments") {
-        LuaLibrary::Function func = codegen::lua::testFunc4;
+        LuaLibrary::Function func = codegen::lua::TestFunc4;
         CHECK(func.name == "testFunc4");
         REQUIRE(func.arguments.size() == 2);
         {
@@ -199,7 +199,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("TestFunc4/No Optional") {
-        LuaLibrary::Function func = codegen::lua::testFunc4;
+        LuaLibrary::Function func = codegen::lua::TestFunc4;
         CHECK(func.name == "testFunc4");
         REQUIRE(func.arguments.size() == 2);
         {
@@ -225,7 +225,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("Basic/TestFunc5") {
-        LuaLibrary::Function func = codegen::lua::testFunc5;
+        LuaLibrary::Function func = codegen::lua::TestFunc5;
         CHECK(func.name == "testFunc5");
         CHECK(func.arguments.size() == 0);
         CHECK(func.returnType == "Integer");
@@ -244,7 +244,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
     }
 
     SECTION("Basic/TestFunc6") {
-        LuaLibrary::Function func = codegen::lua::testFunc6;
+        LuaLibrary::Function func = codegen::lua::TestFunc6;
         CHECK(func.name == "testFunc6");
         CHECK(func.arguments.size() == 0);
         CHECK(func.returnType == "Integer, Number");
@@ -273,7 +273,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
             throw std::runtime_error("excepted exception");
         };
 
-        LuaLibrary::Function func = codegen::lua::testFunc7;
+        LuaLibrary::Function func = codegen::lua::TestFunc7;
         CHECK(func.name == "testFunc7");
         CHECK(func.arguments.size() == 0);
         CHECK(func.returnType == "");

@@ -1072,6 +1072,12 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     );
 
     f->name = std::string(strip(name));
+    
+    if (::isupper(f->name[0])) {
+        throw CodegenError(fmt::format(
+            "Marked functions must not start with an uppercase letter\n{}", content
+        ));
+    }
 
     // Parse the parameters
     while (true) {

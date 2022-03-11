@@ -669,9 +669,12 @@ s->name, s->attributes.dictionary
 
         for (Function* f : code.luaWrapperFunctions) {
             // Open the Function object declaration
+            std::string capitalizedName = f->name;
+            capitalizedName[0] = static_cast<char>(::toupper(capitalizedName[0]));
+
             result += fmt::format(
                 "static const openspace::scripting::LuaLibrary::Function {} = {{\n",
-                f->name
+                capitalizedName
             );
 
             // Name of the function
@@ -739,12 +742,12 @@ s->name, s->attributes.dictionary
             if (f->arguments.empty()) {
                 // If there are no arguments to the function, it's pretty simple to just
                 // call it
-                result += fmt::format("::{}();\n", f->name);
+                result += fmt::format("{}();\n", f->name);
             }
             else {
                 // If there are arguments it might get a bit more complicated since we
                 // want to support default initialized arguments.
-                result += fmt::format("::{}(\n", f->name);
+                result += fmt::format("{}(\n", f->name);
                 for (size_t i = 0; i < f->arguments.size(); i += 1) {
                     Variable* var = f->arguments[i];
 

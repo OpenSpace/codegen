@@ -125,3 +125,16 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Const pointer type for argument") {
         CM::Contains("Illegal pointer type 'const float*' found in function 'foo'")
     );
 }
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void Foo(const float* abc) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Marked functions must not start with an uppercase letter")
+    );
+}

@@ -1334,7 +1334,7 @@ namespace {
 TEST_CASE("Execution/LuaWrapper/Return:  void") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVoid;
+    LuaLibrary::Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
@@ -1351,7 +1351,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  void") {
 TEST_CASE("Execution/LuaWrapper/Return:  bool") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBool;
+    LuaLibrary::Function func = codegen::lua::FuncBool;
     CHECK(func.name == "funcBool");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean");
@@ -1370,7 +1370,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  bool") {
 TEST_CASE("Execution/LuaWrapper/Return:  boolMap") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBoolMap;
+    LuaLibrary::Function func = codegen::lua::FuncBoolMap;
     CHECK(func.name == "funcBoolMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Boolean");
@@ -1396,7 +1396,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  boolMap") {
 TEST_CASE("Execution/LuaWrapper/Return:  boolOptional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBoolOptional;
+    LuaLibrary::Function func = codegen::lua::FuncBoolOptional;
     CHECK(func.name == "funcBoolOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean?");
@@ -1415,7 +1415,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  boolOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  boolOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBoolOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncBoolOptionalNullopt;
     CHECK(func.name == "funcBoolOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean?");
@@ -1432,7 +1432,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  boolOptional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  boolVector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcBoolVector;
+    LuaLibrary::Function func = codegen::lua::FuncBoolVector;
     CHECK(func.name == "funcBoolVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Boolean]");
@@ -1454,7 +1454,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  boolVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  int") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcInt;
+    LuaLibrary::Function func = codegen::lua::FuncInt;
     CHECK(func.name == "funcInt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Integer");
@@ -1474,7 +1474,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intMap") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcIntMap;
+    LuaLibrary::Function func = codegen::lua::FuncIntMap;
     CHECK(func.name == "funcIntMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Integer");
@@ -1499,7 +1499,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intMap") {
 TEST_CASE("Execution/LuaWrapper/Return:  intOptional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIntOptional;
+    LuaLibrary::Function func = codegen::lua::FuncIntOptional;
     CHECK(func.name == "funcIntOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Integer?");
@@ -1518,7 +1518,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  intOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIntOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncIntOptionalNullopt;
     CHECK(func.name == "funcIntOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Integer?");
@@ -1535,7 +1535,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intOptional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  intVector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIntVector;
+    LuaLibrary::Function func = codegen::lua::FuncIntVector;
     CHECK(func.name == "funcIntVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Integer]");
@@ -1557,7 +1557,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  double") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDouble;
+    LuaLibrary::Function func = codegen::lua::FuncDouble;
     CHECK(func.name == "funcDouble");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number");
@@ -1576,7 +1576,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  double") {
 TEST_CASE("Execution/LuaWrapper/Return:  doubleMap") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDoubleMap;
+    LuaLibrary::Function func = codegen::lua::FuncDoubleMap;
     CHECK(func.name == "funcDoubleMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Number");
@@ -1602,7 +1602,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleMap") {
 TEST_CASE("Execution/LuaWrapper/Return:  doubleOptional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDoubleOptional;
+    LuaLibrary::Function func = codegen::lua::FuncDoubleOptional;
     CHECK(func.name == "funcDoubleOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number?");
@@ -1621,7 +1621,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  doubleOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDoubleOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDoubleOptionalNullopt;
     CHECK(func.name == "funcDoubleOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number?");
@@ -1638,7 +1638,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleOptional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  doubleVector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDoubleVector;
+    LuaLibrary::Function func = codegen::lua::FuncDoubleVector;
     CHECK(func.name == "funcDoubleVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Number]");
@@ -1660,7 +1660,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  float") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloat;
+    LuaLibrary::Function func = codegen::lua::FuncFloat;
     CHECK(func.name == "funcFloat");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number");
@@ -1679,7 +1679,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  float") {
 TEST_CASE("Execution/LuaWrapper/Return:  floatMap") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloatMap;
+    LuaLibrary::Function func = codegen::lua::FuncFloatMap;
     CHECK(func.name == "funcFloatMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Number");
@@ -1705,7 +1705,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  floatMap") {
 TEST_CASE("Execution/LuaWrapper/Return:  floatOptional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloatOptional;
+    LuaLibrary::Function func = codegen::lua::FuncFloatOptional;
     CHECK(func.name == "funcFloatOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number?");
@@ -1724,7 +1724,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  floatOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  floatOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloatOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncFloatOptionalNullopt;
     CHECK(func.name == "funcFloatOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number?");
@@ -1741,7 +1741,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  floatOptional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  floatVector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcFloatVector;
+    LuaLibrary::Function func = codegen::lua::FuncFloatVector;
     CHECK(func.name == "funcFloatVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Number]");
@@ -1764,7 +1764,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  string") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcString;
+    LuaLibrary::Function func = codegen::lua::FuncString;
     CHECK(func.name == "funcString");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String");
@@ -1784,7 +1784,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringMap") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcStringMap;
+    LuaLibrary::Function func = codegen::lua::FuncStringMap;
     CHECK(func.name == "funcStringMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> String");
@@ -1811,7 +1811,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringOptional with value") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcStringOptional;
+    LuaLibrary::Function func = codegen::lua::FuncStringOptional;
     CHECK(func.name == "funcStringOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String?");
@@ -1831,7 +1831,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringOptional w/o value") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcStringOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncStringOptionalNullopt;
     CHECK(func.name == "funcStringOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String?");
@@ -1849,7 +1849,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringVector") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcStringVector;
+    LuaLibrary::Function func = codegen::lua::FuncStringVector;
     CHECK(func.name == "funcStringVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[String]");
@@ -1871,7 +1871,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  path") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPath;
+    LuaLibrary::Function func = codegen::lua::FuncPath;
     CHECK(func.name == "funcPath");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Path");
@@ -1890,7 +1890,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  path") {
 TEST_CASE("Execution/LuaWrapper/Return:  pathMap") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPathMap;
+    LuaLibrary::Function func = codegen::lua::FuncPathMap;
     CHECK(func.name == "funcPathMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Path");
@@ -1916,7 +1916,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathMap") {
 TEST_CASE("Execution/LuaWrapper/Return:  pathOptional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPathOptional;
+    LuaLibrary::Function func = codegen::lua::FuncPathOptional;
     CHECK(func.name == "funcPathOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Path?");
@@ -1935,7 +1935,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  pathOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPathOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncPathOptionalNullopt;
     CHECK(func.name == "funcPathOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Path?");
@@ -1952,7 +1952,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathOptional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  pathVector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcPathVector;
+    LuaLibrary::Function func = codegen::lua::FuncPathVector;
     CHECK(func.name == "funcPathVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Path]");
@@ -1975,7 +1975,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2;
+    LuaLibrary::Function func = codegen::lua::FuncIvec2;
     CHECK(func.name == "funcIvec2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec2");
@@ -1994,7 +1994,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2Map;
+    LuaLibrary::Function func = codegen::lua::FuncIvec2Map;
     CHECK(func.name == "funcIvec2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> ivec2");
@@ -2020,7 +2020,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncIvec2Optional;
     CHECK(func.name == "funcIvec2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec2?");
@@ -2039,7 +2039,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncIvec2OptionalNullopt;
     CHECK(func.name == "funcIvec2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec2?");
@@ -2056,7 +2056,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncIvec2Vector;
     CHECK(func.name == "funcIvec2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[ivec2]");
@@ -2078,7 +2078,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3;
+    LuaLibrary::Function func = codegen::lua::FuncIvec3;
     CHECK(func.name == "funcIvec3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec3");
@@ -2097,7 +2097,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3Map;
+    LuaLibrary::Function func = codegen::lua::FuncIvec3Map;
     CHECK(func.name == "funcIvec3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> ivec3");
@@ -2123,7 +2123,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncIvec3Optional;
     CHECK(func.name == "funcIvec3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec3?");
@@ -2142,7 +2142,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncIvec3OptionalNullopt;
     CHECK(func.name == "funcIvec3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec3?");
@@ -2159,7 +2159,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncIvec3Vector;
     CHECK(func.name == "funcIvec3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[ivec3]");
@@ -2181,7 +2181,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4;
+    LuaLibrary::Function func = codegen::lua::FuncIvec4;
     CHECK(func.name == "funcIvec4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec4");
@@ -2200,7 +2200,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4Map;
+    LuaLibrary::Function func = codegen::lua::FuncIvec4Map;
     CHECK(func.name == "funcIvec4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> ivec4");
@@ -2226,7 +2226,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncIvec4Optional;
     CHECK(func.name == "funcIvec4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec4?");
@@ -2245,7 +2245,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncIvec4OptionalNullopt;
     CHECK(func.name == "funcIvec4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "ivec4?");
@@ -2262,7 +2262,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcIvec4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncIvec4Vector;
     CHECK(func.name == "funcIvec4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[ivec4]");
@@ -2284,7 +2284,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2;
+    LuaLibrary::Function func = codegen::lua::FuncDvec2;
     CHECK(func.name == "funcDvec2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2");
@@ -2302,7 +2302,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2Map;
+    LuaLibrary::Function func = codegen::lua::FuncDvec2Map;
     CHECK(func.name == "funcDvec2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec2");
@@ -2328,7 +2328,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDvec2Optional;
     CHECK(func.name == "funcDvec2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2?");
@@ -2347,7 +2347,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDvec2OptionalNullopt;
     CHECK(func.name == "funcDvec2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2?");
@@ -2364,7 +2364,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDvec2Vector;
     CHECK(func.name == "funcDvec2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec2]");
@@ -2386,7 +2386,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3;
+    LuaLibrary::Function func = codegen::lua::FuncDvec3;
     CHECK(func.name == "funcDvec3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3");
@@ -2405,7 +2405,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3Map;
+    LuaLibrary::Function func = codegen::lua::FuncDvec3Map;
     CHECK(func.name == "funcDvec3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec3");
@@ -2431,7 +2431,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDvec3Optional;
     CHECK(func.name == "funcDvec3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3?");
@@ -2450,7 +2450,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDvec3OptionalNullopt;
     CHECK(func.name == "funcDvec3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3?");
@@ -2467,7 +2467,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDvec3Vector;
     CHECK(func.name == "funcDvec3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec3]");
@@ -2489,7 +2489,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4;
+    LuaLibrary::Function func = codegen::lua::FuncDvec4;
     CHECK(func.name == "funcDvec4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4");
@@ -2508,7 +2508,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4Map;
+    LuaLibrary::Function func = codegen::lua::FuncDvec4Map;
     CHECK(func.name == "funcDvec4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec4");
@@ -2534,7 +2534,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDvec4Optional;
     CHECK(func.name == "funcDvec4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4?");
@@ -2553,7 +2553,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDvec4OptionalNullopt;
     CHECK(func.name == "funcDvec4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4?");
@@ -2570,7 +2570,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dvec4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDvec4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDvec4Vector;
     CHECK(func.name == "funcDvec4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec4]");
@@ -2592,7 +2592,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2;
+    LuaLibrary::Function func = codegen::lua::FuncVec2;
     CHECK(func.name == "funcVec2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2");
@@ -2611,7 +2611,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2Map;
+    LuaLibrary::Function func = codegen::lua::FuncVec2Map;
     CHECK(func.name == "funcVec2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec2");
@@ -2637,7 +2637,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncVec2Optional;
     CHECK(func.name == "funcVec2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2?");
@@ -2656,7 +2656,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncVec2OptionalNullopt;
     CHECK(func.name == "funcVec2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec2?");
@@ -2673,7 +2673,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncVec2Vector;
     CHECK(func.name == "funcVec2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec2]");
@@ -2695,7 +2695,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3;
+    LuaLibrary::Function func = codegen::lua::FuncVec3;
     CHECK(func.name == "funcVec3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3");
@@ -2714,7 +2714,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3Map;
+    LuaLibrary::Function func = codegen::lua::FuncVec3Map;
     CHECK(func.name == "funcVec3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec3");
@@ -2740,7 +2740,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncVec3Optional;
     CHECK(func.name == "funcVec3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3?");
@@ -2759,7 +2759,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncVec3OptionalNullopt;
     CHECK(func.name == "funcVec3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3?");
@@ -2776,7 +2776,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncVec3Vector;
     CHECK(func.name == "funcVec3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec3]");
@@ -2798,7 +2798,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4;
+    LuaLibrary::Function func = codegen::lua::FuncVec4;
     CHECK(func.name == "funcVec4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4");
@@ -2817,7 +2817,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4Map;
+    LuaLibrary::Function func = codegen::lua::FuncVec4Map;
     CHECK(func.name == "funcVec4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> vec4");
@@ -2843,7 +2843,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncVec4Optional;
     CHECK(func.name == "funcVec4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4?");
@@ -2862,7 +2862,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncVec4OptionalNullopt;
     CHECK(func.name == "funcVec4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec4?");
@@ -2879,7 +2879,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  vec4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVec4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncVec4Vector;
     CHECK(func.name == "funcVec4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[vec4]");
@@ -2901,7 +2901,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x2;
     CHECK(func.name == "funcMat2x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2");
@@ -2920,7 +2920,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x2Map;
     CHECK(func.name == "funcMat2x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x2");
@@ -2946,7 +2946,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x2Optional;
     CHECK(func.name == "funcMat2x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2?");
@@ -2965,7 +2965,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x2OptionalNullopt;
     CHECK(func.name == "funcMat2x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2?");
@@ -2982,7 +2982,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x2Vector;
     CHECK(func.name == "funcMat2x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x2]");
@@ -3004,7 +3004,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x3;
     CHECK(func.name == "funcMat2x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3");
@@ -3023,7 +3023,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x3Map;
     CHECK(func.name == "funcMat2x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x3");
@@ -3054,7 +3054,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x3Optional;
     CHECK(func.name == "funcMat2x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3?");
@@ -3073,7 +3073,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x3OptionalNullopt;
     CHECK(func.name == "funcMat2x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3?");
@@ -3090,7 +3090,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x3Vector;
     CHECK(func.name == "funcMat2x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x3]");
@@ -3112,7 +3112,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x4;
     CHECK(func.name == "funcMat2x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4");
@@ -3131,7 +3131,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x4Map;
     CHECK(func.name == "funcMat2x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x4");
@@ -3166,7 +3166,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x4Optional;
     CHECK(func.name == "funcMat2x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4?");
@@ -3185,7 +3185,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x4OptionalNullopt;
     CHECK(func.name == "funcMat2x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4?");
@@ -3202,7 +3202,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat2x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat2x4Vector;
     CHECK(func.name == "funcMat2x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x4]");
@@ -3230,7 +3230,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x2;
     CHECK(func.name == "funcMat3x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2");
@@ -3249,7 +3249,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x2Map;
     CHECK(func.name == "funcMat3x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x2");
@@ -3281,7 +3281,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x2Optional;
     CHECK(func.name == "funcMat3x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2?");
@@ -3300,7 +3300,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x2OptionalNullopt;
     CHECK(func.name == "funcMat3x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2?");
@@ -3317,7 +3317,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x2Vector;
     CHECK(func.name == "funcMat3x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x2]");
@@ -3339,7 +3339,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x3;
     CHECK(func.name == "funcMat3x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3");
@@ -3358,7 +3358,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x3Map;
     CHECK(func.name == "funcMat3x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x3");
@@ -3399,7 +3399,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x3Optional;
     CHECK(func.name == "funcMat3x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3?");
@@ -3418,7 +3418,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x3OptionalNullopt;
     CHECK(func.name == "funcMat3x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3?");
@@ -3435,7 +3435,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x3Vector;
     CHECK(func.name == "funcMat3x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x3]");
@@ -3469,7 +3469,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x4;
     CHECK(func.name == "funcMat3x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4");
@@ -3494,7 +3494,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x4Map;
     CHECK(func.name == "funcMat3x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x4");
@@ -3538,7 +3538,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x4Optional;
     CHECK(func.name == "funcMat3x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4?");
@@ -3563,7 +3563,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x4OptionalNullopt;
     CHECK(func.name == "funcMat3x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4?");
@@ -3580,7 +3580,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat3x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat3x4Vector;
     CHECK(func.name == "funcMat3x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x4]");
@@ -3621,7 +3621,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x2;
     CHECK(func.name == "funcMat4x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2");
@@ -3640,7 +3640,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x2Map;
     CHECK(func.name == "funcMat4x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x2");
@@ -3675,7 +3675,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x2Optional;
     CHECK(func.name == "funcMat4x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2?");
@@ -3694,7 +3694,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x2OptionalNullopt;
     CHECK(func.name == "funcMat4x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2?");
@@ -3711,7 +3711,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x2Vector;
     CHECK(func.name == "funcMat4x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x2]");
@@ -3739,7 +3739,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x3;
     CHECK(func.name == "funcMat4x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3");
@@ -3764,7 +3764,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x3Map;
     CHECK(func.name == "funcMat4x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x3");
@@ -3808,7 +3808,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x3Optional;
     CHECK(func.name == "funcMat4x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3?");
@@ -3833,7 +3833,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x3OptionalNullopt;
     CHECK(func.name == "funcMat4x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3?");
@@ -3850,7 +3850,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x3Vector;
     CHECK(func.name == "funcMat4x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x3]");
@@ -3890,7 +3890,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x4;
     CHECK(func.name == "funcMat4x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4");
@@ -3915,7 +3915,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x4Map;
     CHECK(func.name == "funcMat4x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x4");
@@ -3959,7 +3959,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x4Optional;
     CHECK(func.name == "funcMat4x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4?");
@@ -3984,7 +3984,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x4OptionalNullopt;
     CHECK(func.name == "funcMat4x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4?");
@@ -4001,7 +4001,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcMat4x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncMat4x4Vector;
     CHECK(func.name == "funcMat4x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x4]");
@@ -4041,7 +4041,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x2;
     CHECK(func.name == "funcDMat2x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2");
@@ -4060,7 +4060,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Map;
     CHECK(func.name == "funcDMat2x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x2");
@@ -4086,7 +4086,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Optional;
     CHECK(func.name == "funcDMat2x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2?");
@@ -4105,7 +4105,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x2OptionalNullopt;
     CHECK(func.name == "funcDMat2x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x2?");
@@ -4122,7 +4122,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Vector;
     CHECK(func.name == "funcDMat2x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x2]");
@@ -4144,7 +4144,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x3;
     CHECK(func.name == "funcDMat2x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3");
@@ -4163,7 +4163,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Map;
     CHECK(func.name == "funcDMat2x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x3");
@@ -4192,7 +4192,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Optional;
     CHECK(func.name == "funcDMat2x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3?");
@@ -4211,7 +4211,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x3OptionalNullopt;
     CHECK(func.name == "funcDMat2x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x3?");
@@ -4228,7 +4228,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Vector;
     CHECK(func.name == "funcDMat2x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x3]");
@@ -4250,7 +4250,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x4;
     CHECK(func.name == "funcDMat2x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4");
@@ -4269,7 +4269,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Map;
     CHECK(func.name == "funcDMat2x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat2x4");
@@ -4304,7 +4304,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Optional;
     CHECK(func.name == "funcDMat2x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4?");
@@ -4323,7 +4323,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x4OptionalNullopt;
     CHECK(func.name == "funcDMat2x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat2x4?");
@@ -4340,7 +4340,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat2x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Vector;
     CHECK(func.name == "funcDMat2x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat2x4]");
@@ -4371,7 +4371,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x2;
     CHECK(func.name == "funcDMat3x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2");
@@ -4390,7 +4390,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Map;
     CHECK(func.name == "funcDMat3x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x2");
@@ -4425,7 +4425,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Optional;
     CHECK(func.name == "funcDMat3x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2?");
@@ -4444,7 +4444,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x2OptionalNullopt;
     CHECK(func.name == "funcDMat3x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x2?");
@@ -4461,7 +4461,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Vector;
     CHECK(func.name == "funcDMat3x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x2]");
@@ -4483,7 +4483,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x3;
     CHECK(func.name == "funcDMat3x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3");
@@ -4502,7 +4502,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Map;
     CHECK(func.name == "funcDMat3x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x3");
@@ -4537,7 +4537,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Optional;
     CHECK(func.name == "funcDMat3x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3?");
@@ -4556,7 +4556,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x3OptionalNullopt;
     CHECK(func.name == "funcDMat3x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x3?");
@@ -4573,7 +4573,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Vector;
     CHECK(func.name == "funcDMat3x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x3]");
@@ -4604,7 +4604,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x4;
     CHECK(func.name == "funcDMat3x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4");
@@ -4629,7 +4629,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Map;
     CHECK(func.name == "funcDMat3x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat3x4");
@@ -4673,7 +4673,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Optional;
     CHECK(func.name == "funcDMat3x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4?");
@@ -4698,7 +4698,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x4OptionalNullopt;
     CHECK(func.name == "funcDMat3x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat3x4?");
@@ -4715,7 +4715,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat3x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Vector;
     CHECK(func.name == "funcDMat3x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat3x4]");
@@ -4755,7 +4755,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x2;
     CHECK(func.name == "funcDMat4x2");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2");
@@ -4774,7 +4774,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Map;
     CHECK(func.name == "funcDMat4x2Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x2");
@@ -4809,7 +4809,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Optional;
     CHECK(func.name == "funcDMat4x2Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2?");
@@ -4828,7 +4828,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x2OptionalNullopt;
     CHECK(func.name == "funcDMat4x2OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x2?");
@@ -4845,7 +4845,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x2Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Vector;
     CHECK(func.name == "funcDMat4x2Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x2]");
@@ -4867,7 +4867,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x3;
     CHECK(func.name == "funcDMat4x3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3");
@@ -4892,7 +4892,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Map;
     CHECK(func.name == "funcDMat4x3Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x3");
@@ -4936,7 +4936,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Optional;
     CHECK(func.name == "funcDMat4x3Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3?");
@@ -4961,7 +4961,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x3OptionalNullopt;
     CHECK(func.name == "funcDMat4x3OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x3?");
@@ -4978,7 +4978,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x3Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Vector;
     CHECK(func.name == "funcDMat4x3Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x3]");
@@ -5018,7 +5018,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Vector") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x4;
     CHECK(func.name == "funcDMat4x4");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4");
@@ -5043,7 +5043,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Map") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4Map;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Map;
     CHECK(func.name == "funcDMat4x4Map");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> mat4x4");
@@ -5087,7 +5087,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Map") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Optional with value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4Optional;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Optional;
     CHECK(func.name == "funcDMat4x4Optional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4?");
@@ -5112,7 +5112,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Optional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Optional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4OptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x4OptionalNullopt;
     CHECK(func.name == "funcDMat4x4OptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "mat4x4?");
@@ -5129,7 +5129,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Optional w/o value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Vector") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDMat4x4Vector;
+    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Vector;
     CHECK(func.name == "funcDMat4x4Vector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[mat4x4]");
@@ -5170,7 +5170,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionary") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcDictionary;
+    LuaLibrary::Function func = codegen::lua::FuncDictionary;
     CHECK(func.name == "funcDictionary");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Table");
@@ -5195,7 +5195,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryMap") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcDictionaryMap;
+    LuaLibrary::Function func = codegen::lua::FuncDictionaryMap;
     CHECK(func.name == "funcDictionaryMap");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "String -> Table");
@@ -5246,7 +5246,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryOptional with value") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcDictionaryOptional;
+    LuaLibrary::Function func = codegen::lua::FuncDictionaryOptional;
     CHECK(func.name == "funcDictionaryOptional");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Table?");
@@ -5270,7 +5270,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryOptional with value") {
 TEST_CASE("Execution/LuaWrapper/Return:  dictionaryOptional w/o value") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcDictionaryOptionalNullopt;
+    LuaLibrary::Function func = codegen::lua::FuncDictionaryOptionalNullopt;
     CHECK(func.name == "funcDictionaryOptionalNullopt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Table?");
@@ -5288,7 +5288,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryVector") {
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcDictionaryVector;
+    LuaLibrary::Function func = codegen::lua::FuncDictionaryVector;
     CHECK(func.name == "funcDictionaryVector");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "[Table]");
@@ -5326,7 +5326,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryVector") {
 TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcTupleVec3;
+    LuaLibrary::Function func = codegen::lua::FuncTupleVec3;
     CHECK(func.name == "funcTupleVec3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "vec3");
@@ -5345,7 +5345,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)") {
 TEST_CASE("Execution/LuaWrapper/Return:  tuple(bool,int)") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcTupleBoolInt;
+    LuaLibrary::Function func = codegen::lua::FuncTupleBoolInt;
     CHECK(func.name == "funcTupleBoolInt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean, Integer");
@@ -5365,7 +5365,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(bool,int)") {
 TEST_CASE("Execution/LuaWrapper/Return:  tuple(double,float,string)") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcTupleDoubleFloatStringDouble;
+    LuaLibrary::Function func = codegen::lua::FuncTupleDoubleFloatStringDouble;
     CHECK(func.name == "funcTupleDoubleFloatStringDouble");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number, Number, String");
@@ -5387,7 +5387,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(double,float,string)") {
 TEST_CASE("Execution/LuaWrapper/Return:  variant(bool,int) / bool") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantBoolIntBool;
+    LuaLibrary::Function func = codegen::lua::FuncVariantBoolIntBool;
     CHECK(func.name == "funcVariantBoolIntBool");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean | Integer");
@@ -5407,7 +5407,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  variant(bool,int) / bool") {
 TEST_CASE("Execution/LuaWrapper/Return:  variant(bool,int) / int") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantBoolIntInt;
+    LuaLibrary::Function func = codegen::lua::FuncVariantBoolIntInt;
     CHECK(func.name == "funcVariantBoolIntInt");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Boolean | Integer");
@@ -5427,7 +5427,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  variant(bool,int) / int") {
 TEST_CASE("Execution/LuaWrapper/Return:  variant(double, dvec3, string) / double") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDvec3FloatStringDouble;
+    LuaLibrary::Function func = codegen::lua::FuncVariantDvec3FloatStringDouble;
     CHECK(func.name == "funcVariantDvec3FloatStringDouble");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number | vec3 | String");
@@ -5448,7 +5448,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  variant(double, dvec3, string) / double
 TEST_CASE("Execution/LuaWrapper/Return:  variant(double, dvec3, string) / dvec3") {
     using namespace openspace::scripting;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDvec3FloatStringDvec3;
+    LuaLibrary::Function func = codegen::lua::FuncVariantDvec3FloatStringDvec3;
     CHECK(func.name == "funcVariantDvec3FloatStringDvec3");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number | vec3 | String");
@@ -5470,7 +5470,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  variant(double, dvec3, string) / string
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::funcVariantDvec3FloatStringString;
+    LuaLibrary::Function func = codegen::lua::FuncVariantDvec3FloatStringString;
     CHECK(func.name == "funcVariantDvec3FloatStringString");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "Number | vec3 | String");
