@@ -66,6 +66,14 @@ bool operator==(const StackElement& lhs, const StackElement& rhs) {
            lhs.comment == rhs.comment && lhs.parent == rhs.parent;
 }
 
+bool VariableType::isBasicType() const { return tag == Tag::BasicType; }
+bool VariableType::isMapType() const { return tag == Tag::MapType; }
+bool VariableType::isOptionalType() const { return tag == Tag::OptionalType; }
+bool VariableType::isVariantType() const { return tag == Tag::VariantType; }
+bool VariableType::isTupleType() const { return tag == Tag::TupleType; }
+bool VariableType::isVectorType() const { return tag == Tag::VectorType; }
+bool VariableType::isCustomType() const { return tag == Tag::CustomType; }
+
 bool operator==(const VariableType& lhs, const VariableType& rhs) {
     if (lhs.tag != rhs.tag) {
         return false;

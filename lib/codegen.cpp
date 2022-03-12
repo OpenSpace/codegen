@@ -42,6 +42,9 @@
 
 using namespace std::literals;
 
+// Set this value to true if you want to prevent changes to files during code refactoring
+constexpr bool PreventFileChange = false;
+
 namespace {
     std::vector<const VariableType*> usedTypes(const VariableType* var) {
         assert(var);
@@ -511,34 +514,8 @@ template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     return res;
 }
 
-std::string generateResult(const Code& code) {
-    assert(
-        !code.structs.empty() ||
-        !code.enums.empty() ||
-        !code.luaWrapperFunctions.empty()
-    );
-
-    std::string result = FileHeader;
-
-
-    if (!code.structs.empty()) {
-        result += "namespace codegen {\n";
-        result += DocumentationFallback;
-
-        for (Struct* s : code.structs) {
-            result += fmt::format(DocumentationPreamble, s->name);
-
-            if (GenerateWarningsForDocumentationLessTypes) {
-                result += emitWarningsForDocumentationLessTypes(s, code.sourceFile);
-            }
-
-            result += writeStructDocumentation(s);
-            result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
-        }
-        result += "} // namespace codegen\n";
-    }
-
-    // For Linux, we need to delcare the functions in the following order or the overload
+std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallback) {
+    // For Linux, we need to declare the functions in the following order or the overload
     // resolution picks the top fall back implentation and triggers a static_assert:
     // 1. <typename T> bakeTo(..., T*) { static_assert(false); } // fallback
     // 2. <typename T> bakeTo(..., std::optional<T>*)   declaration only
@@ -554,385 +531,361 @@ std::string generateResult(const Code& code) {
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
 
-    result += "\nnamespace codegen {\n";
+    std::string result;
+    result += "namespace codegen {\n\n";
+    result += DocumentationFallback;
 
-    bool hasWrittenMappingFallback = false;
-    
-    if (!code.structs.empty()) {
-        result += "namespace internal { \n";
-        result += BakeFunctionFallback;
-        result += '\n';
+    for (Struct* s : code.structs) {
+        result += fmt::format(DocumentationPreamble, s->name);
 
-        std::vector<const VariableType*> types = usedTypes(code.structs);
-        bool hasOptionalType = false;
-        bool hasVectorType = false;
-        bool hasMapType = false;
-        for (const VariableType* t : types) {
-            assert(t);
-            hasOptionalType |= (t->tag == VariableType::Tag::OptionalType);
-            hasVectorType |= (t->tag == VariableType::Tag::VectorType);
-            hasMapType |= (t->tag == VariableType::Tag::MapType);
+        if (GenerateWarningsForDocumentationLessTypes) {
+            result += emitWarningsForDocumentationLessTypes(s, code.sourceFile);
         }
 
-        if (hasOptionalType) {
-            result += BakeFunctionOptionalDeclaration;
-        }
-        if (hasVectorType) {
-            result += BakeFunctionVectorDeclaration;
-        }
-        if (hasMapType) {
-            result += BakeFunctionMapDeclaration;
-        }
-        for (const VariableType* t : types) {
-            if (t->tag == VariableType::Tag::BasicType) {
-                const BasicType* bt = static_cast<const BasicType*>(t);
-                result += bakeFunctionForType(bt->type);
-            }
-        }
+        result += writeStructDocumentation(s);
+        result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
+    }
 
-        for (Struct* s : code.structs) {
-            result += writeStructConverter(s);
+    result += "namespace internal {\n\n";
+    result += BakeToFunctionFallback;
+    result += "\n\n";
+
+    std::vector<const VariableType*> types = usedTypes(code.structs);
+    bool hasOptionalType = false;
+    bool hasVectorType = false;
+    bool hasMapType = false;
+    for (const VariableType* t : types) {
+        assert(t);
+        hasOptionalType |= t->isOptionalType();
+        hasVectorType |= t->isVectorType();
+        hasMapType |= t->isMapType();
+    }
+
+    if (hasOptionalType) {
+        result += BakeFunctionOptionalDeclaration;
+    }
+    if (hasVectorType) {
+        result += BakeFunctionVectorDeclaration;
+    }
+    if (hasMapType) {
+        result += BakeFunctionMapDeclaration;
+    }
+    for (const VariableType* t : types) {
+        if (t->isBasicType()) {
+            const BasicType* bt = static_cast<const BasicType*>(t);
+            result += bakeFunctionForType(bt->type);
         }
+    }
 
+    for (Struct* s : code.structs) {
+        result += writeStructConverter(s);
+    }
 
-        if (hasOptionalType) {
-            result += BakeFunctionOptional;
-        }
-        if (hasVectorType) {
-            result += BakeFunctionVector;
-        }
-        if (hasMapType) {
-            result += BakeFunctionMap;
-        }
+    if (hasOptionalType) {
+        result += BakeFunctionOptional;
+    }
+    if (hasVectorType) {
+        result += BakeFunctionVector;
+    }
+    if (hasMapType) {
+        result += BakeFunctionMap;
+    }
 
-        result += R"(
-} // namespace internal
+    result += "\n} // namespace internal\n\n";
+    result += BackFunctionFallback;
+    result += '\n';
 
-template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }
-)";
+    for (Struct* s : code.structs) {
+        result += fmt::format(BakePreamble, s->name, s->attributes.dictionary);
 
-        for (Struct* s : code.structs) {
+        for (Variable* var : s->variables) {
             result += fmt::format(
-                R"(
-template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
-    {0} res;
-)",
-s->name, s->attributes.dictionary
-);
+                "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
+            );
+        }
 
-            for (Variable* var : s->variables) {
-                result += fmt::format(
-                    "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
-                );
-            }
+        result += "    return res;\n}\n";
 
-            result += "    return res;\n}\n";
+        std::vector<Enum*> enums = mappedEnums(*s);
+        if (!enums.empty() && !hasWrittenMappingFallback) {
+            result += MapFunctionFallback;
+            result += '\n';
+            hasWrittenMappingFallback = true;
+        }
 
-            std::vector<Enum*> enums = mappedEnums(*s);
-            if (!enums.empty() && !hasWrittenMappingFallback) {
+        for (Enum* e : enums) {
+            result += enumToEnumMapping(e);
+        }
+    }
+
+    result += "\n} // namespace codegen\n\n";
+    return result;
+}
+
+std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback) {
+    std::string result;
+    result += "namespace codegen {\n";
+    result += ToStringFallback;
+    result += '\n';
+    result += FromStringFallback;
+    result += '\n';
+
+    for (Enum* e : code.enums) {
+        result += writeRootEnumConverter(e);
+
+        if (!e->mappedTo.empty()) {
+            if (!hasWrittenMappingFallback) {
                 result += MapFunctionFallback;
                 result += '\n';
                 hasWrittenMappingFallback = true;
             }
-
-            for (Enum* e : enums) {
-                result += enumToEnumMapping(e);
-            }
+            result += enumToEnumMapping(e);
         }
+    }
+    result += "\n } // namespace codegen\n\n";
+    return result;
+}
 
-        result += '\n';
+std::string generateLuaFunction(Function* f) {
+    assert(f);
+    std::string result;
+    // Open the Function object declaration
+    std::string capitalizedName = f->functionName;
+    capitalizedName[0] = static_cast<char>(::toupper(capitalizedName[0]));
+
+    result += fmt::format(LuaWrapperPreamble, capitalizedName);
+    result += fmt::format("    \"{}\",\n", f->luaName);
+
+    // The lambda that is executed
+    result += "    [](lua_State* L) -> int {\n";
+
+    int nRequiredArguments = 0;
+    for (Variable* var : f->arguments) {
+        if (!var->type->isOptionalType()) {
+            nRequiredArguments += 1;
+        }
     }
 
-    if (!code.enums.empty()) {
-        result += ToStringFallback;
-        result += '\n';
-        result += FromStringFallback;
-        result += '\n';
+    // Adding the check for number of variables
+    int nTotalArguments = static_cast<int>(f->arguments.size());
+    if (nRequiredArguments == nTotalArguments) {
+        result += fmt::format(
+            "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
+            nTotalArguments, f->functionName
+        );
+    }
+    else {
+        result += fmt::format(
+            "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
+            nRequiredArguments, nTotalArguments, f->functionName
+        );
+    }
 
-        for (Enum* e : code.enums) {
-            result += writeRootEnumConverter(e);
+    // If there are optional arguments in the beginning of the arugment list, we have
+    // to handle these separately as the tuple implementation doesn't like mixing
+    // optional and non-optional arguments. So we handle optional types from the front
+    // until there are no more optional types left
+    std::vector<Variable*> arguments = f->arguments;
+    while (!arguments.empty() && arguments.front()->type->isOptionalType()) {
+        Variable* var = arguments.front();
+        OptionalType* ot = static_cast<OptionalType*>(var->type);
+        result += fmt::format(
+            LuaWrapperOptionalTypeExtraction,
+            generateTypename(ot), var->name, generateTypename(ot->type)
+        );
 
-            if (!e->mappedTo.empty()) {
-                if (!hasWrittenMappingFallback) {
-                    result += MapFunctionFallback;
-                    result += '\n';
-                    hasWrittenMappingFallback = true;
-                }
-                result += enumToEnumMapping(e);
-            }
+        // Peel off the argument that we just handled
+        arguments.erase(arguments.begin());
+    }
+
+    if (!arguments.empty()) {
+        std::string names;
+        std::string types;
+        for (Variable* var : arguments) {
+            names += var->name + ", ";
+            types += generateTypename(var->type) + ", ";
         }
+        names = names.substr(0, names.size() - 2);
+        types = types.substr(0, types.size() - 2);
+
+        result += fmt::format(
+            "        auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
+        );
+    }
+
+    result += "        try {\n";
+
+    // Depending on if we have a return value, we want to be able to capture that value
+    result += "            ";
+    if (f->returnValue) {
+        result += fmt::format("{} res = ", generateTypename(f->returnValue));
+    }
+
+    if (f->arguments.empty()) {
+        // If there are no arguments to the function, it's pretty simple to just
+        // call it
+        result += fmt::format("{}();\n", f->functionName);
+    }
+    else {
+        // If there are arguments it might get a bit more complicated since we
+        // want to support default initialized arguments.
+        result += fmt::format("{}(\n", f->functionName);
+
+        for (size_t i = 0; i < f->arguments.size(); i += 1) {
+            Variable* var = f->arguments[i];
+
+            result += "                ";
+            if (var->type->isOptionalType() &&
+                static_cast<OptionalType*>(var->type)->defaultArgument.has_value())
+            {
+                OptionalType* ot = static_cast<OptionalType*>(var->type);
+                // If there is a default argument, the function actually wants the
+                // underlying value, not the std::optional type. We basically check if the
+                // original optional value was set; if it was, we derefence it and use it.
+                // Otherwise we paste in the stored default value instead.
+                //
+                // An alternative way would be to not provide the optional argument at
+                // all, but that turned out to be much more code and more complicated than
+                // just storing the default value
+                result += fmt::format(
+                    "{0}.has_value() ? std::move(*{0}) : {1}",
+                    var->name, *ot->defaultArgument
+                );
+            }
+            else {
+                result += fmt::format("std::move({})", var->name);
+            }
+
+            if (i != f->arguments.size() - 1) {
+                result += ',';
+            }
+            result += '\n';
+        }
+        result += "            );\n";
+    }
+
+    if (f->returnValue) {
+        if (f->returnValue->isTupleType()) {
+            result += "            int nArguments = 0;\n";
+            TupleType* tt = static_cast<TupleType*>(f->returnValue);
+            assert(!tt->types.empty());
+            for (size_t i = 0; i < tt->types.size(); i += 1) {
+                if (tt->types[i]->isOptionalType()) {
+                    result += fmt::format(LuaWrapperPushTupleOptional, i);
+                }
+                else {
+                    result += fmt::format(LuaWrapperPushTupleRegular, i);
+                }
+            }
+            result += "            return nArguments;\n";
+        }
+        else if (f->returnValue->isOptionalType()) {
+            result += LuaWrapperPushOptional;
+        }
+        else if (f->returnValue->isVariantType()) {
+            VariantType* vt = static_cast<VariantType*>(f->returnValue);
+            for (VariableType* v : vt->types) {
+                result += fmt::format(LuaWrapperPushVariant, generateTypename(v));
+            }
+            result += "            return 1;\n";
+        }
+        else {
+            result += "            ghoul::lua::push(L, std::move(res));\n";
+            result += "            return 1;\n";
+        }
+    }
+    else {
+        result += "            return 0;\n";
+    }
+
+    result += "        }\n";
+    result += "        catch (const ghoul::lua::LuaError& e) {\n";
+    result += "            return ghoul::lua::luaError(L, e.message);\n";
+    result += "        }\n";
+
+    result += "    },\n";
+
+
+    // Argument description
+    std::string argumentsDesc = "{\n";
+    for (Variable* var : f->arguments) {
+        argumentsDesc += fmt::format(
+            "        {{ \"{}\", \"{}\"", var->name, generateDescriptiveTypename(var->type)
+        );
+
+        if (var->type->isOptionalType() &&
+            static_cast<OptionalType*>(var->type)->defaultArgument.has_value())
+        {
+            OptionalType* ot = static_cast<OptionalType*>(var->type);
+            std::string defaultArgument = *ot->defaultArgument;
+            for (size_t i = 0; i < defaultArgument.size(); i += 1) {
+                if (defaultArgument[i] == '\\' || defaultArgument[i] == '"') {
+                    defaultArgument.insert(defaultArgument.begin() + i, '\\');
+                    i += 1;
+                }
+                if (defaultArgument[i] == '\n') {
+                    defaultArgument.erase(defaultArgument.begin() + i);
+                    i -= 1;
+                }
+            }
+            argumentsDesc += fmt::format(", \"{}\"", defaultArgument);
+        }
+
+        argumentsDesc += " },\n";
+
+    }
+    if (!f->arguments.empty()) {
+        // Remove the closing ", "
+        argumentsDesc = argumentsDesc.substr(0, argumentsDesc.size() - 1);
+    }
+
+    result += "    " + argumentsDesc + "\n    },\n";
+
+    result += fmt::format(
+        "    \"{}\",\n", f->returnValue ? generateDescriptiveTypename(f->returnValue) : ""
+    );
+
+    // Documentation
+    result += "    \"" + f->documentation + "\"\n";
+    result += "};\n\n";
+    
+    return result;
+}
+
+std::string generateLuaWrapperResult(const Code& code) {
+    std::string result;
+    result += "namespace codegen::lua {\n\n";
+
+    for (Function* f : code.luaWrapperFunctions) {
+        result += generateLuaFunction(f);
+    }
+
+    result += "} // namespace codegen::lua\n";
+    return result;
+}
+
+std::string generateResult(const Code& code) {
+    assert(
+        !code.structs.empty() ||
+        !code.enums.empty() ||
+        !code.luaWrapperFunctions.empty()
+    );
+
+    std::string result = FileHeader;
+
+    bool hasWrittenMappingFallback = false;
+    if (!code.structs.empty()) {
+        result += generateStructsResult(code, hasWrittenMappingFallback);
+    }
+    
+    if (!code.enums.empty()) {
+        result += generateEnumResult(code, hasWrittenMappingFallback);
     }
 
     if (!code.luaWrapperFunctions.empty()) {
-        result += "namespace lua {\n\n";
-
-        for (Function* f : code.luaWrapperFunctions) {
-            // Open the Function object declaration
-            std::string capitalizedName = f->functionName;
-            capitalizedName[0] = static_cast<char>(::toupper(capitalizedName[0]));
-
-            result += fmt::format(
-                "static const openspace::scripting::LuaLibrary::Function {} = {{\n",
-                capitalizedName
-            );
-
-            // Name of the function
-            result += fmt::format("    \"{}\",\n", f->luaName);
-
-            // The lambda that is executed
-            result += "    [](lua_State* L) -> int {\n";
-
-            int nRequiredArguments = 0;
-            for (Variable* var : f->arguments) {
-                if (var->type->tag != VariableType::Tag::OptionalType) {
-                    nRequiredArguments += 1;
-                }
-            }
-
-            // Adding the check for number of variables
-            int nTotalArguments = static_cast<int>(f->arguments.size());
-            if (nRequiredArguments == nTotalArguments) {
-                result += fmt::format(
-                    "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
-                    nTotalArguments, f->functionName
-                );
-            }
-            else {
-                result += fmt::format(
-                    "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
-                    nRequiredArguments, nTotalArguments, f->functionName
-                );
-            }
-
-            // If there are optional arguments in the beginning of the arugment list, we
-            // have to handle these separately as the tuple implementation doesn't like
-            // mixing optional and non-optional arguments
-            std::vector<Variable*> arguments = f->arguments;
-            while (true) {
-                if (arguments.empty() ||
-                    arguments.front()->type->tag != VariableType::Tag::OptionalType)
-                {
-                    // We have reached the end of the first batch of optional arguments
-                    break;
-                }
-
-                Variable* var = arguments.front();
-                assert(var->type->tag == VariableType::Tag::OptionalType);
-                OptionalType* ot = static_cast<OptionalType*>(var->type);
-                result += fmt::format(
-                    "        {0} {1};\n"
-                    "        if (ghoul::lua::hasValue<{2}>(L)) {{\n"
-                    "            {1} = ghoul::lua::value<{2}>(L);\n"
-                    "        }}\n",
-                    generateTypename(var->type), var->name, generateTypename(ot->type)
-                );
-
-                arguments.erase(arguments.begin());
-            }
-
-            std::string names;
-            std::string types;
-            for (Variable* var : arguments) {
-                names += var->name + ", ";
-                types += generateTypename(var->type) + ", ";
-            }
-
-            // Remove the final ", " from both strings if we have added anything
-            if (!arguments.empty()) {
-                names.pop_back();
-                names.pop_back();
-                types.pop_back();
-                types.pop_back();
-
-                result += fmt::format(
-                    "        auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
-                );
-            }
-
-            result += "        try {\n";
-
-            // Depending on if we have a return value at all, we want to be able to
-            // capture that value or not
-            if (f->returnValue) {
-                result += fmt::format(
-                    "            {} res = ", generateTypename(f->returnValue)
-                );
-            }
-            else {
-                result += "            ";
-            }
-
-            if (f->arguments.empty()) {
-                // If there are no arguments to the function, it's pretty simple to just
-                // call it
-                result += fmt::format("{}();\n", f->functionName);
-            }
-            else {
-                // If there are arguments it might get a bit more complicated since we
-                // want to support default initialized arguments.
-                result += fmt::format("{}(\n", f->functionName);
-
-                for (size_t i = 0; i < f->arguments.size(); i += 1) {
-                    Variable* var = f->arguments[i];
-
-                    result += "                ";
-                    bool hasWrittenValue = false;
-                    if (var->type->tag == VariableType::Tag::OptionalType) {
-                        OptionalType* ot = static_cast<OptionalType*>(var->type);
-                        if (ot->defaultArgument.has_value()) {
-                            // If there is a default argument, the function actually wants
-                            // the underlying value, not the std::optional type. We
-                            // basically check if the original optional value was set; if
-                            // it was, we derefence it and use it. Otherwise we paste in
-                            // the stored default value instead.
-                            //
-                            // An alternative way would be to not provide the optional
-                            // argument at all, but that turned out to be much more code
-                            // and more complicated than just storing the default value
-
-                            result += fmt::format(
-                                "{0}.has_value() ? std::move(*{0}) : {1}",
-                                var->name, *ot->defaultArgument
-                            );
-                            hasWrittenValue = true;
-                        }
-                    }
-
-                    if (!hasWrittenValue) {
-                        result += fmt::format("std::move({})", var->name);
-                    }
-
-                    if (i != f->arguments.size() - 1) {
-                        result += ',';
-                    }
-                    result += '\n';
-                }
-                result += "            );\n";
-            }
-
-            if (f->returnValue) {
-                if (f->returnValue->tag == VariableType::Tag::TupleType) {
-                    result += "            int nArguments = 0;\n";
-                    TupleType* tt = static_cast<TupleType*>(f->returnValue);
-                    assert(!tt->types.empty());
-                    for (size_t i = 0; i < tt->types.size(); i += 1) {
-                        if (tt->types[i]->tag == VariableType::Tag::OptionalType) {
-                            result += fmt::format(
-                                "            if (std::get<{}>(res).has_value()) {\n"
-                                "                ghoul::lua::push(L, *std::get<{}>(res));\n"
-                                "                nArguments++;\n"
-                                "            }\n",
-                                i
-                            );
-                        }
-                        else {
-                            result += fmt::format(
-                                "            ghoul::lua::push(L, std::get<{}>(res));\n"
-                                "            nArguments++;\n",
-                                i
-                            );
-                        }
-                    }
-                    result += "            return nArguments;\n";
-                }
-                else if (f->returnValue->tag == VariableType::Tag::OptionalType) {
-                    result +=
-                        "            if (res.has_value()) {\n"
-                        "                ghoul::lua::push(L, std::move(*res));\n"
-                        "                return 1;\n"
-                        "            }\n"
-                        "            else {\n"
-                        "                return 0;\n"
-                        "            }\n";
-                }
-                else if (f->returnValue->tag == VariableType::Tag::VariantType) {
-                    VariantType* vt = static_cast<VariantType*>(f->returnValue);
-                    for (VariableType* v : vt->types) {
-                        result += fmt::format(
-                            "            if (std::holds_alternative<{0}>(res)) {{\n"
-                            "                ghoul::lua::push(L, std::move(std::get<{0}>(res)));\n"
-                            "            }}\n",
-                            generateTypename(v)
-                        );
-                    }
-                    result += "            return 1;\n";
-                }
-                else {
-                    result += "            ghoul::lua::push(L, std::move(res));\n";
-                    result += "            return 1;\n";
-                }
-            }
-            else {
-                result += "            return 0;\n";
-            }
-
-            result += "        }\n";
-            result += "        catch (const ghoul::lua::LuaError& e) {\n";
-            result += "            return ghoul::lua::luaError(L, e.message);\n";
-            result += "        }\n";
-
-            result += "    },\n";
-
-
-            // Argument description
-            std::string argumentsDesc = "{\n";
-            for (Variable* var : f->arguments) {
-                argumentsDesc += fmt::format(
-                    "        {{ \"{}\", \"{}\"",
-                    var->name, generateDescriptiveTypename(var->type)
-                );
-
-                if (var->type->tag == VariableType::Tag::OptionalType) {
-                    OptionalType* ot = static_cast<OptionalType*>(var->type);
-                    if (ot->defaultArgument.has_value()) {
-                        std::string defaultArgument = *ot->defaultArgument;
-                        for (size_t i = 0; i < defaultArgument.size(); i += 1) {
-                            if (defaultArgument[i] == '\\' || defaultArgument[i] == '"') {
-                                defaultArgument.insert(defaultArgument.begin() + i, '\\');
-                                i += 1;
-                            }
-                            if (defaultArgument[i] == '\n') {
-                                defaultArgument.erase(defaultArgument.begin() + i);
-                                i -= 1;
-                            }
-                        }
-                        argumentsDesc += fmt::format(", \"{}\"", defaultArgument);
-                    }
-                }
-
-                argumentsDesc += " },\n";
-
-            }
-            if (!f->arguments.empty()) {
-                // Remove the closing ", "
-                argumentsDesc = argumentsDesc.substr(0, argumentsDesc.size() - 1);
-            }
-
-
-            result += "    " + argumentsDesc + "\n    },\n";
-
-            if (f->returnValue) {
-                result += fmt::format(
-                    "    \"{}\",\n", generateDescriptiveTypename(f->returnValue)
-                );
-            }
-            else {
-                result += "    \"\",\n";
-            }
-
-
-            // Documentation
-            result += "    \"" + f->documentation + "\"\n";
-
-            result += "};\n\n";
-        }
-
-        result += "} // namespace lua\n";
+        result += generateLuaWrapperResult(code);
     }
 
-
-    result += "} // namespace codegen\n";
     return result;
 }
 
@@ -976,6 +929,10 @@ Result handleFile(std::filesystem::path path) {
     }
     else {
         shouldWriteFile = true;
+    }
+
+    if (PreventFileChange && shouldWriteFile) {
+        throw CodegenError(fmt::format("File {} changed", path.filename().string()));
     }
 
     std::filesystem::path debugDest = destination;

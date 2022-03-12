@@ -71,6 +71,15 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
     }
 }
 
+void escapeString(std::string& line) {
+    for (size_t i = 0; i < line.size(); i += 1) {
+        if (line[i] == '\\' || line[i] == '"') {
+            line.insert(line.begin() + i, '\\');
+            i += 1;
+        }
+    }
+}
+
 struct ParseResult {
     std::string_view key;
     std::string_view value;
@@ -527,11 +536,8 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     const size_t start = locWrapLua + AttributeLuaWrap.size();
 
-    size_t cursor = start;
-    while (code[cursor] != ']') {
-        cursor += 1;
-    }
-    cursor += 2; // ]]
+    // Find the end of the attribute
+    size_t cursor = code.find(']', start) + 1;
 
     // We have to iterate until we find the first { character that is not contained in
     // any parantheses. { } pairs in parantheses might be used for default initializing a
@@ -558,9 +564,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         cursor += 1;
     }
 
-    cursor += 1;
-
-    return { start, cursor - start };
+    return { start, cursor + 1 - start };
 }
 
 [[nodiscard]] Struct* parseRootStruct(std::string_view code, size_t begin, size_t end) {
@@ -883,26 +887,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     auto eatName = [&content](size_t& cursor) -> std::pair<size_t, size_t> {
         std::pair<size_t, size_t> loc = { 0, 0 };
 
-        // Skip the first whitespace
-        while (true) {
-            if (content[cursor] != ' ') {
-                break;
-            }
-            cursor += 1;
-        }
-
+        // Skip the first whitespace(s)
+        cursor = content.find_first_not_of(' ', cursor);
         loc.first = cursor;
+        
         // The name of the variable is all characters until the first separator which is
         // one of these four characters
-        while (true) {
-            if (content[cursor] == ' ' || content[cursor] == ',' ||
-                content[cursor] == '=' || content[cursor] == ')')
-            {
-                break;
-            }
-
-            cursor += 1;
-        }
+        cursor = content.find_first_of(" ,=)", cursor);
         loc.second = cursor;
 
         return loc;
@@ -916,51 +907,36 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     {
         using namespace std::literals;
         
-        // We want to check for both regular one-line comments as well as block-style
-        // comments
-
         size_t b = begin - AttributeLuaWrap.size();
 
-        // Try to find the last closing brace for the comments
+
+        //
+        // First check for block comments
+        //
         size_t endBlockComment = code.rfind("*/", b);
         bool hasValidBlockComment = endBlockComment != std::string_view::npos;
+        endBlockComment += "/*"sv.size();
 
         // Check that there are only empty character between the end of the block and the
-        // beginning of the function.
-        endBlockComment += "*/"sv.size();
-        size_t blockCursor = endBlockComment;
-        while (hasValidBlockComment && blockCursor < b) {
-            if (code[blockCursor] != ' ' && code[blockCursor] != '\n') {
-                // There is something in between the closing comment and the beginning of
-                // this function definition, so we assume that the comment belongs to
-                // something else and ignore it
-                hasValidBlockComment = false;
-                break;
-            }
+        // beginning of the function
+        size_t firstRealCharAfterBlock = code.find_first_not_of(" \n", endBlockComment);
+        hasValidBlockComment &= (firstRealCharAfterBlock >= b);
 
-            blockCursor += 1;
-        }
 
+        //
+        // Then check for regular // comments
+        //
         size_t endRegularComment = code.rfind("//", b);
         bool hasValidRegularComment = endRegularComment != std::string_view::npos;
-        // Both can't be true at the same time
-
         endRegularComment += "//"sv.size();
-        // The // is at the beginning of the line, so we have to offset our search by the
-        // first \n character following that
+
+        // Check that there are only empty character between the end of the block and the
+        // beginning of the function
         size_t regularCursor = code.find('\n', endRegularComment);
-        while (hasValidRegularComment && regularCursor < b) {
-            if (code[regularCursor] != ' ' && code[regularCursor] != '\n') {
-                // There is something in between the closing comment and the beginning of
-                // this function definition, so we assume that the comment belongs to
-                // something else and ignore it
-                hasValidRegularComment = false;
-                break;
-            }
+        size_t firstRealCharAfterRegular = code.find_first_not_of(" \n", regularCursor);
+        hasValidRegularComment &= (firstRealCharAfterRegular >= b);
 
-            regularCursor += 1;
-        }
-
+        // There should only be at most one of them
         assert(!(hasValidBlockComment && hasValidRegularComment));
 
 
@@ -969,8 +945,10 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             // Find the beginning /* for that comment
             size_t beginBlockComment = code.rfind("/*", endBlockComment);
 
-            std::string_view cmnt = code.substr(beginBlockComment, endBlockComment - beginBlockComment);
-            using namespace std::literals;
+            std::string_view cmnt = code.substr(
+                beginBlockComment,
+                endBlockComment - beginBlockComment
+            );
             cmnt.remove_prefix("/*"sv.size());
             cmnt.remove_suffix("*/"sv.size());
 
@@ -985,7 +963,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 }
 
                 stripLine = strip(stripLine);
-
                 lines.push_back(stripLine);
                 c = p;
                 p = cmnt.find('\n', c + 1);
@@ -1018,29 +995,19 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         }
 
         f->documentation = std::accumulate(
-            lines.begin(),
-            lines.end(),
+            lines.cbegin(),
+            lines.cend(),
             std::string(),
             [](std::string a, std::string_view b) {
-                if (b.empty()) {
-                    return a;
-                }
-                else {
-                    return a + std::string(strip(b)) + ' ';
-                }
+                return b.empty() ? a : a + std::string(strip(b)) + ' ';
             }
         );
-        // People might be using \ in the documentation which we should replace with 
-        // \\ characters. Similarly we want to replace " with \"
-        for (size_t i = 0; i < f->documentation.size(); i += 1) {
-            if (f->documentation[i] == '\\' || f->documentation[i] == '"') {
-                f->documentation.insert(f->documentation.begin() + i, '\\');
-                i += 1;
-            }
-        }
-
         // There is an empty character at the end which we should remove
         f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
+
+        // People might be using \ in the documentation which we should escape. Similarly
+        // we want to replace " with \"
+        escapeString(f->documentation); 
     }
 
     // Check if there are any arguments to the luawrap attribute, which would be the
@@ -1059,29 +1026,29 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         precursor += 1;
     }
     precursor += 2; // ]]
-    while (content[precursor] == ' ' || content[precursor] == '\n') {
-        precursor += 1;
-    }
+    precursor = content.find_first_not_of(" \n", precursor);
 
     if (beginName != std::string_view::npos && endName != std::string_view::npos) {
-        std::string_view cn = content.substr(beginName, endName - beginName);
+        std::string_view luaName = content.substr(beginName, endName - beginName);
 
-        if (cn.empty() || cn.size() == 2) {
+        if (luaName.empty() || luaName.size() == 2) {
             throw CodegenError(fmt::format(
                 "Error in custom name for luawrap function. Provided name was empty\n{}",
                 content
             ));
         }
-        if (cn[0] != '"' || cn[cn.size() - 1] != '"') {
+        if (luaName[0] != '"' || luaName[luaName.size() - 1] != '"') {
             throw CodegenError(fmt::format(
                 "Error in custom name for luawrap function. Provided name must be "
                 "enclosed by \"\n{}", content
             ));
         }
 
-        cn.remove_prefix(1);
-        cn.remove_suffix(1);
-        f->luaName = std::string(cn);
+        assert(luaName[0] == '"');
+        luaName.remove_prefix(1);
+        assert(luaName[luaName.size() - 1] == '"');
+        luaName.remove_suffix(1);
+        f->luaName = std::string(luaName);
     }
 
     content.remove_prefix(precursor);
@@ -1098,34 +1065,25 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     //
     // Extract the function name
     //
-
-    do {
+    {
         // Move the cursor forward as long as there are space characters
+        cursor = content.find_first_not_of(" \n", cursor + 1);
+
+        std::pair<size_t, size_t> loc = { cursor, 0 };
+        cursor = content.find_first_of(" (", cursor);
+        loc.second = cursor;
+
         cursor += 1;
-    } while (content[cursor] == ' ' || content[cursor] == '\n');
-    std::pair<size_t, size_t> functionNameLoc = { cursor, 0 };
-    while (true) {
-        if (content[cursor] == ' ' || content[cursor] == '(') {
-            functionNameLoc.second = cursor;
-            break;
+
+        std::string_view name = content.substr(loc.first, loc.second - loc.first);
+        f->functionName = std::string(strip(name));
+        if (::isupper(f->functionName[0])) {
+            throw CodegenError(fmt::format(
+                "Marked functions must not start with an uppercase letter\n{}", content
+            ));
         }
-
-        cursor += 1;
     }
-    cursor += 1;
 
-
-    std::string_view name = content.substr(
-        functionNameLoc.first,
-        functionNameLoc.second - functionNameLoc.first
-    );
-
-    f->functionName = std::string(strip(name));
-    if (::isupper(f->functionName[0])) {
-        throw CodegenError(fmt::format(
-            "Marked functions must not start with an uppercase letter\n{}", content
-        ));
-    }
     // If no custom Lua name given, we use the function name instead
     if (f->luaName.empty()) {
         f->luaName = f->functionName;
@@ -1147,44 +1105,45 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
 
         if (strip(typeStr) == "const") {
             cursor += 1;
-            std::pair<size_t, size_t> locType2 = eatType(cursor);
-            std::string_view typeStr2 =
-                content.substr(locType2.first, locType2.second - locType2.first);
-            std::string t;
+            std::pair<size_t, size_t> l = eatType(cursor);
+            std::string_view typeStr2 = content.substr(l.first, l.second - l.first);
             assert(!typeStr2.empty());
             if (typeStr2[typeStr2.size() - 1] == '*') {
-                t = "pointer";
+                throw CodegenError(fmt::format(
+                    "Illegal pointer type '{} {}' found in function '{}'\n{}",
+                    typeStr, typeStr2, f->functionName, content
+                ));
             }
             else if (typeStr2[typeStr2.size() - 1] == '&') {
-                t = "reference";
+                throw CodegenError(fmt::format(
+                    "Illegal reference type '{} {}' found in function '{}'\n{}",
+                    typeStr, typeStr2, f->functionName, content
+                ));
             }
-            throw CodegenError(fmt::format(
-                "Illegal {} type '{} {}' found in function '{}'\n{}",
-                t, typeStr, typeStr2, f->functionName, content
-            ));
         }
 
         Variable* v = new Variable;
         v->type = parseType(typeStr, nullptr);
 
-        if (v->type->tag == VariableType::Tag::TupleType) {
+        if (v->type->isTupleType()) {
             throw CodegenError(fmt::format(
                 "Tuples are not supported in parameter arguments\n{}",
                 content.substr(cursor, 50)
             ));
         }
 
-        std::pair<size_t, size_t> locName = eatName(cursor);
-        v->name = std::string(
-            content.substr(locName.first, locName.second - locName.first)
-        );
+        {
+            std::pair<size_t, size_t> l = eatName(cursor);
+            v->name = std::string(content.substr(l.first, l.second - l.first));
 
-        if (v->name.empty()) {
-            throw CodegenError(fmt::format(
-                "Parameter {} of function '{}' has no name, which is not allowed",
-                f->arguments.size(), f->functionName
-            ));
+            if (v->name.empty()) {
+                throw CodegenError(fmt::format(
+                    "Parameter {} of function '{}' has no name, which is not allowed",
+                    f->arguments.size(), f->functionName
+                ));
+            }
         }
+
 
         // There are a few options for characters that follow the name;  either it can be
         // a , meaning that there are more arguments coming, a = representing a default
@@ -1280,7 +1239,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     //bool isInOptionalPhase = false;
     for (size_t i = 0; i < f->arguments.size(); i +=1) {
         Variable* var = f->arguments[i];
-        bool isOptional = var->type->tag == VariableType::Tag::OptionalType;
+        bool isOptional = var->type->isOptionalType();
         switch (phase) {
             case Phase::Initial:
                 phase = isOptional ? Phase::FirstOptional : Phase::Required;
@@ -1298,7 +1257,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                     // same type or there might be confusion in the end
                     if (i > 0) {
                         Variable* lastVar = f->arguments[i - 1];
-                        assert(lastVar->type->tag == VariableType::Tag::OptionalType);
+                        assert(lastVar->type->isOptionalType());
                         OptionalType* ot = static_cast<OptionalType*>(lastVar->type);
                         if (*var->type == *ot->type) {
                             throw CodegenError(fmt::format(
@@ -1317,9 +1276,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                     // We have seen the first optional parameter but now there is a
                     // not-optional one, so we have a wrong ordering of parameters
                     throw CodegenError(fmt::format(
-                        "It is not supported to have non-optional parameters after optional "
-                        "ones\n{}",
-                        content.substr(cursor, 50)
+                        "It is not supported to have non-optional parameters after "
+                        "optional ones\n{}", content.substr(cursor, 50)
                     ));
                 }
                 break;
@@ -1328,14 +1286,14 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
 
     // Verify that we haven't received any custom types for either the return value or any
     // of the arguments as we don't currently know how to handle them
-    if (f->returnValue && f->returnValue->tag == VariableType::Tag::CustomType) {
+    if (f->returnValue && f->returnValue->isCustomType()) {
         throw CodegenError(fmt::format(
             "Illegal type '{}' for return value of function '{}' found",
             static_cast<CustomType*>(f->returnValue)->name, f->functionName
         ));
     }
     for (Variable* var : f->arguments) {
-        if (var->type->tag == VariableType::Tag::CustomType) {
+        if (var->type->isCustomType()) {
             throw CodegenError(fmt::format(
                 "Illegal type '{}' for argument '{}' value of function '{}' found",
                 static_cast<CustomType*>(var->type)->name, var->name, f->functionName
@@ -1394,11 +1352,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 break;
             }
             case Type::Enum: {
-                Enum* e = parseRootEnum(
-                    code,
-                    next.cursors.first,
-                    next.cursors.second
-                );
+                Enum* e = parseRootEnum(code, next.cursors.first, next.cursors.second);
                 assert(e);
                 res.enums.push_back(e);
                 break;

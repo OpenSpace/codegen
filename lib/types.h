@@ -38,7 +38,7 @@
 // that they will properly disambiguate in the Visual Studio Watch window, making the
 // debugging of these types a bit easier.  No need to declare this define otherwise
 
-#define TYPES_ADD_DEBUG_INFORMATION
+//#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
     CodegenError(std::string e);
@@ -93,6 +93,14 @@ struct VariableType {
 #ifdef TYPES_ADD_DEBUG_INFORMATION
     virtual ~VariableType() = default;
 #endif // TYPES_ADD_DEBUG_INFORMATION
+
+    bool isBasicType() const;
+    bool isMapType() const;
+    bool isOptionalType() const;
+    bool isVariantType() const;
+    bool isTupleType() const;
+    bool isVectorType() const;
+    bool isCustomType() const;
 
     enum class Tag {
         BasicType,
