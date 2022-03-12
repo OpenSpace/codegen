@@ -685,11 +685,9 @@ s->name, s->attributes.dictionary
 
             int nRequiredArguments = 0;
             for (Variable* var : f->arguments) {
-                if (var->type->tag == VariableType::Tag::OptionalType) {
-                    // We passed into the optional phase
-                    break;
+                if (var->type->tag != VariableType::Tag::OptionalType) {
+                    nRequiredArguments += 1;
                 }
-                nRequiredArguments += 1;
             }
 
             // Adding the check for number of variables
@@ -707,15 +705,41 @@ s->name, s->attributes.dictionary
                 );
             }
 
+            // If there are optional arguments in the beginning of the arugment list, we
+            // have to handle these separately as the tuple implementation doesn't like
+            // mixing optional and non-optional arguments
+            std::vector<Variable*> arguments = f->arguments;
+            while (true) {
+                if (arguments.empty() ||
+                    arguments.front()->type->tag != VariableType::Tag::OptionalType)
+                {
+                    // We have reached the end of the first batch of optional arguments
+                    break;
+                }
+
+                Variable* var = arguments.front();
+                assert(var->type->tag == VariableType::Tag::OptionalType);
+                OptionalType* ot = static_cast<OptionalType*>(var->type);
+                result += fmt::format(
+                    "        {0} {1};\n"
+                    "        if (ghoul::lua::hasValue<{2}>(L)) {{\n"
+                    "            {1} = ghoul::lua::value<{2}>(L);\n"
+                    "        }}\n",
+                    generateTypename(var->type), var->name, generateTypename(ot->type)
+                );
+
+                arguments.erase(arguments.begin());
+            }
+
             std::string names;
             std::string types;
-            for (Variable* var : f->arguments) {
+            for (Variable* var : arguments) {
                 names += var->name + ", ";
                 types += generateTypename(var->type) + ", ";
             }
 
             // Remove the final ", " from both strings if we have added anything
-            if (!f->arguments.empty()) {
+            if (!arguments.empty()) {
                 names.pop_back();
                 names.pop_back();
                 types.pop_back();
@@ -748,6 +772,7 @@ s->name, s->attributes.dictionary
                 // If there are arguments it might get a bit more complicated since we
                 // want to support default initialized arguments.
                 result += fmt::format("{}(\n", f->functionName);
+
                 for (size_t i = 0; i < f->arguments.size(); i += 1) {
                     Variable* var = f->arguments[i];
 
@@ -851,20 +876,20 @@ s->name, s->attributes.dictionary
 
 
             // Argument description
-            std::string arguments = "{\n";
+            std::string argumentsDesc = "{\n";
             for (Variable* var : f->arguments) {
-                arguments += fmt::format(
+                argumentsDesc += fmt::format(
                     "        {{ \"{}\", \"{}\" }},\n",
                     var->name, generateDescriptiveTypename(var->type)
                 );
             }
             if (!f->arguments.empty()) {
                 // Remove the closing ", "
-                arguments = arguments.substr(0, arguments.size() - 1);
+                argumentsDesc = argumentsDesc.substr(0, argumentsDesc.size() - 1);
             }
 
 
-            result += "    " + arguments + "\n    },\n";
+            result += "    " + argumentsDesc + "\n    },\n";
 
             if (f->returnValue) {
                 result += fmt::format(

@@ -205,3 +205,20 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
         )
     );
 }
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Same argument for last optional and first required")
+{
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::optional<float> arg1, std::optional<int> arg2, int arg3, std::optional<std::string> arg4) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "When using optional arguments in the beginning of the argument list, the "
+            "last optional argument must not have"
+        )
+    );
+}

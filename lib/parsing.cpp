@@ -1266,25 +1266,63 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         f->arguments.push_back(v);
     }
 
-    // Verify that the arguments are ordered correctly, meaning that there are required
-    // arguments first and then optionals. And as soon as we see the first optional
-    // argument we can't transition back to required ones
-    bool isInOptionalPhase = false;
-    for (Variable* var : f->arguments) {
+    // Verify that the arguments are ordered correctly. The correct order is that there
+    // can be optional arguments in the beginning, then required arguments in the middle,
+    // followed by more optional arguments at the end. Only the ending optional arguments
+    // may have default values or else the originating C function was illformed
+    enum class Phase {
+        Initial,
+        FirstOptional,
+        Required,
+        SecondOptional
+    };
+    Phase phase = Phase::Initial;
+    //bool isInOptionalPhase = false;
+    for (size_t i = 0; i < f->arguments.size(); i +=1) {
+        Variable* var = f->arguments[i];
         bool isOptional = var->type->tag == VariableType::Tag::OptionalType;
-        if (isOptional && !isInOptionalPhase) {
-            // This is the first optional parameter that we are seeing
-            isInOptionalPhase = true;
-        }
+        switch (phase) {
+            case Phase::Initial:
+                phase = isOptional ? Phase::FirstOptional : Phase::Required;
+                break;
+            case Phase::Required:
+                if (isOptional) {
+                    phase = Phase::SecondOptional;
+                }
+                break;
+            case Phase::FirstOptional:
+                if (!isOptional) {
+                    phase = Phase::Required;
 
-        if (!isOptional && isInOptionalPhase) {
-            // We have seen the first optional parameter but now there is a not-optional
-            // one, so we have a wrong ordering of parameters
-            throw CodegenError(fmt::format(
-                "It is not supported to have non-optional parameters after optional "
-                "ones\n{}",
-                content.substr(cursor, 50)
-            ));
+                    // Make sure that the last optional and the first required are not the
+                    // same type or there might be confusion in the end
+                    if (i > 0) {
+                        Variable* lastVar = f->arguments[i - 1];
+                        assert(lastVar->type->tag == VariableType::Tag::OptionalType);
+                        OptionalType* ot = static_cast<OptionalType*>(lastVar->type);
+                        if (*var->type == *ot->type) {
+                            throw CodegenError(fmt::format(
+                                "When using optional arguments in the beginning of the "
+                                "argument list, the last optional argument must not have "
+                                "the same type as the first required argument or we "
+                                "can't distinguish whether the parameter is the last "
+                                "optional or the first required one"
+                            ));
+                        }
+                    }
+                }
+                break;
+            case Phase::SecondOptional:
+                if (!isOptional) {
+                    // We have seen the first optional parameter but now there is a
+                    // not-optional one, so we have a wrong ordering of parameters
+                    throw CodegenError(fmt::format(
+                        "It is not supported to have non-optional parameters after optional "
+                        "ones\n{}",
+                        content.substr(cursor, 50)
+                    ));
+                }
+                break;
         }
     }
 

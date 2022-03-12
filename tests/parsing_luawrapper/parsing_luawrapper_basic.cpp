@@ -229,6 +229,153 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, double arg2) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 3);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg0");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        REQUIRE(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
+        CHECK(bt->type == BasicType::Type::String);
+    }
+    {
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+    {
+        Variable* v = f->arguments[2];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        BasicType* bt = static_cast<BasicType*>(v->type);
+        CHECK(bt->type == BasicType::Type::Double);
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, double arg2 = 1.0) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 3);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg0");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        REQUIRE(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
+        CHECK(bt->type == BasicType::Type::String);
+    }
+    {
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+    {
+        Variable* v = f->arguments[2];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        REQUIRE(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
+        CHECK(bt->type == BasicType::Type::Double);
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, std::optional<double> arg2) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 3);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg0");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        REQUIRE(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
+        CHECK(bt->type == BasicType::Type::String);
+    }
+    {
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
+        CHECK(bt->type == BasicType::Type::Int);
+    }
+    {
+        Variable* v = f->arguments[2];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
+        REQUIRE(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
+        CHECK(bt->type == BasicType::Type::Double);
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] int foo() {
