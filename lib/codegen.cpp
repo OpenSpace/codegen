@@ -746,7 +746,7 @@ s->name, s->attributes.dictionary
                 types.pop_back();
 
                 result += fmt::format(
-                    "        const auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
+                    "        auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
                 );
             }
 
@@ -756,7 +756,7 @@ s->name, s->attributes.dictionary
             // capture that value or not
             if (f->returnValue) {
                 result += fmt::format(
-                    "            const {} res = ", generateTypename(f->returnValue)
+                    "            {} res = ", generateTypename(f->returnValue)
                 );
             }
             else {
@@ -792,7 +792,7 @@ s->name, s->attributes.dictionary
                             // and more complicated than just storing the default value
 
                             result += fmt::format(
-                                "{0}.has_value() ? *{0} : {1}",
+                                "{0}.has_value() ? std::move(*{0}) : {1}",
                                 var->name, *ot->defaultArgument
                             );
                             hasWrittenValue = true;
@@ -800,7 +800,7 @@ s->name, s->attributes.dictionary
                     }
 
                     if (!hasWrittenValue) {
-                        result += var->name;
+                        result += fmt::format("std::move({})", var->name);
                     }
 
                     if (i != f->arguments.size() - 1) {
@@ -839,7 +839,7 @@ s->name, s->attributes.dictionary
                 else if (f->returnValue->tag == VariableType::Tag::OptionalType) {
                     result +=
                         "            if (res.has_value()) {\n"
-                        "                ghoul::lua::push(L, *res);\n"
+                        "                ghoul::lua::push(L, std::move(*res));\n"
                         "                return 1;\n"
                         "            }\n"
                         "            else {\n"
@@ -851,7 +851,7 @@ s->name, s->attributes.dictionary
                     for (VariableType* v : vt->types) {
                         result += fmt::format(
                             "            if (std::holds_alternative<{0}>(res)) {{\n"
-                            "                ghoul::lua::push(L, std::get<{0}>(res));\n"
+                            "                ghoul::lua::push(L, std::move(std::get<{0}>(res)));\n"
                             "            }}\n",
                             generateTypename(v)
                         );
@@ -859,7 +859,7 @@ s->name, s->attributes.dictionary
                     result += "            return 1;\n";
                 }
                 else {
-                    result += "            ghoul::lua::push(L, res);\n";
+                    result += "            ghoul::lua::push(L, std::move(res));\n";
                     result += "            return 1;\n";
                 }
             }
