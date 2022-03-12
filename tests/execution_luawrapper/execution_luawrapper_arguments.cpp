@@ -2175,10 +2175,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  bool") {
     LuaLibrary::Function func = codegen::lua::FuncBool;
     CHECK(func.name == "funcBool");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2199,6 +2197,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Boolean?");
+    CHECK(func.arguments[0].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2217,10 +2216,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncBoolDefaulted;
     CHECK(func.name == "funcBoolDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean?");
+    CHECK(func.arguments[0].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2242,6 +2240,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Boolean?");
+    CHECK(func.arguments[1].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2264,6 +2263,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Boolean?");
+    CHECK(func.arguments[1].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2282,10 +2282,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap") {
     LuaLibrary::Function func = codegen::lua::FuncBoolMap;
     CHECK(func.name == "funcBoolMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Boolean");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Boolean");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2310,10 +2308,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional") {
     LuaLibrary::Function func = codegen::lua::FuncBoolOptional;
     CHECK(func.name == "funcBoolOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2351,10 +2347,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector") {
     LuaLibrary::Function func = codegen::lua::FuncBoolVector;
     CHECK(func.name == "funcBoolVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Boolean]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Boolean]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2379,10 +2373,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  int") {
     LuaLibrary::Function func = codegen::lua::FuncInt;
     CHECK(func.name == "funcInt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Integer");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2403,6 +2395,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer?");
+    CHECK(func.arguments[0].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2421,10 +2414,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncIntDefaulted;
     CHECK(func.name == "funcIntDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Integer?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer?");
+    CHECK(func.arguments[0].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2446,6 +2438,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Integer?");
+    CHECK(func.arguments[1].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2468,6 +2461,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Integer?");
+    CHECK(func.arguments[1].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2487,10 +2481,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap") {
     LuaLibrary::Function func = codegen::lua::FuncIntMap;
     CHECK(func.name == "funcIntMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Integer");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2515,10 +2507,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional") {
     LuaLibrary::Function func = codegen::lua::FuncIntOptional;
     CHECK(func.name == "funcIntOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Integer?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2556,10 +2546,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector") {
     LuaLibrary::Function func = codegen::lua::FuncIntVector;
     CHECK(func.name == "funcIntVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Integer]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Integer]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2584,10 +2572,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  double") {
     LuaLibrary::Function func = codegen::lua::FuncDouble;
     CHECK(func.name == "funcDouble");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2608,6 +2594,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Number?");
+    CHECK(func.arguments[0].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2626,10 +2613,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDoubleDefaulted;
     CHECK(func.name == "funcDoubleDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
+    CHECK(func.arguments[0].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2651,6 +2637,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.arguments[1].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2673,6 +2660,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.arguments[1].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2691,10 +2679,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap") {
     LuaLibrary::Function func = codegen::lua::FuncDoubleMap;
     CHECK(func.name == "funcDoubleMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Number");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2719,10 +2705,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional") {
     LuaLibrary::Function func = codegen::lua::FuncDoubleOptional;
     CHECK(func.name == "funcDoubleOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2760,10 +2744,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector") {
     LuaLibrary::Function func = codegen::lua::FuncDoubleVector;
     CHECK(func.name == "funcDoubleVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Number]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Number]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2788,10 +2770,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  float") {
     LuaLibrary::Function func = codegen::lua::FuncFloat;
     CHECK(func.name == "funcFloat");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2812,6 +2792,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Number?");
+    CHECK(func.arguments[0].defaultValue == "1.1f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2830,10 +2811,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncFloatDefaulted;
     CHECK(func.name == "funcFloatDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
+    CHECK(func.arguments[0].defaultValue == "1.1f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2855,6 +2835,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.arguments[1].defaultValue == "2.2f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2877,6 +2858,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Number?");
+    CHECK(func.arguments[1].defaultValue == "2.2f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2895,10 +2877,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap") {
     LuaLibrary::Function func = codegen::lua::FuncFloatMap;
     CHECK(func.name == "funcFloatMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Number");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2923,10 +2903,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional") {
     LuaLibrary::Function func = codegen::lua::FuncFloatOptional;
     CHECK(func.name == "funcFloatOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2964,10 +2942,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector") {
     LuaLibrary::Function func = codegen::lua::FuncFloatVector;
     CHECK(func.name == "funcFloatVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Number]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Number]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2994,10 +2970,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  string") {
     LuaLibrary::Function func = codegen::lua::FuncString;
     CHECK(func.name == "funcString");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3019,6 +2993,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String?");
+    CHECK(func.arguments[0].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3038,10 +3013,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncStringDefaulted;
     CHECK(func.name == "funcStringDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String?");
+    CHECK(func.arguments[0].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3064,6 +3038,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "String?");
+    CHECK(func.arguments[1].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3087,6 +3062,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "String?");
+    CHECK(func.arguments[1].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3106,10 +3082,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap") {
     LuaLibrary::Function func = codegen::lua::FuncStringMap;
     CHECK(func.name == "funcStringMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> String");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3135,10 +3109,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional") {
     LuaLibrary::Function func = codegen::lua::FuncStringOptional;
     CHECK(func.name == "funcStringOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3178,10 +3150,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector") {
     LuaLibrary::Function func = codegen::lua::FuncStringVector;
     CHECK(func.name == "funcStringVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[String]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[String]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3206,10 +3176,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  path") {
     LuaLibrary::Function func = codegen::lua::FuncPath;
     CHECK(func.name == "funcPath");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Path");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3230,6 +3198,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Path?");
+    CHECK(func.arguments[0].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3248,10 +3217,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncPathDefaulted;
     CHECK(func.name == "funcPathDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Path?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path?");
+    CHECK(func.arguments[0].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3273,6 +3241,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Path?");
+    CHECK(func.arguments[1].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3295,6 +3264,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Path?");
+    CHECK(func.arguments[1].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3313,10 +3283,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap") {
     LuaLibrary::Function func = codegen::lua::FuncPathMap;
     CHECK(func.name == "funcPathMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Path");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Path");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3341,10 +3309,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional") {
     LuaLibrary::Function func = codegen::lua::FuncPathOptional;
     CHECK(func.name == "funcPathOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Path?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3382,10 +3348,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector") {
     LuaLibrary::Function func = codegen::lua::FuncPathVector;
     CHECK(func.name == "funcPathVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Path]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Path]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3410,10 +3374,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2;
     CHECK(func.name == "funcIvec2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3434,6 +3396,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3452,10 +3415,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2Defaulted;
     CHECK(func.name == "funcIvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3477,6 +3439,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3499,6 +3462,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3517,10 +3481,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2Map;
     CHECK(func.name == "funcIvec2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> ivec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> ivec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3545,10 +3507,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2Optional;
     CHECK(func.name == "funcIvec2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3586,10 +3546,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2Vector;
     CHECK(func.name == "funcIvec2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[ivec2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[ivec2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3614,10 +3572,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3;
     CHECK(func.name == "funcIvec3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3638,6 +3594,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3656,10 +3613,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3Defaulted;
     CHECK(func.name == "funcIvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3681,6 +3637,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3703,6 +3660,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3721,10 +3679,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3Map;
     CHECK(func.name == "funcIvec3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> ivec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> ivec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3749,10 +3705,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3Optional;
     CHECK(func.name == "funcIvec3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3790,10 +3744,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3Vector;
     CHECK(func.name == "funcIvec3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[ivec3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[ivec3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3818,10 +3770,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4;
     CHECK(func.name == "funcIvec4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3842,6 +3792,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3860,10 +3811,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4Defaulted;
     CHECK(func.name == "funcIvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3885,6 +3835,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3907,6 +3858,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3925,10 +3877,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4Map;
     CHECK(func.name == "funcIvec4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> ivec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> ivec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3953,10 +3903,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4Optional;
     CHECK(func.name == "funcIvec4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "ivec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3994,10 +3942,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4Vector;
     CHECK(func.name == "funcIvec4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[ivec4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[ivec4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4022,10 +3968,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2;
     CHECK(func.name == "funcDvec2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4046,6 +3990,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4064,10 +4009,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2Defaulted;
     CHECK(func.name == "funcDvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4089,6 +4033,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4111,6 +4056,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4129,10 +4075,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2Map;
     CHECK(func.name == "funcDvec2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4157,10 +4101,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2Optional;
     CHECK(func.name == "funcDvec2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4198,10 +4140,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2Vector;
     CHECK(func.name == "funcDvec2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4226,10 +4166,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3;
     CHECK(func.name == "funcDvec3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4250,6 +4188,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4268,10 +4207,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3Defaulted;
     CHECK(func.name == "funcDvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4293,6 +4231,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4315,6 +4254,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4333,10 +4273,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3Map;
     CHECK(func.name == "funcDvec3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4361,10 +4299,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3Optional;
     CHECK(func.name == "funcDvec3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4402,10 +4338,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3Vector;
     CHECK(func.name == "funcDvec3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4430,10 +4364,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4;
     CHECK(func.name == "funcDvec4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4454,6 +4386,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4472,10 +4405,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4Defaulted;
     CHECK(func.name == "funcDvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4497,6 +4429,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4519,6 +4452,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4537,10 +4471,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4Map;
     CHECK(func.name == "funcDvec4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4565,10 +4497,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4Optional;
     CHECK(func.name == "funcDvec4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4606,10 +4536,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4Vector;
     CHECK(func.name == "funcDvec4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4634,10 +4562,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2") {
     LuaLibrary::Function func = codegen::lua::FuncVec2;
     CHECK(func.name == "funcVec2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4658,6 +4584,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4676,10 +4603,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncVec2Defaulted;
     CHECK(func.name == "funcVec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4701,6 +4627,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4723,6 +4650,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec2?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4741,10 +4669,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map") {
     LuaLibrary::Function func = codegen::lua::FuncVec2Map;
     CHECK(func.name == "funcVec2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4769,10 +4695,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncVec2Optional;
     CHECK(func.name == "funcVec2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4810,10 +4734,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec2Vector;
     CHECK(func.name == "funcVec2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4838,10 +4760,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3") {
     LuaLibrary::Function func = codegen::lua::FuncVec3;
     CHECK(func.name == "funcVec3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4862,6 +4782,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4880,10 +4801,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncVec3Defaulted;
     CHECK(func.name == "funcVec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4905,6 +4825,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4927,6 +4848,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec3?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4945,10 +4867,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map") {
     LuaLibrary::Function func = codegen::lua::FuncVec3Map;
     CHECK(func.name == "funcVec3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4973,10 +4893,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncVec3Optional;
     CHECK(func.name == "funcVec3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5014,10 +4932,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec3Vector;
     CHECK(func.name == "funcVec3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5042,10 +4958,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4") {
     LuaLibrary::Function func = codegen::lua::FuncVec4;
     CHECK(func.name == "funcVec4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5066,6 +4980,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "vec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5084,10 +4999,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncVec4Defaulted;
     CHECK(func.name == "funcVec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
+    CHECK(func.arguments[0].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5109,6 +5023,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5131,6 +5046,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "vec4?");
+    CHECK(func.arguments[1].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5149,10 +5065,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map") {
     LuaLibrary::Function func = codegen::lua::FuncVec4Map;
     CHECK(func.name == "funcVec4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> vec4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5177,10 +5091,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncVec4Optional;
     CHECK(func.name == "funcVec4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "vec4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5218,10 +5130,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec4Vector;
     CHECK(func.name == "funcVec4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[vec4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[vec4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5246,10 +5156,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2;
     CHECK(func.name == "funcMat2x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5270,6 +5178,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5288,10 +5197,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2Defaulted;
     CHECK(func.name == "funcMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5313,6 +5221,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5335,6 +5244,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5353,10 +5263,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2Map;
     CHECK(func.name == "funcMat2x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5381,10 +5289,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2Optional;
     CHECK(func.name == "funcMat2x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5422,10 +5328,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2Vector;
     CHECK(func.name == "funcMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5450,10 +5354,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3;
     CHECK(func.name == "funcMat2x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5474,6 +5376,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5492,10 +5395,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3Defaulted;
     CHECK(func.name == "funcMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5517,6 +5419,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5539,6 +5442,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5557,10 +5461,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3Map;
     CHECK(func.name == "funcMat2x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5597,10 +5499,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3Optional;
     CHECK(func.name == "funcMat2x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5638,10 +5538,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3Vector;
     CHECK(func.name == "funcMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5678,10 +5576,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4;
     CHECK(func.name == "funcMat2x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5702,6 +5598,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5720,10 +5617,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4Defaulted;
     CHECK(func.name == "funcMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5745,6 +5641,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5771,6 +5668,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5789,10 +5687,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4Map;
     CHECK(func.name == "funcMat2x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5829,10 +5725,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4Optional;
     CHECK(func.name == "funcMat2x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5870,10 +5764,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4Vector;
     CHECK(func.name == "funcMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5910,10 +5802,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2;
     CHECK(func.name == "funcMat3x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5934,6 +5824,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5952,10 +5843,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2Defaulted;
     CHECK(func.name == "funcMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5977,6 +5867,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5999,6 +5890,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6017,10 +5909,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2Map;
     CHECK(func.name == "funcMat3x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6057,10 +5947,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2Optional;
     CHECK(func.name == "funcMat3x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6098,10 +5986,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2Vector;
     CHECK(func.name == "funcMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6138,10 +6024,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3;
     CHECK(func.name == "funcMat3x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6165,6 +6049,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6186,10 +6071,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3Defaulted;
     CHECK(func.name == "funcMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6211,6 +6095,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6240,6 +6125,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6258,10 +6144,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3Map;
     CHECK(func.name == "funcMat3x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6304,10 +6188,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3Optional;
     CHECK(func.name == "funcMat3x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6348,10 +6230,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3Vector;
     CHECK(func.name == "funcMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6394,10 +6274,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4;
     CHECK(func.name == "funcMat3x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6424,6 +6302,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6448,10 +6327,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4Defaulted;
     CHECK(func.name == "funcMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6473,6 +6351,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6502,6 +6381,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6520,10 +6400,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4Map;
     CHECK(func.name == "funcMat3x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6569,10 +6447,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4Optional;
     CHECK(func.name == "funcMat3x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6616,10 +6492,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4Vector;
     CHECK(func.name == "funcMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6666,10 +6540,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2;
     CHECK(func.name == "funcMat4x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6690,6 +6562,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6708,10 +6581,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2Defaulted;
     CHECK(func.name == "funcMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6733,6 +6605,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6759,6 +6632,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6777,10 +6651,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2Map;
     CHECK(func.name == "funcMat4x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6817,10 +6689,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2Optional;
     CHECK(func.name == "funcMat4x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6858,10 +6728,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2Vector;
     CHECK(func.name == "funcMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6898,10 +6766,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3;
     CHECK(func.name == "funcMat4x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6928,6 +6794,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6952,10 +6819,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3Defaulted;
     CHECK(func.name == "funcMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6977,6 +6843,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7006,6 +6873,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7024,10 +6892,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3Map;
     CHECK(func.name == "funcMat4x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7073,10 +6939,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3Optional;
     CHECK(func.name == "funcMat4x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7120,10 +6984,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3Vector;
     CHECK(func.name == "funcMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7169,10 +7031,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4;
     CHECK(func.name == "funcMat4x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7199,6 +7059,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7223,10 +7084,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4Defaulted;
     CHECK(func.name == "funcMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7248,6 +7108,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7277,6 +7138,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7295,10 +7157,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4Map;
     CHECK(func.name == "funcMat4x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7344,10 +7204,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4Optional;
     CHECK(func.name == "funcMat4x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7391,10 +7249,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4Vector;
     CHECK(func.name == "funcMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7440,10 +7296,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2;
     CHECK(func.name == "funcDMat2x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7464,6 +7318,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7482,10 +7337,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2Defaulted;
     CHECK(func.name == "funcDMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7507,6 +7361,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7529,6 +7384,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7547,10 +7403,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2Map;
     CHECK(func.name == "funcDMat2x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7575,10 +7429,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2Optional;
     CHECK(func.name == "funcDMat2x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7616,10 +7468,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2Vector;
     CHECK(func.name == "funcDMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7644,10 +7494,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3;
     CHECK(func.name == "funcDMat2x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7668,6 +7516,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7686,10 +7535,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3Defaulted;
     CHECK(func.name == "funcDMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7711,6 +7559,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7733,6 +7582,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7751,10 +7601,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3Map;
     CHECK(func.name == "funcDMat2x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7783,10 +7631,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3Optional;
     CHECK(func.name == "funcDMat2x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7824,10 +7670,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3Vector;
     CHECK(func.name == "funcDMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7852,10 +7696,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4;
     CHECK(func.name == "funcDMat2x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7876,6 +7718,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7894,10 +7737,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4Defaulted;
     CHECK(func.name == "funcDMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7919,6 +7761,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7941,6 +7784,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7959,10 +7803,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4Map;
     CHECK(func.name == "funcDMat2x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat2x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7999,10 +7841,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4Optional;
     CHECK(func.name == "funcDMat2x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat2x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8040,10 +7880,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4Vector;
     CHECK(func.name == "funcDMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat2x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat2x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8080,10 +7918,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2;
     CHECK(func.name == "funcDMat3x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8104,6 +7940,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8122,10 +7959,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2Defaulted;
     CHECK(func.name == "funcDMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8147,6 +7983,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8169,6 +8006,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8187,10 +8025,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2Map;
     CHECK(func.name == "funcDMat3x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8227,10 +8063,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2Optional;
     CHECK(func.name == "funcDMat3x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8268,10 +8102,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2Vector;
     CHECK(func.name == "funcDMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8308,10 +8140,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3;
     CHECK(func.name == "funcDMat3x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8335,6 +8165,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8356,10 +8187,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3Defaulted;
     CHECK(func.name == "funcDMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8381,6 +8211,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8407,6 +8238,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8425,10 +8257,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3Map;
     CHECK(func.name == "funcDMat3x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8465,10 +8295,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3Optional;
     CHECK(func.name == "funcDMat3x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8509,10 +8337,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3Vector;
     CHECK(func.name == "funcDMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8549,10 +8375,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4;
     CHECK(func.name == "funcDMat3x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8579,6 +8403,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat3x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8603,10 +8428,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4Defaulted;
     CHECK(func.name == "funcDMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8628,6 +8452,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8657,6 +8482,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat3x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8675,10 +8501,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4Map;
     CHECK(func.name == "funcDMat3x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat3x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8724,10 +8548,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4Optional;
     CHECK(func.name == "funcDMat3x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat3x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8771,10 +8593,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4Vector;
     CHECK(func.name == "funcDMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat3x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat3x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8821,10 +8641,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2;
     CHECK(func.name == "funcDMat4x2");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8845,6 +8663,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8863,10 +8682,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2Defaulted;
     CHECK(func.name == "funcDMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8888,6 +8706,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8914,6 +8733,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x2?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8932,10 +8752,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2Map;
     CHECK(func.name == "funcDMat4x2Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x2");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8972,10 +8790,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2Optional;
     CHECK(func.name == "funcDMat4x2Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x2?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9013,10 +8829,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2Vector;
     CHECK(func.name == "funcDMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x2]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x2]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9053,10 +8867,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3;
     CHECK(func.name == "funcDMat4x3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9083,6 +8895,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9107,10 +8920,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3Defaulted;
     CHECK(func.name == "funcDMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9132,6 +8944,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9161,6 +8974,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x3?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9179,10 +8993,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3Map;
     CHECK(func.name == "funcDMat4x3Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x3");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9228,10 +9040,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3Optional;
     CHECK(func.name == "funcDMat4x3Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x3?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9275,10 +9085,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3Vector;
     CHECK(func.name == "funcDMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x3]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x3]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9324,10 +9132,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4;
     CHECK(func.name == "funcDMat4x4");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9354,6 +9160,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9378,10 +9185,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4Defaulted;
     CHECK(func.name == "funcDMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
+    CHECK(func.arguments[0].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9403,6 +9209,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck with value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9432,6 +9239,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck w/o value") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat4x4?");
+    CHECK(func.arguments[1].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9450,10 +9258,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4Map;
     CHECK(func.name == "funcDMat4x4Map");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> mat4x4");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9499,10 +9305,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4Optional;
     CHECK(func.name == "funcDMat4x4Optional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "mat4x4?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9546,10 +9350,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4Vector;
     CHECK(func.name == "funcDMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[mat4x4]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[mat4x4]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9596,10 +9398,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary") {
     LuaLibrary::Function func = codegen::lua::FuncDictionary;
     CHECK(func.name == "funcDictionary");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Table");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9627,6 +9427,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted with value") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Table?");
+    CHECK(func.arguments[0].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9645,10 +9446,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted w/o value") {
     LuaLibrary::Function func = codegen::lua::FuncDictionaryDefaulted;
     CHECK(func.name == "funcDictionaryDefaulted");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Table?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table?");
+    CHECK(func.arguments[0].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9671,6 +9471,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck with value"
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Table?");
+    CHECK(func.arguments[1].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9700,6 +9501,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck w/o value")
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Table?");
+    CHECK(func.arguments[1].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9719,10 +9521,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap") {
     LuaLibrary::Function func = codegen::lua::FuncDictionaryMap;
     CHECK(func.name == "funcDictionaryMap");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "String -> Table");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String -> Table");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9775,10 +9575,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional") {
     LuaLibrary::Function func = codegen::lua::FuncDictionaryOptional;
     CHECK(func.name == "funcDictionaryOptional");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Table?");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9825,10 +9623,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
     LuaLibrary::Function func = codegen::lua::FuncDictionaryVector;
     CHECK(func.name == "funcDictionaryVector");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "[Table]");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "[Table]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9880,10 +9676,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / bool") {
     LuaLibrary::Function func = codegen::lua::FuncVariantBool;
     CHECK(func.name == "funcVariantBool");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean | Integer");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean | Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9902,10 +9696,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / int") {
     LuaLibrary::Function func = codegen::lua::FuncVariantInt;
     CHECK(func.name == "funcVariantInt");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Boolean | Integer");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean | Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9924,10 +9716,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / doub
     LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringDouble;
     CHECK(func.name == "funcVariantDoubleDvec3StringDouble");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | vec3 | String");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9946,10 +9736,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / vec3
     LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringDvec3;
     CHECK(func.name == "funcVariantDoubleDvec3StringDvec3");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | vec3 | String");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9969,10 +9757,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / stri
     LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringString;
     CHECK(func.name == "funcVariantDoubleDvec3StringString");
     REQUIRE(func.arguments.size() == 1);
-    {
-        CHECK(func.arguments[0].name == "arg");
-        CHECK(func.arguments[0].type == "Number | vec3 | String");
-    }
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 

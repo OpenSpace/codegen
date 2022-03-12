@@ -879,9 +879,30 @@ s->name, s->attributes.dictionary
             std::string argumentsDesc = "{\n";
             for (Variable* var : f->arguments) {
                 argumentsDesc += fmt::format(
-                    "        {{ \"{}\", \"{}\" }},\n",
+                    "        {{ \"{}\", \"{}\"",
                     var->name, generateDescriptiveTypename(var->type)
                 );
+
+                if (var->type->tag == VariableType::Tag::OptionalType) {
+                    OptionalType* ot = static_cast<OptionalType*>(var->type);
+                    if (ot->defaultArgument.has_value()) {
+                        std::string defaultArgument = *ot->defaultArgument;
+                        for (size_t i = 0; i < defaultArgument.size(); i += 1) {
+                            if (defaultArgument[i] == '\\' || defaultArgument[i] == '"') {
+                                defaultArgument.insert(defaultArgument.begin() + i, '\\');
+                                i += 1;
+                            }
+                            if (defaultArgument[i] == '\n') {
+                                defaultArgument.erase(defaultArgument.begin() + i);
+                                i -= 1;
+                            }
+                        }
+                        argumentsDesc += fmt::format(", \"{}\"", defaultArgument);
+                    }
+                }
+
+                argumentsDesc += " },\n";
+
             }
             if (!f->arguments.empty()) {
                 // Remove the closing ", "
