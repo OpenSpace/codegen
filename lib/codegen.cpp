@@ -669,7 +669,7 @@ s->name, s->attributes.dictionary
 
         for (Function* f : code.luaWrapperFunctions) {
             // Open the Function object declaration
-            std::string capitalizedName = f->name;
+            std::string capitalizedName = f->functionName;
             capitalizedName[0] = static_cast<char>(::toupper(capitalizedName[0]));
 
             result += fmt::format(
@@ -678,10 +678,7 @@ s->name, s->attributes.dictionary
             );
 
             // Name of the function
-            result += fmt::format(
-                "    \"{}\",\n",
-                f->customName.empty() ? f->name : f->customName
-            );
+            result += fmt::format("    \"{}\",\n", f->luaName);
 
             // The lambda that is executed
             result += "    [](lua_State* L) -> int {\n";
@@ -700,13 +697,13 @@ s->name, s->attributes.dictionary
             if (nRequiredArguments == nTotalArguments) {
                 result += fmt::format(
                     "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
-                    nTotalArguments, f->name
+                    nTotalArguments, f->functionName
                 );
             }
             else {
                 result += fmt::format(
                     "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
-                    nRequiredArguments, nTotalArguments, f->name
+                    nRequiredArguments, nTotalArguments, f->functionName
                 );
             }
 
@@ -745,12 +742,12 @@ s->name, s->attributes.dictionary
             if (f->arguments.empty()) {
                 // If there are no arguments to the function, it's pretty simple to just
                 // call it
-                result += fmt::format("{}();\n", f->name);
+                result += fmt::format("{}();\n", f->functionName);
             }
             else {
                 // If there are arguments it might get a bit more complicated since we
                 // want to support default initialized arguments.
-                result += fmt::format("{}(\n", f->name);
+                result += fmt::format("{}(\n", f->functionName);
                 for (size_t i = 0; i < f->arguments.size(); i += 1) {
                     Variable* var = f->arguments[i];
 

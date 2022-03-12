@@ -236,8 +236,8 @@ const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
 struct Function {
-    std::string name;
-    std::string customName;
+    std::string functionName;
+    std::string luaName;
     std::string documentation;
 
     VariableType* returnValue = nullptr;

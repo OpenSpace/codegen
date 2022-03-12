@@ -41,7 +41,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
@@ -68,7 +68,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(
         f->documentation ==
         "Some example documentation that covers a few lines. "
@@ -97,7 +97,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(
         f->documentation ==
         "Some example documentation that covers a few lines. "
@@ -130,7 +130,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
@@ -158,7 +158,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(
         f->documentation ==
         "Some example documentation that covers a few lines. "

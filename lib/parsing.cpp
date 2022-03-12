@@ -1081,7 +1081,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
 
         cn.remove_prefix(1);
         cn.remove_suffix(1);
-        f->customName = std::string(cn);
+        f->luaName = std::string(cn);
     }
 
     content.remove_prefix(precursor);
@@ -1120,12 +1120,15 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         functionNameLoc.second - functionNameLoc.first
     );
 
-    f->name = std::string(strip(name));
-    
-    if (::isupper(f->name[0])) {
+    f->functionName = std::string(strip(name));
+    if (::isupper(f->functionName[0])) {
         throw CodegenError(fmt::format(
             "Marked functions must not start with an uppercase letter\n{}", content
         ));
+    }
+    // If no custom Lua name given, we use the function name instead
+    if (f->luaName.empty()) {
+        f->luaName = f->functionName;
     }
 
     // Parse the parameters
@@ -1157,7 +1160,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             }
             throw CodegenError(fmt::format(
                 "Illegal {} type '{} {}' found in function '{}'\n{}",
-                t, typeStr, typeStr2, f->name, content
+                t, typeStr, typeStr2, f->functionName, content
             ));
         }
 
@@ -1179,7 +1182,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         if (v->name.empty()) {
             throw CodegenError(fmt::format(
                 "Parameter {} of function '{}' has no name, which is not allowed",
-                f->arguments.size(), f->name
+                f->arguments.size(), f->functionName
             ));
         }
 
@@ -1290,14 +1293,14 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     if (f->returnValue && f->returnValue->tag == VariableType::Tag::CustomType) {
         throw CodegenError(fmt::format(
             "Illegal type '{}' for return value of function '{}' found",
-            static_cast<CustomType*>(f->returnValue)->name, f->name
+            static_cast<CustomType*>(f->returnValue)->name, f->functionName
         ));
     }
     for (Variable* var : f->arguments) {
         if (var->type->tag == VariableType::Tag::CustomType) {
             throw CodegenError(fmt::format(
                 "Illegal type '{}' for argument '{}' value of function '{}' found",
-                static_cast<CustomType*>(var->type)->name, var->name, f->name
+                static_cast<CustomType*>(var->type)->name, var->name, f->functionName
             ));
         }
     }
@@ -1371,7 +1374,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 assert(f);
 
                 for (Function* func : res.luaWrapperFunctions) {
-                    if (f->name == func->name) {
+                    if (f->functionName == func->functionName) {
                         throw CodegenError(fmt::format(
                             "Cannot define multiple functions with the same name\n{}",
                             code.substr(next.cursors.first, 50)

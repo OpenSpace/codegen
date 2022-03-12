@@ -41,7 +41,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  void") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
@@ -63,7 +63,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -94,7 +94,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -127,7 +127,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -162,7 +162,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -195,7 +195,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -228,7 +228,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -259,7 +259,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -292,7 +292,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -327,7 +327,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -360,7 +360,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  int vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -393,7 +393,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -424,7 +424,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -457,7 +457,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -492,7 +492,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -525,7 +525,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -558,7 +558,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -589,7 +589,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -622,7 +622,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -657,7 +657,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -690,7 +690,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  float vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -723,7 +723,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -754,7 +754,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -787,7 +787,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -822,7 +822,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -855,7 +855,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -888,7 +888,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -919,7 +919,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -952,7 +952,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -987,7 +987,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1020,7 +1020,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1053,7 +1053,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1084,7 +1084,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1117,7 +1117,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1152,7 +1152,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1185,7 +1185,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1218,7 +1218,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1249,7 +1249,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1282,7 +1282,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1317,7 +1317,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1350,7 +1350,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1383,7 +1383,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1414,7 +1414,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1447,7 +1447,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1482,7 +1482,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1515,7 +1515,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1548,7 +1548,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1579,7 +1579,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1612,7 +1612,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1647,7 +1647,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1680,7 +1680,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1713,7 +1713,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1744,7 +1744,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1777,7 +1777,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1812,7 +1812,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1845,7 +1845,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1878,7 +1878,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1909,7 +1909,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1942,7 +1942,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -1977,7 +1977,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2010,7 +2010,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2043,7 +2043,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2074,7 +2074,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2107,7 +2107,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2142,7 +2142,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2175,7 +2175,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2208,7 +2208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2239,7 +2239,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2272,7 +2272,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2307,7 +2307,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2340,7 +2340,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2373,7 +2373,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2404,7 +2404,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2437,7 +2437,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2472,7 +2472,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2505,7 +2505,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2538,7 +2538,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2569,7 +2569,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2602,7 +2602,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2637,7 +2637,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2670,7 +2670,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2703,7 +2703,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2734,7 +2734,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  glm::mat2x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2767,7 +2767,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2802,7 +2802,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2835,7 +2835,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2868,7 +2868,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2899,7 +2899,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2932,7 +2932,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -2967,7 +2967,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3000,7 +3000,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3033,7 +3033,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3064,7 +3064,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3097,7 +3097,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3132,7 +3132,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3165,7 +3165,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3198,7 +3198,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3229,7 +3229,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3262,7 +3262,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3297,7 +3297,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3330,7 +3330,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3363,7 +3363,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3394,7 +3394,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3427,7 +3427,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3462,7 +3462,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3495,7 +3495,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat3x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3528,7 +3528,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3559,7 +3559,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3592,7 +3592,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3627,7 +3627,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3660,7 +3660,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3693,7 +3693,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3724,7 +3724,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3757,7 +3757,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3792,7 +3792,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3825,7 +3825,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3858,7 +3858,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3889,7 +3889,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3922,7 +3922,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3957,7 +3957,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -3990,7 +3990,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4023,7 +4023,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4054,7 +4054,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4087,7 +4087,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4122,7 +4122,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4155,7 +4155,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4188,7 +4188,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4219,7 +4219,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4252,7 +4252,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4287,7 +4287,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4320,7 +4320,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4353,7 +4353,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4384,7 +4384,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4417,7 +4417,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4452,7 +4452,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4485,7 +4485,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat2x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4518,7 +4518,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4549,7 +4549,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4582,7 +4582,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4617,7 +4617,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4650,7 +4650,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4683,7 +4683,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4714,7 +4714,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4747,7 +4747,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4782,7 +4782,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4815,7 +4815,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4848,7 +4848,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4879,7 +4879,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4912,7 +4912,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4947,7 +4947,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -4980,7 +4980,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat3x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5013,7 +5013,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5044,7 +5044,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5077,7 +5077,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5112,7 +5112,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5145,7 +5145,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x2 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5178,7 +5178,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5209,7 +5209,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5242,7 +5242,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5277,7 +5277,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5310,7 +5310,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5343,7 +5343,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5374,7 +5374,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5407,7 +5407,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5442,7 +5442,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5475,7 +5475,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x4 vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5508,7 +5508,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5539,7 +5539,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5572,7 +5572,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5607,7 +5607,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5640,7 +5640,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5677,7 +5677,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -5720,7 +5720,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<double, float, string>") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "func");
+    CHECK(f->functionName == "func");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);

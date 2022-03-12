@@ -41,7 +41,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  void") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
@@ -64,7 +64,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  int") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -90,7 +90,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  int map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -120,7 +120,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  int optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -148,7 +148,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  int vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -176,7 +176,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -202,7 +202,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -232,7 +232,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -260,7 +260,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -288,7 +288,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  float") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -314,7 +314,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  float map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -344,7 +344,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  float optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -372,7 +372,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  float vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -400,7 +400,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -426,7 +426,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -456,7 +456,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -484,7 +484,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -512,7 +512,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -538,7 +538,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -568,7 +568,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -596,7 +596,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -624,7 +624,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -650,7 +650,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -680,7 +680,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -708,7 +708,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -736,7 +736,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -762,7 +762,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -792,7 +792,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -820,7 +820,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -848,7 +848,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -874,7 +874,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -904,7 +904,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -932,7 +932,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -960,7 +960,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -986,7 +986,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1016,7 +1016,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1044,7 +1044,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1072,7 +1072,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1098,7 +1098,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1128,7 +1128,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1156,7 +1156,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1184,7 +1184,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1210,7 +1210,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1240,7 +1240,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1268,7 +1268,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1296,7 +1296,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1322,7 +1322,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1352,7 +1352,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1380,7 +1380,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1408,7 +1408,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1434,7 +1434,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1464,7 +1464,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1492,7 +1492,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1520,7 +1520,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1546,7 +1546,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1576,7 +1576,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1604,7 +1604,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1632,7 +1632,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1658,7 +1658,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1688,7 +1688,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1716,7 +1716,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1744,7 +1744,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1770,7 +1770,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1800,7 +1800,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1828,7 +1828,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1856,7 +1856,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1882,7 +1882,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1912,7 +1912,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1940,7 +1940,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1968,7 +1968,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -1994,7 +1994,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2024,7 +2024,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2052,7 +2052,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2080,7 +2080,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2106,7 +2106,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2136,7 +2136,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2164,7 +2164,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2192,7 +2192,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2218,7 +2218,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2248,7 +2248,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2276,7 +2276,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat3x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2304,7 +2304,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2330,7 +2330,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2360,7 +2360,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2388,7 +2388,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2416,7 +2416,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2442,7 +2442,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2472,7 +2472,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2500,7 +2500,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2528,7 +2528,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2554,7 +2554,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2584,7 +2584,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2612,7 +2612,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2640,7 +2640,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2666,7 +2666,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2696,7 +2696,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2724,7 +2724,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2752,7 +2752,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2778,7 +2778,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2808,7 +2808,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2836,7 +2836,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2864,7 +2864,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2890,7 +2890,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2920,7 +2920,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2948,7 +2948,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -2976,7 +2976,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3002,7 +3002,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3032,7 +3032,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3060,7 +3060,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3088,7 +3088,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3114,7 +3114,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3144,7 +3144,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3172,7 +3172,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3200,7 +3200,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3226,7 +3226,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3256,7 +3256,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3284,7 +3284,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat3x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3312,7 +3312,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x2") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3338,7 +3338,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x2 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3368,7 +3368,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x2 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3396,7 +3396,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x2 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3424,7 +3424,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3450,7 +3450,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3480,7 +3480,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3508,7 +3508,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3536,7 +3536,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x4") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3562,7 +3562,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x4 map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3592,7 +3592,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x4 optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3620,7 +3620,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x4 vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3648,7 +3648,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3674,7 +3674,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3704,7 +3704,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3732,7 +3732,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3764,7 +3764,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant bool") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3795,7 +3795,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant int double") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3835,7 +3835,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant float string path") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3886,7 +3886,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3917,7 +3917,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
@@ -3957,7 +3957,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path") {
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;

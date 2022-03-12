@@ -41,7 +41,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.size() == 0);
@@ -63,7 +63,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -93,7 +93,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
@@ -124,7 +124,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 2);
@@ -162,7 +162,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 2);
@@ -202,7 +202,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 2);
@@ -243,7 +243,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -270,7 +270,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -309,8 +309,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Custom name") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
-    CHECK(f->customName == "bar");
+    CHECK(f->functionName == "foo");
+    CHECK(f->luaName == "bar");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -352,7 +352,7 @@ foo()
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -398,7 +398,7 @@ foo
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -443,7 +443,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition with s
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -481,7 +481,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Minimalistic function definition") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -522,7 +522,7 @@ float arg2,
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "foo");
+    CHECK(f->functionName == "foo");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
@@ -595,7 +595,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline tuple return value") {
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
-    CHECK(f->name == "functionName");
+    CHECK(f->functionName == "functionName");
     CHECK(f->documentation == "");
     {
         VariableType* ret = f->returnValue;
