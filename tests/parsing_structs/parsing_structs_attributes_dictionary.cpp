@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Attribute: Attributes Dictionary (success)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attribute/Dictionary") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // referenceValue documentation
@@ -52,8 +52,9 @@ TEST_CASE("Parsing Attribute: Attributes Dictionary (success)", "[structs][parsi
 })";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -183,4 +184,7 @@ TEST_CASE("Parsing Attribute: Attributes Dictionary (success)", "[structs][parsi
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

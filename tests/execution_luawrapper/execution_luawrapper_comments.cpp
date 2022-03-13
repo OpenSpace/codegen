@@ -24,22 +24,31 @@
 
 #include "catch2/catch.hpp"
 
-#include "codegen.h"
-#include "parsing.h"
-#include "types.h"
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <openspace/scripting/lualibrary.h>
+#include <ghoul/lua/lua_helper.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
 
-namespace CM = Catch::Matchers;
+namespace {
+    /*
+     * Some example documentation
+     * that covers a few lines.
+     * And another one for good measure
+     */
+    [[codegen::luawrap]] double foo(int arg) {
+        return arg * 2.0;
+    }
+#include "execution_luawrapper_comments_codegen.cpp"
+} // namespace
 
-//TEST_CASE("Parsing: Enum Error stringify-map", "[enums][parsing]") {
-//    constexpr const char S[] = R"(
-//    enum class [[codegen::stringify(), codegen::map(Abc)]] Enum1 {
-//        Value1,
-//        value2,
-//        Value3
-//    };
-//)";
-//    CHECK_THROWS_MATCHES(
-//        parse(S),
-//        CodegenError, CM::Contains("Cannot map a root enum")
-//    );
-//}
+TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
+    CHECK(codegen::lua::Foo.name == "foo");
+    CHECK(codegen::lua::Foo.function);
+    CHECK(
+        codegen::lua::Foo.helpText ==
+        "Some example documentation that covers a few lines. "
+        "And another one for good measure"
+    );
+}

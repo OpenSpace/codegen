@@ -30,7 +30,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Unsupported Attributes: double annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::annotation(1)]];
 };)";
@@ -40,7 +40,7 @@ double v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::annotation(1)]];
 };)";
@@ -50,7 +50,7 @@ std::vector<double> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double annotation", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional annotation") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::annotation(1)]];
 };)";
@@ -60,7 +60,7 @@ std::optional<double> v [[codegen::annotation(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: double inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::inlist(1)]];
 };)";
@@ -70,7 +70,7 @@ double v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::inlist(1)]];
 };)";
@@ -80,7 +80,7 @@ std::vector<double> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double inlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional inlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::inlist(1)]];
 };)";
@@ -90,7 +90,7 @@ std::optional<double> v [[codegen::inlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: double notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::notinlist(1)]];
 };)";
@@ -100,7 +100,7 @@ double v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::notinlist(1)]];
 };)";
@@ -110,7 +110,7 @@ std::vector<double> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double notinlist", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional notinlist") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::notinlist(1)]];
 };)";
@@ -120,7 +120,7 @@ std::optional<double> v [[codegen::notinlist(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: double reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::reference(1)]];
 };)";
@@ -130,7 +130,7 @@ double v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::reference(1)]];
 };)";
@@ -140,7 +140,7 @@ std::vector<double> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double reference", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional reference") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::reference(1)]];
 };)";
@@ -150,7 +150,7 @@ std::optional<double> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: double color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::color()]];
 };)";
@@ -160,7 +160,7 @@ double v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::color()]];
 };)";
@@ -170,7 +170,7 @@ std::vector<double> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double color", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional color") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::color()]];
 };)";
@@ -180,7 +180,7 @@ std::optional<double> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: double directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 double v [[codegen::directory()]];
 };)";
@@ -190,7 +190,7 @@ double v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: vector double directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  vector directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<double> v [[codegen::directory()]];
 };)";
@@ -200,7 +200,7 @@ std::vector<double> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Unsupported Attributes: optional double directory", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Double:  optional directory") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<double> v [[codegen::directory()]];
 };)";

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Attribute: Attributes Bool (success)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attribute/Bool") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // [[codegen::verbatim(description)]]
@@ -36,8 +36,9 @@ TEST_CASE("Parsing Attribute: Attributes Bool (success)", "[structs][parsing]") 
     };
 )";
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 

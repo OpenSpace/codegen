@@ -1,0 +1,224 @@
+/*****************************************************************************************
+ *                                                                                       *
+ * OpenSpace Codegen                                                                     *
+ *                                                                                       *
+ * Copyright (c) 2021-2022                                                               *
+ *                                                                                       *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this  *
+ * software and associated documentation files (the "Software"), to deal in the Software *
+ * without restriction, including without limitation the rights to use, copy, modify,    *
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to    *
+ * permit persons to whom the Software is furnished to do so, subject to the following   *
+ * conditions:                                                                           *
+ *                                                                                       *
+ * The above copyright notice and this permission notice shall be included in all copies *
+ * or substantial portions of the Software.                                              *
+ *                                                                                       *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,   *
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A         *
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT    *
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF  *
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE  *
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
+ ****************************************************************************************/
+
+#include "catch2/catch.hpp"
+
+#include "codegen.h"
+#include "parsing.h"
+#include "types.h"
+
+namespace CM = Catch::Matchers;
+
+TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(int) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError, CM::Contains("Parameter 0 of function 'foo' has no name")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] std::chrono::time_point foo() {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "Illegal type 'std::chrono::time_point' for return value of function 'foo'"
+        )
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::list<int> abc) {
+    }
+)";
+    
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "Illegal type 'std::list<int>' for argument 'abc' value of function 'foo'"
+        )
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type second argument") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(float abc, std::list<int> def) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "Illegal type 'std::list<int>' for argument 'def' value of function 'foo'"
+        )
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Reference type for argument") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(float& abc) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Illegal reference type found: float&")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Const reference type for argument") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(const float& abc) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Illegal reference type 'const float&' found in function 'foo'")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Const pointer type for argument") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(const float* abc) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Illegal pointer type 'const float*' found in function 'foo'")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void Foo(const float* abc) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Marked functions must not start with an uppercase letter")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::variant<unsigned int, float> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap()]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap("")]] void foo(std::variant<float, unsigned int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
+    constexpr const char S[] = R"(
+    [[codegen::luawrap(abc)]] void foo(std::variant<float, int> arg) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "Error in custom name for luawrap function. Provided name must be enclosed"
+        )
+    );
+}
+
+TEST_CASE("Parsing/LuaWrapper/Error:  Same argument for last optional and first required")
+{
+    constexpr const char S[] = R"(
+    [[codegen::luawrap]] void foo(std::optional<float> arg1, std::optional<int> arg2, int arg3, std::optional<std::string> arg4) {
+    }
+)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::Contains(
+            "When using optional arguments in the beginning of the argument list, the "
+            "last optional argument must not have"
+        )
+    );
+}

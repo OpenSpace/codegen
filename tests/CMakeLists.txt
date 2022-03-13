@@ -30,6 +30,10 @@ add_executable(
   execution_enums/execution_enums_mapping.cpp
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
+  execution_luawrapper/execution_luawrapper_arguments.cpp
+  execution_luawrapper/execution_luawrapper_basic.cpp
+  execution_luawrapper/execution_luawrapper_comments.cpp
+  execution_luawrapper/execution_luawrapper_return.cpp
   execution_misc/execution_misc_parentdoc.cpp
   execution_structs/execution_structs_attributes.cpp
   execution_structs/execution_structs_basic_types.cpp
@@ -48,10 +52,14 @@ add_executable(
   execution_structs/execution_structs_variant.cpp
 
   parsing_enums/parsing_enums_basic.cpp
-  parsing_enums/parsing_enums_error.cpp
   parsing_enums/parsing_enums_mapping.cpp
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp
+  parsing_luawrapper/parsing_luawrapper_arguments.cpp
+  parsing_luawrapper/parsing_luawrapper_basic.cpp
+  parsing_luawrapper/parsing_luawrapper_comments.cpp
+  parsing_luawrapper/parsing_luawrapper_error.cpp
+  parsing_luawrapper/parsing_luawrapper_return.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp
@@ -66,6 +74,7 @@ add_executable(
   parsing_structs/parsing_structs_attributes_vec3.cpp
   parsing_structs/parsing_structs_attributes_vec4.cpp
   parsing_structs/parsing_structs_attributes_error_bool.cpp
+  parsing_structs/parsing_structs_attributes_error_dictionary.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x2.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x3.cpp
   parsing_structs/parsing_structs_attributes_error_dmat2x4.cpp
@@ -93,7 +102,6 @@ add_executable(
   parsing_structs/parsing_structs_attributes_error_mat4x2.cpp
   parsing_structs/parsing_structs_attributes_error_mat4x3.cpp
   parsing_structs/parsing_structs_attributes_error_mat4x4.cpp
-  parsing_structs/parsing_structs_attributes_error_monostate.cpp
   parsing_structs/parsing_structs_attributes_error_string.cpp
   parsing_structs/parsing_structs_attributes_error_vec2.cpp
   parsing_structs/parsing_structs_attributes_error_vec3.cpp
@@ -142,6 +150,6 @@ add_dependencies(run_test_codegen codegen)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
+  COMMAND codegen ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
   VERBATIM
 )

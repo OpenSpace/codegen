@@ -26,6 +26,7 @@
 #define __OPENSPACE_CODEGEN___TYPES___H__
 
 #include <map>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -93,22 +94,31 @@ struct VariableType {
     virtual ~VariableType() = default;
 #endif // TYPES_ADD_DEBUG_INFORMATION
 
+    bool isBasicType() const;
+    bool isMapType() const;
+    bool isOptionalType() const;
+    bool isVariantType() const;
+    bool isTupleType() const;
+    bool isVectorType() const;
+    bool isCustomType() const;
+
     enum class Tag {
         BasicType,
         MapType,
         OptionalType,
         VariantType,
+        TupleType,
         VectorType,
         CustomType
     };
 
     Tag tag;
-
 };
 bool operator==(const VariableType& lhs, const VariableType& rhs);
 
 VariableType* parseType(std::string_view type, Struct* s);
 std::string generateTypename(const VariableType* type, bool fullyQualified = false);
+std::string generateDescriptiveTypename(const VariableType* type);
 
 struct BasicType : public VariableType {
     enum class Type {
@@ -142,6 +152,9 @@ bool operator==(const MapType& lhs, const MapType& rhs);
 
 struct OptionalType : public VariableType {
     VariableType* type = nullptr;
+    // If this is true, we generated this OptionalType because someone requested a default
+    // initialized variable in a function definition
+    std::optional<std::string> defaultArgument;
 };
 bool operator==(const OptionalType& lhs, const OptionalType& rhs);
 
@@ -150,12 +163,18 @@ struct VariantType : public VariableType {
 };
 bool operator==(const VariantType& lhs, const VariantType& rhs);
 
+struct TupleType : public VariableType {
+    std::vector<VariableType*> types;
+};
+bool operator==(const TupleType& lhs, const TupleType& rhs);
+
 struct VectorType : public VariableType {
     VariableType* type = nullptr;
 };
 bool operator==(const VectorType& lhs, const VectorType& rhs);
 
 struct CustomType : public VariableType {
+    std::string name;
     const StackElement* type = nullptr;
 };
 bool operator==(const CustomType& lhs, const CustomType& rhs);
@@ -224,10 +243,20 @@ const Struct* rootStruct(const Struct* s);
 const StackElement* resolveType(const Struct* context, std::string_view type);
 std::string fqn(const StackElement* s, std::string_view separator);
 
+struct Function {
+    std::string functionName;
+    std::string luaName;
+    std::string documentation;
+
+    VariableType* returnValue = nullptr;
+    std::vector<Variable*> arguments;
+};
+
 
 struct Code {
     std::vector<Struct*> structs;
     std::vector<Enum*> enums;
+    std::vector<Function*> luaWrapperFunctions;
 
     std::string sourceFile;
 };

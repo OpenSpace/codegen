@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    std::cout << fmt::format("codegen");
+    std::cout << "codegen";
     std::vector<std::string_view> srcs;
     for (int i = 1; i < argc; ++i) {
         std::string_view src = argv[i];
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
             std::filesystem::path path = p.path();
 
-            if (path.extension() == ".cpp" &&
+            if ((path.extension() == ".cpp" || path.extension() == ".inl") &&
                 path.string().find("_codegen.cpp") == std::string::npos &&
                 path.string().find(extFolder) == std::string::npos)
             {

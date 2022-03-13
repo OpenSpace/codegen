@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Attribute: Attributes Float (success)", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Attributes/Float") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // keyValue documentation
@@ -107,8 +107,9 @@ TEST_CASE("Parsing Attribute: Attributes Float (success)", "[structs][parsing]")
 })";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -717,4 +718,7 @@ TEST_CASE("Parsing Attribute: Attributes Float (success)", "[structs][parsing]")
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

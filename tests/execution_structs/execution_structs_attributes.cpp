@@ -789,7 +789,9 @@ namespace {
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
 
-TEST_CASE("Attributes Bake", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Attributes:  Bake") {
+    using namespace std::string_literals;
+    
     openspace::documentation::Documentation doc;
     doc.id = "abc";
     DocEng.addDocumentation(doc);
@@ -853,27 +855,27 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     d.setValue("InRangeValueIVec2Optional", glm::dvec2(2));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(2));
-        e.setValue("2", glm::dvec2(2));
-        e.setValue("3", glm::dvec2(2));
+        e.setValue("1", glm::dvec2(2.0));
+        e.setValue("2", glm::dvec2(2.0));
+        e.setValue("3", glm::dvec2(2.0));
         d.setValue("InRangeValueIVec2Vector", e);
     }
-    d.setValue("InRangeValueIVec3", glm::dvec3(2));
-    d.setValue("InRangeValueIVec3Optional", glm::dvec3(2));
+    d.setValue("InRangeValueIVec3", glm::dvec3(2.0));
+    d.setValue("InRangeValueIVec3Optional", glm::dvec3(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(2));
-        e.setValue("2", glm::dvec3(2));
-        e.setValue("3", glm::dvec3(2));
+        e.setValue("1", glm::dvec3(2.0));
+        e.setValue("2", glm::dvec3(2.0));
+        e.setValue("3", glm::dvec3(2.0));
         d.setValue("InRangeValueIVec3Vector", e);
     }
-    d.setValue("InRangeValueIVec4", glm::dvec4(2));
-    d.setValue("InRangeValueIVec4Optional", glm::dvec4(2));
+    d.setValue("InRangeValueIVec4", glm::dvec4(2.0));
+    d.setValue("InRangeValueIVec4Optional", glm::dvec4(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(2));
-        e.setValue("2", glm::dvec4(2));
-        e.setValue("3", glm::dvec4(2));
+        e.setValue("1", glm::dvec4(2.0));
+        e.setValue("2", glm::dvec4(2.0));
+        e.setValue("3", glm::dvec4(2.0));
         d.setValue("InRangeValueIVec4Vector", e);
     }
 
@@ -922,31 +924,31 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         e.setValue("3", glm::dvec4(0.75));
         d.setValue("NotInRangeValueVec4Vector", e);
     }
-    d.setValue("NotInRangeValueIVec2", glm::dvec2(4));
-    d.setValue("NotInRangeValueIVec2Optional", glm::dvec2(4));
+    d.setValue("NotInRangeValueIVec2", glm::dvec2(4.0));
+    d.setValue("NotInRangeValueIVec2Optional", glm::dvec2(4.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(4));
-        e.setValue("2", glm::dvec2(5));
-        e.setValue("3", glm::dvec2(6));
+        e.setValue("1", glm::dvec2(4.0));
+        e.setValue("2", glm::dvec2(5.0));
+        e.setValue("3", glm::dvec2(6.0));
         d.setValue("NotInRangeValueIVec2Vector", e);
     }
-    d.setValue("NotInRangeValueIVec3", glm::dvec3(4));
-    d.setValue("NotInRangeValueIVec3Optional", glm::dvec3(4));
+    d.setValue("NotInRangeValueIVec3", glm::dvec3(4.0));
+    d.setValue("NotInRangeValueIVec3Optional", glm::dvec3(4.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(4));
-        e.setValue("2", glm::dvec3(5));
-        e.setValue("3", glm::dvec3(6));
+        e.setValue("1", glm::dvec3(4.0));
+        e.setValue("2", glm::dvec3(5.0));
+        e.setValue("3", glm::dvec3(6.0));
         d.setValue("NotInRangeValueIVec3Vector", e);
     }
-    d.setValue("NotInRangeValueIVec4", glm::dvec4(4));
-    d.setValue("NotInRangeValueIVec4Optional", glm::dvec4(4));
+    d.setValue("NotInRangeValueIVec4", glm::dvec4(4.0));
+    d.setValue("NotInRangeValueIVec4Optional", glm::dvec4(4.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(4));
-        e.setValue("2", glm::dvec4(5));
-        e.setValue("3", glm::dvec4(6));
+        e.setValue("1", glm::dvec4(4.0));
+        e.setValue("2", glm::dvec4(5.0));
+        e.setValue("3", glm::dvec4(6.0));
         d.setValue("NotInRangeValueIVec4Vector", e);
     }
 
@@ -1000,27 +1002,27 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     d.setValue("LessValueIVec2Optional", glm::dvec2(0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(0));
-        e.setValue("2", glm::dvec2(-1));
-        e.setValue("3", glm::dvec2(-2));
+        e.setValue("1", glm::dvec2(0.0));
+        e.setValue("2", glm::dvec2(-1.0));
+        e.setValue("3", glm::dvec2(-2.0));
         d.setValue("LessValueIVec2Vector", e);
     }
-    d.setValue("LessValueIVec3", glm::dvec3(0));
-    d.setValue("LessValueIVec3Optional", glm::dvec3(0));
+    d.setValue("LessValueIVec3", glm::dvec3(0.0));
+    d.setValue("LessValueIVec3Optional", glm::dvec3(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(0));
-        e.setValue("2", glm::dvec3(-1));
-        e.setValue("3", glm::dvec3(-2));
+        e.setValue("1", glm::dvec3(0.0));
+        e.setValue("2", glm::dvec3(-1.0));
+        e.setValue("3", glm::dvec3(-2.0));
         d.setValue("LessValueIVec3Vector", e);
     }
-    d.setValue("LessValueIVec4", glm::dvec4(0));
-    d.setValue("LessValueIVec4Optional", glm::dvec4(0));
+    d.setValue("LessValueIVec4", glm::dvec4(0.0));
+    d.setValue("LessValueIVec4Optional", glm::dvec4(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(0));
-        e.setValue("2", glm::dvec4(-1));
-        e.setValue("3", glm::dvec4(-2));
+        e.setValue("1", glm::dvec4(0.0));
+        e.setValue("2", glm::dvec4(-1.0));
+        e.setValue("3", glm::dvec4(-2.0));
         d.setValue("LessValueIVec4Vector", e);
     }
 
@@ -1070,31 +1072,31 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         e.setValue("3", glm::dvec4(0.75));
         d.setValue("LessEqualValueVec4Vector", e);
     }
-    d.setValue("LessEqualValueIVec2", glm::dvec2(0));
-    d.setValue("LessEqualValueIVec2Optional", glm::dvec2(0));
+    d.setValue("LessEqualValueIVec2", glm::dvec2(0.0));
+    d.setValue("LessEqualValueIVec2Optional", glm::dvec2(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(0));
-        e.setValue("2", glm::dvec2(-1));
-        e.setValue("3", glm::dvec2(-2));
+        e.setValue("1", glm::dvec2(0.0));
+        e.setValue("2", glm::dvec2(-1.0));
+        e.setValue("3", glm::dvec2(-2.0));
         d.setValue("LessEqualValueIVec2Vector", e);
     }
-    d.setValue("LessEqualValueIVec3", glm::dvec3(0));
-    d.setValue("LessEqualValueIVec3Optional", glm::dvec3(0));
+    d.setValue("LessEqualValueIVec3", glm::dvec3(0.0));
+    d.setValue("LessEqualValueIVec3Optional", glm::dvec3(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(0));
-        e.setValue("2", glm::dvec3(-1));
-        e.setValue("3", glm::dvec3(-2));
+        e.setValue("1", glm::dvec3(0.0));
+        e.setValue("2", glm::dvec3(-1.0));
+        e.setValue("3", glm::dvec3(-2.0));
         d.setValue("LessEqualValueIVec3Vector", e);
     }
-    d.setValue("LessEqualValueIVec4", glm::dvec4(0));
-    d.setValue("LessEqualValueIVec4Optional", glm::dvec4(0));
+    d.setValue("LessEqualValueIVec4", glm::dvec4(0.0));
+    d.setValue("LessEqualValueIVec4Optional", glm::dvec4(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(0));
-        e.setValue("2", glm::dvec4(-1));
-        e.setValue("3", glm::dvec4(-2));
+        e.setValue("1", glm::dvec4(0.0));
+        e.setValue("2", glm::dvec4(-1.0));
+        e.setValue("3", glm::dvec4(-2.0));
         d.setValue("LessEqualValueIVec4Vector", e);
     }
 
@@ -1144,31 +1146,31 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         e.setValue("3", glm::dvec4(1.75));
         d.setValue("GreaterValueVec4Vector", e);
     }
-    d.setValue("GreaterValueIVec2", glm::dvec2(2));
-    d.setValue("GreaterValueIVec2Optional", glm::dvec2(2));
+    d.setValue("GreaterValueIVec2", glm::dvec2(2.0));
+    d.setValue("GreaterValueIVec2Optional", glm::dvec2(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(2));
-        e.setValue("2", glm::dvec2(3));
-        e.setValue("3", glm::dvec2(4));
+        e.setValue("1", glm::dvec2(2.0));
+        e.setValue("2", glm::dvec2(3.0));
+        e.setValue("3", glm::dvec2(4.0));
         d.setValue("GreaterValueIVec2Vector", e);
     }
-    d.setValue("GreaterValueIVec3", glm::dvec3(2));
-    d.setValue("GreaterValueIVec3Optional", glm::dvec3(2));
+    d.setValue("GreaterValueIVec3", glm::dvec3(2.0));
+    d.setValue("GreaterValueIVec3Optional", glm::dvec3(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(2));
-        e.setValue("2", glm::dvec3(3));
-        e.setValue("3", glm::dvec3(4));
+        e.setValue("1", glm::dvec3(2.0));
+        e.setValue("2", glm::dvec3(3.0));
+        e.setValue("3", glm::dvec3(4.0));
         d.setValue("GreaterValueIVec3Vector", e);
     }
-    d.setValue("GreaterValueIVec4", glm::dvec4(2));
-    d.setValue("GreaterValueIVec4Optional", glm::dvec4(2));
+    d.setValue("GreaterValueIVec4", glm::dvec4(2.0));
+    d.setValue("GreaterValueIVec4Optional", glm::dvec4(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(2));
-        e.setValue("2", glm::dvec4(3));
-        e.setValue("3", glm::dvec4(4));
+        e.setValue("1", glm::dvec4(2.0));
+        e.setValue("2", glm::dvec4(3.0));
+        e.setValue("3", glm::dvec4(4.0));
         d.setValue("GreaterValueIVec4Vector", e);
     }
 
@@ -1218,31 +1220,31 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         e.setValue("3", glm::dvec4(1.75));
         d.setValue("GreaterEqualValueVec4Vector", e);
     }
-    d.setValue("GreaterEqualValueIVec2", glm::dvec2(2));
-    d.setValue("GreaterEqualValueIVec2Optional", glm::dvec2(2));
+    d.setValue("GreaterEqualValueIVec2", glm::dvec2(2.0));
+    d.setValue("GreaterEqualValueIVec2Optional", glm::dvec2(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(2));
-        e.setValue("2", glm::dvec2(3));
-        e.setValue("3", glm::dvec2(4));
+        e.setValue("1", glm::dvec2(2.0));
+        e.setValue("2", glm::dvec2(3.0));
+        e.setValue("3", glm::dvec2(4.0));
         d.setValue("GreaterEqualValueIVec2Vector", e);
     }
-    d.setValue("GreaterEqualValueIVec3", glm::dvec3(2));
-    d.setValue("GreaterEqualValueIVec3Optional", glm::dvec3(2));
+    d.setValue("GreaterEqualValueIVec3", glm::dvec3(2.0));
+    d.setValue("GreaterEqualValueIVec3Optional", glm::dvec3(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(2));
-        e.setValue("2", glm::dvec3(3));
-        e.setValue("3", glm::dvec3(4));
+        e.setValue("1", glm::dvec3(2.0));
+        e.setValue("2", glm::dvec3(3.0));
+        e.setValue("3", glm::dvec3(4.0));
         d.setValue("GreaterEqualValueIVec3Vector", e);
     }
-    d.setValue("GreaterEqualValueIVec4", glm::dvec4(2));
-    d.setValue("GreaterEqualValueIVec4Optional", glm::dvec4(2));
+    d.setValue("GreaterEqualValueIVec4", glm::dvec4(2.0));
+    d.setValue("GreaterEqualValueIVec4Optional", glm::dvec4(2.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(2));
-        e.setValue("2", glm::dvec4(3));
-        e.setValue("3", glm::dvec4(4));
+        e.setValue("1", glm::dvec4(2.0));
+        e.setValue("2", glm::dvec4(3.0));
+        e.setValue("3", glm::dvec4(4.0));
         d.setValue("GreaterEqualValueIVec4Vector", e);
     }
 
@@ -1292,77 +1294,77 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         e.setValue("3", glm::dvec4(0.75));
         d.setValue("UnequalValueVec4Vector", e);
     }
-    d.setValue("UnequalValueIVec2", glm::dvec2(0));
-    d.setValue("UnequalValueIVec2Optional", glm::dvec2(0));
+    d.setValue("UnequalValueIVec2", glm::dvec2(0.0));
+    d.setValue("UnequalValueIVec2Optional", glm::dvec2(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec2(0));
-        e.setValue("2", glm::dvec2(-1));
-        e.setValue("3", glm::dvec2(-2));
+        e.setValue("1", glm::dvec2(0.0));
+        e.setValue("2", glm::dvec2(-1.0));
+        e.setValue("3", glm::dvec2(-2.0));
         d.setValue("UnequalValueIVec2Vector", e);
     }
-    d.setValue("UnequalValueIVec3", glm::dvec3(0));
-    d.setValue("UnequalValueIVec3Optional", glm::dvec3(0));
+    d.setValue("UnequalValueIVec3", glm::dvec3(0.0));
+    d.setValue("UnequalValueIVec3Optional", glm::dvec3(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec3(0));
-        e.setValue("2", glm::dvec3(-1));
-        e.setValue("3", glm::dvec3(-2));
+        e.setValue("1", glm::dvec3(0.0));
+        e.setValue("2", glm::dvec3(-1.0));
+        e.setValue("3", glm::dvec3(-2.0));
         d.setValue("UnequalValueIVec3Vector", e);
     }
-    d.setValue("UnequalValueIVec4", glm::dvec4(0));
-    d.setValue("UnequalValueIVec4Optional", glm::dvec4(0));
+    d.setValue("UnequalValueIVec4", glm::dvec4(0.0));
+    d.setValue("UnequalValueIVec4Optional", glm::dvec4(0.0));
     {
         ghoul::Dictionary e;
-        e.setValue("1", glm::dvec4(0));
-        e.setValue("2", glm::dvec4(-1));
-        e.setValue("3", glm::dvec4(-2));
+        e.setValue("1", glm::dvec4(0.0));
+        e.setValue("2", glm::dvec4(-1.0));
+        e.setValue("3", glm::dvec4(-2.0));
         d.setValue("UnequalValueIVec4Vector", e);
     }
 
 
     d.setValue("DescValue", true);
-    d.setValue("InListValue1", std::string("A"));
-    d.setValue("InListValue1Optional", std::string("B"));
+    d.setValue("InListValue1", "A"s);
+    d.setValue("InListValue1Optional", "B"s);
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("C"));
-        e.setValue("2", std::string("D"));
-        e.setValue("3", std::string("E"));
+        e.setValue("1", "C"s);
+        e.setValue("2", "D"s);
+        e.setValue("3", "E"s);
         d.setValue("InListValue1Vector", e);
     }
-    d.setValue("InListValue2", std::string("F"));
-    d.setValue("InListValue2Optional", std::string("G"));
+    d.setValue("InListValue2", "F"s);
+    d.setValue("InListValue2Optional", "G"s);
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("H"));
-        e.setValue("2", std::string("I"));
-        e.setValue("3", std::string("J"));
+        e.setValue("1", "H"s);
+        e.setValue("2", "I"s);
+        e.setValue("3", "J"s);
         d.setValue("InListValue2Vector", e);
     }
-    d.setValue("UnequalValueString", std::string("zyxwv"));
-    d.setValue("UnequalValueStringOptional", std::string("zyxwv"));
+    d.setValue("UnequalValueString", "zyxwv"s);
+    d.setValue("UnequalValueStringOptional", "zyxwv"s);
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("zyxwv1"));
-        e.setValue("2", std::string("zyxwv2"));
-        e.setValue("3", std::string("zyxwv3"));
+        e.setValue("1", "zyxwv1"s);
+        e.setValue("2", "zyxwv2"s);
+        e.setValue("3", "zyxwv3"s);
         d.setValue("UnequalValueStringVector", e);
     }
-    d.setValue("NotEmptyString", std::string("def"));
-    d.setValue("NotEmptyStringOptional", std::string("def"));
+    d.setValue("NotEmptyString", "def"s);
+    d.setValue("NotEmptyStringOptional", "def"s);
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("jkl"));
-        v.setValue("2", std::string("mno"));
-        v.setValue("3", std::string("pqr"));
+        v.setValue("1", "jkl"s);
+        v.setValue("2", "mno"s);
+        v.setValue("3", "pqr"s);
         d.setValue("NotEmptyStringVector", v);
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", std::string("jkl"));
-        v.setValue("2", std::string("mno"));
-        v.setValue("3", std::string("pqr"));
+        v.setValue("1", "jkl"s);
+        v.setValue("2", "mno"s);
+        v.setValue("3", "pqr"s);
         d.setValue("NotEmptyStringOptionalVector", v);
     }
     d.setValue("DictValue", ghoul::Dictionary());
@@ -1443,9 +1445,9 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     d.setValue("AnnotationOptional", std::string("annotation_def"));
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("annotation_ghi"));
-        e.setValue("2", std::string("annotation_jkl"));
-        e.setValue("3", std::string("annotation_mno"));
+        e.setValue("1", "annotation_ghi"s);
+        e.setValue("2", "annotation_jkl"s);
+        e.setValue("3", "annotation_mno"s);
         d.setValue("AnnotationVector", e);
     }
     d.setValue("Dcolor3Value", glm::dvec3(0.0, 0.1, 0.2));
@@ -1485,20 +1487,20 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         d.setValue("VectorColor4Value", e);
     }
 
-    d.setValue("DateTimeValue", std::string("1990 03 11 12:40:53"));
-    d.setValue("OptionalDateTimeValue", std::string("1991 03 11 12:40:53"));
+    d.setValue("DateTimeValue", "1990 03 11 12:40:53"s);
+    d.setValue("OptionalDateTimeValue", "1991 03 11 12:40:53"s);
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("1992 03 11 12:40:53"));
-        e.setValue("2", std::string("1993 03 11 12:40:53"));
-        e.setValue("3", std::string("1994 03 11 12:40:53"));
+        e.setValue("1", "1992 03 11 12:40:53"s);
+        e.setValue("2", "1993 03 11 12:40:53"s);
+        e.setValue("3", "1994 03 11 12:40:53"s);
         d.setValue("VectorDateTimeValue", e);
     }
     {
         ghoul::Dictionary e;
-        e.setValue("1", std::string("1995 03 11 12:40:53"));
-        e.setValue("2", std::string("1996 03 11 12:40:53"));
-        e.setValue("3", std::string("1997 03 11 12:40:53"));
+        e.setValue("1", "1995 03 11 12:40:53"s);
+        e.setValue("2", "1996 03 11 12:40:53"s);
+        e.setValue("3", "1997 03 11 12:40:53"s);
         d.setValue("OptionalVectorDateTimeValue", e);
     }
 
@@ -1567,7 +1569,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(2), glm::ivec4(2), glm::ivec4(2) }
     );
 
-    
     CHECK(p.notInRangeValueInt == 9);
     REQUIRE(p.notInRangeValueIntOptional.has_value());
     CHECK(p.notInRangeValueIntOptional == 10);
@@ -1685,7 +1686,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
 
-
     CHECK(p.lessEqualValueInt == 21);
     REQUIRE(p.lessEqualValueIntOptional.has_value());
     CHECK(p.lessEqualValueIntOptional == 22);
@@ -1743,7 +1743,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         p.lessEqualValueIVec4Vector ==
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
-
 
     CHECK(p.greaterValueInt == 27);
     REQUIRE(p.greaterValueIntOptional.has_value());
@@ -1803,7 +1802,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(2), glm::ivec4(3), glm::ivec4(4) }
     );
 
-
     CHECK(p.greaterEqualValueInt == 33);
     REQUIRE(p.greaterEqualValueIntOptional.has_value());
     CHECK(p.greaterEqualValueIntOptional == 34);
@@ -1861,7 +1859,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         p.greaterEqualValueIVec4Vector ==
         std::vector{ glm::ivec4(2), glm::ivec4(3), glm::ivec4(4) }
     );
-
 
     CHECK(p.unequalValueInt == 39);
     REQUIRE(p.unequalValueIntOptional.has_value());
@@ -1921,7 +1918,6 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
         std::vector{ glm::ivec4(0), glm::ivec4(-1), glm::ivec4(-2) }
     );
 
-
     CHECK(p.descValue == true);
 
     CHECK(p.inListValue1 == "A");
@@ -1945,7 +1941,9 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     CHECK(p.notEmptyStringVector == std::vector<std::string>{ "jkl", "mno", "pqr" });
     REQUIRE(p.notEmptyStringOptionalVector.has_value());
     CHECK(p.notEmptyStringOptionalVector->size() == 3);
-    CHECK(p.notEmptyStringOptionalVector == std::vector<std::string>{ "jkl", "mno", "pqr" });
+    CHECK(
+        p.notEmptyStringOptionalVector == std::vector<std::string>{ "jkl", "mno", "pqr" }
+    );
 
     CHECK(p.notEmptyString == "def");
     REQUIRE(p.notEmptyStringOptional.has_value());
@@ -1992,21 +1990,21 @@ TEST_CASE("Attributes Bake", "[structs][execution]") {
     CHECK(p.vectorColor4Value[1] == glm::vec4(0.94f, 0.95f, 0.96f, 0.97f));
     CHECK(p.vectorColor4Value[2] == glm::vec4(0.98f, 0.99f, 0.991f, 0.992f));
 
-    CHECK(p.dateTimeValue == std::string("1990 03 11 12:40:53"));
+    CHECK(p.dateTimeValue == "1990 03 11 12:40:53");
     REQUIRE(p.optionalDateTimeValue.has_value());
-    CHECK(*p.optionalDateTimeValue == std::string("1991 03 11 12:40:53"));
+    CHECK(*p.optionalDateTimeValue == "1991 03 11 12:40:53");
     REQUIRE(p.vectorDateTimeValue.size() == 3);
-    CHECK(p.vectorDateTimeValue[0] == std::string("1992 03 11 12:40:53"));
-    CHECK(p.vectorDateTimeValue[1] == std::string("1993 03 11 12:40:53"));
-    CHECK(p.vectorDateTimeValue[2] == std::string("1994 03 11 12:40:53"));
+    CHECK(p.vectorDateTimeValue[0] == "1992 03 11 12:40:53");
+    CHECK(p.vectorDateTimeValue[1] == "1993 03 11 12:40:53");
+    CHECK(p.vectorDateTimeValue[2] == "1994 03 11 12:40:53");
     REQUIRE(p.optionalVectorDateTimeValue.has_value());
     REQUIRE((*p.optionalVectorDateTimeValue).size() == 3);
-    CHECK((*p.optionalVectorDateTimeValue)[0] == std::string("1995 03 11 12:40:53"));
-    CHECK((*p.optionalVectorDateTimeValue)[1] == std::string("1996 03 11 12:40:53"));
-    CHECK((*p.optionalVectorDateTimeValue)[2] == std::string("1997 03 11 12:40:53"));
+    CHECK((*p.optionalVectorDateTimeValue)[0] == "1995 03 11 12:40:53");
+    CHECK((*p.optionalVectorDateTimeValue)[1] == "1996 03 11 12:40:53");
+    CHECK((*p.optionalVectorDateTimeValue)[2] == "1997 03 11 12:40:53");
 }
 
-TEST_CASE("Attributes Documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

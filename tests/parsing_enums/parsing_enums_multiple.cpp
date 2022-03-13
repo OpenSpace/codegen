@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Enum Multiple", "[enums][parsing]") {
+TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1,
@@ -48,6 +48,7 @@ TEST_CASE("Parsing: Enum Multiple", "[enums][parsing]") {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     REQUIRE(code.enums.size() == 3);
 
     {
@@ -102,4 +103,7 @@ TEST_CASE("Parsing: Enum Multiple", "[enums][parsing]") {
             CHECK(ee->name == "Val6");
         }
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

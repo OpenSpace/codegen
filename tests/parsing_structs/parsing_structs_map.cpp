@@ -28,15 +28,16 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing Map: Minimal", "[structs][parsing]") {
+TEST_CASE("Parsing/Structs/Map: Minimal") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::map<std::string, std::string> p;
 };)";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -49,6 +50,5 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
-
 }
 

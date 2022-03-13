@@ -25,7 +25,14 @@
 #define CATCH_CONFIG_RUNNER
 #include "catch2/catch.hpp"
 
+#include <ghoul/logging/consolelog.h>
+#include <ghoul/logging/logmanager.h>
+
 int main(int argc, char** argv) {
+    using namespace ghoul::logging;
+    LogManager::initialize(LogLevel::Error);
+    LogMgr.addLog(std::make_unique<ConsoleLog>());
+
     int result = Catch::Session().run(argc, argv);
     return result;
 }

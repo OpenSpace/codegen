@@ -66,6 +66,14 @@ bool operator==(const StackElement& lhs, const StackElement& rhs) {
            lhs.comment == rhs.comment && lhs.parent == rhs.parent;
 }
 
+bool VariableType::isBasicType() const { return tag == Tag::BasicType; }
+bool VariableType::isMapType() const { return tag == Tag::MapType; }
+bool VariableType::isOptionalType() const { return tag == Tag::OptionalType; }
+bool VariableType::isVariantType() const { return tag == Tag::VariantType; }
+bool VariableType::isTupleType() const { return tag == Tag::TupleType; }
+bool VariableType::isVectorType() const { return tag == Tag::VectorType; }
+bool VariableType::isCustomType() const { return tag == Tag::CustomType; }
+
 bool operator==(const VariableType& lhs, const VariableType& rhs) {
     if (lhs.tag != rhs.tag) {
         return false;
@@ -86,6 +94,9 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
         case Tag::VariantType:
             return static_cast<const VariantType&>(lhs) ==
                    static_cast<const VariantType&>(rhs);
+        case Tag::TupleType:
+            return static_cast<const TupleType&>(lhs) ==
+                   static_cast<const TupleType&>(rhs);
         case Tag::VectorType:
             return static_cast<const VectorType&>(lhs) ==
                    static_cast<const VectorType&>(rhs);
@@ -109,6 +120,19 @@ bool operator==(const OptionalType& lhs, const OptionalType& rhs) {
 }
 
 bool operator==(const VariantType& lhs, const VariantType& rhs) {
+    if (lhs.types.size() != rhs.types.size()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < lhs.types.size(); ++i) {
+        if (!(*lhs.types[i] == *rhs.types[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool operator==(const TupleType& lhs, const TupleType& rhs) {
     if (lhs.types.size() != rhs.types.size()) {
         return false;
     }
@@ -189,6 +213,19 @@ std::string fqn(const StackElement* s, std::string_view separator) {
 VariableType* parseType(std::string_view type, Struct* context) {
     using namespace std::literals;
 
+    if (type == "void") {
+        return nullptr;
+    }
+
+    assert(!type.empty());
+
+    if (type[type.size() - 1] == '&') {
+        throw CodegenError(fmt::format("Illegal reference type found: {}", type));
+    }
+    if (type[type.size() - 1] == '*') {
+        throw CodegenError(fmt::format("Illegal pointer type found: {}", type));
+    }
+
     auto newType = [](BasicType::Type t) -> BasicType* {
         BasicType* bt = new BasicType;
         bt->tag = VariableType::Tag::BasicType;
@@ -197,8 +234,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     };
 
     VariableType* t = nullptr;
-
-    if (type == "bool")                       {  t = newType(BasicType::Type::Bool); }
+    if (type == "bool")                       { t = newType(BasicType::Type::Bool); }
     else if (type == "int")                   { t = newType(BasicType::Type::Int); }
     else if (type == "double")                { t = newType(BasicType::Type::Double); }
     else if (type == "float")                 { t = newType(BasicType::Type::Float); }
@@ -276,16 +312,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
             (mp->keyType->tag == VariableType::Tag::BasicType) &&
             (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
 
-        // The value can be either a string or a dictionary
-        const bool isValidValue =
-            (mp->valueType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::String ||
-             static_cast<BasicType*>(mp->valueType)->type == BasicType::Type::Dictionary);
-
-        if (!isValidKey || !isValidValue) {
+        if (!isValidKey) {
             throw CodegenError(fmt::format(
-                "Currently only std::map<std::string, std::string> or "
-                "std::map<std::string, ghoul::Dictionary> is supported\n{}", type
+                "Currently only std::string as key is supported\n{}", type
             ));
         }
 
@@ -325,6 +354,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
             const bool isVectorType = t->tag == VariableType::Tag::VectorType;
             const bool isEnum =
                 t->tag == VariableType::Tag::CustomType &&
+                static_cast<CustomType*>(t)->type &&
                 static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
             if (!isBasicType && !isVectorType && !isEnum) {
                 throw CodegenError(fmt::format(
@@ -336,20 +366,38 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         t = vt;
     }
+    else if (startsWith(type, "std::tuple<")) {
+        type.remove_prefix("std::tuple<"sv.size());
+
+        std::vector<std::string_view> list = extractTemplateTypeList(type);
+
+        TupleType* tt = new TupleType;
+        tt->tag = VariableType::Tag::TupleType;
+
+        for (std::string_view elem : list) {
+            VariableType* t = parseType(elem, context);
+            assert(t);
+            tt->types.push_back(t);
+        }
+
+        t = tt;
+    }
 
     if (!t) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
         // visible in the variable's context
-
-        const StackElement* el = resolveType(context, type);
-        if (!el) {
-            throw CodegenError(fmt::format(
-                "Type detected that codegen doesn't know how to handle: {}", type
-            ));
-        }
         CustomType* ct = new CustomType;
         ct->tag = VariableType::Tag::CustomType;
-        ct->type = el;
+        ct->name = std::string(type);
+        if (context) {
+            const StackElement* el = resolveType(context, type);
+            if (!el) {
+                throw CodegenError(fmt::format(
+                    "Type detected that codegen doesn't know how to handle: {}", type
+                ));
+            }
+            ct->type = el;
+        }
         t = ct;
     }
     assert(t);
@@ -397,8 +445,53 @@ std::string generateTypename(BasicType::Type type) {
     throw std::logic_error("Missing case label");
 }
 
+std::string generateDescriptiveTypename(BasicType::Type type) {
+    switch (type) {
+        case BasicType::Type::Bool:       return "Boolean";
+        case BasicType::Type::Int:        return "Integer";
+        case BasicType::Type::Double:     return "Number";
+        case BasicType::Type::Float:      return "Number";
+        case BasicType::Type::String:     return "String";
+        case BasicType::Type::Path:       return "Path";
+        case BasicType::Type::Ivec2:      return "ivec2";
+        case BasicType::Type::Ivec3:      return "ivec3";
+        case BasicType::Type::Ivec4:      return "ivec4";
+        case BasicType::Type::Dvec2:      return "vec2";
+        case BasicType::Type::Dvec3:      return "vec3";
+        case BasicType::Type::Dvec4:      return "vec4";
+        case BasicType::Type::Vec2:       return "vec2";
+        case BasicType::Type::Vec3:       return "vec3";
+        case BasicType::Type::Vec4:       return "vec4";
+        case BasicType::Type::Mat2x2:     return "mat2x2";
+        case BasicType::Type::Mat2x3:     return "mat2x3";
+        case BasicType::Type::Mat2x4:     return "mat2x4";
+        case BasicType::Type::Mat3x2:     return "mat3x2";
+        case BasicType::Type::Mat3x3:     return "mat3x3";
+        case BasicType::Type::Mat3x4:     return "mat3x4";
+        case BasicType::Type::Mat4x2:     return "mat4x2";
+        case BasicType::Type::Mat4x3:     return "mat4x3";
+        case BasicType::Type::Mat4x4:     return "mat4x4";
+        case BasicType::Type::DMat2x2:    return "mat2x2";
+        case BasicType::Type::DMat2x3:    return "mat2x3";
+        case BasicType::Type::DMat2x4:    return "mat2x4";
+        case BasicType::Type::DMat3x2:    return "mat3x2";
+        case BasicType::Type::DMat3x3:    return "mat3x3";
+        case BasicType::Type::DMat3x4:    return "mat3x4";
+        case BasicType::Type::DMat4x2:    return "mat4x2";
+        case BasicType::Type::DMat4x3:    return "mat4x3";
+        case BasicType::Type::DMat4x4:    return "mat4x4";
+        case BasicType::Type::Dictionary: return "Table";
+    }
+
+    throw std::logic_error("Missing case label");
+}
+
 std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
+}
+
+std::string generateDescriptiveTypename(const BasicType* type) {
+    return generateDescriptiveTypename(type->type);
 }
 
 std::string generateTypename(const MapType* type, bool fullyQualified) {
@@ -407,9 +500,20 @@ std::string generateTypename(const MapType* type, bool fullyQualified) {
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
+std::string generateDescriptiveTypename(const MapType* type) {
+    std::string t1 = generateDescriptiveTypename(type->keyType);
+    std::string t2 = generateDescriptiveTypename(type->valueType);
+    return fmt::format("{} -> {}", t1, t2);
+}
+
 std::string generateTypename(const OptionalType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::optional<{}>", t1);
+}
+
+std::string generateDescriptiveTypename(const OptionalType* type) {
+    std::string t1 = generateDescriptiveTypename(type->type);
+    return fmt::format("{}?", t1);
 }
 
 std::string generateTypename(const VariantType* type, bool fullyQualified) {
@@ -425,9 +529,50 @@ std::string generateTypename(const VariantType* type, bool fullyQualified) {
     return res;
 }
 
+std::string generateDescriptiveTypename(const VariantType* type) {
+    std::string res;
+    for (size_t i = 0; i < type->types.size(); i += 1) {
+        res += generateDescriptiveTypename(type->types[i]);
+
+        if (i != type->types.size() - 1) {
+            res += " | ";
+        }
+    }
+    return res;
+}
+
+std::string generateTypename(const TupleType* type, bool fullyQualified) {
+    std::string res = "std::tuple<";
+    for (VariableType* v : type->types) {
+        res += generateTypename(v, fullyQualified);
+        res += ", ";
+    }
+
+    res.pop_back();   // Remove the final ' '
+    res.back() = '>'; // Replace the final , with the >
+
+    return res;
+}
+
+std::string generateDescriptiveTypename(const TupleType* type) {
+    std::string res;
+    for (size_t i = 0; i < type->types.size(); i += 1) {
+        res += generateDescriptiveTypename(type->types[i]);
+
+        if (i != type->types.size() - 1) {
+            res += ", ";
+        }
+    }
+    return res;
+}
+
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
+}
+
+std::string generateDescriptiveTypename(const VectorType* type) {
+    return "[" + generateDescriptiveTypename(type->type) + "]";
 }
 
 std::string generateTypename(const CustomType* type, bool fullyQualified) {
@@ -435,11 +580,21 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
         return fqn(type->type, "::");
     }
     else {
-        return type->type->name;
+        return
+            type->type ?
+            type->type->name : // If we have a type, we can return its proper name
+            type->name;        // If we don't have a type, we failed where no context for
+                               // this custom type was available
     }
 }
 
+std::string generateDescriptiveTypename(const CustomType* type) {
+    return type->type->name;
+}
+
 std::string generateTypename(const VariableType* type, bool fullyQualified) {
+    assert(type);
+
     const bool fq = fullyQualified;
     switch (type->tag) {
         case VariableType::Tag::BasicType:
@@ -450,6 +605,8 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
             return generateTypename(static_cast<const OptionalType*>(type), fq);
         case VariableType::Tag::VariantType:
             return generateTypename(static_cast<const VariantType*>(type), fq);
+        case VariableType::Tag::TupleType:
+            return generateTypename(static_cast<const TupleType*>(type), fq);
         case VariableType::Tag::VectorType:
             return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
@@ -457,3 +614,26 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
     }
     throw std::logic_error("Missing case label");
 }
+
+std::string generateDescriptiveTypename(const VariableType* type) {
+    assert(type);
+
+    switch (type->tag) {
+    case VariableType::Tag::BasicType:
+        return generateDescriptiveTypename(static_cast<const BasicType*>(type));
+    case VariableType::Tag::MapType:
+        return generateDescriptiveTypename(static_cast<const MapType*>(type));
+    case VariableType::Tag::OptionalType:
+        return generateDescriptiveTypename(static_cast<const OptionalType*>(type));
+    case VariableType::Tag::VariantType:
+        return generateDescriptiveTypename(static_cast<const VariantType*>(type));
+    case VariableType::Tag::TupleType:
+        return generateDescriptiveTypename(static_cast<const TupleType*>(type));
+    case VariableType::Tag::VectorType:
+        return generateDescriptiveTypename(static_cast<const VectorType*>(type));
+    case VariableType::Tag::CustomType:
+        return generateDescriptiveTypename(static_cast<const CustomType*>(type));
+    }
+    throw std::logic_error("Missing case label");
+}
+

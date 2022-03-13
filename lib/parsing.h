@@ -27,7 +27,6 @@
 
 #include "types.h"
 #include <string_view>
-#include <vector>
 
 [[nodiscard]] Code parse(std::string_view code);
 

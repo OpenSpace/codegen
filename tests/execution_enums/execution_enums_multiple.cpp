@@ -46,10 +46,11 @@ namespace {
     enum class [[codegen::stringify()]] Enum3 {
         Val6
     };
+
 #include "execution_enums_multiple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Multiple From String", "[enums][execution][basic]") {
+TEST_CASE("Execution/Enums/Multiple:  From String") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");
     CHECK(v1 == Enum1::Value1);
     Enum1 v2 = codegen::fromString<Enum1>("value2");
@@ -66,7 +67,7 @@ TEST_CASE("Multiple From String", "[enums][execution][basic]") {
     CHECK(v6 == Enum3::Val6);
 }
 
-TEST_CASE("Multiple To String", "[enums][execution]") {
+TEST_CASE("Execution/Enums/Multiple:  To String") {
     std::string_view v1 = codegen::toString(Enum1::Value1);
     CHECK(v1 == "Value1");
     std::string_view v2 = codegen::toString(Enum1::value2);

@@ -38,7 +38,7 @@ namespace {
 #include "execution_structs_other_codegen.cpp"
 } // namespace
 
-TEST_CASE("Documentation id", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Other:  Documentation Id") {
     using namespace openspace::documentation;
     Documentation doc1 = codegen::doc<Parameters>("");
     CHECK(doc1.id == "");

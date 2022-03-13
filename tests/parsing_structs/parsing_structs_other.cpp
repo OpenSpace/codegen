@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Multiline", "[structs][parsing]") {
+TEST_CASE("Parsing: Multiline") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Multiline)]] Parameters {
     // multi
@@ -81,8 +81,9 @@ Lines, With, Weird,
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -156,7 +157,7 @@ Lines, With, Weird,
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing: Multiple", "[structs][parsing]") {
+TEST_CASE("Parsing: Multiple") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(P1)]] Param1 {
     int abc;
@@ -203,4 +204,7 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "jkl");
     }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

@@ -93,7 +93,9 @@ namespace {
 #include "execution_structs_variant_codegen.cpp"
 } // namespace
 
-TEST_CASE("Variant bake", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Variant:  Bake") {
+    using namespace std::string_literals;
+    
     {
         ghoul::Dictionary d1;
         d1.setValue("BoolDoubleValue", false);
@@ -106,13 +108,13 @@ TEST_CASE("Variant bake", "[structs][execution]") {
             glm::dmat3x4(5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12)
         );
         d1.setValue("OptionalValue", 5.0);
-        d1.setValue("VariantVector", std::string("abc"));
-        d1.setValue("VariantVector2", std::string("def"));
+        d1.setValue("VariantVector", "abc"s);
+        d1.setValue("VariantVector2", "def"s);
         d1.setValue("MultipleVariantA", 2.0);
         d1.setValue("MultipleVariantB", 2.0);
         d1.setValue("MultipleVariantA2", 2.0);
-        d1.setValue("VariantEnumFloat", std::string("Value2"));
-        d1.setValue("OptionalVariantEnumFloat", std::string("Value2"));
+        d1.setValue("VariantEnumFloat", "Value2"s);
+        d1.setValue("OptionalVariantEnumFloat", "Value2"s);
 
         const Parameters p1 = codegen::bake<Parameters>(d1);
         CHECK(std::get<bool>(p1.boolDoubleValue) == false);
@@ -152,7 +154,7 @@ TEST_CASE("Variant bake", "[structs][execution]") {
     {
         ghoul::Dictionary d2;
         d2.setValue("BoolDoubleValue", 6.0);
-        d2.setValue("FloatStringValue", std::string("abc"));
+        d2.setValue("FloatStringValue", "abc"s);
         d2.setValue("IvecsValue", glm::dvec3(7.0, 8.0, 9.0));
         d2.setValue("Vecmat1", glm::dvec3(10.1, 10.2, 10.3));
         d2.setValue(
@@ -168,23 +170,23 @@ TEST_CASE("Variant bake", "[structs][execution]") {
         );
         {
             ghoul::Dictionary e;
-            e.setValue("1", std::string("abc"));
-            e.setValue("2", std::string("def"));
-            e.setValue("3", std::string("ghi"));
-            e.setValue("4", std::string("jkl"));
+            e.setValue("1", "abc"s);
+            e.setValue("2", "def"s);
+            e.setValue("3", "ghi"s);
+            e.setValue("4", "jkl"s);
             d2.setValue("VariantVector", e);
         }
         {
             ghoul::Dictionary e;
-            e.setValue("1", std::string("mno"));
-            e.setValue("2", std::string("pqr"));
-            e.setValue("3", std::string("stu"));
-            e.setValue("4", std::string("vwx"));
+            e.setValue("1", "mno"s);
+            e.setValue("2", "pqr"s);
+            e.setValue("3", "stu"s);
+            e.setValue("4", "vwx"s);
             d2.setValue("VariantVector2", e);
         }
-        d2.setValue("MultipleVariantA", std::string("a"));
-        d2.setValue("MultipleVariantB", std::string("a"));
-        d2.setValue("MultipleVariantA2", std::string("a"));
+        d2.setValue("MultipleVariantA", "a"s);
+        d2.setValue("MultipleVariantB", "a"s);
+        d2.setValue("MultipleVariantA2", "a"s);
         d2.setValue("VariantEnumFloat", 2.0);
         d2.setValue("OptionalVariantEnumFloat", 2.0);
 
@@ -231,7 +233,7 @@ TEST_CASE("Variant bake", "[structs][execution]") {
     {
         ghoul::Dictionary d3;
         d3.setValue("BoolDoubleValue", 13.1);
-        d3.setValue("FloatStringValue", std::string("abc"));
+        d3.setValue("FloatStringValue", "abc"s);
         d3.setValue("IvecsValue", glm::dvec4(14.0, 15.0, 16.0, 17.0));
         d3.setValue("Vecmat1", glm::dvec4(18.1, 18.2, 18.3, 18.4));
         d3.setValue(
@@ -240,13 +242,13 @@ TEST_CASE("Variant bake", "[structs][execution]") {
         );
         d3.setValue("RestValue", glm::dmat2x3(20.1, 20.2, 20.3, 20.4, 20.5, 20.6));
         d3.setValue("OptionalValue", true);
-        d3.setValue("VariantVector", std::string("abc"));
-        d3.setValue("VariantVector2", std::string("def"));
+        d3.setValue("VariantVector", "abc"s);
+        d3.setValue("VariantVector2", "def"s);
         d3.setValue("MultipleVariantA", 1.0);
         d3.setValue("MultipleVariantB", 1.0);
         d3.setValue("MultipleVariantA2", 1.0);
-        d3.setValue("VariantEnumFloat", std::string("Value1"));
-        d3.setValue("OptionalVariantEnumFloat", std::string("Value1"));
+        d3.setValue("VariantEnumFloat", "Value1"s);
+        d3.setValue("OptionalVariantEnumFloat", "Value1"s);
 
         const Parameters p3 = codegen::bake<Parameters>(d3);
         CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
@@ -286,7 +288,7 @@ TEST_CASE("Variant bake", "[structs][execution]") {
     {
         ghoul::Dictionary d4;
         d4.setValue("BoolDoubleValue", 20.0);
-        d4.setValue("FloatStringValue", std::string("abc"));
+        d4.setValue("FloatStringValue", "abc"s);
         d4.setValue("IvecsValue", glm::dvec2(21.0, 22.0));
         d4.setValue(
             "Vecmat1",
@@ -302,11 +304,11 @@ TEST_CASE("Variant bake", "[structs][execution]") {
                 25.1, 25.2, 25.3, 25.4, 25.5, 25.6, 25.7, 25.8, 25.9, 25.10, 25.11, 25.12
             )
         );
-        d4.setValue("VariantVector", std::string("abc"));
-        d4.setValue("VariantVector2", std::string("def"));
-        d4.setValue("MultipleVariantA", std::string("abc"));
-        d4.setValue("MultipleVariantB", std::string("def"));
-        d4.setValue("MultipleVariantA2", std::string("ghi"));
+        d4.setValue("VariantVector", "abc"s);
+        d4.setValue("VariantVector2", "def"s);
+        d4.setValue("MultipleVariantA", "abc"s);
+        d4.setValue("MultipleVariantB", "def"s);
+        d4.setValue("MultipleVariantA2", "ghi"s);
         d4.setValue("VariantEnumFloat", 5.0);
         d4.setValue("OptionalVariantEnumFloat", 5.0);
 
@@ -351,7 +353,7 @@ TEST_CASE("Variant bake", "[structs][execution]") {
     }
 }
 
-TEST_CASE("Variant documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Variant:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

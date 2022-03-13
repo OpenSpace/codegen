@@ -36,17 +36,15 @@ namespace {
 #include "execution_structs_simple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Simple bake", "[structs][execution]") {
-    {
-        ghoul::Dictionary d;
-        d.setValue("Value", 5.0);
+TEST_CASE("Execution/Structs/Simple:  Bake") {
+    ghoul::Dictionary d;
+    d.setValue("Value", 5.0);
 
-        const Parameters p = codegen::bake<Parameters>(d);
-        CHECK(p.value == 5.f);
-    }
+    const Parameters p = codegen::bake<Parameters>(d);
+    CHECK(p.value == 5.f);
 }
 
-TEST_CASE("Simple documentation", "[structs][execution]") {
+TEST_CASE("Execution/Structs/Simple:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
