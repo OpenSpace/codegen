@@ -1,15 +1,11 @@
 # Overview
-The codegen program created generated code for `struct`s marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name (mostly the class name of the Renderable for which the code is generated).  Everything touched by the code generation has to be delared inside a struct (referred to as a *root struct*).  Member variables, structs, documentations can be modified by adding attributes of the style `[[codegen::TYPE(PARAMETER)]]` where *TYPE* is a keyword for the attribute and *PARAMETER* are optional parameters that might be necessary. Multiple attributes can be added by separating them with a comma (`[[codegen::key(ABC), codegen::inrange(0.0, 1.0)]]`).
+The `codegen` application automatically generated often-used and repetetive C++ code which is saved to an external file that can be included in the main application.  This is handled through the use of attribute markers in specific locations.  At the moment, there are three different locations that can accept attributes:
+1. `struct`s can be marked with the `[[codegen::Dictionary(Name)]]` attribute, where *Name* is a unique name (mostly the class name of the Renderable for which the code is generated).  Everything touched by the code generation has to be delared inside a struct (referred to as a *root struct*).  Member variables, structs, documentations can be modified by adding attributes of the style `[[codegen::TYPE(PARAMETER)]]` where *TYPE* is a keyword for the attribute and *PARAMETER* are optional parameters that might be necessary. Multiple attributes can be added by separating them with a comma (`[[codegen::key(ABC), codegen::inrange(0.0, 1.0)]]`).
+2. `enum class` can be marked with the `[[codegen::stringify]]` or `[[codegen::map]]` attribute to either create conversion functions that convert enum values to and from `string` values (for the first attribute) or that can map an enum to a second enum where all of the values have the same name
+3. A C-style function can be marked with `[[codegen::luawrap]]` which will generate code that extracts the necessary functions from a Lua state to call the function and then push the return value of the function back to the Lua stack.  The generated code also contains information about the name of the function, descriptions of the arguments and return values, and also the documentation for the marked function
 
 Execution:
-`codegen.exe C:/Development/OpenSpace/modules` to run it an all files recursively in the modules folder or `codegen.exe C:/Development/OpenSpace/modules/base/basemodule.cpp` to run in on this specific file.  Every file that does not contain a marked struct will be ignored.  For every other file `renderabletest.cpp`, a `renderabletest_codegen.cpp` will be generated that will have to be included directly *after* the struct definition. For example in a file renderableexample.cpp:
-```
-struct [[codegen::Dictionary(RenderableExample)]] Params {
-  // Description for example
-  float example;
-};
-#include "renderabletest_codegen.cpp"
-```
+`codegen.exe C:/Development/OpenSpace/modules` to run it an all files recursively in the modules folder or `codegen.exe C:/Development/OpenSpace/modules/base/basemodule.cpp` to run in on this specific file.  Every file that does not contain a marked struct will be ignored.  For every other file `renderabletest.cpp`, a `renderabletest_codegen.cpp` will be generated that will have to be included directly *after* the struct definition.
 
 Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed.
 
@@ -23,6 +19,8 @@ If a struct  was marked with `codegen::Dictionary` the following functions will 
 If any enum in the file was marked with the `codegen::map(abc)` attribute the function `codegen::map<myspace::ABC>` is available that returns the corresponding type to the passed in value.
 
 If any enum is marked with with `codegen::stringify()` attribute, the `toString` and `fromString` methods are created with allow the enum values to be converted to and from std representations repectively.
+
+If a function `abc` was marked with the `codegen::luawrap` attribute, the generated file will contain a namespace `codegen::lua` with a struct `Abc` in it that contains all of the information about the marked function.
 
 
 ## Root struct
@@ -62,7 +60,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:
-```
+```cpp
 enum class E {
     V1,
     V2,
@@ -72,7 +70,7 @@ enum class E {
 When baking, a Dictionary containing a string "V1" will result in the `E::V1` enum to be selected.
 
 It is also possible to automatically generate the code to map an enum to an external enum automatically by adding the `[[codegen::map(OTHER_NAME)]]` attribute to the enum class.  For example if you have:
-```
+```cpp
 namespace myspace {
 enum class External {
   ValueA,
@@ -82,7 +80,7 @@ enum class External {
 }
 ```
 somewhere in the code an you define a codegen:ed struct with:
-```
+```cpp
 struct [[codegen::Dictionary(Name)]] {
   enum class [[codegen::map(myspace::External)]] Internal {
     ValueA,
@@ -98,7 +96,7 @@ then there is a function `codegen::map<myspace::External>` available that takes 
 
 ## Root enums
 `enum class` definitions can also happen on the root level.  Codegen will create code for these if they are marked with either the `codegen::stringify` or `codegen::map` attributes.  For the usage of the `codegen::map` attribute, see the relevant section above.  Any root enum that is marked with the `codegen::stringify` attribute will cause two functions to appear in the `_codegen.cpp` file: `codegen::toString` and `codegen::fromString`.  These functions can be used to convert between string representations of the enum values and the enum values.  Please note that the `codegen::key` value is used if an enum value uses one.  For example:
-```
+```cpp
 enum class [[codegen::stringify()]] TestEnum {
   Value1,
   Value2 [[codegen::key("Different key")]]
@@ -111,7 +109,46 @@ assert(codegen::fromString<TestEnum>("Different key") == TestEnum::Value2);
 assert(codegen::toString(TestEnum::Value2) == "Different key");
 ```
 
-## Verifier Mappings
+## Lua Wrapping functions
+The `codegen::luawrap` attribute can take an optional argument that overwrites the default behavior of using the function name as the exported Lua name.
+```cpp
+/**
+ * Some documentation at the top
+ */
+[[codegen::luawrap("foo")]] std::string bar(int a, float f = 1.f) {
+  return "abc";
+}
+```
+Will be made available as the `foo` function in the Lua context and will generated the following:
+```cpp
+static const openspace::scripting::LuaLibrary::Function Bar = {
+    "foo",
+    [](lua_State* L) -> int {
+        ghoul::lua::checkArgumentsAndThrow(L, { 1, 2 }, "foo");
+        auto [a, f] = ghoul::lua::values<int, std::optional<float>>(L);
+        try {
+            std::string res = bar(
+              a,
+              f.has_value() ? std::move(*f) : 1.f
+            );
+            ghoul::lua::push(L, std::move(res));
+            return 1;
+        }
+        catch (const ghoul::lua::LuaError& e) {
+            return ghoul::lua::luaError(L, e.message);
+        }
+    },
+    {
+        { "a", "Integer" },
+        { "f", "Number?", "1.f" }
+    },
+    "String",
+    "Some documentation at the top."
+};
+```
+
+
+# Verifier Mappings
 This is a complete list of variable types and attribute combinations.  We are **not** listing the `[[codegen::key(...)]]` attribute here, as this is allowed with *every* variable.
 
  - `int` + `[[codegen::inrange]]` -> `InRangeVerifier<IntVerifier>`

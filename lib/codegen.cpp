@@ -681,12 +681,20 @@ std::string generateLuaFunction(Function* f) {
         );
     }
 
-    // If there are optional arguments in the beginning of the arugment list, we have
-    // to handle these separately as the tuple implementation doesn't like mixing
-    // optional and non-optional arguments. So we handle optional types from the front
-    // until there are no more optional types left
     std::vector<Variable*> arguments = f->arguments;
-    while (!arguments.empty() && arguments.front()->type->isOptionalType()) {
+    // If we only have optional arguments, we don't want them to be peeled off from the
+    // front, but handle them as a bunch instead
+    bool hasOnlyOptional = true;
+    for (Variable* var : arguments) {
+        if (!var->type->isOptionalType()) {
+            hasOnlyOptional = false;
+            break;
+        }
+    }
+
+    while (!hasOnlyOptional &&
+           !arguments.empty() && arguments.front()->type->isOptionalType())
+    {
         Variable* var = arguments.front();
         OptionalType* ot = static_cast<OptionalType*>(var->type);
         result += fmt::format(
