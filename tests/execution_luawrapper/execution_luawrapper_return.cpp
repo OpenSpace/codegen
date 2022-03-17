@@ -1435,7 +1435,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  boolVector") {
     LuaLibrary::Function func = codegen::lua::FuncBoolVector;
     CHECK(func.name == "funcBoolVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Boolean]");
+    CHECK(func.returnType == "Boolean[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -1538,7 +1538,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  intVector") {
     LuaLibrary::Function func = codegen::lua::FuncIntVector;
     CHECK(func.name == "funcIntVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Integer]");
+    CHECK(func.returnType == "Integer[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -1641,7 +1641,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleVector") {
     LuaLibrary::Function func = codegen::lua::FuncDoubleVector;
     CHECK(func.name == "funcDoubleVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Number]");
+    CHECK(func.returnType == "Number[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -1744,7 +1744,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  floatVector") {
     LuaLibrary::Function func = codegen::lua::FuncFloatVector;
     CHECK(func.name == "funcFloatVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Number]");
+    CHECK(func.returnType == "Number[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -1852,7 +1852,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  stringVector") {
     LuaLibrary::Function func = codegen::lua::FuncStringVector;
     CHECK(func.name == "funcStringVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[String]");
+    CHECK(func.returnType == "String[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -1955,7 +1955,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  pathVector") {
     LuaLibrary::Function func = codegen::lua::FuncPathVector;
     CHECK(func.name == "funcPathVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Path]");
+    CHECK(func.returnType == "Path[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2059,7 +2059,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec2Vector;
     CHECK(func.name == "funcIvec2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[ivec2]");
+    CHECK(func.returnType == "ivec2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2162,7 +2162,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec3Vector;
     CHECK(func.name == "funcIvec3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[ivec3]");
+    CHECK(func.returnType == "ivec3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2265,7 +2265,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncIvec4Vector;
     CHECK(func.name == "funcIvec4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[ivec4]");
+    CHECK(func.returnType == "ivec4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2367,7 +2367,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec2Vector;
     CHECK(func.name == "funcDvec2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec2]");
+    CHECK(func.returnType == "vec2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2470,7 +2470,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec3Vector;
     CHECK(func.name == "funcDvec3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec3]");
+    CHECK(func.returnType == "vec3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2573,7 +2573,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDvec4Vector;
     CHECK(func.name == "funcDvec4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec4]");
+    CHECK(func.returnType == "vec4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2676,7 +2676,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec2Vector;
     CHECK(func.name == "funcVec2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec2]");
+    CHECK(func.returnType == "vec2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2779,7 +2779,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec3Vector;
     CHECK(func.name == "funcVec3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec3]");
+    CHECK(func.returnType == "vec3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2882,7 +2882,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  vec4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncVec4Vector;
     CHECK(func.name == "funcVec4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[vec4]");
+    CHECK(func.returnType == "vec4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -2985,7 +2985,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x2Vector;
     CHECK(func.name == "funcMat2x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x2]");
+    CHECK(func.returnType == "mat2x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3093,7 +3093,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x3Vector;
     CHECK(func.name == "funcMat2x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x3]");
+    CHECK(func.returnType == "mat2x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3205,7 +3205,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat2x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat2x4Vector;
     CHECK(func.name == "funcMat2x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x4]");
+    CHECK(func.returnType == "mat2x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3320,7 +3320,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x2Vector;
     CHECK(func.name == "funcMat3x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x2]");
+    CHECK(func.returnType == "mat3x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3438,7 +3438,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x3Vector;
     CHECK(func.name == "funcMat3x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x3]");
+    CHECK(func.returnType == "mat3x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3583,7 +3583,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat3x4Vector;
     CHECK(func.name == "funcMat3x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x4]");
+    CHECK(func.returnType == "mat3x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3714,7 +3714,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x2Vector;
     CHECK(func.name == "funcMat4x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x2]");
+    CHECK(func.returnType == "mat4x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -3853,7 +3853,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x3Vector;
     CHECK(func.name == "funcMat4x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x3]");
+    CHECK(func.returnType == "mat4x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4004,7 +4004,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncMat4x4Vector;
     CHECK(func.name == "funcMat4x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x4]");
+    CHECK(func.returnType == "mat4x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4125,7 +4125,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x2Vector;
     CHECK(func.name == "funcDMat2x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x2]");
+    CHECK(func.returnType == "mat2x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4231,7 +4231,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x3Vector;
     CHECK(func.name == "funcDMat2x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x3]");
+    CHECK(func.returnType == "mat2x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4343,7 +4343,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat2x4Vector;
     CHECK(func.name == "funcDMat2x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat2x4]");
+    CHECK(func.returnType == "mat2x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4464,7 +4464,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x2Vector;
     CHECK(func.name == "funcDMat3x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x2]");
+    CHECK(func.returnType == "mat3x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4576,7 +4576,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x3Vector;
     CHECK(func.name == "funcDMat3x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x3]");
+    CHECK(func.returnType == "mat3x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4718,7 +4718,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat3x4Vector;
     CHECK(func.name == "funcDMat3x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat3x4]");
+    CHECK(func.returnType == "mat3x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4848,7 +4848,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x2Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x2Vector;
     CHECK(func.name == "funcDMat4x2Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x2]");
+    CHECK(func.returnType == "mat4x2[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -4981,7 +4981,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x3Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x3Vector;
     CHECK(func.name == "funcDMat4x3Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x3]");
+    CHECK(func.returnType == "mat4x3[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -5132,7 +5132,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat4x4Vector") {
     LuaLibrary::Function func = codegen::lua::FuncDMat4x4Vector;
     CHECK(func.name == "funcDMat4x4Vector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[mat4x4]");
+    CHECK(func.returnType == "mat4x4[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();
@@ -5291,7 +5291,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionaryVector") {
     LuaLibrary::Function func = codegen::lua::FuncDictionaryVector;
     CHECK(func.name == "funcDictionaryVector");
     CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "[Table]");
+    CHECK(func.returnType == "Table[]");
     CHECK(func.helpText == "");
 
     lua_State* state = luaL_newstate();

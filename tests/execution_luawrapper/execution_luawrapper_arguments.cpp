@@ -2348,7 +2348,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector") {
     CHECK(func.name == "funcBoolVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Boolean]");
+    CHECK(func.arguments[0].type == "Boolean[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2547,7 +2547,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector") {
     CHECK(func.name == "funcIntVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Integer]");
+    CHECK(func.arguments[0].type == "Integer[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2745,7 +2745,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector") {
     CHECK(func.name == "funcDoubleVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Number]");
+    CHECK(func.arguments[0].type == "Number[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -2943,7 +2943,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector") {
     CHECK(func.name == "funcFloatVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Number]");
+    CHECK(func.arguments[0].type == "Number[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3151,7 +3151,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector") {
     CHECK(func.name == "funcStringVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[String]");
+    CHECK(func.arguments[0].type == "String[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3349,7 +3349,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector") {
     CHECK(func.name == "funcPathVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Path]");
+    CHECK(func.arguments[0].type == "Path[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3547,7 +3547,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector") {
     CHECK(func.name == "funcIvec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[ivec2]");
+    CHECK(func.arguments[0].type == "ivec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3745,7 +3745,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector") {
     CHECK(func.name == "funcIvec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[ivec3]");
+    CHECK(func.arguments[0].type == "ivec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -3943,7 +3943,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector") {
     CHECK(func.name == "funcIvec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[ivec4]");
+    CHECK(func.arguments[0].type == "ivec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4141,7 +4141,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector") {
     CHECK(func.name == "funcDvec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec2]");
+    CHECK(func.arguments[0].type == "vec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4339,7 +4339,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector") {
     CHECK(func.name == "funcDvec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec3]");
+    CHECK(func.arguments[0].type == "vec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4537,7 +4537,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector") {
     CHECK(func.name == "funcDvec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec4]");
+    CHECK(func.arguments[0].type == "vec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4735,7 +4735,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector") {
     CHECK(func.name == "funcVec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec2]");
+    CHECK(func.arguments[0].type == "vec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -4933,7 +4933,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector") {
     CHECK(func.name == "funcVec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec3]");
+    CHECK(func.arguments[0].type == "vec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5131,7 +5131,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector") {
     CHECK(func.name == "funcVec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[vec4]");
+    CHECK(func.arguments[0].type == "vec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5329,7 +5329,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector") {
     CHECK(func.name == "funcMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x2]");
+    CHECK(func.arguments[0].type == "mat2x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5539,7 +5539,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector") {
     CHECK(func.name == "funcMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x3]");
+    CHECK(func.arguments[0].type == "mat2x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5765,7 +5765,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector") {
     CHECK(func.name == "funcMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x4]");
+    CHECK(func.arguments[0].type == "mat2x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -5987,7 +5987,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector") {
     CHECK(func.name == "funcMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x2]");
+    CHECK(func.arguments[0].type == "mat3x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6231,7 +6231,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector") {
     CHECK(func.name == "funcMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x3]");
+    CHECK(func.arguments[0].type == "mat3x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6493,7 +6493,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector") {
     CHECK(func.name == "funcMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x4]");
+    CHECK(func.arguments[0].type == "mat3x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6729,7 +6729,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector") {
     CHECK(func.name == "funcMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x2]");
+    CHECK(func.arguments[0].type == "mat4x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -6985,7 +6985,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector") {
     CHECK(func.name == "funcMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x3]");
+    CHECK(func.arguments[0].type == "mat4x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7250,7 +7250,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector") {
     CHECK(func.name == "funcMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x4]");
+    CHECK(func.arguments[0].type == "mat4x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7469,7 +7469,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector") {
     CHECK(func.name == "funcDMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x2]");
+    CHECK(func.arguments[0].type == "mat2x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7671,7 +7671,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector") {
     CHECK(func.name == "funcDMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x3]");
+    CHECK(func.arguments[0].type == "mat2x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -7881,7 +7881,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector") {
     CHECK(func.name == "funcDMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat2x4]");
+    CHECK(func.arguments[0].type == "mat2x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8103,7 +8103,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector") {
     CHECK(func.name == "funcDMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x2]");
+    CHECK(func.arguments[0].type == "mat3x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8338,7 +8338,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector") {
     CHECK(func.name == "funcDMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x3]");
+    CHECK(func.arguments[0].type == "mat3x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8594,7 +8594,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector") {
     CHECK(func.name == "funcDMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat3x4]");
+    CHECK(func.arguments[0].type == "mat3x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -8830,7 +8830,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector") {
     CHECK(func.name == "funcDMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x2]");
+    CHECK(func.arguments[0].type == "mat4x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9086,7 +9086,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector") {
     CHECK(func.name == "funcDMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x3]");
+    CHECK(func.arguments[0].type == "mat4x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9351,7 +9351,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector") {
     CHECK(func.name == "funcDMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[mat4x4]");
+    CHECK(func.arguments[0].type == "mat4x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 
@@ -9624,7 +9624,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
     CHECK(func.name == "funcDictionaryVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
-    CHECK(func.arguments[0].type == "[Table]");
+    CHECK(func.arguments[0].type == "Table[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
 

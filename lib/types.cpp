@@ -572,7 +572,7 @@ std::string generateTypename(const VectorType* type, bool fullyQualified) {
 }
 
 std::string generateDescriptiveTypename(const VectorType* type) {
-    return "[" + generateDescriptiveTypename(type->type) + "]";
+    return generateDescriptiveTypename(type->type) + "[]";
 }
 
 std::string generateTypename(const CustomType* type, bool fullyQualified) {
