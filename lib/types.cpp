@@ -329,15 +329,15 @@ VariableType* parseType(std::string_view type, Struct* context) {
         vt->tag = VariableType::Tag::VariantType;
 
         for (std::string_view elem : list) {
-            VariableType* t = parseType(elem, context);
-            assert(t);
-            vt->types.push_back(t);
+            VariableType* listType = parseType(elem, context);
+            assert(listType);
+            vt->types.push_back(listType);
         }
 
         // Check for multiple vector types
         int nVectorTypes = 0;
-        for (VariableType* t : vt->types) {
-            if (t->tag == VariableType::Tag::VectorType) {
+        for (VariableType* listType : vt->types) {
+            if (listType->tag == VariableType::Tag::VectorType) {
                 nVectorTypes += 1;
             }
         }
@@ -349,17 +349,14 @@ VariableType* parseType(std::string_view type, Struct* context) {
         }
 
         // Check for illegal types
-        for (VariableType* t : vt->types) {
-            const bool isBasicType = t->tag == VariableType::Tag::BasicType;
-            const bool isVectorType = t->tag == VariableType::Tag::VectorType;
+        for (VariableType* lt : vt->types) {
             const bool isEnum =
-                t->tag == VariableType::Tag::CustomType &&
-                static_cast<CustomType*>(t)->type &&
-                static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
-            if (!isBasicType && !isVectorType && !isEnum) {
+                lt->isCustomType() && static_cast<CustomType*>(lt)->type &&
+                static_cast<CustomType*>(lt)->type->type == StackElement::Type::Enum;
+            if (!lt->isBasicType() && !lt->isVectorType() && !isEnum) {
                 throw CodegenError(fmt::format(
                     "Unsupported type '{}' found in variant list\n{}",
-                    generateTypename(t), type
+                    generateTypename(lt), type
                 ));
             }
         }
@@ -375,9 +372,9 @@ VariableType* parseType(std::string_view type, Struct* context) {
         tt->tag = VariableType::Tag::TupleType;
 
         for (std::string_view elem : list) {
-            VariableType* t = parseType(elem, context);
-            assert(t);
-            tt->types.push_back(t);
+            VariableType* listType = parseType(elem, context);
+            assert(listType);
+            tt->types.push_back(listType);
         }
 
         t = tt;

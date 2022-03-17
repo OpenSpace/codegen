@@ -85,6 +85,15 @@ namespace {
                 res.insert(res.end(), v1.begin(), v1.end());
                 break;
             }
+            case VariableType::Tag::TupleType: {
+                const TupleType* vt = static_cast<const TupleType*>(var);
+                for (VariableType* v : vt->types) {
+                    assert(v);
+                    std::vector<const VariableType*> v1 = usedTypes(v);
+                    res.insert(res.end(), v1.begin(), v1.end());
+                }
+                break;
+            }
         }
 
         assert(
@@ -110,8 +119,8 @@ namespace {
                 continue;
             }
 
-            const Struct& s = static_cast<const Struct&>(*e);
-            std::vector<const VariableType*> t = usedTypes(s);
+            const Struct& str = static_cast<const Struct&>(*e);
+            std::vector<const VariableType*> t = usedTypes(str);
             res.insert(res.end(), t.begin(), t.end());
         }
 
@@ -152,8 +161,8 @@ namespace {
             }
 
             if (se->type == StackElement::Type::Struct) {
-                Struct* s = static_cast<Struct*>(se);
-                std::vector<Enum*> subRes = mappedEnums(*s);
+                Struct* str = static_cast<Struct*>(se);
+                std::vector<Enum*> subRes = mappedEnums(*str);
                 res.insert(res.end(), subRes.begin(), subRes.end());
             }
         }
@@ -176,8 +185,8 @@ namespace {
             comment = argument;
         }
         else {
-            if (size_t it = comment.find('"');
-                it != std::string::npos && comment[it - 1] != '\\')
+            if (size_t jt = comment.find('"');
+                jt != std::string::npos && comment[jt - 1] != '\\')
             {
                 throw CodegenError(fmt::format(
                     "Discovered unallowed unescaped \" in comment line\n{}", comment
@@ -358,14 +367,13 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     );
 
     for (VariableType* t : variantType->types) {
-        std::string type = generateTypename(t);
+        std::string typeName = generateTypename(t);
         
-        const bool isVectorType = t->tag == VariableType::Tag::VectorType;
         const bool isEnumType =
-            t->tag == VariableType::Tag::CustomType &&
+            t->isCustomType() &&
             static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
-        if (isVectorType) {
-            std::string bakeFunction = vectorBakeFunctionForType(type);
+        if (t->isVectorType()) {
+            std::string bakeFunction = vectorBakeFunctionForType(typeName);
             result += bakeFunction;
         }
         else if (isEnumType) {
@@ -374,9 +382,9 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
             result += bakeFunction;
         }
         else {
-            std::string_view conversionFunction = variantConversionFunctionForType(type);
-            assert(!conversionFunction.empty());
-            result += conversionFunction;
+            std::string_view conversionFunc = variantConversionFunctionForType(typeName);
+            assert(!conversionFunc.empty());
+            result += conversionFunc;
         }
     }
 
@@ -398,11 +406,11 @@ std::string writeInnerEnumConverter(Enum* e) {
 
     for (EnumElement* elem : e->elements) {
         assert(elem);
-        std::string type = fqn(e, "::");
+        std::string typeStr = fqn(e, "::");
         assert(!elem->attributes.key.empty());
         result += fmt::format(
             "    if (v == {}) {{ *val = {}::{}; }}\n",
-            elem->attributes.key, type, elem->name
+            elem->attributes.key, typeStr, elem->name
         );
     }
     result += "}\n";
@@ -458,7 +466,6 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s, std::string_view so
     assert(s);
 
     std::string res;
-    const Struct* root = rootStruct(s);
     for (Variable* var : s->variables) {
         assert(var);
         if (var->comment.empty()) {
@@ -908,9 +915,9 @@ std::string createClickableFileName(std::string filename) {
 }
 
 Result handleFile(std::filesystem::path path) {
-    std::ifstream f(path);
-    std::string res = std::string(std::istreambuf_iterator<char>{f}, {});
-    f.close();
+    std::ifstream file(path);
+    std::string res = std::string(std::istreambuf_iterator<char>(file), {});
+    file.close();
 
 
     std::string p = path.string();
