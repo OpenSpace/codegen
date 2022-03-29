@@ -678,13 +678,13 @@ std::string generateLuaFunction(Function* f) {
     if (nRequiredArguments == nTotalArguments) {
         result += fmt::format(
             "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
-            nTotalArguments, f->functionName
+            nTotalArguments, f->luaName
         );
     }
     else {
         result += fmt::format(
             "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
-            nRequiredArguments, nTotalArguments, f->functionName
+            nRequiredArguments, nTotalArguments, f->luaName
         );
     }
 
