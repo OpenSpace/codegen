@@ -82,7 +82,7 @@ struct StackElement {
 #endif // TYPES_ADD_DEBUG_INFORMATION
 
     enum class Type { Struct, Enum };
-    Type type;
+    Type type = Type::Struct;
 
     std::string name;
     std::string comment;
