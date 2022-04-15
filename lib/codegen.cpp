@@ -271,8 +271,7 @@ std::string writeEnumDocumentation(Enum* e) {
         fqn(e, "_")
     );
 
-    Enum* en = static_cast<Enum*>(e);
-    for (EnumElement* em : en->elements) {
+    for (EnumElement* em : e->elements) {
         // If no key attribute is specified, we use the name instead
         std::string key =
             em->attributes.key.empty() ?

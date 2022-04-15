@@ -392,7 +392,7 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     }
 
     if (!res->attributes.key.empty()) {
-        res->key = std::string(res->attributes.key);
+        res->key = res->attributes.key;
     }
     else {
         res->key = fmt::format("\"{}\"", res->name);
@@ -998,8 +998,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
             lines.cbegin(),
             lines.cend(),
             std::string(),
-            [](std::string a, std::string_view b) {
-                return b.empty() ? a : a + std::string(strip(b)) + ' ';
+            [](std::string lhs, std::string_view rhs) {
+                return rhs.empty() ? lhs : lhs + std::string(strip(rhs)) + ' ';
             }
         );
         // There is an empty character at the end which we should remove
