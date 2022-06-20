@@ -1304,7 +1304,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     return f;
 }
 
-[[nodiscard]] Code parse(std::string_view code) {
+[[nodiscard]] Code parse(std::string codeStr) {
+    // When trying to generate code checked out on a Windows machine on a Linux virtual
+    // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
+    // we just remove all of the \r characters here
+    codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
+    std::string_view code = codeStr;
+
     Code res;
 
     while (!code.empty()) {

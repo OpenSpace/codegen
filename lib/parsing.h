@@ -26,8 +26,8 @@
 #define __OPENSPACE_CODEGEN___PARSING___H__
 
 #include "types.h"
-#include <string_view>
+#include <string>
 
-[[nodiscard]] Code parse(std::string_view code);
+[[nodiscard]] Code parse(std::string codeStr);
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

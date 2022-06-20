@@ -920,7 +920,7 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    Code code = parse(res);
+    Code code = parse(std::move(res));
     if (code.structs.empty() && code.enums.empty() && code.luaWrapperFunctions.empty()) {
         return Result::NotProcessed;
     }
