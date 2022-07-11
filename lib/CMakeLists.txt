@@ -47,7 +47,6 @@ set(MSVC_WARNINGS
   "/MP"       # Multi-threading support
   "/W4"       # Highest warning level
   "/w44062"   # enumerator 'identifier' in a switch of enum 'enumeration' is not handled
-  "/wd4068"   # unknown pragma
   "/wd4127"   # conditional expression is constant
   "/wd4201"   # nonstandard extension used : nameless struct/union
   "/wd5030"   # attribute 'attribute' is not recognized
@@ -168,12 +167,10 @@ set(CLANG_WARNINGS
   "-Wvariadic-macros"
   "-Wvla"
   "-Wzero-length-array"
-
   "-Wno-missing-braces"
   "-Wno-ignored-attributes"
   "-Wno-unknown-attributes"
-  "-Wno-unknown-pragmas"
-  )
+)
 
 set(GCC_WARNINGS
   "-ggdb"
@@ -199,12 +196,10 @@ set(GCC_WARNINGS
   "-Wnon-virtual-dtor"
   "-Wold-style-cast"
   "-Woverloaded-virtual"
-
   "-Wno-long-long"
   "-Wno-ignored-attributes"
   "-Wno-attributes"
-  "-Wno-unknown-pragmas"
-  )
+)
 
 if (MSVC)
   target_compile_options(codegen-lib PRIVATE ${MSVC_WARNINGS})

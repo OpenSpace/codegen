@@ -119,13 +119,9 @@ add_executable(
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
 target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-module-collection)
 if (MSVC)
-  target_compile_options(codegentest PRIVATE "/wd4068" "/wd5030" "/bigobj")
+  target_compile_options(codegentest PRIVATE "/wd5030" "/bigobj")
 else ()
-  target_compile_options(
-    codegentest
-    PRIVATE
-    "-Wno-ignored-attributes" "-Wno-attributes" "-Wno-unknown-pragmas"
-  )
+  target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
 endif ()
 
 if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
