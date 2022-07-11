@@ -58,7 +58,7 @@ add_executable(
   parsing_luawrapper/parsing_luawrapper_arguments.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_luawrapper/parsing_luawrapper_comments.cpp
-  parsing_luawrapper/parsing_luawrapper_error.cpp
+  parsing_luawrapper/parsing_luawrapper_fail.cpp
   parsing_luawrapper/parsing_luawrapper_return.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
@@ -73,47 +73,47 @@ add_executable(
   parsing_structs/parsing_structs_attributes_vec2.cpp
   parsing_structs/parsing_structs_attributes_vec3.cpp
   parsing_structs/parsing_structs_attributes_vec4.cpp
-  parsing_structs/parsing_structs_attributes_error_bool.cpp
-  parsing_structs/parsing_structs_attributes_error_dictionary.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat2x2.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat2x3.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat2x4.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat3x2.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat3x3.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat3x4.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat4x2.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat4x3.cpp
-  parsing_structs/parsing_structs_attributes_error_dmat4x4.cpp
-  parsing_structs/parsing_structs_attributes_error_double.cpp
-  parsing_structs/parsing_structs_attributes_error_dvec2.cpp
-  parsing_structs/parsing_structs_attributes_error_dvec3.cpp
-  parsing_structs/parsing_structs_attributes_error_dvec4.cpp
-  parsing_structs/parsing_structs_attributes_error_float.cpp
-  parsing_structs/parsing_structs_attributes_error_int.cpp
-  parsing_structs/parsing_structs_attributes_error_ivec2.cpp
-  parsing_structs/parsing_structs_attributes_error_ivec3.cpp
-  parsing_structs/parsing_structs_attributes_error_ivec4.cpp
-  parsing_structs/parsing_structs_attributes_error_mat2x2.cpp
-  parsing_structs/parsing_structs_attributes_error_mat2x3.cpp
-  parsing_structs/parsing_structs_attributes_error_mat2x4.cpp
-  parsing_structs/parsing_structs_attributes_error_mat3x2.cpp
-  parsing_structs/parsing_structs_attributes_error_mat3x3.cpp
-  parsing_structs/parsing_structs_attributes_error_mat3x4.cpp
-  parsing_structs/parsing_structs_attributes_error_mat4x2.cpp
-  parsing_structs/parsing_structs_attributes_error_mat4x3.cpp
-  parsing_structs/parsing_structs_attributes_error_mat4x4.cpp
-  parsing_structs/parsing_structs_attributes_error_string.cpp
-  parsing_structs/parsing_structs_attributes_error_vec2.cpp
-  parsing_structs/parsing_structs_attributes_error_vec3.cpp
-  parsing_structs/parsing_structs_attributes_error_vec4.cpp
+  parsing_structs/parsing_structs_attributes_fail_bool.cpp
+  parsing_structs/parsing_structs_attributes_fail_dictionary.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat2x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat2x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat2x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat3x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat3x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat3x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat4x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat4x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_dmat4x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_double.cpp
+  parsing_structs/parsing_structs_attributes_fail_dvec2.cpp
+  parsing_structs/parsing_structs_attributes_fail_dvec3.cpp
+  parsing_structs/parsing_structs_attributes_fail_dvec4.cpp
+  parsing_structs/parsing_structs_attributes_fail_float.cpp
+  parsing_structs/parsing_structs_attributes_fail_int.cpp
+  parsing_structs/parsing_structs_attributes_fail_ivec2.cpp
+  parsing_structs/parsing_structs_attributes_fail_ivec3.cpp
+  parsing_structs/parsing_structs_attributes_fail_ivec4.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat2x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat2x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat2x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat3x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat3x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat3x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat4x2.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat4x3.cpp
+  parsing_structs/parsing_structs_attributes_fail_mat4x4.cpp
+  parsing_structs/parsing_structs_attributes_fail_string.cpp
+  parsing_structs/parsing_structs_attributes_fail_vec2.cpp
+  parsing_structs/parsing_structs_attributes_fail_vec3.cpp
+  parsing_structs/parsing_structs_attributes_fail_vec4.cpp
   parsing_structs/parsing_structs_enums.cpp
-  parsing_structs/parsing_structs_error.cpp
+  parsing_structs/parsing_structs_fail.cpp
   parsing_structs/parsing_structs_map.cpp
   parsing_structs/parsing_structs_other.cpp
   parsing_structs/parsing_structs_struct.cpp
   parsing_structs/parsing_structs_variable.cpp
   parsing_structs/parsing_structs_variant.cpp
-  parsing_structs/parsing_structs_variant_error.cpp
+  parsing_structs/parsing_structs_variant_fail.cpp
 )
 
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
