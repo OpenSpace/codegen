@@ -40,7 +40,7 @@ set(FILES
 
 add_library(codegen-lib ${FILES})
 target_include_directories(codegen-lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_features(codegen-lib PUBLIC cxx_std_17)
+target_compile_features(codegen-lib PUBLIC cxx_std_20)
 target_link_libraries(codegen-lib PUBLIC fmt)
 
 set(MSVC_WARNINGS

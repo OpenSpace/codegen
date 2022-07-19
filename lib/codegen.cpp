@@ -885,7 +885,7 @@ std::string generateResult(const Code& code) {
         !code.luaWrapperFunctions.empty()
     );
 
-    std::string result = FileHeader;
+    std::string result = std::string(FileHeader);
 
     bool hasWrittenMappingFallback = false;
     if (!code.structs.empty()) {

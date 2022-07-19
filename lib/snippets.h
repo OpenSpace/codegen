@@ -29,35 +29,35 @@
 #include <string_view>
 
 namespace {
-    constexpr const char BakeFunctionVectorDeclaration[] = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
-    constexpr const char BakeFunctionMapDeclaration[] = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val);\n";
-    constexpr const char BakeFunctionOptionalDeclaration[] = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
+    constexpr std::string_view BakeFunctionVectorDeclaration = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
+    constexpr std::string_view BakeFunctionMapDeclaration = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val);\n";
+    constexpr std::string_view BakeFunctionOptionalDeclaration = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
 
-    constexpr const char BackFunctionFallback[] = "template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }";
-    constexpr const char BakeToFunctionFallback[] = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
-    constexpr const char MapFunctionFallback[] = "template<typename T, typename U> [[maybe_unused]] T map(U) { static_assert(sizeof(T) == 0); }";
-    constexpr const char DocumentationFallback[] = R"(template<typename T> [[maybe_unused]] openspace::documentation::Documentation doc(std::string, [[maybe_unused]] openspace::documentation::Documentation parentDoc = openspace::documentation::Documentation()) {
+    constexpr std::string_view BackFunctionFallback = "template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }";
+    constexpr std::string_view BakeToFunctionFallback = "template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
+    constexpr std::string_view MapFunctionFallback = "template<typename T, typename U> [[maybe_unused]] T map(U) { static_assert(sizeof(T) == 0); }";
+    constexpr std::string_view DocumentationFallback = R"(template<typename T> [[maybe_unused]] openspace::documentation::Documentation doc(std::string, [[maybe_unused]] openspace::documentation::Documentation parentDoc = openspace::documentation::Documentation()) {
     static_assert(sizeof(T) == 0);
     return openspace::documentation::Documentation();
 }
 )";
     
-    constexpr const char ToStringFallback[] = "template<typename T> [[maybe_unused]] std::string_view toString(T t) { static_assert(sizeof(T) == 0); return \"\"; }";
-    constexpr const char FromStringFallback[] = "template<typename T> [[maybe_unused]] T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
+    constexpr std::string_view ToStringFallback = "template<typename T> [[maybe_unused]] std::string_view toString(T t) { static_assert(sizeof(T) == 0); return \"\"; }";
+    constexpr std::string_view FromStringFallback = "template<typename T> [[maybe_unused]] T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
 
-    constexpr const char BakePreamble[] = R"(
+    constexpr std::string_view BakePreamble = R"(
 template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
 )";
 
-    constexpr const char DocumentationPreamble[] = R"(
+    constexpr std::string_view DocumentationPreamble = R"(
 template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std::string id, openspace::documentation::Documentation parentDoc) {{
     using namespace openspace::documentation;
 
 )";
 
-    constexpr const char DocumentationEpilog[] = R"(
+    constexpr std::string_view DocumentationEpilog = R"(
     openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
     
     // Move the entries from the parent doc into this one
@@ -68,28 +68,28 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 
 )";
 
-    constexpr const char LuaWrapperPreamble[] = "static const openspace::scripting::LuaLibrary::Function {} = {{\n";
+    constexpr std::string_view LuaWrapperPreamble = "static const openspace::scripting::LuaLibrary::Function {} = {{\n";
 
-    constexpr const char LuaWrapperOptionalTypeExtraction[] = R"(
+    constexpr std::string_view LuaWrapperOptionalTypeExtraction = R"(
         {0} {1};
         if (ghoul::lua::hasValue<{2}>(L)) {{
             {1} = ghoul::lua::value<{2}>(L);
         }}
 )";
 
-    constexpr const char LuaWrapperPushTupleOptional[] = R"(
-            if (std::get<{}>(res).has_value()) {
-                ghoul::lua::push(L, *std::get<{}>(res));
+    constexpr std::string_view LuaWrapperPushTupleOptional = R"(
+            if (std::get<{0}>(res).has_value()) {{
+                ghoul::lua::push(L, *std::get<{0}>(res));
                 nArguments++;
-            }
+            }}
 )";
 
-    constexpr const char LuaWrapperPushTupleRegular[] = R"(
+    constexpr std::string_view LuaWrapperPushTupleRegular = R"(
             ghoul::lua::push(L, std::get<{}>(res));
             nArguments++;
 )";
 
-    constexpr const char LuaWrapperPushOptional[] = R"(
+    constexpr std::string_view LuaWrapperPushOptional = R"(
             if (res.has_value()) {
                 ghoul::lua::push(L, std::move(*res));
                 return 1;
@@ -99,13 +99,13 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
             }
 )";
 
-    constexpr const char LuaWrapperPushVariant[] = R"(
+    constexpr std::string_view LuaWrapperPushVariant = R"(
             if (std::holds_alternative<{0}>(res)) {{
                 ghoul::lua::push(L, std::move(std::get<{0}>(res)));
             }}
 )";
 
-    constexpr const char FileHeader[] = R"(// This file has been auto-generated by the codegen tool
+    constexpr std::string_view FileHeader = R"(// This file has been auto-generated by the codegen tool
 //
 // Under **no** circumstances change this file manually as any change will be
 // automatically overwritten. Instead change the struct tagged with "codegen::Dictionary"
@@ -118,7 +118,7 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 
 )";
 
-    constexpr const char BakeFunctionOptional[] = R"(
+    constexpr std::string_view BakeFunctionOptional = R"(
 template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val) {
     if (d.hasKey(key)) {
         T v;
@@ -131,7 +131,7 @@ template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, st
 }
 )";
 
-    constexpr const char BakeFunctionVector[] = R"(
+    constexpr std::string_view BakeFunctionVector = R"(
 template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
     // For the moment we need to make sure in here that all of the keys are sequential
@@ -156,7 +156,7 @@ template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, st
 }
 )";
 
-    constexpr const char BakeFunctionMap[] = R"(
+    constexpr std::string_view BakeFunctionMap = R"(
 template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
     
