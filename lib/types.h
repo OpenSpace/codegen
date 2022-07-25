@@ -48,29 +48,28 @@ struct CodegenError : public std::runtime_error {
 };
 
 namespace attributes {
-    constexpr const char Annotation[] = "annotation";
-    constexpr const char Color[] = "color";
-    constexpr const char DateTime[] = "datetime";
-    constexpr const char Directory[] = "directory";
-    constexpr const char InList[] = "inlist";
-    constexpr const char InRange[] = "inrange";
-    constexpr const char Less[] = "less";
-    constexpr const char LessEqual[] = "lessequal";
-    constexpr const char Greater[] = "greater";
-    constexpr const char GreaterEqual[] = "greaterequal";
-    constexpr const char NotInList[] = "notinlist";
-    constexpr const char NotInRange[] = "notinrange";
-    constexpr const char Reference[] = "reference";
-    constexpr const char Unequal[] = "unequal";
+    constexpr std::string_view Annotation = "annotation";
+    constexpr std::string_view Color = "color";
+    constexpr std::string_view DateTime = "datetime";
+    constexpr std::string_view Directory = "directory";
+    constexpr std::string_view InList = "inlist";
+    constexpr std::string_view InRange = "inrange";
+    constexpr std::string_view Less = "less";
+    constexpr std::string_view LessEqual = "lessequal";
+    constexpr std::string_view Greater = "greater";
+    constexpr std::string_view GreaterEqual = "greaterequal";
+    constexpr std::string_view NotInList = "notinlist";
+    constexpr std::string_view NotInRange = "notinrange";
+    constexpr std::string_view Reference = "reference";
+    constexpr std::string_view Unequal = "unequal";
 
-    constexpr const char Key[] = "key";
+    constexpr std::string_view Key = "key";
 
-    constexpr const char Dictionary[] = "Dictionary";
-    constexpr const char NoExhaustive[] = "noexhaustive";
-    constexpr const char MustBeNotEmpty[] = "notempty";
+    constexpr std::string_view Dictionary = "Dictionary";
+    constexpr std::string_view NoExhaustive = "noexhaustive";
+    constexpr std::string_view MustBeNotEmpty = "notempty";
 
-    constexpr const char Map[] = "map";
-
+    constexpr std::string_view Map = "map";
 } // namespace attributes
 
 
