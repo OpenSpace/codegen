@@ -25,8 +25,8 @@
 #ifndef __OPENSPACE_CODEGEN___SETTINGS___H__
 #define __OPENSPACE_CODEGEN___SETTINGS___H__
 
-constexpr const bool PrintTiming = true;
-constexpr const bool ShouldAlwaysWriteFiles = false;
-constexpr const bool GenerateWarningsForDocumentationLessTypes = false;
+constexpr bool PrintTiming = true;
+constexpr bool ShouldAlwaysWriteFiles = false;
+constexpr bool GenerateWarningsForDocumentationLessTypes = false;
 
 #endif // __OPENSPACE_CODEGEN___SETTINGS___H__
