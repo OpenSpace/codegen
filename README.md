@@ -143,7 +143,7 @@ static const openspace::scripting::LuaLibrary::Function Bar = {
         { "f", "Number?", "1.f" }
     },
     "String",
-    "Some documentation at the top."
+    "Some documentation at the top"
 };
 ```
 
