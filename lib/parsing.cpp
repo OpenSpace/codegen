@@ -843,7 +843,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         bool foundBeginningOfReturnValue = false;
         int nOpenBrackets = 0;
 
-        std::pair<size_t, size_t> loc = { 0, 0 };
+        std::pair<size_t, size_t> loc = std::pair(0, 0);
         while (true) {
             if (cursor == content.size()) {
                 throw CodegenError(fmt::format(
@@ -885,7 +885,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     };
 
     auto eatName = [&content](size_t& cursor) -> std::pair<size_t, size_t> {
-        std::pair<size_t, size_t> loc = { 0, 0 };
+        std::pair<size_t, size_t> loc = std::pair(0, 0);
 
         // Skip the first whitespace(s)
         cursor = content.find_first_not_of(' ', cursor);
@@ -1069,7 +1069,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         // Move the cursor forward as long as there are space characters
         cursor = content.find_first_not_of(" \n", cursor + 1);
 
-        std::pair<size_t, size_t> loc = { cursor, 0 };
+        std::pair<size_t, size_t> loc = std::pair(cursor, 0);
         cursor = content.find_first_of(" (", cursor);
         loc.second = cursor;
 
