@@ -188,9 +188,10 @@ namespace {
             if (size_t jt = comment.find('"');
                 jt != std::string::npos && comment[jt - 1] != '\\')
             {
-                throw CodegenError(fmt::format(
-                    "Discovered unallowed unescaped \" in comment line\n{}", comment
-                ));
+                comment.insert(jt, "\\");
+                //throw CodegenError(fmt::format(
+                //    "Discovered unallowed unescaped \" in comment line\n{}", comment
+                //));
             }
 
             // We add artificial spaces between the multiline comments, which causes there

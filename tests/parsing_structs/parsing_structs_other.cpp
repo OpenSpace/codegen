@@ -28,9 +28,9 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Multiline") {
+TEST_CASE("Parsing: Comments") {
     constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Multiline)]] Parameters {
+struct [[codegen::Dictionary(Comments)]] Parameters {
     // multi
     // line
     // commenting
@@ -77,6 +77,9 @@ Lines, With, Weird,
         "multiple lines breaks, because someone really has a"
         "lot to say"
     )]];
+
+    // This value has a " in the comment which might cause it to break?
+    std::vector<std::string> quoteInComment;
 };
 )";
 
@@ -87,7 +90,7 @@ Lines, With, Weird,
     Struct* s = code.structs.front();
     REQUIRE(s);
 
-    REQUIRE(s->variables.size() == 8);
+    REQUIRE(s->variables.size() == 9);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -151,6 +154,13 @@ Lines, With, Weird,
         CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "newLine2Annotation documentation");
         CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
+    }
+    {
+        Variable* var = s->variables[8];
+        REQUIRE(var);
+        CHECK(var->name == "quoteInComment");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "This value has a \" in the comment which might cause it to break?");
     }
 
     std::string r = generateResult(code);

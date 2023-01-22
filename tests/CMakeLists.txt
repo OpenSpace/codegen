@@ -35,11 +35,13 @@ add_executable(
   execution_luawrapper/execution_luawrapper_comments.cpp
   execution_luawrapper/execution_luawrapper_return.cpp
   execution_misc/execution_misc_parentdoc.cpp
+  execution_misc/execution_misc_multiple.cpp
   execution_structs/execution_structs_attributes.cpp
   execution_structs/execution_structs_basic_types.cpp
   execution_structs/execution_structs_basic_types_optional.cpp
   execution_structs/execution_structs_basic_types_optional_vector.cpp
   execution_structs/execution_structs_basic_types_vector.cpp
+  execution_structs/execution_structs_comments.cpp
   execution_structs/execution_structs_enums.cpp
   execution_structs/execution_structs_enummapping.cpp
   execution_structs/execution_structs_map.cpp
@@ -61,6 +63,7 @@ add_executable(
   parsing_luawrapper/parsing_luawrapper_fail.cpp
   parsing_luawrapper/parsing_luawrapper_return.cpp
   parsing_mixed/parsing_mixed_basic.cpp
+  parsing_mixed/parsing_multiple_dictionaries.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
   parsing_structs/parsing_structs_attributes_dictionary.cpp
   parsing_structs/parsing_structs_attributes_float.cpp

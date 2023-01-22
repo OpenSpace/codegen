@@ -65,20 +65,6 @@ TEST_CASE("Parsing/Structs/Error:  Missing space") {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Illegal \" in description") {
-    constexpr const char Source[] = R"(
-struct [[codegen::Dictionary(Error)]] Parameters {
-    // description " with character
-    int error;
-};
-)";
-    Code code = parse(Source);
-    CHECK_THROWS_MATCHES(
-        generateResult(code),
-        CodegenError, Catch::Matchers::Contains("Discovered unallowed unescaped")
-    );
-}
-
 TEST_CASE("Parsing/Structs/Error:  Missing variant closing") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
