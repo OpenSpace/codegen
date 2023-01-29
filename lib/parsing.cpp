@@ -1142,6 +1142,12 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                     f->arguments.size(), f->functionName
                 ));
             }
+
+            if (v->name == "res") {
+                throw CodegenError(
+                    "'res' is a reserved name and cannot be used for parameter naems"
+                );
+            }
         }
 
 
