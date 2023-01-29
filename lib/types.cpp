@@ -670,7 +670,12 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
 }
 
 std::string generateLuaExtractionTypename(const CustomType* type) {
-    return "ghoul::Dictionary";
+    // Yo dawg, I heard you like types
+    switch (type->type->type) {
+        case StackElement::Type::Enum: return "std::string";
+        case StackElement::Type::Struct: return "ghoul::Dictionary";
+    }
+    throw std::logic_error("Missing case label");
 }
 
 std::string generateDescriptiveTypename(const CustomType* type) {

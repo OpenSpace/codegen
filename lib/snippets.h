@@ -45,10 +45,18 @@ namespace {
     constexpr std::string_view ToStringFallback = "template<typename T> [[maybe_unused]] std::string_view toString(T t) { static_assert(sizeof(T) == 0); return \"\"; }";
     constexpr std::string_view FromStringFallback = "template<typename T> [[maybe_unused]] T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
 
-    constexpr std::string_view BakePreamble = R"(
+    constexpr std::string_view BakeEnumFallback = "template<typename T> [[maybe_unused]] T bake(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
+
+    constexpr std::string_view BakeStructPreamble = R"(
 template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res;
+)";
+
+    constexpr std::string_view BakeEnum = R"(
+template <> [[maybe_unused]] {0} bake<{0}>(std::string_view value) {{
+    return fromString<{0}>(value);
+}}
 )";
 
     constexpr std::string_view BakeCustomMapDeclaration = R"(

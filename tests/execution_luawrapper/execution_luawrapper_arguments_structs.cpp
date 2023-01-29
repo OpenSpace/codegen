@@ -161,7 +161,6 @@ namespace {
         }
 
         CHECK(keys[0] == "first");
-
         CHECK(ps["first"].a == 1);
         CHECK(ps["first"].b == Approx(2.2));
         CHECK(ps["first"].c == "3.3");

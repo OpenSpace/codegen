@@ -33,6 +33,7 @@
 
 namespace {
     constexpr std::string_view AttributeDictionary = "[[codegen::Dictionary";
+    constexpr std::string_view AttributeEnum = "[[codegen::enum";
     constexpr std::string_view AttributeStringify = "[[codegen::stringify";
     constexpr std::string_view AttributeMap = "[[codegen::map";
     constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap";
@@ -479,9 +480,10 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
 std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     assert(!code.empty());
 
+    const size_t locEnum = code.find(AttributeEnum);
     const size_t locStringify = code.find(AttributeStringify);
     const size_t locMap = code.find(AttributeMap);
-    const size_t loc = std::min(locStringify, locMap);
+    const size_t loc = std::min({ locEnum, locStringify, locMap });
     if (loc == std::string_view::npos) {
         // We didn't find the attribute
         return { std::string_view::npos, std::string_view::npos };

@@ -515,6 +515,8 @@ template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     res += "    throw std::runtime_error(\"Could not find value in enum\");\n";
     res += "}\n";
 
+    res += fmt::format(BakeEnum, e->name);
+
     return res;
 }
 
@@ -600,7 +602,7 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     result += '\n';
 
     for (Struct* s : code.structs) {
-        result += fmt::format(BakePreamble, s->name, s->attributes.dictionary);
+        result += fmt::format(BakeStructPreamble, s->name, s->attributes.dictionary);
 
         for (Variable* var : s->variables) {
             result += fmt::format(
@@ -622,42 +624,6 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
         }
     }
 
-    if (!code.luaWrapperFunctions.empty()) {
-        // The Lua wrapping functions require a bit more of the conversions, like being
-        // able to return them wrapped in an optional, vector, etc, so we need to enhance
-        // the `bake` function to be able to take care of those types if they arise
-        bool hasCustomInMap = false;
-        bool hasCustomInOptional = false;
-        bool hasCustomInVector = false;
-        
-        auto updateState = [&](VariableType* var) {
-            if (!var) {
-                return;
-            }
-            hasCustomInMap |= var->isMapType() && var->containsCustomType();
-            hasCustomInOptional |= var->isOptionalType() && var->containsCustomType();
-            hasCustomInVector |= var->isVectorType() && var->containsCustomType();
-        };
-
-        for (Function* f : code.luaWrapperFunctions) {
-            updateState(f->returnValue);
-
-            for (Variable* var : f->arguments) {
-                updateState(var->type);
-            }
-        }
-
-        // First, we need to define the declarations to handle all of the cases
-        result += hasCustomInMap ? BakeCustomMapDeclaration : "";
-        result += hasCustomInOptional ? BakeCustomOptionalDeclaration : "";
-        result += hasCustomInVector ? BakeCustomVectorDeclaration : "";
-
-        // Then we can define them properly
-        result += hasCustomInMap ? BakeCustomMap : "";
-        result += hasCustomInOptional ? BakeCustomOptional : "";
-        result += hasCustomInVector ? BakeCustomVector : "";
-    }
-
     result += "\n} // namespace codegen\n\n";
     return result;
 }
@@ -669,6 +635,9 @@ std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback
     result += '\n';
     result += FromStringFallback;
     result += '\n';
+    result += BakeEnumFallback;
+    result += '\n';
+
 
     for (Enum* e : code.enums) {
         result += writeRootEnumConverter(e);
@@ -682,6 +651,7 @@ std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback
             result += enumToEnumMapping(e);
         }
     }
+
     result += "\n } // namespace codegen\n\n";
     return result;
 }
@@ -851,20 +821,30 @@ std::string generateLuaFunction(Function* f) {
         else if (f->returnValue->isCustomType()) {
             CustomType* vt = static_cast<CustomType*>(f->returnValue);
             
-            assert(vt->type->type == StackElement::Type::Struct);
-            const Struct* s = static_cast<const Struct*>(vt->type);
+            switch (vt->type->type) {
+                case StackElement::Type::Struct: {
+                    const Struct* s = static_cast<const Struct*>(vt->type);
 
-            result += "            lua_newtable(L);\n";
-            for (Variable* var : s->variables) {
-                result += fmt::format(
-                    "            ghoul::lua::push(L, \"{0}\", std::move(res.{0}));\n",
-                    var->name
-                );
-                result += "            lua_settable(L, -3);\n";
+                    result += "            lua_newtable(L);\n";
+                    for (Variable* var : s->variables) {
+                        result += fmt::format(
+                            "            ghoul::lua::push(L, \"{0}\", std::move(res.{0}));\n",
+                            var->name
+                        );
+                        result += "            lua_settable(L, -3);\n";
+                    }
+                    result += '\n';
+                    result += "            return 1;\n";
+                    break;
+                }
+                case StackElement::Type::Enum: {
+                    result += "            ghoul::lua::push(L, codegen::toString(res));\n";
+                    result += "            return 1;\n";
+                    break;
+                }
+                default:
+                    throw std::logic_error("Missing case label");
             }
-            result += '\n';
-            result += "            return 1;\n";
-
         }
         else {
             result += "            ghoul::lua::push(L, std::move(res));\n";
@@ -931,6 +911,44 @@ std::string generateLuaFunction(Function* f) {
 
 std::string generateLuaWrapperResult(const Code& code) {
     std::string result;
+
+    result += "namespace codegen {\n";
+    // The Lua wrapping functions require a bit more of the conversions, like being
+    // able to return them wrapped in an optional, vector, etc, so we need to enhance
+    // the `bake` function to be able to take care of those types if they arise
+    bool hasCustomInMap = false;
+    bool hasCustomInOptional = false;
+    bool hasCustomInVector = false;
+
+    auto updateState = [&](VariableType* var) {
+        if (!var) {
+            return;
+        }
+        hasCustomInMap |= var->isMapType() && var->containsCustomType();
+        hasCustomInOptional |= var->isOptionalType() && var->containsCustomType();
+        hasCustomInVector |= var->isVectorType() && var->containsCustomType();
+    };
+
+    for (Function* f : code.luaWrapperFunctions) {
+        updateState(f->returnValue);
+
+        for (Variable* var : f->arguments) {
+            updateState(var->type);
+        }
+    }
+
+    // First, we need to define the declarations to handle all of the cases
+    result += hasCustomInMap ? BakeCustomMapDeclaration : "";
+    result += hasCustomInOptional ? BakeCustomOptionalDeclaration : "";
+    result += hasCustomInVector ? BakeCustomVectorDeclaration : "";
+
+    // Then we can define them properly
+    result += hasCustomInMap ? BakeCustomMap : "";
+    result += hasCustomInOptional ? BakeCustomOptional : "";
+    result += hasCustomInVector ? BakeCustomVector : "";
+
+    result += "} // namespace codegen\n\n";
+
     result += "namespace codegen::lua {\n\n";
 
     for (Function* f : code.luaWrapperFunctions) {

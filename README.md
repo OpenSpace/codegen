@@ -91,6 +91,8 @@ struct [[codegen::Dictionary(Name)]] {
 ```
 then there is a function `codegen::map<myspace::External>` available that takes an `Internal` enum and returns the `External` with the same name.  NB: This matching is done purely on a name-to-name basis, so the enum values of `External` and `Internal` have to be **exactly** the same.
 
+If you want to make an `enum class` known to codegen for any other reason (most likely to use it as a parameter in a Lua function, the annotation `[[codegen::enum]]` will cause codegen to inspect the enum, without doing anything with it directly, thus making it possible to use it later in the file.
+
 ### Enum Attributes
  - `[[codegen::key(Name)]]`: Use the "Name" instead of the enum values name
 
