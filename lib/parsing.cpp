@@ -93,8 +93,22 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
     if (p == std::string::npos) {
         return {};
     }
-    const size_t beg = block.find('(', p) + 1;
 
+    const size_t beg = block.find('(', p) + 1;
+    if (beg == 0) {
+        // The find function returned npos, which +1 == 0
+
+        // No parameters are needed, but if there's a ) without a corresponding ( it's bad
+        if (const size_t end = block.find(')');  end != std::string_view::npos) {
+            throw CodegenError(fmt::format(
+                "Attribute parameter parantheses unbalanced\n{}", block
+            ));
+        }
+
+        return {};
+    }
+
+    // If there is a ( then there has to be a ) as well
     std::string_view name = block.substr(p + key.size(), beg - (p + key.size()) - 1);
     if (const size_t end = block.find(')', beg);  end == std::string_view::npos) {
         throw CodegenError(fmt::format(

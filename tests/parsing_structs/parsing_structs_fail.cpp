@@ -212,7 +212,7 @@ struct [[codegen::Dictionary]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
+        CodegenError, Catch::Matchers::Contains("No name specified for root struct")
     );
 }
 

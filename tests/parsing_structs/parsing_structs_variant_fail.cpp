@@ -42,7 +42,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Parsing/Structs/Variant/Error:  Custom substrct") {
+TEST_CASE("Parsing/Structs/Variant/Error:  Custom substruct") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     struct A {
