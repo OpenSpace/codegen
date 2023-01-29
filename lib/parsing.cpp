@@ -1166,6 +1166,16 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             ));
         }
 
+        cursor = content.find_first_not_of(' ', cursor);
+        if (size_t beg = content.substr(cursor).find("[[codegen::");
+            beg != std::string_view::npos)
+        {
+            Variable::Attributes attr = parseAttributes(content.substr(cursor));
+            size_t end = content.substr(cursor).find("]]");
+            cursor += (end - beg) + 3;  // 2 -> ]]
+            cursor = content.find_first_not_of(' ', cursor);
+        }
+
         {
             std::pair<size_t, size_t> l = eatName(cursor);
             v->name = std::string(content.substr(l.first, l.second - l.first));

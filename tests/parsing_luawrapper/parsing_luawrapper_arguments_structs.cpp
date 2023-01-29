@@ -114,12 +114,26 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as single parameter") {
         CHECK(f->documentation == "");
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
-        CHECK(f->arguments[0]->name == "p");
-        REQUIRE(f->arguments[0]->type->isCustomType());
-        CustomType* t = static_cast<CustomType*>(f->arguments[0]->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isCustomType());
+        CustomType* t = static_cast<CustomType*>(v->type);
         REQUIRE(t);
         REQUIRE(t->type);
         CHECK(t->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -166,9 +180,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional single parameter") 
         CHECK(f->documentation == "");
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
-        CHECK(f->arguments[0]->name == "p");
-        REQUIRE(f->arguments[0]->type->isOptionalType());
-        OptionalType* t = static_cast<OptionalType*>(f->arguments[0]->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isOptionalType());
+        OptionalType* t = static_cast<OptionalType*>(v->type);
         REQUIRE(t);
 
         REQUIRE(t->type->isCustomType());
@@ -176,6 +192,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional single parameter") 
         REQUIRE(tt);
         REQUIRE(tt->type);
         CHECK(tt->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -224,21 +252,48 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter") {
         REQUIRE(f->arguments.size() == 2);
 
         {
-            CHECK(f->arguments[0]->name == "p");
-            REQUIRE(f->arguments[0]->type->isCustomType());
-            CustomType* t = static_cast<CustomType*>(f->arguments[0]->type);
-            REQUIRE(t);
-            REQUIRE(t->type);
-            CHECK(t->type->name == "Parameter");
-        }
-        {
-            CHECK(f->arguments[1]->name == "q");
-            REQUIRE(f->arguments[1]->type->isCustomType());
-            CustomType* t = static_cast<CustomType*>(f->arguments[1]->type);
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "p");
+            REQUIRE(v->type->isCustomType());
+            CustomType* t = static_cast<CustomType*>(v->type);
             REQUIRE(t);
             REQUIRE(t->type);
             CHECK(t->type->name == "Parameter");
 
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+        {
+            Variable* v = f->arguments[1];
+            REQUIRE(v);
+            CHECK(v->name == "q");
+            REQUIRE(v->type->isCustomType());
+            CustomType* t = static_cast<CustomType*>(v->type);
+            REQUIRE(t);
+            REQUIRE(t->type);
+            CHECK(t->type->name == "Parameter");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
         }
     }
 
@@ -288,17 +343,33 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter w/ option
         REQUIRE(f->arguments.size() == 2);
 
         {
-            CHECK(f->arguments[0]->name == "p");
-            REQUIRE(f->arguments[0]->type->isCustomType());
-            CustomType* t = static_cast<CustomType*>(f->arguments[0]->type);
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "p");
+            REQUIRE(v->type->isCustomType());
+            CustomType* t = static_cast<CustomType*>(v->type);
             REQUIRE(t);
             REQUIRE(t->type);
             CHECK(t->type->name == "Parameter");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
         }
         {
-            CHECK(f->arguments[1]->name == "q");
-            REQUIRE(f->arguments[1]->type->isOptionalType());
-            OptionalType* t = static_cast<OptionalType*>(f->arguments[1]->type);
+            Variable* v = f->arguments[1];
+            REQUIRE(v);
+            CHECK(v->name == "q");
+            REQUIRE(v->type->isOptionalType());
+            OptionalType* t = static_cast<OptionalType*>(v->type);
             REQUIRE(t);
 
             REQUIRE(t->type->isCustomType());
@@ -307,6 +378,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter w/ option
             REQUIRE(tt->type);
             CHECK(tt->type->name == "Parameter");
 
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
         }
     }
 
@@ -354,14 +437,28 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as parameter vector") {
         CHECK(f->documentation == "");
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
-        CHECK(f->arguments[0]->name == "p");
-        REQUIRE(f->arguments[0]->type->isVectorType());
-        VectorType* t = static_cast<VectorType*>(f->arguments[0]->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isVectorType());
+        VectorType* t = static_cast<VectorType*>(v->type);
         REQUIRE(t->type->isCustomType());
         CustomType* tt = static_cast<CustomType*>(t->type);
         REQUIRE(tt);
         REQUIRE(tt->type);
         CHECK(tt->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -408,9 +505,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional parameter vector") 
         CHECK(f->documentation == "");
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
-        CHECK(f->arguments[0]->name == "p");
-        REQUIRE(f->arguments[0]->type->isOptionalType());
-        OptionalType* t = static_cast<OptionalType*>(f->arguments[0]->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isOptionalType());
+        OptionalType* t = static_cast<OptionalType*>(v->type);
         REQUIRE(t->type->isVectorType());
         VectorType* tt = static_cast<VectorType*>(t->type);
         REQUIRE(tt->type->isCustomType());
@@ -418,6 +517,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional parameter vector") 
         REQUIRE(ttt);
         REQUIRE(ttt->type);
         CHECK(ttt->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -464,15 +575,29 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map") {
         CHECK(f->documentation == "");
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
-        CHECK(f->arguments[0]->name == "p");
-        REQUIRE(f->arguments[0]->type->isMapType());
-        MapType* t = static_cast<MapType*>(f->arguments[0]->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isMapType());
+        MapType* t = static_cast<MapType*>(v->type);
         CHECK(generateTypename(t->keyType) == "std::string");
         REQUIRE(t->valueType->isCustomType());
         CustomType* tt = static_cast<CustomType*>(t->valueType);
         REQUIRE(tt);
         REQUIRE(tt->type);
         CHECK(tt->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -501,14 +626,62 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as return value") {
 
         CHECK(s->name == "Parameter");
         REQUIRE(s->variables.size() == 3);
-        CHECK(s->variables[0]->name == "a");
-        CHECK(generateTypename(s->variables[0]->type) == "int");
+        {
+            Variable* v = s->variables[0];
+            REQUIRE(v);
+            CHECK(v->name == "a");
+            CHECK(generateTypename(v->type) == "int");
 
-        CHECK(s->variables[1]->name == "b");
-        CHECK(generateTypename(s->variables[1]->type) == "float");
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
 
-        CHECK(s->variables[2]->name == "c");
-        CHECK(generateTypename(s->variables[2]->type) == "std::string");
+        {
+            Variable* v = s->variables[1];
+            REQUIRE(v);
+            CHECK(v->name == "b");
+            CHECK(generateTypename(v->type) == "float");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+
+        {
+            Variable* v = s->variables[2];
+            REQUIRE(v);
+            CHECK(v->name == "c");
+            CHECK(generateTypename(v->type) == "std::string");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
     }
     {
         REQUIRE(code.luaWrapperFunctions.size() == 1);

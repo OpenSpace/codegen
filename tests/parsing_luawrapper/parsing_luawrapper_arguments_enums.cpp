@@ -104,6 +104,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as single parameter") {
         CustomType* t = static_cast<CustomType*>(v->type);
         CHECK(t->name == "Enum");
         REQUIRE(t->type->type == StackElement::Type::Enum);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -149,6 +161,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as double parameter") {
             CustomType* t = static_cast<CustomType*>(v->type);
             CHECK(t->name == "Enum");
             REQUIRE(t->type->type == StackElement::Type::Enum);
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
         }
         {
             Variable* v = f->arguments[1];
@@ -157,6 +181,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as double parameter") {
             CustomType* t = static_cast<CustomType*>(v->type);
             CHECK(t->name == "Enum");
             REQUIRE(t->type->type == StackElement::Type::Enum);
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
         }
     }
 
@@ -204,6 +240,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as optional parameter") {
         CustomType* tt = static_cast<CustomType*>(t->type);
         CHECK(tt->name == "Enum");
         REQUIRE(tt->type->type == StackElement::Type::Enum);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -250,6 +298,18 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as vector parameter") {
         CustomType* tt = static_cast<CustomType*>(t->type);
         CHECK(tt->name == "Enum");
         REQUIRE(tt->type->type == StackElement::Type::Enum);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);

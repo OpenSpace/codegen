@@ -74,6 +74,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -105,6 +117,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
         OptionalType* ot = static_cast<OptionalType*>(v->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -135,6 +159,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -143,6 +179,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -173,6 +221,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -183,6 +243,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -213,6 +285,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -223,6 +307,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -255,6 +351,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -263,6 +371,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[2];
@@ -270,6 +390,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
         CHECK(v->name == "arg2");
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Double);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -302,6 +434,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -310,6 +454,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[2];
@@ -320,6 +476,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -352,6 +520,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[1];
@@ -360,6 +540,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
         Variable* v = f->arguments[2];
@@ -370,6 +562,18 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
         REQUIRE(ot->type);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Double);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -693,32 +897,68 @@ float arg2,
 
     REQUIRE(f->arguments.size() == 3);
     {
-        Variable* var = f->arguments[0];
-        REQUIRE(var);
-        CHECK(var->name == "arg1");
-        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(var->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
-        Variable* var = f->arguments[1];
-        REQUIRE(var);
-        CHECK(var->name == "arg2");
-        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(var->type);
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Float);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
-        Variable* var = f->arguments[2];
-        REQUIRE(var);
-        CHECK(var->name == "arg3");
-        REQUIRE(var->type->tag == VariableType::Tag::OptionalType);
-        OptionalType* ot = static_cast<OptionalType*>(var->type);
+        Variable* v = f->arguments[2];
+        REQUIRE(v);
+        CHECK(v->name == "arg3");
+        REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
         REQUIRE(ot->defaultArgument.has_value());
         CHECK(*ot->defaultArgument == "\"abc\"");
         REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
@@ -808,20 +1048,44 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline tuple return value") {
 
     REQUIRE(f->arguments.size() == 2);
     {
-        Variable* var = f->arguments[0];
-        REQUIRE(var);
-        CHECK(var->name == "arg1");
-        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(var->type);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg1");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::String);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
     {
-        Variable* var = f->arguments[1];
-        REQUIRE(var);
-        CHECK(var->name == "arg2");
-        REQUIRE(var->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(var->type);
+        Variable* v = f->arguments[1];
+        REQUIRE(v);
+        CHECK(v->name == "arg2");
+        REQUIRE(v->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Int);
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
     }
 
     std::string r = generateResult(code);
