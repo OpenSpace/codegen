@@ -74,6 +74,36 @@ bool VariableType::isTupleType() const { return tag == Tag::TupleType; }
 bool VariableType::isVectorType() const { return tag == Tag::VectorType; }
 bool VariableType::isCustomType() const { return tag == Tag::CustomType; }
 
+bool VariableType::containsCustomType() const {
+    switch (tag) {
+        case Tag::BasicType:
+            return false;
+        case Tag::MapType:
+            return static_cast<const MapType*>(this)->keyType->containsCustomType() ||
+                   static_cast<const MapType*>(this)->valueType->containsCustomType();
+        case Tag::OptionalType:
+            return static_cast<const OptionalType*>(this)->type->containsCustomType();
+        case Tag::VariantType:
+            return std::any_of(
+                static_cast<const VariantType*>(this)->types.begin(),
+                static_cast<const VariantType*>(this)->types.end(),
+                std::mem_fn(&VariableType::containsCustomType)
+            );
+        case Tag::TupleType:
+            return std::any_of(
+                static_cast<const TupleType*>(this)->types.begin(),
+                static_cast<const TupleType*>(this)->types.end(),
+                std::mem_fn(&VariableType::containsCustomType)
+            );
+        case Tag::VectorType:
+            return static_cast<const VectorType*>(this)->type->containsCustomType();
+        case Tag::CustomType:
+            return true;
+    }
+
+    throw std::logic_error("Missing case label");
+}
+
 bool operator==(const VariableType& lhs, const VariableType& rhs) {
     if (lhs.tag != rhs.tag) {
         return false;
@@ -383,18 +413,22 @@ VariableType* parseType(std::string_view type, Struct* context) {
     if (!t) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
         // visible in the variable's context
+        if (!context) {
+            throw CodegenError(fmt::format(
+                "Type detected that codegen doesn't know how to handle: '{}'", type
+            ));
+        }
+
         CustomType* ct = new CustomType;
         ct->tag = VariableType::Tag::CustomType;
         ct->name = std::string(type);
-        if (context) {
-            const StackElement* el = resolveType(context, type);
-            if (!el) {
-                throw CodegenError(fmt::format(
-                    "Type detected that codegen doesn't know how to handle: {}", type
-                ));
-            }
-            ct->type = el;
+        const StackElement* el = resolveType(context, type);
+        if (!el) {
+            throw CodegenError(fmt::format(
+                "Type detected that codegen doesn't know how to handle: '{}'", type
+            ));
         }
+        ct->type = el;
         t = ct;
     }
     assert(t);
@@ -442,6 +476,10 @@ std::string generateTypename(BasicType::Type type) {
     throw std::logic_error("Missing case label");
 }
 
+std::string generateLuaExtractionTypename(BasicType::Type type) {
+    return generateTypename(type);
+}
+
 std::string generateDescriptiveTypename(BasicType::Type type) {
     switch (type) {
         case BasicType::Type::Bool:       return "Boolean";
@@ -487,6 +525,10 @@ std::string generateTypename(const BasicType* type) {
     return generateTypename(type->type);
 }
 
+std::string generateLuaExtractionTypename(const BasicType* type) {
+    return generateLuaExtractionTypename(type->type);
+}
+
 std::string generateDescriptiveTypename(const BasicType* type) {
     return generateDescriptiveTypename(type->type);
 }
@@ -494,6 +536,12 @@ std::string generateDescriptiveTypename(const BasicType* type) {
 std::string generateTypename(const MapType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->keyType, fullyQualified);
     std::string t2 = generateTypename(type->valueType, fullyQualified);
+    return fmt::format("std::map<{}, {}>", t1, t2);
+}
+
+std::string generateLuaExtractionTypename(const MapType* type) {
+    std::string t1 = generateLuaExtractionTypename(type->keyType);
+    std::string t2 = generateLuaExtractionTypename(type->valueType);
     return fmt::format("std::map<{}, {}>", t1, t2);
 }
 
@@ -505,6 +553,11 @@ std::string generateDescriptiveTypename(const MapType* type) {
 
 std::string generateTypename(const OptionalType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
+    return fmt::format("std::optional<{}>", t1);
+}
+
+std::string generateLuaExtractionTypename(const OptionalType* type) {
+    std::string t1 = generateLuaExtractionTypename(type->type);
     return fmt::format("std::optional<{}>", t1);
 }
 
@@ -520,6 +573,19 @@ std::string generateTypename(const VariantType* type, bool fullyQualified) {
         res += ", ";
     }
     
+    res.pop_back();   // Remove the final ' '
+    res.back() = '>'; // Replace the final , with the >
+
+    return res;
+}
+
+std::string generateLuaExtractionTypename(const VariantType* type) {
+    std::string res = "std::variant<";
+    for (VariableType* v : type->types) {
+        res += generateLuaExtractionTypename(v);
+        res += ", ";
+    }
+
     res.pop_back();   // Remove the final ' '
     res.back() = '>'; // Replace the final , with the >
 
@@ -551,6 +617,19 @@ std::string generateTypename(const TupleType* type, bool fullyQualified) {
     return res;
 }
 
+std::string generateLuaExtractionTypename(const TupleType* type) {
+    std::string res = "std::tuple<";
+    for (VariableType* v : type->types) {
+        res += generateLuaExtractionTypename(v);
+        res += ", ";
+    }
+
+    res.pop_back();   // Remove the final ' '
+    res.back() = '>'; // Replace the final , with the >
+
+    return res;
+}
+
 std::string generateDescriptiveTypename(const TupleType* type) {
     std::string res;
     for (size_t i = 0; i < type->types.size(); i += 1) {
@@ -565,6 +644,11 @@ std::string generateDescriptiveTypename(const TupleType* type) {
 
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
+    return fmt::format("std::vector<{}>", t1);
+}
+
+std::string generateLuaExtractionTypename(const VectorType* type) {
+    std::string t1 = generateLuaExtractionTypename(type->type);
     return fmt::format("std::vector<{}>", t1);
 }
 
@@ -583,6 +667,10 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
             type->name;        // If we don't have a type, we failed where no context for
                                // this custom type was available
     }
+}
+
+std::string generateLuaExtractionTypename(const CustomType* type) {
+    return "ghoul::Dictionary";
 }
 
 std::string generateDescriptiveTypename(const CustomType* type) {
@@ -608,6 +696,28 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
             return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
             return generateTypename(static_cast<const CustomType*>(type), fq);
+    }
+    throw std::logic_error("Missing case label");
+}
+
+std::string generateLuaExtractionTypename(const VariableType* type) {
+    assert(type);
+
+    switch (type->tag) {
+        case VariableType::Tag::BasicType:
+            return generateLuaExtractionTypename(static_cast<const BasicType*>(type));
+        case VariableType::Tag::MapType:
+            return generateLuaExtractionTypename(static_cast<const MapType*>(type));
+        case VariableType::Tag::OptionalType:
+            return generateLuaExtractionTypename(static_cast<const OptionalType*>(type));
+        case VariableType::Tag::VariantType:
+            return generateLuaExtractionTypename(static_cast<const VariantType*>(type));
+        case VariableType::Tag::TupleType:
+            return generateLuaExtractionTypename(static_cast<const TupleType*>(type));
+        case VariableType::Tag::VectorType:
+            return generateLuaExtractionTypename(static_cast<const VectorType*>(type));
+        case VariableType::Tag::CustomType:
+            return generateLuaExtractionTypename(static_cast<const CustomType*>(type));
     }
     throw std::logic_error("Missing case label");
 }

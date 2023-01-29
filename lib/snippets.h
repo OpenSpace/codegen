@@ -51,6 +51,52 @@ template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     {0} res;
 )";
 
+    constexpr std::string_view BakeCustomMapDeclaration = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::map<std::string, U>& v);
+)";
+
+    constexpr std::string_view BakeCustomOptionalDeclaration = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::optional<U>& v);
+)";
+
+    constexpr std::string_view BakeCustomVectorDeclaration = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::vector<U>& v);
+)";
+
+    constexpr std::string_view BakeCustomMap = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::map<std::string, U>& v) {
+    T res;
+    for (auto [k, v] : v) {
+        typename T::mapped_type r = bake<typename T::mapped_type>(std::move(v));
+        res[std::move(k)] = r;
+    }
+    return res;
+}
+)";
+
+    constexpr std::string_view BakeCustomOptional = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::optional<U>& v) {
+    if (v.has_value()) {
+        return bake<typename T::value_type>(*v);
+    }
+    else {
+        return std::nullopt;
+    }
+}
+)";
+
+    constexpr std::string_view BakeCustomVector = R"(
+template <typename T, typename U> [[maybe_unused]] T bake(const std::vector<U>& v) {
+    T res;
+    res.reserve(v.size());
+    for (const U& d : v) {
+        typename T::value_type r = bake<typename T::value_type>(d);
+        res.push_back(r);
+    }
+    return res;
+}
+)";
+
     constexpr std::string_view DocumentationPreamble = R"(
 template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std::string id, openspace::documentation::Documentation parentDoc) {{
     using namespace openspace::documentation;

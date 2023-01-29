@@ -625,6 +625,42 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
         }
     }
 
+    if (!code.luaWrapperFunctions.empty()) {
+        // The Lua wrapping functions require a bit more of the conversions, like being
+        // able to return them wrapped in an optional, vector, etc, so we need to enhance
+        // the `bake` function to be able to take care of those types if they arise
+        bool hasCustomInMap = false;
+        bool hasCustomInOptional = false;
+        bool hasCustomInVector = false;
+        
+        auto updateState = [&](VariableType* var) {
+            if (!var) {
+                return;
+            }
+            hasCustomInMap |= var->isMapType() && var->containsCustomType();
+            hasCustomInOptional |= var->isOptionalType() && var->containsCustomType();
+            hasCustomInVector |= var->isVectorType() && var->containsCustomType();
+        };
+
+        for (Function* f : code.luaWrapperFunctions) {
+            updateState(f->returnValue);
+
+            for (Variable* var : f->arguments) {
+                updateState(var->type);
+            }
+        }
+
+        // First, we need to define the declarations to handle all of the cases
+        result += hasCustomInMap ? BakeCustomMapDeclaration : "";
+        result += hasCustomInOptional ? BakeCustomOptionalDeclaration : "";
+        result += hasCustomInVector ? BakeCustomVectorDeclaration : "";
+
+        // Then we can define them properly
+        result += hasCustomInMap ? BakeCustomMap : "";
+        result += hasCustomInOptional ? BakeCustomOptional : "";
+        result += hasCustomInVector ? BakeCustomVector : "";
+    }
+
     result += "\n} // namespace codegen\n\n";
     return result;
 }
@@ -699,14 +735,17 @@ std::string generateLuaFunction(Function* f) {
         }
     }
 
+    // Need to handle optional arguments separately from the regular ones as they have to
+    // have an extra check to see if the value exists
     while (!hasOnlyOptional &&
            !arguments.empty() && arguments.front()->type->isOptionalType())
     {
         Variable* var = arguments.front();
         OptionalType* ot = static_cast<OptionalType*>(var->type);
+
         result += fmt::format(
             LuaWrapperOptionalTypeExtraction,
-            generateTypename(ot), var->name, generateTypename(ot->type)
+            generateTypename(ot), var->name, generateLuaExtractionTypename(ot->type)
         );
 
         // Peel off the argument that we just handled
@@ -718,7 +757,7 @@ std::string generateLuaFunction(Function* f) {
         std::string types;
         for (Variable* var : arguments) {
             names += var->name + ", ";
-            types += generateTypename(var->type) + ", ";
+            types += generateLuaExtractionTypename(var->type) + ", ";
         }
         names = names.substr(0, names.size() - 2);
         types = types.substr(0, types.size() - 2);
@@ -767,6 +806,14 @@ std::string generateLuaFunction(Function* f) {
                     var->name, *ot->defaultArgument
                 );
             }
+            else if (var->type->containsCustomType()) {
+                // We have extracted this type as a ghoul::Dictionary previously, and need
+                // to bake it into the correct type here instead
+                result += fmt::format(
+                    "codegen::bake<{0}>({1})",
+                    generateTypename(var->type), var->name
+                );
+            }
             else {
                 result += fmt::format("std::move({})", var->name);
             }
@@ -803,6 +850,24 @@ std::string generateLuaFunction(Function* f) {
                 result += fmt::format(LuaWrapperPushVariant, generateTypename(v));
             }
             result += "            return 1;\n";
+        }
+        else if (f->returnValue->isCustomType()) {
+            CustomType* vt = static_cast<CustomType*>(f->returnValue);
+            
+            assert(vt->type->type == StackElement::Type::Struct);
+            const Struct* s = static_cast<const Struct*>(vt->type);
+
+            result += "            lua_newtable(L);\n";
+            for (Variable* var : s->variables) {
+                result += fmt::format(
+                    "            ghoul::lua::push(L, \"{0}\", std::move(res.{0}));\n",
+                    var->name
+                );
+                result += "            lua_settable(L, -3);\n";
+            }
+            result += '\n';
+            result += "            return 1;\n";
+
         }
         else {
             result += "            ghoul::lua::push(L, std::move(res));\n";

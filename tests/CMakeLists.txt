@@ -31,6 +31,7 @@ add_executable(
   execution_enums/execution_enums_multiple.cpp
   execution_enums/execution_enums_keys.cpp
   execution_luawrapper/execution_luawrapper_arguments.cpp
+  execution_luawrapper/execution_luawrapper_arguments_structs.cpp
   execution_luawrapper/execution_luawrapper_basic.cpp
   execution_luawrapper/execution_luawrapper_comments.cpp
   execution_luawrapper/execution_luawrapper_return.cpp
@@ -58,6 +59,7 @@ add_executable(
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp
   parsing_luawrapper/parsing_luawrapper_arguments.cpp
+  parsing_luawrapper/parsing_luawrapper_arguments_structs.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_luawrapper/parsing_luawrapper_comments.cpp
   parsing_luawrapper/parsing_luawrapper_fail.cpp

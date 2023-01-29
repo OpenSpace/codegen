@@ -111,6 +111,7 @@ assert(codegen::toString(TestEnum::Value2) == "Different key");
 
 ## Lua Wrapping functions
 The `codegen::luawrap` attribute can take an optional argument that overwrites the default behavior of using the function name as the exported Lua name.
+
 ```cpp
 /**
  * Some documentation at the top

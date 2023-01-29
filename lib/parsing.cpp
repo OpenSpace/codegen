@@ -835,7 +835,9 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     return rootEnum;
 }
 
-Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
+Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
+                            std::vector<Struct*> structs, std::vector<Enum*> enums)
+{
     std::string_view content = strip(code.substr(begin, end));
     assert(!content.empty());
 
@@ -1054,13 +1056,28 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     content.remove_prefix(precursor);
     size_t cursor = 0;
 
+
+    // This pseudo-struct holds all of the root elements that have been declared prior to
+    // this function. We need to pass this as a context into the parseType function in
+    // order to use custom structs and enums as parameters or return values as we need to
+    // resolve those types locally
+    Struct* root = nullptr;
+    if (!structs.empty() || !enums.empty()) {
+        root = new Struct;
+        root->name = "_root";
+
+        root->children.insert(root->children.end(), structs.begin(), structs.end());
+        root->children.insert(root->children.end(), enums.begin(), enums.end());
+    }
+
+
     // Find and parse the return value
     std::pair<size_t, size_t> retValueLoc = eatType(cursor);
     std::string_view returnValueStr = content.substr(
         retValueLoc.first,
         retValueLoc.second
     );
-    f->returnValue = parseType(returnValueStr, nullptr);
+    f->returnValue = parseType(returnValueStr, root);
 
     //
     // Extract the function name
@@ -1088,6 +1105,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
     if (f->luaName.empty()) {
         f->luaName = f->functionName;
     }
+
 
     // Parse the parameters
     while (true) {
@@ -1123,7 +1141,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         }
 
         Variable* v = new Variable;
-        v->type = parseType(typeStr, nullptr);
+        v->type = parseType(typeStr, root);
 
         if (v->type->isTupleType()) {
             throw CodegenError(fmt::format(
@@ -1242,7 +1260,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
         SecondOptional
     };
     Phase phase = Phase::Initial;
-    //bool isInOptionalPhase = false;
     for (size_t i = 0; i < f->arguments.size(); i +=1) {
         Variable* var = f->arguments[i];
         bool isOptional = var->type->isOptionalType();
@@ -1287,23 +1304,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                     ));
                 }
                 break;
-        }
-    }
-
-    // Verify that we haven't received any custom types for either the return value or any
-    // of the arguments as we don't currently know how to handle them
-    if (f->returnValue && f->returnValue->isCustomType()) {
-        throw CodegenError(fmt::format(
-            "Illegal type '{}' for return value of function '{}' found",
-            static_cast<CustomType*>(f->returnValue)->name, f->functionName
-        ));
-    }
-    for (Variable* var : f->arguments) {
-        if (var->type->isCustomType()) {
-            throw CodegenError(fmt::format(
-                "Illegal type '{}' for argument '{}' value of function '{}' found",
-                static_cast<CustomType*>(var->type)->name, var->name, f->functionName
-            ));
         }
     }
 
@@ -1373,7 +1373,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end) {
                 Function* f = parseRootFunction(
                     code,
                     next.cursors.first,
-                    next.cursors.second
+                    next.cursors.second,
+                    res.structs,
+                    res.enums
                 );
                 assert(f);
 

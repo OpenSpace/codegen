@@ -101,6 +101,8 @@ struct VariableType {
     bool isVectorType() const;
     bool isCustomType() const;
 
+    bool containsCustomType() const;
+
     enum class Tag {
         BasicType,
         MapType,
@@ -117,6 +119,7 @@ bool operator==(const VariableType& lhs, const VariableType& rhs);
 
 VariableType* parseType(std::string_view type, Struct* s);
 std::string generateTypename(const VariableType* type, bool fullyQualified = false);
+std::string generateLuaExtractionTypename(const VariableType* type);
 std::string generateDescriptiveTypename(const VariableType* type);
 
 struct BasicType : public VariableType {

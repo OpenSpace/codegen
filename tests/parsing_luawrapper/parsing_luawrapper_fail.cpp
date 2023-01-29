@@ -52,7 +52,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type") {
         generateResult(parse(S)),
         CodegenError,
         CM::Contains(
-            "Illegal type 'std::chrono::time_point' for return value of function 'foo'"
+            "Type detected that codegen doesn't know how to handle: 'std::chrono::time_point'"
         )
     );
 }
@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
         generateResult(parse(S)),
         CodegenError,
         CM::Contains(
-            "Illegal type 'std::list<int>' for argument 'abc' value of function 'foo'"
+            "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
         )
     );
 }
@@ -82,7 +82,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type second argument") 
         generateResult(parse(S)),
         CodegenError,
         CM::Contains(
-            "Illegal type 'std::list<int>' for argument 'def' value of function 'foo'"
+            "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
         )
     );
 }
@@ -148,7 +148,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+        CM::Contains("Type detected that codegen doesn't know how to handle: 'unsigned int'")
     );
 }
 
@@ -161,7 +161,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Unsupported type 'unsigned int' found in variant list")
+        CM::Contains("Type detected that codegen doesn't know how to handle: 'unsigned int'")
     );
 }
 
