@@ -28,9 +28,125 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>") {
     constexpr const char Source[] = R"(
-    [[codegen::luawrap]] std::tuple<bool> foo() {
+    [[codegen::luawrap]] void func(std::variant<bool, int> arg) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->functionName == "func");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 1);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg");
+        REQUIRE(v->type);
+        REQUIRE(v->type->tag == VariableType::Tag::VariantType);
+        VariantType* ot = static_cast<VariantType*>(v->type);
+        REQUIRE(ot->types.size() == 2);
+        {
+            VariableType* t = ot->types[0];
+            REQUIRE(t->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(t);
+            REQUIRE(bt->type == BasicType::Type::Bool);
+        }
+        {
+            VariableType* t = ot->types[1];
+            REQUIRE(t->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(t);
+            REQUIRE(bt->type == BasicType::Type::Int);
+        }
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<double, float, string>") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void func(std::variant<double, float, std::string> arg) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions.front();
+    REQUIRE(f);
+
+    CHECK(f->functionName == "func");
+    CHECK(f->documentation == "");
+    CHECK(f->returnValue == nullptr);
+    REQUIRE(f->arguments.size() == 1);
+    {
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "arg");
+        REQUIRE(v->type);
+        REQUIRE(v->type->tag == VariableType::Tag::VariantType);
+        VariantType* ot = static_cast<VariantType*>(v->type);
+        REQUIRE(ot->types.size() == 3);
+        {
+            VariableType* t = ot->types[0];
+            REQUIRE(t->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(t);
+            REQUIRE(bt->type == BasicType::Type::Double);
+        }
+        {
+            VariableType* t = ot->types[1];
+            REQUIRE(t->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(t);
+            REQUIRE(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* t = ot->types[2];
+            REQUIRE(t->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(t);
+            REQUIRE(bt->type == BasicType::Type::String);
+        }
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Return:  variant bool") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] std::variant<bool> foo() {
         return true;
     }
 )";
@@ -46,8 +162,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
-    CHECK(rt->tag == VariableType::Tag::TupleType);
-    TupleType* vt = static_cast<TupleType*>(rt);
+    CHECK(rt->tag == VariableType::Tag::VariantType);
+    VariantType* vt = static_cast<VariantType*>(rt);
     REQUIRE(vt->types.size() == 1);
     VariableType* v = vt->types[0];
     REQUIRE(v);
@@ -59,9 +175,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
+TEST_CASE("Parsing/LuaWrapper/Return:  variant int double") {
     constexpr const char Source[] = R"(
-    [[codegen::luawrap]] std::tuple<int, double> foo() {
+    [[codegen::luawrap]] std::variant<int, double> foo() {
         return 1;
     }
 )";
@@ -77,8 +193,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
-    CHECK(rt->tag == VariableType::Tag::TupleType);
-    TupleType* vt = static_cast<TupleType*>(rt);
+    CHECK(rt->tag == VariableType::Tag::VariantType);
+    VariantType* vt = static_cast<VariantType*>(rt);
     REQUIRE(vt->types.size() == 2);
     {
         VariableType* v = vt->types[0];
@@ -99,9 +215,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path") {
+TEST_CASE("Parsing/LuaWrapper/Return:  variant float string path") {
     constexpr const char Source[] = R"(
-    [[codegen::luawrap]] std::tuple<float, std::string, std::filesystem::path> foo() {
+    [[codegen::luawrap]] std::variant<float, std::string, std::filesystem::path> foo() {
         return 1.f;
     }
 )";
@@ -117,8 +233,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path") {
     CHECK(f->documentation == "");
     CHECK(f->arguments.size() == 0);
     VariableType* rt = f->returnValue;
-    CHECK(rt->tag == VariableType::Tag::TupleType);
-    TupleType* vt = static_cast<TupleType*>(rt);
+    CHECK(rt->tag == VariableType::Tag::VariantType);
+    VariantType* vt = static_cast<VariantType*>(rt);
     REQUIRE(vt->types.size() == 3);
     {
         VariableType* v = vt->types[0];

@@ -59,13 +59,48 @@ add_executable(
   parsing_enums/parsing_enums_mapping.cpp
   parsing_enums/parsing_enums_multiple.cpp
   parsing_enums/parsing_enums_keys.cpp
-  parsing_luawrapper/parsing_luawrapper_arguments.cpp
-  parsing_luawrapper/parsing_luawrapper_arguments_enums.cpp
-  parsing_luawrapper/parsing_luawrapper_arguments_structs.cpp
+  parsing_luawrapper/parsing_luawrapper_types_bool.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dictionary.cpp
+  parsing_luawrapper/parsing_luawrapper_types_double.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat2x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat2x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat2x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat3x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat3x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat3x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat4x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat4x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dmat4x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dvec2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dvec3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_dvec4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_int.cpp
+  parsing_luawrapper/parsing_luawrapper_types_ivec2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_ivec3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_ivec4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_float.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat2x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat2x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat2x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat3x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat3x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat3x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat4x2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat4x3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_mat4x4.cpp
+  parsing_luawrapper/parsing_luawrapper_types_void.cpp
+  parsing_luawrapper/parsing_luawrapper_types_enums.cpp
+  parsing_luawrapper/parsing_luawrapper_types_path.cpp
+  parsing_luawrapper/parsing_luawrapper_types_string.cpp
+  parsing_luawrapper/parsing_luawrapper_types_structs.cpp
+  parsing_luawrapper/parsing_luawrapper_types_tuple.cpp
+  parsing_luawrapper/parsing_luawrapper_types_variant.cpp
+  parsing_luawrapper/parsing_luawrapper_types_vec2.cpp
+  parsing_luawrapper/parsing_luawrapper_types_vec3.cpp
+  parsing_luawrapper/parsing_luawrapper_types_vec4.cpp
   parsing_luawrapper/parsing_luawrapper_basic.cpp
   parsing_luawrapper/parsing_luawrapper_comments.cpp
   parsing_luawrapper/parsing_luawrapper_fail.cpp
-  parsing_luawrapper/parsing_luawrapper_return.cpp
   parsing_mixed/parsing_mixed_basic.cpp
   parsing_mixed/parsing_multiple_dictionaries.cpp
   parsing_structs/parsing_structs_attributes_bool.cpp
@@ -126,7 +161,7 @@ add_executable(
 target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
 target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-module-collection)
 if (MSVC)
-  target_compile_options(codegentest PRIVATE "/wd5030" "/bigobj")
+  target_compile_options(codegentest PRIVATE "/MP" "/wd5030" "/bigobj")
 else ()
   target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
 endif ()
