@@ -196,10 +196,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void") {
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -215,15 +215,15 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
     CHECK(func.arguments[0].type == "Parameter");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ghoul::lua::push(state, p);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -241,21 +241,21 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
     CHECK(func.arguments[1].type == "Parameter?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ghoul::lua::push(state, true, p);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     ghoul::lua::push(state, false);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -271,19 +271,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters") {
     CHECK(func.arguments[1].type == "Parameter");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ghoul::Dictionary q;
     q.setValue("A", 4);
     q.setValue("B", 5.5);
-    q.setValue("C", std::string("6.6"));
+    q.setValue("C", "6.6");
     ghoul::lua::push(state, p, q);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -303,24 +303,23 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") 
     CHECK(func.arguments[2].type == "Parameter?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ghoul::Dictionary q;
     q.setValue("A", 4);
     q.setValue("B", 5.5);
-    q.setValue("C", std::string("6.6"));
+    q.setValue("C", "6.6");
     ghoul::lua::push(state, true, p, q);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     ghoul::lua::push(state, false, p);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -338,6 +337,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
     CHECK(func.arguments[1].type == "Parameter[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -345,35 +345,34 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ps.push_back(p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", std::string("6.6"));
+    p2.setValue("C", "6.6");
     ps.push_back(p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", std::string("9.9"));
+    p3.setValue("C", "9.9");
     ps.push_back(p3);
     ghoul::lua::push(state, 3, ps);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     ps.clear();
     ps.push_back(p);
     ghoul::lua::push(state, 1, ps);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
 
     ps.clear();
     ghoul::lua::push(state, 0, ps);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -391,6 +390,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
     CHECK(func.arguments[2].type == "Parameter[]?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -398,39 +398,38 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ps.push_back(p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", std::string("6.6"));
+    p2.setValue("C", "6.6");
     ps.push_back(p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", std::string("9.9"));
+    p3.setValue("C", "9.9");
     ps.push_back(p3);
     ghoul::lua::push(state, true, 3, ps);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     ps.clear();
     ps.push_back(p);
     ghoul::lua::push(state, true, 1, ps);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
 
     ps.clear();
     ghoul::lua::push(state, true, 0, ps);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
 
     ghoul::lua::push(state, false);
-    REQUIRE(func.function);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -444,6 +443,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
     CHECK(func.arguments[0].type == "String -> Parameter");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -452,23 +452,22 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", std::string("3.3"));
+    p.setValue("C", "3.3");
     ps.setValue("first", p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", std::string("6.6"));
+    p2.setValue("C", "6.6");
     ps.setValue("second", p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", std::string("9.9"));
+    p3.setValue("C", "9.9");
     ps.setValue("third", p3);
 
     ghoul::lua::push(state, ps);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -488,12 +487,13 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
     CHECK(func.arguments[2].type == "String");
     CHECK(func.returnType == "Parameter");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 1, 2.2, std::string("3.3"));
-    REQUIRE(func.function);
+    ghoul::lua::push(state, 1, 2.2, "3.3");
     func.function(state);
+    CHECK(lua_gettop(state) == 1);
 
     ghoul::Dictionary d = ghoul::lua::value<ghoul::Dictionary>(state);
     REQUIRE(d.hasValue<double>("a"));
@@ -502,5 +502,4 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
     CHECK(d.value<double>("b") == Approx(2.2));
     REQUIRE(d.hasValue<std::string>("c"));
     CHECK(d.value<std::string>("c") == "3.3");
-    CHECK(lua_gettop(state) == 0);
 }

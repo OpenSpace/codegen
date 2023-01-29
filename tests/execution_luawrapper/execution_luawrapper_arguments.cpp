@@ -2160,10 +2160,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  void") {
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2179,11 +2179,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  bool") {
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2200,11 +2200,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2221,10 +2221,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2243,11 +2243,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, false);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2266,11 +2266,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "true");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2286,6 +2286,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap") {
     CHECK(func.arguments[0].type == "String -> Boolean");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2296,7 +2297,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", false);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2312,11 +2312,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional") {
     CHECK(func.arguments[0].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2332,10 +2332,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  funcBoolOptionalNullopt") {
     CHECK(func.arguments[0].type == "Boolean?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2351,6 +2351,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector") {
     CHECK(func.arguments[0].type == "Boolean[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2361,7 +2362,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, false);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2377,11 +2377,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  int") {
     CHECK(func.arguments[0].type == "Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2398,11 +2398,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 2);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2419,10 +2419,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2441,11 +2441,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, 3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2464,11 +2464,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2485,6 +2485,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap") {
     CHECK(func.arguments[0].type == "String -> Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2495,7 +2496,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", 3);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2511,11 +2511,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional") {
     CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2531,10 +2531,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intOptionalNullopt") {
     CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2550,6 +2550,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector") {
     CHECK(func.arguments[0].type == "Integer[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2560,7 +2561,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, 3);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2576,11 +2576,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  double") {
     CHECK(func.arguments[0].type == "Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1.1);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2597,11 +2597,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 2.2);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2618,10 +2618,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2640,11 +2640,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, 3.3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2663,11 +2663,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "2.2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2683,6 +2683,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap") {
     CHECK(func.arguments[0].type == "String -> Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2693,7 +2694,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", 3.3);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2709,11 +2709,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional") {
     CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1.1);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2729,10 +2729,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptionalNullopt") {
     CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2748,6 +2748,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector") {
     CHECK(func.arguments[0].type == "Number[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2758,7 +2759,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, 3.3);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2774,11 +2774,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  float") {
     CHECK(func.arguments[0].type == "Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1.1f);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2795,11 +2795,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "1.1f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1.1f);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2816,10 +2816,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "1.1f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2838,11 +2838,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "2.2f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, 3.3f);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2861,11 +2861,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "2.2f");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2881,6 +2881,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap") {
     CHECK(func.arguments[0].type == "String -> Number");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2891,7 +2892,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", 3.3f);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2907,11 +2907,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional") {
     CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 1.1f);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2927,10 +2927,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptionalNullopt") {
     CHECK(func.arguments[0].type == "Number?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2946,6 +2946,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector") {
     CHECK(func.arguments[0].type == "Number[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -2956,7 +2957,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, 3.3f);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2974,11 +2974,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  string") {
     CHECK(func.arguments[0].type == "String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "abc"s);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -2996,11 +2996,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "abc"s);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3018,10 +3018,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3041,11 +3041,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, "def"s);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3065,11 +3065,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "\"abc\"");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3086,6 +3086,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap") {
     CHECK(func.arguments[0].type == "String -> String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3096,7 +3097,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", "ghi"s);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3113,11 +3113,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional") {
     CHECK(func.arguments[0].type == "String?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "abc"s);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3134,10 +3134,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptionalNullopt") {
     CHECK(func.arguments[0].type == "String?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3154,6 +3154,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector") {
     CHECK(func.arguments[0].type == "String[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3164,7 +3165,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, "ghi"s);
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3180,11 +3180,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  path") {
     CHECK(func.arguments[0].type == "Path");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, std::filesystem::path("abc"));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3201,11 +3201,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, std::filesystem::path("abc"));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3222,10 +3222,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3244,11 +3244,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, std::filesystem::path("def"));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3267,11 +3267,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathDefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "std::filesystem::path(\"abc\")");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3287,6 +3287,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap") {
     CHECK(func.arguments[0].type == "String -> Path");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3297,7 +3298,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", std::filesystem::path("ghi"));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3313,11 +3313,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional") {
     CHECK(func.arguments[0].type == "Path?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, std::filesystem::path("abc"));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3333,10 +3333,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptionalNullopt") {
     CHECK(func.arguments[0].type == "Path?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3352,6 +3352,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector") {
     CHECK(func.arguments[0].type == "Path[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3362,7 +3363,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, std::filesystem::path("ghi"));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3378,11 +3378,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2") {
     CHECK(func.arguments[0].type == "ivec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec2(1, 2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3399,11 +3399,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec2(1, 2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3420,10 +3420,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3442,11 +3442,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::ivec2(2, 3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3465,11 +3465,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec2(1, 2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3485,6 +3485,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map") {
     CHECK(func.arguments[0].type == "String -> ivec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3495,7 +3496,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::ivec2(5, 6));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3511,11 +3511,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional") {
     CHECK(func.arguments[0].type == "ivec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec2(1, 2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3531,10 +3531,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2OptionalNullopt") {
     CHECK(func.arguments[0].type == "ivec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3550,6 +3550,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector") {
     CHECK(func.arguments[0].type == "ivec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3560,7 +3561,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::ivec2(5, 6));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3576,11 +3576,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3") {
     CHECK(func.arguments[0].type == "ivec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec3(1, 2, 3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3597,11 +3597,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec3(1, 2, 3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3618,10 +3618,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3640,11 +3640,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::ivec3(4, 5, 6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3663,11 +3663,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3683,6 +3683,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map") {
     CHECK(func.arguments[0].type == "String -> ivec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3693,7 +3694,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::ivec3(7, 8, 9));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3709,11 +3709,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional") {
     CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec3(1, 2, 3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3729,10 +3729,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3OptionalNullopt") {
     CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3748,6 +3748,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector") {
     CHECK(func.arguments[0].type == "ivec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3758,7 +3759,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::ivec3(7, 8, 9));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3774,11 +3774,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4") {
     CHECK(func.arguments[0].type == "ivec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec4(1, 2, 3, 4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3795,11 +3795,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec4(1, 2, 3, 4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3816,10 +3816,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3838,11 +3838,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::ivec4(5, 6, 7, 8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3861,11 +3861,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::ivec4(1, 2, 3, 4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3881,6 +3881,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map") {
     CHECK(func.arguments[0].type == "String -> ivec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3891,7 +3892,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::ivec4(9, 10, 11, 12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3907,11 +3907,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional") {
     CHECK(func.arguments[0].type == "ivec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::ivec4(1, 2, 3, 4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3927,10 +3927,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4OptionalNullopt") {
     CHECK(func.arguments[0].type == "ivec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3946,6 +3946,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector") {
     CHECK(func.arguments[0].type == "ivec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -3956,7 +3957,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::ivec4(9, 10, 11, 12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3972,11 +3972,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2") {
     CHECK(func.arguments[0].type == "vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec2(1.1, 2.2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -3993,11 +3993,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec2(1.1, 2.2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4014,10 +4014,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4036,11 +4036,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dvec2(3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4059,11 +4059,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec2(1.1, 2.2)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4079,6 +4079,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map") {
     CHECK(func.arguments[0].type == "String -> vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4089,7 +4090,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::dvec2(5.5, 6.6));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4105,11 +4105,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional") {
     CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec2(1.1, 2.2));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4125,10 +4125,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4144,6 +4144,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector") {
     CHECK(func.arguments[0].type == "vec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4154,7 +4155,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dvec2(5.5, 6.6));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4170,11 +4170,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3") {
     CHECK(func.arguments[0].type == "vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec3(1.1, 2.2, 3.3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4191,11 +4191,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec3(1.1, 2.2, 3.3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4212,10 +4212,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4234,11 +4234,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dvec3(4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4257,11 +4257,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec3(1.1, 2.2, 3.3)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4277,6 +4277,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map") {
     CHECK(func.arguments[0].type == "String -> vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4287,7 +4288,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::dvec3(7.7, 8.8, 9.9));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4303,11 +4303,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional") {
     CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec3(1.1, 2.2, 3.3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4323,10 +4323,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4342,6 +4342,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector") {
     CHECK(func.arguments[0].type == "vec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4352,7 +4353,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dvec3(7.7, 8.8, 9.9));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4368,11 +4368,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4") {
     CHECK(func.arguments[0].type == "vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec4(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4389,11 +4389,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec4(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4410,10 +4410,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4432,11 +4432,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dvec4(5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4455,11 +4455,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dvec4(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4475,6 +4475,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map") {
     CHECK(func.arguments[0].type == "String -> vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4485,7 +4486,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::dvec4(9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4501,11 +4501,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional") {
     CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec4(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4521,10 +4521,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4540,6 +4540,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector") {
     CHECK(func.arguments[0].type == "vec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4550,7 +4551,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dvec4(9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4566,11 +4566,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2") {
     CHECK(func.arguments[0].type == "vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec2(1.1f, 2.2f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4587,11 +4587,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec2(1.1f, 2.2f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4608,10 +4608,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4630,11 +4630,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::vec2(3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4653,11 +4653,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec2(1.1f, 2.2f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4673,6 +4673,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map") {
     CHECK(func.arguments[0].type == "String -> vec2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4683,7 +4684,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::vec2(5.5f, 6.6f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4699,11 +4699,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional") {
     CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec2(1.1f, 2.2f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4719,10 +4719,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4738,6 +4738,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector") {
     CHECK(func.arguments[0].type == "vec2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4748,7 +4749,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::vec2(5.5f, 6.6f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4764,11 +4764,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3") {
     CHECK(func.arguments[0].type == "vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec3(1.1f, 2.2f, 3.3f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4785,11 +4785,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec3(1.1f, 2.2f, 3.3f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4806,10 +4806,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4828,11 +4828,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::vec3(4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4851,11 +4851,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec3(1.1f, 2.2f, 3.3f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4871,6 +4871,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map") {
     CHECK(func.arguments[0].type == "String -> vec3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4881,7 +4882,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::vec3(7.7f, 8.8f, 9.9f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4897,11 +4897,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional") {
     CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec3(1.1f, 2.2f, 3.3f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4917,10 +4917,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4936,6 +4936,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector") {
     CHECK(func.arguments[0].type == "vec3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -4946,7 +4947,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::vec3(7.7f, 8.8f, 9.9f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4962,11 +4962,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4") {
     CHECK(func.arguments[0].type == "vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -4983,11 +4983,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5004,10 +5004,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5026,11 +5026,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5049,11 +5049,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::vec4(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5069,6 +5069,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map") {
     CHECK(func.arguments[0].type == "String -> vec4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5079,7 +5080,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5095,11 +5095,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional") {
     CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5115,10 +5115,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4OptionalNullopt") {
     CHECK(func.arguments[0].type == "vec4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5134,6 +5134,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector") {
     CHECK(func.arguments[0].type == "vec4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5144,7 +5145,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5160,11 +5160,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2") {
     CHECK(func.arguments[0].type == "mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5181,11 +5181,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5202,10 +5202,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5224,11 +5224,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5247,11 +5247,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5267,6 +5267,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map") {
     CHECK(func.arguments[0].type == "String -> mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5277,7 +5278,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5293,11 +5293,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional") {
     CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5313,10 +5313,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5332,6 +5332,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector") {
     CHECK(func.arguments[0].type == "mat2x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5342,7 +5343,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5358,11 +5358,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3") {
     CHECK(func.arguments[0].type == "mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5379,11 +5379,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5400,10 +5400,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5422,11 +5422,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5445,11 +5445,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5465,6 +5465,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map") {
     CHECK(func.arguments[0].type == "String -> mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5487,7 +5488,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map") {
         glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5503,11 +5503,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional") {
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5523,10 +5523,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5542,6 +5542,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector") {
     CHECK(func.arguments[0].type == "mat2x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5564,7 +5565,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector") {
         glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5580,11 +5580,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4") {
     CHECK(func.arguments[0].type == "mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5601,11 +5601,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5622,10 +5622,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5644,6 +5644,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5652,7 +5653,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck with value") {
         false,
         glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5671,11 +5671,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5691,6 +5691,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map") {
     CHECK(func.arguments[0].type == "String -> mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5713,7 +5714,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map") {
         glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5729,11 +5729,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional") {
     CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5749,10 +5749,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5768,6 +5768,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector") {
     CHECK(func.arguments[0].type == "mat2x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5790,7 +5791,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector") {
         glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5806,11 +5806,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2") {
     CHECK(func.arguments[0].type == "mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5827,11 +5827,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5848,10 +5848,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5870,11 +5870,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5893,11 +5893,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5913,6 +5913,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map") {
     CHECK(func.arguments[0].type == "String -> mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -5935,7 +5936,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map") {
         glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5951,11 +5951,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional") {
     CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5971,10 +5971,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -5990,6 +5990,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector") {
     CHECK(func.arguments[0].type == "mat3x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6012,7 +6013,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector") {
         glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6028,6 +6028,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3") {
     CHECK(func.arguments[0].type == "mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6035,7 +6036,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3") {
         state,
         glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5, 6.6f, 7.7f, 8.8f, 9.9f)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6052,6 +6052,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6059,7 +6060,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted with value") {
         state,
         glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6076,10 +6076,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6098,6 +6098,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6109,7 +6110,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck with value") {
             15.15f, 16.16f, 17.17f, 18.18f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6128,11 +6128,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6148,6 +6148,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map") {
     CHECK(func.arguments[0].type == "String -> mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6176,7 +6177,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6192,6 +6192,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional") {
     CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6199,7 +6200,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional") {
         state,
         glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6215,10 +6215,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6234,6 +6234,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector") {
     CHECK(func.arguments[0].type == "mat3x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6262,7 +6263,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6278,6 +6278,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4") {
     CHECK(func.arguments[0].type == "mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6288,7 +6289,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6305,6 +6305,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6315,7 +6316,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted with value") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6332,10 +6332,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6354,6 +6354,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6365,7 +6366,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck with value") {
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6384,11 +6384,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat3x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6404,6 +6404,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map") {
     CHECK(func.arguments[0].type == "String -> mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6435,7 +6436,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6451,6 +6451,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional") {
     CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6461,7 +6462,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6477,10 +6477,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6496,6 +6496,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector") {
     CHECK(func.arguments[0].type == "mat3x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6527,7 +6528,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6544,11 +6544,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2") {
     CHECK(func.arguments[0].type == "mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6565,11 +6565,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6586,10 +6586,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6608,6 +6608,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6616,7 +6617,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck with value") {
         false,
         glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6635,11 +6635,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6655,6 +6655,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map") {
     CHECK(func.arguments[0].type == "String -> mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6677,7 +6678,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map") {
         glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6693,11 +6693,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional") {
     CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6713,10 +6713,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6732,6 +6732,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector") {
     CHECK(func.arguments[0].type == "mat4x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6754,7 +6755,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector") {
         glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6770,6 +6770,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3") {
     CHECK(func.arguments[0].type == "mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6780,7 +6781,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6797,6 +6797,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6807,7 +6808,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted with value") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6824,10 +6824,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6846,6 +6846,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6857,7 +6858,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck with value") {
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6876,11 +6876,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6896,6 +6896,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map") {
     CHECK(func.arguments[0].type == "String -> mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6927,7 +6928,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6943,6 +6943,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional") {
     CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -6953,7 +6954,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional") {
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6969,10 +6969,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -6988,6 +6988,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector") {
     CHECK(func.arguments[0].type == "mat4x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7019,7 +7020,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7035,6 +7035,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4") {
     CHECK(func.arguments[0].type == "mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7045,7 +7046,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4") {
             9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7062,6 +7062,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7072,7 +7073,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted with value") {
             9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7089,10 +7089,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7111,6 +7111,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7122,7 +7123,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck with value") {
             25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7141,11 +7141,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7161,6 +7161,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map") {
     CHECK(func.arguments[0].type == "String -> mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7192,7 +7193,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7208,6 +7208,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional") {
     CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7218,7 +7219,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional") {
             9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7234,10 +7234,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7253,6 +7253,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector") {
     CHECK(func.arguments[0].type == "mat4x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7284,7 +7285,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7300,11 +7300,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2") {
     CHECK(func.arguments[0].type == "mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7321,11 +7321,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7342,10 +7342,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7364,11 +7364,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7387,11 +7387,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x2(1.1, 2.2, 3.3, 4.4)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7407,6 +7407,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map") {
     CHECK(func.arguments[0].type == "String -> mat2x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7417,7 +7418,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "key3", glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7433,11 +7433,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional") {
     CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7453,10 +7453,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7472,6 +7472,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector") {
     CHECK(func.arguments[0].type == "mat2x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7482,7 +7483,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7498,11 +7498,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3") {
     CHECK(func.arguments[0].type == "mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7519,11 +7519,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7540,10 +7540,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7562,11 +7562,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7585,11 +7585,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7605,6 +7605,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
     CHECK(func.arguments[0].type == "String -> mat2x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7619,7 +7620,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map") {
         glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7635,11 +7635,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional") {
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7655,10 +7655,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7674,6 +7674,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector") {
     CHECK(func.arguments[0].type == "mat2x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7684,7 +7685,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7700,11 +7700,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4") {
     CHECK(func.arguments[0].type == "mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7721,11 +7721,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7742,10 +7742,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7764,11 +7764,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7787,11 +7787,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7807,6 +7807,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map") {
     CHECK(func.arguments[0].type == "String -> mat2x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7829,7 +7830,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map") {
         glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7845,11 +7845,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional") {
     CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7865,10 +7865,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat2x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7884,6 +7884,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector") {
     CHECK(func.arguments[0].type == "mat2x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -7906,7 +7907,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector") {
         glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7922,11 +7922,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2") {
     CHECK(func.arguments[0].type == "mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7943,11 +7943,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7964,10 +7964,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -7986,11 +7986,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, false, glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8009,11 +8009,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8029,6 +8029,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map") {
     CHECK(func.arguments[0].type == "String -> mat3x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8051,7 +8052,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map") {
         glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8067,11 +8067,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional") {
     CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8087,10 +8087,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8106,6 +8106,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector") {
     CHECK(func.arguments[0].type == "mat3x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8128,7 +8129,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector") {
         glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8144,6 +8144,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3") {
     CHECK(func.arguments[0].type == "mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8151,7 +8152,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3") {
         state,
         glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8168,6 +8168,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8175,7 +8176,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted with value") {
         state,
         glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8192,10 +8192,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8214,6 +8214,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8222,7 +8223,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck with value") {
         false,
         glm::dmat3x3(10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8241,11 +8241,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8261,6 +8261,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map") {
     CHECK(func.arguments[0].type == "String -> mat3x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8283,7 +8284,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map") {
         glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8299,6 +8299,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional") {
     CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8306,7 +8307,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional") {
         state,
         glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8322,10 +8322,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8341,6 +8341,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector") {
     CHECK(func.arguments[0].type == "mat3x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8363,7 +8364,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector") {
         glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8379,6 +8379,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4") {
     CHECK(func.arguments[0].type == "mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8389,7 +8390,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8406,6 +8406,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8416,7 +8417,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted with value") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8433,10 +8433,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8455,6 +8455,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8466,7 +8467,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck with value") {
             19.19, 20.20, 21.21, 22.22, 23.23, 24.24
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8485,11 +8485,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat3x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8505,6 +8505,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map") {
     CHECK(func.arguments[0].type == "String -> mat3x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8536,7 +8537,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8552,6 +8552,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional") {
     CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8562,7 +8563,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8578,10 +8578,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat3x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8597,6 +8597,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector") {
     CHECK(func.arguments[0].type == "mat3x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8628,7 +8629,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8645,11 +8645,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2") {
     CHECK(func.arguments[0].type == "mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8666,11 +8666,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8687,10 +8687,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8709,6 +8709,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8717,7 +8718,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck with value") {
         false,
         glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8736,11 +8736,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8756,6 +8756,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map") {
     CHECK(func.arguments[0].type == "String -> mat4x2");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8778,7 +8779,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map") {
         glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8794,11 +8794,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional") {
     CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8814,10 +8814,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x2?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8833,6 +8833,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector") {
     CHECK(func.arguments[0].type == "mat4x2[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8855,7 +8856,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector") {
         glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8871,6 +8871,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3") {
     CHECK(func.arguments[0].type == "mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8881,7 +8882,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8898,6 +8898,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8908,7 +8909,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted with value") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8925,10 +8925,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8947,6 +8947,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -8958,7 +8959,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck with value") {
             19.19, 20.20, 21.21, 22.22, 23.23, 24.24
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8977,11 +8977,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -8997,6 +8997,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map") {
     CHECK(func.arguments[0].type == "String -> mat4x3");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9028,7 +9029,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9044,6 +9044,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional") {
     CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9054,7 +9055,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional") {
             7.7, 8.8, 9.9, 10.10, 11.11, 12.12
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9070,10 +9070,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x3?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9089,6 +9089,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector") {
     CHECK(func.arguments[0].type == "mat4x3[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9120,7 +9121,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9136,6 +9136,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4") {
     CHECK(func.arguments[0].type == "mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9146,7 +9147,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4") {
             9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9163,6 +9163,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted with value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9173,7 +9174,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted with value") {
             9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9190,10 +9190,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Defaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9212,6 +9212,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck with value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9223,7 +9224,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck with value") {
             25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9242,11 +9242,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4DefaultedCheck w/o value") {
     CHECK(func.arguments[1].defaultValue == "glm::dmat4x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9262,6 +9262,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map") {
     CHECK(func.arguments[0].type == "String -> mat4x4");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9293,7 +9294,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9309,6 +9309,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional") {
     CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9319,7 +9320,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional") {
             9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16
         )
     );
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9335,10 +9335,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4OptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9354,6 +9354,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector") {
     CHECK(func.arguments[0].type == "mat4x4[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9385,7 +9386,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector") {
         )
     );
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9402,6 +9402,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary") {
     CHECK(func.arguments[0].type == "Table");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9412,7 +9413,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary") {
     lua_rawset(state, -3);
     ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9430,11 +9430,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted with value") {
     CHECK(func.arguments[0].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     lua_newtable(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9451,10 +9451,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaulted w/o value") {
     CHECK(func.arguments[0].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9474,6 +9474,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck with value"
     CHECK(func.arguments[1].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9485,7 +9486,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck with value"
     lua_rawset(state, -3);
     ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9504,11 +9504,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryDefaultedCheck w/o value")
     CHECK(func.arguments[1].defaultValue == "ghoul::Dictionary()");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9525,6 +9525,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap") {
     CHECK(func.arguments[0].type == "String -> Table");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9562,7 +9563,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap") {
         lua_rawset(state, -3);
     }
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9579,6 +9579,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional") {
     CHECK(func.arguments[0].type == "Table?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9591,7 +9592,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptional") {
         ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
         lua_rawset(state, -3);
     }
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9607,10 +9607,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryOptionalNullopt") {
     CHECK(func.arguments[0].type == "mat4x4?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9627,6 +9627,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
     CHECK(func.arguments[0].type == "Table[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
@@ -9664,7 +9665,6 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector") {
         lua_rawset(state, -3);
     }
     lua_rawset(state, -3);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9680,11 +9680,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / bool") {
     CHECK(func.arguments[0].type == "Boolean | Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9700,11 +9700,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(bool,int) / int") {
     CHECK(func.arguments[0].type == "Boolean | Integer");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 2);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9720,11 +9720,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / doub
     CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 2.2);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9740,11 +9740,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / vec3
     CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, glm::dvec3(1.1, 2.2, 3.3));
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -9761,11 +9761,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  variant(double, vec3, string) / stri
     CHECK(func.arguments[0].type == "Number | vec3 | String");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "abc"s);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);

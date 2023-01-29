@@ -152,10 +152,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void") {
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -171,11 +171,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  One Parameter") {
     CHECK(func.arguments[0].type == "Enum");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "B");
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -193,11 +193,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters") {
     CHECK(func.arguments[1].type == "Enum");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, "B", "C");
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -217,16 +217,17 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters w/ optional") {
     CHECK(func.arguments[2].type == "Enum?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, true, "B", "C");
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     ghoul::lua::push(state, false, "B");
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -242,19 +243,20 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Vector Arguments") {
     CHECK(func.arguments[1].type == "Enum[]");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     std::vector<std::string> es;
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::lua::push(state, 0, es);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
 
     es.push_back("B");
     ghoul::lua::push(state, 1, es);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
 
     es.clear();
     es.push_back("A");
@@ -262,6 +264,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Vector Arguments") {
     es.push_back("C");
     ghoul::lua::push(state, 3, es);
     func.function(state);
+    CHECK(lua_gettop(state) == 0);
     lua_close(state);
 }
 
@@ -279,13 +282,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  OptionalVector Arguments") {
     CHECK(func.arguments[2].type == "Enum[]?");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     std::vector<std::string> es;
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
-
     ghoul::lua::push(state, true, 0, es);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -315,16 +317,16 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Map Arguments") {
     CHECK(func.arguments[0].type == "String -> Enum");
     CHECK(func.returnType == "");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary es;
-    es.setValue("first", std::string("A"));
-    es.setValue("second", std::string("B"));
-    es.setValue("third", std::string("C"));
+    es.setValue("first", "A");
+    es.setValue("second", "B");
+    es.setValue("third", "C");
 
     ghoul::lua::push(state, es);
-    REQUIRE(func.function);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
@@ -340,11 +342,10 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Return value") {
     CHECK(func.arguments[0].type == "Integer");
     CHECK(func.returnType == "Enum");
     CHECK(func.helpText == "");
+    REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    REQUIRE(func.function);
-    
     ghoul::lua::push(state, 1);
     func.function(state);
     CHECK(lua_gettop(state) == 1);
@@ -359,6 +360,5 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Return value") {
     func.function(state);
     CHECK(lua_gettop(state) == 1);
     CHECK(ghoul::lua::value<std::string>(state) == "C");
-
     lua_close(state);
 }

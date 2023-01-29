@@ -50,7 +50,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/EnumMapping:  1") {
     ghoul::Dictionary d;
-    d.setValue("EnumAValue", std::string("Value1"));
+    d.setValue("EnumAValue", "Value1");
 
     const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::Value1);
@@ -61,7 +61,7 @@ TEST_CASE("Execution/Structs/EnumMapping:  1") {
 
 TEST_CASE("Execution/Structs/EnumMapping:  2") {
     ghoul::Dictionary d;
-    d.setValue("EnumAValue", std::string("value2"));
+    d.setValue("EnumAValue", "value2");
 
     const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::value2);
@@ -72,7 +72,7 @@ TEST_CASE("Execution/Structs/EnumMapping:  2") {
 
 TEST_CASE("Execution/Structs/EnumMapping:  3") {
     ghoul::Dictionary d;
-    d.setValue("EnumAValue", std::string("Value3"));
+    d.setValue("EnumAValue", "Value3");
 
     const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::Value3);
