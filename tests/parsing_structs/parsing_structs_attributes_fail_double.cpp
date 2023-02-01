@@ -22,7 +22,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
@@ -36,7 +38,7 @@ double v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'annotation'")
     );
 }
 
@@ -46,7 +48,7 @@ std::vector<double> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'annotation'")
     );
 }
 
@@ -56,7 +58,7 @@ std::optional<double> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'annotation'")
     );
 }
 
@@ -66,7 +68,7 @@ double v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'inlist'")
     );
 }
 
@@ -76,7 +78,7 @@ std::vector<double> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'inlist'")
     );
 }
 
@@ -86,7 +88,7 @@ std::optional<double> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'inlist'")
     );
 }
 
@@ -96,7 +98,7 @@ double v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -106,7 +108,7 @@ std::vector<double> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -116,7 +118,7 @@ std::optional<double> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'notinlist'")
     );
 }
 
@@ -126,7 +128,7 @@ double v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'reference'")
     );
 }
 
@@ -136,7 +138,7 @@ std::vector<double> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'reference'")
     );
 }
 
@@ -146,7 +148,7 @@ std::optional<double> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'reference'")
     );
 }
 
@@ -156,7 +158,7 @@ double v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'color'")
     );
 }
 
@@ -166,7 +168,7 @@ std::vector<double> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'color'")
     );
 }
 
@@ -176,7 +178,7 @@ std::optional<double> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'color'")
     );
 }
 
@@ -186,7 +188,7 @@ double v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'directory'")
     );
 }
 
@@ -196,7 +198,7 @@ std::vector<double> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'directory'")
     );
 }
 
@@ -206,6 +208,6 @@ std::optional<double> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'double' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'double' does not support attribute 'directory'")
     );
 }

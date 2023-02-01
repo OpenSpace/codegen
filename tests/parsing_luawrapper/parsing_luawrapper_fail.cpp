@@ -22,7 +22,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
@@ -38,7 +40,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided") {
 
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("Parameter 0 of function 'foo' has no name")
+        CodegenError, CM::StartsWith("Parameter 0 of function 'foo' has no name")
     );
 }
 
@@ -51,7 +53,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains(
+        CM::StartsWith(
             "Type detected that codegen doesn't know how to handle: 'std::chrono::time_point'"
         )
     );
@@ -66,7 +68,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains(
+        CM::StartsWith(
             "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
         )
     );
@@ -81,7 +83,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type second argument") 
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains(
+        CM::StartsWith(
             "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
         )
     );
@@ -96,7 +98,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Reference type for argument") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Illegal reference type found: float&")
+        CM::StartsWith("Illegal reference type found: float&")
     );
 }
 
@@ -109,7 +111,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Const reference type for argument") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Illegal reference type 'const float&' found in function 'foo'")
+        CM::StartsWith("Illegal reference type 'const float&' found in function 'foo'")
     );
 }
 
@@ -122,7 +124,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Const pointer type for argument") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Illegal pointer type 'const float*' found in function 'foo'")
+        CM::StartsWith("Illegal pointer type 'const float*' found in function 'foo'")
     );
 }
 
@@ -135,7 +137,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Marked functions must not start with an uppercase letter")
+        CM::StartsWith("Marked functions must not start with an uppercase letter")
     );
 }
 
@@ -148,7 +150,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Type detected that codegen doesn't know how to handle: 'unsigned int'")
+        CM::StartsWith("Type detected that codegen doesn't know how to handle: 'unsigned int'")
     );
 }
 
@@ -161,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Type detected that codegen doesn't know how to handle: 'unsigned int'")
+        CM::StartsWith("Type detected that codegen doesn't know how to handle: 'unsigned int'")
     );
 }
 
@@ -174,7 +176,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+        CM::StartsWith("Error in custom name for luawrap function. Provided name was empty")
     );
 }
 
@@ -187,7 +189,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Error in custom name for luawrap function. Provided name was empty")
+        CM::StartsWith("Error in custom name for luawrap function. Provided name was empty")
     );
 }
 
@@ -200,7 +202,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains(
+        CM::StartsWith(
             "Error in custom name for luawrap function. Provided name must be enclosed"
         )
     );
@@ -216,7 +218,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Same argument for last optional and first 
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains(
+        CM::StartsWith(
             "When using optional arguments in the beginning of the argument list, the "
             "last optional argument must not have"
         )

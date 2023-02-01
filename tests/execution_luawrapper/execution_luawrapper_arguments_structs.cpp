@@ -22,7 +22,8 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
@@ -162,17 +163,17 @@ namespace {
 
         CHECK(keys[0] == "first");
         CHECK(ps["first"].a == 1);
-        CHECK(ps["first"].b == Approx(2.2));
+        CHECK(ps["first"].b == Catch::Approx(2.2));
         CHECK(ps["first"].c == "3.3");
         
         CHECK(keys[1] == "second");
         CHECK(ps["second"].a == 4);
-        CHECK(ps["second"].b == Approx(5.5));
+        CHECK(ps["second"].b == Catch::Approx(5.5));
         CHECK(ps["second"].c == "6.6");
 
         CHECK(keys[2] == "third");
         CHECK(ps["third"].a == 7);
-        CHECK(ps["third"].b == Approx(8.8));
+        CHECK(ps["third"].b == Catch::Approx(8.8));
         CHECK(ps["third"].c == "9.9");
     }
 
@@ -499,7 +500,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
     REQUIRE(d.hasValue<double>("a"));
     CHECK(d.value<double>("a") == 1);
     REQUIRE(d.hasValue<double>("b"));
-    CHECK(d.value<double>("b") == Approx(2.2));
+    CHECK(d.value<double>("b") == Catch::Approx(2.2));
     REQUIRE(d.hasValue<std::string>("c"));
     CHECK(d.value<std::string>("c") == "3.3");
 }

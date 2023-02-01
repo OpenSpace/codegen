@@ -158,8 +158,7 @@ add_executable(
   parsing_structs/parsing_structs_variant_fail.cpp
 )
 
-target_include_directories(codegentest PUBLIC "${GHOUL_BASE_DIR}/ext/catch2/single_include")
-target_link_libraries(codegentest PUBLIC codegen-lib openspace-core openspace-module-collection)
+target_link_libraries(codegentest PUBLIC Catch2 codegen-lib openspace-core openspace-module-collection)
 if (MSVC)
   target_compile_options(codegentest PRIVATE "/MP" "/wd5030" "/bigobj")
 else ()

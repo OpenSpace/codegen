@@ -22,7 +22,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
@@ -38,7 +40,7 @@ struct [[codegen::Dictionary(D)]] P {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("can't have a variant containing multiple vector types")
+        CodegenError, Catch::Matchers::StartsWith("We can't have a variant containing multiple vector types")
     );
 }
 
@@ -55,7 +57,7 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'A' found in variant list")
+        Catch::Matchers::StartsWith("Unsupported type 'A' found in variant list")
     );
 }
 
@@ -69,7 +71,7 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'std::optional<int>' found in variant list")
+        Catch::Matchers::StartsWith("Unsupported type 'std::optional<int>' found in variant list")
     );
 }
 
@@ -83,6 +85,6 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::Contains("Unsupported type 'std::variant<int, float>' found in variant list")
+        Catch::Matchers::StartsWith("Unsupported type 'std::variant<int, float>' found in variant list")
     );
 }

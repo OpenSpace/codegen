@@ -22,7 +22,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
@@ -36,7 +38,7 @@ glm::dmat3x4 v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'annotation'")
     );
 }
 
@@ -48,7 +50,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'annotation'")
     );
 }
 
@@ -60,7 +62,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'annotation'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'annotation'")
     );
 }
 
@@ -72,7 +74,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inlist'")
     );
 }
 
@@ -84,7 +86,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inlist'")
     );
 }
 
@@ -96,7 +98,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inlist'")
     );
 }
 
@@ -108,7 +110,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inrange'")
     );
 }
 
@@ -120,7 +122,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inrange'")
     );
 }
 
@@ -132,7 +134,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'inrange'")
     );
 }
 
@@ -144,7 +146,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'less'")
     );
 }
 
@@ -156,7 +158,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'less'")
     );
 }
 
@@ -168,7 +170,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'less'")
     );
 }
 
@@ -180,7 +182,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'lessequal'")
     );
 }
 
@@ -192,7 +194,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'lessequal'")
     );
 }
 
@@ -204,7 +206,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'lessequal'")
     );
 }
 
@@ -216,7 +218,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greater'")
     );
 }
 
@@ -228,7 +230,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greater'")
     );
 }
 
@@ -240,7 +242,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greater'")
     );
 }
 
@@ -252,7 +254,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -264,7 +266,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -276,7 +278,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'greaterequal'")
     );
 }
 
@@ -288,7 +290,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinlist'")
     );
 }
 
@@ -300,7 +302,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinlist'")
     );
 }
 
@@ -312,7 +314,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinlist'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinlist'")
     );
 }
 
@@ -324,7 +326,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinrange'")
     );
 }
 
@@ -336,7 +338,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinrange'")
     );
 }
 
@@ -348,7 +350,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'notinrange'")
     );
 }
 
@@ -360,7 +362,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'reference'")
     );
 }
 
@@ -372,7 +374,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'reference'")
     );
 }
 
@@ -384,7 +386,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'reference'")
     );
 }
 
@@ -396,7 +398,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'unequal'")
     );
 }
 
@@ -408,7 +410,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'unequal'")
     );
 }
 
@@ -420,7 +422,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'unequal'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'unequal'")
     );
 }
 
@@ -432,7 +434,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'color'")
     );
 }
 
@@ -444,7 +446,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'color'")
     );
 }
 
@@ -456,7 +458,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'color'")
     );
 }
 
@@ -468,7 +470,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'directory'")
     );
 }
 
@@ -480,7 +482,7 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'directory'")
     );
 }
 
@@ -492,6 +494,6 @@ struct [[codegen::Dictionary(D)]] P {
 )";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'glm::dmat3x4' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'glm::dmat3x4' does not support attribute 'directory'")
     );
 }

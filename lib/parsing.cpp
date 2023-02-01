@@ -1171,8 +1171,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             beg != std::string_view::npos)
         {
             Variable::Attributes attr = parseAttributes(content.substr(cursor));
-            size_t end = content.substr(cursor).find("]]");
-            cursor += (end - beg) + 3;  // 2 -> ]]
+            size_t e = content.substr(cursor).find("]]");
+            cursor += (e - beg) + 3;  // 2 -> ]]
             cursor = content.find_first_not_of(' ', cursor);
         }
 

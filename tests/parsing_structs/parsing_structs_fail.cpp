@@ -22,11 +22,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
 #include "types.h"
+
+namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/Structs/Error:  Extra \" in root name") {
     constexpr const char Source[] = R"(
@@ -37,7 +41,7 @@ struct [[codegen::Dictionary("Wrong")]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Root struct name must not be enclosed")
+        CodegenError, CM::StartsWith("Root struct name must not be enclosed")
     );
 }
 
@@ -51,7 +55,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     Code code = parse(Source);
     CHECK_THROWS_MATCHES(
         generateResult(code),
-        CodegenError, Catch::Matchers::Contains("Malformed codegen::verbatim")
+        CodegenError, CM::StartsWith("Malformed codegen::verbatim")
     );
 }
 
@@ -61,7 +65,7 @@ TEST_CASE("Parsing/Structs/Error:  Missing space") {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Missing space or struct name before")
+        CodegenError, CM::StartsWith("Missing space or struct name before")
     );
 }
 
@@ -76,7 +80,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
             Code code = parse(Source);
             std::string r = generateResult(code);
         }(),
-        CodegenError, Catch::Matchers::Contains("Unbalanced number of < > brackets")
+        CodegenError, CM::StartsWith("Unbalanced number of < > brackets")
     );
 }
 
@@ -88,7 +92,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Type detected that codegen doesn't know how to handle")
+        CodegenError, CM::StartsWith("Type detected that codegen doesn't know how to handle")
     );
 }
 
@@ -101,7 +105,7 @@ Type [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Could not find 'struct' before '[[codegen")
+        CodegenError, CM::StartsWith("Could not find 'struct' before '[[codegen")
     );
 }
 
@@ -114,7 +118,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
+        CodegenError, CM::StartsWith("Attribute parameter has unterminated parameter list")
     );
 }
 
@@ -127,7 +131,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Unknown attribute 'unknown_key' in attribute")
+        CodegenError, CM::StartsWith("Unknown attribute 'unknown_key' in attribute")
     );
 }
 
@@ -140,7 +144,7 @@ struct [[codegen::Dictionary(Error]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Attribute parameter has unterminated parameter list")
+        CodegenError, CM::StartsWith("Attribute parameter has unterminated parameter list")
     );
 }
 
@@ -156,7 +160,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Unterminated attribute brackets")
+        CodegenError, CM::StartsWith("Unterminated attribute brackets")
     );
 }
 
@@ -170,7 +174,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Unknown attribute 'unknown_key' in struct definition")
+        CodegenError, CM::StartsWith("Unknown attribute 'unknown_key' in struct definition")
     );
 }
 
@@ -186,7 +190,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Unrecognized attribute 'unknown_key' found")
+        CodegenError, CM::StartsWith("Unrecognized attribute 'unknown_key' found")
     );
 }
 
@@ -199,7 +203,7 @@ struct [[codegen::Dictionary()]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("No name specified for root struct")
+        CodegenError, CM::StartsWith("No name specified for root struct")
     );
 }
 
@@ -212,7 +216,7 @@ struct [[codegen::Dictionary]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("No name specified for root struct")
+        CodegenError, CM::StartsWith("No name specified for root struct")
     );
 }
 
@@ -224,7 +228,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Could not find closing } of root struct")
+        CodegenError, CM::StartsWith("Could not find closing } of root struct")
     );
 }
 
@@ -237,7 +241,7 @@ struct Parameters [[codegen::Dictionary(abc)]] {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Only 'struct' can appear directly before [[codegen::Dictionary")
+        CodegenError, CM::StartsWith("Only 'struct' can appear directly before [[codegen::Dictionary")
     );
 }
 
@@ -251,7 +255,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Block comments are not allowed")
+        CodegenError, CM::StartsWith("Block comments are not allowed")
     );
 }
 
@@ -267,7 +271,7 @@ struct [[codegen::Dictionary(S1)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Found nested structs annotated with the Dictionary attribute.")
+        CodegenError, CM::StartsWith("Found nested structs annotated with the Dictionary attribute.")
     );
 }
 
@@ -284,7 +288,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Old-style 'enum' not supported. Use 'enum class' instead")
+        CodegenError, CM::StartsWith("Old-style 'enum' not supported. Use 'enum class' instead")
     );
 }
 
@@ -298,7 +302,7 @@ struct [[codegen::Dictionary(D)]] P {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::Contains("Found '=' in variable definition")
+        CodegenError, CM::StartsWith("Found '=' in variable definition")
     );
 }
 
@@ -308,6 +312,6 @@ int v [[codegen::color(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, Catch::Matchers::Contains("Boolean attribute needs to be")
+        CodegenError, CM::StartsWith("Boolean attribute needs to be")
     );
 }

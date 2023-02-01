@@ -22,7 +22,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
  ****************************************************************************************/
 
-#include "catch2/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "codegen.h"
 #include "parsing.h"
@@ -36,7 +38,7 @@ std::string v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -46,7 +48,7 @@ std::vector<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -56,7 +58,7 @@ std::optional<std::string> v [[codegen::inrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'inrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'inrange'")
     );
 }
 
@@ -66,7 +68,7 @@ std::string v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'less'")
     );
 }
 
@@ -76,7 +78,7 @@ std::vector<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'less'")
     );
 }
 
@@ -86,7 +88,7 @@ std::optional<std::string> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'less'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'less'")
     );
 }
 
@@ -96,7 +98,7 @@ std::string v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -106,7 +108,7 @@ std::vector<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -116,7 +118,7 @@ std::optional<std::string> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'lessequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'lessequal'")
     );
 }
 
@@ -126,7 +128,7 @@ std::string v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -136,7 +138,7 @@ std::vector<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -146,7 +148,7 @@ std::optional<std::string> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greater'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greater'")
     );
 }
 
@@ -156,7 +158,7 @@ std::string v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -166,7 +168,7 @@ std::vector<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -176,7 +178,7 @@ std::optional<std::string> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'greaterequal'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'greaterequal'")
     );
 }
 
@@ -186,7 +188,7 @@ std::string v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -196,7 +198,7 @@ std::vector<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -206,7 +208,7 @@ std::optional<std::string> v [[codegen::notinrange(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'notinrange'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'notinrange'")
     );
 }
 
@@ -216,7 +218,7 @@ std::string v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'reference'")
     );
 }
 
@@ -226,7 +228,7 @@ std::vector<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'reference'")
     );
 }
 
@@ -236,7 +238,7 @@ std::optional<std::string> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'reference'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'reference'")
     );
 }
 
@@ -246,7 +248,7 @@ std::string v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'color'")
     );
 }
 
@@ -256,7 +258,7 @@ std::vector<std::string> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'color'")
     );
 }
 
@@ -266,7 +268,7 @@ std::optional<std::string> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'color'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'color'")
     );
 }
 
@@ -276,7 +278,7 @@ std::string v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'directory'")
     );
 }
 
@@ -286,7 +288,7 @@ std::vector<std::string> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'directory'")
     );
 }
 
@@ -296,7 +298,7 @@ std::optional<std::string> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::Contains("'std::string' does not support attribute 'directory'")
+        CodegenError, CM::StartsWith("Type 'std::string' does not support attribute 'directory'")
     );
 }
 
@@ -307,7 +309,7 @@ std::string v [[codegen::annotation("abc"), codegen::inlist({"abc", "def" })]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -318,7 +320,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc",
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -329,7 +331,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::inlist({"abc
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -340,7 +342,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -351,7 +353,7 @@ std::string v [[codegen::annotation("abc"), codegen::unequal("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -362,7 +364,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc")
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -373,7 +375,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::unequal("abc
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -384,7 +386,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the annotation attribute, no other attribute can be used")
+        CM::StartsWith("With the annotation attribute, no other attribute can be used")
     );
 }
 
@@ -395,7 +397,7 @@ std::string v [[codegen::annotation("abc"), codegen::notempty()]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -406,7 +408,7 @@ std::vector<std::string> v [[codegen::annotation("abc"), codegen::notempty()]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -417,7 +419,7 @@ std::optional<std::string> v [[codegen::annotation("abc"), codegen::notempty()]]
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -428,7 +430,7 @@ std::optional<std::vector<std::string>> v [[codegen::annotation("abc"), codegen:
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -439,7 +441,7 @@ std::string v [[codegen::notempty(), codegen::inlist({"abc", "def"})]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -450,7 +452,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def"}
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -461,7 +463,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::inlist({"abc", "def
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -472,7 +474,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::inlist
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -483,7 +485,7 @@ std::string v [[codegen::notempty(), codegen::unequal("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -494,7 +496,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -505,7 +507,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::unequal("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -516,7 +518,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::unequa
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -527,7 +529,7 @@ std::string v [[codegen::notempty(), codegen::annotation("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -538,7 +540,7 @@ std::vector<std::string> v [[codegen::notempty(), codegen::annotation("abc")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -549,7 +551,7 @@ std::optional<std::string> v [[codegen::notempty(), codegen::annotation("abc")]]
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -560,7 +562,7 @@ std::optional<std::vector<std::string>> v [[codegen::notempty(), codegen::annota
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("With the notempty attribute, no other attribute can be used")
+        CM::StartsWith("With the notempty attribute, no other attribute can be used")
     );
 }
 
@@ -571,6 +573,6 @@ std::string v [[codegen::notempty("bla")]];
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::Contains("Boolean attribute needs to be empty, 'true', or 'false'")
+        CM::StartsWith("Boolean attribute needs to be empty, 'true', or 'false'")
     );
 }
