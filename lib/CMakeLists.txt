@@ -22,26 +22,28 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-set(FILES
-  codegen.h
-  codegen.cpp
-  parsing.h
-  parsing.cpp
-  settings.h
-  snippets.h
-  snippets.cpp
-  types.h
-  types.cpp
-  util.h
-  util.cpp
-  verifier.h
+add_library(codegen-lib ${FILES})
+target_sources(
+  codegen-lib
+  PRIVATE
+    codegen.h
+    codegen.cpp
+    parsing.h
+    parsing.cpp
+    settings.h
+    snippets.h
+    snippets.cpp
+    types.h
+    types.cpp
+    util.h
+    util.cpp
+    verifier.h
   verifier.cpp
 )
 
-add_library(codegen-lib ${FILES})
 target_include_directories(codegen-lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_features(codegen-lib PUBLIC cxx_std_20)
-target_link_libraries(codegen-lib PUBLIC fmt)
+target_link_libraries(codegen-lib PRIVATE fmt)
 
 set(MSVC_WARNINGS
   "/MP"       # Multi-threading support
@@ -70,8 +72,7 @@ set(MSVC_WARNINGS
   "/w44548"   # expression before comma has no effect; expected expression with side-effect
   "/w44549"   # 'operator': operator before comma has no effect; did you intend 'operator'?
   "/w44555"   # expression has no effect; expected expression with side-effect
-  # This is disabled until GLM is updated to version 0.9.9 that removes occurrance of this warning
-  # "/w44574"   # 'identifier' is defined to be '0': did you mean to use '#if identifier'?
+  "/w44574"   # 'identifier' is defined to be '0': did you mean to use '#if identifier'?
   "/w44608"   # 'symbol1' has already been initialized by another union member in the initializer list, 'symbol2'
   "/w44628"   # digraphs not supported with -Ze. Character sequence 'digraph' not interpreted as alternate token for 'char'
   "/w44640"   # 'instance': construction of local static object is not thread-safe
@@ -79,7 +80,6 @@ set(MSVC_WARNINGS
   "/w44906"   # string literal cast to 'LPWSTR'
   "/w44986"   # 'symbol': exception specification does not match previous declaration
   "/w44988"   # 'symbol': variable declared outside class/function scope
-  "/std:c++latest"
   "/permissive-"
   "/Zc:twoPhase-"  # Used to prevent C:\Program Files (x86)\Windows Kits\8.1\Include\um\combaseapi.h(229): error C2187: syntax error: 'identifier' was unexpected here
                     # This is a bug in Visual Studio 15.3 and can be removed with the next version:
@@ -89,7 +89,6 @@ set(MSVC_WARNINGS
 )
 
 set(CLANG_WARNINGS
-  "-stdlib=libc++"
   "-Wall"
   "-Wextra"
   "-Wabstract-vbase-init"
