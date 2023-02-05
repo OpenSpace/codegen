@@ -42,8 +42,8 @@ namespace {
 }
 )";
     
-    constexpr std::string_view ToStringFallback = "template<typename T> [[maybe_unused]] std::string_view toString(T t) { static_assert(sizeof(T) == 0); return \"\"; }";
-    constexpr std::string_view FromStringFallback = "template<typename T> [[maybe_unused]] T fromString(std::string_view sv) { static_assert(sizeof(T) == 0); return T(); }";
+    constexpr std::string_view ToStringFallback = "template<typename T> [[maybe_unused]] std::string_view toString(T) { static_assert(sizeof(T) == 0); return \"\"; }";
+    constexpr std::string_view FromStringFallback = "template<typename T> [[maybe_unused]] T fromString(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
 
     constexpr std::string_view BakeEnumFallback = "template<typename T> [[maybe_unused]] T bake(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
 
