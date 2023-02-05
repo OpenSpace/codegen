@@ -172,10 +172,6 @@ if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
   # wanted by CEF
   set(PROJECT_ARCH "x86_64")
 
-  if (WIN32)
-    set(RESOURCE_FILE ${OPENSPACE_APPS_DIR}/OpenSpace/openspace.rc)
-  endif ()
-
   # Add the CEF binary distribution's cmake/ directory to the module path and
   # find CEF to initialize it properly.
   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${WEBBROWSER_MODULE_PATH}/cmake")
