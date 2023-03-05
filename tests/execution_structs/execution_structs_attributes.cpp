@@ -1441,8 +1441,8 @@ TEST_CASE("Execution/Structs/Attributes:  Bake") {
         d.setValue("OptionalVectorDictValueMap", e);
     }
 
-    d.setValue("Annotation", "annotation_abc");
-    d.setValue("AnnotationOptional", "annotation_def");
+    d.setValue("Annotation", "annotation_abc"s);
+    d.setValue("AnnotationOptional", "annotation_def"s);
     {
         ghoul::Dictionary e;
         e.setValue("1", "annotation_ghi"s);
