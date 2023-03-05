@@ -483,6 +483,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncReturnValue;
     CHECK(func.name == "funcReturnValue");
@@ -499,7 +500,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    ghoul::lua::push(state, 1, 2.2, "3.3");
+    ghoul::lua::push(state, 1, 2.2, "3.3"s);
     func.function(state);
     CHECK(lua_gettop(state) == 1);
 
