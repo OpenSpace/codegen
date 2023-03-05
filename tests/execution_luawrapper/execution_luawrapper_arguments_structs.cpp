@@ -208,6 +208,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncSingleArgument;
     CHECK(func.name == "funcSingleArgument");
@@ -223,7 +224,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ghoul::lua::push(state, p);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -232,6 +233,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncOptionalArgument;
     CHECK(func.name == "funcOptionalArgument");
@@ -249,7 +251,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ghoul::lua::push(state, true, p);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -262,6 +264,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncMultipleArguments;
     CHECK(func.name == "funcMultipleArguments");
@@ -279,11 +282,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ghoul::Dictionary q;
     q.setValue("A", 4);
     q.setValue("B", 5.5);
-    q.setValue("C", "6.6");
+    q.setValue("C", "6.6"s);
     ghoul::lua::push(state, p, q);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -292,6 +295,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncOptionalMultiple;
     CHECK(func.name == "funcOptionalMultiple");
@@ -311,11 +315,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") 
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ghoul::Dictionary q;
     q.setValue("A", 4);
     q.setValue("B", 5.5);
-    q.setValue("C", "6.6");
+    q.setValue("C", "6.6"s);
     ghoul::lua::push(state, true, p, q);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -328,6 +332,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") 
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncVectorArguments;
     CHECK(func.name == "funcVectorArguments");
@@ -346,19 +351,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ps.push_back(p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", "6.6");
+    p2.setValue("C", "6.6"s);
     ps.push_back(p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", "9.9");
+    p3.setValue("C", "9.9"s);
     ps.push_back(p3);
     ghoul::lua::push(state, 3, ps);
     func.function(state);
@@ -379,6 +384,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncOptionalVectorArguments;
     CHECK(func.name == "funcOptionalVectorArguments");
@@ -399,19 +405,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ps.push_back(p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", "6.6");
+    p2.setValue("C", "6.6"s);
     ps.push_back(p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", "9.9");
+    p3.setValue("C", "9.9"s);
     ps.push_back(p3);
     ghoul::lua::push(state, true, 3, ps);
     func.function(state);
@@ -436,6 +442,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncMapArguments;
     CHECK(func.name == "funcMapArguments");
@@ -453,19 +460,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
     ghoul::Dictionary p;
     p.setValue("A", 1);
     p.setValue("B", 2.2);
-    p.setValue("C", "3.3");
+    p.setValue("C", "3.3"s);
     ps.setValue("first", p);
 
     ghoul::Dictionary p2;
     p2.setValue("A", 4);
     p2.setValue("B", 5.5);
-    p2.setValue("C", "6.6");
+    p2.setValue("C", "6.6"s);
     ps.setValue("second", p2);
 
     ghoul::Dictionary p3;
     p3.setValue("A", 7);
     p3.setValue("B", 8.8);
-    p3.setValue("C", "9.9");
+    p3.setValue("C", "9.9"s);
     ps.setValue("third", p3);
 
     ghoul::lua::push(state, ps);

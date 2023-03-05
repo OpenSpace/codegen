@@ -309,6 +309,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  OptionalVector Arguments") {
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Map Arguments") {
     using namespace openspace::scripting;
+    using namespace std::string_literals;
 
     LuaLibrary::Function func = codegen::lua::FuncMapArguments;
     CHECK(func.name == "funcMapArguments");
@@ -322,9 +323,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Map Arguments") {
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     ghoul::Dictionary es;
-    es.setValue("first", "A");
-    es.setValue("second", "B");
-    es.setValue("third", "C");
+    es.setValue("first", "A"s);
+    es.setValue("second", "B"s);
+    es.setValue("third", "C"s);
 
     ghoul::lua::push(state, es);
     func.function(state);
