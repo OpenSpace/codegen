@@ -252,6 +252,11 @@ struct Function {
 
     VariableType* returnValue = nullptr;
     std::vector<Variable*> arguments;
+
+    struct {
+        std::string file;
+        int line = 0;
+    } sourceLocation;
 };
 
 

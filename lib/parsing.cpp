@@ -29,6 +29,7 @@
 #include <fmt/format.h>
 #include <algorithm>
 #include <cassert>
+#include <filesystem>
 #include <numeric>
 
 namespace {
@@ -1336,12 +1337,17 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     return f;
 }
 
-[[nodiscard]] Code parse(std::string codeStr) {
+[[nodiscard]] Code parse(std::string codeStr, std::string fileName) {
     // When trying to generate code checked out on a Windows machine on a Linux virtual
     // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
     std::string_view code = codeStr;
+
+    // We want to keep track of the line number where we find different parts. Since we
+    // remove the code parts that we have successfully dealt with, we need to manually
+    // count the number of lines that have already been processed
+    int nSkippedLines = 0;
 
     Code res;
 
@@ -1405,6 +1411,24 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 );
                 assert(f);
 
+                // Count the number of \n between the beginning and 'begin' to get the
+                // line number. Since we do line numbers 1-based, we have to add 1
+                int nLines = static_cast<int>(
+                    std::count(code.begin(), code.begin() + next.cursors.first, '\n')
+                ) + 1;
+
+                f->sourceLocation.line = nSkippedLines + nLines;
+                
+                // There is probably something smarter that we can do here, but if we use
+                // the `fileName` as is we are going to end up with the 
+                f->sourceLocation.file = fileName;
+                std::replace(
+                    f->sourceLocation.file.begin(),
+                    f->sourceLocation.file.end(),
+                    '\\',
+                    '/'
+                );
+
                 for (Function* func : res.luaWrapperFunctions) {
                     if (f->functionName == func->functionName) {
                         throw CodegenError(fmt::format(
@@ -1421,10 +1445,15 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 throw std::logic_error("Missing case exception");
         }
 
-        // Remove the code that we just handled
-        code.remove_prefix(
-            std::min(next.cursors.first + next.cursors.second, code.size())
+        const size_t p = std::min(next.cursors.first + next.cursors.second, code.size());
+
+        // Count the number of skipped lines so that our source location stays correct
+        nSkippedLines += static_cast<int>(
+            std::count(code.begin(), code.begin() + p, '\n')
         );
+
+        // Remove the code that we just handled
+        code.remove_prefix(p);
     }
 
     return res;

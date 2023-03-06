@@ -28,6 +28,6 @@
 #include "types.h"
 #include <string>
 
-[[nodiscard]] Code parse(std::string codeStr);
+[[nodiscard]] Code parse(std::string codeStr, std::string fileName = "");
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

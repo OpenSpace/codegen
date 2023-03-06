@@ -903,7 +903,24 @@ std::string generateLuaFunction(Function* f) {
     );
 
     // Documentation
-    result += "    \"" + f->documentation + "\"\n";
+    result += "    \"" + f->documentation + "\",\n";
+
+    // Source location
+    if (f->sourceLocation.file.empty()) {
+        // The `sourceLocation.file` is empty for all of the unit tests where we call the
+        // `parse` function manually, so that not filename exists
+        result += fmt::format("    {{ \"<null>\", {} }}\n", f->sourceLocation.line);
+    }
+    else {
+        // `sourceLocation.file` is the full path to the file, but we only want to store
+        // the path relative to the working directory
+        result += fmt::format(
+            "    {{ \"{}\", {} }}\n",
+            f->sourceLocation.file,
+            f->sourceLocation.line
+        );
+    }
+
     result += "};\n\n";
     
     return result;
@@ -1001,7 +1018,7 @@ Result handleFile(std::filesystem::path path) {
 
 
     std::string p = path.string();
-    Code code = parse(std::move(res));
+    Code code = parse(std::move(res), p);
     if (code.structs.empty() && code.enums.empty() && code.luaWrapperFunctions.empty()) {
         return Result::NotProcessed;
     }
