@@ -126,8 +126,9 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 
     constexpr std::string_view LuaWrapperOptionalTypeExtraction = R"(
         {0} {1};
-        if (ghoul::lua::hasValue<{2}>(L)) {{
-            {1} = ghoul::lua::value<{2}>(L);
+        if (ghoul::lua::hasValue<{2}>(L, 1)) {{
+            {1} = ghoul::lua::value<{2}>(L, 1, ghoul::lua::PopValue::No);
+            lua_remove(L, 1);
         }}
 )";
 
