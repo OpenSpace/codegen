@@ -57,6 +57,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::color()]]`:  Marks a glm::vec3, glm::vec4, glm::dvec3, or glm::dvec4 as containing a color, meaning that a `ColorVerifier` is generated that checks whether all components are in the range `[0,1]`. The parameter must be either empty, `true`, or `false`
  - `[[codegen::directory()]]`: Marks a `std::filesystem::path` to be allowed to be a directory. The parameter must be either empty, `true`, or `false`
  - `[[codegen::notempty()]]`: Checks that a `std::string` that this attribute is attached to is not empty
+ - `[[codegen::identifier()]]`: Checks that a `std::string` that this attribute is attached to fulfills the requirements of an identifier, meaning that is doesn't contain any whitespaces or dots
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:

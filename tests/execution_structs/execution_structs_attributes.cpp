@@ -785,6 +785,20 @@ namespace {
         // optional vector dateTime value documentation
         std::optional<std::vector<std::string>> optionalVectorDateTimeValue
             [[codegen::datetime()]];
+
+
+        // identifier value documentation
+        std::string identifierValue [[codegen::identifier()]];
+
+        // optional identifier value documentation
+        std::optional<std::string> optionalIdentifierValue [[codegen::identifier()]];
+
+        // vector identifier value documentation
+        std::vector<std::string> vectorIdentifierValue [[codegen::identifier()]];
+
+        // optional vector identifier value documentation
+        std::optional<std::vector<std::string>> optionalVectorIdentifierValue
+            [[codegen::identifier()]];
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
@@ -1504,6 +1518,23 @@ TEST_CASE("Execution/Structs/Attributes:  Bake") {
         d.setValue("OptionalVectorDateTimeValue", e);
     }
 
+    d.setValue("IdentifierValue", "abcdef"s);
+    d.setValue("OptionalIdentifierValue", "defghi"s);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "ghijkl"s);
+        e.setValue("2", "jklomn"s);
+        e.setValue("3", "omnpqr"s);
+        d.setValue("VectorIdentifierValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "pqrstu"s);
+        e.setValue("2", "stuvwx"s);
+        e.setValue("3", "vwxyzz"s);
+        d.setValue("OptionalVectorIdentifierValue", e);
+    }
+
     const Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
@@ -2008,7 +2039,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 213);
+    REQUIRE(doc.entries.size() == 217);
     {
         DocumentationEntry e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -4835,5 +4866,46 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Date and time");
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[213];
+        CHECK(e.key == "IdentifierValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "identifier value documentation");
+        CHECK(e.verifier->type() == "Identifier");
+        CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[214];
+        CHECK(e.key == "OptionalIdentifierValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optional identifier value documentation");
+        CHECK(e.verifier->type() == "Identifier");
+        CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[215];
+        CHECK(e.key == "VectorIdentifierValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "vector identifier value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Identifier");
+        CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        DocumentationEntry e = doc.entries[216];
+        CHECK(e.key == "OptionalVectorIdentifierValue");
+        CHECK(e.optional);
+        CHECK(e.documentation == "optional vector identifier value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Identifier");
+        CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
     }
 }

@@ -52,6 +52,7 @@ namespace attributes {
     constexpr std::string_view Color = "color";
     constexpr std::string_view DateTime = "datetime";
     constexpr std::string_view Directory = "directory";
+    constexpr std::string_view Identifier = "identifier";
     constexpr std::string_view InList = "inlist";
     constexpr std::string_view InRange = "inrange";
     constexpr std::string_view Less = "less";
@@ -205,6 +206,7 @@ struct Variable {
         bool isDirectory = false;
         bool isColor = false;
         bool isDateTime = false;
+        bool isIdentifier = false;
         bool mustBeNotEmpty = false;
     };
     Attributes attributes;

@@ -111,6 +111,20 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         // optional vector dateTime value documentation
         std::optional<std::vector<std::string>> optionalVectorDateTimeValue
             [[codegen::datetime()]];
+
+        // identifier value documentation
+        std::string identifierValue [[codegen::identifier()]];
+
+        // optional identifier value documentation
+        std::optional<std::string> optionalIdentifierValue [[codegen::identifier()]];
+
+        // vector identifier value documentation
+        std::vector<std::string> vectorIdentifierValue [[codegen::identifier()]];
+
+        // optional vector identifier value documentation
+        std::optional<std::vector<std::string>> optionalVectorIdentifierValue
+            [[codegen::identifier()]];
+
 })";
 
     Code code = parse(Source);
@@ -121,7 +135,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 25);
+    REQUIRE(s->variables.size() == 29);
 
     {
         Variable* var = s->variables[0];
@@ -145,6 +159,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -170,6 +185,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -195,6 +211,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -220,6 +237,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -245,6 +263,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -270,6 +289,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -295,6 +315,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -320,6 +341,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -345,6 +367,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -371,6 +394,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -396,6 +420,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -421,6 +446,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -446,6 +472,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -471,6 +498,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -496,6 +524,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -521,6 +550,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -546,6 +576,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -571,6 +602,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -596,6 +628,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -621,6 +654,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -646,6 +680,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
     }
 
     {
@@ -670,6 +705,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -695,6 +731,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -720,6 +757,7 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -745,6 +783,110 @@ TEST_CASE("Parsing/Structs/Attributes/String") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+        {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "identifierValue");
+        CHECK(var->key == "\"IdentifierValue\"");
+        CHECK(generateTypename(var->type) == "std::string");
+        CHECK(var->comment == "identifier value documentation");
+        CHECK(var->attributes.isIdentifier);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "optionalIdentifierValue");
+        CHECK(var->key == "\"OptionalIdentifierValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::string>");
+        CHECK(var->comment == "optional identifier value documentation");
+        CHECK(var->attributes.isIdentifier);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "vectorIdentifierValue");
+        CHECK(var->key == "\"VectorIdentifierValue\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::string>");
+        CHECK(var->comment == "vector identifier value documentation");
+        CHECK(var->attributes.isIdentifier);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.mustBeNotEmpty);
+    }
+
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorIdentifierValue");
+        CHECK(var->key == "\"OptionalVectorIdentifierValue\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::string>>");
+        CHECK(var->comment == "optional vector identifier value documentation");
+        CHECK(var->attributes.isIdentifier);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 

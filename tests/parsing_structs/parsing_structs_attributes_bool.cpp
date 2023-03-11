@@ -66,6 +66,7 @@ TEST_CASE("Parsing/Structs/Attribute/Bool") {
     CHECK(!var->attributes.isColor);
     CHECK(!var->attributes.isDirectory);
     CHECK(!var->attributes.isDateTime);
+    CHECK(!var->attributes.isIdentifier);
     CHECK(!var->attributes.mustBeNotEmpty);
 
     std::string r = generateResult(code);

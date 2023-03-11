@@ -121,6 +121,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -146,6 +147,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -171,6 +173,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -196,6 +199,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -221,6 +225,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -246,6 +251,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -271,6 +277,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -296,6 +303,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -321,6 +329,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -346,6 +355,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -371,6 +381,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -396,6 +407,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -421,6 +433,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -446,6 +459,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -471,6 +485,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -496,6 +511,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 

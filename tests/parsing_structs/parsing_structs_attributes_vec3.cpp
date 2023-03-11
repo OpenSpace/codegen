@@ -180,6 +180,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -205,6 +206,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -230,6 +232,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -255,6 +258,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -280,6 +284,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -305,6 +310,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -330,6 +336,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -355,6 +362,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -380,6 +388,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -405,6 +414,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -430,6 +440,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -455,6 +466,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -480,6 +492,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -505,6 +518,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -530,6 +544,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -555,6 +570,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -580,6 +596,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -605,6 +622,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -630,6 +648,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -655,6 +674,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -680,6 +700,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -705,6 +726,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -730,6 +752,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -755,6 +778,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -780,6 +804,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -805,6 +830,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -830,6 +856,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -855,6 +882,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -880,9 +908,9 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
-
 
     {
         Variable* var = s->variables[29];
@@ -906,6 +934,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -931,6 +960,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -956,6 +986,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -981,6 +1012,7 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(var->attributes.reference.empty());
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 

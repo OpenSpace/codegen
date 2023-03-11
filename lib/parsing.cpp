@@ -214,6 +214,9 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::Color) {
             res.isColor = booleanValue(p.value);
         }
+        else if (p.key == attributes::Identifier) {
+            res.isIdentifier = booleanValue(p.value);
+        }
         else if (p.key == attributes::MustBeNotEmpty) {
             res.mustBeNotEmpty = booleanValue(p.value);
         }

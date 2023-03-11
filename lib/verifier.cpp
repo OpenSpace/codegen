@@ -71,6 +71,7 @@ namespace {
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (
@@ -84,6 +85,7 @@ namespace {
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (
@@ -96,6 +98,7 @@ namespace {
             report(attributes.reference, attributes::Reference);
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
@@ -106,6 +109,7 @@ namespace {
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::String) {
@@ -132,6 +136,7 @@ namespace {
             report(attributes.unequal, attributes::Unequal);
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
         else if (type == Type::Dictionary) {
@@ -148,6 +153,7 @@ namespace {
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
+            reportBool(attributes.isIdentifier, attributes::Identifier);
             reportBool(attributes.mustBeNotEmpty, attributes::Directory);
         }
     }
@@ -248,6 +254,9 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         }
         if (attr.isDateTime) {
             return "DateTimeVerifier";
+        }
+        if (attr.isIdentifier) {
+            return "IdentifierVerifier";
         }
         return res;
     }

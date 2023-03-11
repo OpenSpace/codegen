@@ -139,6 +139,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -165,6 +166,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -191,6 +193,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -216,6 +219,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -241,6 +245,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -266,6 +271,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -291,6 +297,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -316,6 +323,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -341,6 +349,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -366,6 +375,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -391,6 +401,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -416,6 +427,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -441,6 +453,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -466,6 +479,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -491,6 +505,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -516,6 +531,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -541,6 +557,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -566,6 +583,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -591,6 +609,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -616,6 +635,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -641,6 +661,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -666,6 +687,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -691,6 +713,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
@@ -716,6 +739,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isDirectory);
         CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
