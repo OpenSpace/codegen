@@ -95,7 +95,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Variant:  Bake") {
     using namespace std::string_literals;
-    
+
     {
         ghoul::Dictionary d1;
         d1.setValue("BoolDoubleValue", false);

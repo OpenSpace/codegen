@@ -41,7 +41,7 @@ namespace {
     return openspace::documentation::Documentation();
 }
 )";
-    
+
     constexpr std::string_view ToStringFallback = "template<typename T> [[maybe_unused]] std::string_view toString(T) { static_assert(sizeof(T) == 0); return \"\"; }";
     constexpr std::string_view FromStringFallback = "template<typename T> [[maybe_unused]] T fromString(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
 
@@ -113,7 +113,7 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 
     constexpr std::string_view DocumentationEpilog = R"(
     openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
-    
+
     // Move the entries from the parent doc into this one
     d.entries.insert(d.entries.begin(), parentDoc.entries.begin(), parentDoc.entries.end());
 
@@ -201,7 +201,7 @@ template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, st
         if (!dict.hasKey(k)) {
             throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
         }
-    }    
+    }
 
     for (size_t i = 1; i <= dict.size(); ++i) {
         T v;
@@ -214,7 +214,7 @@ template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, st
     constexpr std::string_view BakeFunctionMap = R"(
 template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
-    
+
     for (std::string_view k : dict.keys()) {
         T v;
         bakeTo(dict, k, &v);

@@ -572,7 +572,7 @@ std::string generateTypename(const VariantType* type, bool fullyQualified) {
         res += generateTypename(v, fullyQualified);
         res += ", ";
     }
-    
+
     res.pop_back();   // Remove the final ' '
     res.back() = '>'; // Replace the final , with the >
 

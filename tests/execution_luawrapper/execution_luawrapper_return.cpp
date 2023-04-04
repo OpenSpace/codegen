@@ -3444,14 +3444,14 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x3Vector") {
     REQUIRE(val.size() == 3);
     CHECK(val[0] == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
     CHECK(
-        val[1] == 
+        val[1] ==
         glm::mat3x3(
             10.10f, 11.11f, 12.12f, 13.13f, 14.14f,
             15.15f, 16.16f, 17.17f, 18.18f
         )
     );
     CHECK(
-        val[2] == 
+        val[2] ==
         glm::mat3x3(
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
             24.24f, 25.25f, 26.26f, 27.27f
@@ -3588,21 +3588,21 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat3x4Vector") {
     std::vector<glm::mat3x4> val = ghoul::lua::value<std::vector<glm::mat3x4>>(state);
     REQUIRE(val.size() == 3);
     CHECK(
-        val[0] == 
+        val[0] ==
         glm::mat3x4(
             1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
     CHECK(
-        val[1] == 
+        val[1] ==
         glm::mat3x4(
             13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
         )
     );
     CHECK(
-        val[2] == 
+        val[2] ==
         glm::mat3x4(
             25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
             31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
@@ -3655,12 +3655,12 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Map") {
     );
     REQUIRE(val.find("key2") != val.end());
     CHECK(
-        val.find("key2")->second == 
+        val.find("key2")->second ==
         glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
     );
     REQUIRE(val.find("key3") != val.end());
     CHECK(
-        val.find("key3")->second == 
+        val.find("key3")->second ==
         glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_close(state);
@@ -3720,11 +3720,11 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x2Vector") {
     REQUIRE(val.size() == 3);
     CHECK(val[0] == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     CHECK(
-        val[1] == 
+        val[1] ==
         glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
     );
     CHECK(
-        val[2] == 
+        val[2] ==
         glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
     );
     lua_close(state);
@@ -3746,7 +3746,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3") {
     REQUIRE(lua_gettop(state) == 1);
     glm::mat4x3 val = ghoul::lua::value<glm::mat4x3>(state);
     CHECK(
-        val == 
+        val ==
         glm::mat4x3(
             1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
@@ -3774,7 +3774,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Map") {
     CHECK(val.size() == 3);
     REQUIRE(val.find("key1") != val.end());
     CHECK(
-        val.find("key1")->second == 
+        val.find("key1")->second ==
         glm::mat4x3(
             1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
@@ -3858,21 +3858,21 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x3Vector") {
     std::vector<glm::mat4x3> val = ghoul::lua::value<std::vector<glm::mat4x3>>(state);
     REQUIRE(val.size() == 3);
     CHECK(
-        val[0] == 
+        val[0] ==
         glm::mat4x3(
             1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f,
             7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
         )
     );
     CHECK(
-        val[1] == 
+        val[1] ==
         glm::mat4x3(
             13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
         )
     );
     CHECK(
-        val[2] == 
+        val[2] ==
         glm::mat4x3(
             25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
             31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
@@ -3966,7 +3966,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Optional with value") {
     REQUIRE(lua_gettop(state) == 1);
     glm::mat4x4 val = ghoul::lua::value<glm::mat4x4>(state);
     CHECK(
-        val == 
+        val ==
         glm::mat4x4(
             1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f,
             9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f

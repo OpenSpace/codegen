@@ -81,7 +81,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Substruct:  Bake") {
     using namespace std::string_literals;
-    
+
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
@@ -113,11 +113,11 @@ TEST_CASE("Execution/Structs/Substruct:  Bake") {
         ghoul::Dictionary e;
         e.setValue("A", "abc"s);
         e.setValue("B", 2.0);
-        
+
         ghoul::Dictionary f;
         f.setValue("A", "def"s);
         f.setValue("B", 3.0);
-        
+
         d.setValue("StructDValue", e);
 
         {

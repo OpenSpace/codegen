@@ -34,19 +34,19 @@ namespace {
     struct [[codegen::Dictionary(BasicTypes)]] Parameters {
         // bool value documentation
         bool boolValue;
-        
+
         // int value documentation
         int intValue;
 
         // int value 2 documentation
         int intValue2;
-        
+
         // double value documentation
         double doubleValue;
-        
+
         // float value documentation
         float floatValue;
-        
+
         // string value documentation
         std::string stringValue;
 
@@ -58,34 +58,34 @@ namespace {
 
         // directory value documentation
         std::filesystem::path directoryValue [[codegen::directory()]];
-        
+
         // ivec2 value documentation
         glm::ivec2 ivec2Value;
-        
+
         // ivec3 value documentation
         glm::ivec3 ivec3Value;
-        
+
         // ivec4 value documentation
         glm::ivec4 ivec4Value;
-        
+
         // dvec2 value documentation
         glm::dvec2 dvec2Value;
-        
+
         // dvec3 value documentation
         glm::dvec3 dvec3Value;
-        
+
         // dvec4 value documentation
         glm::dvec4 dvec4Value;
-        
+
         // vec2 value documentation
         glm::vec2 vec2Value;
-        
+
         // vec3 value documentation
         glm::vec3 vec3Value;
-        
+
         // vec4 value documentation
         glm::vec4 vec4Value;
-        
+
         // mat2x2 value documentation
         glm::mat2x2 mat2x2Value;
 
@@ -94,13 +94,13 @@ namespace {
 
         // mat2x3 value documentation
         glm::mat2x3 mat2x3Value;
-        
+
         // mat2x4 value documentation
         glm::mat2x4 mat2x4Value;
-        
+
         // mat3x2 value documentation
         glm::mat3x2 mat3x2Value;
-        
+
         // mat3x3 value documentation
         glm::mat3x3 mat3x3Value;
 
@@ -109,13 +109,13 @@ namespace {
 
         // mat3x4 value documentation
         glm::mat3x4 mat3x4Value;
-        
+
         // mat4x2 value documentation
         glm::mat4x2 mat4x2Value;
-        
+
         // mat4x3 value documentation
         glm::mat4x3 mat4x3Value;
-        
+
         // mat4x4 value documentation
         glm::mat4x4 mat4x4Value;
 
@@ -130,13 +130,13 @@ namespace {
 
         // dmat2x3 value documentation
         glm::dmat2x3 dmat2x3Value;
-        
+
         // dmat2x4 value documentation
         glm::dmat2x4 dmat2x4Value;
-        
+
         // dmat3x2 value documentation
         glm::dmat3x2 dmat3x2Value;
-        
+
         // dmat3x3 value documentation
         glm::dmat3x3 dmat3x3Value;
 
@@ -145,13 +145,13 @@ namespace {
 
         // dmat3x4 value documentation
         glm::dmat3x4 dmat3x4Value;
-        
+
         // dmat4x2 value documentation
         glm::dmat4x2 dmat4x2Value;
-        
+
         // dmat4x3 value documentation
         glm::dmat4x3 dmat4x3Value;
-        
+
         // dmat4x4 value documentation
         glm::dmat4x4 dmat4x4Value;
 
@@ -166,7 +166,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Basic/Types:  Bake") {
     using namespace std::string_literals;
-    
+
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types.txt").string();
     {

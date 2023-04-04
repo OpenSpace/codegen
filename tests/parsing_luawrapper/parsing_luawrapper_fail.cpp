@@ -64,7 +64,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
     [[codegen::luawrap]] void foo(std::list<int> abc) {
     }
 )";
-    
+
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,

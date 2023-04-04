@@ -41,7 +41,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
     using namespace std::string_literals;
-    
+
     {
         ghoul::Dictionary d;
         const Parameters p = codegen::bake<Parameters>(d);
@@ -95,7 +95,7 @@ TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Documentation") {
     REQUIRE(u->documentations.size() == 1);
     CHECK(u->documentations[0].key == "*");
     CHECK(u->documentations[0].verifier->type() == "String");
-    StringVerifier* x = 
+    StringVerifier* x =
         dynamic_cast<StringVerifier*>(u->documentations[0].verifier.get());
     REQUIRE(x);
     CHECK(x->mustBeNotEmpty() == false);

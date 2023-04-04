@@ -75,7 +75,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Shadowing:  Bake") {
     using namespace std::string_literals;
-    
+
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;

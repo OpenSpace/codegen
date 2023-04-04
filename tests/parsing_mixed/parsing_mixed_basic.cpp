@@ -123,7 +123,7 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs") {
     struct [[codegen::Dictionary(MixedStruct)]] Struct {
         int value;
         double value2;
-};   
+};
 )";
 
     Code code = parse(Source);

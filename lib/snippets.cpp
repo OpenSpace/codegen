@@ -209,7 +209,7 @@ std::string enumToEnumMapping(Enum* e) {
     std::string result = fmt::format(R"(
 template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
     switch (value) {{
-        // If you end up here following a compiler error saying something about 
+        // If you end up here following a compiler error saying something about
         // 'illegal qualified name in member declaration' or such nonsense, then you tried
         // to map an enum A to another enum B and A has an enum value that B does not
         // have. For example enum class A {{ Value1, Value2 }}; enum class B {{ Value1 }};

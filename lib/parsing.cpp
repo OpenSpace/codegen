@@ -44,7 +44,7 @@ namespace {
  * Extracts everything until the next newline character and updates the \param cursor to
  * the following character. Any whitespaces from the extracted line are trimmed from
  * either end.
- * 
+ *
  * \param sv The string from which the line is extracted
  * \param cursor The location inside \p sv that is the beginning of the line extraction
  */
@@ -705,7 +705,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                 if (stack.back()->type == StackElement::Type::Enum && !enumBuffer.empty())
                 {
                     Enum* e = static_cast<Enum*>(stack.back());
-                
+
                     enumBuffer += line;
                     EnumElement* el = parseEnumElement(enumBuffer);
                     assert(el);
@@ -761,7 +761,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                     enumBuffer += ' ';
                     continue;
                 }
-                
+
                 EnumElement* el;
                 if (enumBuffer.empty()) {
                     el = parseEnumElement(line);
@@ -912,7 +912,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         // Skip the first whitespace(s)
         cursor = content.find_first_not_of(' ', cursor);
         loc.first = cursor;
-        
+
         // The name of the variable is all characters until the first separator which is
         // one of these four characters
         cursor = content.find_first_of(" ,=)", cursor);
@@ -928,7 +928,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     // up in the file, so we have to be a bit conservative with what we try to pick up
     {
         using namespace std::literals;
-        
+
         size_t b = begin - AttributeLuaWrap.size();
 
 
@@ -1029,7 +1029,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
         // People might be using \ in the documentation which we should escape. Similarly
         // we want to replace " with \"
-        escapeString(f->documentation); 
+        escapeString(f->documentation);
     }
 
     // Check if there are any arguments to the luawrap attribute, which would be the
@@ -1270,7 +1270,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             while (content[equalLoc] == ' ') {
                 equalLoc += 1;
             }
-            
+
             std::string_view defaultValue = content.substr(equalLoc, cursor - equalLoc);
             ot->defaultArgument = std::string(defaultValue);
             v->type = ot;
@@ -1421,9 +1421,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 ) + 1;
 
                 f->sourceLocation.line = nSkippedLines + nLines;
-                
+
                 // There is probably something smarter that we can do here, but if we use
-                // the `fileName` as is we are going to end up with the 
+                // the `fileName` as is we are going to end up with the
                 f->sourceLocation.file = fileName;
                 std::replace(
                     f->sourceLocation.file.begin(),

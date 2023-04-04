@@ -295,7 +295,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic") {
         lua_State* state = luaL_newstate();
         REQUIRE(state);
         lua_atpanic(state, panicFunc);
-        
+
         CHECK_THROWS_MATCHES(
             func.function(state),
             std::runtime_error, Catch::Matchers::Message("excepted exception")

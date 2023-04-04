@@ -167,7 +167,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake") {
     using namespace std::string_literals;
-    
+
     std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile1 =
         (path / "codegen_execution_basic_types_optional_vector_1.txt").string();

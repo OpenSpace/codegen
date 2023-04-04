@@ -318,7 +318,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         }
         return res;
     }
-    else if (type == Type::Ivec4) { 
+    else if (type == Type::Ivec4) {
         std::string res = "IntVector4Verifier";
         if (!attr.inrange.empty()) {
             res = addQualifier(res, "InRangeVerifier", attr.inrange);

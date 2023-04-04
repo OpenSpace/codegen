@@ -155,7 +155,7 @@ namespace {
 
     [[codegen::luawrap]] void funcMapArguments(std::map<std::string, Parameter> ps) {
         REQUIRE(ps.size() == 3);
-        
+
         std::vector<std::string> keys;
         for (const std::pair<const std::string, Parameter>& p : ps) {
             keys.push_back(p.first);
@@ -165,7 +165,7 @@ namespace {
         CHECK(ps["first"].a == 1);
         CHECK(ps["first"].b == Catch::Approx(2.2));
         CHECK(ps["first"].c == "3.3");
-        
+
         CHECK(keys[1] == "second");
         CHECK(ps["second"].a == 4);
         CHECK(ps["second"].b == Catch::Approx(5.5));

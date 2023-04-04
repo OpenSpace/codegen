@@ -51,7 +51,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
 
         // lessValueInt documentation
         int lessValueInt [[codegen::less(-5)]];
-        
+
         // lessValueIntOptional documentation
         std::optional<int> lessValueIntOptional [[codegen::less(-5)]];
 

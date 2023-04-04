@@ -62,7 +62,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Map:  Bake") {
     using namespace std::literals;
-    
+
     ghoul::Dictionary d;
     {
         ghoul::Dictionary e;
@@ -737,7 +737,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].documentation.empty());
         CHECK(w->documentations[0].verifier->type() == "String");
-        StringVerifier* u = 
+        StringVerifier* u =
             dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
         REQUIRE(u);
         CHECK(u->mustBeNotEmpty() == false);

@@ -74,7 +74,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Enums:  Bake") {
     using namespace std::string_literals;
-    
+
     ghoul::Dictionary d;
     d.setValue("EnumAValue", "Value1"s);
     d.setValue("EnumBValue", "value2"s);

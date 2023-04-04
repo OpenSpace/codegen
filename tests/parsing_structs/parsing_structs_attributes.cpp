@@ -44,7 +44,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing
     CHECK(code.enums.size() == 0);
     Struct* s = code.structs.front();
     REQUIRE(s->variables.size() == 2);
-    
+
     {
         Variable* var = s->variables[0];
         REQUIRE(var);

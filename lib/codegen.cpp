@@ -127,7 +127,7 @@ namespace {
 
         return res;
     }
-    
+
     std::vector<const VariableType*> usedTypes(const std::vector<Struct*> structs) {
         std::vector<const VariableType*> res;
 
@@ -365,7 +365,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
 
     for (VariableType* t : variantType->types) {
         std::string typeName = generateTypename(t);
-        
+
         const bool isEnumType =
             t->isCustomType() &&
             static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
@@ -489,7 +489,7 @@ std::string writeRootEnumConverter(Enum* e) {
     // toString
     res += fmt::format(R"(
 template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
-    switch (t) {{ 
+    switch (t) {{
 )",
         e->name
     );
@@ -820,7 +820,7 @@ std::string generateLuaFunction(Function* f) {
         }
         else if (f->returnValue->isCustomType()) {
             CustomType* vt = static_cast<CustomType*>(f->returnValue);
-            
+
             switch (vt->type->type) {
                 case StackElement::Type::Struct: {
                     const Struct* s = static_cast<const Struct*>(vt->type);
@@ -922,7 +922,7 @@ std::string generateLuaFunction(Function* f) {
     }
 
     result += "};\n\n";
-    
+
     return result;
 }
 
@@ -989,7 +989,7 @@ std::string generateResult(const Code& code) {
     if (!code.structs.empty()) {
         result += generateStructsResult(code, hasWrittenMappingFallback);
     }
-    
+
     if (!code.enums.empty()) {
         result += generateEnumResult(code, hasWrittenMappingFallback);
     }

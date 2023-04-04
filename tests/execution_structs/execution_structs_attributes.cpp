@@ -228,7 +228,7 @@ namespace {
 
         // lessValueInt documentation
         int lessValueInt [[codegen::less(20)]];
-        
+
         // lessValueIntOptional documentation
         std::optional<int> lessValueIntOptional [[codegen::less(20)]];
 
@@ -805,7 +805,7 @@ namespace {
 
 TEST_CASE("Execution/Structs/Attributes:  Bake") {
     using namespace std::string_literals;
-    
+
     openspace::documentation::Documentation doc;
     doc.id = "abc";
     DocEng.addDocumentation(doc);
