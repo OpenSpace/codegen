@@ -59,7 +59,7 @@ namespace {
 #include "execution_enums_mapping_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Enums/Mapping:  From String") {
+TEST_CASE("Execution/Enums/Mapping:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");
     CHECK(v1 == Enum1::Value1);
     Enum1 v2 = codegen::fromString<Enum1>("value2");
@@ -80,7 +80,7 @@ TEST_CASE("Execution/Enums/Mapping:  From String") {
     CHECK(mv6 == Mapped3::Val6);
 }
 
-TEST_CASE("Execution/Enums/Mapping:  To String") {
+TEST_CASE("Execution/Enums/Mapping:  To String", "[Execution][Enums]") {
     std::string_view v1 = codegen::toString(Enum1::Value1);
     CHECK(v1 == "Value1");
     std::string_view v2 = codegen::toString(Enum1::value2);

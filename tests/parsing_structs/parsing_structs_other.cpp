@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing: Comments") {
+TEST_CASE("Parsing: Comments", "[Parsing][Misc]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Comments)]] Parameters {
     // multi
@@ -167,7 +167,7 @@ Lines, With, Weird,
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing: Multiple") {
+TEST_CASE("Parsing: Multiple", "[Parsing][Misc]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(P1)]] Param1 {
     int abc;

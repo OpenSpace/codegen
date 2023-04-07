@@ -803,7 +803,7 @@ namespace {
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Attributes:  Bake") {
+TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     openspace::documentation::Documentation doc;
@@ -2035,7 +2035,7 @@ TEST_CASE("Execution/Structs/Attributes:  Bake") {
     CHECK((*p.optionalVectorDateTimeValue)[2] == "1997 03 11 12:40:53");
 }
 
-TEST_CASE("Execution/Structs/Attributes:  Documentation") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

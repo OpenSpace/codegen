@@ -93,7 +93,7 @@ namespace {
 #include "execution_structs_variant_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Variant:  Bake") {
+TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     {
@@ -353,7 +353,7 @@ TEST_CASE("Execution/Structs/Variant:  Bake") {
     }
 }
 
-TEST_CASE("Execution/Structs/Variant:  Documentation") {
+TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

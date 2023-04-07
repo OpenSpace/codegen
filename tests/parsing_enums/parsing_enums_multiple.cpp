@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
+TEST_CASE("Parsing/Enums/Multiple:  Multiple", "[Parsing][Enums]") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1,
@@ -55,7 +55,7 @@ TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
         Enum* e = code.enums[0];
         REQUIRE(e);
         CHECK(e->parent == nullptr);
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
         {
             EnumElement* ee = e->elements[0];
@@ -78,7 +78,7 @@ TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
         Enum* e = code.enums[1];
         REQUIRE(e);
         CHECK(e->parent == nullptr);
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 2);
         {
             EnumElement* ee = e->elements[0];
@@ -95,7 +95,7 @@ TEST_CASE("Parsing/Enums/Multiple:  Multiple") {
     {
         Enum* e = code.enums[2];
         CHECK(e->parent == nullptr);
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 1);
         {
             EnumElement* ee = e->elements[0];

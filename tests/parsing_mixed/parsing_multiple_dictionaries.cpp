@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/MultipleDictionaries") {
+TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(StructA)]] StructA {
         int value;
@@ -134,7 +134,7 @@ TEST_CASE("Parsing/MultipleDictionaries") {
 }
 
 
-//TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum") {
+//TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Misc]") {
 //    constexpr const char Source[] = R"(
 //    struct [[codegen::Dictionary(MixedStruct)]] Struct {
 //        int value;

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::ivec3 arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::ivec3 arg = glm::ivec3(1, 2, 3)) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, glm::ivec3> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<glm::ivec3> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<glm::ivec3> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  ivec3 vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  ivec3") {
+TEST_CASE("Parsing/LuaWrapper/Return:  ivec3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] glm::ivec3 foo() {
         return glm::ivec3(1, 2, 3);
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, glm::ivec3> foo() {
         return { "test", glm::ivec3(1, 2) };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<glm::ivec3> foo() {
         return glm::ivec3(1, 2, 3);
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  ivec3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<glm::ivec3> foo() {
         return { glm::ivec3(1, 2, 3) };

@@ -127,7 +127,7 @@ namespace {
 #include "execution_luawrapper_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper:  Basic") {
+TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     using namespace openspace::scripting;
     resetTestRuns();
 

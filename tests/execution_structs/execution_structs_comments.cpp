@@ -101,7 +101,7 @@ namespace {
 #include "execution_structs_comments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Comments") {
+TEST_CASE("Execution/Structs/Comments", "[Execution][Structs]") {
     using namespace openspace::documentation;
 
     Documentation d = codegen::doc<Parameters>("abc");

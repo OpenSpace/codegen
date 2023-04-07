@@ -36,7 +36,7 @@ namespace {
 #include "execution_structs_simple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Simple:  Bake") {
+TEST_CASE("Execution/Structs/Simple:  Bake", "[Execution][Structs]") {
     ghoul::Dictionary d;
     d.setValue("Value", 5.0);
 
@@ -44,7 +44,7 @@ TEST_CASE("Execution/Structs/Simple:  Bake") {
     CHECK(p.value == 5.f);
 }
 
-TEST_CASE("Execution/Structs/Simple:  Documentation") {
+TEST_CASE("Execution/Structs/Simple:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

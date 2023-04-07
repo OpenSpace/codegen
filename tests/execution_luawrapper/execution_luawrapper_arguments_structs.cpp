@@ -189,7 +189,7 @@ namespace {
 #include "execution_luawrapper_arguments_structs_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void") {
+TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void", "[Execution][LuaWrapper]") {
     using namespace openspace::scripting;
 
     LuaLibrary::Function func = codegen::lua::FuncVoid;
@@ -206,7 +206,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  One Parameter",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -231,7 +235,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One Parameter") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  One optional Parameter",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -262,7 +270,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  One optional Parameter") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  Two Parameters",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -330,7 +342,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") 
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  Vector Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -382,7 +398,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Vector Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -440,7 +460,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  OptionalVector Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  Map Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 
@@ -481,7 +505,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Map Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Return value") {
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Structs:  Return value",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace openspace::scripting;
     using namespace std::string_literals;
 

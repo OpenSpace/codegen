@@ -300,7 +300,7 @@ Enum* parseEnum(std::string_view line) {
                 if (a.value.empty()) {
                     throw CodegenError("The `map` attribute must have a string argument");
                 }
-                e->mappedTo = a.value;
+                e->attributes.mappedTo = a.value;
             }
         }
         cursor = endAttr + 1;

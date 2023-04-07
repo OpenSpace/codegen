@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Structs/Attribute/Dictionary") {
+TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // referenceValue documentation

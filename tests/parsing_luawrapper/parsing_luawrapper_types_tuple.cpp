@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
+TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::tuple<bool> foo() {
         return true;
@@ -59,7 +59,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
+TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::tuple<int, double> foo() {
         return 1;
@@ -99,7 +99,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path") {
+TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path", "[Parsing][LuaWrapper]")
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::tuple<float, std::string, std::filesystem::path> foo() {
         return 1.f;

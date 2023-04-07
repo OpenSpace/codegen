@@ -43,7 +43,7 @@ namespace {
 #include "execution_luawrapper_comments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Comments:  Simple") {
+TEST_CASE("Execution/LuaWrapper/Comments:  Simple", "[Execution][LuaWrapper]") {
     CHECK(codegen::lua::Foo.name == "foo");
     CHECK(codegen::lua::Foo.function);
     CHECK(

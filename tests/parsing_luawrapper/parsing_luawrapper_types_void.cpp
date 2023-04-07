@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  void") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  void", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func() {
     }
@@ -50,7 +50,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  void") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  void") {
+TEST_CASE("Parsing/LuaWrapper/Return:  void", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo() {
     }

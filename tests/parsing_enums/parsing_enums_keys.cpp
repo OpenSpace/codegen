@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Enums/Keys:  Keys") {
+TEST_CASE("Parsing/Enums/Keys:  Keys", "[Parsing][Enums]") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1 [[codegen::key("KeyForValue1")]],
@@ -44,7 +44,7 @@ TEST_CASE("Parsing/Enums/Keys:  Keys") {
     REQUIRE(e);
 
     CHECK(e->parent == nullptr);
-    CHECK(e->mappedTo.empty());
+    CHECK(e->attributes.mappedTo.empty());
     REQUIRE(e->elements.size() == 3);
     {
         EnumElement* ee = e->elements[0];

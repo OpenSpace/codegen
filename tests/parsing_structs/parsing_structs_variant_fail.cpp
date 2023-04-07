@@ -30,7 +30,9 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Structs/Variant/Error:  Multiple Vectors") {
+namespace CM = Catch::Matchers;
+
+TEST_CASE("Parsing/Structs/Variant/Error:  Multiple Vectors", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
@@ -40,11 +42,12 @@ struct [[codegen::Dictionary(D)]] P {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, Catch::Matchers::StartsWith("We can't have a variant containing multiple vector types")
+        CodegenError,
+        CM::StartsWith("We can't have a variant containing multiple vector types")
     );
 }
 
-TEST_CASE("Parsing/Structs/Variant/Error:  Custom substruct") {
+TEST_CASE("Parsing/Structs/Variant/Error:  Custom substruct", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     struct A {
@@ -57,11 +60,11 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::StartsWith("Unsupported type 'A' found in variant list")
+        CM::StartsWith("Unsupported type 'A' found in variant list")
     );
 }
 
-TEST_CASE("Parsing/Structs/Variant/Error:  Internal optional") {
+TEST_CASE("Parsing/Structs/Variant/Error:  Internal optional", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::optional<int>, float> v;
@@ -71,11 +74,11 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::StartsWith("Unsupported type 'std::optional<int>' found in variant list")
+        CM::StartsWith("Unsupported type 'std::optional<int>' found in variant list")
     );
 }
 
-TEST_CASE("Parsing/Structs/Variant/Error:  Nested variants") {
+TEST_CASE("Parsing/Structs/Variant/Error:  Nested variants", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::variant<int, float>, float> v;
@@ -85,6 +88,6 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        Catch::Matchers::StartsWith("Unsupported type 'std::variant<int, float>' found in variant list")
+        CM::StartsWith("Unsupported type 'std::variant<int, float>' found in variant")
     );
 }

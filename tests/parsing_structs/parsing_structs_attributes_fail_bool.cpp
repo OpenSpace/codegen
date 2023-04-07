@@ -32,57 +32,82 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  annotation") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  annotation", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector annotation") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector annotation",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional annotation") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional annotation",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'annotation'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  inlist") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  inlist",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'inlist'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'inlist'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector inlist") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector inlist",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'inlist'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'inlist'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional inlist") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional inlist",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inlist(1, 2)]];
 };)";
@@ -92,7 +117,7 @@ std::optional<bool> v [[codegen::inlist(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  inrange") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  inrange", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::inrange(1, 2)]];
 };)";
@@ -102,7 +127,8 @@ bool v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector inrange") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector inrange", "[Parsing][Structs]")
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::inrange(1, 2)]];
 };)";
@@ -112,7 +138,11 @@ std::vector<bool> v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional inrange") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional inrange",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::inrange(1, 2)]];
 };)";
@@ -122,7 +152,7 @@ std::optional<bool> v [[codegen::inrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  less") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  less", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::less(1)]];
 };)";
@@ -132,7 +162,7 @@ bool v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector less") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector less", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::less(1)]];
 };)";
@@ -142,7 +172,7 @@ std::vector<bool> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional less") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional less", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::less(1)]];
 };)";
@@ -152,7 +182,7 @@ std::optional<bool> v [[codegen::less(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  lessequal") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  lessequal", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::lessequal(1)]];
 };)";
@@ -162,7 +192,11 @@ bool v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector lessequal") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector lessequal",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::lessequal(1)]];
 };)";
@@ -172,7 +206,11 @@ std::vector<bool> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional lessequal") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional lessequal",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::lessequal(1)]];
 };)";
@@ -182,7 +220,7 @@ std::optional<bool> v [[codegen::lessequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  greater") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  greater", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greater(1)]];
 };)";
@@ -192,7 +230,8 @@ bool v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector greater") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector greater", "[Parsing][Structs]")
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greater(1)]];
 };)";
@@ -202,7 +241,11 @@ std::vector<bool> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional greater") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional greater",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greater(1)]];
 };)";
@@ -212,37 +255,48 @@ std::optional<bool> v [[codegen::greater(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  greaterequal") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  greaterequal", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector greaterequal") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector greaterequal",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional greaterequal") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional greaterequal",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
-        CodegenError, CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
+        CodegenError,
+        CM::StartsWith("Type 'bool' does not support attribute 'greaterequal'")
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  notinlist") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  notinlist", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinlist(1, 2)]];
 };)";
@@ -252,7 +306,11 @@ bool v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector notinlist") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector notinlist",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -262,7 +320,11 @@ std::vector<bool> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional notinlist") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional notinlist",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinlist(1, 2)]];
 };)";
@@ -272,7 +334,7 @@ std::optional<bool> v [[codegen::notinlist(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  notinrange") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  notinrange", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::notinrange(1, 2)]];
 };)";
@@ -282,7 +344,11 @@ bool v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector notinrange") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector notinrange",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::notinrange(1, 2)]];
 };)";
@@ -292,7 +358,11 @@ std::vector<bool> v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional notinrange") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional notinrange",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::notinrange(1, 2)]];
 };)";
@@ -302,7 +372,7 @@ std::optional<bool> v [[codegen::notinrange(1, 2)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  reference") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  reference", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::reference(1)]];
 };)";
@@ -312,7 +382,11 @@ bool v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector reference") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector reference",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::reference(1)]];
 };)";
@@ -322,7 +396,11 @@ std::vector<bool> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional reference") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional reference",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::reference(1)]];
 };)";
@@ -332,7 +410,7 @@ std::optional<bool> v [[codegen::reference(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  unequal") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  unequal", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::unequal(1)]];
 };)";
@@ -342,7 +420,8 @@ bool v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector unequal") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector unequal", "[Parsing][Structs]")
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::unequal(1)]];
 };)";
@@ -352,7 +431,11 @@ std::vector<bool> v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional unequal") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional unequal",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::unequal(1)]];
 };)";
@@ -362,7 +445,7 @@ std::optional<bool> v [[codegen::unequal(1)]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  color") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  color", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::color()]];
 };)";
@@ -372,7 +455,7 @@ bool v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector color") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector color", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::color()]];
 };)";
@@ -382,7 +465,8 @@ std::vector<bool> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional color") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional color", "[Parsing][Structs]")
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::color()]];
 };)";
@@ -392,7 +476,7 @@ std::optional<bool> v [[codegen::color()]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  directory") {
+TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  directory", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 bool v [[codegen::directory()]];
 };)";
@@ -402,7 +486,11 @@ bool v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  vector directory") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  vector directory",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<bool> v [[codegen::directory()]];
 };)";
@@ -412,7 +500,11 @@ std::vector<bool> v [[codegen::directory()]];
     );
 }
 
-TEST_CASE("Parsing/Structs/Attributes/Error/Bool:  optional directory") {
+TEST_CASE(
+    "Parsing/Structs/Attributes/Error/Bool:  optional directory",
+    "[Parsing][Structs]"
+)
+{
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<bool> v [[codegen::directory()]];
 };)";

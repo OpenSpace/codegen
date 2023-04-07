@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::filesystem::path arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::filesystem::path arg = std::filesystem::path()) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, std::filesystem::path> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<std::filesystem::path> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  path vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  path vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<std::filesystem::path> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  path") {
+TEST_CASE("Parsing/LuaWrapper/Return:  path", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::filesystem::path foo() {
         return std::filesystem::path("test");
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  path map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  path map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, std::filesystem::path> foo() {
         return { "test", std::filesystem::path("string") };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  path optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  path optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<std::filesystem::path> foo() {
         return std::filesystem::path("abc");
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  path vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  path vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<std::filesystem::path> foo() {
         return { std::filesystem::path("abc") };

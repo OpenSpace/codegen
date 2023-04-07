@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo() {
     }
@@ -50,7 +50,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     /*
      * Some example documentation
@@ -81,7 +81,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     // Some example documentation
     // that covers a few lines.
@@ -110,7 +110,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     /*
      * Some example documentation
@@ -139,7 +139,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2") {
+TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     // First lines that shouldn't be included
     // in the documentation

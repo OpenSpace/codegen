@@ -42,7 +42,7 @@ namespace {
 #include "execution_structs_multiple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Multiple:  Parameters") {
+TEST_CASE("Execution/Structs/Multiple:  Parameters", "[Execution][Structs]") {
     using namespace openspace::documentation;
 
     ghoul::Dictionary d;
