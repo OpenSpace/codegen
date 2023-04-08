@@ -43,8 +43,6 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Multiple:  Parameters", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-
     ghoul::Dictionary d;
     d.setValue("Abc", 1);
     d.setValue("Def", 2);

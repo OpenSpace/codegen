@@ -81,7 +81,7 @@ TEST_CASE(
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
+    const DocumentationEntry& e = doc.entries[0];
     CHECK(e.key == "Ovv");
     CHECK(e.optional);
     CHECK(e.documentation == "optional variant vector documentation");

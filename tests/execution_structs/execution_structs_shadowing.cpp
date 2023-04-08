@@ -114,7 +114,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
 
     REQUIRE(doc.entries.size() == 4);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "A");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -132,7 +132,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         CHECK(sil->values == std::vector<std::string>{ "Type1", "Type2" });
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "B");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -150,7 +150,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         CHECK(sil->values == std::vector<std::string>{ "Type3", "Type4" });
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "T");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -161,7 +161,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         CHECK(sil->values == std::vector<std::string>{ "Type5", "Type6" });
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "C");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());

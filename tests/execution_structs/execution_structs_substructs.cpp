@@ -157,7 +157,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
 
     REQUIRE(doc.entries.size() == 6);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "StructAValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable structAValue documentation");
@@ -172,7 +172,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         CHECK(dynamic_cast<IntVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "StructBValue");
         CHECK(e.optional);
         CHECK(e.documentation == "variable structBValue documentation");
@@ -187,7 +187,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         CHECK(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "StructCValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable structCValue documentation");
@@ -220,7 +220,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         CHECK(dynamic_cast<BoolVerifier*>(w->documentations[1].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "StructDValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable structDValue documentation");
@@ -244,7 +244,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         CHECK(dynamic_cast<IntVerifier*>(v->documentations[1].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[4];
+        const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "StructDVectorValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable structDVectorValue documentation");
@@ -278,7 +278,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         CHECK(dynamic_cast<IntVerifier*>(w->documentations[1].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[5];
+        const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "StructDOptionalValue");
         CHECK(e.optional);
         CHECK(e.documentation == "variable structDOptionalValue documentation");

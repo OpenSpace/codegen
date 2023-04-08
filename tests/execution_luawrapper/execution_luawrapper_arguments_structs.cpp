@@ -32,6 +32,8 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 
+using Function = openspace::scripting::LuaLibrary::Function;
+
 namespace {
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -190,9 +192,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVoid;
+    Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
@@ -211,10 +211,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncSingleArgument;
+    Function func = codegen::lua::FuncSingleArgument;
     CHECK(func.name == "funcSingleArgument");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "p");
@@ -240,10 +239,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncOptionalArgument;
+    Function func = codegen::lua::FuncOptionalArgument;
     CHECK(func.name == "funcOptionalArgument");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "hasValue");
@@ -275,10 +273,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncMultipleArguments;
+    Function func = codegen::lua::FuncMultipleArguments;
     CHECK(func.name == "funcMultipleArguments");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "p");
@@ -306,10 +303,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncOptionalMultiple;
+    Function func = codegen::lua::FuncOptionalMultiple;
     CHECK(func.name == "funcOptionalMultiple");
     REQUIRE(func.arguments.size() == 3);
     CHECK(func.arguments[0].name == "hasValue");
@@ -347,10 +343,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncVectorArguments;
+    Function func = codegen::lua::FuncVectorArguments;
     CHECK(func.name == "funcVectorArguments");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "n");
@@ -403,10 +398,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncOptionalVectorArguments;
+    Function func = codegen::lua::FuncOptionalVectorArguments;
     CHECK(func.name == "funcOptionalVectorArguments");
     REQUIRE(func.arguments.size() == 3);
     CHECK(func.arguments[0].name == "hasValue");
@@ -465,10 +459,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncMapArguments;
+    Function func = codegen::lua::FuncMapArguments;
     CHECK(func.name == "funcMapArguments");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "ps");
@@ -510,10 +503,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncReturnValue;
+    Function func = codegen::lua::FuncReturnValue;
     CHECK(func.name == "funcReturnValue");
     REQUIRE(func.arguments.size() == 3);
     CHECK(func.arguments[0].name == "a");

@@ -359,7 +359,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
 
     REQUIRE(doc.entries.size() == 15);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "boolDouble value documentation");
@@ -373,7 +373,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "FloatStringValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "floatString value documentation");
@@ -389,7 +389,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(w->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "IvecsValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "ivecs value documentation");
@@ -405,7 +405,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<Vector4Verifier<int>*>(v->values[2].get()));
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "Vecmat1");
         CHECK(!e.optional);
         CHECK(e.documentation == "vecmat1 value documentation");
@@ -431,7 +431,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[5].get()));
     }
     {
-        DocumentationEntry e = doc.entries[4];
+        const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "Vecmat2");
         CHECK(!e.optional);
         CHECK(e.documentation == "vecmat2 value documentation");
@@ -450,7 +450,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<Matrix2x4Verifier<double>*>(v->values[2].get()));
     }
     {
-        DocumentationEntry e = doc.entries[5];
+        const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "RestValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "rest value documentation");
@@ -481,7 +481,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<Matrix4x4Verifier<double>*>(v->values[7].get()));
     }
     {
-        DocumentationEntry e = doc.entries[6];
+        const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "OptionalValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional documentation");
@@ -495,7 +495,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
     {
-        DocumentationEntry e = doc.entries[7];
+        const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "VariantVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "variant vector documentation");
@@ -520,7 +520,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(x->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[8];
+        const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "VariantVector2");
         CHECK(!e.optional);
         CHECK(e.documentation == "variant vector 2 documentation");
@@ -545,7 +545,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(x->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[9];
+        const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "MultipleVariantA");
         CHECK(!e.optional);
         CHECK(e.documentation == "multiple variant a documentation");
@@ -561,7 +561,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(w->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[10];
+        const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "MultipleVariantB");
         CHECK(!e.optional);
         CHECK(e.documentation == "multiple variant b documentation");
@@ -577,7 +577,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
     {
-        DocumentationEntry e = doc.entries[11];
+        const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "MultipleVariantA2");
         CHECK(!e.optional);
         CHECK(e.documentation == "multiple variant a2 documentation");
@@ -593,7 +593,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(w->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[12];
+        const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "MultipleVariantB2");
         CHECK(e.optional);
         CHECK(e.documentation == "multiple variant b2 documentation");
@@ -609,7 +609,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<IntVerifier*>(v->values[1].get()));
     }
     {
-        DocumentationEntry e = doc.entries[13];
+        const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "VariantEnumFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "variant enum float documentation");
@@ -625,7 +625,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
     }
     {
-        DocumentationEntry e = doc.entries[14];
+        const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "OptionalVariantEnumFloat");
         CHECK(e.optional);
         CHECK(e.documentation == "optional variant enum float documentation");

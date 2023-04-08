@@ -31,6 +31,8 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 
+using Function = openspace::scripting::LuaLibrary::Function;
+
 namespace {
     [[codegen::luawrap]] void funcVoid() {
     }
@@ -2153,9 +2155,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  void", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVoid;
+    Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
@@ -2170,9 +2170,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  void", "[Execution][LuaWrapper]") {
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  bool", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBool;
+    Function func = codegen::lua::FuncBool;
     CHECK(func.name == "funcBool");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2194,9 +2192,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolDefaulted;
+    Function func = codegen::lua::FuncBoolDefaulted;
     CHECK(func.name == "funcBoolDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2219,9 +2215,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolDefaulted;
+    Function func = codegen::lua::FuncBoolDefaulted;
     CHECK(func.name == "funcBoolDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2243,9 +2237,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolDefaultedCheck;
+    Function func = codegen::lua::FuncBoolDefaultedCheck;
     CHECK(func.name == "funcBoolDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2270,9 +2262,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolDefaultedCheck;
+    Function func = codegen::lua::FuncBoolDefaultedCheck;
     CHECK(func.name == "funcBoolDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2293,9 +2283,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolMap;
+    Function func = codegen::lua::FuncBoolMap;
     CHECK(func.name == "funcBoolMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2319,9 +2307,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolMap", "[Execution][LuaWrapper]")
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  boolOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolOptional;
+    Function func = codegen::lua::FuncBoolOptional;
     CHECK(func.name == "funcBoolOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2343,9 +2329,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolOptionalNullopt;
+    Function func = codegen::lua::FuncBoolOptionalNullopt;
     CHECK(func.name == "funcBoolOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2362,9 +2346,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncBoolVector;
+    Function func = codegen::lua::FuncBoolVector;
     CHECK(func.name == "funcBoolVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2388,9 +2370,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  int", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncInt;
+    Function func = codegen::lua::FuncInt;
     CHECK(func.name == "funcInt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2412,9 +2392,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntDefaulted;
+    Function func = codegen::lua::FuncIntDefaulted;
     CHECK(func.name == "funcIntDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2437,9 +2415,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntDefaulted;
+    Function func = codegen::lua::FuncIntDefaulted;
     CHECK(func.name == "funcIntDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2461,9 +2437,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntDefaultedCheck;
+    Function func = codegen::lua::FuncIntDefaultedCheck;
     CHECK(func.name == "funcIntDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2488,9 +2462,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntDefaultedCheck;
+    Function func = codegen::lua::FuncIntDefaultedCheck;
     CHECK(func.name == "funcIntDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2511,10 +2483,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  intMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncIntMap;
+    Function func = codegen::lua::FuncIntMap;
     CHECK(func.name == "funcIntMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2538,9 +2509,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap", "[Execution][LuaWrapper]") 
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntOptional;
+    Function func = codegen::lua::FuncIntOptional;
     CHECK(func.name == "funcIntOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2562,9 +2531,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntOptionalNullopt;
+    Function func = codegen::lua::FuncIntOptionalNullopt;
     CHECK(func.name == "funcIntOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2581,9 +2548,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  intVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIntVector;
+    Function func = codegen::lua::FuncIntVector;
     CHECK(func.name == "funcIntVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2607,9 +2572,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  double", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDouble;
+    Function func = codegen::lua::FuncDouble;
     CHECK(func.name == "funcDouble");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2631,9 +2594,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleDefaulted;
+    Function func = codegen::lua::FuncDoubleDefaulted;
     CHECK(func.name == "funcDoubleDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2656,9 +2617,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleDefaulted;
+    Function func = codegen::lua::FuncDoubleDefaulted;
     CHECK(func.name == "funcDoubleDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2680,9 +2639,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleDefaultedCheck;
+    Function func = codegen::lua::FuncDoubleDefaultedCheck;
     CHECK(func.name == "funcDoubleDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2707,9 +2664,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleDefaultedCheck;
+    Function func = codegen::lua::FuncDoubleDefaultedCheck;
     CHECK(func.name == "funcDoubleDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2730,9 +2685,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleMap;
+    Function func = codegen::lua::FuncDoubleMap;
     CHECK(func.name == "funcDoubleMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2756,9 +2709,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleMap", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  doubleOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleOptional;
+    Function func = codegen::lua::FuncDoubleOptional;
     CHECK(func.name == "funcDoubleOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2780,9 +2731,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleOptionalNullopt;
+    Function func = codegen::lua::FuncDoubleOptionalNullopt;
     CHECK(func.name == "funcDoubleOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2799,9 +2748,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDoubleVector;
+    Function func = codegen::lua::FuncDoubleVector;
     CHECK(func.name == "funcDoubleVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2825,9 +2772,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  float", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloat;
+    Function func = codegen::lua::FuncFloat;
     CHECK(func.name == "funcFloat");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2849,9 +2794,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatDefaulted;
+    Function func = codegen::lua::FuncFloatDefaulted;
     CHECK(func.name == "funcFloatDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2874,9 +2817,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatDefaulted;
+    Function func = codegen::lua::FuncFloatDefaulted;
     CHECK(func.name == "funcFloatDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2898,9 +2839,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatDefaultedCheck;
+    Function func = codegen::lua::FuncFloatDefaultedCheck;
     CHECK(func.name == "funcFloatDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2925,9 +2864,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatDefaultedCheck;
+    Function func = codegen::lua::FuncFloatDefaultedCheck;
     CHECK(func.name == "funcFloatDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -2948,9 +2885,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatMap;
+    Function func = codegen::lua::FuncFloatMap;
     CHECK(func.name == "funcFloatMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2974,9 +2909,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatMap", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  floatOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatOptional;
+    Function func = codegen::lua::FuncFloatOptional;
     CHECK(func.name == "funcFloatOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -2998,9 +2931,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatOptionalNullopt;
+    Function func = codegen::lua::FuncFloatOptionalNullopt;
     CHECK(func.name == "funcFloatOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3017,9 +2948,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncFloatVector;
+    Function func = codegen::lua::FuncFloatVector;
     CHECK(func.name == "funcFloatVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3044,10 +2973,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector", "[Execution][LuaWrappe
 
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  string", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncString;
+    Function func = codegen::lua::FuncString;
     CHECK(func.name == "funcString");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3069,10 +2997,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringDefaulted;
+    Function func = codegen::lua::FuncStringDefaulted;
     CHECK(func.name == "funcStringDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3095,10 +3022,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-    using namespace std::string_literals;
-
-    LuaLibrary::Function func = codegen::lua::FuncStringDefaulted;
+    Function func = codegen::lua::FuncStringDefaulted;
     CHECK(func.name == "funcStringDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3120,10 +3044,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringDefaultedCheck;
+    Function func = codegen::lua::FuncStringDefaultedCheck;
     CHECK(func.name == "funcStringDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3148,10 +3071,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringDefaultedCheck;
+    Function func = codegen::lua::FuncStringDefaultedCheck;
     CHECK(func.name == "funcStringDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3172,10 +3094,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringMap;
+    Function func = codegen::lua::FuncStringMap;
     CHECK(func.name == "funcStringMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3199,10 +3120,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringMap", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  stringOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringOptional;
+    Function func = codegen::lua::FuncStringOptional;
     CHECK(func.name == "funcStringOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3224,10 +3144,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-    using namespace std::string_literals;
-
-    LuaLibrary::Function func = codegen::lua::FuncStringOptionalNullopt;
+    Function func = codegen::lua::FuncStringOptionalNullopt;
     CHECK(func.name == "funcStringOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3244,10 +3161,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncStringVector;
+    Function func = codegen::lua::FuncStringVector;
     CHECK(func.name == "funcStringVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3271,9 +3187,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  path", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPath;
+    Function func = codegen::lua::FuncPath;
     CHECK(func.name == "funcPath");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3295,9 +3209,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathDefaulted;
+    Function func = codegen::lua::FuncPathDefaulted;
     CHECK(func.name == "funcPathDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3320,9 +3232,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathDefaulted;
+    Function func = codegen::lua::FuncPathDefaulted;
     CHECK(func.name == "funcPathDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3344,9 +3254,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathDefaultedCheck;
+    Function func = codegen::lua::FuncPathDefaultedCheck;
     CHECK(func.name == "funcPathDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3371,9 +3279,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathDefaultedCheck;
+    Function func = codegen::lua::FuncPathDefaultedCheck;
     CHECK(func.name == "funcPathDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3394,9 +3300,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathMap;
+    Function func = codegen::lua::FuncPathMap;
     CHECK(func.name == "funcPathMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3420,9 +3324,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathMap", "[Execution][LuaWrapper]")
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  pathOptional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathOptional;
+    Function func = codegen::lua::FuncPathOptional;
     CHECK(func.name == "funcPathOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3444,9 +3346,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathOptionalNullopt;
+    Function func = codegen::lua::FuncPathOptionalNullopt;
     CHECK(func.name == "funcPathOptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3463,9 +3363,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncPathVector;
+    Function func = codegen::lua::FuncPathVector;
     CHECK(func.name == "funcPathVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3489,9 +3387,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2;
+    Function func = codegen::lua::FuncIvec2;
     CHECK(func.name == "funcIvec2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3513,9 +3409,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2Defaulted;
+    Function func = codegen::lua::FuncIvec2Defaulted;
     CHECK(func.name == "funcIvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3538,9 +3432,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2Defaulted;
+    Function func = codegen::lua::FuncIvec2Defaulted;
     CHECK(func.name == "funcIvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3562,9 +3454,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2DefaultedCheck;
+    Function func = codegen::lua::FuncIvec2DefaultedCheck;
     CHECK(func.name == "funcIvec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3589,9 +3479,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2DefaultedCheck;
+    Function func = codegen::lua::FuncIvec2DefaultedCheck;
     CHECK(func.name == "funcIvec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3612,9 +3500,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2Map;
+    Function func = codegen::lua::FuncIvec2Map;
     CHECK(func.name == "funcIvec2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3638,9 +3524,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2Optional;
+    Function func = codegen::lua::FuncIvec2Optional;
     CHECK(func.name == "funcIvec2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3662,9 +3546,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2OptionalNullopt;
+    Function func = codegen::lua::FuncIvec2OptionalNullopt;
     CHECK(func.name == "funcIvec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3681,9 +3563,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec2Vector;
+    Function func = codegen::lua::FuncIvec2Vector;
     CHECK(func.name == "funcIvec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3707,9 +3587,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3;
+    Function func = codegen::lua::FuncIvec3;
     CHECK(func.name == "funcIvec3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3731,9 +3609,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3Defaulted;
+    Function func = codegen::lua::FuncIvec3Defaulted;
     CHECK(func.name == "funcIvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3756,9 +3632,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3Defaulted;
+    Function func = codegen::lua::FuncIvec3Defaulted;
     CHECK(func.name == "funcIvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3780,9 +3654,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3DefaultedCheck;
+    Function func = codegen::lua::FuncIvec3DefaultedCheck;
     CHECK(func.name == "funcIvec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3807,9 +3679,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3DefaultedCheck;
+    Function func = codegen::lua::FuncIvec3DefaultedCheck;
     CHECK(func.name == "funcIvec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -3830,9 +3700,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3Map;
+    Function func = codegen::lua::FuncIvec3Map;
     CHECK(func.name == "funcIvec3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3856,9 +3724,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3Optional;
+    Function func = codegen::lua::FuncIvec3Optional;
     CHECK(func.name == "funcIvec3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3880,9 +3746,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3OptionalNullopt;
+    Function func = codegen::lua::FuncIvec3OptionalNullopt;
     CHECK(func.name == "funcIvec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3899,9 +3763,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec3Vector;
+    Function func = codegen::lua::FuncIvec3Vector;
     CHECK(func.name == "funcIvec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3925,9 +3787,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4;
+    Function func = codegen::lua::FuncIvec4;
     CHECK(func.name == "funcIvec4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3949,9 +3809,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4Defaulted;
+    Function func = codegen::lua::FuncIvec4Defaulted;
     CHECK(func.name == "funcIvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3974,9 +3832,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4Defaulted;
+    Function func = codegen::lua::FuncIvec4Defaulted;
     CHECK(func.name == "funcIvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -3998,9 +3854,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4DefaultedCheck;
+    Function func = codegen::lua::FuncIvec4DefaultedCheck;
     CHECK(func.name == "funcIvec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4025,9 +3879,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4DefaultedCheck;
+    Function func = codegen::lua::FuncIvec4DefaultedCheck;
     CHECK(func.name == "funcIvec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4048,9 +3900,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4Map;
+    Function func = codegen::lua::FuncIvec4Map;
     CHECK(func.name == "funcIvec4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4074,9 +3924,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4Optional;
+    Function func = codegen::lua::FuncIvec4Optional;
     CHECK(func.name == "funcIvec4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4098,9 +3946,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4OptionalNullopt;
+    Function func = codegen::lua::FuncIvec4OptionalNullopt;
     CHECK(func.name == "funcIvec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4117,9 +3963,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncIvec4Vector;
+    Function func = codegen::lua::FuncIvec4Vector;
     CHECK(func.name == "funcIvec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4143,9 +3987,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2;
+    Function func = codegen::lua::FuncDvec2;
     CHECK(func.name == "funcDvec2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4167,9 +4009,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2Defaulted;
+    Function func = codegen::lua::FuncDvec2Defaulted;
     CHECK(func.name == "funcDvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4192,9 +4032,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2Defaulted;
+    Function func = codegen::lua::FuncDvec2Defaulted;
     CHECK(func.name == "funcDvec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4216,9 +4054,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2DefaultedCheck;
+    Function func = codegen::lua::FuncDvec2DefaultedCheck;
     CHECK(func.name == "funcDvec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4243,9 +4079,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2DefaultedCheck;
+    Function func = codegen::lua::FuncDvec2DefaultedCheck;
     CHECK(func.name == "funcDvec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4266,9 +4100,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2Map;
+    Function func = codegen::lua::FuncDvec2Map;
     CHECK(func.name == "funcDvec2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4292,9 +4124,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2Optional;
+    Function func = codegen::lua::FuncDvec2Optional;
     CHECK(func.name == "funcDvec2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4316,9 +4146,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2OptionalNullopt;
+    Function func = codegen::lua::FuncDvec2OptionalNullopt;
     CHECK(func.name == "funcDvec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4335,9 +4163,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec2Vector;
+    Function func = codegen::lua::FuncDvec2Vector;
     CHECK(func.name == "funcDvec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4361,9 +4187,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3;
+    Function func = codegen::lua::FuncDvec3;
     CHECK(func.name == "funcDvec3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4385,9 +4209,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3Defaulted;
+    Function func = codegen::lua::FuncDvec3Defaulted;
     CHECK(func.name == "funcDvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4410,9 +4232,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3Defaulted;
+    Function func = codegen::lua::FuncDvec3Defaulted;
     CHECK(func.name == "funcDvec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4434,9 +4254,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3DefaultedCheck;
+    Function func = codegen::lua::FuncDvec3DefaultedCheck;
     CHECK(func.name == "funcDvec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4461,9 +4279,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3DefaultedCheck;
+    Function func = codegen::lua::FuncDvec3DefaultedCheck;
     CHECK(func.name == "funcDvec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4484,9 +4300,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3Map;
+    Function func = codegen::lua::FuncDvec3Map;
     CHECK(func.name == "funcDvec3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4510,9 +4324,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3Optional;
+    Function func = codegen::lua::FuncDvec3Optional;
     CHECK(func.name == "funcDvec3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4534,9 +4346,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3OptionalNullopt;
+    Function func = codegen::lua::FuncDvec3OptionalNullopt;
     CHECK(func.name == "funcDvec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4553,9 +4363,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec3Vector;
+    Function func = codegen::lua::FuncDvec3Vector;
     CHECK(func.name == "funcDvec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4579,9 +4387,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4;
+    Function func = codegen::lua::FuncDvec4;
     CHECK(func.name == "funcDvec4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4603,9 +4409,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4Defaulted;
+    Function func = codegen::lua::FuncDvec4Defaulted;
     CHECK(func.name == "funcDvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4628,9 +4432,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4Defaulted;
+    Function func = codegen::lua::FuncDvec4Defaulted;
     CHECK(func.name == "funcDvec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4652,9 +4454,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4DefaultedCheck;
+    Function func = codegen::lua::FuncDvec4DefaultedCheck;
     CHECK(func.name == "funcDvec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4679,9 +4479,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4DefaultedCheck;
+    Function func = codegen::lua::FuncDvec4DefaultedCheck;
     CHECK(func.name == "funcDvec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4702,9 +4500,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4Map;
+    Function func = codegen::lua::FuncDvec4Map;
     CHECK(func.name == "funcDvec4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4728,9 +4524,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Map", "[Execution][LuaWrapper]"
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4Optional;
+    Function func = codegen::lua::FuncDvec4Optional;
     CHECK(func.name == "funcDvec4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4752,9 +4546,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4OptionalNullopt;
+    Function func = codegen::lua::FuncDvec4OptionalNullopt;
     CHECK(func.name == "funcDvec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4771,9 +4563,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDvec4Vector;
+    Function func = codegen::lua::FuncDvec4Vector;
     CHECK(func.name == "funcDvec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4797,9 +4587,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector", "[Execution][LuaWrappe
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2;
+    Function func = codegen::lua::FuncVec2;
     CHECK(func.name == "funcVec2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4821,9 +4609,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2Defaulted;
+    Function func = codegen::lua::FuncVec2Defaulted;
     CHECK(func.name == "funcVec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4846,9 +4632,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2Defaulted;
+    Function func = codegen::lua::FuncVec2Defaulted;
     CHECK(func.name == "funcVec2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4870,9 +4654,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2DefaultedCheck;
+    Function func = codegen::lua::FuncVec2DefaultedCheck;
     CHECK(func.name == "funcVec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4897,9 +4679,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2DefaultedCheck;
+    Function func = codegen::lua::FuncVec2DefaultedCheck;
     CHECK(func.name == "funcVec2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -4920,9 +4700,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2Map;
+    Function func = codegen::lua::FuncVec2Map;
     CHECK(func.name == "funcVec2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4946,9 +4724,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Map", "[Execution][LuaWrapper]")
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2Optional;
+    Function func = codegen::lua::FuncVec2Optional;
     CHECK(func.name == "funcVec2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4970,9 +4746,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2OptionalNullopt;
+    Function func = codegen::lua::FuncVec2OptionalNullopt;
     CHECK(func.name == "funcVec2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -4989,9 +4763,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec2Vector;
+    Function func = codegen::lua::FuncVec2Vector;
     CHECK(func.name == "funcVec2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5015,9 +4787,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3;
+    Function func = codegen::lua::FuncVec3;
     CHECK(func.name == "funcVec3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5039,9 +4809,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3Defaulted;
+    Function func = codegen::lua::FuncVec3Defaulted;
     CHECK(func.name == "funcVec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5064,9 +4832,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3Defaulted;
+    Function func = codegen::lua::FuncVec3Defaulted;
     CHECK(func.name == "funcVec3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5088,9 +4854,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3DefaultedCheck;
+    Function func = codegen::lua::FuncVec3DefaultedCheck;
     CHECK(func.name == "funcVec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5115,9 +4879,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3DefaultedCheck;
+    Function func = codegen::lua::FuncVec3DefaultedCheck;
     CHECK(func.name == "funcVec3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5138,9 +4900,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3Map;
+    Function func = codegen::lua::FuncVec3Map;
     CHECK(func.name == "funcVec3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5164,9 +4924,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Map", "[Execution][LuaWrapper]")
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3Optional;
+    Function func = codegen::lua::FuncVec3Optional;
     CHECK(func.name == "funcVec3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5188,9 +4946,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3OptionalNullopt;
+    Function func = codegen::lua::FuncVec3OptionalNullopt;
     CHECK(func.name == "funcVec3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5207,9 +4963,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec3Vector;
+    Function func = codegen::lua::FuncVec3Vector;
     CHECK(func.name == "funcVec3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5233,9 +4987,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4;
+    Function func = codegen::lua::FuncVec4;
     CHECK(func.name == "funcVec4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5257,9 +5009,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4Defaulted;
+    Function func = codegen::lua::FuncVec4Defaulted;
     CHECK(func.name == "funcVec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5282,9 +5032,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4Defaulted;
+    Function func = codegen::lua::FuncVec4Defaulted;
     CHECK(func.name == "funcVec4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5306,9 +5054,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4DefaultedCheck;
+    Function func = codegen::lua::FuncVec4DefaultedCheck;
     CHECK(func.name == "funcVec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5333,9 +5079,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4DefaultedCheck;
+    Function func = codegen::lua::FuncVec4DefaultedCheck;
     CHECK(func.name == "funcVec4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5356,9 +5100,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4Map;
+    Function func = codegen::lua::FuncVec4Map;
     CHECK(func.name == "funcVec4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5382,9 +5124,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Map", "[Execution][LuaWrapper]")
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4Optional;
+    Function func = codegen::lua::FuncVec4Optional;
     CHECK(func.name == "funcVec4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5406,9 +5146,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4OptionalNullopt;
+    Function func = codegen::lua::FuncVec4OptionalNullopt;
     CHECK(func.name == "funcVec4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5425,9 +5163,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVec4Vector;
+    Function func = codegen::lua::FuncVec4Vector;
     CHECK(func.name == "funcVec4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5451,9 +5187,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2;
+    Function func = codegen::lua::FuncMat2x2;
     CHECK(func.name == "funcMat2x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5475,9 +5209,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2Defaulted;
+    Function func = codegen::lua::FuncMat2x2Defaulted;
     CHECK(func.name == "funcMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5500,9 +5232,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2Defaulted;
+    Function func = codegen::lua::FuncMat2x2Defaulted;
     CHECK(func.name == "funcMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5524,9 +5254,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x2DefaultedCheck;
     CHECK(func.name == "funcMat2x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5551,9 +5279,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x2DefaultedCheck;
     CHECK(func.name == "funcMat2x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5574,9 +5300,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2Map;
+    Function func = codegen::lua::FuncMat2x2Map;
     CHECK(func.name == "funcMat2x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5600,9 +5324,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2Optional;
+    Function func = codegen::lua::FuncMat2x2Optional;
     CHECK(func.name == "funcMat2x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5624,9 +5346,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2OptionalNullopt;
+    Function func = codegen::lua::FuncMat2x2OptionalNullopt;
     CHECK(func.name == "funcMat2x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5643,9 +5363,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x2Vector;
+    Function func = codegen::lua::FuncMat2x2Vector;
     CHECK(func.name == "funcMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5669,9 +5387,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3;
+    Function func = codegen::lua::FuncMat2x3;
     CHECK(func.name == "funcMat2x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5693,9 +5409,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3Defaulted;
+    Function func = codegen::lua::FuncMat2x3Defaulted;
     CHECK(func.name == "funcMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5721,9 +5435,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3Defaulted;
+    Function func = codegen::lua::FuncMat2x3Defaulted;
     CHECK(func.name == "funcMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5748,9 +5460,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x3DefaultedCheck;
     CHECK(func.name == "funcMat2x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5778,9 +5488,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x3DefaultedCheck;
     CHECK(func.name == "funcMat2x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -5804,9 +5512,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3Map;
+    Function func = codegen::lua::FuncMat2x3Map;
     CHECK(func.name == "funcMat2x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5842,9 +5548,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3Optional;
+    Function func = codegen::lua::FuncMat2x3Optional;
     CHECK(func.name == "funcMat2x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5866,9 +5570,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3OptionalNullopt;
+    Function func = codegen::lua::FuncMat2x3OptionalNullopt;
     CHECK(func.name == "funcMat2x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5885,9 +5587,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x3Vector;
+    Function func = codegen::lua::FuncMat2x3Vector;
     CHECK(func.name == "funcMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5923,9 +5623,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4;
+    Function func = codegen::lua::FuncMat2x4;
     CHECK(func.name == "funcMat2x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5947,9 +5645,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4Defaulted;
+    Function func = codegen::lua::FuncMat2x4Defaulted;
     CHECK(func.name == "funcMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -5975,9 +5671,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4Defaulted;
+    Function func = codegen::lua::FuncMat2x4Defaulted;
     CHECK(func.name == "funcMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6002,9 +5696,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x4DefaultedCheck;
     CHECK(func.name == "funcMat2x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6036,9 +5728,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat2x4DefaultedCheck;
     CHECK(func.name == "funcMat2x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6062,9 +5752,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4Map;
+    Function func = codegen::lua::FuncMat2x4Map;
     CHECK(func.name == "funcMat2x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6100,9 +5788,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4Optional;
+    Function func = codegen::lua::FuncMat2x4Optional;
     CHECK(func.name == "funcMat2x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6124,9 +5810,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4OptionalNullopt;
+    Function func = codegen::lua::FuncMat2x4OptionalNullopt;
     CHECK(func.name == "funcMat2x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6143,9 +5827,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat2x4Vector;
+    Function func = codegen::lua::FuncMat2x4Vector;
     CHECK(func.name == "funcMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6181,9 +5863,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2;
+    Function func = codegen::lua::FuncMat3x2;
     CHECK(func.name == "funcMat3x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6205,9 +5885,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2Defaulted;
+    Function func = codegen::lua::FuncMat3x2Defaulted;
     CHECK(func.name == "funcMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6233,9 +5911,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2Defaulted;
+    Function func = codegen::lua::FuncMat3x2Defaulted;
     CHECK(func.name == "funcMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6260,9 +5936,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x2DefaultedCheck;
     CHECK(func.name == "funcMat3x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6290,9 +5964,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x2DefaultedCheck;
     CHECK(func.name == "funcMat3x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6316,9 +5988,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2Map;
+    Function func = codegen::lua::FuncMat3x2Map;
     CHECK(func.name == "funcMat3x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6354,9 +6024,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2Optional;
+    Function func = codegen::lua::FuncMat3x2Optional;
     CHECK(func.name == "funcMat3x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6378,9 +6046,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2OptionalNullopt;
+    Function func = codegen::lua::FuncMat3x2OptionalNullopt;
     CHECK(func.name == "funcMat3x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6397,9 +6063,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x2Vector;
+    Function func = codegen::lua::FuncMat3x2Vector;
     CHECK(func.name == "funcMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6435,9 +6099,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3;
+    Function func = codegen::lua::FuncMat3x3;
     CHECK(func.name == "funcMat3x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6462,9 +6124,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3Defaulted;
+    Function func = codegen::lua::FuncMat3x3Defaulted;
     CHECK(func.name == "funcMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6493,9 +6153,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3Defaulted;
+    Function func = codegen::lua::FuncMat3x3Defaulted;
     CHECK(func.name == "funcMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6520,9 +6178,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x3DefaultedCheck;
     CHECK(func.name == "funcMat3x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6557,9 +6213,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x3DefaultedCheck;
     CHECK(func.name == "funcMat3x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6583,9 +6237,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3Map;
+    Function func = codegen::lua::FuncMat3x3Map;
     CHECK(func.name == "funcMat3x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6627,9 +6279,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3Optional;
+    Function func = codegen::lua::FuncMat3x3Optional;
     CHECK(func.name == "funcMat3x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6654,9 +6304,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3OptionalNullopt;
+    Function func = codegen::lua::FuncMat3x3OptionalNullopt;
     CHECK(func.name == "funcMat3x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6673,9 +6321,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x3Vector;
+    Function func = codegen::lua::FuncMat3x3Vector;
     CHECK(func.name == "funcMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6717,9 +6363,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4;
+    Function func = codegen::lua::FuncMat3x4;
     CHECK(func.name == "funcMat3x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6747,9 +6391,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4Defaulted;
+    Function func = codegen::lua::FuncMat3x4Defaulted;
     CHECK(func.name == "funcMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6782,9 +6424,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4Defaulted;
+    Function func = codegen::lua::FuncMat3x4Defaulted;
     CHECK(func.name == "funcMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6810,9 +6450,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x4DefaultedCheck;
     CHECK(func.name == "funcMat3x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6848,9 +6486,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat3x4DefaultedCheck;
     CHECK(func.name == "funcMat3x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -6875,9 +6511,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4Map;
+    Function func = codegen::lua::FuncMat3x4Map;
     CHECK(func.name == "funcMat3x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6922,9 +6556,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4Optional;
+    Function func = codegen::lua::FuncMat3x4Optional;
     CHECK(func.name == "funcMat3x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6952,9 +6584,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4OptionalNullopt;
+    Function func = codegen::lua::FuncMat3x4OptionalNullopt;
     CHECK(func.name == "funcMat3x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -6971,9 +6601,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat3x4Vector;
+    Function func = codegen::lua::FuncMat3x4Vector;
     CHECK(func.name == "funcMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7019,9 +6647,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector", "[Execution][LuaWrapp
 
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2;
+    Function func = codegen::lua::FuncMat4x2;
     CHECK(func.name == "funcMat4x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7043,9 +6669,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2Defaulted;
+    Function func = codegen::lua::FuncMat4x2Defaulted;
     CHECK(func.name == "funcMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7071,9 +6695,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2Defaulted;
+    Function func = codegen::lua::FuncMat4x2Defaulted;
     CHECK(func.name == "funcMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7098,9 +6720,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x2DefaultedCheck;
     CHECK(func.name == "funcMat4x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7132,9 +6752,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x2DefaultedCheck;
     CHECK(func.name == "funcMat4x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7158,9 +6776,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2Map;
+    Function func = codegen::lua::FuncMat4x2Map;
     CHECK(func.name == "funcMat4x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7196,9 +6812,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2Optional;
+    Function func = codegen::lua::FuncMat4x2Optional;
     CHECK(func.name == "funcMat4x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7220,9 +6834,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2OptionalNullopt;
+    Function func = codegen::lua::FuncMat4x2OptionalNullopt;
     CHECK(func.name == "funcMat4x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7239,9 +6851,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x2Vector;
+    Function func = codegen::lua::FuncMat4x2Vector;
     CHECK(func.name == "funcMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7277,9 +6887,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3;
+    Function func = codegen::lua::FuncMat4x3;
     CHECK(func.name == "funcMat4x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7307,9 +6915,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3Defaulted;
+    Function func = codegen::lua::FuncMat4x3Defaulted;
     CHECK(func.name == "funcMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7342,9 +6948,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3Defaulted;
+    Function func = codegen::lua::FuncMat4x3Defaulted;
     CHECK(func.name == "funcMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7370,9 +6974,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x3DefaultedCheck;
     CHECK(func.name == "funcMat4x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7408,9 +7010,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x3DefaultedCheck;
     CHECK(func.name == "funcMat4x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7435,9 +7035,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3Map;
+    Function func = codegen::lua::FuncMat4x3Map;
     CHECK(func.name == "funcMat4x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7482,9 +7080,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3Optional;
+    Function func = codegen::lua::FuncMat4x3Optional;
     CHECK(func.name == "funcMat4x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7512,9 +7108,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3OptionalNullopt;
+    Function func = codegen::lua::FuncMat4x3OptionalNullopt;
     CHECK(func.name == "funcMat4x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7531,9 +7125,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x3Vector;
+    Function func = codegen::lua::FuncMat4x3Vector;
     CHECK(func.name == "funcMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7578,9 +7170,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4;
+    Function func = codegen::lua::FuncMat4x4;
     CHECK(func.name == "funcMat4x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7608,9 +7198,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4Defaulted;
+    Function func = codegen::lua::FuncMat4x4Defaulted;
     CHECK(func.name == "funcMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7643,9 +7231,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4Defaulted;
+    Function func = codegen::lua::FuncMat4x4Defaulted;
     CHECK(func.name == "funcMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7671,9 +7257,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x4DefaultedCheck;
     CHECK(func.name == "funcMat4x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7709,9 +7293,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4DefaultedCheck;
+    Function func = codegen::lua::FuncMat4x4DefaultedCheck;
     CHECK(func.name == "funcMat4x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7736,9 +7318,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4Map;
+    Function func = codegen::lua::FuncMat4x4Map;
     CHECK(func.name == "funcMat4x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7783,9 +7363,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map", "[Execution][LuaWrapper]
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4Optional;
+    Function func = codegen::lua::FuncMat4x4Optional;
     CHECK(func.name == "funcMat4x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7813,9 +7391,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4OptionalNullopt;
+    Function func = codegen::lua::FuncMat4x4OptionalNullopt;
     CHECK(func.name == "funcMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7832,9 +7408,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMat4x4Vector;
+    Function func = codegen::lua::FuncMat4x4Vector;
     CHECK(func.name == "funcMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7879,9 +7453,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector", "[Execution][LuaWrapp
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2;
+    Function func = codegen::lua::FuncDMat2x2;
     CHECK(func.name == "funcDMat2x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7903,9 +7475,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Defaulted;
+    Function func = codegen::lua::FuncDMat2x2Defaulted;
     CHECK(func.name == "funcDMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7928,9 +7498,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Defaulted;
+    Function func = codegen::lua::FuncDMat2x2Defaulted;
     CHECK(func.name == "funcDMat2x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -7952,9 +7520,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x2DefaultedCheck;
     CHECK(func.name == "funcDMat2x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -7979,9 +7545,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x2DefaultedCheck;
     CHECK(func.name == "funcDMat2x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8002,9 +7566,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Map;
+    Function func = codegen::lua::FuncDMat2x2Map;
     CHECK(func.name == "funcDMat2x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8028,9 +7590,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Optional;
+    Function func = codegen::lua::FuncDMat2x2Optional;
     CHECK(func.name == "funcDMat2x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8052,9 +7612,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2OptionalNullopt;
+    Function func = codegen::lua::FuncDMat2x2OptionalNullopt;
     CHECK(func.name == "funcDMat2x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8071,9 +7629,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x2Vector;
+    Function func = codegen::lua::FuncDMat2x2Vector;
     CHECK(func.name == "funcDMat2x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8097,9 +7653,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3;
+    Function func = codegen::lua::FuncDMat2x3;
     CHECK(func.name == "funcDMat2x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8121,9 +7675,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Defaulted;
+    Function func = codegen::lua::FuncDMat2x3Defaulted;
     CHECK(func.name == "funcDMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8146,9 +7698,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Defaulted;
+    Function func = codegen::lua::FuncDMat2x3Defaulted;
     CHECK(func.name == "funcDMat2x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8170,9 +7720,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x3DefaultedCheck;
     CHECK(func.name == "funcDMat2x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8197,9 +7745,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x3DefaultedCheck;
     CHECK(func.name == "funcDMat2x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8220,9 +7766,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Map;
+    Function func = codegen::lua::FuncDMat2x3Map;
     CHECK(func.name == "funcDMat2x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8250,9 +7794,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Optional;
+    Function func = codegen::lua::FuncDMat2x3Optional;
     CHECK(func.name == "funcDMat2x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8274,9 +7816,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3OptionalNullopt;
+    Function func = codegen::lua::FuncDMat2x3OptionalNullopt;
     CHECK(func.name == "funcDMat2x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8293,9 +7833,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x3Vector;
+    Function func = codegen::lua::FuncDMat2x3Vector;
     CHECK(func.name == "funcDMat2x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8319,9 +7857,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4;
+    Function func = codegen::lua::FuncDMat2x4;
     CHECK(func.name == "funcDMat2x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8343,9 +7879,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Defaulted;
+    Function func = codegen::lua::FuncDMat2x4Defaulted;
     CHECK(func.name == "funcDMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8371,9 +7905,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Defaulted;
+    Function func = codegen::lua::FuncDMat2x4Defaulted;
     CHECK(func.name == "funcDMat2x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8398,9 +7930,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x4DefaultedCheck;
     CHECK(func.name == "funcDMat2x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8432,9 +7962,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat2x4DefaultedCheck;
     CHECK(func.name == "funcDMat2x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8458,9 +7986,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Map;
+    Function func = codegen::lua::FuncDMat2x4Map;
     CHECK(func.name == "funcDMat2x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8496,9 +8022,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Optional;
+    Function func = codegen::lua::FuncDMat2x4Optional;
     CHECK(func.name == "funcDMat2x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8520,9 +8044,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4OptionalNullopt;
+    Function func = codegen::lua::FuncDMat2x4OptionalNullopt;
     CHECK(func.name == "funcDMat2x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8539,9 +8061,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat2x4Vector;
+    Function func = codegen::lua::FuncDMat2x4Vector;
     CHECK(func.name == "funcDMat2x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8577,9 +8097,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2;
+    Function func = codegen::lua::FuncDMat3x2;
     CHECK(func.name == "funcDMat3x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8601,9 +8119,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Defaulted;
+    Function func = codegen::lua::FuncDMat3x2Defaulted;
     CHECK(func.name == "funcDMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8626,9 +8142,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Defaulted;
+    Function func = codegen::lua::FuncDMat3x2Defaulted;
     CHECK(func.name == "funcDMat3x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8650,9 +8164,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x2DefaultedCheck;
     CHECK(func.name == "funcDMat3x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8677,9 +8189,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x2DefaultedCheck;
     CHECK(func.name == "funcDMat3x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8700,9 +8210,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Map;
+    Function func = codegen::lua::FuncDMat3x2Map;
     CHECK(func.name == "funcDMat3x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8738,9 +8246,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Optional;
+    Function func = codegen::lua::FuncDMat3x2Optional;
     CHECK(func.name == "funcDMat3x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8762,9 +8268,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2OptionalNullopt;
+    Function func = codegen::lua::FuncDMat3x2OptionalNullopt;
     CHECK(func.name == "funcDMat3x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8781,9 +8285,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x2Vector;
+    Function func = codegen::lua::FuncDMat3x2Vector;
     CHECK(func.name == "funcDMat3x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8819,9 +8321,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3;
+    Function func = codegen::lua::FuncDMat3x3;
     CHECK(func.name == "funcDMat3x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8846,9 +8346,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Defaulted;
+    Function func = codegen::lua::FuncDMat3x3Defaulted;
     CHECK(func.name == "funcDMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8877,9 +8375,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Defaulted;
+    Function func = codegen::lua::FuncDMat3x3Defaulted;
     CHECK(func.name == "funcDMat3x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -8904,9 +8400,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x3DefaultedCheck;
     CHECK(func.name == "funcDMat3x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8938,9 +8432,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x3DefaultedCheck;
     CHECK(func.name == "funcDMat3x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -8964,9 +8456,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Map;
+    Function func = codegen::lua::FuncDMat3x3Map;
     CHECK(func.name == "funcDMat3x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9002,9 +8492,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Optional;
+    Function func = codegen::lua::FuncDMat3x3Optional;
     CHECK(func.name == "funcDMat3x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9029,9 +8517,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3OptionalNullopt;
+    Function func = codegen::lua::FuncDMat3x3OptionalNullopt;
     CHECK(func.name == "funcDMat3x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9048,9 +8534,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x3Vector;
+    Function func = codegen::lua::FuncDMat3x3Vector;
     CHECK(func.name == "funcDMat3x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9086,9 +8570,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4;
+    Function func = codegen::lua::FuncDMat3x4;
     CHECK(func.name == "funcDMat3x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9116,9 +8598,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Defaulted;
+    Function func = codegen::lua::FuncDMat3x4Defaulted;
     CHECK(func.name == "funcDMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9150,9 +8630,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Defaulted;
+    Function func = codegen::lua::FuncDMat3x4Defaulted;
     CHECK(func.name == "funcDMat3x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9177,9 +8655,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x4DefaultedCheck;
     CHECK(func.name == "funcDMat3x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9215,9 +8691,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat3x4DefaultedCheck;
     CHECK(func.name == "funcDMat3x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9241,9 +8715,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Map;
+    Function func = codegen::lua::FuncDMat3x4Map;
     CHECK(func.name == "funcDMat3x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9288,9 +8760,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Optional;
+    Function func = codegen::lua::FuncDMat3x4Optional;
     CHECK(func.name == "funcDMat3x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9318,9 +8788,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4OptionalNullopt;
+    Function func = codegen::lua::FuncDMat3x4OptionalNullopt;
     CHECK(func.name == "funcDMat3x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9337,9 +8805,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat3x4Vector;
+    Function func = codegen::lua::FuncDMat3x4Vector;
     CHECK(func.name == "funcDMat3x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9385,9 +8851,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector", "[Execution][LuaWrap
 
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2;
+    Function func = codegen::lua::FuncDMat4x2;
     CHECK(func.name == "funcDMat4x2");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9409,9 +8873,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Defaulted;
+    Function func = codegen::lua::FuncDMat4x2Defaulted;
     CHECK(func.name == "funcDMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9437,9 +8899,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Defaulted;
+    Function func = codegen::lua::FuncDMat4x2Defaulted;
     CHECK(func.name == "funcDMat4x2Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9464,9 +8924,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x2DefaultedCheck;
     CHECK(func.name == "funcDMat4x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9498,9 +8956,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x2DefaultedCheck;
     CHECK(func.name == "funcDMat4x2DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9524,9 +8980,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Map;
+    Function func = codegen::lua::FuncDMat4x2Map;
     CHECK(func.name == "funcDMat4x2Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9562,9 +9016,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Optional;
+    Function func = codegen::lua::FuncDMat4x2Optional;
     CHECK(func.name == "funcDMat4x2Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9586,9 +9038,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2OptionalNullopt;
+    Function func = codegen::lua::FuncDMat4x2OptionalNullopt;
     CHECK(func.name == "funcDMat4x2OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9605,9 +9055,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x2Vector;
+    Function func = codegen::lua::FuncDMat4x2Vector;
     CHECK(func.name == "funcDMat4x2Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9643,9 +9091,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3;
+    Function func = codegen::lua::FuncDMat4x3;
     CHECK(func.name == "funcDMat4x3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9673,9 +9119,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Defaulted;
+    Function func = codegen::lua::FuncDMat4x3Defaulted;
     CHECK(func.name == "funcDMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9708,9 +9152,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Defaulted;
+    Function func = codegen::lua::FuncDMat4x3Defaulted;
     CHECK(func.name == "funcDMat4x3Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9736,9 +9178,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x3DefaultedCheck;
     CHECK(func.name == "funcDMat4x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9774,9 +9214,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x3DefaultedCheck;
     CHECK(func.name == "funcDMat4x3DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -9801,9 +9239,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Map;
+    Function func = codegen::lua::FuncDMat4x3Map;
     CHECK(func.name == "funcDMat4x3Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9848,9 +9284,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Optional;
+    Function func = codegen::lua::FuncDMat4x3Optional;
     CHECK(func.name == "funcDMat4x3Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9878,9 +9312,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3OptionalNullopt;
+    Function func = codegen::lua::FuncDMat4x3OptionalNullopt;
     CHECK(func.name == "funcDMat4x3OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9897,9 +9329,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x3Vector;
+    Function func = codegen::lua::FuncDMat4x3Vector;
     CHECK(func.name == "funcDMat4x3Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9944,9 +9374,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4;
+    Function func = codegen::lua::FuncDMat4x4;
     CHECK(func.name == "funcDMat4x4");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -9974,9 +9402,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Defaulted;
+    Function func = codegen::lua::FuncDMat4x4Defaulted;
     CHECK(func.name == "funcDMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10009,9 +9435,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Defaulted;
+    Function func = codegen::lua::FuncDMat4x4Defaulted;
     CHECK(func.name == "funcDMat4x4Defaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10037,9 +9461,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x4DefaultedCheck;
     CHECK(func.name == "funcDMat4x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -10075,9 +9497,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4DefaultedCheck;
+    Function func = codegen::lua::FuncDMat4x4DefaultedCheck;
     CHECK(func.name == "funcDMat4x4DefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -10102,9 +9522,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Map;
+    Function func = codegen::lua::FuncDMat4x4Map;
     CHECK(func.name == "funcDMat4x4Map");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10149,9 +9567,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Map", "[Execution][LuaWrapper
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Optional", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Optional;
+    Function func = codegen::lua::FuncDMat4x4Optional;
     CHECK(func.name == "funcDMat4x4Optional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10179,9 +9595,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4OptionalNullopt;
+    Function func = codegen::lua::FuncDMat4x4OptionalNullopt;
     CHECK(func.name == "funcDMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10198,9 +9612,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4Vector;
+    Function func = codegen::lua::FuncDMat4x4Vector;
     CHECK(func.name == "funcDMat4x4Vector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10245,10 +9657,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector", "[Execution][LuaWrap
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncDictionary;
+    Function func = codegen::lua::FuncDictionary;
     CHECK(func.name == "funcDictionary");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10276,10 +9687,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-    using namespace std::string_literals;
-
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryDefaulted;
+    Function func = codegen::lua::FuncDictionaryDefaulted;
     CHECK(func.name == "funcDictionaryDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10302,9 +9710,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryDefaulted;
+    Function func = codegen::lua::FuncDictionaryDefaulted;
     CHECK(func.name == "funcDictionaryDefaulted");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10326,10 +9732,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryDefaultedCheck;
+    Function func = codegen::lua::FuncDictionaryDefaultedCheck;
     CHECK(func.name == "funcDictionaryDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -10361,9 +9766,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryDefaultedCheck;
+    Function func = codegen::lua::FuncDictionaryDefaultedCheck;
     CHECK(func.name == "funcDictionaryDefaultedCheck");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "isDefaulted");
@@ -10384,10 +9787,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryMap", "[Execution][LuaWrapper]") {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryMap;
+    Function func = codegen::lua::FuncDictionaryMap;
     CHECK(func.name == "funcDictionaryMap");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10442,10 +9844,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryOptional;
+    Function func = codegen::lua::FuncDictionaryOptional;
     CHECK(func.name == "funcDictionaryOptional");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10475,9 +9876,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncDMat4x4OptionalNullopt;
+    Function func = codegen::lua::FuncDMat4x4OptionalNullopt;
     CHECK(func.name == "funcDMat4x4OptionalNullopt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10495,10 +9894,9 @@ TEST_CASE(
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector", "[Execution][LuaWrapper]")
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncDictionaryVector;
+    Function func = codegen::lua::FuncDictionaryVector;
     CHECK(func.name == "funcDictionaryVector");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10553,9 +9951,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVariantBool;
+    Function func = codegen::lua::FuncVariantBool;
     CHECK(func.name == "funcVariantBool");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10577,9 +9973,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVariantInt;
+    Function func = codegen::lua::FuncVariantInt;
     CHECK(func.name == "funcVariantInt");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10601,9 +9995,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringDouble;
+    Function func = codegen::lua::FuncVariantDoubleDvec3StringDouble;
     CHECK(func.name == "funcVariantDoubleDvec3StringDouble");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10625,9 +10017,7 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringDvec3;
+    Function func = codegen::lua::FuncVariantDoubleDvec3StringDvec3;
     CHECK(func.name == "funcVariantDoubleDvec3StringDvec3");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
@@ -10649,10 +10039,9 @@ TEST_CASE(
     "[Execution][LuaWrapper]"
 )
 {
-    using namespace openspace::scripting;
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncVariantDoubleDvec3StringString;
+    Function func = codegen::lua::FuncVariantDoubleDvec3StringString;
     CHECK(func.name == "funcVariantDoubleDvec3StringString");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");

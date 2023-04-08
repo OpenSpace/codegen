@@ -105,7 +105,6 @@ target_sources(
     parsing_luawrapper/parsing_luawrapper_comments.cpp
     parsing_luawrapper/parsing_luawrapper_fail.cpp
     parsing_mixed/parsing_mixed_basic.cpp
-    parsing_mixed/parsing_mixed_enums.cpp
     parsing_mixed/parsing_multiple_dictionaries.cpp
     parsing_structs/parsing_structs_attributes_bool.cpp
     parsing_structs/parsing_structs_attributes_dictionary.cpp

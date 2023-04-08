@@ -49,7 +49,7 @@ TEST_CASE("Execution/Structs/Simple:  Documentation", "[Execution][Structs]") {
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
+    const DocumentationEntry& e = doc.entries[0];
     CHECK(e.key == "Value");
     CHECK(!e.optional);
     CHECK(e.documentation == "value documentation");
