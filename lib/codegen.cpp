@@ -155,7 +155,7 @@ namespace {
         for (StackElement* se : s.children) {
             if (se->type == StackElement::Type::Enum) {
                 Enum* e = static_cast<Enum*>(se);
-                if (!e->mappedTo.empty()) {
+                if (!e->attributes.mappedTo.empty()) {
                     res.push_back(e);
                 }
             }
@@ -199,6 +199,35 @@ namespace {
             comment = fmt::format("\"{}\"", comment);
         }
         return comment;
+    }
+
+    std::vector<Enum*> collectEnums(Struct* s) {
+        std::vector<Enum*> res;
+        for (StackElement* se : s->children) {
+            switch (se->type) {
+            case StackElement::Type::Struct:
+            {
+                std::vector<Enum*> e = collectEnums(static_cast<Struct*>(se));
+                res.insert(res.end(), e.begin(), e.end());
+                break;
+            }
+            case StackElement::Type::Enum:
+                res.push_back(static_cast<Enum*>(se));
+                break;
+            }
+        }
+        return res;
+    }
+
+    std::vector<Enum*> collectEnums(const Code& code) {
+        std::vector<Enum*> res = code.enums;
+
+        for (Struct* s : code.structs) {
+            std::vector<Enum*> e = collectEnums(s);
+            res.insert(res.end(), e.begin(), e.end());
+        }
+
+        return res;
     }
 } // namespace
 
@@ -482,7 +511,6 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s, std::string_view so
 
 std::string writeRootEnumConverter(Enum* e) {
     assert(e);
-    assert(e->parent == nullptr);
 
     std::string res;
 
@@ -491,11 +519,12 @@ std::string writeRootEnumConverter(Enum* e) {
 template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     switch (t) {{
 )",
-        e->name
+        fqn(e, "::")
     );
     for (EnumElement* elem : e->elements) {
         res += fmt::format(
-            "        case {0}::{1}: return {2};\n", e->name, elem->name, elem->attributes.key
+            "        case {0}::{1}: return {2};\n",
+            fqn(e, "::"), elem->name, elem->attributes.key
         );
     }
     res += R"(        default: throw "This default label is not necessary since the case labels are "
@@ -505,17 +534,17 @@ template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     // fromString
     res += fmt::format(
         "template <> [[maybe_unused]] {0} fromString<{0}>(std::string_view sv) {{\n",
-        e->name
+        fqn(e, "::")
     );
     for (EnumElement* elem : e->elements) {
         res += fmt::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
-            elem->attributes.key, e->name, elem->name
+            elem->attributes.key, fqn(e, "::"), elem->name
         );
     }
     res += "    throw std::runtime_error(\"Could not find value in enum\");\n";
     res += "}\n";
 
-    res += fmt::format(BakeEnum, e->name);
+    res += fmt::format(BakeEnum, fqn(e, "::"));
 
     return res;
 }
@@ -629,20 +658,27 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
 }
 
 std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback) {
+    std::vector<Enum*> enums = collectEnums(code);
+
+    // If there are no enums, we can bail out
+    if (enums.empty()) {
+        return "";
+    }
+
     std::string result;
     result += "namespace codegen {\n";
+    result += BakeEnumFallback;
+    result += '\n';
     result += ToStringFallback;
     result += '\n';
     result += FromStringFallback;
-    result += '\n';
-    result += BakeEnumFallback;
     result += '\n';
 
 
     for (Enum* e : code.enums) {
         result += writeRootEnumConverter(e);
 
-        if (!e->mappedTo.empty()) {
+        if (!e->attributes.mappedTo.empty()) {
             if (!hasWrittenMappingFallback) {
                 result += MapFunctionFallback;
                 result += '\n';
@@ -990,9 +1026,8 @@ std::string generateResult(const Code& code) {
         result += generateStructsResult(code, hasWrittenMappingFallback);
     }
 
-    if (!code.enums.empty()) {
-        result += generateEnumResult(code, hasWrittenMappingFallback);
-    }
+    // We can't just check on empty code.enum since there might be enums hiding in structs
+    result += generateEnumResult(code, hasWrittenMappingFallback);
 
     if (!code.luaWrapperFunctions.empty()) {
         result += generateLuaWrapperResult(code);

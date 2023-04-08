@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Enums/Basic:  Basic setup") {
+TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
     constexpr const char Source[] = R"(
     enum class [[codegen::stringify()]] Enum {
         Value1,
@@ -45,7 +45,8 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup") {
     REQUIRE(e);
 
     CHECK(e->parent == nullptr);
-    CHECK(e->mappedTo.empty());
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
     REQUIRE(e->elements.size() == 3);
     {
         EnumElement* ee = e->elements[0];

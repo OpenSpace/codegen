@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(ghoul::Dictionary arg) {
     }
@@ -71,7 +71,8 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted", "[Parsing][LuaWrapper]")
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(ghoul::Dictionary arg = ghoul::Dictionary()) {
     }
@@ -116,7 +117,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, ghoul::Dictionary> arg) {
     }
@@ -163,7 +164,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<ghoul::Dictionary> arg) {
     }
@@ -208,7 +209,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<ghoul::Dictionary> arg) {
     }
@@ -253,7 +254,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dictionary") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dictionary", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] ghoul::Dictionary foo() {
         return ghoul::Dictionary();
@@ -279,7 +280,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, ghoul::Dictionary> foo() {
         return { "test", ghoul::Dictionary() };
@@ -309,7 +310,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<ghoul::Dictionary> foo() {
         return ghoul::Dictionary();
@@ -337,7 +338,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<ghoul::Dictionary> foo() {
         return { ghoul::Dictionary() };

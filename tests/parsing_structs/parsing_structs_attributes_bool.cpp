@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Structs/Attribute/Bool") {
+TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // [[codegen::verbatim(description)]]

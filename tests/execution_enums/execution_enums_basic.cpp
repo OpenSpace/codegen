@@ -40,7 +40,7 @@ namespace {
 #include "execution_enums_basic_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Enums/Basic:  From String") {
+TEST_CASE("Execution/Enums/Basic:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");
     CHECK(v1 == Enum1::Value1);
     Enum1 v2 = codegen::fromString<Enum1>("value2");
@@ -49,7 +49,7 @@ TEST_CASE("Execution/Enums/Basic:  From String") {
     CHECK(v3 == Enum1::Value3);
 }
 
-TEST_CASE("Execution/Enums/Basic:  To String") {
+TEST_CASE("Execution/Enums/Basic:  To String", "[Execution][Enums]") {
     std::string_view sv1 = codegen::toString(Enum1::Value1);
     CHECK(sv1 == "Value1");
     std::string_view sv2 = codegen::toString(Enum1::value2);

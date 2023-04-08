@@ -101,18 +101,24 @@ namespace {
 #include "execution_structs_comments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Comments") {
+TEST_CASE("Execution/Structs/Comments", "[Execution][Structs]") {
     using namespace openspace::documentation;
 
     Documentation d = codegen::doc<Parameters>("abc");
     REQUIRE(d.entries.size() == 9);
     CHECK(d.entries[0].documentation == "multi line commenting");
     CHECK(d.entries[1].documentation == "multi line simple variable def");
-    CHECK(d.entries[2].documentation == "multi line commenting and multi line variable def");
+    CHECK(
+        d.entries[2].documentation ==
+        "multi line commenting and multi line variable def"
+    );
     CHECK(d.entries[3].documentation == "misaligned commenting all over the place");
     CHECK(d.entries[4].documentation == "multiline comment with attribute");
     CHECK(d.entries[5].documentation.empty());
     CHECK(d.entries[6].documentation.empty());
     CHECK(d.entries[7].documentation == "newLine2Annotation documentation");
-    CHECK(d.entries[8].documentation == "This value has a \" in the comment which might cause it to break?");
+    CHECK(
+        d.entries[8].documentation ==
+        "This value has a \" in the comment which might cause it to break?"
+    );
 }

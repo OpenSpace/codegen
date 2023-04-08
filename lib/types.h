@@ -71,6 +71,7 @@ namespace attributes {
     constexpr std::string_view MustBeNotEmpty = "notempty";
 
     constexpr std::string_view Map = "map";
+    constexpr std::string_view Stringify = "stringify";
 } // namespace attributes
 
 
@@ -238,8 +239,13 @@ struct EnumElement {
 struct Enum : public StackElement {
     Enum() { type = StackElement::Type::Enum; }
 
-    std::string mappedTo; // another FQ enum that values of this should be mapped to
     std::vector<EnumElement*> elements;
+
+    struct Attributes {
+        bool stringify = false;
+        std::string mappedTo; // another FQ enum that values of this should be mapped to
+    };
+    Attributes attributes;
 };
 
 

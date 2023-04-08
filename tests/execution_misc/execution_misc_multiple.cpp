@@ -40,7 +40,7 @@ namespace {
 #include "execution_misc_multiple_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Misc:  Multiple") {
+TEST_CASE("Execution/Misc:  Multiple", "[Execution][Misc]") {
     using namespace openspace::documentation;
 
     Documentation a = codegen::doc<StructA>("abc");

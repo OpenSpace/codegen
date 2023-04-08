@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(double arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(double arg = 2.0) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, double> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<double> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  double vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  double vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<double> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  double") {
+TEST_CASE("Parsing/LuaWrapper/Return:  double", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] double foo() {
         return 1.0;
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  double map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  double map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, double> foo() {
         return { "test", 1.0 };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  double optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  double optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<double> foo() {
         return 1.0;
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  double vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  double vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<double> foo() {
         return { 1.0 };

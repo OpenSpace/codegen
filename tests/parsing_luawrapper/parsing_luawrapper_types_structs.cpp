@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  void") {
+TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  void", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -74,7 +74,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  void") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as single parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as single parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -140,7 +144,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as single parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional single parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as optional single parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -210,7 +218,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional single parameter") 
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -301,7 +313,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter w/ optional") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter w/ optional",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -397,7 +413,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as multiple parameter w/ option
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as parameter vector") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as parameter vector",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -465,7 +485,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as parameter vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional parameter vector") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as optional parameter vector",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -535,7 +559,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as optional parameter vector") 
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;
@@ -604,7 +628,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as return value") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Struct:  as return value",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     struct [[codegen::Dictionary(P)]] Parameter {
         int a;

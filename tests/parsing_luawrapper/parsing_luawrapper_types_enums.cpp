@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  void") {
+TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  void", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,
@@ -66,7 +66,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  void") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as single parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Enums:  as single parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,
@@ -122,7 +126,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as single parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as double parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Enums:  as double parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,
@@ -200,7 +208,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as double parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as optional parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Enums:  as optional parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,
@@ -258,7 +270,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as optional parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as vector parameter") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments-Enums:  as vector parameter",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,
@@ -316,7 +332,8 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as vector parameter") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as return value") {
+TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as return value", "[Parsing][LuaWrapper]")
+{
     constexpr const char Source[] = R"(
     enum class [[codegen::enum]] Enum {
         A,

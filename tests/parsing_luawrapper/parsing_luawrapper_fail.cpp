@@ -32,7 +32,8 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided") {
+TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided", "[Parsing][LuaWrapper]")
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(int) {
     }
@@ -44,7 +45,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type") {
+TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type", "[Parsing][LuaWrapper]") {
     constexpr const char S[] = R"(
     [[codegen::luawrap]] std::chrono::time_point foo() {
     }
@@ -59,7 +60,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Unhandled argument type first argument",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(std::list<int> abc) {
     }
@@ -74,7 +79,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type first argument") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type second argument") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Unhandled argument type second argument",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(float abc, std::list<int> def) {
     }
@@ -89,7 +98,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled argument type second argument") 
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Reference type for argument") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Reference type for argument",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(float& abc) {
     }
@@ -102,7 +115,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Reference type for argument") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Const reference type for argument") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Const reference type for argument",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(const float& abc) {
     }
@@ -115,7 +132,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Const reference type for argument") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Const pointer type for argument") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Const pointer type for argument",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(const float* abc) {
     }
@@ -128,7 +149,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Const pointer type for argument") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Uppercase function name",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void Foo(const float* abc) {
     }
@@ -141,7 +166,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Uppercase function name") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Unsupported type in variant/1",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(std::variant<unsigned int, float> arg) {
     }
@@ -154,7 +183,11 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/1") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Unsupported type in variant/2",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(std::variant<float, unsigned int> arg) {
     }
@@ -167,7 +200,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unsupported type in variant/2") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1") {
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1", "[Parsing][LuaWrapper]") {
     constexpr const char S[] = R"(
     [[codegen::luawrap()]] void foo(std::variant<float, unsigned int> arg) {
     }
@@ -180,7 +213,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2") {
+TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2", "[Parsing][LuaWrapper]") {
     constexpr const char S[] = R"(
     [[codegen::luawrap("")]] void foo(std::variant<float, unsigned int> arg) {
     }
@@ -193,7 +226,8 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
+TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name", "[Parsing][LuaWrapper]")
+{
     constexpr const char S[] = R"(
     [[codegen::luawrap(abc)]] void foo(std::variant<float, int> arg) {
     }
@@ -208,7 +242,10 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name") {
     );
 }
 
-TEST_CASE("Parsing/LuaWrapper/Error:  Same argument for last optional and first required")
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Same argument for last optional and first required",
+    "[Parsing][LuaWrapper]"
+)
 {
     constexpr const char S[] = R"(
     [[codegen::luawrap]] void foo(std::optional<float> arg1, std::optional<int> arg2, int arg3, std::optional<std::string> arg4) {

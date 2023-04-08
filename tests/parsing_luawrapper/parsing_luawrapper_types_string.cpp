@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::string arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::string arg = "abc") {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, std::string> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<std::string> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  string vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  string vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<std::string> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  string vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  string") {
+TEST_CASE("Parsing/LuaWrapper/Return:  string", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::string foo() {
         return "test";
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  string map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  string map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, std::string> foo() {
         return { "test", "string" };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  string optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  string optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<std::string> foo() {
         return "test";
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  string optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  string vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  string vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<std::string> foo() {
         return { "test" };

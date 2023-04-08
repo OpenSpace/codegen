@@ -164,7 +164,7 @@ namespace {
 #include "execution_structs_basic_types_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Basic/Types:  Bake") {
+TEST_CASE("Execution/Structs/Basic/Types:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     std::filesystem::path path = std::filesystem::temp_directory_path();
@@ -417,13 +417,13 @@ TEST_CASE("Execution/Structs/Basic/Types:  Bake") {
     CHECK(p.dictValue.value<double>("b") == 2.0);
 }
 
-TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
+TEST_CASE("Execution/Structs/Basic/Types:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 43);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "bool value documentation");
@@ -431,7 +431,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<BoolVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "IntValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "int value documentation");
@@ -439,7 +439,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<IntVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "DoubleValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "double value documentation");
@@ -447,7 +447,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[4];
+        const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "FloatValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "float value documentation");
@@ -455,7 +455,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[5];
+        const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "StringValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "string value documentation");
@@ -465,7 +465,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(v->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[6];
+        const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "StringNotEmptyValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
@@ -475,7 +475,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(v->mustBeNotEmpty() == true);
     }
     {
-        DocumentationEntry e = doc.entries[7];
+        const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "PathValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "path value documentation");
@@ -483,7 +483,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<FileVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[8];
+        const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "DirectoryValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "directory value documentation");
@@ -491,7 +491,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DirectoryVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[9];
+        const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "Ivec2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec2 value documentation");
@@ -499,7 +499,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<IntVector2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[10];
+        const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "Ivec3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec3 value documentation");
@@ -507,7 +507,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<IntVector3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[11];
+        const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "Ivec4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec4 value documentation");
@@ -515,7 +515,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<IntVector4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[12];
+        const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "Dvec2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec2 value documentation");
@@ -523,7 +523,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[13];
+        const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "Dvec3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec3 value documentation");
@@ -531,7 +531,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[14];
+        const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "Dvec4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec4 value documentation");
@@ -539,7 +539,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[15];
+        const DocumentationEntry& e = doc.entries[15];
         CHECK(e.key == "Vec2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vec2 value documentation");
@@ -547,7 +547,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[16];
+        const DocumentationEntry& e = doc.entries[16];
         CHECK(e.key == "Vec3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vec3 value documentation");
@@ -555,7 +555,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[17];
+        const DocumentationEntry& e = doc.entries[17];
         CHECK(e.key == "Vec4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vec4 value documentation");
@@ -563,7 +563,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleVector4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[18];
+        const DocumentationEntry& e = doc.entries[18];
         CHECK(e.key == "Mat2x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x2 value documentation");
@@ -571,7 +571,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[19];
+        const DocumentationEntry& e = doc.entries[19];
         CHECK(e.key == "Mat2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2 value documentation");
@@ -579,7 +579,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[20];
+        const DocumentationEntry& e = doc.entries[20];
         CHECK(e.key == "Mat2x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x3 value documentation");
@@ -587,7 +587,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[21];
+        const DocumentationEntry& e = doc.entries[21];
         CHECK(e.key == "Mat2x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x4 value documentation");
@@ -595,7 +595,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[22];
+        const DocumentationEntry& e = doc.entries[22];
         CHECK(e.key == "Mat3x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x2 value documentation");
@@ -603,7 +603,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[23];
+        const DocumentationEntry& e = doc.entries[23];
         CHECK(e.key == "Mat3x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x3 value documentation");
@@ -611,7 +611,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[24];
+        const DocumentationEntry& e = doc.entries[24];
         CHECK(e.key == "Mat3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3 value documentation");
@@ -619,7 +619,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[25];
+        const DocumentationEntry& e = doc.entries[25];
         CHECK(e.key == "Mat3x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x4 value documentation");
@@ -627,7 +627,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[26];
+        const DocumentationEntry& e = doc.entries[26];
         CHECK(e.key == "Mat4x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x2 value documentation");
@@ -635,7 +635,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[27];
+        const DocumentationEntry& e = doc.entries[27];
         CHECK(e.key == "Mat4x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x3 value documentation");
@@ -643,7 +643,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[28];
+        const DocumentationEntry& e = doc.entries[28];
         CHECK(e.key == "Mat4x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x4 value documentation");
@@ -651,7 +651,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[29];
+        const DocumentationEntry& e = doc.entries[29];
         CHECK(e.key == "Mat4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4 value documentation");
@@ -659,7 +659,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[30];
+        const DocumentationEntry& e = doc.entries[30];
         CHECK(e.key == "Dmat2x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x2 value documentation");
@@ -667,7 +667,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[31];
+        const DocumentationEntry& e = doc.entries[31];
         CHECK(e.key == "Dmat2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2 value documentation");
@@ -675,7 +675,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[32];
+        const DocumentationEntry& e = doc.entries[32];
         CHECK(e.key == "Dmat2x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x3 value documentation");
@@ -683,7 +683,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[33];
+        const DocumentationEntry& e = doc.entries[33];
         CHECK(e.key == "Dmat2x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x4 value documentation");
@@ -691,7 +691,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix2x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[34];
+        const DocumentationEntry& e = doc.entries[34];
         CHECK(e.key == "Dmat3x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x2 value documentation");
@@ -699,7 +699,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[35];
+        const DocumentationEntry& e = doc.entries[35];
         CHECK(e.key == "Dmat3x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x3 value documentation");
@@ -707,7 +707,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[36];
+        const DocumentationEntry& e = doc.entries[36];
         CHECK(e.key == "Dmat3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3 value documentation");
@@ -715,7 +715,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[37];
+        const DocumentationEntry& e = doc.entries[37];
         CHECK(e.key == "Dmat3x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x4 value documentation");
@@ -723,7 +723,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix3x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[38];
+        const DocumentationEntry& e = doc.entries[38];
         CHECK(e.key == "Dmat4x2Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x2 value documentation");
@@ -731,7 +731,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x2Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[39];
+        const DocumentationEntry& e = doc.entries[39];
         CHECK(e.key == "Dmat4x3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x3 value documentation");
@@ -739,7 +739,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[40];
+        const DocumentationEntry& e = doc.entries[40];
         CHECK(e.key == "Dmat4x4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x4 value documentation");
@@ -747,7 +747,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4x4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[41];
+        const DocumentationEntry& e = doc.entries[41];
         CHECK(e.key == "Dmat4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4 value documentation");
@@ -755,7 +755,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Documentation") {
         CHECK(dynamic_cast<DoubleMatrix4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[42];
+        const DocumentationEntry& e = doc.entries[42];
         CHECK(e.key == "DictValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "dict value documentation");

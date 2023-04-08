@@ -39,7 +39,7 @@ namespace {
 #include "execution_structs_optional_variant_vector_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
+TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     {
@@ -72,12 +72,16 @@ TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake") {
     }
 }
 
-TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Documentation") {
+TEST_CASE(
+    "Execution/Structs/Optional/Variant/Vector:  Documentation",
+    "[Execution][Structs]"
+)
+{
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 1);
-    DocumentationEntry e = doc.entries[0];
+    const DocumentationEntry& e = doc.entries[0];
     CHECK(e.key == "Ovv");
     CHECK(e.optional);
     CHECK(e.documentation == "optional variant vector documentation");

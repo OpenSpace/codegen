@@ -73,7 +73,7 @@ namespace {
 #include "execution_structs_shadowing_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Shadowing:  Bake") {
+TEST_CASE("Execution/Structs/Shadowing:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     ghoul::Dictionary d;
@@ -108,13 +108,13 @@ TEST_CASE("Execution/Structs/Shadowing:  Bake") {
     CHECK(p.c.t == P::C::T::Type8);
 }
 
-TEST_CASE("Execution/Structs/Shadowing:  Documentation") {
+TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<P>("");
 
     REQUIRE(doc.entries.size() == 4);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "A");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -132,7 +132,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation") {
         CHECK(sil->values == std::vector<std::string>{ "Type1", "Type2" });
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "B");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -150,7 +150,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation") {
         CHECK(sil->values == std::vector<std::string>{ "Type3", "Type4" });
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "T");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());
@@ -161,7 +161,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation") {
         CHECK(sil->values == std::vector<std::string>{ "Type5", "Type6" });
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "C");
         CHECK(!e.optional);
         CHECK(e.documentation.empty());

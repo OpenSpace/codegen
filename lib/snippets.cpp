@@ -203,8 +203,8 @@ std::string_view variantConversionFunctionForType(std::string_view type) {
 
 std::string enumToEnumMapping(Enum* e) {
     assert(e);
-    assert(!e->mappedTo.empty());
-    std::string mappedTo = e->mappedTo;
+    assert(!e->attributes.mappedTo.empty());
+    std::string mappedTo = e->attributes.mappedTo;
     std::string fullyQualifiedName = fqn(e, "::");
     std::string result = fmt::format(R"(
 template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
@@ -221,7 +221,7 @@ template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
     for (EnumElement* ee : e->elements) {
         result += fmt::format(R"(
         case {0}::{2}:  return {1}::{2};)",
-            fullyQualifiedName, e->mappedTo, ee->name
+            fullyQualifiedName, e->attributes.mappedTo, ee->name
         );
     }
 

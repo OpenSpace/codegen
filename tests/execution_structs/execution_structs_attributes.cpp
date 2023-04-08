@@ -803,7 +803,7 @@ namespace {
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Attributes:  Bake") {
+TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     openspace::documentation::Documentation doc;
@@ -2035,13 +2035,13 @@ TEST_CASE("Execution/Structs/Attributes:  Bake") {
     CHECK((*p.optionalVectorDateTimeValue)[2] == "1997 03 11 12:40:53");
 }
 
-TEST_CASE("Execution/Structs/Attributes:  Documentation") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 217);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "KeyKey");
         CHECK(!e.optional);
         CHECK(e.documentation == "keyValue documentation");
@@ -2049,7 +2049,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "KeyKeyOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "keyValueOptional documentation");
@@ -2057,7 +2057,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "KeyKeyVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "keyValueVector documentation");
@@ -2070,7 +2070,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DoubleVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "InRangeValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueInt documentation");
@@ -2082,7 +2082,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 8);
     }
     {
-        DocumentationEntry e = doc.entries[4];
+        const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "InRangeValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIntOptional documentation");
@@ -2094,7 +2094,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 8);
     }
     {
-        DocumentationEntry e = doc.entries[5];
+        const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "InRangeValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIntVector documentation");
@@ -2112,7 +2112,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == 8);
     }
     {
-        DocumentationEntry e = doc.entries[6];
+        const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "InRangeValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueFloat documentation");
@@ -2124,7 +2124,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 9.0);
     }
     {
-        DocumentationEntry e = doc.entries[7];
+        const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "InRangeValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueFloatOptional documentation");
@@ -2136,7 +2136,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 9.0);
     }
     {
-        DocumentationEntry e = doc.entries[8];
+        const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "InRangeValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueFloatVector documentation");
@@ -2155,7 +2155,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == 9.0);
     }
     {
-        DocumentationEntry e = doc.entries[9];
+        const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "InRangeValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec2 documentation");
@@ -2167,7 +2167,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec2(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[10];
+        const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "InRangeValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec2Optional documentation");
@@ -2179,7 +2179,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec2(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[11];
+        const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "InRangeValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec2Vector documentation");
@@ -2198,7 +2198,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec2(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[12];
+        const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "InRangeValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec3 documentation");
@@ -2210,7 +2210,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec3(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[13];
+        const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "InRangeValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec3Optional documentation");
@@ -2222,7 +2222,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec3(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[14];
+        const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "InRangeValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec3Vector documentation");
@@ -2241,7 +2241,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec3(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[15];
+        const DocumentationEntry& e = doc.entries[15];
         CHECK(e.key == "InRangeValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec4 documentation");
@@ -2253,7 +2253,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec4(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[16];
+        const DocumentationEntry& e = doc.entries[16];
         CHECK(e.key == "InRangeValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec4Optional documentation");
@@ -2265,7 +2265,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec4(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[17];
+        const DocumentationEntry& e = doc.entries[17];
         CHECK(e.key == "InRangeValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec4Vector documentation");
@@ -2284,7 +2284,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec4(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[18];
+        const DocumentationEntry& e = doc.entries[18];
         CHECK(e.key == "InRangeValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec2 documentation");
@@ -2296,7 +2296,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[19];
+        const DocumentationEntry& e = doc.entries[19];
         CHECK(e.key == "InRangeValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec2Optional documentation");
@@ -2308,7 +2308,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[20];
+        const DocumentationEntry& e = doc.entries[20];
         CHECK(e.key == "InRangeValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec2Vector documentation");
@@ -2327,7 +2327,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[21];
+        const DocumentationEntry& e = doc.entries[21];
         CHECK(e.key == "InRangeValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec3 documentation");
@@ -2339,7 +2339,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[22];
+        const DocumentationEntry& e = doc.entries[22];
         CHECK(e.key == "InRangeValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec3Optional documentation");
@@ -2351,7 +2351,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[23];
+        const DocumentationEntry& e = doc.entries[23];
         CHECK(e.key == "InRangeValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec3Vector documentation");
@@ -2370,7 +2370,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[24];
+        const DocumentationEntry& e = doc.entries[24];
         CHECK(e.key == "InRangeValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec4 documentation");
@@ -2382,7 +2382,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[25];
+        const DocumentationEntry& e = doc.entries[25];
         CHECK(e.key == "InRangeValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec4Optional documentation");
@@ -2394,7 +2394,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[26];
+        const DocumentationEntry& e = doc.entries[26];
         CHECK(e.key == "InRangeValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec4Vector documentation");
@@ -2413,7 +2413,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[27];
+        const DocumentationEntry& e = doc.entries[27];
         CHECK(e.key == "NotInRangeValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueInt documentation");
@@ -2425,7 +2425,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 7);
     }
     {
-        DocumentationEntry e = doc.entries[28];
+        const DocumentationEntry& e = doc.entries[28];
         CHECK(e.key == "NotInRangeValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIntOptional documentation");
@@ -2437,7 +2437,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 7);
     }
     {
-        DocumentationEntry e = doc.entries[29];
+        const DocumentationEntry& e = doc.entries[29];
         CHECK(e.key == "NotInRangeValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIntVector documentation");
@@ -2456,7 +2456,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == 7);
     }
     {
-        DocumentationEntry e = doc.entries[30];
+        const DocumentationEntry& e = doc.entries[30];
         CHECK(e.key == "NotInRangeValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueFloat documentation");
@@ -2468,7 +2468,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 0.5);
     }
     {
-        DocumentationEntry e = doc.entries[31];
+        const DocumentationEntry& e = doc.entries[31];
         CHECK(e.key == "NotInRangeValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueFloatOptional documentation");
@@ -2480,7 +2480,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == 0.5);
     }
     {
-        DocumentationEntry e = doc.entries[32];
+        const DocumentationEntry& e = doc.entries[32];
         CHECK(e.key == "NotInRangeValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueFloatVector documentation");
@@ -2499,7 +2499,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == 0.5);
     }
     {
-        DocumentationEntry e = doc.entries[33];
+        const DocumentationEntry& e = doc.entries[33];
         CHECK(e.key == "NotInRangeValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec2 documentation");
@@ -2511,7 +2511,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec2(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[34];
+        const DocumentationEntry& e = doc.entries[34];
         CHECK(e.key == "NotInRangeValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec2Optional documentation");
@@ -2523,7 +2523,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec2(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[35];
+        const DocumentationEntry& e = doc.entries[35];
         CHECK(e.key == "NotInRangeValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec2Vector documentation");
@@ -2542,7 +2542,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec2(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[36];
+        const DocumentationEntry& e = doc.entries[36];
         CHECK(e.key == "NotInRangeValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec3 documentation");
@@ -2554,7 +2554,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec3(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[37];
+        const DocumentationEntry& e = doc.entries[37];
         CHECK(e.key == "NotInRangeValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec3Optional documentation");
@@ -2566,7 +2566,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec3(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[38];
+        const DocumentationEntry& e = doc.entries[38];
         CHECK(e.key == "NotInRangeValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec3Vector documentation");
@@ -2585,7 +2585,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec3(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[39];
+        const DocumentationEntry& e = doc.entries[39];
         CHECK(e.key == "NotInRangeValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec4 documentation");
@@ -2597,7 +2597,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec4(2.f));
     }
     {
-        DocumentationEntry e = doc.entries[40];
+        const DocumentationEntry& e = doc.entries[40];
         CHECK(e.key == "NotInRangeValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec4Optional documentation");
@@ -2609,7 +2609,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::dvec4(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[41];
+        const DocumentationEntry& e = doc.entries[41];
         CHECK(e.key == "NotInRangeValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec4Vector documentation");
@@ -2628,7 +2628,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::dvec4(2.0));
     }
     {
-        DocumentationEntry e = doc.entries[42];
+        const DocumentationEntry& e = doc.entries[42];
         CHECK(e.key == "NotInRangeValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2 documentation");
@@ -2640,7 +2640,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[43];
+        const DocumentationEntry& e = doc.entries[43];
         CHECK(e.key == "NotInRangeValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2Optional documentation");
@@ -2652,7 +2652,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[44];
+        const DocumentationEntry& e = doc.entries[44];
         CHECK(e.key == "NotInRangeValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2Vector documentation");
@@ -2671,7 +2671,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec2(3));
     }
     {
-        DocumentationEntry e = doc.entries[45];
+        const DocumentationEntry& e = doc.entries[45];
         CHECK(e.key == "NotInRangeValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3 documentation");
@@ -2683,7 +2683,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[46];
+        const DocumentationEntry& e = doc.entries[46];
         CHECK(e.key == "NotInRangeValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3Optional documentation");
@@ -2695,7 +2695,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[47];
+        const DocumentationEntry& e = doc.entries[47];
         CHECK(e.key == "NotInRangeValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3Vector documentation");
@@ -2714,7 +2714,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec3(3));
     }
     {
-        DocumentationEntry e = doc.entries[48];
+        const DocumentationEntry& e = doc.entries[48];
         CHECK(e.key == "NotInRangeValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4 documentation");
@@ -2726,7 +2726,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[49];
+        const DocumentationEntry& e = doc.entries[49];
         CHECK(e.key == "NotInRangeValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4Optional documentation");
@@ -2738,7 +2738,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[50];
+        const DocumentationEntry& e = doc.entries[50];
         CHECK(e.key == "NotInRangeValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4Vector documentation");
@@ -2757,7 +2757,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->upper == glm::ivec4(3));
     }
     {
-        DocumentationEntry e = doc.entries[51];
+        const DocumentationEntry& e = doc.entries[51];
         CHECK(e.key == "LessValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueInt documentation");
@@ -2768,7 +2768,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 20);
     }
     {
-        DocumentationEntry e = doc.entries[52];
+        const DocumentationEntry& e = doc.entries[52];
         CHECK(e.key == "LessValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIntOptional documentation");
@@ -2779,7 +2779,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 20);
     }
     {
-        DocumentationEntry e = doc.entries[53];
+        const DocumentationEntry& e = doc.entries[53];
         CHECK(e.key == "LessValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIntVector documentation");
@@ -2796,7 +2796,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 20);
     }
     {
-        DocumentationEntry e = doc.entries[54];
+        const DocumentationEntry& e = doc.entries[54];
         CHECK(e.key == "LessValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueFloat documentation");
@@ -2807,7 +2807,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 21.0);
     }
     {
-        DocumentationEntry e = doc.entries[55];
+        const DocumentationEntry& e = doc.entries[55];
         CHECK(e.key == "LessValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueFloatOptional documentation");
@@ -2818,7 +2818,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 22.0);
     }
     {
-        DocumentationEntry e = doc.entries[56];
+        const DocumentationEntry& e = doc.entries[56];
         CHECK(e.key == "LessValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueFloatVector documentation");
@@ -2835,7 +2835,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 23.0);
     }
     {
-        DocumentationEntry e = doc.entries[57];
+        const DocumentationEntry& e = doc.entries[57];
         CHECK(e.key == "LessValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec2 documentation");
@@ -2846,7 +2846,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[58];
+        const DocumentationEntry& e = doc.entries[58];
         CHECK(e.key == "LessValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec2Optional documentation");
@@ -2857,7 +2857,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[59];
+        const DocumentationEntry& e = doc.entries[59];
         CHECK(e.key == "LessValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec2Vector documentation");
@@ -2875,7 +2875,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[60];
+        const DocumentationEntry& e = doc.entries[60];
         CHECK(e.key == "LessValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec3 documentation");
@@ -2886,7 +2886,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[61];
+        const DocumentationEntry& e = doc.entries[61];
         CHECK(e.key == "LessValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec3Optional documentation");
@@ -2897,7 +2897,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[62];
+        const DocumentationEntry& e = doc.entries[62];
         CHECK(e.key == "LessValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec3Vector documentation");
@@ -2915,7 +2915,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[63];
+        const DocumentationEntry& e = doc.entries[63];
         CHECK(e.key == "LessValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec4 documentation");
@@ -2926,7 +2926,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[64];
+        const DocumentationEntry& e = doc.entries[64];
         CHECK(e.key == "LessValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec4Optional documentation");
@@ -2937,7 +2937,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[65];
+        const DocumentationEntry& e = doc.entries[65];
         CHECK(e.key == "LessValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec4Vector documentation");
@@ -2955,7 +2955,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[66];
+        const DocumentationEntry& e = doc.entries[66];
         CHECK(e.key == "LessValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec2 documentation");
@@ -2966,7 +2966,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[67];
+        const DocumentationEntry& e = doc.entries[67];
         CHECK(e.key == "LessValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec2Optional documentation");
@@ -2977,7 +2977,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[68];
+        const DocumentationEntry& e = doc.entries[68];
         CHECK(e.key == "LessValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec2Vector documentation");
@@ -2995,7 +2995,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[69];
+        const DocumentationEntry& e = doc.entries[69];
         CHECK(e.key == "LessValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec3 documentation");
@@ -3006,7 +3006,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[70];
+        const DocumentationEntry& e = doc.entries[70];
         CHECK(e.key == "LessValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec3Optional documentation");
@@ -3017,7 +3017,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[71];
+        const DocumentationEntry& e = doc.entries[71];
         CHECK(e.key == "LessValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec3Vector documentation");
@@ -3035,7 +3035,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[72];
+        const DocumentationEntry& e = doc.entries[72];
         CHECK(e.key == "LessValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec4 documentation");
@@ -3046,7 +3046,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[73];
+        const DocumentationEntry& e = doc.entries[73];
         CHECK(e.key == "LessValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec4Optional documentation");
@@ -3057,7 +3057,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[74];
+        const DocumentationEntry& e = doc.entries[74];
         CHECK(e.key == "LessValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec4Vector documentation");
@@ -3075,7 +3075,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[75];
+        const DocumentationEntry& e = doc.entries[75];
         CHECK(e.key == "LessEqualValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueInt documentation");
@@ -3086,7 +3086,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[76];
+        const DocumentationEntry& e = doc.entries[76];
         CHECK(e.key == "LessEqualValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIntOptional documentation");
@@ -3097,7 +3097,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[77];
+        const DocumentationEntry& e = doc.entries[77];
         CHECK(e.key == "LessEqualValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIntVector documentation");
@@ -3114,7 +3114,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[78];
+        const DocumentationEntry& e = doc.entries[78];
         CHECK(e.key == "LessEqualValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueFloat documentation");
@@ -3125,7 +3125,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 27.0);
     }
     {
-        DocumentationEntry e = doc.entries[79];
+        const DocumentationEntry& e = doc.entries[79];
         CHECK(e.key == "LessEqualValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueFloatOptional documentation");
@@ -3136,7 +3136,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 27.0);
     }
     {
-        DocumentationEntry e = doc.entries[80];
+        const DocumentationEntry& e = doc.entries[80];
         CHECK(e.key == "LessEqualValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueFloatVector documentation");
@@ -3154,7 +3154,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 27.0);
     }
     {
-        DocumentationEntry e = doc.entries[81];
+        const DocumentationEntry& e = doc.entries[81];
         CHECK(e.key == "LessEqualValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec2 documentation");
@@ -3165,7 +3165,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[82];
+        const DocumentationEntry& e = doc.entries[82];
         CHECK(e.key == "LessEqualValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec2Optional documentation");
@@ -3176,7 +3176,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[83];
+        const DocumentationEntry& e = doc.entries[83];
         CHECK(e.key == "LessEqualValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec2Vector documentation");
@@ -3194,7 +3194,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[84];
+        const DocumentationEntry& e = doc.entries[84];
         CHECK(e.key == "LessEqualValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec3 documentation");
@@ -3205,7 +3205,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[85];
+        const DocumentationEntry& e = doc.entries[85];
         CHECK(e.key == "LessEqualValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec3Optional documentation");
@@ -3216,7 +3216,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[86];
+        const DocumentationEntry& e = doc.entries[86];
         CHECK(e.key == "LessEqualValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec3Vector documentation");
@@ -3234,7 +3234,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[87];
+        const DocumentationEntry& e = doc.entries[87];
         CHECK(e.key == "LessEqualValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec4 documentation");
@@ -3245,7 +3245,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[88];
+        const DocumentationEntry& e = doc.entries[88];
         CHECK(e.key == "LessEqualValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec4Optional documentation");
@@ -3256,7 +3256,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[89];
+        const DocumentationEntry& e = doc.entries[89];
         CHECK(e.key == "LessEqualValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec4Vector documentation");
@@ -3274,7 +3274,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[90];
+        const DocumentationEntry& e = doc.entries[90];
         CHECK(e.key == "LessEqualValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2 documentation");
@@ -3285,7 +3285,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[91];
+        const DocumentationEntry& e = doc.entries[91];
         CHECK(e.key == "LessEqualValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2Optional documentation");
@@ -3296,7 +3296,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[92];
+        const DocumentationEntry& e = doc.entries[92];
         CHECK(e.key == "LessEqualValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2Vector documentation");
@@ -3314,7 +3314,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[93];
+        const DocumentationEntry& e = doc.entries[93];
         CHECK(e.key == "LessEqualValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3 documentation");
@@ -3325,7 +3325,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[94];
+        const DocumentationEntry& e = doc.entries[94];
         CHECK(e.key == "LessEqualValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3Optional documentation");
@@ -3336,7 +3336,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[95];
+        const DocumentationEntry& e = doc.entries[95];
         CHECK(e.key == "LessEqualValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3Vector documentation");
@@ -3354,7 +3354,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[96];
+        const DocumentationEntry& e = doc.entries[96];
         CHECK(e.key == "LessEqualValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4 documentation");
@@ -3365,7 +3365,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[97];
+        const DocumentationEntry& e = doc.entries[97];
         CHECK(e.key == "LessEqualValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4Optional documentation");
@@ -3376,7 +3376,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[98];
+        const DocumentationEntry& e = doc.entries[98];
         CHECK(e.key == "LessEqualValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4Vector documentation");
@@ -3394,7 +3394,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[99];
+        const DocumentationEntry& e = doc.entries[99];
         REQUIRE(e.key == "GreaterValueInt");
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "greaterValueInt documentation");
@@ -3405,7 +3405,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         REQUIRE(v->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[100];
+        const DocumentationEntry& e = doc.entries[100];
         CHECK(e.key == "GreaterValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIntOptional documentation");
@@ -3416,7 +3416,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[101];
+        const DocumentationEntry& e = doc.entries[101];
         CHECK(e.key == "GreaterValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIntVector documentation");
@@ -3433,7 +3433,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 25);
     }
     {
-        DocumentationEntry e = doc.entries[102];
+        const DocumentationEntry& e = doc.entries[102];
         CHECK(e.key == "GreaterValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueFloat documentation");
@@ -3444,7 +3444,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == -5.0);
     }
     {
-        DocumentationEntry e = doc.entries[103];
+        const DocumentationEntry& e = doc.entries[103];
         CHECK(e.key == "GreaterValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueFloatOptional documentation");
@@ -3455,7 +3455,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == -5.0);
     }
     {
-        DocumentationEntry e = doc.entries[104];
+        const DocumentationEntry& e = doc.entries[104];
         CHECK(e.key == "GreaterValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueFloatVector documentation");
@@ -3473,7 +3473,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == -5.0);
     }
     {
-        DocumentationEntry e = doc.entries[105];
+        const DocumentationEntry& e = doc.entries[105];
         CHECK(e.key == "GreaterValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec2 documentation");
@@ -3484,7 +3484,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[106];
+        const DocumentationEntry& e = doc.entries[106];
         CHECK(e.key == "GreaterValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec2Optional documentation");
@@ -3495,7 +3495,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[107];
+        const DocumentationEntry& e = doc.entries[107];
         CHECK(e.key == "GreaterValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec2Vector documentation");
@@ -3513,7 +3513,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[108];
+        const DocumentationEntry& e = doc.entries[108];
         CHECK(e.key == "GreaterValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec3 documentation");
@@ -3524,7 +3524,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[109];
+        const DocumentationEntry& e = doc.entries[109];
         CHECK(e.key == "GreaterValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec3Optional documentation");
@@ -3535,7 +3535,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[110];
+        const DocumentationEntry& e = doc.entries[110];
         CHECK(e.key == "GreaterValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec3Vector documentation");
@@ -3553,7 +3553,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[111];
+        const DocumentationEntry& e = doc.entries[111];
         CHECK(e.key == "GreaterValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec4 documentation");
@@ -3564,7 +3564,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[112];
+        const DocumentationEntry& e = doc.entries[112];
         CHECK(e.key == "GreaterValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec4Optional documentation");
@@ -3575,7 +3575,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[113];
+        const DocumentationEntry& e = doc.entries[113];
         CHECK(e.key == "GreaterValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec4Vector documentation");
@@ -3593,7 +3593,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[114];
+        const DocumentationEntry& e = doc.entries[114];
         CHECK(e.key == "GreaterValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec2 documentation");
@@ -3604,7 +3604,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[115];
+        const DocumentationEntry& e = doc.entries[115];
         CHECK(e.key == "GreaterValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec2Optional documentation");
@@ -3615,7 +3615,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[116];
+        const DocumentationEntry& e = doc.entries[116];
         CHECK(e.key == "GreaterValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec2Vector documentation");
@@ -3633,7 +3633,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[117];
+        const DocumentationEntry& e = doc.entries[117];
         CHECK(e.key == "GreaterValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec3 documentation");
@@ -3644,7 +3644,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[118];
+        const DocumentationEntry& e = doc.entries[118];
         CHECK(e.key == "GreaterValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec3Optional documentation");
@@ -3655,7 +3655,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[119];
+        const DocumentationEntry& e = doc.entries[119];
         CHECK(e.key == "GreaterValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec3Vector documentation");
@@ -3673,7 +3673,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[120];
+        const DocumentationEntry& e = doc.entries[120];
         CHECK(e.key == "GreaterValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec4 documentation");
@@ -3684,7 +3684,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[121];
+        const DocumentationEntry& e = doc.entries[121];
         CHECK(e.key == "GreaterValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec4Optional documentation");
@@ -3695,7 +3695,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[122];
+        const DocumentationEntry& e = doc.entries[122];
         CHECK(e.key == "GreaterValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec4Vector documentation");
@@ -3713,7 +3713,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[123];
+        const DocumentationEntry& e = doc.entries[123];
         CHECK(e.key == "GreaterEqualValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueInt documentation");
@@ -3724,7 +3724,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 33);
     }
     {
-        DocumentationEntry e = doc.entries[124];
+        const DocumentationEntry& e = doc.entries[124];
         CHECK(e.key == "GreaterEqualValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIntOptional documentation");
@@ -3735,7 +3735,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 33);
     }
     {
-        DocumentationEntry e = doc.entries[125];
+        const DocumentationEntry& e = doc.entries[125];
         CHECK(e.key == "GreaterEqualValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIntVector documentation");
@@ -3753,7 +3753,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 33);
     }
     {
-        DocumentationEntry e = doc.entries[126];
+        const DocumentationEntry& e = doc.entries[126];
         CHECK(e.key == "GreaterEqualValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueFloat documentation");
@@ -3764,7 +3764,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == -25.0);
     }
     {
-        DocumentationEntry e = doc.entries[127];
+        const DocumentationEntry& e = doc.entries[127];
         CHECK(e.key == "GreaterEqualValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueFloatOptional documentation");
@@ -3775,7 +3775,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == -25.0);
     }
     {
-        DocumentationEntry e = doc.entries[128];
+        const DocumentationEntry& e = doc.entries[128];
         CHECK(e.key == "GreaterEqualValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueFloatVector documentation");
@@ -3793,7 +3793,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == -25.0);
     }
     {
-        DocumentationEntry e = doc.entries[129];
+        const DocumentationEntry& e = doc.entries[129];
         CHECK(e.key == "GreaterEqualValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2 documentation");
@@ -3804,7 +3804,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[130];
+        const DocumentationEntry& e = doc.entries[130];
         CHECK(e.key == "GreaterEqualValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2Optional documentation");
@@ -3815,7 +3815,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[131];
+        const DocumentationEntry& e = doc.entries[131];
         CHECK(e.key == "GreaterEqualValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2Vector documentation");
@@ -3833,7 +3833,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[132];
+        const DocumentationEntry& e = doc.entries[132];
         CHECK(e.key == "GreaterEqualValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3 documentation");
@@ -3844,7 +3844,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[133];
+        const DocumentationEntry& e = doc.entries[133];
         CHECK(e.key == "GreaterEqualValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3Optional documentation");
@@ -3855,7 +3855,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[134];
+        const DocumentationEntry& e = doc.entries[134];
         CHECK(e.key == "GreaterEqualValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3Vector documentation");
@@ -3873,7 +3873,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[135];
+        const DocumentationEntry& e = doc.entries[135];
         CHECK(e.key == "GreaterEqualValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4 documentation");
@@ -3884,7 +3884,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[136];
+        const DocumentationEntry& e = doc.entries[136];
         CHECK(e.key == "GreaterEqualValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4Optional documentation");
@@ -3895,7 +3895,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[137];
+        const DocumentationEntry& e = doc.entries[137];
         CHECK(e.key == "GreaterEqualValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4Vector documentation");
@@ -3913,7 +3913,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[138];
+        const DocumentationEntry& e = doc.entries[138];
         CHECK(e.key == "GreaterEqualValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2 documentation");
@@ -3924,7 +3924,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[139];
+        const DocumentationEntry& e = doc.entries[139];
         CHECK(e.key == "GreaterEqualValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2Optional documentation");
@@ -3935,7 +3935,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[140];
+        const DocumentationEntry& e = doc.entries[140];
         CHECK(e.key == "GreaterEqualValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2Vector documentation");
@@ -3953,7 +3953,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[141];
+        const DocumentationEntry& e = doc.entries[141];
         CHECK(e.key == "GreaterEqualValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3 documentation");
@@ -3964,7 +3964,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[142];
+        const DocumentationEntry& e = doc.entries[142];
         CHECK(e.key == "GreaterEqualValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3Optional documentation");
@@ -3975,7 +3975,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[143];
+        const DocumentationEntry& e = doc.entries[143];
         CHECK(e.key == "GreaterEqualValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3Vector documentation");
@@ -3993,7 +3993,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[144];
+        const DocumentationEntry& e = doc.entries[144];
         CHECK(e.key == "GreaterEqualValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4 documentation");
@@ -4004,7 +4004,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[145];
+        const DocumentationEntry& e = doc.entries[145];
         CHECK(e.key == "GreaterEqualValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4Optional documentation");
@@ -4015,7 +4015,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[146];
+        const DocumentationEntry& e = doc.entries[146];
         CHECK(e.key == "GreaterEqualValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4Vector documentation");
@@ -4033,7 +4033,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[147];
+        const DocumentationEntry& e = doc.entries[147];
         CHECK(e.key == "UnequalValueInt");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueInt documentation");
@@ -4044,7 +4044,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 1);
     }
     {
-        DocumentationEntry e = doc.entries[148];
+        const DocumentationEntry& e = doc.entries[148];
         CHECK(e.key == "UnequalValueIntOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIntOptional documentation");
@@ -4055,7 +4055,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 1);
     }
     {
-        DocumentationEntry e = doc.entries[149];
+        const DocumentationEntry& e = doc.entries[149];
         CHECK(e.key == "UnequalValueIntVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIntVector documentation");
@@ -4072,7 +4072,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 1);
     }
     {
-        DocumentationEntry e = doc.entries[150];
+        const DocumentationEntry& e = doc.entries[150];
         CHECK(e.key == "UnequalValueFloat");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueFloat documentation");
@@ -4083,7 +4083,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 123.0);
     }
     {
-        DocumentationEntry e = doc.entries[151];
+        const DocumentationEntry& e = doc.entries[151];
         CHECK(e.key == "UnequalValueFloatOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueFloatOptional documentation");
@@ -4094,7 +4094,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == 123.0);
     }
     {
-        DocumentationEntry e = doc.entries[152];
+        const DocumentationEntry& e = doc.entries[152];
         CHECK(e.key == "UnequalValueFloatVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueFloatVector documentation");
@@ -4112,7 +4112,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == 123.0);
     }
     {
-        DocumentationEntry e = doc.entries[153];
+        const DocumentationEntry& e = doc.entries[153];
         CHECK(e.key == "UnequalValueVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec2 documentation");
@@ -4123,7 +4123,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[154];
+        const DocumentationEntry& e = doc.entries[154];
         CHECK(e.key == "UnequalValueVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec2Optional documentation");
@@ -4134,7 +4134,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[155];
+        const DocumentationEntry& e = doc.entries[155];
         CHECK(e.key == "UnequalValueVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec2Vector documentation");
@@ -4152,7 +4152,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec2(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[156];
+        const DocumentationEntry& e = doc.entries[156];
         CHECK(e.key == "UnequalValueVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec3 documentation");
@@ -4163,7 +4163,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[157];
+        const DocumentationEntry& e = doc.entries[157];
         CHECK(e.key == "UnequalValueVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec3Optional documentation");
@@ -4174,7 +4174,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[158];
+        const DocumentationEntry& e = doc.entries[158];
         CHECK(e.key == "UnequalValueVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec3Vector documentation");
@@ -4192,7 +4192,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec3(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[159];
+        const DocumentationEntry& e = doc.entries[159];
         CHECK(e.key == "UnequalValueVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec4 documentation");
@@ -4203,7 +4203,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[160];
+        const DocumentationEntry& e = doc.entries[160];
         CHECK(e.key == "UnequalValueVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec4Optional documentation");
@@ -4214,7 +4214,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[161];
+        const DocumentationEntry& e = doc.entries[161];
         CHECK(e.key == "UnequalValueVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec4Vector documentation");
@@ -4232,7 +4232,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::dvec4(1.f));
     }
     {
-        DocumentationEntry e = doc.entries[162];
+        const DocumentationEntry& e = doc.entries[162];
         CHECK(e.key == "UnequalValueIVec2");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec2 documentation");
@@ -4243,7 +4243,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[163];
+        const DocumentationEntry& e = doc.entries[163];
         CHECK(e.key == "UnequalValueIVec2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec2Optional documentation");
@@ -4254,7 +4254,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[164];
+        const DocumentationEntry& e = doc.entries[164];
         CHECK(e.key == "UnequalValueIVec2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec2Vector documentation");
@@ -4272,7 +4272,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec2(1));
     }
     {
-        DocumentationEntry e = doc.entries[165];
+        const DocumentationEntry& e = doc.entries[165];
         CHECK(e.key == "UnequalValueIVec3");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec3 documentation");
@@ -4283,7 +4283,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[166];
+        const DocumentationEntry& e = doc.entries[166];
         CHECK(e.key == "UnequalValueIVec3Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec3Optional documentation");
@@ -4294,7 +4294,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[167];
+        const DocumentationEntry& e = doc.entries[167];
         CHECK(e.key == "UnequalValueIVec3Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec3Vector documentation");
@@ -4312,7 +4312,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec3(1));
     }
     {
-        DocumentationEntry e = doc.entries[168];
+        const DocumentationEntry& e = doc.entries[168];
         CHECK(e.key == "UnequalValueIVec4");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec4 documentation");
@@ -4323,7 +4323,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[169];
+        const DocumentationEntry& e = doc.entries[169];
         CHECK(e.key == "UnequalValueIVec4Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec4Optional documentation");
@@ -4334,7 +4334,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[170];
+        const DocumentationEntry& e = doc.entries[170];
         CHECK(e.key == "UnequalValueIVec4Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec4Vector documentation");
@@ -4352,7 +4352,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == glm::ivec4(1));
     }
     {
-        DocumentationEntry e = doc.entries[171];
+        const DocumentationEntry& e = doc.entries[171];
         CHECK(e.key == "DescValue");
         CHECK(!e.optional);
         CHECK(e.documentation == description);
@@ -4360,7 +4360,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<BoolVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[172];
+        const DocumentationEntry& e = doc.entries[172];
         CHECK(e.key == "InListValue1");
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue1 documentation");
@@ -4371,7 +4371,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
-        DocumentationEntry e = doc.entries[173];
+        const DocumentationEntry& e = doc.entries[173];
         CHECK(e.key == "InListValue1Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inListValue1Optional documentation");
@@ -4382,7 +4382,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
-        DocumentationEntry e = doc.entries[174];
+        const DocumentationEntry& e = doc.entries[174];
         CHECK(e.key == "InListValue1Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue1Vector documentation");
@@ -4399,7 +4399,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
     {
-        DocumentationEntry e = doc.entries[175];
+        const DocumentationEntry& e = doc.entries[175];
         CHECK(e.key == "InListValue2");
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue2 documentation");
@@ -4410,7 +4410,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
-        DocumentationEntry e = doc.entries[176];
+        const DocumentationEntry& e = doc.entries[176];
         CHECK(e.key == "InListValue2Optional");
         CHECK(e.optional);
         CHECK(e.documentation == "inListValue2Optional documentation");
@@ -4421,7 +4421,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
-        DocumentationEntry e = doc.entries[177];
+        const DocumentationEntry& e = doc.entries[177];
         CHECK(e.key == "InListValue2Vector");
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue2Vector documentation");
@@ -4438,7 +4438,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
     {
-        DocumentationEntry e = doc.entries[178];
+        const DocumentationEntry& e = doc.entries[178];
         CHECK(e.key == "UnequalValueString");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueString documentation");
@@ -4449,7 +4449,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == "abcdef");
     }
     {
-        DocumentationEntry e = doc.entries[179];
+        const DocumentationEntry& e = doc.entries[179];
         CHECK(e.key == "UnequalValueStringOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueStringOptional documentation");
@@ -4460,7 +4460,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->value == "abcdef");
     }
     {
-        DocumentationEntry e = doc.entries[180];
+        const DocumentationEntry& e = doc.entries[180];
         CHECK(e.key == "UnequalValueStringVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueStringVector documentation");
@@ -4478,7 +4478,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->value == "abcdef");
     }
     {
-        DocumentationEntry e = doc.entries[181];
+        const DocumentationEntry& e = doc.entries[181];
         CHECK(e.key == "NotEmptyString");
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
@@ -4488,7 +4488,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->mustBeNotEmpty() == true);
     }
     {
-        DocumentationEntry e = doc.entries[182];
+        const DocumentationEntry& e = doc.entries[182];
         CHECK(e.key == "NotEmptyStringOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional value documentation");
@@ -4498,7 +4498,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->mustBeNotEmpty() == true);
     }
     {
-        DocumentationEntry e = doc.entries[183];
+        const DocumentationEntry& e = doc.entries[183];
         CHECK(e.key == "NotEmptyStringVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty vector value documentation");
@@ -4515,7 +4515,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->mustBeNotEmpty() == true);
     }
     {
-        DocumentationEntry e = doc.entries[184];
+        const DocumentationEntry& e = doc.entries[184];
         CHECK(e.key == "NotEmptyStringOptionalVector");
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional vector value documentation");
@@ -4532,7 +4532,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->mustBeNotEmpty() == true);
     }
     {
-        DocumentationEntry e = doc.entries[185];
+        const DocumentationEntry& e = doc.entries[185];
         CHECK(e.key == "ReferenceValueOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueOptional documentation");
@@ -4542,7 +4542,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[186];
+        const DocumentationEntry& e = doc.entries[186];
         CHECK(e.key == "ReferenceValueVector");
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueVector documentation");
@@ -4559,7 +4559,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[187];
+        const DocumentationEntry& e = doc.entries[187];
         CHECK(e.key == "DictValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValue documentation");
@@ -4569,7 +4569,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[188];
+        const DocumentationEntry& e = doc.entries[188];
         CHECK(e.key == "DictValueVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueVector documentation");
@@ -4586,7 +4586,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[189];
+        const DocumentationEntry& e = doc.entries[189];
         CHECK(e.key == "DictValueOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "dictValueOptional documentation");
@@ -4596,7 +4596,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[190];
+        const DocumentationEntry& e = doc.entries[190];
         CHECK(e.key == "DictValueMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueMap documentation");
@@ -4613,7 +4613,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[191];
+        const DocumentationEntry& e = doc.entries[191];
         CHECK(e.key == "VectorDictValueMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDictValueMap documentation");
@@ -4637,7 +4637,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(u->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[192];
+        const DocumentationEntry& e = doc.entries[192];
         CHECK(e.key == "OptionalDictValueMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDictValueMap documentation");
@@ -4654,7 +4654,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[193];
+        const DocumentationEntry& e = doc.entries[193];
         CHECK(e.key == "OptionalVectorDictValueMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalVectorDictValueMap documentation");
@@ -4678,7 +4678,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(u->identifier == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[194];
+        const DocumentationEntry& e = doc.entries[194];
         CHECK(e.key == "Annotation");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotation documentation");
@@ -4689,7 +4689,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->annotation == "abc");
     }
     {
-        DocumentationEntry e = doc.entries[195];
+        const DocumentationEntry& e = doc.entries[195];
         CHECK(e.key == "AnnotationOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "annotationOptional documentation");
@@ -4700,7 +4700,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(v->annotation == "def");
     }
     {
-        DocumentationEntry e = doc.entries[196];
+        const DocumentationEntry& e = doc.entries[196];
         CHECK(e.key == "AnnotationVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotationVector documentation");
@@ -4715,7 +4715,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(w->annotation == "ghi");
     }
     {
-        DocumentationEntry e = doc.entries[197];
+        const DocumentationEntry& e = doc.entries[197];
         CHECK(e.key == "Dcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor3Value documentation");
@@ -4723,7 +4723,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[198];
+        const DocumentationEntry& e = doc.entries[198];
         CHECK(e.key == "OptionalDcolor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor3Value documentation");
@@ -4731,7 +4731,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[199];
+        const DocumentationEntry& e = doc.entries[199];
         CHECK(e.key == "VectorDcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor3Value documentation");
@@ -4743,7 +4743,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[200];
+        const DocumentationEntry& e = doc.entries[200];
         CHECK(e.key == "Color3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color3Value documentation");
@@ -4751,7 +4751,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[201];
+        const DocumentationEntry& e = doc.entries[201];
         CHECK(e.key == "OptionalColor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor3Value documentation");
@@ -4759,7 +4759,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[202];
+        const DocumentationEntry& e = doc.entries[202];
         CHECK(e.key == "VectorColor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor3Value documentation");
@@ -4771,7 +4771,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[203];
+        const DocumentationEntry& e = doc.entries[203];
         CHECK(e.key == "Dcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor4Value documentation");
@@ -4779,7 +4779,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[204];
+        const DocumentationEntry& e = doc.entries[204];
         CHECK(e.key == "OptionalDcolor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor4Value documentation");
@@ -4787,7 +4787,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[205];
+        const DocumentationEntry& e = doc.entries[205];
         CHECK(e.key == "VectorDcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor4Value documentation");
@@ -4799,7 +4799,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[206];
+        const DocumentationEntry& e = doc.entries[206];
         CHECK(e.key == "Color4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color4Value documentation");
@@ -4807,7 +4807,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[207];
+        const DocumentationEntry& e = doc.entries[207];
         CHECK(e.key == "OptionalColor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor4Value documentation");
@@ -4815,7 +4815,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[208];
+        const DocumentationEntry& e = doc.entries[208];
         CHECK(e.key == "VectorColor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor4Value documentation");
@@ -4827,7 +4827,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[209];
+        const DocumentationEntry& e = doc.entries[209];
         CHECK(e.key == "DateTimeValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "dateTime value documentation");
@@ -4835,7 +4835,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[210];
+        const DocumentationEntry& e = doc.entries[210];
         CHECK(e.key == "OptionalDateTimeValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional dateTime value documentation");
@@ -4843,7 +4843,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[211];
+        const DocumentationEntry& e = doc.entries[211];
         CHECK(e.key == "VectorDateTimeValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "vector dateTime value documentation");
@@ -4855,7 +4855,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[212];
+        const DocumentationEntry& e = doc.entries[212];
         CHECK(e.key == "OptionalVectorDateTimeValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector dateTime value documentation");
@@ -4868,7 +4868,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[213];
+        const DocumentationEntry& e = doc.entries[213];
         CHECK(e.key == "IdentifierValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "identifier value documentation");
@@ -4876,7 +4876,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[214];
+        const DocumentationEntry& e = doc.entries[214];
         CHECK(e.key == "OptionalIdentifierValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional identifier value documentation");
@@ -4884,7 +4884,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[215];
+        const DocumentationEntry& e = doc.entries[215];
         CHECK(e.key == "VectorIdentifierValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "vector identifier value documentation");
@@ -4896,7 +4896,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation") {
         CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[216];
+        const DocumentationEntry& e = doc.entries[216];
         CHECK(e.key == "OptionalVectorIdentifierValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector identifier value documentation");

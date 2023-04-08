@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::vec2 arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::vec2 arg = glm::vec2(1.f, 2.f)) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, glm::vec2> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<glm::vec2> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<glm::vec2> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec2 vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  vec2") {
+TEST_CASE("Parsing/LuaWrapper/Return:  vec2", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] glm::vec2 foo() {
         return glm::vec2(1.f, 2.f);
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  vec2 map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  vec2 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, glm::vec2> foo() {
         return { "test", glm::vec2(1.f, 2.f) };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  vec2 optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  vec2 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<glm::vec2> foo() {
         return glm::vec2(1.f, 2.f);
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec2 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  vec2 vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  vec2 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<glm::vec2> foo() {
         return { glm::vec2(1.f, 2.f) };

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::variant<bool, int> arg) {
     }
@@ -83,7 +83,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<double, float, string>") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Arguments:  Variant<double, float, string>",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::variant<double, float, std::string> arg) {
     }
@@ -144,7 +148,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<double, float, string>") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  variant bool") {
+TEST_CASE("Parsing/LuaWrapper/Return:  variant bool", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::variant<bool> foo() {
         return true;
@@ -175,7 +179,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant bool") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  variant int double") {
+TEST_CASE("Parsing/LuaWrapper/Return:  variant int double", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::variant<int, double> foo() {
         return 1;
@@ -215,7 +219,11 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant int double") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  variant float string path") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Return:  variant float string path",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::variant<float, std::string, std::filesystem::path> foo() {
         return 1.f;

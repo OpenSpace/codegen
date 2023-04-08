@@ -60,7 +60,7 @@ namespace {
 #include "execution_structs_map_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Map:  Bake") {
+TEST_CASE("Execution/Structs/Map:  Bake", "[Execution][Structs]") {
     using namespace std::literals;
 
     ghoul::Dictionary d;
@@ -647,13 +647,13 @@ TEST_CASE("Execution/Structs/Map:  Bake") {
     REQUIRE(p.optionalVectorDictMap->at(2).at("c").value<std::string>("I") == "9"s);
 }
 
-TEST_CASE("Execution/Structs/Map:  Documentation") {
+TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 8);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "SimpleMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "simpleMap documentation");
@@ -671,7 +671,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         CHECK(w->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "OptionalMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalMap documentation");
@@ -689,7 +689,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         CHECK(w->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "VectorMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorMap documentation");
@@ -716,7 +716,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         CHECK(u->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "OptionalVectorMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalVectorMap documentation");
@@ -743,7 +743,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         CHECK(u->mustBeNotEmpty() == false);
     }
     {
-        DocumentationEntry e = doc.entries[4];
+        const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "DictMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictMap documentation");
@@ -758,7 +758,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         REQUIRE(dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[5];
+        const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "OptionalDictMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDictMap documentation");
@@ -773,7 +773,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         REQUIRE(dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[6];
+        const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "VectorDictMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDictMap documentation");
@@ -797,7 +797,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation") {
         REQUIRE(dynamic_cast<TableVerifier*>(w->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[7];
+        const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "OptionalVectorDictMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalVectorDictMap documentation");

@@ -84,7 +84,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         REQUIRE(se->type == StackElement::Type::Enum);
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "A");
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -97,7 +97,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         REQUIRE(se->type == StackElement::Type::Enum);
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "B");
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -110,7 +110,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         REQUIRE(se->type == StackElement::Type::Enum);
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "C");
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -123,7 +123,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         REQUIRE(se->type == StackElement::Type::Enum);
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "D");
-        CHECK(e->mappedTo.empty());
+        CHECK(e->attributes.mappedTo.empty());
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe");
         CHECK(e->elements[1]->name == "ValueB");

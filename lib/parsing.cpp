@@ -300,7 +300,10 @@ Enum* parseEnum(std::string_view line) {
                 if (a.value.empty()) {
                     throw CodegenError("The `map` attribute must have a string argument");
                 }
-                e->mappedTo = a.value;
+                e->attributes.mappedTo = a.value;
+            }
+            if (a.key == attributes::Stringify) {
+                e->attributes.stringify = true;
             }
         }
         cursor = endAttr + 1;

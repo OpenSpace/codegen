@@ -68,11 +68,20 @@ namespace {
         };
         // variable enumDValue documentation
         D enumDValue;
+
+        enum class E {
+            Value1,
+            Value2,
+            Value3,
+            Value4
+        };
+        // variable enumEValue documentation
+        E enumEValue;
     };
 #include "execution_structs_enums_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/Enums:  Bake") {
+TEST_CASE("Execution/Structs/Enums:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     ghoul::Dictionary d;
@@ -86,10 +95,8 @@ TEST_CASE("Execution/Structs/Enums:  Bake") {
         e.setValue("3", "Value1"s);
         d.setValue("EnumCValue", e);
     }
-    d.setValue(
-        "EnumDValue",
-        std::string("On a second line or else one line would be too long")
-    );
+    d.setValue("EnumDValue", "On a second line or else one line would be too long"s);
+    d.setValue("EnumEValue", "Value2"s);
 
     const Parameters p = codegen::bake<Parameters>(d);
     CHECK(p.enumAValue == Parameters::A::Value1);
@@ -108,11 +115,9 @@ TEST_CASE("Execution/Structs/Enums:  Bake") {
         p.enumDValue ==
         Parameters::D::VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe
     );
+    CHECK(p.enumEValue == Parameters::E::Value2);
 
-    d.setValue(
-        "EnumDValue",
-        std::string("a continuation line as the last element of the enum")
-    );
+    d.setValue("EnumDValue", "a continuation line as the last element of the enum"s);
 
     const Parameters q = codegen::bake<Parameters>(d);
     CHECK(
@@ -121,13 +126,13 @@ TEST_CASE("Execution/Structs/Enums:  Bake") {
     );
 }
 
-TEST_CASE("Execution/Structs/Enums:  Documentation") {
+TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 4);
+    REQUIRE(doc.entries.size() == 5);
     {
-        DocumentationEntry e = doc.entries[0];
+        const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "EnumAValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable enumAValue documentation");
@@ -135,7 +140,7 @@ TEST_CASE("Execution/Structs/Enums:  Documentation") {
         CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[1];
+        const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "EnumBValue");
         CHECK(e.optional);
         CHECK(e.documentation == "variable enumBValue documentation");
@@ -143,7 +148,7 @@ TEST_CASE("Execution/Structs/Enums:  Documentation") {
         CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[2];
+        const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "EnumCValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable enumCValue documentation");
@@ -158,7 +163,7 @@ TEST_CASE("Execution/Structs/Enums:  Documentation") {
         CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        DocumentationEntry e = doc.entries[3];
+        const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "EnumDValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "variable enumDValue documentation");
@@ -173,4 +178,21 @@ TEST_CASE("Execution/Structs/Enums:  Documentation") {
             }
         );
     }
+    {
+        const DocumentationEntry& e = doc.entries[4];
+        CHECK(e.key == "EnumEValue");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "variable enumEValue documentation");
+        StringInListVerifier* sil = dynamic_cast<StringInListVerifier*>(e.verifier.get());
+        REQUIRE(sil);
+        CHECK(
+            sil->values ==
+            std::vector<std::string> { "Value1", "Value2", "Value3", "Value4" }
+        );
+    }
+}
+
+TEST_CASE("Execution/Structs/Enums:  String", "[Execution][Structs]") {
+    //Parameters::E e1 = codegen::fromString<Parameters::E>("Value1");
+    //CHECK(e1 == Parameters::E::Value1);
 }

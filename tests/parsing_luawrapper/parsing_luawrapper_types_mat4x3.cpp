@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::mat4x3 arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::mat4x3 arg = glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f)) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, glm::mat4x3> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<glm::mat4x3> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<glm::mat4x3> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat4x3 vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3") {
+TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] glm::mat4x3 foo() {
         return glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f);
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, glm::mat4x3> foo() {
         return { "test", glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f) };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<glm::mat4x3> foo() {
         return glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f);
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  mat4x3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<glm::mat4x3> foo() {
         return { glm::mat4x3(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f) };

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::dvec3 arg) {
     }
@@ -71,7 +71,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(glm::dvec3 arg = glm::dvec3(1.0, 2.0, 3.0)) {
     }
@@ -116,7 +116,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 defaulted") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 map") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::map<std::string, glm::dvec3> arg) {
     }
@@ -163,7 +163,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::optional<glm::dvec3> arg) {
     }
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void func(std::vector<glm::dvec3> arg) {
     }
@@ -253,7 +253,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dvec3 vector") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dvec3") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dvec3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] glm::dvec3 foo() {
         return glm::dvec3(1.0, 2.0, 3.0);
@@ -279,7 +279,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 map") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 map", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::map<std::string, glm::dvec3> foo() {
         return { "test", glm::dvec3(1.0, 2.0, 3.0) };
@@ -309,7 +309,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 map") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 optional") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 optional", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::optional<glm::dvec3> foo() {
         return glm::dvec3(1.0, 2.0, 3.0);
@@ -337,7 +337,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 optional") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 vector") {
+TEST_CASE("Parsing/LuaWrapper/Return:  dvec3 vector", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::vector<glm::dvec3> foo() {
         return { glm::dvec3(1.0, 2.0, 3.0) };

@@ -28,7 +28,7 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo() {
     }
@@ -50,7 +50,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(int arg) {
     }
@@ -92,7 +92,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(int arg = 1) {
     }
@@ -135,7 +135,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(int arg1, std::string arg2) {
     }
@@ -197,7 +197,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)", "[Parsing][LuaWrapper]")
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(int arg1, std::optional<double> arg2) {
     }
@@ -261,7 +262,8 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)", "[Parsing][LuaWrapper]")
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(int arg1, double arg2 = 2.0) {
     }
@@ -325,7 +327,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, double arg2) {
     }
@@ -408,7 +410,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, double arg2 = 1.0) {
     }
@@ -494,7 +500,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/1") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] void foo(std::optional<std::string> arg0, int arg1, std::optional<double> arg2) {
     }
@@ -580,7 +590,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Sandwiched required arguments/2") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  Return value", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] int foo() {
         return 1;
@@ -608,7 +618,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::tuple<int, double> foo() {
     }
@@ -647,7 +661,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments, Multiple return values") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Custom name") {
+TEST_CASE("Parsing/LuaWrapper/Basic:  Custom name", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap("bar")]] std::tuple<int, double> foo() {
     }
@@ -687,7 +701,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Custom name") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline function definition") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Multiline function definition",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]]
 std::tuple<int, double>
@@ -729,7 +747,11 @@ foo()
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Silly multiline function definition",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]]
 std::tuple<
@@ -775,7 +797,11 @@ foo
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition with spaces") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Silly multiline function definition with spaces",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]]
    std::tuple<
@@ -820,7 +846,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Silly multiline function definition with s
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Minimalistic function definition") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Minimalistic function definition",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]] std::tuple<int, double> foo(){}
 )";
@@ -858,7 +888,11 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Minimalistic function definition") {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline argument function definition") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Multiline argument function definition",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]] std::tuple<int, double> foo(int arg1,
 float arg2,
@@ -965,7 +999,11 @@ float arg2,
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/LuaWrapper/Basic:  Multiline tuple return value") {
+TEST_CASE(
+    "Parsing/LuaWrapper/Basic:  Multiline tuple return value",
+    "[Parsing][LuaWrapper]"
+)
+{
     constexpr const char Source[] = R"(
 [[codegen::luawrap]] std::tuple<std::string, bool, std::string, bool, double,
     std::string, float, float, bool>

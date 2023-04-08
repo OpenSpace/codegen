@@ -48,7 +48,7 @@ namespace {
 #include "execution_structs_enummapping_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/Structs/EnumMapping:  1") {
+TEST_CASE("Execution/Structs/EnumMapping:  1", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     ghoul::Dictionary d;
@@ -61,7 +61,7 @@ TEST_CASE("Execution/Structs/EnumMapping:  1") {
     CHECK(ma == MappedEnumA::Value1);
 }
 
-TEST_CASE("Execution/Structs/EnumMapping:  2") {
+TEST_CASE("Execution/Structs/EnumMapping:  2", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     ghoul::Dictionary d;
@@ -74,7 +74,7 @@ TEST_CASE("Execution/Structs/EnumMapping:  2") {
     CHECK(ma == MappedEnumA::value2);
 }
 
-TEST_CASE("Execution/Structs/EnumMapping:  3") {
+TEST_CASE("Execution/Structs/EnumMapping:  3", "[Execution][Structs]") {
     using namespace std::string_literals;
 
     ghoul::Dictionary d;

@@ -32,7 +32,7 @@
 
 namespace CM = Catch::Matchers;
 
-TEST_CASE("Parsing/Structs/Error:  Extra \" in root name") {
+TEST_CASE("Parsing/Structs/Error:  Extra \" in root name", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary("Wrong")]] Parameters {
     int dummy;
@@ -45,7 +45,7 @@ struct [[codegen::Dictionary("Wrong")]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Missing description") {
+TEST_CASE("Parsing/Structs/Error:  Missing description", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     // [[codegen::verbatim]]
@@ -59,7 +59,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Missing space") {
+TEST_CASE("Parsing/Structs/Error:  Missing space", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters{
 };)";
 
@@ -69,7 +69,7 @@ TEST_CASE("Parsing/Structs/Error:  Missing space") {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Missing variant closing") {
+TEST_CASE("Parsing/Structs/Error:  Missing variant closing", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     std::variant<int, float error;
@@ -84,7 +84,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unknown type") {
+TEST_CASE("Parsing/Structs/Error:  Unknown type", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     std::list<int> error;
@@ -92,11 +92,12 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Type detected that codegen doesn't know how to handle")
+        CodegenError,
+        CM::StartsWith("Type detected that codegen doesn't know how to handle")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Missing struct") {
+TEST_CASE("Parsing/Structs/Error:  Missing struct", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 Type [[codegen::Dictionary(Error)]] Parameters {
     std::string str;
@@ -109,7 +110,7 @@ Type [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unterminated attribute") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated attribute", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val [[codegen::inrange(1.0, 2.0]];
@@ -118,11 +119,12 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Attribute parameter has unterminated parameter list")
+        CodegenError,
+        CM::StartsWith("Attribute parameter has unterminated parameter list")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unknown attribute (variable)") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (variable)", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val [[codegen::unknown_key(parameter)]];
@@ -135,7 +137,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unterminated dictionary") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated dictionary", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error]] Parameters {
     int val;
@@ -144,11 +146,13 @@ struct [[codegen::Dictionary(Error]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Attribute parameter has unterminated parameter list")
+        CodegenError,
+        CM::StartsWith("Attribute parameter has unterminated parameter list")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unterminated attribute brackets") {
+TEST_CASE("Parsing/Structs/Error:  Unterminated attribute brackets", "[Parsing][Structs]")
+{
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     enum class A {
@@ -164,7 +168,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unknown attribute (struct)") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (struct)", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     struct [[codegen::unknown_key()]] P {
@@ -174,11 +178,12 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Unknown attribute 'unknown_key' in struct definition")
+        CodegenError,
+        CM::StartsWith("Unknown attribute 'unknown_key' in struct definition")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Unknown attribute (enum)") {
+TEST_CASE("Parsing/Structs/Error:  Unknown attribute (enum)", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     enum class E {
@@ -194,7 +199,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Empty root name 1") {
+TEST_CASE("Parsing/Structs/Error:  Empty root name 1", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary()]] Parameters {
     int val;
@@ -207,7 +212,7 @@ struct [[codegen::Dictionary()]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Empty root name 2") {
+TEST_CASE("Parsing/Structs/Error:  Empty root name 2", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary]] Parameters {
     int val;
@@ -220,7 +225,7 @@ struct [[codegen::Dictionary]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Missing closing }") {
+TEST_CASE("Parsing/Structs/Error:  Missing closing }", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(Error)]] Parameters {
     int val;
@@ -232,7 +237,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Wrong order") {
+TEST_CASE("Parsing/Structs/Error:  Wrong order", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct Parameters [[codegen::Dictionary(abc)]] {
     int value;
@@ -241,11 +246,12 @@ struct Parameters [[codegen::Dictionary(abc)]] {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Only 'struct' can appear directly before [[codegen::Dictionary")
+        CodegenError,
+        CM::StartsWith("Only 'struct' can appear directly before [[codegen::Dictionary")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Block comments") {
+TEST_CASE("Parsing/Structs/Error:  Block comments", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(abc)]] Parameters {
     /* evil block comment */
@@ -259,7 +265,7 @@ struct [[codegen::Dictionary(abc)]] Parameters {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Duplicate root struct") {
+TEST_CASE("Parsing/Structs/Error:  Duplicate root struct", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(S1)]] Parameters {
     struct [[codegen::Dictionary(S2)]] Sub {
@@ -271,11 +277,12 @@ struct [[codegen::Dictionary(S1)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Found nested structs annotated with the Dictionary attribute.")
+        CodegenError,
+        CM::StartsWith("Found nested structs annotated with the Dictionary attribute.")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Old-style enum") {
+TEST_CASE("Parsing/Structs/Error:  Old-style enum", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(abc)]] Parameters {
     enum ABC {
@@ -288,11 +295,12 @@ struct [[codegen::Dictionary(abc)]] Parameters {
 
     CHECK_THROWS_MATCHES(
         parse(Source),
-        CodegenError, CM::StartsWith("Old-style 'enum' not supported. Use 'enum class' instead")
+        CodegenError,
+        CM::StartsWith("Old-style 'enum' not supported. Use 'enum class' instead")
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Default argument in variable") {
+TEST_CASE("Parsing/Structs/Error:  Default argument in variable", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(
 struct [[codegen::Dictionary(D)]] P {
    int value1;
@@ -306,7 +314,7 @@ struct [[codegen::Dictionary(D)]] P {
     );
 }
 
-TEST_CASE("Parsing/Structs/Error:  Misshapen boolean value") {
+TEST_CASE("Parsing/Structs/Error:  Misshapen boolean value", "[Parsing][Structs]") {
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::color(1)]];
 };)";

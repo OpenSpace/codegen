@@ -31,6 +31,8 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 
+using Function = openspace::scripting::LuaLibrary::Function;
+
 namespace {
     enum class [[codegen::enum]] Enum {
         A,
@@ -144,10 +146,8 @@ namespace {
 #include "execution_luawrapper_arguments_enums_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVoid;
+TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
     CHECK(func.arguments.size() == 0);
     CHECK(func.returnType == "");
@@ -161,10 +161,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  One Parameter") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncSingleArgument;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  One Parameter",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncSingleArgument;
     CHECK(func.name == "funcSingleArgument");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "e");
@@ -181,10 +183,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  One Parameter") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncMultipleArguments;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  Two Parameters",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncMultipleArguments;
     CHECK(func.name == "funcMultipleArguments");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "e");
@@ -203,10 +207,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters w/ optional") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncOptionalMultiple;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  Two Parameters w/ optional",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncOptionalMultiple;
     CHECK(func.name == "funcOptionalMultiple");
     REQUIRE(func.arguments.size() == 3);
     CHECK(func.arguments[0].name == "hasValue");
@@ -231,10 +237,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Two Parameters w/ optional") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Vector Arguments") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncVectorArguments;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  Vector Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncVectorArguments;
     CHECK(func.name == "funcVectorArguments");
     REQUIRE(func.arguments.size() == 2);
     CHECK(func.arguments[0].name == "n");
@@ -268,10 +276,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Vector Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  OptionalVector Arguments") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncOptionalVectorArguments;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  OptionalVector Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncOptionalVectorArguments;
     CHECK(func.name == "funcOptionalVectorArguments");
     REQUIRE(func.arguments.size() == 3);
     CHECK(func.arguments[0].name == "hasValue");
@@ -307,11 +317,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  OptionalVector Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Map Arguments") {
-    using namespace openspace::scripting;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  Map Arguments",
+    "[Execution][LuaWrapper]"
+)
+{
     using namespace std::string_literals;
 
-    LuaLibrary::Function func = codegen::lua::FuncMapArguments;
+    Function func = codegen::lua::FuncMapArguments;
     CHECK(func.name == "funcMapArguments");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "es");
@@ -333,10 +346,12 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Map Arguments") {
     lua_close(state);
 }
 
-TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  Return value") {
-    using namespace openspace::scripting;
-
-    LuaLibrary::Function func = codegen::lua::FuncReturnValue;
+TEST_CASE(
+    "Execution/LuaWrapper/Arguments-Enums:  Return value",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::FuncReturnValue;
     CHECK(func.name == "funcReturnValue");
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "v");
