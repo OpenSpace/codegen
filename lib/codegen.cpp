@@ -200,6 +200,35 @@ namespace {
         }
         return comment;
     }
+
+    std::vector<Enum*> collectEnums(Struct* s) {
+        std::vector<Enum*> res;
+        for (StackElement* se : s->children) {
+            switch (se->type) {
+            case StackElement::Type::Struct:
+            {
+                std::vector<Enum*> e = collectEnums(static_cast<Struct*>(se));
+                res.insert(res.end(), e.begin(), e.end());
+                break;
+            }
+            case StackElement::Type::Enum:
+                res.push_back(static_cast<Enum*>(se));
+                break;
+            }
+        }
+        return res;
+    }
+
+    std::vector<Enum*> collectEnums(const Code& code) {
+        std::vector<Enum*> res = code.enums;
+
+        for (Struct* s : code.structs) {
+            std::vector<Enum*> e = collectEnums(s);
+            res.insert(res.end(), e.begin(), e.end());
+        }
+
+        return res;
+    }
 } // namespace
 
 std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
@@ -629,16 +658,7 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
 }
 
 std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback) {
-    std::vector<Enum*> enums = code.enums;
-    // There might be enums that are hidden in structs
-    for (Struct* s : code.structs) {
-        for (StackElement* se : s->children) {
-            if (se->type == StackElement::Type::Enum) {
-                Enum* e = static_cast<Enum*>(se);
-                enums.push_back(e);
-            }
-        }
-    }
+    std::vector<Enum*> enums = collectEnums(code);
 
     // If there are no enums, we can bail out
     if (enums.empty()) {
@@ -647,14 +667,15 @@ std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback
 
     std::string result;
     result += "namespace codegen {\n";
+    result += BakeEnumFallback;
+    result += '\n';
     result += ToStringFallback;
     result += '\n';
     result += FromStringFallback;
     result += '\n';
-    result += BakeEnumFallback;
-    result += '\n';
 
-    for (Enum* e : enums) {
+
+    for (Enum* e : code.enums) {
         result += writeRootEnumConverter(e);
 
         if (!e->attributes.mappedTo.empty()) {

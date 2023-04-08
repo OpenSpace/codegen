@@ -185,7 +185,10 @@ TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
         CHECK(e.documentation == "variable enumEValue documentation");
         StringInListVerifier* sil = dynamic_cast<StringInListVerifier*>(e.verifier.get());
         REQUIRE(sil);
-        CHECK(sil->values == std::vector<std::string> { "Value1", "Value2", "Value3" });
+        CHECK(
+            sil->values ==
+            std::vector<std::string> { "Value1", "Value2", "Value3", "Value4" }
+        );
     }
 }
 

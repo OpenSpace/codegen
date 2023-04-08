@@ -45,6 +45,7 @@ TEST_CASE("Parsing/Enums/Keys:  Keys", "[Parsing][Enums]") {
 
     CHECK(e->parent == nullptr);
     CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
     REQUIRE(e->elements.size() == 3);
     {
         EnumElement* ee = e->elements[0];

@@ -302,6 +302,9 @@ Enum* parseEnum(std::string_view line) {
                 }
                 e->attributes.mappedTo = a.value;
             }
+            if (a.key == attributes::Stringify) {
+                e->attributes.stringify = true;
+            }
         }
         cursor = endAttr + 1;
     }

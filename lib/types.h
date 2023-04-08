@@ -71,6 +71,7 @@ namespace attributes {
     constexpr std::string_view MustBeNotEmpty = "notempty";
 
     constexpr std::string_view Map = "map";
+    constexpr std::string_view Stringify = "stringify";
 } // namespace attributes
 
 
