@@ -76,7 +76,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 };
 )";
     CHECK_THROWS_MATCHES(
-        [&](){
+        [](){
             Code code = parse(Source);
             std::string r = generateResult(code);
         }(),
