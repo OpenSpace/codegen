@@ -232,6 +232,49 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/5", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class
+    [[codegen::stringify()]]
+    Enum
+    {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
     constexpr const char Source[] = R"(
     enum class E {
@@ -414,6 +457,114 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
         EnumElement* ee = e->elements[2];
         REQUIRE(ee);
         CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/5", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class E {
+        Value1,
+        Value2,
+        Value3
+    };
+
+    enum class
+    [[codegen::map(E)]]
+    Enum
+    {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/6", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    namespace abc::def::ghi {
+        enum class E {
+            Value5,
+            Value4,
+            Value3,
+            Value2,
+            Value1,
+            Value0
+        };
+    } // abc::def::ghi
+
+    enum class [[codegen::map(abc::def::ghi::E)]]
+    Enum
+    {
+        Value1 = 0,
+        Value2,
+        Value3,
+        Value4
+    };
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "abc::def::ghi::E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 4);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+    {
+        EnumElement* ee = e->elements[3];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value4");
     }
 
     std::string r = generateResult(code);

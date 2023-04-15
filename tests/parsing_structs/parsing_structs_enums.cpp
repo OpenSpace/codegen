@@ -30,7 +30,26 @@
 
 TEST_CASE("Parsing/Structs/Enums") {
     constexpr const char Source[] = R"(
+
+enum class Base {
+    Value1,
+    Value2,
+    Value3
+};
+
+namespace abc::def::ghi {
+    enum class OtherBase {
+        Value5,
+        Value4,
+        Value3,
+        Value2,
+        Value1,
+        Value0
+    };
+} // abc::def::ghi
+
 struct [[codegen::Dictionary(Multiline)]] Parameters {
+
     // enum A documentation
     enum class A {
         Value1,
@@ -39,6 +58,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     };
     // variable enumAValue documentation
     A enumAValue;
+
 
     // enum B documentation
     enum class B {
@@ -49,6 +69,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     // variable enumBValue documentation
     std::optional<B> enumBValue;
 
+
     // enum C documentation
     enum class C {
         Value1,
@@ -57,6 +78,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     };
     // variable enumCValue documentation
     std::vector<C> enumCValue;
+
 
     enum class D {
         VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe
@@ -67,6 +89,100 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     };
     // variable enumDValue documentation
     D enumDValue;
+
+
+    enum class [[codegen::stringify()]] E {
+        Value1,
+        value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::stringify()]] F {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::stringify()]]
+    G {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::stringify()]] H {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::stringify()]]
+    I
+    {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class [[codegen::map(Base)]] J {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::map(Base)]] K {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::map(Base)]]
+    L {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::map(Base)]] M {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class
+    [[codegen::map(Base)]]
+    N
+    {
+        Value1,
+        Value2,
+        Value3
+    };
+
+
+    enum class [[codegen::map(abc::def::ghi::OtherBase)]]
+    O2
+    {
+        Value1 = 0,
+        Value2,
+        Value3,
+        Value4
+    };
 };
 )";
 
@@ -77,7 +193,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
-    REQUIRE(s->children.size() == 4);
+    REQUIRE(s->children.size() == 15);
     {
         StackElement* se = s->children[0];
         REQUIRE(se);
@@ -85,6 +201,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "A");
         CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -98,6 +215,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "B");
         CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -111,6 +229,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "C");
         CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -124,10 +243,166 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         Enum* e = static_cast<Enum*>(se);
         CHECK(e->name == "D");
         CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe");
         CHECK(e->elements[1]->name == "ValueB");
         CHECK(e->elements[2]->name == "SecondVeryLongValueThatWillCheckIfWeDetectPropertyThatWeHave");
+    }
+
+    {
+        StackElement* se = s->children[4];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "E");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[5];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "F");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[6];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "G");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[7];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "H");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[8];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "I");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[9];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "J");
+        CHECK(e->attributes.mappedTo == "Base");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[10];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "K");
+        CHECK(e->attributes.mappedTo == "Base");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[11];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "L");
+        CHECK(e->attributes.mappedTo == "Base");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[12];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "M");
+        CHECK(e->attributes.mappedTo == "Base");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[13];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "N");
+        CHECK(e->attributes.mappedTo == "Base");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+    }
+
+    {
+        StackElement* se = s->children[14];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "O2");
+        CHECK(e->attributes.mappedTo == "abc::def::ghi::OtherBase");
+        CHECK(!e->attributes.stringify);
+        REQUIRE(e->elements.size() == 4);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "Value2");
+        CHECK(e->elements[2]->name == "Value3");
+        CHECK(e->elements[3]->name == "Value4");
     }
 
     std::string r = generateResult(code);
