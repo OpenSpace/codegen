@@ -800,6 +800,12 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     Enum* rootEnum = nullptr;
     std::string enumBuffer;
 
+    // Determines whether we are currently in the header collecting phase, meaning that
+    // part of the declaration:
+    // enum class [[codegen...] Enum {
+    // which can be distributed over multiple rows
+    bool isCollectingHeader = false;
+
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
         std::string_view line = extractLine(content, &cursor);
@@ -807,11 +813,38 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
             continue;
         }
 
-        if (startsWith(line, "enum class")) {
-            assert(!rootEnum);
-            rootEnum = parseEnum(line);
-            assert(rootEnum);
-            continue;
+        if (startsWith(line, "enum class") || isCollectingHeader) {
+            if (line.find('{') == std::string_view::npos) {
+                // We opened the line with enum class, but it is not finished, so we need
+                // to collect multiple lines until we do
+                enumBuffer += line;
+                enumBuffer += ' ';
+                isCollectingHeader = true;
+                continue;
+            }
+            if (enumBuffer.empty()) {
+                // The header information started and finished in a single row
+                assert(!isCollectingHeader);
+                assert(!rootEnum);
+                rootEnum = parseEnum(line);
+                assert(rootEnum);
+                continue;
+            }
+            else {
+                // We had to collect the header information over multiple rows; we are
+                // still missing the last one though
+                enumBuffer += line;
+                enumBuffer += ' ';
+
+                assert(isCollectingHeader);
+                assert(!rootEnum);
+                rootEnum = parseEnum(enumBuffer);
+                assert(rootEnum);
+                
+                enumBuffer.clear();
+                isCollectingHeader = false;
+                continue;
+            }
         }
 
         if (startsWith(line, "};")) {

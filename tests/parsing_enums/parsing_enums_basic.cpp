@@ -67,3 +67,355 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/1", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class [[codegen::stringify()]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/2", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class
+    [[codegen::stringify()]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/3", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class
+    [[codegen::stringify()]]
+    Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class
+    [[codegen::stringify()]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class E {
+        Value1,
+        Value2,
+        Value3
+    };
+
+    enum class [[codegen::map(E)]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/2", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class E {
+        Value1,
+        Value2,
+        Value3
+    };
+
+    enum class
+    [[codegen::map(E)]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/3", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class E {
+        Value1,
+        Value2,
+        Value3
+    };
+
+    enum class
+    [[codegen::map(E)]]
+    Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
+    constexpr const char Source[] = R"(
+    enum class E {
+        Value1,
+        Value2,
+        Value3
+    };
+
+    enum class
+    [[codegen::map(E)]] Enum {
+        Value1,
+        Value2,
+        Value3
+    };
+    )";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.luaWrapperFunctions.size() == 0);
+    REQUIRE(code.enums.size() == 1);
+    Enum* e = code.enums.front();
+    REQUIRE(e);
+
+    CHECK(e->parent == nullptr);
+    CHECK(e->attributes.mappedTo == "E");
+    CHECK(!e->attributes.stringify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Value3");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
