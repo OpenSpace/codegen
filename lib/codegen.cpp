@@ -53,6 +53,7 @@ namespace {
 
         switch (var->tag) {
             case VariableType::Tag::BasicType:
+            case VariableType::Tag::PointerType:
             case VariableType::Tag::CustomType:
                 break;
             case VariableType::Tag::MapType: {
