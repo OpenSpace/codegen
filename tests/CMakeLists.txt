@@ -38,6 +38,7 @@ target_sources(
     execution_luawrapper/execution_luawrapper_arguments_structs.cpp
     execution_luawrapper/execution_luawrapper_basic.cpp
     execution_luawrapper/execution_luawrapper_comments.cpp
+    execution_luawrapper/execution_luawrapper_pointer.cpp
     execution_luawrapper/execution_luawrapper_return.cpp
     execution_misc/execution_misc_parentdoc.cpp
     execution_misc/execution_misc_multiple.cpp

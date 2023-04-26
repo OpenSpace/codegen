@@ -404,6 +404,13 @@ Variable* parseVariable(std::string_view line, Struct* s) {
 
     std::string_view typeString = line.substr(0, p1);
     res->type = parseType(typeString, s);
+
+    if (res->type->isPointerType()) {
+        throw CodegenError(fmt::format(
+            "Illegal pointer type in struct definition\n{}", line
+        ));
+    }
+
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
         std::string_view attributes = line.substr(p2 + 1);
@@ -1115,6 +1122,14 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
         precursor += 1;
     }
+
+    if (content.substr(precursor, 2) != "]]") {
+        throw CodegenError(fmt::format(
+            "Error parsing root function, unterminated codegen marker. Missing ']'\n{}",
+            content
+        ));
+    }
+
     precursor += 2; // ]]
     precursor = content.find_first_not_of(" \n", precursor);
 

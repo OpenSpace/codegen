@@ -781,4 +781,3 @@ std::string generateDescriptiveTypename(const VariableType* type) {
     }
     throw std::logic_error("Missing case label");
 }
-
