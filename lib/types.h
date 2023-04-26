@@ -101,6 +101,7 @@ struct VariableType {
     bool isOptionalType() const;
     bool isVariantType() const;
     bool isTupleType() const;
+    bool isArrayType() const;
     bool isVectorType() const;
     bool isCustomType() const;
 
@@ -113,6 +114,7 @@ struct VariableType {
         OptionalType,
         VariantType,
         TupleType,
+        ArrayType,
         VectorType,
         CustomType
     };
@@ -178,6 +180,12 @@ struct TupleType : public VariableType {
     std::vector<VariableType*> types;
 };
 bool operator==(const TupleType& lhs, const TupleType& rhs);
+
+struct ArrayType : public VariableType {
+    VariableType* type = nullptr;
+    int size = 0;
+};
+bool operator==(const ArrayType& lhs, const ArrayType& rhs);
 
 struct VectorType : public VariableType {
     VariableType* type = nullptr;

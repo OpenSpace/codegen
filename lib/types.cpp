@@ -28,6 +28,7 @@
 #include "util.h"
 #include <algorithm>
 #include <cassert>
+#include <charconv>
 #include <functional>
 
 namespace {
@@ -72,6 +73,7 @@ bool VariableType::isMapType() const { return tag == Tag::MapType; }
 bool VariableType::isOptionalType() const { return tag == Tag::OptionalType; }
 bool VariableType::isVariantType() const { return tag == Tag::VariantType; }
 bool VariableType::isTupleType() const { return tag == Tag::TupleType; }
+bool VariableType::isArrayType() const { return tag == Tag::ArrayType; }
 bool VariableType::isVectorType() const { return tag == Tag::VectorType; }
 bool VariableType::isCustomType() const { return tag == Tag::CustomType; }
 
@@ -98,6 +100,8 @@ bool VariableType::containsCustomType() const {
                 static_cast<const TupleType*>(this)->types.end(),
                 std::mem_fn(&VariableType::containsCustomType)
             );
+        case Tag::ArrayType:
+            return static_cast<const ArrayType*>(this)->type->containsCustomType();
         case Tag::VectorType:
             return static_cast<const VectorType*>(this)->type->containsCustomType();
         case Tag::CustomType:
@@ -133,6 +137,9 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
         case Tag::TupleType:
             return static_cast<const TupleType&>(lhs) ==
                    static_cast<const TupleType&>(rhs);
+        case Tag::ArrayType:
+            return static_cast<const ArrayType&>(lhs) ==
+                   static_cast<const ArrayType&>(rhs);
         case Tag::VectorType:
             return static_cast<const VectorType&>(lhs) ==
                    static_cast<const VectorType&>(rhs);
@@ -185,11 +192,15 @@ bool operator==(const TupleType& lhs, const TupleType& rhs) {
     return true;
 }
 
-bool operator==(const CustomType& lhs, const CustomType& rhs) {
-    return *lhs.type == *rhs.type;
+bool operator==(const ArrayType& lhs, const ArrayType& rhs) {
+    return *lhs.type == *rhs.type && lhs.size == rhs.size;
 }
 
 bool operator==(const VectorType& lhs, const VectorType& rhs) {
+    return *lhs.type == *rhs.type;
+}
+
+bool operator==(const CustomType& lhs, const CustomType& rhs) {
     return *lhs.type == *rhs.type;
 }
 
@@ -320,6 +331,37 @@ VariableType* parseType(std::string_view type, Struct* context) {
         vt->type = parseType(type, context);
         assert(vt->type);
         t = vt;
+    }
+    else if (startsWith(type, "std::array<")) {
+        type.remove_prefix("std::array<"sv.size());
+        type.remove_suffix(">"sv.size());
+
+        size_t separator = type.find(',');
+        if (separator == std::string_view::npos) {
+            throw CodegenError(fmt::format(
+                "Invalid array specification, missing comma: {}", type
+            ));
+
+        }
+
+        std::string_view count = type.substr(separator + 1);
+        count = strip(count);
+        type = type.substr(0, separator);
+        type = strip(type);
+
+        ArrayType* at = new ArrayType;
+        at->tag = VariableType::Tag::ArrayType;
+        at->type = parseType(type, context);
+        assert(at->type);
+        int size;
+        auto result = std::from_chars(count.data(), count.data() + count.size(), size);
+        if (result.ec == std::errc::invalid_argument) {
+            throw CodegenError(fmt::format(
+                "Invalid array specification, could not convert size to integer: {}", type
+            ));
+        }
+        at->size = size;
+        t = at;
     }
     else if (startsWith(type, "std::optional<")) {
         type.remove_prefix("std::optional<"sv.size());
@@ -669,6 +711,20 @@ std::string generateDescriptiveTypename(const TupleType* type) {
     return res;
 }
 
+std::string generateTypename(const ArrayType* type, bool fullyQualified) {
+    std::string t1 = generateTypename(type->type, fullyQualified);
+    return fmt::format("std::array<{}, {}>", t1, type->size);
+}
+
+std::string generateLuaExtractionTypename(const ArrayType* type) {
+    std::string t1 = generateLuaExtractionTypename(type->type);
+    return fmt::format("std::array<{}, {}>", t1, type->size);
+}
+
+std::string generateDescriptiveTypename(const ArrayType* type) {
+    return fmt::format("{}[{}]", generateDescriptiveTypename(type->type), type->size);
+}
+
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
     return fmt::format("std::vector<{}>", t1);
@@ -726,6 +782,8 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
             return generateTypename(static_cast<const VariantType*>(type), fq);
         case VariableType::Tag::TupleType:
             return generateTypename(static_cast<const TupleType*>(type), fq);
+        case VariableType::Tag::ArrayType:
+            return generateTypename(static_cast<const ArrayType*>(type), fq);
         case VariableType::Tag::VectorType:
             return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
@@ -750,6 +808,8 @@ std::string generateLuaExtractionTypename(const VariableType* type) {
             return generateLuaExtractionTypename(static_cast<const VariantType*>(type));
         case VariableType::Tag::TupleType:
             return generateLuaExtractionTypename(static_cast<const TupleType*>(type));
+        case VariableType::Tag::ArrayType:
+            return generateLuaExtractionTypename(static_cast<const ArrayType*>(type));
         case VariableType::Tag::VectorType:
             return generateLuaExtractionTypename(static_cast<const VectorType*>(type));
         case VariableType::Tag::CustomType:
@@ -774,6 +834,8 @@ std::string generateDescriptiveTypename(const VariableType* type) {
             return generateDescriptiveTypename(static_cast<const VariantType*>(type));
         case VariableType::Tag::TupleType:
             return generateDescriptiveTypename(static_cast<const TupleType*>(type));
+        case VariableType::Tag::ArrayType:
+            return generateDescriptiveTypename(static_cast<const ArrayType*>(type));
         case VariableType::Tag::VectorType:
             return generateDescriptiveTypename(static_cast<const VectorType*>(type));
         case VariableType::Tag::CustomType:

@@ -80,6 +80,12 @@ namespace {
                 }
                 break;
             }
+            case VariableType::Tag::ArrayType: {
+                const ArrayType* vt = static_cast<const ArrayType*>(var);
+                std::vector<const VariableType*> v1 = usedTypes(vt->type);
+                res.insert(res.end(), v1.begin(), v1.end());
+                break;
+            }
             case VariableType::Tag::VectorType: {
                 const VectorType* vt = static_cast<const VectorType*>(var);
                 std::vector<const VariableType*> v1 = usedTypes(vt->type);
