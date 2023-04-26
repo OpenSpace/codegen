@@ -318,8 +318,20 @@ TEST_CASE("Parsing/Structs/Error:  Misshapen boolean value", "[Parsing][Structs]
     constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::color(1)]];
 };)";
+
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError, CM::StartsWith("Boolean attribute needs to be")
+    );
+}
+
+TEST_CASE("Parsing/Structs/Error:  Illegal pointer type", "[Parsing][Structs]") {
+    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+void* v;
+};)";
+
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError, CM::StartsWith("Illegal pointer type in struct definition")
     );
 }

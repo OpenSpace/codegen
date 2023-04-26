@@ -30,14 +30,15 @@ target_sources(
     main.cpp
 
     execution_enums/execution_enums_basic.cpp
+    execution_enums/execution_enums_keys.cpp
     execution_enums/execution_enums_mapping.cpp
     execution_enums/execution_enums_multiple.cpp
-    execution_enums/execution_enums_keys.cpp
     execution_luawrapper/execution_luawrapper_arguments.cpp
     execution_luawrapper/execution_luawrapper_arguments_enums.cpp
     execution_luawrapper/execution_luawrapper_arguments_structs.cpp
     execution_luawrapper/execution_luawrapper_basic.cpp
     execution_luawrapper/execution_luawrapper_comments.cpp
+    execution_luawrapper/execution_luawrapper_pointer.cpp
     execution_luawrapper/execution_luawrapper_return.cpp
     execution_misc/execution_misc_parentdoc.cpp
     execution_misc/execution_misc_multiple.cpp
@@ -47,8 +48,8 @@ target_sources(
     execution_structs/execution_structs_basic_types_optional_vector.cpp
     execution_structs/execution_structs_basic_types_vector.cpp
     execution_structs/execution_structs_comments.cpp
-    execution_structs/execution_structs_enums.cpp
     execution_structs/execution_structs_enummapping.cpp
+    execution_structs/execution_structs_enums.cpp
     execution_structs/execution_structs_map.cpp
     execution_structs/execution_structs_multiple.cpp
     execution_structs/execution_structs_optional_variant_vector.cpp
@@ -59,12 +60,15 @@ target_sources(
     execution_structs/execution_structs_variant.cpp
 
     parsing_enums/parsing_enums_basic.cpp
+    parsing_enums/parsing_enums_keys.cpp
     parsing_enums/parsing_enums_mapping.cpp
     parsing_enums/parsing_enums_multiple.cpp
-    parsing_enums/parsing_enums_keys.cpp
+    parsing_luawrapper/parsing_luawrapper_basic.cpp
+    parsing_luawrapper/parsing_luawrapper_comments.cpp
+    parsing_luawrapper/parsing_luawrapper_fail.cpp
+    parsing_luawrapper/parsing_luawrapper_return.cpp
     parsing_luawrapper/parsing_luawrapper_types_bool.cpp
     parsing_luawrapper/parsing_luawrapper_types_dictionary.cpp
-    parsing_luawrapper/parsing_luawrapper_types_double.cpp
     parsing_luawrapper/parsing_luawrapper_types_dmat2x2.cpp
     parsing_luawrapper/parsing_luawrapper_types_dmat2x3.cpp
     parsing_luawrapper/parsing_luawrapper_types_dmat2x4.cpp
@@ -74,14 +78,16 @@ target_sources(
     parsing_luawrapper/parsing_luawrapper_types_dmat4x2.cpp
     parsing_luawrapper/parsing_luawrapper_types_dmat4x3.cpp
     parsing_luawrapper/parsing_luawrapper_types_dmat4x4.cpp
+    parsing_luawrapper/parsing_luawrapper_types_double.cpp
     parsing_luawrapper/parsing_luawrapper_types_dvec2.cpp
     parsing_luawrapper/parsing_luawrapper_types_dvec3.cpp
     parsing_luawrapper/parsing_luawrapper_types_dvec4.cpp
+    parsing_luawrapper/parsing_luawrapper_types_enums.cpp
+    parsing_luawrapper/parsing_luawrapper_types_float.cpp
     parsing_luawrapper/parsing_luawrapper_types_int.cpp
     parsing_luawrapper/parsing_luawrapper_types_ivec2.cpp
     parsing_luawrapper/parsing_luawrapper_types_ivec3.cpp
     parsing_luawrapper/parsing_luawrapper_types_ivec4.cpp
-    parsing_luawrapper/parsing_luawrapper_types_float.cpp
     parsing_luawrapper/parsing_luawrapper_types_mat2x2.cpp
     parsing_luawrapper/parsing_luawrapper_types_mat2x3.cpp
     parsing_luawrapper/parsing_luawrapper_types_mat2x4.cpp
@@ -91,9 +97,8 @@ target_sources(
     parsing_luawrapper/parsing_luawrapper_types_mat4x2.cpp
     parsing_luawrapper/parsing_luawrapper_types_mat4x3.cpp
     parsing_luawrapper/parsing_luawrapper_types_mat4x4.cpp
-    parsing_luawrapper/parsing_luawrapper_types_void.cpp
-    parsing_luawrapper/parsing_luawrapper_types_enums.cpp
     parsing_luawrapper/parsing_luawrapper_types_path.cpp
+    parsing_luawrapper/parsing_luawrapper_types_pointer.cpp
     parsing_luawrapper/parsing_luawrapper_types_string.cpp
     parsing_luawrapper/parsing_luawrapper_types_structs.cpp
     parsing_luawrapper/parsing_luawrapper_types_tuple.cpp
@@ -101,23 +106,12 @@ target_sources(
     parsing_luawrapper/parsing_luawrapper_types_vec2.cpp
     parsing_luawrapper/parsing_luawrapper_types_vec3.cpp
     parsing_luawrapper/parsing_luawrapper_types_vec4.cpp
-    parsing_luawrapper/parsing_luawrapper_basic.cpp
-    parsing_luawrapper/parsing_luawrapper_comments.cpp
-    parsing_luawrapper/parsing_luawrapper_fail.cpp
+    parsing_luawrapper/parsing_luawrapper_types_void.cpp
     parsing_mixed/parsing_mixed_basic.cpp
     parsing_mixed/parsing_multiple_dictionaries.cpp
+    parsing_structs/parsing_structs_attributes.cpp
     parsing_structs/parsing_structs_attributes_bool.cpp
     parsing_structs/parsing_structs_attributes_dictionary.cpp
-    parsing_structs/parsing_structs_attributes_float.cpp
-    parsing_structs/parsing_structs_attributes_int.cpp
-    parsing_structs/parsing_structs_attributes_ivec2.cpp
-    parsing_structs/parsing_structs_attributes_ivec3.cpp
-    parsing_structs/parsing_structs_attributes_ivec4.cpp
-    parsing_structs/parsing_structs_attributes_path.cpp
-    parsing_structs/parsing_structs_attributes_string.cpp
-    parsing_structs/parsing_structs_attributes_vec2.cpp
-    parsing_structs/parsing_structs_attributes_vec3.cpp
-    parsing_structs/parsing_structs_attributes_vec4.cpp
     parsing_structs/parsing_structs_attributes_fail_bool.cpp
     parsing_structs/parsing_structs_attributes_fail_dictionary.cpp
     parsing_structs/parsing_structs_attributes_fail_dmat2x2.cpp
@@ -151,6 +145,16 @@ target_sources(
     parsing_structs/parsing_structs_attributes_fail_vec2.cpp
     parsing_structs/parsing_structs_attributes_fail_vec3.cpp
     parsing_structs/parsing_structs_attributes_fail_vec4.cpp
+    parsing_structs/parsing_structs_attributes_float.cpp
+    parsing_structs/parsing_structs_attributes_int.cpp
+    parsing_structs/parsing_structs_attributes_ivec2.cpp
+    parsing_structs/parsing_structs_attributes_ivec3.cpp
+    parsing_structs/parsing_structs_attributes_ivec4.cpp
+    parsing_structs/parsing_structs_attributes_path.cpp
+    parsing_structs/parsing_structs_attributes_string.cpp
+    parsing_structs/parsing_structs_attributes_vec2.cpp
+    parsing_structs/parsing_structs_attributes_vec3.cpp
+    parsing_structs/parsing_structs_attributes_vec4.cpp
     parsing_structs/parsing_structs_enums.cpp
     parsing_structs/parsing_structs_fail.cpp
     parsing_structs/parsing_structs_map.cpp

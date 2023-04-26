@@ -261,3 +261,20 @@ TEST_CASE(
         )
     );
 }
+
+TEST_CASE(
+    "Parsing/LuaWrapper/Error:  Unterminated luawrap marker", "[Parsing][LuaWrapper]"
+)
+{
+    constexpr const char S[] = R"(
+    [[codegen::luawrap] void foo() {
+    }
+)";
+    CHECK_THROWS_MATCHES(
+        generateResult(parse(S)),
+        CodegenError,
+        CM::StartsWith(
+            "Error parsing root function, unterminated codegen marker. Missing ']'"
+        )
+    );
+}

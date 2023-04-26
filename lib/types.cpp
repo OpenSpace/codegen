@@ -67,6 +67,7 @@ bool operator==(const StackElement& lhs, const StackElement& rhs) {
 }
 
 bool VariableType::isBasicType() const { return tag == Tag::BasicType; }
+bool VariableType::isPointerType() const { return tag == Tag::PointerType; }
 bool VariableType::isMapType() const { return tag == Tag::MapType; }
 bool VariableType::isOptionalType() const { return tag == Tag::OptionalType; }
 bool VariableType::isVariantType() const { return tag == Tag::VariantType; }
@@ -77,6 +78,8 @@ bool VariableType::isCustomType() const { return tag == Tag::CustomType; }
 bool VariableType::containsCustomType() const {
     switch (tag) {
         case Tag::BasicType:
+            return false;
+        case Tag::PointerType:
             return false;
         case Tag::MapType:
             return static_cast<const MapType*>(this)->keyType->containsCustomType() ||
@@ -115,6 +118,9 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
         case Tag::BasicType:
             return static_cast<const BasicType&>(lhs) ==
                    static_cast<const BasicType&>(rhs);
+        case Tag::PointerType:
+            return static_cast<const PointerType&>(lhs) ==
+                   static_cast<const PointerType&>(rhs);
         case Tag::MapType:
             return static_cast<const MapType&>(lhs) ==
                    static_cast<const MapType&>(rhs);
@@ -138,6 +144,10 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
 }
 
 bool operator==(const BasicType& lhs, const BasicType& rhs) {
+    return lhs.type == rhs.type;
+}
+
+bool operator==(const PointerType& lhs, const PointerType& rhs) {
     return lhs.type == rhs.type;
 }
 
@@ -251,9 +261,6 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
     if (type[type.size() - 1] == '&') {
         throw CodegenError(fmt::format("Illegal reference type found: {}", type));
-    }
-    if (type[type.size() - 1] == '*') {
-        throw CodegenError(fmt::format("Illegal pointer type found: {}", type));
     }
 
     auto newType = [](BasicType::Type t) -> BasicType* {
@@ -409,6 +416,14 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         t = tt;
     }
+    else if (type[type.size() - 1] == '*') {
+        PointerType* tt = new PointerType;
+        tt->tag = VariableType::Tag::PointerType;
+        // Remove the trailing *
+        tt->type = type.substr(0, type.size() - 1);
+        t = tt;
+    }
+
 
     if (!t) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
@@ -531,6 +546,18 @@ std::string generateLuaExtractionTypename(const BasicType* type) {
 
 std::string generateDescriptiveTypename(const BasicType* type) {
     return generateDescriptiveTypename(type->type);
+}
+
+std::string generateTypename(const PointerType* type) {
+    return fmt::format("{}*", type->type);
+}
+
+std::string generateLuaExtractionTypename(const PointerType* type) {
+    return fmt::format("{}*", type->type);
+}
+
+std::string generateDescriptiveTypename(const PointerType* type) {
+    return fmt::format("{}*", type->type);
 }
 
 std::string generateTypename(const MapType* type, bool fullyQualified) {
@@ -689,6 +716,8 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateTypename(static_cast<const BasicType*>(type));
+        case VariableType::Tag::PointerType:
+            return generateTypename(static_cast<const PointerType*>(type));
         case VariableType::Tag::MapType:
             return generateTypename(static_cast<const MapType*>(type), fq);
         case VariableType::Tag::OptionalType:
@@ -711,6 +740,8 @@ std::string generateLuaExtractionTypename(const VariableType* type) {
     switch (type->tag) {
         case VariableType::Tag::BasicType:
             return generateLuaExtractionTypename(static_cast<const BasicType*>(type));
+        case VariableType::Tag::PointerType:
+            return generateLuaExtractionTypename(static_cast<const PointerType*>(type));
         case VariableType::Tag::MapType:
             return generateLuaExtractionTypename(static_cast<const MapType*>(type));
         case VariableType::Tag::OptionalType:
@@ -731,21 +762,22 @@ std::string generateDescriptiveTypename(const VariableType* type) {
     assert(type);
 
     switch (type->tag) {
-    case VariableType::Tag::BasicType:
-        return generateDescriptiveTypename(static_cast<const BasicType*>(type));
-    case VariableType::Tag::MapType:
-        return generateDescriptiveTypename(static_cast<const MapType*>(type));
-    case VariableType::Tag::OptionalType:
-        return generateDescriptiveTypename(static_cast<const OptionalType*>(type));
-    case VariableType::Tag::VariantType:
-        return generateDescriptiveTypename(static_cast<const VariantType*>(type));
-    case VariableType::Tag::TupleType:
-        return generateDescriptiveTypename(static_cast<const TupleType*>(type));
-    case VariableType::Tag::VectorType:
-        return generateDescriptiveTypename(static_cast<const VectorType*>(type));
-    case VariableType::Tag::CustomType:
-        return generateDescriptiveTypename(static_cast<const CustomType*>(type));
+        case VariableType::Tag::BasicType:
+            return generateDescriptiveTypename(static_cast<const BasicType*>(type));
+        case VariableType::Tag::PointerType:
+            return generateDescriptiveTypename(static_cast<const PointerType*>(type));
+        case VariableType::Tag::MapType:
+            return generateDescriptiveTypename(static_cast<const MapType*>(type));
+        case VariableType::Tag::OptionalType:
+            return generateDescriptiveTypename(static_cast<const OptionalType*>(type));
+        case VariableType::Tag::VariantType:
+            return generateDescriptiveTypename(static_cast<const VariantType*>(type));
+        case VariableType::Tag::TupleType:
+            return generateDescriptiveTypename(static_cast<const TupleType*>(type));
+        case VariableType::Tag::VectorType:
+            return generateDescriptiveTypename(static_cast<const VectorType*>(type));
+        case VariableType::Tag::CustomType:
+            return generateDescriptiveTypename(static_cast<const CustomType*>(type));
     }
     throw std::logic_error("Missing case label");
 }
-

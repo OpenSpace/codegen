@@ -96,6 +96,7 @@ struct VariableType {
 #endif // TYPES_ADD_DEBUG_INFORMATION
 
     bool isBasicType() const;
+    bool isPointerType() const;
     bool isMapType() const;
     bool isOptionalType() const;
     bool isVariantType() const;
@@ -107,6 +108,7 @@ struct VariableType {
 
     enum class Tag {
         BasicType,
+        PointerType,
         MapType,
         OptionalType,
         VariantType,
@@ -147,6 +149,11 @@ struct BasicType : public VariableType {
 };
 bool operator==(const BasicType& lhs, const BasicType& rhs);
 std::string generateTypename(BasicType::Type type);
+
+struct PointerType : public VariableType {
+    std::string type;
+};
+bool operator==(const PointerType& lhs, const PointerType& rhs);
 
 struct MapType : public VariableType {
     VariableType* keyType = nullptr;

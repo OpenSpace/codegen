@@ -140,11 +140,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map", "[Parsing][LuaWrapper
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::MapType);
-        MapType* ot = static_cast<MapType*>(v->type);
-        REQUIRE(ot->keyType->tag == VariableType::Tag::BasicType);
-        CHECK(static_cast<BasicType*>(ot->keyType)->type == BasicType::Type::String);
-        REQUIRE(ot->valueType->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->valueType);
+        MapType* mt = static_cast<MapType*>(v->type);
+        REQUIRE(mt->keyType->tag == VariableType::Tag::BasicType);
+        CHECK(static_cast<BasicType*>(mt->keyType)->type == BasicType::Type::String);
+        REQUIRE(mt->valueType->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(mt->valueType);
         CHECK(bt->type == BasicType::Type::Dictionary);
 
         CHECK(v->attributes.annotation.empty());
@@ -232,9 +232,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector", "[Parsing][LuaWrap
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::VectorType);
-        VectorType* ot = static_cast<VectorType*>(v->type);
-        REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        BasicType* bt = static_cast<BasicType*>(ot->type);
+        VectorType* vt = static_cast<VectorType*>(v->type);
+        REQUIRE(vt->type->tag == VariableType::Tag::BasicType);
+        BasicType* bt = static_cast<BasicType*>(vt->type);
         CHECK(bt->type == BasicType::Type::Dictionary);
 
         CHECK(v->attributes.annotation.empty());
