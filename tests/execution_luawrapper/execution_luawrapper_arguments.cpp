@@ -29,6 +29,7 @@
 #include <openspace/scripting/lualibrary.h>
 #include <ghoul/lua/lua_helper.h>
 #include <ghoul/misc/dictionary.h>
+#include <array>
 #include <optional>
 
 using Function = openspace::scripting::LuaLibrary::Function;
@@ -80,6 +81,31 @@ namespace {
         CHECK(arg[2] == false);
     }
 
+    [[codegen::luawrap]] void funcBoolArray1(std::array<bool, 1> arg) {
+        CHECK(arg[0] == true);
+    }
+
+    [[codegen::luawrap]] void funcBoolArray2(std::array<bool, 5> arg) {
+        CHECK(arg[0] == true);
+        CHECK(arg[1] == false);
+        CHECK(arg[2] == true);
+        CHECK(arg[3] == false);
+        CHECK(arg[4] == true);
+    }
+
+    [[codegen::luawrap]] void funcBoolArray3(std::array<bool, 10> arg) {
+        CHECK(arg[0] == true);
+        CHECK(arg[1] == false);
+        CHECK(arg[2] == true);
+        CHECK(arg[3] == false);
+        CHECK(arg[4] == true);
+        CHECK(arg[5] == true);
+        CHECK(arg[6] == false);
+        CHECK(arg[7] == true);
+        CHECK(arg[8] == false);
+        CHECK(arg[9] == true);
+    }
+
     [[codegen::luawrap]] void funcInt(int arg) {
         CHECK(arg == 1);
     }
@@ -121,6 +147,31 @@ namespace {
         CHECK(arg[0] == 1);
         CHECK(arg[1] == 2);
         CHECK(arg[2] == 3);
+    }
+
+    [[codegen::luawrap]] void funcIntArray1(std::array<int, 1> arg) {
+        CHECK(arg[0] == 2);
+    }
+
+    [[codegen::luawrap]] void funcIntArray2(std::array<int, 5> arg) {
+        CHECK(arg[0] == 2);
+        CHECK(arg[1] == 4);
+        CHECK(arg[2] == 6);
+        CHECK(arg[3] == 8);
+        CHECK(arg[4] == 10);
+    }
+
+    [[codegen::luawrap]] void funcIntArray3(std::array<int, 10> arg) {
+        CHECK(arg[0] == 2);
+        CHECK(arg[1] == 4);
+        CHECK(arg[2] == 6);
+        CHECK(arg[3] == 8);
+        CHECK(arg[4] == 10);
+        CHECK(arg[5] == 12);
+        CHECK(arg[6] == 14);
+        CHECK(arg[7] == 16);
+        CHECK(arg[8] == 18);
+        CHECK(arg[9] == 20);
     }
 
     [[codegen::luawrap]] void funcDouble(double arg) {
@@ -166,6 +217,31 @@ namespace {
         CHECK(arg[2] == 3.3);
     }
 
+    [[codegen::luawrap]] void funcDoubleArray1(std::array<double, 1> arg) {
+        CHECK(arg[0] == 1.1);
+    }
+
+    [[codegen::luawrap]] void funcDoubleArray2(std::array<double, 5> arg) {
+        CHECK(arg[0] == 1.1);
+        CHECK(arg[1] == 2.2);
+        CHECK(arg[2] == 3.3);
+        CHECK(arg[3] == 4.4);
+        CHECK(arg[4] == 5.5);
+    }
+
+    [[codegen::luawrap]] void funcDoubleArray3(std::array<double, 10> arg) {
+        CHECK(arg[0] == 1.1);
+        CHECK(arg[1] == 2.2);
+        CHECK(arg[2] == 3.3);
+        CHECK(arg[3] == 4.4);
+        CHECK(arg[4] == 5.5);
+        CHECK(arg[5] == 6.6);
+        CHECK(arg[6] == 7.7);
+        CHECK(arg[7] == 8.8);
+        CHECK(arg[8] == 9.9);
+        CHECK(arg[9] == 10.10);
+    }
+
     [[codegen::luawrap]] void funcFloat(float arg) {
         CHECK(arg == 1.1f);
     }
@@ -207,6 +283,31 @@ namespace {
         CHECK(arg[0] == 1.1f);
         CHECK(arg[1] == 2.2f);
         CHECK(arg[2] == 3.3f);
+    }
+
+    [[codegen::luawrap]] void funcFloatArray1(std::array<float, 1> arg) {
+        CHECK(arg[0] == 1.1f);
+    }
+
+    [[codegen::luawrap]] void funcFloatArray2(std::array<float, 5> arg) {
+        CHECK(arg[0] == 1.1f);
+        CHECK(arg[1] == 2.2f);
+        CHECK(arg[2] == 3.3f);
+        CHECK(arg[3] == 4.4f);
+        CHECK(arg[4] == 5.5f);
+    }
+
+    [[codegen::luawrap]] void funcFloatArray3(std::array<float, 10> arg) {
+        CHECK(arg[0] == 1.1f);
+        CHECK(arg[1] == 2.2f);
+        CHECK(arg[2] == 3.3f);
+        CHECK(arg[3] == 4.4f);
+        CHECK(arg[4] == 5.5f);
+        CHECK(arg[5] == 6.6f);
+        CHECK(arg[6] == 7.7f);
+        CHECK(arg[7] == 8.8f);
+        CHECK(arg[8] == 9.9f);
+        CHECK(arg[9] == 10.10f);
     }
 
     [[codegen::luawrap]] void funcString(std::string arg) {
@@ -252,6 +353,31 @@ namespace {
         CHECK(arg[2] == "ghi");
     }
 
+    [[codegen::luawrap]] void funcStringArray1(std::array<std::string, 1> arg) {
+        CHECK(arg[0] == "abc");
+    }
+
+    [[codegen::luawrap]] void funcStringArray2(std::array<std::string, 5> arg) {
+        CHECK(arg[0] == "abc");
+        CHECK(arg[1] == "def");
+        CHECK(arg[2] == "ghi");
+        CHECK(arg[3] == "jkl");
+        CHECK(arg[4] == "mno");
+    }
+
+    [[codegen::luawrap]] void funcStringArray3(std::array<std::string, 10> arg) {
+        CHECK(arg[0] == "abc");
+        CHECK(arg[1] == "def");
+        CHECK(arg[2] == "ghi");
+        CHECK(arg[3] == "jkl");
+        CHECK(arg[4] == "mno");
+        CHECK(arg[5] == "pqr");
+        CHECK(arg[6] == "stu");
+        CHECK(arg[7] == "vwx");
+        CHECK(arg[8] == "yzz");
+        CHECK(arg[9] == "ABC");
+    }
+
     [[codegen::luawrap]] void funcPath(std::filesystem::path arg) {
         CHECK(arg == std::filesystem::path("abc"));
     }
@@ -293,6 +419,31 @@ namespace {
         CHECK(arg[0] == std::filesystem::path("abc"));
         CHECK(arg[1] == std::filesystem::path("def"));
         CHECK(arg[2] == std::filesystem::path("ghi"));
+    }
+
+    [[codegen::luawrap]] void funcPathArray1(std::array<std::filesystem::path, 1> arg) {
+        CHECK(arg[0] == "abc");
+    }
+
+    [[codegen::luawrap]] void funcPathArray2(std::array<std::filesystem::path, 5> arg) {
+        CHECK(arg[0] == "abc");
+        CHECK(arg[1] == "def");
+        CHECK(arg[2] == "ghi");
+        CHECK(arg[3] == "jkl");
+        CHECK(arg[4] == "mno");
+    }
+
+    [[codegen::luawrap]] void funcPathArray3(std::array<std::filesystem::path, 10> arg) {
+        CHECK(arg[0] == "abc");
+        CHECK(arg[1] == "def");
+        CHECK(arg[2] == "ghi");
+        CHECK(arg[3] == "jkl");
+        CHECK(arg[4] == "mno");
+        CHECK(arg[5] == "pqr");
+        CHECK(arg[6] == "stu");
+        CHECK(arg[7] == "vwx");
+        CHECK(arg[8] == "yzz");
+        CHECK(arg[9] == "ABC");
     }
 
     [[codegen::luawrap]] void funcIvec2(glm::ivec2 arg) {
@@ -338,6 +489,31 @@ namespace {
         CHECK(arg[2] == glm::ivec2(5, 6));
     }
 
+    [[codegen::luawrap]] void funcIvec2Array1(std::array<glm::ivec2, 1> arg) {
+        CHECK(arg[0] == glm::ivec2(1, 2));
+    }
+
+    [[codegen::luawrap]] void funcIvec2Array2(std::array<glm::ivec2, 5> arg) {
+        CHECK(arg[0] == glm::ivec2(1, 2));
+        CHECK(arg[1] == glm::ivec2(3, 4));
+        CHECK(arg[2] == glm::ivec2(5, 6));
+        CHECK(arg[3] == glm::ivec2(7, 8));
+        CHECK(arg[4] == glm::ivec2(9, 10));
+    }
+
+    [[codegen::luawrap]] void funcIvec2Array3(std::array<glm::ivec2, 10> arg) {
+        CHECK(arg[0] == glm::ivec2(1, 2));
+        CHECK(arg[1] == glm::ivec2(3, 4));
+        CHECK(arg[2] == glm::ivec2(5, 6));
+        CHECK(arg[3] == glm::ivec2(7, 8));
+        CHECK(arg[4] == glm::ivec2(9, 10));
+        CHECK(arg[5] == glm::ivec2(11, 12));
+        CHECK(arg[6] == glm::ivec2(13, 14));
+        CHECK(arg[7] == glm::ivec2(15, 16));
+        CHECK(arg[8] == glm::ivec2(17, 18));
+        CHECK(arg[9] == glm::ivec2(19, 20));
+    }
+
     [[codegen::luawrap]] void funcIvec3(glm::ivec3 arg) {
         CHECK(arg == glm::ivec3(1, 2, 3));
     }
@@ -381,6 +557,31 @@ namespace {
         CHECK(arg[2] == glm::ivec3(7, 8, 9));
     }
 
+    [[codegen::luawrap]] void funcIvec3Array1(std::array<glm::ivec3, 1> arg) {
+        CHECK(arg[0] == glm::ivec3(1, 2, 3));
+    }
+
+    [[codegen::luawrap]] void funcIvec3Array2(std::array<glm::ivec3, 5> arg) {
+        CHECK(arg[0] == glm::ivec3(1, 2, 3));
+        CHECK(arg[1] == glm::ivec3(4, 5, 6));
+        CHECK(arg[2] == glm::ivec3(7, 8, 9));
+        CHECK(arg[3] == glm::ivec3(10, 11, 12));
+        CHECK(arg[4] == glm::ivec3(13, 14, 15));
+    }
+
+    [[codegen::luawrap]] void funcIvec3Array3(std::array<glm::ivec3, 10> arg) {
+        CHECK(arg[0] == glm::ivec3(1, 2, 3));
+        CHECK(arg[1] == glm::ivec3(4, 5, 6));
+        CHECK(arg[2] == glm::ivec3(7, 8, 9));
+        CHECK(arg[3] == glm::ivec3(10, 11, 12));
+        CHECK(arg[4] == glm::ivec3(13, 14, 15));
+        CHECK(arg[5] == glm::ivec3(16, 17, 18));
+        CHECK(arg[6] == glm::ivec3(19, 20, 21));
+        CHECK(arg[7] == glm::ivec3(22, 23, 24));
+        CHECK(arg[8] == glm::ivec3(25, 26, 27));
+        CHECK(arg[9] == glm::ivec3(28, 29, 30));
+    }
+
     [[codegen::luawrap]] void funcIvec4(glm::ivec4 arg) {
         CHECK(arg == glm::ivec4(1, 2, 3, 4));
     }
@@ -422,6 +623,31 @@ namespace {
         CHECK(arg[0] == glm::ivec4(1, 2, 3, 4));
         CHECK(arg[1] == glm::ivec4(5, 6, 7, 8));
         CHECK(arg[2] == glm::ivec4(9, 10, 11, 12));
+    }
+
+    [[codegen::luawrap]] void funcIvec4Array1(std::array<glm::ivec4, 1> arg) {
+        CHECK(arg[0] == glm::ivec4(1, 2, 3, 4));
+    }
+
+    [[codegen::luawrap]] void funcIvec4Array2(std::array<glm::ivec4, 5> arg) {
+        CHECK(arg[0] == glm::ivec4(1, 2, 3, 4));
+        CHECK(arg[1] == glm::ivec4(5, 6, 7, 8));
+        CHECK(arg[2] == glm::ivec4(9, 10, 11, 12));
+        CHECK(arg[3] == glm::ivec4(13, 14, 15, 16));
+        CHECK(arg[4] == glm::ivec4(17, 18, 19, 20));
+    }
+
+    [[codegen::luawrap]] void funcIvec4Array3(std::array<glm::ivec4, 10> arg) {
+        CHECK(arg[0] == glm::ivec4(1, 2, 3, 4));
+        CHECK(arg[1] == glm::ivec4(5, 6, 7, 8));
+        CHECK(arg[2] == glm::ivec4(9, 10, 11, 12));
+        CHECK(arg[3] == glm::ivec4(13, 14, 15, 16));
+        CHECK(arg[4] == glm::ivec4(17, 18, 19, 20));
+        CHECK(arg[5] == glm::ivec4(21, 22, 23, 24));
+        CHECK(arg[6] == glm::ivec4(25, 26, 27, 28));
+        CHECK(arg[7] == glm::ivec4(29, 30, 31, 32));
+        CHECK(arg[8] == glm::ivec4(33, 34, 35, 36));
+        CHECK(arg[9] == glm::ivec4(37, 38, 39, 40));
     }
 
     [[codegen::luawrap]] void funcDvec2(glm::dvec2 arg) {
@@ -2369,6 +2595,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolVector", "[Execution][LuaWrapper
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncBoolArray1;
+    CHECK(func.name == "funcBoolArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, true);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncBoolArray2;
+    CHECK(func.name == "funcBoolArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, true);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncBoolArray3;
+    CHECK(func.name == "funcBoolArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Boolean[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, true);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, false);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, true);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  int", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncInt;
     CHECK(func.name == "funcInt");
@@ -2565,6 +2877,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector", "[Execution][LuaWrapper]
     ghoul::lua::push(state, 2, 2);
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, 3);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  intArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIntArray1;
+    CHECK(func.name == "funcIntArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 2);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  intArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIntArray2;
+    CHECK(func.name == "funcIntArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 2);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 4);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 6);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 8);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 10);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  intArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIntArray3;
+    CHECK(func.name == "funcIntArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Integer[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 2);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 4);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 6);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 8);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 10);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, 12);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, 14);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, 16);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, 18);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, 20);
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -2771,6 +3169,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleVector", "[Execution][LuaWrapp
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDoubleArray1;
+    CHECK(func.name == "funcDoubleArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDoubleArray2;
+    CHECK(func.name == "funcDoubleArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 2.2);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 3.3);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 4.4);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 5.5);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDoubleArray3;
+    CHECK(func.name == "funcDoubleArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 2.2);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 3.3);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 4.4);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 5.5);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, 6.6);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, 7.7);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, 8.8);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, 9.9);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, 10.10);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  float", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncFloat;
     CHECK(func.name == "funcFloat");
@@ -2971,6 +3455,91 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  floatVector", "[Execution][LuaWrappe
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncFloatArray1;
+    CHECK(func.name == "funcFloatArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1f);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncFloatArray2;
+    CHECK(func.name == "funcFloatArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 2.2f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 3.3f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 4.4f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 5.5f);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  floatArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncFloatArray3;
+    CHECK(func.name == "funcFloatArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Number[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, 1.1f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, 2.2f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, 3.3f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, 4.4f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, 5.5f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, 6.6f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, 7.7f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, 8.8f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, 9.9f);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, 10.10f);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  string", "[Execution][LuaWrapper]") {
     using namespace std::string_literals;
@@ -3186,6 +3755,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  stringVector", "[Execution][LuaWrapp
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncStringArray1;
+    CHECK(func.name == "funcStringArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncStringArray2;
+    CHECK(func.name == "funcStringArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, "def");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, "ghi");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, "jkl");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, "mno");
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  stringArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncStringArray3;
+    CHECK(func.name == "funcStringArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "String[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, "def");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, "ghi");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, "jkl");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, "mno");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, "pqr");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, "stu");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, "vwx");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, "yzz");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, "ABC");
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  path", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncPath;
     CHECK(func.name == "funcPath");
@@ -3380,6 +4035,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  pathVector", "[Execution][LuaWrapper
     ghoul::lua::push(state, 2, std::filesystem::path("def"));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, std::filesystem::path("ghi"));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathArray1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncPathArray1;
+    CHECK(func.name == "funcPathArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathArray2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncPathArray2;
+    CHECK(func.name == "funcPathArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, "def");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, "ghi");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, "jkl");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, "mno");
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  pathArray3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncPathArray3;
+    CHECK(func.name == "funcPathArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Path[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, "abc");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, "def");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, "ghi");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, "jkl");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, "mno");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, "pqr");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, "stu");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, "vwx");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, "yzz");
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, "ABC");
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -3586,6 +4327,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Vector", "[Execution][LuaWrappe
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec2Array1;
+    CHECK(func.name == "funcIvec2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec2(1, 2));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec2Array2;
+    CHECK(func.name == "funcIvec2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec2(1, 2));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec2(3, 4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec2(5, 6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec2(7, 8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec2(9, 10));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec2Array3;
+    CHECK(func.name == "funcIvec2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec2(1, 2));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec2(3, 4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec2(5, 6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec2(7, 8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec2(9, 10));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::ivec2(11, 12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::ivec2(13, 14));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::ivec2(15, 16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::ivec2(17, 18));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::ivec2(19, 20));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncIvec3;
     CHECK(func.name == "funcIvec3");
@@ -3786,6 +4613,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector", "[Execution][LuaWrappe
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec3Array1;
+    CHECK(func.name == "funcIvec3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec3(1, 2, 3));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec3Array2;
+    CHECK(func.name == "funcIvec3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec3(1, 2, 3));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec3(4, 5, 6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec3(7, 8, 9));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec3(10, 11, 12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec3(13, 14, 15));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec3Array3;
+    CHECK(func.name == "funcIvec3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec3(1, 2, 3));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec3(4, 5, 6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec3(7, 8, 9));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec3(10, 11, 12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec3(13, 14, 15));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::ivec3(16, 17, 18));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::ivec3(19, 20, 21));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::ivec3(22, 23, 24));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::ivec3(25, 26, 27));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::ivec3(28, 29, 30));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncIvec4;
     CHECK(func.name == "funcIvec4");
@@ -3980,6 +4893,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Vector", "[Execution][LuaWrappe
     ghoul::lua::push(state, 2, glm::ivec4(5, 6, 7, 8));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::ivec4(9, 10, 11, 12));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec4Array1;
+    CHECK(func.name == "funcIvec4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec4(1, 2, 3, 4));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec4Array2;
+    CHECK(func.name == "funcIvec4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec4(1, 2, 3, 4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec4(5, 6, 7, 8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec4(9, 10, 11, 12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec4(13, 14, 15, 16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec4(17, 18, 19, 20));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncIvec4Array3;
+    CHECK(func.name == "funcIvec4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "ivec4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::ivec4(1, 2, 3, 4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::ivec4(5, 6, 7, 8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::ivec4(9, 10, 11, 12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::ivec4(13, 14, 15, 16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::ivec4(17, 18, 19, 20));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::ivec4(21, 22, 23, 24));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::ivec4(25, 26, 27, 28));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::ivec4(29, 30, 31, 32));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::ivec4(33, 34, 35, 36));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::ivec4(37, 38, 39, 40));
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);

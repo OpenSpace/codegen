@@ -628,6 +628,145 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map", "[Parsing][LuaWrapper]
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    struct [[codegen::Dictionary(P)]] Parameter {
+        int a;
+        float b;
+        std::string c;
+    };
+
+    [[codegen::luawrap]] void func1(std::array<Parameter, 1> p) {
+    }
+
+    [[codegen::luawrap]] void func2(std::array<Parameter, 5> p) {
+    }
+
+    [[codegen::luawrap]] void func3(std::array<Parameter, 10> p) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.enums.size() == 0);
+
+    {
+        REQUIRE(code.structs.size() == 1);
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+
+        CHECK(s->name == "Parameter");
+        REQUIRE(s->variables.size() == 3);
+        CHECK(s->variables[0]->name == "a");
+        CHECK(generateTypename(s->variables[0]->type) == "int");
+
+        CHECK(s->variables[1]->name == "b");
+        CHECK(generateTypename(s->variables[1]->type) == "float");
+
+        CHECK(s->variables[2]->name == "c");
+        CHECK(generateTypename(s->variables[2]->type) == "std::string");
+    }
+    REQUIRE(code.luaWrapperFunctions.size() == 3);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isArrayType());
+        ArrayType* at = static_cast<ArrayType*>(v->type);
+        REQUIRE(at->type->tag == VariableType::Tag::CustomType);
+        CHECK(at->size == 1);
+        CustomType* ct = static_cast<CustomType*>(at->type);
+        REQUIRE(ct);
+        REQUIRE(ct->type);
+        CHECK(ct->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isArrayType());
+        ArrayType* at = static_cast<ArrayType*>(v->type);
+        REQUIRE(at->type->tag == VariableType::Tag::CustomType);
+        CHECK(at->size == 5);
+        CustomType* ct = static_cast<CustomType*>(at->type);
+        REQUIRE(ct);
+        REQUIRE(ct->type);
+        CHECK(ct->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        Variable* v = f->arguments[0];
+        REQUIRE(v);
+        CHECK(v->name == "p");
+        REQUIRE(v->type->isArrayType());
+        ArrayType* at = static_cast<ArrayType*>(v->type);
+        REQUIRE(at->type->tag == VariableType::Tag::CustomType);
+        CHECK(at->size == 10);
+        CustomType* ct = static_cast<CustomType*>(at->type);
+        REQUIRE(ct);
+        REQUIRE(ct->type);
+        CHECK(ct->type->name == "Parameter");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.key.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.inrange.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.notinlist.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE(
     "Parsing/LuaWrapper/Arguments-Struct:  as return value",
     "[Parsing][LuaWrapper]"

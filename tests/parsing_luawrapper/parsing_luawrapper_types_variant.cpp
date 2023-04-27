@@ -148,6 +148,156 @@ TEST_CASE(
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/LuaWrapper/Arguments:  variant array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void func1(std::array<std::variant<double, float, std::string>, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void func2(std::array<std::variant<double, float, std::string>, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void func3(std::array<std::variant<double, float, std::string>, 10> arg) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 3);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::VariantType);
+            CHECK(at->size == 1);
+            VariantType* ot = static_cast<VariantType*>(at->type);
+            REQUIRE(ot->types.size() == 3);
+            {
+                VariableType* t = ot->types[0];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Double);
+            }
+            {
+                VariableType* t = ot->types[1];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Float);
+            }
+            {
+                VariableType* t = ot->types[2];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::String);
+            }
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::VariantType);
+            CHECK(at->size == 5);
+            VariantType* ot = static_cast<VariantType*>(at->type);
+            REQUIRE(ot->types.size() == 3);
+            {
+                VariableType* t = ot->types[0];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Double);
+            }
+            {
+                VariableType* t = ot->types[1];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Float);
+            }
+            {
+                VariableType* t = ot->types[2];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::String);
+            }
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::VariantType);
+            CHECK(at->size == 10);
+            VariantType* ot = static_cast<VariantType*>(at->type);
+            REQUIRE(ot->types.size() == 3);
+            {
+                VariableType* t = ot->types[0];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Double);
+            }
+            {
+                VariableType* t = ot->types[1];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::Float);
+            }
+            {
+                VariableType* t = ot->types[2];
+                REQUIRE(t->tag == VariableType::Tag::BasicType);
+                BasicType* bt = static_cast<BasicType*>(t);
+                REQUIRE(bt->type == BasicType::Type::String);
+            }
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE("Parsing/LuaWrapper/Return:  variant bool", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] std::variant<bool> foo() {
@@ -264,6 +414,138 @@ TEST_CASE(
         REQUIRE(v->tag == VariableType::Tag::BasicType);
         BasicType* bt = static_cast<BasicType*>(v);
         CHECK(bt->type == BasicType::Type::Path);
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Return:  variant array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] std::array<std::variant<float, std::string, std::filesystem::path>, 1> foo1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<std::variant<float, std::string, std::filesystem::path>, 5> foo2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<std::variant<float, std::string, std::filesystem::path>, 10> foo3() {
+        return {};
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 3);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        CHECK(at->type->tag == VariableType::Tag::VariantType);
+        CHECK(at->size == 1);
+        VariantType* vt = static_cast<VariantType*>(at->type);
+        REQUIRE(vt->types.size() == 3);
+        {
+            VariableType* v = vt->types[0];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* v = vt->types[1];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* v = vt->types[2];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Path);
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        CHECK(at->type->tag == VariableType::Tag::VariantType);
+        CHECK(at->size == 5);
+        VariantType* vt = static_cast<VariantType*>(at->type);
+        REQUIRE(vt->types.size() == 3);
+        {
+            VariableType* v = vt->types[0];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* v = vt->types[1];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* v = vt->types[2];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Path);
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        CHECK(at->type->tag == VariableType::Tag::VariantType);
+        CHECK(at->size == 10);
+        VariantType* vt = static_cast<VariantType*>(at->type);
+        REQUIRE(vt->types.size() == 3);
+        {
+            VariableType* v = vt->types[0];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Float);
+        }
+        {
+            VariableType* v = vt->types[1];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::String);
+        }
+        {
+            VariableType* v = vt->types[2];
+            REQUIRE(v);
+            REQUIRE(v->tag == VariableType::Tag::BasicType);
+            BasicType* bt = static_cast<BasicType*>(v);
+            CHECK(bt->type == BasicType::Type::Path);
+        }
     }
 
     std::string r = generateResult(code);

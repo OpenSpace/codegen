@@ -253,6 +253,126 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 vector", "[Parsing][LuaWrapper]")
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/LuaWrapper/Arguments:  vec3 array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] void func1(std::array<glm::vec3, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void func2(std::array<glm::vec3, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void func3(std::array<glm::vec3, 10> arg) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 3);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 1);
+            BasicType* bt = static_cast<BasicType*>(at->type);
+            CHECK(bt->type == BasicType::Type::Vec3);
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 5);
+            BasicType* bt = static_cast<BasicType*>(at->type);
+            CHECK(bt->type == BasicType::Type::Vec3);
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "func3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 10);
+            BasicType* bt = static_cast<BasicType*>(at->type);
+            CHECK(bt->type == BasicType::Type::Vec3);
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE("Parsing/LuaWrapper/Return:  vec3", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     [[codegen::luawrap]] glm::vec3 foo() {
@@ -360,6 +480,75 @@ TEST_CASE("Parsing/LuaWrapper/Return:  vec3 vector", "[Parsing][LuaWrapper]") {
     REQUIRE(vt->type->tag == VariableType::Tag::BasicType);
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Vec3);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Return:  vec3 array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] std::array<glm::vec3, 1> foo1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<glm::vec3, 5> foo2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<glm::vec3, 10> foo3() {
+        return {};
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 3);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+        CHECK(at->size == 1);
+        BasicType* bt = static_cast<BasicType*>(at->type);
+        CHECK(bt->type == BasicType::Type::Vec3);
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+        CHECK(at->size == 5);
+        BasicType* bt = static_cast<BasicType*>(at->type);
+        CHECK(bt->type == BasicType::Type::Vec3);
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "foo3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+        CHECK(at->size == 10);
+        BasicType* bt = static_cast<BasicType*>(at->type);
+        CHECK(bt->type == BasicType::Type::Vec3);
+    }
 
     std::string r = generateResult(code);
     CHECK(!r.empty());

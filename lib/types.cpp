@@ -336,7 +336,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         type.remove_prefix("std::array<"sv.size());
         type.remove_suffix(">"sv.size());
 
-        size_t separator = type.find(',');
+        size_t separator = type.rfind(',');
         if (separator == std::string_view::npos) {
             throw CodegenError(fmt::format(
                 "Invalid array specification, missing comma: {}", type

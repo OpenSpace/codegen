@@ -973,6 +973,560 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
     CHECK(!r.empty());
 }
 
+TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    struct Foo {};
+    
+    [[codegen::luawrap]] void funcVoid1(std::array<void*, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void funcVoid2(std::array<void*, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void funcVoid3(std::array<void*, 10> arg) {
+    }
+
+    [[codegen::luawrap]] void funcInt1(std::array<int*, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void funcInt2(std::array<int*, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void funcInt3(std::array<int*, 10> arg) {
+    }
+
+    [[codegen::luawrap]] void funcString1(std::array<std::string*, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void funcString2(std::array<std::string*, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void funcString3(std::array<std::string*, 10> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFoo1(std::array<Foo*, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFoo2(std::array<Foo*, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFoo3(std::array<Foo*, 10> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFooS1(std::array<Foo**, 1> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFooS2(std::array<Foo**, 5> arg) {
+    }
+
+    [[codegen::luawrap]] void funcFooS3(std::array<Foo**, 10> arg) {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 15);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 1);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "void");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 5);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "void");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 10);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "void");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[3];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 1);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "int");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[4];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 5);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "int");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[5];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 10);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "int");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[6];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 1);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "std::string");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[7];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 5);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "std::string");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[8];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 10);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "std::string");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[9];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 1);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[10];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 5);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[11];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 10);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[12];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS1");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 1);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo*");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[13];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS2");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 5);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo*");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+    {
+        Function* f = code.luaWrapperFunctions[14];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS3");
+        CHECK(f->documentation == "");
+        CHECK(f->returnValue == nullptr);
+        REQUIRE(f->arguments.size() == 1);
+        {
+            Variable* v = f->arguments[0];
+            REQUIRE(v);
+            CHECK(v->name == "arg");
+            REQUIRE(v->type);
+            REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
+            REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+            CHECK(at->size == 10);
+            PointerType* pt = static_cast<PointerType*>(at->type);
+            CHECK(pt->type == "Foo*");
+
+            CHECK(v->attributes.annotation.empty());
+            CHECK(v->attributes.key.empty());
+            CHECK(v->attributes.inlist.empty());
+            CHECK(v->attributes.inrange.empty());
+            CHECK(v->attributes.less.empty());
+            CHECK(v->attributes.lessequal.empty());
+            CHECK(v->attributes.greater.empty());
+            CHECK(v->attributes.greaterequal.empty());
+            CHECK(v->attributes.notinlist.empty());
+            CHECK(v->attributes.reference.empty());
+            CHECK(v->attributes.unequal.empty());
+        }
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
     constexpr const char Source[] = R"(
     struct Foo {};
@@ -1363,6 +1917,303 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         REQUIRE(vt->type->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(vt->type);
         CHECK(generateTypename(pt) == "Foo**");
+    }
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    [[codegen::luawrap]] std::array<void*, 1> funcVoid1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<void*, 5> funcVoid2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<void*, 10> funcVoid3() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<int*, 1> funcInt1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<int*, 5> funcInt2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<int*, 10> funcInt3() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<std::string*, 1> funcString1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<std::string*, 5> funcString2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<std::string*, 10> funcString3() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo*, 1> funcFoo1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo*, 5> funcFoo2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo*, 10> funcFoo3() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo**, 1> funcFooS1() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo**, 5> funcFooS2() {
+        return {};
+    }
+
+    [[codegen::luawrap]] std::array<Foo**, 10> funcFooS3() {
+        return {};
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 15);
+    {
+        Function* f = code.luaWrapperFunctions[0];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 1);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "void");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[1];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 5);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "void");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[2];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcVoid3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 10);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "void");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[3];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 1);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "int");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[4];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 5);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "int");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[5];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcInt3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 10);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "int");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[6];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 1);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "std::string");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[7];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 5);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "std::string");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[8];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcString3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 10);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "std::string");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[9];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 1);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[10];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 5);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[11];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFoo3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 10);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[12];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS1");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 1);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo*");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[13];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS2");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 5);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo*");
+    }
+    {
+        Function* f = code.luaWrapperFunctions[14];
+        REQUIRE(f);
+
+        CHECK(f->functionName == "funcFooS3");
+        CHECK(f->documentation == "");
+        CHECK(f->arguments.size() == 0);
+        VariableType* rt = f->returnValue;
+        CHECK(rt->tag == VariableType::Tag::ArrayType);
+        ArrayType* at = static_cast<ArrayType*>(rt);
+        REQUIRE(at->type->tag == VariableType::Tag::PointerType);
+        CHECK(at->size == 10);
+        PointerType* pt = static_cast<PointerType*>(at->type);
+        CHECK(pt->type == "Foo*");
     }
 
     std::string r = generateResult(code);

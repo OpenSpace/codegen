@@ -285,9 +285,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool array", "[Parsing][LuaWrapper]") 
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
             ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 1);
             BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Bool);
-            CHECK(at->size == 1);
 
             CHECK(v->attributes.annotation.empty());
             CHECK(v->attributes.key.empty());
@@ -318,9 +318,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool array", "[Parsing][LuaWrapper]") 
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
             ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 5);
             BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Bool);
-            CHECK(at->size == 5);
 
             CHECK(v->attributes.annotation.empty());
             CHECK(v->attributes.key.empty());
@@ -351,9 +351,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool array", "[Parsing][LuaWrapper]") 
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
             ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
+            CHECK(at->size == 10);
             BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Bool);
-            CHECK(at->size == 10);
 
             CHECK(v->attributes.annotation.empty());
             CHECK(v->attributes.key.empty());
