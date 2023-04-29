@@ -33,13 +33,48 @@ target_sources(
     execution_enums/execution_enums_keys.cpp
     execution_enums/execution_enums_mapping.cpp
     execution_enums/execution_enums_multiple.cpp
-    execution_luawrapper/execution_luawrapper_arguments.cpp
     execution_luawrapper/execution_luawrapper_arguments_enums.cpp
     execution_luawrapper/execution_luawrapper_arguments_structs.cpp
     execution_luawrapper/execution_luawrapper_basic.cpp
     execution_luawrapper/execution_luawrapper_comments.cpp
-    execution_luawrapper/execution_luawrapper_pointer.cpp
-    execution_luawrapper/execution_luawrapper_return.cpp
+    execution_luawrapper/execution_luawrapper_types_pointer.cpp
+    execution_luawrapper/execution_luawrapper_types_bool.cpp
+    execution_luawrapper/execution_luawrapper_types_dictionary.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat2x2.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat2x3.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat2x4.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat3x2.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat3x3.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat3x4.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat4x2.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat4x3.cpp
+    execution_luawrapper/execution_luawrapper_types_dmat4x4.cpp
+    execution_luawrapper/execution_luawrapper_types_double.cpp
+    execution_luawrapper/execution_luawrapper_types_dvec2.cpp
+    execution_luawrapper/execution_luawrapper_types_dvec3.cpp
+    execution_luawrapper/execution_luawrapper_types_dvec4.cpp
+    execution_luawrapper/execution_luawrapper_types_float.cpp
+    execution_luawrapper/execution_luawrapper_types_int.cpp
+    execution_luawrapper/execution_luawrapper_types_ivec2.cpp
+    execution_luawrapper/execution_luawrapper_types_ivec3.cpp
+    execution_luawrapper/execution_luawrapper_types_ivec4.cpp
+    execution_luawrapper/execution_luawrapper_types_mat2x2.cpp
+    execution_luawrapper/execution_luawrapper_types_mat2x3.cpp
+    execution_luawrapper/execution_luawrapper_types_mat2x4.cpp
+    execution_luawrapper/execution_luawrapper_types_mat3x2.cpp
+    execution_luawrapper/execution_luawrapper_types_mat3x3.cpp
+    execution_luawrapper/execution_luawrapper_types_mat3x4.cpp
+    execution_luawrapper/execution_luawrapper_types_mat4x2.cpp
+    execution_luawrapper/execution_luawrapper_types_mat4x3.cpp
+    execution_luawrapper/execution_luawrapper_types_mat4x4.cpp
+    execution_luawrapper/execution_luawrapper_types_path.cpp
+    execution_luawrapper/execution_luawrapper_types_string.cpp
+    execution_luawrapper/execution_luawrapper_types_tuple.cpp
+    execution_luawrapper/execution_luawrapper_types_variant.cpp
+    execution_luawrapper/execution_luawrapper_types_vec2.cpp
+    execution_luawrapper/execution_luawrapper_types_vec3.cpp
+    execution_luawrapper/execution_luawrapper_types_vec4.cpp
+    execution_luawrapper/execution_luawrapper_types_void.cpp
     execution_misc/execution_misc_parentdoc.cpp
     execution_misc/execution_misc_multiple.cpp
     execution_structs/execution_structs_attributes.cpp

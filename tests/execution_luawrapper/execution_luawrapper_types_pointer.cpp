@@ -382,19 +382,19 @@ namespace {
         CHECK(arg[2][2]->c == "yzz");
     }
 
-    [[codegen::luawrap]] void* funcVoidReturn() {
+    [[codegen::luawrap]] void* returnVoid() {
         return reinterpret_cast<void*>(1);
     }
 
-    [[codegen::luawrap]] int* funcIntReturn() {
+    [[codegen::luawrap]] int* returnInt() {
         return new int(1);
     }
 
-    [[codegen::luawrap]] std::string* funcStringReturn() {
+    [[codegen::luawrap]] std::string* returnString() {
         return new std::string("foo");
     }
 
-    [[codegen::luawrap]] Foo* funcStructReturn() {
+    [[codegen::luawrap]] Foo* returnStruct() {
         return new Foo {
             .a = 1,
             .b = 2.f,
@@ -402,7 +402,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] Foo** funcStruct2Return() {
+    [[codegen::luawrap]] Foo** returnStruct2() {
         Foo** fs = new Foo*[3];
 
         fs[0] = new Foo {
@@ -426,7 +426,7 @@ namespace {
         return fs;
     }
 
-    [[codegen::luawrap]] std::map<std::string, void*> funcVoidReturnMap() {
+    [[codegen::luawrap]] std::map<std::string, void*> returnVoidMap() {
         return {
             { "key1", reinterpret_cast<void*>(1) },
             { "key2", reinterpret_cast<void*>(2) },
@@ -434,7 +434,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::map<std::string, int*> funcIntReturnMap() {
+    [[codegen::luawrap]] std::map<std::string, int*> returnIntMap() {
         return {
             { "key1", new int(1) },
             { "key2", new int(2) },
@@ -442,7 +442,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::map<std::string, std::string*> funcStringReturnMap() {
+    [[codegen::luawrap]] std::map<std::string, std::string*> returnStringMap() {
         return {
             { "key1", new std::string("abc") },
             { "key2", new std::string("def") },
@@ -450,7 +450,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::map<std::string, Foo*> funcStructReturnMap() {
+    [[codegen::luawrap]] std::map<std::string, Foo*> returnStructMap() {
         return {
             { "key1", new Foo { .a = 1, .b = 2.f, .c = "abc" } },
             { "key2", new Foo { .a = 3, .b = 4.f, .c = "def" } },
@@ -458,7 +458,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::map<std::string, Foo**> funcStruct2ReturnMap() {
+    [[codegen::luawrap]] std::map<std::string, Foo**> returnStruct2Map() {
         Foo** fs1 = new Foo*[3];
         fs1[0] = new Foo {
             .a = 1,
@@ -523,7 +523,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::optional<void*> funcVoidReturnOptional(bool shouldReturn) {
+    [[codegen::luawrap]] std::optional<void*> returnVoidOptional(bool shouldReturn) {
         if (shouldReturn) {
             return reinterpret_cast<void*>(1);
         }
@@ -532,7 +532,7 @@ namespace {
         }
     }
 
-    [[codegen::luawrap]] std::optional<int*> funcIntReturnOptional(bool shouldReturn) {
+    [[codegen::luawrap]] std::optional<int*> returnIntOptional(bool shouldReturn) {
         if (shouldReturn) {
             return new int(1);
         }
@@ -541,7 +541,7 @@ namespace {
         }
     }
 
-    [[codegen::luawrap]] std::optional<std::string*> funcStringReturnOptional(
+    [[codegen::luawrap]] std::optional<std::string*> returnStringOptional(
                                                                         bool shouldReturn)
     {
         if (shouldReturn) {
@@ -552,7 +552,7 @@ namespace {
         }
     }
 
-    [[codegen::luawrap]] std::optional<Foo*> funcStructReturnOptional(bool shouldReturn) {
+    [[codegen::luawrap]] std::optional<Foo*> returnStructOptional(bool shouldReturn) {
         if (shouldReturn) {
             return new Foo {
                 .a = 1,
@@ -565,8 +565,7 @@ namespace {
         }
     }
 
-    [[codegen::luawrap]] std::optional<Foo**> funcStruct2ReturnOptional(bool shouldReturn)
-    {
+    [[codegen::luawrap]] std::optional<Foo**> returnStruct2Optional(bool shouldReturn) {
         if (shouldReturn) {
             Foo** fs = new Foo*[3];
 
@@ -595,7 +594,7 @@ namespace {
         }
     }
 
-    [[codegen::luawrap]] std::vector<void*> funcVoidReturnVector() {
+    [[codegen::luawrap]] std::vector<void*> returnVoidVector() {
         return {
             reinterpret_cast<void*>(1),
             reinterpret_cast<void*>(2),
@@ -603,7 +602,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::vector<int*> funcIntReturnVector() {
+    [[codegen::luawrap]] std::vector<int*> returnIntVector() {
         return {
             new int(1),
             new int(2),
@@ -611,7 +610,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::vector<std::string*> funcStringReturnVector() {
+    [[codegen::luawrap]] std::vector<std::string*> returnStringVector() {
         return {
             new std::string("abc"),
             new std::string("def"),
@@ -619,7 +618,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::vector<Foo*> funcStructReturnVector() {
+    [[codegen::luawrap]] std::vector<Foo*> returnStructVector() {
         return {
             new Foo { .a = 1, .b = 2.f, .c = "abc" },
             new Foo { .a = 3, .b = 4.f, .c = "def" },
@@ -627,7 +626,7 @@ namespace {
         };
     }
 
-    [[codegen::luawrap]] std::vector<Foo**> funcStruct2ReturnVector() {
+    [[codegen::luawrap]] std::vector<Foo**> returnStruct2Vector() {
         Foo** fs1 = new Foo*[3];
         fs1[0] = new Foo{
             .a = 1,
@@ -688,7 +687,7 @@ namespace {
         return { fs1, fs2, fs3 };
     }
 
-#include "execution_luawrapper_pointer_codegen.cpp"
+#include "execution_luawrapper_types_pointer_codegen.cpp"
 } // namespace
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  void*", "[Execution][LuaWrapper]") {
@@ -1460,5 +1459,556 @@ TEST_CASE(
     ghoul::lua::push(state, v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  void*", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnVoid;
+    CHECK(func.name == "returnVoid");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "void*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    void* val = ghoul::lua::value<void*>(state);
+    CHECK(val == reinterpret_cast<void*>(1));
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  int*", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnInt;
+    CHECK(func.name == "returnInt");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "int*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    int* val = ghoul::lua::value<int*>(state);
+    CHECK(*val == 1);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  std::string*", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnString;
+    CHECK(func.name == "returnString");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "std::string*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::string* val = ghoul::lua::value<std::string*>(state);
+    CHECK(*val == "foo");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  Foo*", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnStruct;
+    CHECK(func.name == "returnStruct");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "Foo*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    Foo* val = ghoul::lua::value<Foo*>(state);
+    CHECK(val->a == 1);
+    CHECK(val->b == 2.f);
+    CHECK(val->c == "abc");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  Foo**", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnStruct2;
+    CHECK(func.name == "returnStruct2");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "Foo**");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    Foo** val = ghoul::lua::value<Foo**>(state);
+    CHECK(val[0]->a == 1);
+    CHECK(val[0]->b == 2.f);
+    CHECK(val[0]->c == "abc");
+    CHECK(val[1]->a == 3);
+    CHECK(val[1]->b == 4.f);
+    CHECK(val[1]->c == "def");
+    CHECK(val[2]->a == 5);
+    CHECK(val[2]->b == 6.f);
+    CHECK(val[2]->c == "ghi");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  void* map", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnVoidMap;
+    CHECK(func.name == "returnVoidMap");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "String -> void*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::map<std::string, void*> val =
+        ghoul::lua::value<std::map<std::string, void*>>(state);
+    REQUIRE(val.size() == 3);
+    REQUIRE(val.contains("key1"));
+    CHECK(val["key1"] == reinterpret_cast<void*>(1));
+    REQUIRE(val.contains("key2"));
+    CHECK(val["key2"] == reinterpret_cast<void*>(2));
+    REQUIRE(val.contains("key3"));
+    CHECK(val["key3"] == reinterpret_cast<void*>(3));
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  int* map", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnIntMap;
+    CHECK(func.name == "returnIntMap");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "String -> int*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::map<std::string, int*> val =
+        ghoul::lua::value<std::map<std::string, int*>>(state);
+    REQUIRE(val.size() == 3);
+    REQUIRE(val.contains("key1"));
+    CHECK(*val["key1"] == 1);
+    REQUIRE(val.contains("key2"));
+    CHECK(*val["key2"] == 2);
+    REQUIRE(val.contains("key3"));
+    CHECK(*val["key3"] == 3);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  std::string* map", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnStringMap;
+    CHECK(func.name == "returnStringMap");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "String -> std::string*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::map<std::string, std::string*> val =
+        ghoul::lua::value<std::map<std::string, std::string*>>(state);
+    REQUIRE(val.size() == 3);
+    REQUIRE(val.contains("key1"));
+    CHECK(*val["key1"] == "abc");
+    REQUIRE(val.contains("key2"));
+    CHECK(*val["key2"] == "def");
+    REQUIRE(val.contains("key3"));
+    CHECK(*val["key3"] == "ghi");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  Foo* map", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnStructMap;
+    CHECK(func.name == "returnStructMap");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "String -> Foo*");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::map<std::string, Foo*> val =
+        ghoul::lua::value<std::map<std::string, Foo*>>(state);
+    REQUIRE(val.size() == 3);
+    REQUIRE(val.contains("key1"));
+    CHECK(val["key1"]->a == 1);
+    CHECK(val["key1"]->b == 2.f);
+    CHECK(val["key1"]->c == "abc");
+    REQUIRE(val.contains("key2"));
+    CHECK(val["key2"]->a == 3);
+    CHECK(val["key2"]->b == 4.f);
+    CHECK(val["key2"]->c == "def");
+    REQUIRE(val.contains("key3"));
+    CHECK(val["key3"]->a == 5);
+    CHECK(val["key3"]->b == 6.f);
+    CHECK(val["key3"]->c == "ghi");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  Foo** map", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnStruct2Map;
+    CHECK(func.name == "returnStruct2Map");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "String -> Foo**");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::map<std::string, Foo**> val =
+        ghoul::lua::value<std::map<std::string, Foo**>>(state);
+    REQUIRE(val.size() == 3);
+    REQUIRE(val.contains("key1"));
+    CHECK(val["key1"][0]->a == 1);
+    CHECK(val["key1"][0]->b == 2.f);
+    CHECK(val["key1"][0]->c == "abc");
+    CHECK(val["key1"][1]->a == 3);
+    CHECK(val["key1"][1]->b == 4.f);
+    CHECK(val["key1"][1]->c == "def");
+    CHECK(val["key1"][2]->a == 5);
+    CHECK(val["key1"][2]->b == 6.f);
+    CHECK(val["key1"][2]->c == "ghi");
+    REQUIRE(val.contains("key2"));
+    CHECK(val["key2"][0]->a == 7);
+    CHECK(val["key2"][0]->b == 8.f);
+    CHECK(val["key2"][0]->c == "jkl");
+    CHECK(val["key2"][1]->a == 9);
+    CHECK(val["key2"][1]->b == 10.f);
+    CHECK(val["key2"][1]->c == "mno");
+    CHECK(val["key2"][2]->a == 11);
+    CHECK(val["key2"][2]->b == 12.f);
+    CHECK(val["key2"][2]->c == "pqr");
+    REQUIRE(val.contains("key3"));
+    CHECK(val["key3"][0]->a == 13);
+    CHECK(val["key3"][0]->b == 14.f);
+    CHECK(val["key3"][0]->c == "stu");
+    CHECK(val["key3"][1]->a == 15);
+    CHECK(val["key3"][1]->b == 16.f);
+    CHECK(val["key3"][1]->c == "vwx");
+    CHECK(val["key3"][2]->a == 17);
+    CHECK(val["key3"][2]->b == 18.f);
+    CHECK(val["key3"][2]->c == "yzz");
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  void* optional", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnVoidOptional;
+    CHECK(func.name == "returnVoidOptional");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "shouldReturn");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.returnType == "void*?");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    ghoul::lua::push(state, true);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::optional<void*> val1 = ghoul::lua::value<std::optional<void*>>(state);
+    REQUIRE(val1.has_value());
+    CHECK(*val1 == reinterpret_cast<void*>(1));
+
+    ghoul::lua::push(state, false);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 0);
+
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  int* optional", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnIntOptional;
+    CHECK(func.name == "returnIntOptional");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "shouldReturn");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.returnType == "int*?");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    ghoul::lua::push(state, true);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::optional<int*> val1 = ghoul::lua::value<std::optional<int*>>(state);
+    REQUIRE(val1.has_value());
+    int* v = *val1;
+    CHECK(*v == 1);
+
+    ghoul::lua::push(state, false);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 0);
+
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  std::string* optional",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStringOptional;
+    CHECK(func.name == "returnStringOptional");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "shouldReturn");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.returnType == "std::string*?");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    ghoul::lua::push(state, true);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::optional<std::string*> val1 =
+        ghoul::lua::value<std::optional<std::string*>>(state);
+    REQUIRE(val1.has_value());
+    std::string* v = *val1;
+    CHECK(*v == "abc");
+
+    ghoul::lua::push(state, false);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 0);
+
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  Foo* optional",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStructOptional;
+    CHECK(func.name == "returnStructOptional");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "shouldReturn");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.returnType == "Foo*?");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    ghoul::lua::push(state, true);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::optional<Foo*> val1 = ghoul::lua::value<std::optional<Foo*>>(state);
+    REQUIRE(val1.has_value());
+    Foo* v = *val1;
+    CHECK(v->a == 1);
+    CHECK(v->b == 2.f);
+    CHECK(v->c == "abc");
+
+    ghoul::lua::push(state, false);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 0);
+
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  Foo** optional",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStruct2Optional;
+    CHECK(func.name == "returnStruct2Optional");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "shouldReturn");
+    CHECK(func.arguments[0].type == "Boolean");
+    CHECK(func.returnType == "Foo**?");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    ghoul::lua::push(state, true);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::optional<Foo**> val1 = ghoul::lua::value<std::optional<Foo**>>(state);
+    REQUIRE(val1.has_value());
+    Foo** v = *val1;
+    CHECK(v[0]->a == 1);
+    CHECK(v[0]->b == 2.f);
+    CHECK(v[0]->c == "abc");
+    CHECK(v[1]->a == 3);
+    CHECK(v[1]->b == 4.f);
+    CHECK(v[1]->c == "def");
+    CHECK(v[2]->a == 5);
+    CHECK(v[2]->b == 6.f);
+    CHECK(v[2]->c == "ghi");
+
+    ghoul::lua::push(state, false);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 0);
+
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  void* vector", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnVoidVector;
+    CHECK(func.name == "returnVoidVector");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "void*[]");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::vector<void*> val = ghoul::lua::value<std::vector<void*>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(val[0] == reinterpret_cast<void*>(1));
+    CHECK(val[1] == reinterpret_cast<void*>(2));
+    CHECK(val[2] == reinterpret_cast<void*>(3));
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Return:  int* vector", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::ReturnIntVector;
+    CHECK(func.name == "returnIntVector");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "int*[]");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::vector<int*> val = ghoul::lua::value<std::vector<int*>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(*val[0] == 1);
+    CHECK(*val[1] == 2);
+    CHECK(*val[2] == 3);
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  std::string* vector",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStringVector;
+    CHECK(func.name == "returnStringVector");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "std::string*[]");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::vector<std::string*> val = ghoul::lua::value<std::vector<std::string*>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(*val[0] == "abc");
+    CHECK(*val[1] == "def");
+    CHECK(*val[2] == "ghi");
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  Foo* vector",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStructVector;
+    CHECK(func.name == "returnStructVector");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "Foo*[]");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::vector<Foo*> val = ghoul::lua::value<std::vector<Foo*>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(val[0]->a == 1);
+    CHECK(val[0]->b == 2.f);
+    CHECK(val[0]->c == "abc");
+    CHECK(val[1]->a == 3);
+    CHECK(val[1]->b == 4.f);
+    CHECK(val[1]->c == "def");
+    CHECK(val[2]->a == 5);
+    CHECK(val[2]->b == 6.f);
+    CHECK(val[2]->c == "ghi");
+    lua_close(state);
+}
+
+TEST_CASE(
+    "Execution/LuaWrapper/Return:  Foo** vector",
+    "[Execution][LuaWrapper]"
+)
+{
+    Function func = codegen::lua::ReturnStruct2Vector;
+    CHECK(func.name == "returnStruct2Vector");
+    CHECK(func.arguments.size() == 0);
+    CHECK(func.returnType == "Foo**[]");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+
+    func.function(state);
+    REQUIRE(lua_gettop(state) == 1);
+    std::vector<Foo**> val = ghoul::lua::value<std::vector<Foo**>>(state);
+    REQUIRE(val.size() == 3);
+    CHECK(val[0][0]->a == 1);
+    CHECK(val[0][0]->b == 2.f);
+    CHECK(val[0][0]->c == "abc");
+    CHECK(val[0][1]->a == 3);
+    CHECK(val[0][1]->b == 4.f);
+    CHECK(val[0][1]->c == "def");
+    CHECK(val[0][2]->a == 5);
+    CHECK(val[0][2]->b == 6.f);
+    CHECK(val[0][2]->c == "ghi");
+    CHECK(val[1][0]->a == 7);
+    CHECK(val[1][0]->b == 8.f);
+    CHECK(val[1][0]->c == "jkl");
+    CHECK(val[1][1]->a == 9);
+    CHECK(val[1][1]->b == 10.f);
+    CHECK(val[1][1]->c == "mno");
+    CHECK(val[1][2]->a == 11);
+    CHECK(val[1][2]->b == 12.f);
+    CHECK(val[1][2]->c == "pqr");
+    CHECK(val[2][0]->a == 13);
+    CHECK(val[2][0]->b == 14.f);
+    CHECK(val[2][0]->c == "stu");
+    CHECK(val[2][1]->a == 15);
+    CHECK(val[2][1]->b == 16.f);
+    CHECK(val[2][1]->c == "vwx");
+    CHECK(val[2][2]->a == 17);
+    CHECK(val[2][2]->b == 18.f);
+    CHECK(val[2][2]->c == "yzz");
     lua_close(state);
 }
