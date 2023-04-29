@@ -693,6 +693,31 @@ namespace {
         CHECK(arg[2] == glm::dvec2(5.5, 6.6));
     }
 
+    [[codegen::luawrap]] void funcDvec2Array1(std::array<glm::dvec2, 1> arg) {
+        CHECK(arg[0] == glm::dvec2(1.1, 2.2));
+    }
+
+    [[codegen::luawrap]] void funcDvec2Array2(std::array<glm::dvec2, 5> arg) {
+        CHECK(arg[0] == glm::dvec2(1.1, 2.2));
+        CHECK(arg[1] == glm::dvec2(3.3, 4.4));
+        CHECK(arg[2] == glm::dvec2(5.5, 6.6));
+        CHECK(arg[3] == glm::dvec2(7.7, 8.8));
+        CHECK(arg[4] == glm::dvec2(9.9, 10.10));
+    }
+
+    [[codegen::luawrap]] void funcDvec2Array3(std::array<glm::dvec2, 10> arg) {
+        CHECK(arg[0] == glm::dvec2(1.1, 2.2));
+        CHECK(arg[1] == glm::dvec2(3.3, 4.4));
+        CHECK(arg[2] == glm::dvec2(5.5, 6.6));
+        CHECK(arg[3] == glm::dvec2(7.7, 8.8));
+        CHECK(arg[4] == glm::dvec2(9.9, 10.10));
+        CHECK(arg[5] == glm::dvec2(11.11, 12.12));
+        CHECK(arg[6] == glm::dvec2(13.13, 14.14));
+        CHECK(arg[7] == glm::dvec2(15.15, 16.16));
+        CHECK(arg[8] == glm::dvec2(17.17, 18.18));
+        CHECK(arg[9] == glm::dvec2(19.19, 20.20));
+    }
+
     [[codegen::luawrap]] void funcDvec3(glm::dvec3 arg) {
         CHECK(arg == glm::dvec3(1.1, 2.2, 3.3));
     }
@@ -707,7 +732,6 @@ namespace {
         }
         else {
             CHECK(arg == glm::dvec3(4.4, 5.5, 6.6));
-
         }
     }
 
@@ -737,6 +761,31 @@ namespace {
         CHECK(arg[2] == glm::dvec3(7.7, 8.8, 9.9));
     }
 
+    [[codegen::luawrap]] void funcDvec3Array1(std::array<glm::dvec3, 1> arg) {
+        CHECK(arg[0] == glm::dvec3(1.1, 2.2, 3.3));
+    }
+
+    [[codegen::luawrap]] void funcDvec3Array2(std::array<glm::dvec3, 5> arg) {
+        CHECK(arg[0] == glm::dvec3(1.1, 2.2, 3.3));
+        CHECK(arg[1] == glm::dvec3(4.4, 5.5, 6.6));
+        CHECK(arg[2] == glm::dvec3(7.7, 8.8, 9.9));
+        CHECK(arg[3] == glm::dvec3(10.10, 11.11, 12.12));
+        CHECK(arg[4] == glm::dvec3(13.13, 14.14, 15.15));
+    }
+
+    [[codegen::luawrap]] void funcDvec3Array3(std::array<glm::dvec3, 10> arg) {
+        CHECK(arg[0] == glm::dvec3(1.1, 2.2, 3.3));
+        CHECK(arg[1] == glm::dvec3(4.4, 5.5, 6.6));
+        CHECK(arg[2] == glm::dvec3(7.7, 8.8, 9.9));
+        CHECK(arg[3] == glm::dvec3(10.10, 11.11, 12.12));
+        CHECK(arg[4] == glm::dvec3(13.13, 14.14, 15.15));
+        CHECK(arg[5] == glm::dvec3(16.16, 17.17, 18.18));
+        CHECK(arg[6] == glm::dvec3(19.19, 20.20, 21.21));
+        CHECK(arg[7] == glm::dvec3(22.22, 23.23, 24.24));
+        CHECK(arg[8] == glm::dvec3(25.25, 26.26, 27.27));
+        CHECK(arg[9] == glm::dvec3(28.28, 29.29, 30.30));
+    }
+
     [[codegen::luawrap]] void funcDvec4(glm::dvec4 arg) {
         CHECK(arg == glm::dvec4(1.1, 2.2, 3.3, 4.4));
     }
@@ -751,7 +800,6 @@ namespace {
         }
         else {
             CHECK(arg == glm::dvec4(5.5, 6.6, 7.7, 8.8));
-
         }
     }
 
@@ -779,6 +827,31 @@ namespace {
         CHECK(arg[0] == glm::dvec4(1.1, 2.2, 3.3, 4.4));
         CHECK(arg[1] == glm::dvec4(5.5, 6.6, 7.7, 8.8));
         CHECK(arg[2] == glm::dvec4(9.9, 10.10, 11.11, 12.12));
+    }
+
+    [[codegen::luawrap]] void funcDvec4Array1(std::array<glm::dvec4, 1> arg) {
+        CHECK(arg[0] == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDvec4Array2(std::array<glm::dvec4, 5> arg) {
+        CHECK(arg[0] == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dvec4(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dvec4(9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[3] == glm::dvec4(13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[4] == glm::dvec4(17.17, 18.18, 19.19, 20.20));
+    }
+
+    [[codegen::luawrap]] void funcDvec4Array3(std::array<glm::dvec4, 10> arg) {
+        CHECK(arg[0] == glm::dvec4(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dvec4(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dvec4(9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[3] == glm::dvec4(13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[4] == glm::dvec4(17.17, 18.18, 19.19, 20.20));
+        CHECK(arg[5] == glm::dvec4(21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[6] == glm::dvec4(25.25, 26.26, 27.27, 28.28));
+        CHECK(arg[7] == glm::dvec4(29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[8] == glm::dvec4(33.33, 34.34, 35.35, 36.36));
+        CHECK(arg[9] == glm::dvec4(37.37, 38.38, 39.39, 40.40));
     }
 
     [[codegen::luawrap]] void funcVec2(glm::vec2 arg) {
@@ -824,6 +897,31 @@ namespace {
         CHECK(arg[2] == glm::vec2(5.5f, 6.6f));
     }
 
+    [[codegen::luawrap]] void funcVec2Array1(std::array<glm::vec2, 1> arg) {
+        CHECK(arg[0] == glm::vec2(1.1f, 2.2f));
+    }
+
+    [[codegen::luawrap]] void funcVec2Array2(std::array<glm::vec2, 5> arg) {
+        CHECK(arg[0] == glm::vec2(1.1f, 2.2f));
+        CHECK(arg[1] == glm::vec2(3.3f, 4.4f));
+        CHECK(arg[2] == glm::vec2(5.5f, 6.6f));
+        CHECK(arg[3] == glm::vec2(7.7f, 8.8f));
+        CHECK(arg[4] == glm::vec2(9.9f, 10.10f));
+    }
+
+    [[codegen::luawrap]] void funcVec2Array3(std::array<glm::vec2, 10> arg) {
+        CHECK(arg[0] == glm::vec2(1.1f, 2.2f));
+        CHECK(arg[1] == glm::vec2(3.3f, 4.4f));
+        CHECK(arg[2] == glm::vec2(5.5f, 6.6f));
+        CHECK(arg[3] == glm::vec2(7.7f, 8.8f));
+        CHECK(arg[4] == glm::vec2(9.9f, 10.10f));
+        CHECK(arg[5] == glm::vec2(11.11f, 12.12f));
+        CHECK(arg[6] == glm::vec2(13.13f, 14.14f));
+        CHECK(arg[7] == glm::vec2(15.15f, 16.16f));
+        CHECK(arg[8] == glm::vec2(17.17f, 18.18f));
+        CHECK(arg[9] == glm::vec2(19.19f, 20.20f));
+    }
+
     [[codegen::luawrap]] void funcVec3(glm::vec3 arg) {
         CHECK(arg == glm::vec3(1.1f, 2.2f, 3.3f));
     }
@@ -865,6 +963,31 @@ namespace {
         CHECK(arg[0] == glm::vec3(1.1f, 2.2f, 3.3f));
         CHECK(arg[1] == glm::vec3(4.4f, 5.5f, 6.6f));
         CHECK(arg[2] == glm::vec3(7.7f, 8.8f, 9.9f));
+    }
+
+    [[codegen::luawrap]] void funcVec3Array1(std::array<glm::vec3, 1> arg) {
+        CHECK(arg[0] == glm::vec3(1.1f, 2.2f, 3.3f));
+    }
+
+    [[codegen::luawrap]] void funcVec3Array2(std::array<glm::vec3, 5> arg) {
+        CHECK(arg[0] == glm::vec3(1.1f, 2.2f, 3.3f));
+        CHECK(arg[1] == glm::vec3(4.4f, 5.5f, 6.6f));
+        CHECK(arg[2] == glm::vec3(7.7f, 8.8f, 9.9f));
+        CHECK(arg[3] == glm::vec3(10.10f, 11.11f, 12.12f));
+        CHECK(arg[4] == glm::vec3(13.13f, 14.14f, 15.15f));
+    }
+
+    [[codegen::luawrap]] void funcVec3Array3(std::array<glm::vec3, 10> arg) {
+        CHECK(arg[0] == glm::vec3(1.1, 2.2, 3.3));
+        CHECK(arg[1] == glm::vec3(4.4, 5.5, 6.6));
+        CHECK(arg[2] == glm::vec3(7.7, 8.8, 9.9));
+        CHECK(arg[3] == glm::vec3(10.10, 11.11, 12.12));
+        CHECK(arg[4] == glm::vec3(13.13, 14.14, 15.15));
+        CHECK(arg[5] == glm::vec3(16.16, 17.17, 18.18));
+        CHECK(arg[6] == glm::vec3(19.19, 20.20, 21.21));
+        CHECK(arg[7] == glm::vec3(22.22, 23.23, 24.24));
+        CHECK(arg[8] == glm::vec3(25.25, 26.26, 27.27));
+        CHECK(arg[9] == glm::vec3(28.28, 29.29, 30.30));
     }
 
     [[codegen::luawrap]] void funcVec4(glm::vec4 arg) {
@@ -910,6 +1033,31 @@ namespace {
         CHECK(arg[2] == glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
     }
 
+    [[codegen::luawrap]] void funcVec4Array1(std::array<glm::vec4, 1> arg) {
+        CHECK(arg[0] == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+    }
+
+    [[codegen::luawrap]] void funcVec4Array2(std::array<glm::vec4, 5> arg) {
+        CHECK(arg[0] == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[3] == glm::vec4(13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[4] == glm::vec4(17.17f, 18.18f, 19.19f, 20.20f));
+    }
+
+    [[codegen::luawrap]] void funcVec4Array3(std::array<glm::vec4, 10> arg) {
+        CHECK(arg[0] == glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[3] == glm::vec4(13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[4] == glm::vec4(17.17f, 18.18f, 19.19f, 20.20f));
+        CHECK(arg[5] == glm::vec4(21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[6] == glm::vec4(25.25f, 26.26f, 27.27f, 28.28f));
+        CHECK(arg[7] == glm::vec4(29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[8] == glm::vec4(33.33f, 34.34f, 35.35f, 36.36f));
+        CHECK(arg[9] == glm::vec4(37.37f, 38.38f, 39.39f, 40.40f));
+    }
+
     [[codegen::luawrap]] void funcMat2x2(glm::mat2x2 arg) {
         CHECK(arg == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
     }
@@ -951,6 +1099,31 @@ namespace {
         CHECK(arg[0] == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
         CHECK(arg[1] == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
         CHECK(arg[2] == glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x2Array1(std::array<glm::mat2x2, 1> arg) {
+        CHECK(arg[0] == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x2Array2(std::array<glm::mat2x2, 5> arg) {
+        CHECK(arg[0] == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[3] == glm::mat2x2(13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[4] == glm::mat2x2(17.17f, 18.18f, 19.19f, 20.20f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x2Array3(std::array<glm::mat2x2, 10> arg) {
+        CHECK(arg[0] == glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+        CHECK(arg[1] == glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[2] == glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[3] == glm::mat2x2(13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[4] == glm::mat2x2(17.17f, 18.18f, 19.19f, 20.20f));
+        CHECK(arg[5] == glm::mat2x2(21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[6] == glm::mat2x2(25.25f, 26.26f, 27.27f, 28.28f));
+        CHECK(arg[7] == glm::mat2x2(29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[8] == glm::mat2x2(33.33f, 34.34f, 35.35f, 36.36f));
+        CHECK(arg[9] == glm::mat2x2(37.37f, 38.38f, 39.39f, 40.40f));
     }
 
     [[codegen::luawrap]] void funcMat2x3(glm::mat2x3 arg) {
@@ -1003,6 +1176,31 @@ namespace {
         CHECK(arg[0] == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
         CHECK(arg[1] == glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
         CHECK(arg[2] == glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x3Array1(std::array<glm::mat2x3, 1> arg) {
+        CHECK(arg[0] == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x3Array2(std::array<glm::mat2x3, 5> arg) {
+        CHECK(arg[0] == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+        CHECK(arg[3] == glm::mat2x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[4] == glm::mat2x3(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x3Array3(std::array<glm::mat2x3, 10> arg) {
+        CHECK(arg[0] == glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+        CHECK(arg[3] == glm::mat2x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[4] == glm::mat2x3(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f));
+        CHECK(arg[5] == glm::mat2x3(21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f));
+        CHECK(arg[6] == glm::mat2x3(27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[7] == glm::mat2x3(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f));
+        CHECK(arg[8] == glm::mat2x3(39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f));
+        CHECK(arg[9] == glm::mat2x3(45.45f, 46.46f, 47.47f, 48.48f, 49.49f, 50.50f));
     }
 
     [[codegen::luawrap]] void funcMat2x4(glm::mat2x4 arg) {
@@ -1066,6 +1264,31 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcMat2x4Array1(std::array<glm::mat2x4, 1> arg) {
+        CHECK(arg[0] == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x4Array2(std::array<glm::mat2x4, 5> arg) {
+        CHECK(arg[0] == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[1] == glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[2] == glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[3] == glm::mat2x4(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[4] == glm::mat2x4(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f));
+    }
+
+    [[codegen::luawrap]] void funcMat2x4Array3(std::array<glm::mat2x4, 10> arg) {
+        CHECK(arg[0] == glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[1] == glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[2] == glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[3] == glm::mat2x4(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[4] == glm::mat2x4(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f));
+        CHECK(arg[5] == glm::mat2x4(41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f));
+        CHECK(arg[6] == glm::mat2x4(49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f, 55.55f, 56.56f));
+        CHECK(arg[7] == glm::mat2x4(57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f, 64.64f));
+        CHECK(arg[8] == glm::mat2x4(65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f));
+        CHECK(arg[9] == glm::mat2x4(73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f));
+    }
+
     [[codegen::luawrap]] void funcMat3x2(glm::mat3x2 arg) {
         CHECK(arg == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
     }
@@ -1116,6 +1339,31 @@ namespace {
         CHECK(arg[0] == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
         CHECK(arg[1] == glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
         CHECK(arg[2] == glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x2Array1(std::array<glm::mat3x2, 1> arg) {
+        CHECK(arg[0] == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x2Array2(std::array<glm::mat3x2, 5> arg) {
+        CHECK(arg[0] == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+        CHECK(arg[3] == glm::mat3x2(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[4] == glm::mat3x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x2Array3(std::array<glm::mat3x2, 10> arg) {
+        CHECK(arg[0] == glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+        CHECK(arg[1] == glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+        CHECK(arg[2] == glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f));
+        CHECK(arg[3] == glm::mat3x2(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[4] == glm::mat3x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f));
+        CHECK(arg[5] == glm::mat3x2(21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f));
+        CHECK(arg[6] == glm::mat3x2(27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[7] == glm::mat3x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f));
+        CHECK(arg[8] == glm::mat3x2(39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f));
+        CHECK(arg[9] == glm::mat3x2(45.45f, 46.46f, 47.47f, 48.48f, 49.49f, 50.50f));
     }
 
     [[codegen::luawrap]] void funcMat3x3(glm::mat3x3 arg) {
@@ -1198,6 +1446,57 @@ namespace {
                 24.24f, 25.25f, 26.26f, 27.27f
             )
         );
+    }
+
+    [[codegen::luawrap]] void funcMat3x3Array1(std::array<glm::mat3x3, 1> arg) {
+        CHECK(arg[0] == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
+    }
+
+    [[codegen::luawrap]] void funcMat3x3Array2(std::array<glm::mat3x3, 5> arg) {
+        CHECK(arg[0] == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
+        CHECK(arg[1] == glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f
+        ));
+        CHECK(arg[2] == glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f
+        ));
+        CHECK(arg[3] == glm::mat3x3(
+            28.28f, 29.29f, 30.30f, 31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[4] == glm::mat3x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f, 45.45f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat3x3Array3(std::array<glm::mat3x3, 10> arg) {
+        CHECK(arg[0] == glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f));
+        CHECK(arg[1] == glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f
+        ));
+        CHECK(arg[2] == glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f
+        ));
+        CHECK(arg[3] == glm::mat3x3(
+            28.28f, 29.29f, 30.30f, 31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[4] == glm::mat3x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f, 45.45f
+        ));
+        CHECK(arg[5] == glm::mat3x3(
+            46.46f, 47.47f, 48.48f, 49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f
+        ));
+        CHECK(arg[6] == glm::mat3x3(
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f
+        ));
+        CHECK(arg[7] == glm::mat3x3(
+            64.64f, 65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        ));
+        CHECK(arg[8] == glm::mat3x3(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f, 81.81f
+        ));
+        CHECK(arg[9] == glm::mat3x3(
+            82.82f, 83.83f, 84.84f, 85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f
+        ));
     }
 
     [[codegen::luawrap]] void funcMat3x4(glm::mat3x4 arg) {
@@ -1307,6 +1606,76 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcMat3x4Array1(std::array<glm::mat3x4, 1> arg) {
+        CHECK(arg[0] == glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat3x4Array2(std::array<glm::mat3x4, 5> arg) {
+        CHECK(arg[0] == glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+        CHECK(arg[1] == glm::mat3x4(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        ));
+        CHECK(arg[2] == glm::mat3x4(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[3] == glm::mat3x4(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[4] == glm::mat3x4(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat3x4Array3(std::array<glm::mat3x4, 10> arg) {
+        CHECK(arg[0] == glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+        CHECK(arg[1] == glm::mat3x4(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        ));
+        CHECK(arg[2] == glm::mat3x4(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[3] == glm::mat3x4(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[4] == glm::mat3x4(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        ));
+        CHECK(arg[5] == glm::mat3x4(
+            61.61f, 62.62f, 63.63f, 64.64f, 65.65f, 66.66f,
+            67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        ));
+        CHECK(arg[6] == glm::mat3x4(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f,
+            79.79f, 80.80f, 81.81f, 82.82f, 83.83f, 84.84f
+        ));
+        CHECK(arg[7] == glm::mat3x4(
+            85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f,
+            91.91f, 92.92f, 93.93f, 94.94f, 95.95f, 96.96f
+        ));
+        CHECK(arg[8] == glm::mat3x4(
+            97.97f, 98.98f, 99.99f, 100.100f, 101.101f, 102.102f,
+            103.103f, 104.104f, 105.105f, 106.106f, 107.107f, 108.108f
+        ));
+        CHECK(arg[9] == glm::mat3x4(
+            109.109f, 110.110f, 111.111f, 112.112f, 113.113f, 114.114f,
+            115.115f, 116.116f, 117.117f, 118.118f, 119.119f, 120.120f
+        ));
+    }
+
     [[codegen::luawrap]] void funcMat4x2(glm::mat4x2 arg) {
         CHECK(arg == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
     }
@@ -1369,6 +1738,31 @@ namespace {
             arg[2] ==
             glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
         );
+    }
+
+    [[codegen::luawrap]] void funcMat4x2Array1(std::array<glm::mat4x2, 1> arg) {
+        CHECK(arg[0] == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+    }
+
+    [[codegen::luawrap]] void funcMat4x2Array2(std::array<glm::mat4x2, 5> arg) {
+        CHECK(arg[0] == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[1] == glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[2] == glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[3] == glm::mat4x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[4] == glm::mat4x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f));
+    }
+
+    [[codegen::luawrap]] void funcMat4x2Array3(std::array<glm::mat4x2, 10> arg) {
+        CHECK(arg[0] == glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f));
+        CHECK(arg[1] == glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f));
+        CHECK(arg[2] == glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f));
+        CHECK(arg[3] == glm::mat4x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f));
+        CHECK(arg[4] == glm::mat4x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f));
+        CHECK(arg[5] == glm::mat4x2(41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f));
+        CHECK(arg[6] == glm::mat4x2(49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f, 55.55f, 56.56f));
+        CHECK(arg[7] == glm::mat4x2(57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f, 64.64f));
+        CHECK(arg[8] == glm::mat4x2(65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f));
+        CHECK(arg[9] == glm::mat4x2(73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f));
     }
 
     [[codegen::luawrap]] void funcMat4x3(glm::mat4x3 arg) {
@@ -1480,6 +1874,76 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcMat4x3Array1(std::array<glm::mat4x3, 1> arg) {
+        CHECK(arg[0] == glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat4x3Array2(std::array<glm::mat4x3, 5> arg) {
+        CHECK(arg[0] == glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+        CHECK(arg[1] == glm::mat4x3(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        ));
+        CHECK(arg[2] == glm::mat4x3(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[3] == glm::mat4x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[4] == glm::mat4x3(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat4x3Array3(std::array<glm::mat4x3, 10> arg) {
+        CHECK(arg[0] == glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        ));
+        CHECK(arg[1] == glm::mat4x3(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        ));
+        CHECK(arg[2] == glm::mat4x3(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        ));
+        CHECK(arg[3] == glm::mat4x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[4] == glm::mat4x3(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        ));
+        CHECK(arg[5] == glm::mat4x3(
+            61.61f, 62.62f, 63.63f, 64.64f, 65.65f, 66.66f,
+            67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        ));
+        CHECK(arg[6] == glm::mat4x3(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f,
+            79.79f, 80.80f, 81.81f, 82.82f, 83.83f, 84.84f
+        ));
+        CHECK(arg[7] == glm::mat4x3(
+            85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f,
+            91.91f, 92.92f, 93.93f, 94.94f, 95.95f, 96.96f
+        ));
+        CHECK(arg[8] == glm::mat4x3(
+            97.97f, 98.98f, 99.99f, 100.100f, 101.101f, 102.102f,
+            103.103f, 104.104f, 105.105f, 106.106f, 107.107f, 108.108f
+        ));
+        CHECK(arg[9] == glm::mat4x3(
+            109.109f, 110.110f, 111.111f, 112.112f, 113.113f, 114.114f,
+            115.115f, 116.116f, 117.117f, 118.118f, 119.119f, 120.120f
+        ));
+    }
+
     [[codegen::luawrap]] void funcMat4x4(glm::mat4x4 arg) {
         CHECK(
             arg ==
@@ -1589,6 +2053,111 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcMat4x4Array1(std::array<glm::mat4x4, 1> arg) {
+        CHECK(arg[0] == glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat4x4Array2(std::array<glm::mat4x4, 5> arg) {
+        CHECK(arg[0] == glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        ));
+        CHECK(arg[1] == glm::mat4x4(
+            17.17f, 18.18f, 19.19f, 20.20f,
+            21.21f, 22.22f, 23.23f, 24.24f,
+            25.25f, 26.26f, 27.27f, 28.28f,
+            29.29f, 30.30f, 31.31f, 32.32f
+        ));
+        CHECK(arg[2] == glm::mat4x4(
+            33.33f, 34.34f, 35.35f, 36.36f,
+            37.37f, 38.38f, 39.39f, 40.40f,
+            41.41f, 42.42f, 43.43f, 44.44f,
+            45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[3] == glm::mat4x4(
+            49.49f, 50.50f, 51.51f, 52.52f,
+            53.53f, 54.54f, 55.55f, 56.56f,
+            57.57f, 58.58f, 59.59f, 60.60f,
+            61.61f, 62.62f, 63.63f, 64.64f
+        ));
+        CHECK(arg[4] == glm::mat4x4(
+            65.65f, 66.66f, 67.67f, 68.68f,
+            69.69f, 70.70f, 71.71f, 72.72f,
+            73.73f, 74.74f, 75.75f, 76.76f,
+            77.77f, 78.78f, 79.79f, 80.80f
+        ));
+    }
+
+    [[codegen::luawrap]] void funcMat4x4Array3(std::array<glm::mat4x4, 10> arg) {
+        CHECK(arg[0] == glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        ));
+        CHECK(arg[1] == glm::mat4x4(
+            17.17f, 18.18f, 19.19f, 20.20f,
+            21.21f, 22.22f, 23.23f, 24.24f,
+            25.25f, 26.26f, 27.27f, 28.28f,
+            29.29f, 30.30f, 31.31f, 32.32f
+        ));
+        CHECK(arg[2] == glm::mat4x4(
+            33.33f, 34.34f, 35.35f, 36.36f,
+            37.37f, 38.38f, 39.39f, 40.40f,
+            41.41f, 42.42f, 43.43f, 44.44f,
+            45.45f, 46.46f, 47.47f, 48.48f
+        ));
+        CHECK(arg[3] == glm::mat4x4(
+            49.49f, 50.50f, 51.51f, 52.52f,
+            53.53f, 54.54f, 55.55f, 56.56f,
+            57.57f, 58.58f, 59.59f, 60.60f,
+            61.61f, 62.62f, 63.63f, 64.64f
+        ));
+        CHECK(arg[4] == glm::mat4x4(
+            65.65f, 66.66f, 67.67f, 68.68f,
+            69.69f, 70.70f, 71.71f, 72.72f,
+            73.73f, 74.74f, 75.75f, 76.76f,
+            77.77f, 78.78f, 79.79f, 80.80f
+        ));
+        CHECK(arg[5] == glm::mat4x4(
+            81.81f, 82.82f, 83.83f, 84.84f,
+            85.85f, 86.86f, 87.87f, 88.88f,
+            89.89f, 90.90f, 91.91f, 92.92f,
+            93.93f, 94.94f, 95.95f, 96.96f
+        ));
+        CHECK(arg[6] == glm::mat4x4(
+            97.97f, 98.98f, 99.99f, 100.100f,
+            101.101f, 102.102f, 103.103f, 104.104f,
+            105.105f, 106.106f, 107.107f, 108.108f,
+            109.109f, 110.110f, 111.111f, 112.112f
+        ));
+        CHECK(arg[7] == glm::mat4x4(
+            113.113f, 114.114f, 115.115f, 116.116f,
+            117.117f, 118.118f, 119.119f, 120.120f,
+            121.121f, 122.122f, 123.123f, 124.124f,
+            125.125f, 126.126f, 127.127f, 128.128f
+        ));
+        CHECK(arg[8] == glm::mat4x4(
+            129.129f, 130.130f, 131.131f, 132.132f,
+            133.133f, 134.134f, 135.135f, 136.136f,
+            137.137f, 138.138f, 139.139f, 140.140f,
+            141.141f, 142.142f, 143.143f, 144.144f
+        ));
+        CHECK(arg[9] == glm::mat4x4(
+            145.145f, 146.146f, 147.147f, 148.148f,
+            149.149f, 150.150f, 151.151f, 152.152f,
+            153.153f, 154.154f, 155.155f, 156.156f,
+            157.157f, 158.158f, 159.159f, 160.160f
+        ));
+    }
+
     [[codegen::luawrap]] void funcDMat2x2(glm::dmat2x2 arg) {
         CHECK(arg == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
     }
@@ -1630,6 +2199,31 @@ namespace {
         CHECK(arg[0] == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
         CHECK(arg[1] == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
         CHECK(arg[2] == glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x2Array1(std::array<glm::dmat2x2, 1> arg) {
+        CHECK(arg[0] == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x2Array2(std::array<glm::dmat2x2, 5> arg) {
+        CHECK(arg[0] == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[3] == glm::dmat2x2(13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[4] == glm::dmat2x2(17.17, 18.18, 19.19, 20.20));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x2Array3(std::array<glm::dmat2x2, 10> arg) {
+        CHECK(arg[0] == glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+        CHECK(arg[1] == glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[2] == glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[3] == glm::dmat2x2(13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[4] == glm::dmat2x2(17.17, 18.18, 19.19, 20.20));
+        CHECK(arg[5] == glm::dmat2x2(21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[6] == glm::dmat2x2(25.25, 26.26, 27.27, 28.28));
+        CHECK(arg[7] == glm::dmat2x2(29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[8] == glm::dmat2x2(33.33, 34.34, 35.35, 36.36));
+        CHECK(arg[9] == glm::dmat2x2(37.37, 38.38, 39.39, 40.40));
     }
 
     [[codegen::luawrap]] void funcDMat2x3(glm::dmat2x3 arg) {
@@ -1679,6 +2273,31 @@ namespace {
         CHECK(arg[0] == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
         CHECK(arg[1] == glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
         CHECK(arg[2] == glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x3Array1(std::array<glm::dmat2x3, 1> arg) {
+        CHECK(arg[0] == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x3Array2(std::array<glm::dmat2x3, 5> arg) {
+        CHECK(arg[0] == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+        CHECK(arg[3] == glm::dmat2x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[4] == glm::dmat2x3(25.25, 26.26, 27.27, 28.28, 29.29, 30.30));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x3Array3(std::array<glm::dmat2x3, 10> arg) {
+        CHECK(arg[0] == glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+        CHECK(arg[3] == glm::dmat2x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[4] == glm::dmat2x3(25.25, 26.26, 27.27, 28.28, 29.29, 30.30));
+        CHECK(arg[5] == glm::dmat2x3(31.31, 32.32, 33.33, 34.34, 35.35, 36.36));
+        CHECK(arg[6] == glm::dmat2x3(37.37, 38.38, 39.39, 40.40, 41.41, 42.42));
+        CHECK(arg[7] == glm::dmat2x3(43.43, 44.44, 45.45, 46.46, 47.47, 48.48));
+        CHECK(arg[8] == glm::dmat2x3(49.49, 50.50, 51.51, 52.52, 53.53, 54.54));
+        CHECK(arg[9] == glm::dmat2x3(55.55, 56.56, 57.57, 58.58, 59.59, 60.60));
     }
 
     [[codegen::luawrap]] void funcDMat2x4(glm::dmat2x4 arg) {
@@ -1745,6 +2364,31 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcDMat2x4Array1(std::array<glm::dmat2x4, 1> arg) {
+        CHECK(arg[0] == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x4Array2(std::array<glm::dmat2x4, 5> arg) {
+        CHECK(arg[0] == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[1] == glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[2] == glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[3] == glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[4] == glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40));
+    }
+
+    [[codegen::luawrap]] void funcDMat2x4Array3(std::array<glm::dmat2x4, 10> arg) {
+        CHECK(arg[0] == glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[1] == glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[2] == glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[3] == glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[4] == glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40));
+        CHECK(arg[5] == glm::dmat2x4(41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48));
+        CHECK(arg[6] == glm::dmat2x4(49.49, 50.50, 51.51, 52.52, 53.53, 54.54, 55.55, 56.56));
+        CHECK(arg[7] == glm::dmat2x4(57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63, 64.64));
+        CHECK(arg[8] == glm::dmat2x4(65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72));
+        CHECK(arg[9] == glm::dmat2x4(73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80));
+    }
+
     [[codegen::luawrap]] void funcDMat3x2(glm::dmat3x2 arg) {
         CHECK(arg == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
     }
@@ -1795,6 +2439,31 @@ namespace {
         CHECK(arg[0] == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
         CHECK(arg[1] == glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
         CHECK(arg[2] == glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x2Array1(std::array<glm::dmat3x2, 1> arg) {
+        CHECK(arg[0] == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x2Array2(std::array<glm::dmat3x2, 5> arg) {
+        CHECK(arg[0] == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+        CHECK(arg[3] == glm::dmat3x2(19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[4] == glm::dmat3x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x2Array3(std::array<glm::dmat3x2, 10> arg) {
+        CHECK(arg[0] == glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+        CHECK(arg[1] == glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+        CHECK(arg[2] == glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+        CHECK(arg[3] == glm::dmat3x2(19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[4] == glm::dmat3x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30));
+        CHECK(arg[5] == glm::dmat3x2(21.21, 22.22, 23.23, 24.24, 25.25, 26.26));
+        CHECK(arg[6] == glm::dmat3x2(27.27, 28.28, 29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[7] == glm::dmat3x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38));
+        CHECK(arg[8] == glm::dmat3x2(39.39, 40.40, 41.41, 42.42, 43.43, 44.44));
+        CHECK(arg[9] == glm::dmat3x2(45.45, 46.46, 47.47, 48.48, 49.49, 50.50));
     }
 
     [[codegen::luawrap]] void funcDMat3x3(glm::dmat3x3 arg) {
@@ -1862,6 +2531,57 @@ namespace {
             arg[2] ==
             glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
         );
+    }
+
+    [[codegen::luawrap]] void funcDMat3x3Array1(std::array<glm::dmat3x3, 1> arg) {
+        CHECK(arg[0] == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x3Array2(std::array<glm::dmat3x3, 5> arg) {
+        CHECK(arg[0] == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
+        CHECK(arg[1] == glm::dmat3x3(
+            10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18
+        ));
+        CHECK(arg[2] == glm::dmat3x3(
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27
+        ));
+        CHECK(arg[3] == glm::dmat3x3(
+            28.28, 29.29, 30.30, 31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[4] == glm::dmat3x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42, 43.43, 44.44, 45.45
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x3Array3(std::array<glm::dmat3x3, 10> arg) {
+        CHECK(arg[0] == glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9));
+        CHECK(arg[1] == glm::dmat3x3(
+            10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18
+        ));
+        CHECK(arg[2] == glm::dmat3x3(
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27
+        ));
+        CHECK(arg[3] == glm::dmat3x3(
+            28.28, 29.29, 30.30, 31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[4] == glm::dmat3x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42, 43.43, 44.44, 45.45
+        ));
+        CHECK(arg[5] == glm::dmat3x3(
+            46.46, 47.47, 48.48, 49.49, 50.50, 51.51, 52.52, 53.53, 54.54
+        ));
+        CHECK(arg[6] == glm::dmat3x3(
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63
+        ));
+        CHECK(arg[7] == glm::dmat3x3(
+            64.64, 65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        ));
+        CHECK(arg[8] == glm::dmat3x3(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80, 81.81
+        ));
+        CHECK(arg[9] == glm::dmat3x3(
+            82.82, 83.83, 84.84, 85.85, 86.86, 87.87, 88.88, 89.89, 90.90
+        ));
     }
 
     [[codegen::luawrap]] void funcDMat3x4(glm::dmat3x4 arg) {
@@ -1973,6 +2693,76 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcDMat3x4Array1(std::array<glm::dmat3x4, 1> arg) {
+        CHECK(arg[0] == glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x4Array2(std::array<glm::dmat3x4, 5> arg) {
+        CHECK(arg[0] == glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+        CHECK(arg[1] == glm::dmat3x4(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        ));
+        CHECK(arg[2] == glm::dmat3x4(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[3] == glm::dmat3x4(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[4] == glm::dmat3x4(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat3x4Array3(std::array<glm::dmat3x4, 10> arg) {
+        CHECK(arg[0] == glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+        CHECK(arg[1] == glm::dmat3x4(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        ));
+        CHECK(arg[2] == glm::dmat3x4(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[3] == glm::dmat3x4(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[4] == glm::dmat3x4(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        ));
+        CHECK(arg[5] == glm::dmat3x4(
+            61.61, 62.62, 63.63, 64.64, 65.65, 66.66,
+            67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        ));
+        CHECK(arg[6] == glm::dmat3x4(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78,
+            79.79, 80.80, 81.81, 82.82, 83.83, 84.84
+        ));
+        CHECK(arg[7] == glm::dmat3x4(
+            85.85, 86.86, 87.87, 88.88, 89.89, 90.90,
+            91.91, 92.92, 93.93, 94.94, 95.95, 96.96
+        ));
+        CHECK(arg[8] == glm::dmat3x4(
+            97.97, 98.98, 99.99, 100.100, 101.101, 102.102,
+            103.103, 104.104, 105.105, 106.106, 107.107, 108.108
+        ));
+        CHECK(arg[9] == glm::dmat3x4(
+            109.109, 110.110, 111.111, 112.112, 113.113, 114.114,
+            115.115, 116.116, 117.117, 118.118, 119.119, 120.120
+        ));
+    }
+
     [[codegen::luawrap]] void funcDMat4x2(glm::dmat4x2 arg) {
         CHECK(arg == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
     }
@@ -2035,6 +2825,31 @@ namespace {
             arg[2] ==
             glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
         );
+    }
+
+    [[codegen::luawrap]] void funcDMat4x2Array1(std::array<glm::dmat4x2, 1> arg) {
+        CHECK(arg[0] == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x2Array2(std::array<glm::dmat4x2, 5> arg) {
+        CHECK(arg[0] == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[1] == glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[2] == glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[3] == glm::dmat4x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[4] == glm::dmat4x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x2Array3(std::array<glm::dmat4x2, 10> arg) {
+        CHECK(arg[0] == glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8));
+        CHECK(arg[1] == glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16));
+        CHECK(arg[2] == glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24));
+        CHECK(arg[3] == glm::dmat4x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32));
+        CHECK(arg[4] == glm::dmat4x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40));
+        CHECK(arg[5] == glm::dmat4x2(41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48));
+        CHECK(arg[6] == glm::dmat4x2(49.49, 50.50, 51.51, 52.52, 53.53, 54.54, 55.55, 56.56));
+        CHECK(arg[7] == glm::dmat4x2(57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63, 64.64));
+        CHECK(arg[8] == glm::dmat4x2(65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72));
+        CHECK(arg[9] == glm::dmat4x2(73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80));
     }
 
     [[codegen::luawrap]] void funcDMat4x3(glm::dmat4x3 arg) {
@@ -2146,6 +2961,76 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcDMat4x3Array1(std::array<glm::dmat4x3, 1> arg) {
+        CHECK(arg[0] == glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x3Array2(std::array<glm::dmat4x3, 5> arg) {
+        CHECK(arg[0] == glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+        CHECK(arg[1] == glm::dmat4x3(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        ));
+        CHECK(arg[2] == glm::dmat4x3(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[3] == glm::dmat4x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[4] == glm::dmat4x3(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x3Array3(std::array<glm::dmat4x3, 10> arg) {
+        CHECK(arg[0] == glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        ));
+        CHECK(arg[1] == glm::dmat4x3(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        ));
+        CHECK(arg[2] == glm::dmat4x3(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        ));
+        CHECK(arg[3] == glm::dmat4x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[4] == glm::dmat4x3(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        ));
+        CHECK(arg[5] == glm::dmat4x3(
+            61.61, 62.62, 63.63, 64.64, 65.65, 66.66,
+            67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        ));
+        CHECK(arg[6] == glm::dmat4x3(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78,
+            79.79, 80.80, 81.81, 82.82, 83.83, 84.84
+        ));
+        CHECK(arg[7] == glm::dmat4x3(
+            85.85, 86.86, 87.87, 88.88, 89.89, 90.90,
+            91.91, 92.92, 93.93, 94.94, 95.95, 96.96
+        ));
+        CHECK(arg[8] == glm::dmat4x3(
+            97.97, 98.98, 99.99, 100.100, 101.101, 102.102,
+            103.103, 104.104, 105.105, 106.106, 107.107, 108.108
+        ));
+        CHECK(arg[9] == glm::dmat4x3(
+            109.109, 110.110, 111.111, 112.112, 113.113, 114.114,
+            115.115, 116.116, 117.117, 118.118, 119.119, 120.120
+        ));
+    }
+
     [[codegen::luawrap]] void funcDMat4x4(glm::dmat4x4 arg) {
         CHECK(
             arg ==
@@ -2255,6 +3140,111 @@ namespace {
         );
     }
 
+    [[codegen::luawrap]] void funcDMat4x4Array1(std::array<glm::dmat4x4, 1> arg) {
+        CHECK(arg[0] == glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x4Array2(std::array<glm::dmat4x4, 5> arg) {
+        CHECK(arg[0] == glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        ));
+        CHECK(arg[1] == glm::dmat4x4(
+            17.17, 18.18, 19.19, 20.20,
+            21.21, 22.22, 23.23, 24.24,
+            25.25, 26.26, 27.27, 28.28,
+            29.29, 30.30, 31.31, 32.32
+        ));
+        CHECK(arg[2] == glm::dmat4x4(
+            33.33, 34.34, 35.35, 36.36,
+            37.37, 38.38, 39.39, 40.40,
+            41.41, 42.42, 43.43, 44.44,
+            45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[3] == glm::dmat4x4(
+            49.49, 50.50, 51.51, 52.52,
+            53.53, 54.54, 55.55, 56.56,
+            57.57, 58.58, 59.59, 60.60,
+            61.61, 62.62, 63.63, 64.64
+        ));
+        CHECK(arg[4] == glm::dmat4x4(
+            65.65, 66.66, 67.67, 68.68,
+            69.69, 70.70, 71.71, 72.72,
+            73.73, 74.74, 75.75, 76.76,
+            77.77, 78.78, 79.79, 80.80
+        ));
+    }
+
+    [[codegen::luawrap]] void funcDMat4x4Array3(std::array<glm::dmat4x4, 10> arg) {
+        CHECK(arg[0] == glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        ));
+        CHECK(arg[1] == glm::dmat4x4(
+            17.17, 18.18, 19.19, 20.20,
+            21.21, 22.22, 23.23, 24.24,
+            25.25, 26.26, 27.27, 28.28,
+            29.29, 30.30, 31.31, 32.32
+        ));
+        CHECK(arg[2] == glm::dmat4x4(
+            33.33, 34.34, 35.35, 36.36,
+            37.37, 38.38, 39.39, 40.40,
+            41.41, 42.42, 43.43, 44.44,
+            45.45, 46.46, 47.47, 48.48
+        ));
+        CHECK(arg[3] == glm::dmat4x4(
+            49.49, 50.50, 51.51, 52.52,
+            53.53, 54.54, 55.55, 56.56,
+            57.57, 58.58, 59.59, 60.60,
+            61.61, 62.62, 63.63, 64.64
+        ));
+        CHECK(arg[4] == glm::dmat4x4(
+            65.65, 66.66, 67.67, 68.68,
+            69.69, 70.70, 71.71, 72.72,
+            73.73, 74.74, 75.75, 76.76,
+            77.77, 78.78, 79.79, 80.80
+        ));
+        CHECK(arg[5] == glm::dmat4x4(
+            81.81, 82.82, 83.83, 84.84,
+            85.85, 86.86, 87.87, 88.88,
+            89.89, 90.90, 91.91, 92.92,
+            93.93, 94.94, 95.95, 96.96
+        ));
+        CHECK(arg[6] == glm::dmat4x4(
+            97.97, 98.98, 99.99, 100.100,
+            101.101, 102.102, 103.103, 104.104,
+            105.105, 106.106, 107.107, 108.108,
+            109.109, 110.110, 111.111, 112.112
+        ));
+        CHECK(arg[7] == glm::dmat4x4(
+            113.113, 114.114, 115.115, 116.116,
+            117.117, 118.118, 119.119, 120.120,
+            121.121, 122.122, 123.123, 124.124,
+            125.125, 126.126, 127.127, 128.128
+        ));
+        CHECK(arg[8] == glm::dmat4x4(
+            129.129, 130.130, 131.131, 132.132,
+            133.133, 134.134, 135.135, 136.136,
+            137.137, 138.138, 139.139, 140.140,
+            141.141, 142.142, 143.143, 144.144
+        ));
+        CHECK(arg[9] == glm::dmat4x4(
+            145.145, 146.146, 147.147, 148.148,
+            149.149, 150.150, 151.151, 152.152,
+            153.153, 154.154, 155.155, 156.156,
+            157.157, 158.158, 159.159, 160.160
+        ));
+    }
+
     [[codegen::luawrap]] void funcDictionary(ghoul::Dictionary arg) {
         REQUIRE(arg.hasValue<double>("a"));
         CHECK(arg.value<double>("a") == 1.1);
@@ -2350,6 +3340,112 @@ namespace {
         CHECK(arg[2].value<std::string>("b") == "ghi");
         REQUIRE(arg[2].hasValue<glm::dvec3>("c"));
         CHECK(arg[2].value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
+    }
+
+    [[codegen::luawrap]] void funcDictionaryArray1(std::array<ghoul::Dictionary, 1> arg) {
+        CHECK(arg[0].hasValue<double>("a"));
+        CHECK(arg[0].value<double>("a") == 1.1);
+        REQUIRE(arg[0].hasValue<std::string>("b"));
+        CHECK(arg[0].value<std::string>("b") == "abc");
+        REQUIRE(arg[0].hasValue<glm::dvec3>("c"));
+        CHECK(arg[0].value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+    }
+
+    [[codegen::luawrap]] void funcDictionaryArray2(std::array<ghoul::Dictionary, 5> arg) {
+        CHECK(arg[0].hasValue<double>("a"));
+        CHECK(arg[0].value<double>("a") == 1.1);
+        REQUIRE(arg[0].hasValue<std::string>("b"));
+        CHECK(arg[0].value<std::string>("b") == "abc");
+        REQUIRE(arg[0].hasValue<glm::dvec3>("c"));
+        CHECK(arg[0].value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+        CHECK(arg[1].hasValue<double>("a"));
+        CHECK(arg[1].value<double>("a") == 5.5);
+        REQUIRE(arg[1].hasValue<std::string>("b"));
+        CHECK(arg[1].value<std::string>("b") == "def");
+        REQUIRE(arg[1].hasValue<glm::dvec3>("c"));
+        CHECK(arg[1].value<glm::dvec3>("c") == glm::dvec3(6.6, 7.7, 8.8));
+        CHECK(arg[2].hasValue<double>("a"));
+        CHECK(arg[2].value<double>("a") == 9.9);
+        REQUIRE(arg[2].hasValue<std::string>("b"));
+        CHECK(arg[2].value<std::string>("b") == "ghi");
+        REQUIRE(arg[2].hasValue<glm::dvec3>("c"));
+        CHECK(arg[2].value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
+        CHECK(arg[3].hasValue<double>("a"));
+        CHECK(arg[3].value<double>("a") == 13.13);
+        REQUIRE(arg[3].hasValue<std::string>("b"));
+        CHECK(arg[3].value<std::string>("b") == "jkl");
+        REQUIRE(arg[3].hasValue<glm::dvec3>("c"));
+        CHECK(arg[3].value<glm::dvec3>("c") == glm::dvec3(14.14, 15.15, 16.16));
+        CHECK(arg[4].hasValue<double>("a"));
+        CHECK(arg[4].value<double>("a") == 17.17);
+        REQUIRE(arg[4].hasValue<std::string>("b"));
+        CHECK(arg[4].value<std::string>("b") == "mno");
+        REQUIRE(arg[4].hasValue<glm::dvec3>("c"));
+        CHECK(arg[4].value<glm::dvec3>("c") == glm::dvec3(18.18, 19.19, 20.20));
+    }
+
+    [[codegen::luawrap]] void funcDictionaryArray3(std::array<ghoul::Dictionary, 10> arg)
+    {
+        CHECK(arg[0].hasValue<double>("a"));
+        CHECK(arg[0].value<double>("a") == 1.1);
+        REQUIRE(arg[0].hasValue<std::string>("b"));
+        CHECK(arg[0].value<std::string>("b") == "abc");
+        REQUIRE(arg[0].hasValue<glm::dvec3>("c"));
+        CHECK(arg[0].value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+        CHECK(arg[1].hasValue<double>("a"));
+        CHECK(arg[1].value<double>("a") == 5.5);
+        REQUIRE(arg[1].hasValue<std::string>("b"));
+        CHECK(arg[1].value<std::string>("b") == "def");
+        REQUIRE(arg[1].hasValue<glm::dvec3>("c"));
+        CHECK(arg[1].value<glm::dvec3>("c") == glm::dvec3(6.6, 7.7, 8.8));
+        CHECK(arg[2].hasValue<double>("a"));
+        CHECK(arg[2].value<double>("a") == 9.9);
+        REQUIRE(arg[2].hasValue<std::string>("b"));
+        CHECK(arg[2].value<std::string>("b") == "ghi");
+        REQUIRE(arg[2].hasValue<glm::dvec3>("c"));
+        CHECK(arg[2].value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
+        CHECK(arg[3].hasValue<double>("a"));
+        CHECK(arg[3].value<double>("a") == 13.13);
+        REQUIRE(arg[3].hasValue<std::string>("b"));
+        CHECK(arg[3].value<std::string>("b") == "jkl");
+        REQUIRE(arg[3].hasValue<glm::dvec3>("c"));
+        CHECK(arg[3].value<glm::dvec3>("c") == glm::dvec3(14.14, 15.15, 16.16));
+        CHECK(arg[4].hasValue<double>("a"));
+        CHECK(arg[4].value<double>("a") == 17.17);
+        REQUIRE(arg[4].hasValue<std::string>("b"));
+        CHECK(arg[4].value<std::string>("b") == "mno");
+        REQUIRE(arg[4].hasValue<glm::dvec3>("c"));
+        CHECK(arg[4].value<glm::dvec3>("c") == glm::dvec3(18.18, 19.19, 20.20));
+        CHECK(arg[5].hasValue<double>("a"));
+        CHECK(arg[5].value<double>("a") == 21.21);
+        REQUIRE(arg[5].hasValue<std::string>("b"));
+        CHECK(arg[5].value<std::string>("b") == "pqr");
+        REQUIRE(arg[5].hasValue<glm::dvec3>("c"));
+        CHECK(arg[5].value<glm::dvec3>("c") == glm::dvec3(22.22, 23.23, 24.24));
+        CHECK(arg[6].hasValue<double>("a"));
+        CHECK(arg[6].value<double>("a") == 25.25);
+        REQUIRE(arg[6].hasValue<std::string>("b"));
+        CHECK(arg[6].value<std::string>("b") == "stu");
+        REQUIRE(arg[6].hasValue<glm::dvec3>("c"));
+        CHECK(arg[6].value<glm::dvec3>("c") == glm::dvec3(26.26, 27.27, 28.28));
+        CHECK(arg[7].hasValue<double>("a"));
+        CHECK(arg[7].value<double>("a") == 29.29);
+        REQUIRE(arg[7].hasValue<std::string>("b"));
+        CHECK(arg[7].value<std::string>("b") == "vwx");
+        REQUIRE(arg[7].hasValue<glm::dvec3>("c"));
+        CHECK(arg[7].value<glm::dvec3>("c") == glm::dvec3(30.30, 31.31, 32.32));
+        CHECK(arg[8].hasValue<double>("a"));
+        CHECK(arg[8].value<double>("a") == 33.33);
+        REQUIRE(arg[8].hasValue<std::string>("b"));
+        CHECK(arg[8].value<std::string>("b") == "yzz");
+        REQUIRE(arg[8].hasValue<glm::dvec3>("c"));
+        CHECK(arg[8].value<glm::dvec3>("c") == glm::dvec3(34.34, 35.35, 36.36));
+        CHECK(arg[9].hasValue<double>("a"));
+        CHECK(arg[9].value<double>("a") == 37.37);
+        REQUIRE(arg[9].hasValue<std::string>("b"));
+        CHECK(arg[9].value<std::string>("b") == "ABC");
+        REQUIRE(arg[9].hasValue<glm::dvec3>("c"));
+        CHECK(arg[9].value<glm::dvec3>("c") == glm::dvec3(38.38, 39.39, 40.40));
     }
 
     [[codegen::luawrap]] void funcVariantBool(std::variant<bool, int> arg) {
@@ -5185,6 +6281,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Vector", "[Execution][LuaWrappe
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec2Array1;
+    CHECK(func.name == "funcDvec2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec2(1.1, 2.2));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec2Array2;
+    CHECK(func.name == "funcDvec2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec2(1.1, 2.2));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec2(3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec2(5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec2(7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec2(9.9, 10.10));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec24Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec2Array3;
+    CHECK(func.name == "funcDvec2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec2(1.1, 2.2));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec2(3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec2(5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec2(7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec2(9.9, 10.10));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::dvec2(11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::dvec2(13.13, 14.14));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::dvec2(15.15, 16.16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::dvec2(17.17, 18.18));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::dvec2(19.19, 20.20));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDvec3;
     CHECK(func.name == "funcDvec3");
@@ -5379,6 +6561,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Vector", "[Execution][LuaWrappe
     ghoul::lua::push(state, 2, glm::dvec3(4.4, 5.5, 6.6));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dvec3(7.7, 8.8, 9.9));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec3Array1;
+    CHECK(func.name == "funcDvec3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec3(1.1, 2.2, 3.3));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec3Array2;
+    CHECK(func.name == "funcDvec3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec3(1.1, 2.2, 3.3));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec3(4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec3(7.7, 8.8, 9.9));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec3(10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec3(13.13, 14.14, 15.15));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec3Array3;
+    CHECK(func.name == "funcDvec3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec3(1.1, 2.2, 3.3));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec3(4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec3(7.7, 8.8, 9.9));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec3(10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec3(13.13, 14.14, 15.15));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::dvec3(16.16, 17.17, 18.18));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::dvec3(19.19, 20.20, 21.21));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::dvec3(22.22, 23.23, 24.24));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::dvec3(25.25, 26.26, 27.27));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::dvec3(28.28, 29.29, 30.30));
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5585,6 +6853,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Vector", "[Execution][LuaWrappe
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec4Array1;
+    CHECK(func.name == "funcDvec4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec4(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec4Array2;
+    CHECK(func.name == "funcDvec4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec4(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec4(5.5, 6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec4(9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec4(13.13, 14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec4(17.17, 18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDvec4Array3;
+    CHECK(func.name == "funcDvec4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dvec4(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dvec4(5.5, 6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dvec4(9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dvec4(13.13, 14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dvec4(17.17, 18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::dvec4(21.21, 22.22, 23.23, 24.24));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::dvec4(25.25, 26.26, 27.27, 28.28));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::dvec4(29.29, 30.30, 31.31, 32.32));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::dvec4(33.33, 34.34, 35.35, 36.36));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::dvec4(37.37, 38.38, 39.39, 40.40));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVec2;
     CHECK(func.name == "funcVec2");
@@ -5779,6 +7133,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Vector", "[Execution][LuaWrapper
     ghoul::lua::push(state, 2, glm::vec2(3.3f, 4.4f));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::vec2(5.5f, 6.6f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec2Array1;
+    CHECK(func.name == "funcVec2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec2(1.1f, 2.2f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec2Array2;
+    CHECK(func.name == "funcVec2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec2(1.1f, 2.2f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec2(3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec2(5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec2(7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec2(9.9f, 10.10f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec2Array3;
+    CHECK(func.name == "funcVec2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec2(1.1f, 2.2f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec2(3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec2(5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec2(7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec2(9.9f, 10.10f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::vec2(11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::vec2(13.13f, 14.14f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::vec2(15.15f, 16.16f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::vec2(17.17, 18.18));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::vec2(19.19, 20.20));
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -5985,6 +7425,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Vector", "[Execution][LuaWrapper
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec3Array1;
+    CHECK(func.name == "funcVec3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec3(1.1f, 2.2f, 3.3f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec3Array2;
+    CHECK(func.name == "funcVec3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec3(1.1f, 2.2f, 3.3f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec3(4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec3(7.7f, 8.8f, 9.9f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec3(10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec3(13.13f, 14.14f, 15.15f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec3Array3;
+    CHECK(func.name == "funcVec3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec3(1.1f, 2.2f, 3.3f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec3(4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec3(7.7f, 8.8f, 9.9f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec3(10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec3(13.13f, 14.14f, 15.15f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::vec3(16.16f, 17.17f, 18.18f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::vec3(19.19f, 20.20f, 21.21f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::vec3(22.22f, 23.23f, 24.24f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::vec3(25.25f, 26.26f, 27.27f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::vec3(28.28f, 29.29f, 30.30f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVec4;
     CHECK(func.name == "funcVec4");
@@ -6185,6 +7711,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Vector", "[Execution][LuaWrapper
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec4Array1;
+    CHECK(func.name == "funcVec4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec4Array2;
+    CHECK(func.name == "funcVec4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec4(13.13f, 14.14f, 15.15f, 16.16f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec4(17.17f, 18.18f, 19.19f, 20.20f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  vec4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncVec4Array3;
+    CHECK(func.name == "funcVec4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "vec4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::vec4(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::vec4(5.5f, 6.6f, 7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::vec4(9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::vec4(13.13f, 14.14f, 15.15f, 16.16f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::vec4(17.17f, 18.18f, 19.19f, 20.20f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::vec4(21.21f, 22.22f, 23.23f, 24.24f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::vec4(25.25f, 26.26f, 27.27f, 28.28f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::vec4(29.29f, 30.30f, 31.31f, 32.32f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::vec4(33.33f, 34.34f, 35.35f, 36.36f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::vec4(37.37f, 38.38f, 39.39f, 40.40f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat2x2;
     CHECK(func.name == "funcMat2x2");
@@ -6379,6 +7991,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Vector", "[Execution][LuaWrapp
     ghoul::lua::push(state, 2, glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x2Array1;
+    CHECK(func.name == "funcMat2x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x2Array2;
+    CHECK(func.name == "funcMat2x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::mat2x2(13.13f, 14.14f, 15.15f, 16.16f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::mat2x2(17.17f, 18.18f, 19.19f, 20.20f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x2Array3;
+    CHECK(func.name == "funcMat2x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x2(1.1f, 2.2f, 3.3f, 4.4f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat2x2(5.5f, 6.6f, 7.7f, 8.8f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::mat2x2(13.13f, 14.14f, 15.15f, 16.16f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::mat2x2(17.17f, 18.18f, 19.19f, 20.20f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::mat2x2(21.21f, 22.22f, 23.23f, 24.24f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::mat2x2(25.25f, 26.26f, 27.27f, 28.28f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::mat2x2(29.29f, 30.30f, 31.31f, 32.32f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::mat2x2(33.33f, 34.34f, 35.35f, 36.36f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::mat2x2(37.37f, 38.38f, 39.39f, 40.40f));
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -6614,6 +8312,136 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Vector", "[Execution][LuaWrapp
         state,
         3,
         glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x3Array1;
+    CHECK(func.name == "funcMat2x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x3Array2;
+    CHECK(func.name == "funcMat2x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat2x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat2x3(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x3Array3;
+    CHECK(func.name == "funcMat2x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat2x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat2x3(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat2x3(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat2x3(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat2x3(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat2x3(21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat2x3(27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat2x3(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat2x3(39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat2x3(45.45f, 46.46f, 47.47f, 48.48f, 49.49f, 50.50f)
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -6861,6 +8689,156 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Vector", "[Execution][LuaWrapp
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x4Array1;
+    CHECK(func.name == "funcMat2x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x4Array2;
+    CHECK(func.name == "funcMat2x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat2x4(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat2x4(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat2x4Array3;
+    CHECK(func.name == "funcMat2x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat2x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat2x4(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat2x4(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat2x4(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat2x4(41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat2x4(49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f, 55.55f, 56.56f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat2x4(57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f, 64.64f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat2x4(65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat2x4(73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat3x2;
     CHECK(func.name == "funcMat3x2");
@@ -7090,6 +9068,136 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Vector", "[Execution][LuaWrapp
         state,
         3,
         glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x2Array1;
+    CHECK(func.name == "funcMat3x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x2Array2;
+    CHECK(func.name == "funcMat3x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x2(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x2Array3;
+    CHECK(func.name == "funcMat3x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::mat3x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::mat3x2(7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x2(19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat3x2(21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat3x2(27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat3x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat3x2(39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat3x2(45.45f, 46.46f, 47.47f, 48.48f, 49.49f, 50.50f)
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -7353,6 +9461,182 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Vector", "[Execution][LuaWrapp
         glm::mat3x3(
             19.19f, 20.20f, 21.21f, 22.22f, 23.23f,
             24.24f, 25.25f, 26.26f, 27.27f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x3Array1;
+    CHECK(func.name == "funcMat3x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x3Array2;
+    CHECK(func.name == "funcMat3x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x3(
+            28.28f, 29.29f, 30.30f, 31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f, 45.45f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x3Array3;
+    CHECK(func.name == "funcMat3x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x3(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat3x3(
+            10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x3(
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f, 25.25f, 26.26f, 27.27f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x3(
+            28.28f, 29.29f, 30.30f, 31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f, 43.43f, 44.44f, 45.45f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat3x3(
+            46.46f, 47.47f, 48.48f, 49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat3x3(
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat3x3(
+            64.64f, 65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat3x3(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f, 81.81f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat3x3(
+             82.82f, 83.83f, 84.84f, 85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f
         )
     );
     lua_rawset(state, -3);
@@ -7644,6 +9928,200 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Vector", "[Execution][LuaWrapp
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x4Array1;
+    CHECK(func.name == "funcMat3x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x4Array2;
+    CHECK(func.name == "funcMat3x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat3x4(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x4(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x4(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x4(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat3x4Array3;
+    CHECK(func.name == "funcMat3x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat3x4(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat3x4(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat3x4(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat3x4(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat3x4(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat3x4(
+            61.61f, 62.62f, 63.63f, 64.64f, 65.65f, 66.66f,
+            67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat3x4(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f,
+            79.79f, 80.80f, 81.81f, 82.82f, 83.83f, 84.84f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat3x4(
+            85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f,
+            91.91f, 92.92f, 93.93f, 94.94f, 95.95f, 96.96f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat3x4(
+            97.97f, 98.98f, 99.99f, 100.100f, 101.101f, 102.102f,
+            103.103f, 104.104f, 105.105f, 106.106f, 107.107f, 108.108f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat3x4(
+            109.109f, 110.110f, 111.111f, 112.112f, 113.113f, 114.114f,
+            115.115f, 116.116f, 117.117f, 118.118f, 119.119f, 120.120f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat4x2;
@@ -7878,6 +10356,156 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Vector", "[Execution][LuaWrapp
         state,
         3,
         glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x2Array1;
+    CHECK(func.name == "funcMat4x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x2Array2;
+    CHECK(func.name == "funcMat4x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x2Array3;
+    CHECK(func.name == "funcMat4x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x2(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x2(9.9f, 10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x2(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x2(25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f, 31.31f, 32.32f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x2(33.33f, 34.34f, 35.35f, 36.36f, 37.37f, 38.38f, 39.39f, 40.40f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat4x2(41.41f, 42.42f, 43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat4x2(49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f, 55.55f, 56.56f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat4x2(57.57f, 58.58f, 59.59f, 60.60f, 61.61f, 62.62f, 63.63f, 64.64f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat4x2(65.65f, 66.66f, 67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat4x2(73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f, 79.79f, 80.80f)
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -8160,6 +10788,201 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Vector", "[Execution][LuaWrapp
         glm::mat4x3(
             25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
             31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x3Array1;
+    CHECK(func.name == "funcMat4x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x3Array2;
+    CHECK(func.name == "funcMat4x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x3(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x3(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x3(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x3Array3;
+    CHECK(func.name == "funcMat4x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x3(
+            1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, 10.10f, 11.11f, 12.12f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x3(
+            13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f,
+            19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x3(
+            25.25f, 26.26f, 27.27f, 28.28f, 29.29f, 30.30f,
+            31.31f, 32.32f, 33.33f, 34.34f, 35.35f, 36.36f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x3(
+            37.37f, 38.38f, 39.39f, 40.40f, 41.41f, 42.42f,
+            43.43f, 44.44f, 45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x3(
+            49.49f, 50.50f, 51.51f, 52.52f, 53.53f, 54.54f,
+            55.55f, 56.56f, 57.57f, 58.58f, 59.59f, 60.60f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat4x3(
+            61.61f, 62.62f, 63.63f, 64.64f, 65.65f, 66.66f,
+            67.67f, 68.68f, 69.69f, 70.70f, 71.71f, 72.72f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat4x3(
+            73.73f, 74.74f, 75.75f, 76.76f, 77.77f, 78.78f,
+            79.79f, 80.80f, 81.81f, 82.82f, 83.83f, 84.84f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat4x3(
+            85.85f, 86.86f, 87.87f, 88.88f, 89.89f, 90.90f,
+            91.91f, 92.92f, 93.93f, 94.94f, 95.95f, 96.96f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat4x3(
+            97.97f, 98.98f, 99.99f, 100.100f, 101.101f, 102.102f,
+            103.103f, 104.104f, 105.105f, 106.106f, 107.107f, 108.108f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat4x3(
+            109.109f, 110.110f, 111.111f, 112.112f, 113.113f, 114.114f,
+            115.115f, 116.116f, 117.117f, 118.118f, 119.119f, 120.120f
         )
     );
     lua_rawset(state, -3);
@@ -8451,6 +11274,236 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector", "[Execution][LuaWrapp
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x4Array1;
+    CHECK(func.name == "funcMat4x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x4Array2;
+    CHECK(func.name == "funcMat4x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x4(
+            17.17f, 18.18f, 19.19f, 20.20f,
+            21.21f, 22.22f, 23.23f, 24.24f,
+            25.25f, 26.26f, 27.27f, 28.28f,
+            29.29f, 30.30f, 31.31f, 32.32f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x4(
+            33.33f, 34.34f, 35.35f, 36.36f,
+            37.37f, 38.38f, 39.39f, 40.40f,
+            41.41f, 42.42f, 43.43f, 44.44f,
+            45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x4(
+            49.49f, 50.50f, 51.51f, 52.52f,
+            53.53f, 54.54f, 55.55f, 56.56f,
+            57.57f, 58.58f, 59.59f, 60.60f,
+            61.61f, 62.62f, 63.63f, 64.64f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x4(
+            65.65f, 66.66f, 67.67f, 68.68f,
+            69.69f, 70.70f, 71.71f, 72.72f,
+            73.73f, 74.74f, 75.75f, 76.76f,
+            77.77f, 78.78f, 79.79f, 80.80f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncMat4x4Array3;
+    CHECK(func.name == "funcMat4x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::mat4x4(
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.10f, 11.11f, 12.12f,
+            13.13f, 14.14f, 15.15f, 16.16f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::mat4x4(
+            17.17f, 18.18f, 19.19f, 20.20f,
+            21.21f, 22.22f, 23.23f, 24.24f,
+            25.25f, 26.26f, 27.27f, 28.28f,
+            29.29f, 30.30f, 31.31f, 32.32f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::mat4x4(
+            33.33f, 34.34f, 35.35f, 36.36f,
+            37.37f, 38.38f, 39.39f, 40.40f,
+            41.41f, 42.42f, 43.43f, 44.44f,
+            45.45f, 46.46f, 47.47f, 48.48f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::mat4x4(
+            49.49f, 50.50f, 51.51f, 52.52f,
+            53.53f, 54.54f, 55.55f, 56.56f,
+            57.57f, 58.58f, 59.59f, 60.60f,
+            61.61f, 62.62f, 63.63f, 64.64f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::mat4x4(
+            65.65f, 66.66f, 67.67f, 68.68f,
+            69.69f, 70.70f, 71.71f, 72.72f,
+            73.73f, 74.74f, 75.75f, 76.76f,
+            77.77f, 78.78f, 79.79f, 80.80f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::mat4x4(
+            81.81f, 82.82f, 83.83f, 84.84f, 
+            85.85f, 86.86f, 87.87f, 88.88f,
+            89.89f, 90.90f, 91.91f, 92.92f,
+            93.93f, 94.94f, 95.95f, 96.96f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::mat4x4(
+            97.97f, 98.98f, 99.99f, 100.100f,
+            101.101f, 102.102f, 103.103f, 104.104f,
+            105.105f, 106.106f, 107.107f, 108.108f,
+            109.109f, 110.110f, 111.111f, 112.112f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::mat4x4(
+            113.113f, 114.114f, 115.115f, 116.116f,
+            117.117f, 118.118f, 119.119f, 120.120f,
+            121.121f, 122.122f, 123.123f, 124.124f,
+            125.125f, 126.126f, 127.127f, 128.128f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::mat4x4(
+            129.129f, 130.130f, 131.131f, 132.132f,
+            133.133f, 134.134f, 135.135f, 136.136f,
+            137.137f, 138.138f, 139.139f, 140.140f,
+            141.141f, 142.142f, 143.143f, 144.144f
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::mat4x4(
+            145.145f, 146.146f, 147.147f, 148.148f,
+            149.149f, 150.150f, 151.151f, 152.152f,
+            153.153f, 154.154f, 155.155f, 156.156f,
+            157.157f, 158.158f, 159.159f, 160.160f
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat2x2;
     CHECK(func.name == "funcDMat2x2");
@@ -8645,6 +11698,92 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Vector", "[Execution][LuaWrap
     ghoul::lua::push(state, 2, glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x2Array1;
+    CHECK(func.name == "funcDMat2x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x2Array2;
+    CHECK(func.name == "funcDMat2x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dmat2x2(13.13, 14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dmat2x2(17.17, 18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x2Array3;
+    CHECK(func.name == "funcDMat2x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x2(1.1, 2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat2x2(5.5, 6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 3, glm::dmat2x2(9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 4, glm::dmat2x2(13.13, 14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 5, glm::dmat2x2(17.17, 18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 6, glm::dmat2x2(21.21, 22.22, 23.23, 24.24));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 7, glm::dmat2x2(25.25, 26.26, 27.27, 28.28));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 8, glm::dmat2x2(29.29, 30.30, 31.31, 32.32));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 9, glm::dmat2x2(33.33, 34.34, 35.35, 36.36));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 10, glm::dmat2x2(37.37, 38.38, 39.39, 40.40));
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -8849,6 +11988,136 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector", "[Execution][LuaWrap
     ghoul::lua::push(state, 2, glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
     lua_rawset(state, -3);
     ghoul::lua::push(state, 3, glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x3Array1;
+    CHECK(func.name == "funcDMat2x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x3Array2;
+    CHECK(func.name == "funcDMat2x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat2x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat2x3(25.25, 26.26, 27.27, 28.28, 29.29, 30.30)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x3Array3;
+    CHECK(func.name == "funcDMat2x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat2x3(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat2x3(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat2x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat2x3(25.25, 26.26, 27.27, 28.28, 29.29, 30.30)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat2x3(31.31, 32.32, 33.33, 34.34, 35.35, 36.36)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat2x3(37.37, 38.38, 39.39, 40.40, 41.41, 42.42)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat2x3(43.43, 44.44, 45.45, 46.46, 47.47, 48.48)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat2x3(49.49, 50.50, 51.51, 52.52, 53.53, 54.54)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat2x3(55.55, 56.56, 57.57, 58.58, 59.59, 60.60)
+    );
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -9095,6 +12364,156 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Vector", "[Execution][LuaWrap
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x4Array1;
+    CHECK(func.name == "funcDMat2x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x4Array2;
+    CHECK(func.name == "funcDMat2x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat2x4Array3;
+    CHECK(func.name == "funcDMat2x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat2x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat2x4(41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat2x4(49.49, 50.50, 51.51, 52.52, 53.53, 54.54, 55.55, 56.56)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat2x4(57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63, 64.64)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat2x4(65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat2x4(73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat3x2;
     CHECK(func.name == "funcDMat3x2");
@@ -9312,6 +12731,136 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Vector", "[Execution][LuaWrap
         state,
         3,
         glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x2Array1;
+    CHECK(func.name == "funcDMat3x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x2Array2;
+    CHECK(func.name == "funcDMat3x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x2(19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x2Array3;
+    CHECK(func.name == "funcDMat3x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1, glm::dmat3x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6));
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, 2, glm::dmat3x2(7.7, 8.8, 9.9, 10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x2(19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat3x2(21.21, 22.22, 23.23, 24.24, 25.25, 26.26)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat3x2(27.27, 28.28, 29.29, 30.30, 31.31, 32.32)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat3x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat3x2(39.39, 40.40, 41.41, 42.42, 43.43, 44.44)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat3x2(45.45, 46.46, 47.47, 48.48, 49.49, 50.50)
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -9561,6 +13110,182 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Vector", "[Execution][LuaWrap
         state,
         3,
         glm::dmat3x3(19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x3Array1;
+    CHECK(func.name == "funcDMat3x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x3Array2;
+    CHECK(func.name == "funcDMat3x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat3x3(
+            10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x3(
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x3(
+            28.28, 29.29, 30.30, 31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42, 43.43, 44.44, 45.45
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x3Array3;
+    CHECK(func.name == "funcDMat3x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat3x3(
+            10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16, 17.17, 18.18
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x3(
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24, 25.25, 26.26, 27.27
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x3(
+            28.28, 29.29, 30.30, 31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42, 43.43, 44.44, 45.45
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat3x3(
+            46.46, 47.47, 48.48, 49.49, 50.50, 51.51, 52.52, 53.53, 54.54
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat3x3(
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat3x3(
+            64.64, 65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat3x3(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80, 81.81
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat3x3(
+            82.82, 83.83, 84.84, 85.85, 86.86, 87.87, 88.88, 89.89, 90.90
+        )
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -9848,6 +13573,200 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Vector", "[Execution][LuaWrap
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x4Array1;
+    CHECK(func.name == "funcDMat3x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x4Array2;
+    CHECK(func.name == "funcDMat3x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat3x4(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x4(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x4(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x4(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat3x4Array3;
+    CHECK(func.name == "funcDMat3x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat3x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat3x4(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat3x4(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat3x4(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat3x4(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat3x4(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat3x4(
+            61.61, 62.62, 63.63, 64.64, 65.65, 66.66,
+            67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat3x4(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78,
+            79.79, 80.80, 81.81, 82.82, 83.83, 84.84
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat3x4(
+            85.85, 86.86, 87.87, 88.88, 89.89, 90.90,
+            91.91, 92.92, 93.93, 94.94, 95.95, 96.96
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat3x4(
+            97.97, 98.98, 99.99, 100.100, 101.101, 102.102,
+            103.103, 104.104, 105.105, 106.106, 107.107, 108.108
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat3x4(
+            109.109, 110.110, 111.111, 112.112, 113.113, 114.114,
+            115.115, 116.116, 117.117, 118.118, 119.119, 120.120
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat4x2;
@@ -10082,6 +14001,156 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Vector", "[Execution][LuaWrap
         state,
         3,
         glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x2Array1;
+    CHECK(func.name == "funcDMat4x2Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x2Array2;
+    CHECK(func.name == "funcDMat4x2Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40)
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x2Array3;
+    CHECK(func.name == "funcDMat4x2Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x2[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x2(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x2(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x2(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x2(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x2(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat4x2(41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat4x2(49.49, 50.50, 51.51, 52.52, 53.53, 54.54, 55.55, 56.56)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat4x2(57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63, 64.64)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat4x2(65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72)
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat4x2(73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80)
     );
     lua_rawset(state, -3);
     func.function(state);
@@ -10372,6 +14441,201 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Vector", "[Execution][LuaWrap
     lua_close(state);
 }
 
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x3Array1;
+    CHECK(func.name == "funcDMat4x3Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x3Array2;
+    CHECK(func.name == "funcDMat4x3Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x3(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x3(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x3(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x3Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x3Array3;
+    CHECK(func.name == "funcDMat4x3Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x3[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x3(
+            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10, 11.11, 12.12
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x3(
+            13.13, 14.14, 15.15, 16.16, 17.17, 18.18,
+            19.19, 20.20, 21.21, 22.22, 23.23, 24.24
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x3(
+            25.25, 26.26, 27.27, 28.28, 29.29, 30.30,
+            31.31, 32.32, 33.33, 34.34, 35.35, 36.36
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x3(
+            37.37, 38.38, 39.39, 40.40, 41.41, 42.42,
+            43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x3(
+            49.49, 50.50, 51.51, 52.52, 53.53, 54.54,
+            55.55, 56.56, 57.57, 58.58, 59.59, 60.60
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat4x3(
+            61.61, 62.62, 63.63, 64.64, 65.65, 66.66,
+            67.67, 68.68, 69.69, 70.70, 71.71, 72.72
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat4x3(
+            73.73, 74.74, 75.75, 76.76, 77.77, 78.78,
+            79.79, 80.80, 81.81, 82.82, 83.83, 84.84
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat4x3(
+            85.85, 86.86, 87.87, 88.88, 89.89, 90.90,
+            91.91, 92.92, 93.93, 94.94, 95.95, 96.96
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat4x3(
+            97.97, 98.98, 99.99, 100.100, 101.101, 102.102,
+            103.103, 104.104, 105.105, 106.106, 107.107, 108.108
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat4x3(
+            109.109, 110.110, 111.111, 112.112, 113.113, 114.114,
+            115.115, 116.116, 117.117, 118.118, 119.119, 120.120
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat4x4;
     CHECK(func.name == "funcDMat4x4");
@@ -10647,6 +14911,236 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Vector", "[Execution][LuaWrap
         glm::dmat4x4(
             33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40,
             41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Array1", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x4Array1;
+    CHECK(func.name == "funcDMat4x4Array1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Array2", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x4Array2;
+    CHECK(func.name == "funcDMat4x4Array2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x4(
+            17.17, 18.18, 19.19, 20.20,
+            21.21, 22.22, 23.23, 24.24,
+            25.25, 26.26, 27.27, 28.28,
+            29.29, 30.30, 31.31, 32.32
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x4(
+            33.33, 34.34, 35.35, 36.36,
+            37.37, 38.38, 39.39, 40.40,
+            41.41, 42.42, 43.43, 44.44,
+            45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x4(
+            49.49, 50.50, 51.51, 52.52,
+            53.53, 54.54, 55.55, 56.56,
+            57.57, 58.58, 59.59, 60.60,
+            61.61, 62.62, 63.63, 64.64
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x4(
+            65.65, 66.66, 67.67, 68.68,
+            69.69, 70.70, 71.71, 72.72,
+            73.73, 74.74, 75.75, 76.76,
+            77.77, 78.78, 79.79, 80.80
+        )
+    );
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x4Array3", "[Execution][LuaWrapper]") {
+    Function func = codegen::lua::FuncDMat4x4Array3;
+    CHECK(func.name == "funcDMat4x4Array3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "mat4x4[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(
+        state,
+        1,
+        glm::dmat4x4(
+            1.1, 2.2, 3.3, 4.4,
+            5.5, 6.6, 7.7, 8.8,
+            9.9, 10.10, 11.11, 12.12,
+            13.13, 14.14, 15.15, 16.16
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        2,
+        glm::dmat4x4(
+            17.17, 18.18, 19.19, 20.20,
+            21.21, 22.22, 23.23, 24.24,
+            25.25, 26.26, 27.27, 28.28,
+            29.29, 30.30, 31.31, 32.32
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        3,
+        glm::dmat4x4(
+            33.33, 34.34, 35.35, 36.36,
+            37.37, 38.38, 39.39, 40.40,
+            41.41, 42.42, 43.43, 44.44,
+            45.45, 46.46, 47.47, 48.48
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        4,
+        glm::dmat4x4(
+            49.49, 50.50, 51.51, 52.52,
+            53.53, 54.54, 55.55, 56.56,
+            57.57, 58.58, 59.59, 60.60,
+            61.61, 62.62, 63.63, 64.64
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        5,
+        glm::dmat4x4(
+            65.65, 66.66, 67.67, 68.68,
+            69.69, 70.70, 71.71, 72.72,
+            73.73, 74.74, 75.75, 76.76,
+            77.77, 78.78, 79.79, 80.80
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        6,
+        glm::dmat4x4(
+            81.81, 82.82, 83.83, 84.84,
+            85.85, 86.86, 87.87, 88.88,
+            89.89, 90.90, 91.91, 92.92,
+            93.93, 94.94, 95.95, 96.96
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        7,
+        glm::dmat4x4(
+            97.97, 98.98, 99.99, 100.100,
+            101.101, 102.102, 103.103, 104.104,
+            105.105, 106.106, 107.107, 108.108,
+            109.109, 110.110, 111.111, 112.112
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        8,
+        glm::dmat4x4(
+            113.113, 114.114, 115.115, 116.116,
+            117.117, 118.118, 119.119, 120.120,
+            121.121, 122.122, 123.123, 124.124,
+            125.125, 126.126, 127.127, 128.128
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        9,
+        glm::dmat4x4(
+            129.129, 130.130, 131.131, 132.132,
+            133.133, 134.134, 135.135, 136.136,
+            137.137, 138.138, 139.139, 140.140,
+            141.141, 142.142, 143.143, 144.144
+        )
+    );
+    lua_rawset(state, -3);
+    ghoul::lua::push(
+        state,
+        10,
+        glm::dmat4x4(
+            145.145, 146.146, 147.147, 148.148,
+            149.149, 150.150, 151.151, 152.152,
+            153.153, 154.154, 155.155, 156.156,
+            157.157, 158.158, 159.159, 160.160
         )
     );
     lua_rawset(state, -3);
@@ -10940,6 +15434,230 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryVector", "[Execution][LuaW
         lua_rawset(state, -3);
     }
     lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray1", "[Execution][LuaWrapper]")
+{
+    using namespace std::string_literals;
+
+    Function func = codegen::lua::FuncDictionaryArray1;
+    CHECK(func.name == "funcDictionaryArray1");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table[1]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+    ghoul::lua::push(state, 1);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray2", "[Execution][LuaWrapper]")
+{
+    using namespace std::string_literals;
+
+    Function func = codegen::lua::FuncDictionaryArray2;
+    CHECK(func.name == "funcDictionaryArray2");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table[5]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+
+    ghoul::lua::push(state, 1);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 2);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 5.5);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "def"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 3);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 9.9);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "ghi"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 4);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 13.13);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "jkl"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 5);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 17.17);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "mno"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+    lua_close(state);
+}
+
+TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray3", "[Execution][LuaWrapper]")
+{
+    using namespace std::string_literals;
+
+    Function func = codegen::lua::FuncDictionaryArray3;
+    CHECK(func.name == "funcDictionaryArray3");
+    REQUIRE(func.arguments.size() == 1);
+    CHECK(func.arguments[0].name == "arg");
+    CHECK(func.arguments[0].type == "Table[10]");
+    CHECK(func.returnType == "");
+    CHECK(func.helpText == "");
+    REQUIRE(func.function);
+
+    lua_State* state = luaL_newstate();
+    REQUIRE(state);
+    lua_newtable(state);
+
+    ghoul::lua::push(state, 1);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 1.1);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "abc"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(2.2, 3.3, 4.4));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 2);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 5.5);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "def"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(6.6, 7.7, 8.8));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 3);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 9.9);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "ghi"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(10.10, 11.11, 12.12));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 4);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 13.13);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "jkl"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(14.14, 15.15, 16.16));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 5);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 17.17);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "mno"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(18.18, 19.19, 20.20));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 6);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 21.21);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "pqr"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(22.22, 23.23, 24.24));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 7);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 25.25);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "stu"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(26.26, 27.27, 28.28));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 8);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 29.29);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "vwx"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(30.30, 31.31, 32.32));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 9);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 33.33);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "yzz"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(34.34, 35.35, 36.36));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
+    ghoul::lua::push(state, 10);
+    lua_newtable(state);
+    ghoul::lua::push(state, "a"s, 37.37);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "b"s, "ABC"s);
+    lua_rawset(state, -3);
+    ghoul::lua::push(state, "c"s, glm::dvec3(38.38, 39.39, 40.40));
+    lua_rawset(state, -3);
+    lua_rawset(state, -3);
+
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
