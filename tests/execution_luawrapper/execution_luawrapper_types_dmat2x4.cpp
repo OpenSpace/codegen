@@ -427,6 +427,15 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array1", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x4, 1> {
+            glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8)
+        }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 
@@ -475,6 +484,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array2", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x4, 5> {
+            glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8),
+            glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16),
+            glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24),
+            glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32),
+            glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40)
+        }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 
@@ -553,6 +575,24 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4Array3", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x4, 10> {
+            glm::dmat2x4(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8),
+            glm::dmat2x4(9.9, 10.10, 11.11, 12.12, 13.13, 14.14, 15.15, 16.16),
+            glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24),
+            glm::dmat2x4(25.25, 26.26, 27.27, 28.28, 29.29, 30.30, 31.31, 32.32),
+            glm::dmat2x4(33.33, 34.34, 35.35, 36.36, 37.37, 38.38, 39.39, 40.40),
+            glm::dmat2x4(41.41, 42.42, 43.43, 44.44, 45.45, 46.46, 47.47, 48.48),
+            glm::dmat2x4(49.49, 50.50, 51.51, 52.52, 53.53, 54.54, 55.55, 56.56),
+            glm::dmat2x4(57.57, 58.58, 59.59, 60.60, 61.61, 62.62, 63.63, 64.64),
+            glm::dmat2x4(65.65, 66.66, 67.67, 68.68, 69.69, 70.70, 71.71, 72.72),
+            glm::dmat2x4(73.73, 74.74, 75.75, 76.76, 77.77, 78.78, 79.79, 80.80)
+        }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 

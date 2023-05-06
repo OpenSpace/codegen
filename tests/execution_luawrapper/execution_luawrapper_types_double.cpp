@@ -346,6 +346,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray1", "[Execution][LuaWrapp
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<double, 1> { 1.1 } );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -374,6 +379,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray2", "[Execution][LuaWrapp
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<double, 5> { 1.1, 2.2, 3.3, 4.4, 5.5 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -412,6 +422,14 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  doubleArray3", "[Execution][LuaWrapp
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<double, 10> { 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.10 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
+
     lua_close(state);
 }
 

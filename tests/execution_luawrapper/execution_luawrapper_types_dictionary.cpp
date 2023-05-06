@@ -182,54 +182,63 @@ namespace {
         CHECK(arg[0].value<std::string>("b") == "abc");
         REQUIRE(arg[0].hasValue<glm::dvec3>("c"));
         CHECK(arg[0].value<glm::dvec3>("c") == glm::dvec3(2.2, 3.3, 4.4));
+        
         CHECK(arg[1].hasValue<double>("a"));
         CHECK(arg[1].value<double>("a") == 5.5);
         REQUIRE(arg[1].hasValue<std::string>("b"));
         CHECK(arg[1].value<std::string>("b") == "def");
         REQUIRE(arg[1].hasValue<glm::dvec3>("c"));
         CHECK(arg[1].value<glm::dvec3>("c") == glm::dvec3(6.6, 7.7, 8.8));
+        
         CHECK(arg[2].hasValue<double>("a"));
         CHECK(arg[2].value<double>("a") == 9.9);
         REQUIRE(arg[2].hasValue<std::string>("b"));
         CHECK(arg[2].value<std::string>("b") == "ghi");
         REQUIRE(arg[2].hasValue<glm::dvec3>("c"));
         CHECK(arg[2].value<glm::dvec3>("c") == glm::dvec3(10.10, 11.11, 12.12));
+        
         CHECK(arg[3].hasValue<double>("a"));
         CHECK(arg[3].value<double>("a") == 13.13);
         REQUIRE(arg[3].hasValue<std::string>("b"));
         CHECK(arg[3].value<std::string>("b") == "jkl");
         REQUIRE(arg[3].hasValue<glm::dvec3>("c"));
         CHECK(arg[3].value<glm::dvec3>("c") == glm::dvec3(14.14, 15.15, 16.16));
+        
         CHECK(arg[4].hasValue<double>("a"));
         CHECK(arg[4].value<double>("a") == 17.17);
         REQUIRE(arg[4].hasValue<std::string>("b"));
         CHECK(arg[4].value<std::string>("b") == "mno");
         REQUIRE(arg[4].hasValue<glm::dvec3>("c"));
         CHECK(arg[4].value<glm::dvec3>("c") == glm::dvec3(18.18, 19.19, 20.20));
+        
         CHECK(arg[5].hasValue<double>("a"));
         CHECK(arg[5].value<double>("a") == 21.21);
         REQUIRE(arg[5].hasValue<std::string>("b"));
         CHECK(arg[5].value<std::string>("b") == "pqr");
         REQUIRE(arg[5].hasValue<glm::dvec3>("c"));
         CHECK(arg[5].value<glm::dvec3>("c") == glm::dvec3(22.22, 23.23, 24.24));
+        
         CHECK(arg[6].hasValue<double>("a"));
         CHECK(arg[6].value<double>("a") == 25.25);
         REQUIRE(arg[6].hasValue<std::string>("b"));
         CHECK(arg[6].value<std::string>("b") == "stu");
         REQUIRE(arg[6].hasValue<glm::dvec3>("c"));
         CHECK(arg[6].value<glm::dvec3>("c") == glm::dvec3(26.26, 27.27, 28.28));
+        
         CHECK(arg[7].hasValue<double>("a"));
         CHECK(arg[7].value<double>("a") == 29.29);
         REQUIRE(arg[7].hasValue<std::string>("b"));
         CHECK(arg[7].value<std::string>("b") == "vwx");
         REQUIRE(arg[7].hasValue<glm::dvec3>("c"));
         CHECK(arg[7].value<glm::dvec3>("c") == glm::dvec3(30.30, 31.31, 32.32));
+        
         CHECK(arg[8].hasValue<double>("a"));
         CHECK(arg[8].value<double>("a") == 33.33);
         REQUIRE(arg[8].hasValue<std::string>("b"));
         CHECK(arg[8].value<std::string>("b") == "yzz");
         REQUIRE(arg[8].hasValue<glm::dvec3>("c"));
         CHECK(arg[8].value<glm::dvec3>("c") == glm::dvec3(34.34, 35.35, 36.36));
+        
         CHECK(arg[9].hasValue<double>("a"));
         CHECK(arg[9].value<double>("a") == 37.37);
         REQUIRE(arg[9].hasValue<std::string>("b"));
@@ -627,6 +636,15 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray1", "[Execution][LuaW
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::Dictionary d1;
+    d1.setValue("a", 1.1);
+    d1.setValue("b", "abc"s);
+    d1.setValue("c", glm::dvec3(2.2, 3.3, 4.4));
+    ghoul::lua::push(state, std::array<ghoul::Dictionary, 1> { d1 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -699,6 +717,32 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray2", "[Execution][LuaW
 
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+
+    ghoul::Dictionary d1;
+    d1.setValue("a", 1.1);
+    d1.setValue("b", "abc"s);
+    d1.setValue("c", glm::dvec3(2.2, 3.3, 4.4));
+    ghoul::Dictionary d2;
+    d2.setValue("a", 5.5);
+    d2.setValue("b", "def"s);
+    d2.setValue("c", glm::dvec3(6.6, 7.7, 8.8));
+    ghoul::Dictionary d3;
+    d3.setValue("a", 9.9);
+    d3.setValue("b", "ghi"s);
+    d3.setValue("c", glm::dvec3(10.10, 11.11, 12.12));
+    ghoul::Dictionary d4;
+    d4.setValue("a", 13.13);
+    d4.setValue("b", "jkl"s);
+    d4.setValue("c", glm::dvec3(14.14, 15.15, 16.16));
+    ghoul::Dictionary d5;
+    d5.setValue("a", 17.17);
+    d5.setValue("b", "mno"s);
+    d5.setValue("c", glm::dvec3(18.18, 19.19, 20.20));
+    ghoul::lua::push(state, std::array<ghoul::Dictionary, 5> { d1, d2, d3, d4, d5 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -821,6 +865,54 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dictionaryArray3", "[Execution][LuaW
 
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::Dictionary d1;
+    d1.setValue("a", 1.1);
+    d1.setValue("b", "abc"s);
+    d1.setValue("c", glm::dvec3(2.2, 3.3, 4.4));
+    ghoul::Dictionary d2;
+    d2.setValue("a", 5.5);
+    d2.setValue("b", "def"s);
+    d2.setValue("c", glm::dvec3(6.6, 7.7, 8.8));
+    ghoul::Dictionary d3;
+    d3.setValue("a", 9.9);
+    d3.setValue("b", "ghi"s);
+    d3.setValue("c", glm::dvec3(10.10, 11.11, 12.12));
+    ghoul::Dictionary d4;
+    d4.setValue("a", 13.13);
+    d4.setValue("b", "jkl"s);
+    d4.setValue("c", glm::dvec3(14.14, 15.15, 16.16));
+    ghoul::Dictionary d5;
+    d5.setValue("a", 17.17);
+    d5.setValue("b", "mno"s);
+    d5.setValue("c", glm::dvec3(18.18, 19.19, 20.20));
+    ghoul::Dictionary d6;
+    d6.setValue("a", 21.21);
+    d6.setValue("b", "pqr"s);
+    d6.setValue("c", glm::dvec3(22.22, 23.23, 24.24));
+    ghoul::Dictionary d7;
+    d7.setValue("a", 25.25);
+    d7.setValue("b", "stu"s);
+    d7.setValue("c", glm::dvec3(26.26, 27.27, 28.28));
+    ghoul::Dictionary d8;
+    d8.setValue("a", 29.29);
+    d8.setValue("b", "vwx"s);
+    d8.setValue("c", glm::dvec3(30.30, 31.31, 32.32));
+    ghoul::Dictionary d9;
+    d9.setValue("a", 33.33);
+    d9.setValue("b", "yzz"s);
+    d9.setValue("c", glm::dvec3(34.34, 35.35, 36.36));
+    ghoul::Dictionary d10;
+    d10.setValue("a", 37.37);
+    d10.setValue("b", "ABC"s);
+    d10.setValue("c", glm::dvec3(38.38, 39.39, 40.40));
+    ghoul::lua::push(
+        state,
+        std::array<ghoul::Dictionary, 10> { d1, d2, d3, d4, d5, d6, d7, d8, d9, d10 }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 

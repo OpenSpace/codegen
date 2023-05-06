@@ -350,6 +350,13 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array1", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x2, 1> { glm::dmat2x2(1.1, 2.2, 3.3, 4.4) }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 
@@ -378,6 +385,19 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array2", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x2, 5> {
+            glm::dmat2x2(1.1, 2.2, 3.3, 4.4),
+            glm::dmat2x2(5.5, 6.6, 7.7, 8.8),
+            glm::dmat2x2(9.9, 10.10, 11.11, 12.12),
+            glm::dmat2x2(13.13, 14.14, 15.15, 16.16),
+            glm::dmat2x2(17.17, 18.18, 19.19, 20.20)
+        }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 
@@ -416,6 +436,24 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2Array3", "[Execution][LuaWrap
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dmat2x2, 10> {
+            glm::dmat2x2(1.1, 2.2, 3.3, 4.4),
+            glm::dmat2x2(5.5, 6.6, 7.7, 8.8),
+            glm::dmat2x2(9.9, 10.10, 11.11, 12.12),
+            glm::dmat2x2(13.13, 14.14, 15.15, 16.16),
+            glm::dmat2x2(17.17, 18.18, 19.19, 20.20),
+            glm::dmat2x2(21.21, 22.22, 23.23, 24.24),
+            glm::dmat2x2(25.25, 26.26, 27.27, 28.28),
+            glm::dmat2x2(29.29, 30.30, 31.31, 32.32),
+            glm::dmat2x2(33.33, 34.34, 35.35, 36.36),
+            glm::dmat2x2(37.37, 38.38, 39.39, 40.40)
+        }
+    );
+    func.function(state);
+
     lua_close(state);
 }
 

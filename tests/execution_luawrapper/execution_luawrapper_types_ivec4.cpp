@@ -350,6 +350,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array1", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<glm::ivec4, 1> { glm::ivec4(1, 2, 3, 4) });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -378,6 +383,20 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array2", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::ivec4, 5> {
+            glm::ivec4(1, 2, 3, 4),
+            glm::ivec4(5, 6, 7, 8),
+            glm::ivec4(9, 10, 11, 12),
+            glm::ivec4(13, 14, 15, 16),
+            glm::ivec4(17, 18, 19, 20)
+        }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -416,6 +435,25 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec4Array3", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::ivec4, 10> {
+            glm::ivec4(1, 2, 3, 4),
+            glm::ivec4(5, 6, 7, 8),
+            glm::ivec4(9, 10, 11, 12),
+            glm::ivec4(13, 14, 15, 16),
+            glm::ivec4(17, 18, 19, 20),
+            glm::ivec4(21, 22, 23, 24),
+            glm::ivec4(25, 26, 27, 28),
+            glm::ivec4(29, 30, 31, 32),
+            glm::ivec4(33, 34, 35, 36),
+            glm::ivec4(37, 38, 39, 40)
+        }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 

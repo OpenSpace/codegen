@@ -348,6 +348,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray1", "[Execution][LuaWrapper]
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<int, 1> { 2 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -376,6 +381,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray2", "[Execution][LuaWrapper]
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<int, 5> { 2, 4, 6, 8, 10 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -414,6 +424,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray3", "[Execution][LuaWrapper]
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<int, 10> { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 

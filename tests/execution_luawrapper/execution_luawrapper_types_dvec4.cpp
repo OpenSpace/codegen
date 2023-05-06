@@ -350,6 +350,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array1", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<glm::dvec4, 1> { glm::dvec4(1.1, 2.2, 3.3, 4.4) });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -378,6 +383,20 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array2", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dvec4, 5> {
+            glm::dvec4(1.1, 2.2, 3.3, 4.4),
+            glm::dvec4(5.5, 6.6, 7.7, 8.8),
+            glm::dvec4(9.9, 10.10, 11.11, 12.12),
+            glm::dvec4(13.13, 14.14, 15.15, 16.16),
+            glm::dvec4(17.17, 18.18, 19.19, 20.20)
+        }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -416,6 +435,25 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dvec4Array3", "[Execution][LuaWrappe
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<glm::dvec4, 10> {
+            glm::dvec4(1.1, 2.2, 3.3, 4.4),
+            glm::dvec4(5.5, 6.6, 7.7, 8.8),
+            glm::dvec4(9.9, 10.10, 11.11, 12.12),
+            glm::dvec4(13.13, 14.14, 15.15, 16.16),
+            glm::dvec4(17.17, 18.18, 19.19, 20.20),
+            glm::dvec4(21.21, 22.22, 23.23, 24.24),
+            glm::dvec4(25.25, 26.26, 27.27, 28.28),
+            glm::dvec4(29.29, 30.30, 31.31, 32.32),
+            glm::dvec4(33.33, 34.34, 35.35, 36.36),
+            glm::dvec4(37.37, 38.38, 39.39, 40.40)
+        }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 

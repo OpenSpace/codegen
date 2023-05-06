@@ -346,6 +346,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray1", "[Execution][LuaWrapper
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<bool, 1> { true });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -374,6 +379,11 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray2", "[Execution][LuaWrapper
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(state, std::array<bool, 5> { true, false, true, false, true });
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
@@ -412,6 +422,16 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  boolArray3", "[Execution][LuaWrapper
     lua_rawset(state, -3);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
+
+    ghoul::lua::push(
+        state,
+        std::array<bool, 10> {
+            true, false, true, false, true, true, false, true, false, true
+        }
+    );
+    func.function(state);
+    CHECK(lua_gettop(state) == 0);
+
     lua_close(state);
 }
 
