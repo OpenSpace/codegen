@@ -708,7 +708,7 @@ std::string generateDescriptiveTypename(const TupleType* type) {
             res += ", ";
         }
     }
-    return res;
+    return fmt::format("({})", res);
 }
 
 std::string generateTypename(const ArrayType* type, bool fullyQualified) {

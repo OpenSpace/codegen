@@ -260,7 +260,7 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         Function func = codegen::lua::TestFunc6;
         CHECK(func.name == "testFunc6");
         CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "Integer, Number");
+        CHECK(func.returnType == "(Integer, Number)");
         CHECK(func.helpText == "");
         REQUIRE(func.function);
 

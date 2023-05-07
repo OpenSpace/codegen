@@ -1246,13 +1246,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         Variable* v = new Variable;
         v->type = parseType(typeStr, root);
 
-        if (v->type->isTupleType()) {
-            throw CodegenError(fmt::format(
-                "Tuples are not supported in parameter arguments\n{}",
-                content.substr(cursor, 50)
-            ));
-        }
-
         cursor = content.find_first_not_of(' ', cursor);
         if (size_t beg = content.substr(cursor).find("[[codegen::");
             beg != std::string_view::npos)
