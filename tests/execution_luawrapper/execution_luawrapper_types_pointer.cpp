@@ -758,7 +758,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo*", "[Execution][LuaWrapper]") {
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    Foo v = Foo(1, 2.f, "abc");
+    Foo v = Foo{ 1, 2.f, "abc" };
     ghoul::lua::push(state, &v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1281,7 +1281,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo* optional", "[Execution][LuaWrap
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    Foo v = Foo(1, 2.f, "abc");
+    Foo v = Foo{ 1, 2.f, "abc" };
     ghoul::lua::push(state, &v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
