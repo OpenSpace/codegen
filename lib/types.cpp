@@ -353,7 +353,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         at->tag = VariableType::Tag::ArrayType;
         at->type = parseType(type, context);
         assert(at->type);
-        int size;
+        int size = -1;
         auto result = std::from_chars(count.data(), count.data() + count.size(), size);
         if (result.ec == std::errc::invalid_argument) {
             throw CodegenError(fmt::format(
