@@ -200,7 +200,11 @@ target_sources(
     parsing_structs/parsing_structs_variant_fail.cpp
 )
 
-target_link_libraries(codegentest PRIVATE Catch2 fmt codegen-lib openspace-core openspace-module-collection)
+find_package(fmt CONFIG REQUIRED)
+find_package(Catch2 CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+target_link_libraries(codegentest PRIVATE ZLIB::ZLIB Catch2::Catch2 fmt::fmt codegen-lib openspace-core openspace-module-collection)
+
 if (MSVC)
   target_compile_options(codegentest PRIVATE "/MP" "/wd5030")
 else ()
