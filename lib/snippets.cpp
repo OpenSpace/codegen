@@ -141,8 +141,8 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
         case BasicType::Type::DMat4x3:   return BakeFunctionDMat4x3;
         case BasicType::Type::DMat4x4:   return BakeFunctionDMat4x4;
         case BasicType::Type::Dictionary: return BakeFunctionDictionary;
+        default:                         throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case label");
 }
 
 std::string vectorBakeFunctionForType(std::string_view type) {

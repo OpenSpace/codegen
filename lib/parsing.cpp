@@ -1434,8 +1434,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         enum class Type {
             Struct,
             Enum,
-            Function,
-            None
+            Function
         };
         struct NextCode {
             Type type;
@@ -1520,8 +1519,6 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 res.luaWrapperFunctions.push_back(f);
                 break;
             }
-            default:
-                throw std::logic_error("Missing case exception");
         }
 
         const size_t p = std::min(next.cursors.first + next.cursors.second, code.size());

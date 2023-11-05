@@ -80,6 +80,8 @@ set(MSVC_WARNINGS
   "/w44906"   # string literal cast to 'LPWSTR'
   "/w44986"   # 'symbol': exception specification does not match previous declaration
   "/w44988"   # 'symbol': variable declared outside class/function scope
+  "/w45041"   # out-of-line definition for constexpr data is deprecated
+  "/w45204"   # virtual class has non-virtual trivial destructor
   "/permissive-"
   "/Zc:twoPhase-"  # Used to prevent C:\Program Files (x86)\Windows Kits\8.1\Include\um\combaseapi.h(229): error C2187: syntax error: 'identifier' was unexpected here
                     # This is a bug in Visual Studio 15.3 and can be removed with the next version:

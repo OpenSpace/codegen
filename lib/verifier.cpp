@@ -171,293 +171,281 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
     // @TODO (abock, 2021-02-12) Really the check for unsupported attributes should be
     // done directly after parsing and not when we are trying to generate the verifiers
     reportUnsupportedAttribute(type, attr);
-    if (type == Type::Bool) { return "BoolVerifier"; }
-    else if (type == Type::Int) {
-        std::string res = "IntVerifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::Double || type == Type::Float) {
-        std::string res = "DoubleVerifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::String) {
-        std::string res = "StringVerifier";
-        if (!attr.inlist.empty()) {
-            std::string param = '{' + std::string(attr.inlist) + '}';
-            res = addQualifier(res, "InListVerifier", param);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        if (attr.mustBeNotEmpty) {
-            if (!attr.inlist.empty() || !attr.unequal.empty() ||
-                !attr.annotation.empty())
-            {
-                throw CodegenError(fmt::format(
-                    "With the notempty attribute, no other attribute can be used:\n{}",
-                    generateTypename(type)
-                ));
+    std::string res;
+    switch (type) {
+        case Type::Bool: return "BoolVerifier";
+        case Type::Int:
+            res = "IntVerifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Double:
+        case Type::Float:
+            res = "DoubleVerifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::String:
+            res = "StringVerifier";
+            if (!attr.inlist.empty()) {
+                std::string param = '{' + std::string(attr.inlist) + '}';
+                res = addQualifier(res, "InListVerifier", param);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            if (attr.mustBeNotEmpty) {
+                if (!attr.inlist.empty() || !attr.unequal.empty() ||
+                    !attr.annotation.empty())
+                {
+                    throw CodegenError(fmt::format(
+                        "With the notempty attribute, no other attribute can be used:\n{}",
+                        generateTypename(type)
+                    ));
+                }
+
+                res = "StringVerifier(true)";
+            }
+            if (!attr.annotation.empty()) {
+                if (!attr.inlist.empty() || !attr.unequal.empty() || attr.mustBeNotEmpty) {
+                    throw CodegenError(fmt::format(
+                        "With the annotation attribute, no other attribute can be used:\n{}",
+                        generateTypename(type)
+                    ));
+                }
+                res = addQualifier(res, "AnnotationVerifier", attr.annotation);
+            }
+            if (attr.isDateTime) {
+                return "DateTimeVerifier";
+            }
+            if (attr.isIdentifier) {
+                return "IdentifierVerifier";
+            }
+            return res;
+        case Type::Path:
+            return attr.isDirectory ? "DirectoryVerifier" : "FileVerifier";
+        case Type::Ivec2:
+            res = "IntVector2Verifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Ivec3:
+            res = "IntVector3Verifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Ivec4:
+            res = "IntVector4Verifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Dvec2:
+        case Type::Vec2:
+            res = "DoubleVector2Verifier";
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Dvec3:
+        case Type::Vec3:
+            if (attr.isColor) {
+                res = "Color3Verifier";
+            }
+            else {
+                res = "DoubleVector3Verifier";
             }
 
-            res = "StringVerifier(true)";
-        }
-        if (!attr.annotation.empty()) {
-            if (!attr.inlist.empty() || !attr.unequal.empty() || attr.mustBeNotEmpty) {
-                throw CodegenError(fmt::format(
-                    "With the annotation attribute, no other attribute can be used:\n{}",
-                    generateTypename(type)
-                ));
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
             }
-            res = addQualifier(res, "AnnotationVerifier", attr.annotation);
-        }
-        if (attr.isDateTime) {
-            return "DateTimeVerifier";
-        }
-        if (attr.isIdentifier) {
-            return "IdentifierVerifier";
-        }
-        return res;
-    }
-    else if (type == Type::Path)  {
-        if (attr.isDirectory) {
-            return "DirectoryVerifier";
-        }
-        else {
-            return "FileVerifier";
-        }
-    }
-    else if (type == Type::Ivec2) {
-        std::string res = "IntVector2Verifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::Ivec3) {
-        std::string res = "IntVector3Verifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::Ivec4) {
-        std::string res = "IntVector4Verifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::Dvec2 || type == Type::Vec2) {
-        std::string res = "DoubleVector2Verifier";
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::Dvec3 || type == Type::Vec3) {
-        std::string res;
-        if (attr.isColor) {
-            res ="Color3Verifier";
-        }
-        else {
-            res = "DoubleVector3Verifier";
-        }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::Dvec4:
+        case Type::Vec4:
+            if (attr.isColor) {
+                res = "Color4Verifier";
+            }
+            else {
+                res = "DoubleVector4Verifier";
+            }
 
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
+            if (!attr.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            }
+            if (!attr.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            }
+            if (!attr.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attr.less);
+            }
+            if (!attr.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            }
+            if (!attr.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            }
+            if (!attr.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            }
+            if (!attr.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            }
+            return res;
+        case Type::DMat2x2: return "DoubleMatrix2x2Verifier";
+        case Type::DMat2x3: return "DoubleMatrix2x3Verifier";
+        case Type::DMat2x4: return "DoubleMatrix2x4Verifier";
+        case Type::DMat3x2: return "DoubleMatrix3x2Verifier";
+        case Type::DMat3x3: return "DoubleMatrix3x3Verifier";
+        case Type::DMat3x4: return "DoubleMatrix3x4Verifier";
+        case Type::DMat4x2: return "DoubleMatrix4x2Verifier";
+        case Type::DMat4x3: return "DoubleMatrix4x3Verifier";
+        case Type::DMat4x4: return "DoubleMatrix4x4Verifier";
+        case Type::Mat2x2: return "DoubleMatrix2x2Verifier";
+        case Type::Mat2x3: return "DoubleMatrix2x3Verifier";
+        case Type::Mat2x4: return "DoubleMatrix2x4Verifier";
+        case Type::Mat3x2: return "DoubleMatrix3x2Verifier";
+        case Type::Mat3x3: return "DoubleMatrix3x3Verifier";
+        case Type::Mat3x4: return "DoubleMatrix3x4Verifier";
+        case Type::Mat4x2: return "DoubleMatrix4x2Verifier";
+        case Type::Mat4x3: return "DoubleMatrix4x3Verifier";
+        case Type::Mat4x4: return "DoubleMatrix4x4Verifier";
+        case Type::Dictionary:
+            if (attr.reference.empty()) {
+                return "TableVerifier";
+            }
+            else {
+                return fmt::format("ReferencingVerifier({})", attr.reference);
+            }
+        default: throw std::logic_error("Missing case label");
     }
-    else if (type == Type::Dvec4 || type == Type::Vec4) {
-        std::string res;
-        if (attr.isColor) {
-            res = "Color4Verifier";
-        }
-        else {
-            res = "DoubleVector4Verifier";
-        }
-
-        if (!attr.inrange.empty()) {
-            res = addQualifier(res, "InRangeVerifier", attr.inrange);
-        }
-        if (!attr.notinrange.empty()) {
-            res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
-        }
-        if (!attr.less.empty()) {
-            res = addQualifier(res, "LessVerifier", attr.less);
-        }
-        if (!attr.lessequal.empty()) {
-            res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
-        }
-        if (!attr.greater.empty()) {
-            res = addQualifier(res, "GreaterVerifier", attr.greater);
-        }
-        if (!attr.greaterequal.empty()) {
-            res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
-        }
-        if (!attr.unequal.empty()) {
-            res = addQualifier(res, "UnequalVerifier", attr.unequal);
-        }
-        return res;
-    }
-    else if (type == Type::DMat2x2) { return "DoubleMatrix2x2Verifier"; }
-    else if (type == Type::DMat2x3) { return "DoubleMatrix2x3Verifier"; }
-    else if (type == Type::DMat2x4) { return "DoubleMatrix2x4Verifier"; }
-    else if (type == Type::DMat3x2) { return "DoubleMatrix3x2Verifier"; }
-    else if (type == Type::DMat3x3) { return "DoubleMatrix3x3Verifier"; }
-    else if (type == Type::DMat3x4) { return "DoubleMatrix3x4Verifier"; }
-    else if (type == Type::DMat4x2) { return "DoubleMatrix4x2Verifier"; }
-    else if (type == Type::DMat4x3) { return "DoubleMatrix4x3Verifier"; }
-    else if (type == Type::DMat4x4) { return "DoubleMatrix4x4Verifier"; }
-    else if (type == Type::Mat2x2) { return "DoubleMatrix2x2Verifier"; }
-    else if (type == Type::Mat2x3) { return "DoubleMatrix2x3Verifier"; }
-    else if (type == Type::Mat2x4) { return "DoubleMatrix2x4Verifier"; }
-    else if (type == Type::Mat3x2) { return "DoubleMatrix3x2Verifier"; }
-    else if (type == Type::Mat3x3) { return "DoubleMatrix3x3Verifier"; }
-    else if (type == Type::Mat3x4) { return "DoubleMatrix3x4Verifier"; }
-    else if (type == Type::Mat4x2) { return "DoubleMatrix4x2Verifier"; }
-    else if (type == Type::Mat4x3) { return "DoubleMatrix4x3Verifier"; }
-    else if (type == Type::Mat4x4) { return "DoubleMatrix4x4Verifier"; }
-    else if (type == Type::Dictionary) {
-        if (attr.reference.empty()) {
-            return "TableVerifier";
-        }
-        else {
-            return fmt::format("ReferencingVerifier({})", attr.reference);
-        }
-    }
-
-    throw std::logic_error("Missing case label");
 }

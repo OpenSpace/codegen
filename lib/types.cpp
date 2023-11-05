@@ -106,9 +106,9 @@ bool VariableType::containsCustomType() const {
             return static_cast<const VectorType*>(this)->type->containsCustomType();
         case Tag::CustomType:
             return true;
+        default:
+            throw std::logic_error("Missing case label");
     }
-
-    throw std::logic_error("Missing case label");
 }
 
 bool operator==(const VariableType& lhs, const VariableType& rhs) {
@@ -146,8 +146,9 @@ bool operator==(const VariableType& lhs, const VariableType& rhs) {
         case Tag::CustomType:
             return static_cast<const CustomType&>(lhs) ==
                    static_cast<const CustomType&>(rhs);
+        default:
+            throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case exception");
 }
 
 bool operator==(const BasicType& lhs, const BasicType& rhs) {
@@ -528,9 +529,8 @@ std::string generateTypename(BasicType::Type type) {
         case BasicType::Type::DMat4x3: return "glm::dmat4x3";
         case BasicType::Type::DMat4x4: return "glm::dmat4x4";
         case BasicType::Type::Dictionary: return "ghoul::Dictionary";
+        default:                       throw std::logic_error("Missing case label");
     }
-
-    throw std::logic_error("Missing case label");
 }
 
 std::string generateLuaExtractionTypename(BasicType::Type type) {
@@ -573,9 +573,8 @@ std::string generateDescriptiveTypename(BasicType::Type type) {
         case BasicType::Type::DMat4x3:    return "mat4x3";
         case BasicType::Type::DMat4x4:    return "mat4x4";
         case BasicType::Type::Dictionary: return "Table";
+        default:                          throw std::logic_error("Missing case label");
     }
-
-    throw std::logic_error("Missing case label");
 }
 
 std::string generateTypename(const BasicType* type) {
@@ -755,10 +754,10 @@ std::string generateTypename(const CustomType* type, bool fullyQualified) {
 std::string generateLuaExtractionTypename(const CustomType* type) {
     // Yo dawg, I heard you like types
     switch (type->type->type) {
-        case StackElement::Type::Enum: return "std::string";
+        case StackElement::Type::Enum:   return "std::string";
         case StackElement::Type::Struct: return "ghoul::Dictionary";
+        default:                         throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case label");
 }
 
 std::string generateDescriptiveTypename(const CustomType* type) {
@@ -788,8 +787,9 @@ std::string generateTypename(const VariableType* type, bool fullyQualified) {
             return generateTypename(static_cast<const VectorType*>(type), fq);
         case VariableType::Tag::CustomType:
             return generateTypename(static_cast<const CustomType*>(type), fq);
+        default:
+            throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case label");
 }
 
 std::string generateLuaExtractionTypename(const VariableType* type) {
@@ -814,8 +814,9 @@ std::string generateLuaExtractionTypename(const VariableType* type) {
             return generateLuaExtractionTypename(static_cast<const VectorType*>(type));
         case VariableType::Tag::CustomType:
             return generateLuaExtractionTypename(static_cast<const CustomType*>(type));
+        default:
+            throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case label");
 }
 
 std::string generateDescriptiveTypename(const VariableType* type) {
@@ -840,6 +841,7 @@ std::string generateDescriptiveTypename(const VariableType* type) {
             return generateDescriptiveTypename(static_cast<const VectorType*>(type));
         case VariableType::Tag::CustomType:
             return generateDescriptiveTypename(static_cast<const CustomType*>(type));
+        default:
+            throw std::logic_error("Missing case label");
     }
-    throw std::logic_error("Missing case label");
 }

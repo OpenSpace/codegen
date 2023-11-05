@@ -885,8 +885,6 @@ std::string generateLuaFunction(Function* f) {
                     result += "            return 1;\n";
                     break;
                 }
-                default:
-                    throw std::logic_error("Missing case label");
             }
         }
         else {
