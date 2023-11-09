@@ -107,27 +107,6 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter", "[Parsing][St
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/Structs/Struct:  Comment Ignored", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(// Test documentation
-struct [[codegen::Dictionary(Name)]] Parameters {
-};)";
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    Struct* s = code.structs.front();
-
-    REQUIRE(s);
-    CHECK(s->name == "Parameters");
-    CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
-    CHECK(s->comment.empty());
-    CHECK(s->children.empty());
-    CHECK(s->variables.empty());
-
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
 TEST_CASE("Parsing/Structs/Struct:  Substruct", "[Parsing][Structs]") {
     constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 struct A {

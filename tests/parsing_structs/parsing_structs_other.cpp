@@ -218,3 +218,38 @@ struct [[codegen::Dictionary(P4)]] Param4 {
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing: Struct Comments", "[Parsing][Misc]") {
+    constexpr const char Source[] = R"(
+// Some documentation for the first struct
+struct [[codegen::Dictionary(P1)]] Param1 {
+    int abc;
+};
+
+// Some documentation for the second struct
+struct [[codegen::Dictionary(P2)]] Param2 {
+    int abc;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 2);
+
+    {
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "abc");
+
+        CHECK(s->comment == "Some documentation for the first struct");
+    }
+
+    {
+        Struct* s = code.structs[1];
+        REQUIRE(s);
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "abc");
+
+        CHECK(s->comment == "Some documentation for the second struct");
+    }
+}

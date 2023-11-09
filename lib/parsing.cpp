@@ -82,6 +82,120 @@ void escapeString(std::string& line) {
     }
 }
 
+// The comment before an item is optional and we don't want to accidentally pick up some
+// other documentation higher up in the file, so we have to be a bit conservative with
+// what we try to pick up
+std::string precedingComment(std::string_view code, size_t cursor) {
+    using namespace std::literals;
+
+    //
+    // First check for block comments
+    //
+    size_t endBlockComment = code.rfind("*/", cursor);
+    bool hasValidBlockComment = endBlockComment != std::string_view::npos;
+    endBlockComment += "/*"sv.size();
+
+    // Check that there are only empty character between the end of the block and the
+    // beginning of the function
+    size_t firstRealCharAfterBlock = code.find_first_not_of(" \n", endBlockComment);
+    hasValidBlockComment &= (firstRealCharAfterBlock >= cursor);
+
+
+    //
+    // Then check for regular // comments
+    //
+    size_t endRegularComment = code.rfind("//", cursor);
+    bool hasValidRegularComment = endRegularComment != std::string_view::npos;
+    endRegularComment += "//"sv.size();
+
+    // Check that there are only empty character between the end of the block and the
+    // beginning of the function
+    size_t regularCursor = code.find('\n', endRegularComment);
+    size_t firstRealCharAfterRegular = code.find_first_not_of(" \n", regularCursor);
+    hasValidRegularComment &= (firstRealCharAfterRegular >= cursor);
+
+    // There should only be at most one of them
+    assert(!(hasValidBlockComment && hasValidRegularComment));
+
+
+    std::vector<std::string_view> lines;
+    if (hasValidBlockComment) {
+        // Find the beginning /* for that comment
+        size_t beginBlockComment = code.rfind("/*", endBlockComment);
+
+        std::string_view cmnt = code.substr(
+            beginBlockComment,
+            endBlockComment - beginBlockComment
+        );
+        cmnt.remove_prefix("/*"sv.size());
+        cmnt.remove_suffix("*/"sv.size());
+
+        size_t c = 0;
+        size_t p = cmnt.find('\n', 1);
+        while (p != std::string_view::npos) {
+            std::string_view line = cmnt.substr(c, p - c);
+            std::string_view stripLine = strip(line);
+
+            if (stripLine[0] == '*') {
+                stripLine.remove_prefix(1);
+            }
+
+            stripLine = strip(stripLine);
+            lines.push_back(stripLine);
+            c = p;
+            p = cmnt.find('\n', c + 1);
+        }
+    }
+
+    if (hasValidRegularComment) {
+        // Extract lines backwards until we find the first non-commented line and then
+        // abort
+        size_t c = code.find('\n', endRegularComment);
+        assert(c != std::string_view::npos);
+        while (true) {
+            size_t lineBegin = code.rfind('\n', c - 1);
+
+            if (lineBegin == std::string_view::npos) {
+                // If we couldn't find a newline, we have reached the beginning of the
+                // code block
+                lineBegin = 0;
+            }
+
+            std::string_view line = code.substr(lineBegin, c - lineBegin);
+            std::string_view stripLine = strip(line);
+            if (stripLine.substr(0, 2) != "//") {
+                // The line did not start with a comment, therefore we have reached
+                // the end of the comment block
+                break;
+            }
+
+            stripLine.remove_prefix("//"sv.size());
+            stripLine = strip(stripLine);
+            lines.push_back(stripLine);
+            c = lineBegin;
+        }
+
+        std::reverse(lines.begin(), lines.end());
+    }
+
+    std::string comment = std::accumulate(
+        lines.cbegin(),
+        lines.cend(),
+        std::string(),
+        [](std::string lhs, std::string_view rhs) {
+            return rhs.empty() ? lhs : lhs + std::string(strip(rhs)) + ' ';
+        }
+    );
+    // There is an empty character at the end which we should remove
+    comment = comment.substr(0, comment.size() - 1);
+
+    // People might be using \ in the documentation which we should escape. Similarly
+    // we want to replace " with \"
+    escapeString(comment);
+
+    return comment;
+}
+
 struct ParseResult {
     std::string_view key;
     std::string_view value;
@@ -606,6 +720,8 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         ));
     }
 
+    std::string comment = precedingComment(code, begin);
+
     Struct* rootStruct = nullptr;
     std::vector<StackElement*> stack;
     std::string structBuffer;
@@ -628,8 +744,8 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         // If the buffer is filled, then we are in a continuation of a variable definition
         if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
-                std::string_view comment = parseCommentLine(line);
-                commentBuffer += comment;
+                std::string_view cmnt = parseCommentLine(line);
+                commentBuffer += cmnt;
                 commentBuffer += " ";
                 continue;
             }
@@ -823,6 +939,11 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     assert(rootStruct);
     assert(!rootStruct->attributes.dictionary.empty());
+
+    if (!comment.empty()) {
+        rootStruct->comment = std::move(comment);
+    }
+
     return rootStruct;
 }
 
@@ -998,114 +1119,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
     Function* f = new Function;
 
-    // Let's see if there is a documentation entry just preceding this function. It is
-    // optional and we don't want to accidentally pick up some other documentation higher
-    // up in the file, so we have to be a bit conservative with what we try to pick up
-    {
-        using namespace std::literals;
-
-        size_t b = begin - AttributeLuaWrap.size();
-
-
-        //
-        // First check for block comments
-        //
-        size_t endBlockComment = code.rfind("*/", b);
-        bool hasValidBlockComment = endBlockComment != std::string_view::npos;
-        endBlockComment += "/*"sv.size();
-
-        // Check that there are only empty character between the end of the block and the
-        // beginning of the function
-        size_t firstRealCharAfterBlock = code.find_first_not_of(" \n", endBlockComment);
-        hasValidBlockComment &= (firstRealCharAfterBlock >= b);
-
-
-        //
-        // Then check for regular // comments
-        //
-        size_t endRegularComment = code.rfind("//", b);
-        bool hasValidRegularComment = endRegularComment != std::string_view::npos;
-        endRegularComment += "//"sv.size();
-
-        // Check that there are only empty character between the end of the block and the
-        // beginning of the function
-        size_t regularCursor = code.find('\n', endRegularComment);
-        size_t firstRealCharAfterRegular = code.find_first_not_of(" \n", regularCursor);
-        hasValidRegularComment &= (firstRealCharAfterRegular >= b);
-
-        // There should only be at most one of them
-        assert(!(hasValidBlockComment && hasValidRegularComment));
-
-
-        std::vector<std::string_view> lines;
-        if (hasValidBlockComment) {
-            // Find the beginning /* for that comment
-            size_t beginBlockComment = code.rfind("/*", endBlockComment);
-
-            std::string_view cmnt = code.substr(
-                beginBlockComment,
-                endBlockComment - beginBlockComment
-            );
-            cmnt.remove_prefix("/*"sv.size());
-            cmnt.remove_suffix("*/"sv.size());
-
-            size_t c = 0;
-            size_t p = cmnt.find('\n', 1);
-            while (p != std::string_view::npos) {
-                std::string_view line = cmnt.substr(c, p - c);
-                std::string_view stripLine = strip(line);
-
-                if (stripLine[0] == '*') {
-                    stripLine.remove_prefix(1);
-                }
-
-                stripLine = strip(stripLine);
-                lines.push_back(stripLine);
-                c = p;
-                p = cmnt.find('\n', c + 1);
-            }
-        }
-
-        if (hasValidRegularComment) {
-            // Extract lines backwards until we find the first non-commented line and then
-            // abort
-            size_t cursor = code.find('\n', endRegularComment);
-            assert(cursor != std::string_view::npos);
-            while (true) {
-                size_t lineBegin = code.rfind('\n', cursor - 1);
-
-                std::string_view line = code.substr(lineBegin, cursor - lineBegin);
-                std::string_view stripLine = strip(line);
-                if (stripLine.substr(0, 2) != "//") {
-                    // The line did not start with a comment, therefore we have reached
-                    // the end of the comment block
-                    break;
-                }
-
-                stripLine.remove_prefix("//"sv.size());
-                stripLine = strip(stripLine);
-                lines.push_back(stripLine);
-                cursor = lineBegin;
-            }
-
-            std::reverse(lines.begin(), lines.end());
-        }
-
-        f->documentation = std::accumulate(
-            lines.cbegin(),
-            lines.cend(),
-            std::string(),
-            [](std::string lhs, std::string_view rhs) {
-                return rhs.empty() ? lhs : lhs + std::string(strip(rhs)) + ' ';
-            }
-        );
-        // There is an empty character at the end which we should remove
-        f->documentation = f->documentation.substr(0, f->documentation.size() - 1);
-
-        // People might be using \ in the documentation which we should escape. Similarly
-        // we want to replace " with \"
-        escapeString(f->documentation);
-    }
+    // Let's see if there is a documentation entry just preceding this function. 
+    f->documentation = precedingComment(code, begin - AttributeLuaWrap.size());
 
     // Check if there are any arguments to the luawrap attribute, which would be the
     // custom name that we should use
