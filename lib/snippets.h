@@ -112,7 +112,12 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 )";
 
     constexpr std::string_view DocumentationEpilog = R"(
-    openspace::documentation::Documentation d = {{ "{0}", std::move(id), std::move(codegen_{1}->documentations) }};
+    openspace::documentation::Documentation d = {{
+        .name = "{0}",
+        .id = std::move(id),
+        .description = "{2}",
+        .entries = std::move(codegen_{1}->documentations)
+    }};
 
     // Move the entries from the parent doc into this one
     d.entries.insert(d.entries.begin(), parentDoc.entries.begin(), parentDoc.entries.end());

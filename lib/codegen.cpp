@@ -585,7 +585,10 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
         }
 
         result += writeStructDocumentation(s);
-        result += fmt::format(DocumentationEpilog, s->attributes.dictionary, s->name);
+        result += fmt::format(
+            DocumentationEpilog,
+            s->attributes.dictionary, s->name, s->comment
+        );
     }
 
     result += "namespace internal {\n\n";
