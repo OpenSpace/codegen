@@ -115,7 +115,7 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
     openspace::documentation::Documentation d = {{
         .name = "{0}",
         .id = std::move(id),
-        .description = "{2}",
+        .description = R"[({2})[",
         .entries = std::move(codegen_{1}->documentations)
     }};
 

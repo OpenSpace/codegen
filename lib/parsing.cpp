@@ -132,6 +132,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
         size_t c = 0;
         size_t p = cmnt.find('\n', 1);
+        bool isFirst = true;
         while (p != std::string_view::npos) {
             std::string_view line = cmnt.substr(c, p - c);
             std::string_view stripLine = strip(line);
@@ -140,10 +141,19 @@ std::string precedingComment(std::string_view code, size_t cursor) {
                 stripLine.remove_prefix(1);
             }
 
-            stripLine = strip(stripLine);
-            lines.push_back(stripLine);
+            if (!isFirst && isEmptyLine(stripLine)) {
+                // No words on this line => add a new empty line to the comment
+                lines.push_back("\n\n");
+            }
+            else {
+                stripLine = strip(stripLine);
+                lines.push_back(stripLine);
+            }
+
             c = p;
             p = cmnt.find('\n', c + 1);
+
+            isFirst = false;
         }
     }
 
@@ -170,8 +180,15 @@ std::string precedingComment(std::string_view code, size_t cursor) {
             }
 
             stripLine.remove_prefix("//"sv.size());
-            stripLine = strip(stripLine);
-            lines.push_back(stripLine);
+
+            if (isEmptyLine(stripLine)) {
+                // No words on this line => add a new empty line to the comment
+                lines.push_back("\n\n");
+            }
+            else {
+                stripLine = strip(stripLine);
+                lines.push_back(stripLine);
+            }
             c = lineBegin;
         }
 
@@ -183,7 +200,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
         lines.cend(),
         std::string(),
         [](std::string lhs, std::string_view rhs) {
-            return rhs.empty() ? lhs : lhs + std::string(strip(rhs)) + ' ';
+            return rhs.empty() ? lhs : lhs + std::string(rhs) + ' ';
         }
     );
     // There is an empty character at the end which we should remove

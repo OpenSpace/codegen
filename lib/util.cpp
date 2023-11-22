@@ -29,6 +29,11 @@
 #include <cassert>
 #include <functional>
 
+bool isEmptyLine(std::string_view sv) {
+    size_t b = sv.find_first_not_of(" \t\n");
+    return b == std::string_view::npos;
+}
+
 std::string_view strip(std::string_view sv) {
     size_t b = sv.find_first_not_of(" \t\n");
     if (b != std::string_view::npos) {

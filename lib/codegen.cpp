@@ -947,7 +947,7 @@ std::string generateLuaFunction(Function* f) {
     );
 
     // Documentation
-    result += "    \"" + f->documentation + "\",\n";
+    result += fmt::format(R"(    R"[({})[")", f->documentation) + ",\n";
 
     // Source location
     if (f->sourceLocation.file.empty()) {

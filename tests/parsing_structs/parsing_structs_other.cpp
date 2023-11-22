@@ -253,3 +253,58 @@ struct [[codegen::Dictionary(P2)]] Param2 {
         CHECK(s->comment == "Some documentation for the second struct");
     }
 }
+
+TEST_CASE("Parsing: Struct Comments With Multiple Paragraphs", "[Parsing][Misc]") {
+    constexpr const char Source[] = R"(
+// Some brief documentation for the struct
+//
+// Some more details for the struct
+struct [[codegen::Dictionary(P)]] Param {
+    int abc;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+
+    {
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "abc");
+
+        std::string expected = R"(Some brief documentation for the struct
+
+Some more details for the struct)";
+        CHECK(s->comment == expected);
+    }
+}
+
+TEST_CASE("Parsing: Struct Comments With Multiple Paragraphs - Block comments", "[Parsing][Misc]") {
+    constexpr const char Source[] = R"(
+/*
+ * Some brief documentation for the struct.
+ *
+ * Some more details for the struct
+ */
+
+struct [[codegen::Dictionary(P)]] Param {
+    int abc;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+
+    {
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+        REQUIRE(s->variables.size() == 1);
+        CHECK(s->variables[0]->name == "abc");
+
+        std::string expected = R"(Some brief documentation for the struct
+
+Some more details for the struct)";
+        CHECK(s->comment == expected);
+    }
+}
