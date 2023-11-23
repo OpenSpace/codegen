@@ -302,7 +302,7 @@ struct [[codegen::Dictionary(P)]] Param {
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "abc");
 
-        std::string expected = R"(Some brief documentation for the struct
+        std::string expected = R"(Some brief documentation for the struct.
 
 Some more details for the struct)";
         CHECK(s->comment == expected);
