@@ -28,6 +28,7 @@
 #include <string_view>
 #include <vector>
 
+[[nodiscard]] bool isEmptyLine(std::string_view sv);
 [[nodiscard]] std::string_view strip(std::string_view sv);
 [[nodiscard]] bool startsWith(std::string_view lhs, std::string_view rhs);
 [[nodiscard]] std::vector<std::string_view> extractTemplateTypeList(std::string_view types);
