@@ -40,10 +40,29 @@ namespace {
     [[codegen::luawrap]] double foo(int arg) {
         return arg * 2.0;
     }
+
+    // Some example documentation
+    // that covers a few lines.
+    // And another one for good measure
+    [[codegen::luawrap]] void foo2() {
+    }
+
+    //
+    [[codegen::luawrap]] void foo3() {
+    }
+
+    // 
+    [[codegen::luawrap]] void foo4() {
+    }
+
+    //
+    //
+    [[codegen::luawrap]] void foo5() {
+    }
 #include "execution_luawrapper_comments_codegen.cpp"
 } // namespace
 
-TEST_CASE("Execution/LuaWrapper/Comments:  Simple", "[Execution][LuaWrapper]") {
+TEST_CASE("Execution/LuaWrapper/Comments:  Direct Comment/1", "[Execution][LuaWrapper]") {
     CHECK(codegen::lua::Foo.name == "foo");
     CHECK(codegen::lua::Foo.function);
     CHECK(
@@ -51,4 +70,32 @@ TEST_CASE("Execution/LuaWrapper/Comments:  Simple", "[Execution][LuaWrapper]") {
         "Some example documentation that covers a few lines. "
         "And another one for good measure"
     );
+}
+
+TEST_CASE("Execution/LuaWrapper/Comments:  Direct Comment/2", "[Execution][LuaWrapper]") {
+    CHECK(codegen::lua::Foo2.name == "foo2");
+    CHECK(codegen::lua::Foo2.function);
+    CHECK(
+        codegen::lua::Foo2.helpText ==
+        "Some example documentation that covers a few lines. "
+        "And another one for good measure"
+    );
+}
+
+TEST_CASE("Execution/LuaWrapper/Comments:  Empty Comment/1", "[Execution][LuaWrapper]") {
+    CHECK(codegen::lua::Foo3.name == "foo3");
+    CHECK(codegen::lua::Foo3.function);
+    CHECK(codegen::lua::Foo3.helpText.empty());
+}
+
+TEST_CASE("Execution/LuaWrapper/Comments:  Empty Comment/2", "[Execution][LuaWrapper]") {
+    CHECK(codegen::lua::Foo4.name == "foo4");
+    CHECK(codegen::lua::Foo4.function);
+    CHECK(codegen::lua::Foo4.helpText.empty());
+}
+
+TEST_CASE("Execution/LuaWrapper/Comments:  Empty Comment/3", "[Execution][LuaWrapper]") {
+    CHECK(codegen::lua::Foo5.name == "foo5");
+    CHECK(codegen::lua::Foo5.function);
+    CHECK(codegen::lua::Foo5.helpText.empty());
 }

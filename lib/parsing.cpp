@@ -195,6 +195,16 @@ std::string precedingComment(std::string_view code, size_t cursor) {
         std::reverse(lines.begin(), lines.end());
     }
 
+    const bool onlyEmpty = std::all_of(
+        lines.begin(),
+        lines.end(),
+        [](std::string_view v) { return v == "\n\n"; }
+    );
+    if (onlyEmpty) {
+        // If this is true, we encountered an empty comment block that we want to ignore
+        return "";
+    }
+
     std::string comment = std::accumulate(
         lines.cbegin(),
         lines.cend(),

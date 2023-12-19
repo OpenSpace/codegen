@@ -170,3 +170,75 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWra
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+// Only // in the line
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    //
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation.empty());
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+// The line has a space after the //
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/2", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    // 
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation.empty());
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper]") {
+    constexpr const char Source[] = R"(
+    //
+    //
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 0);
+    CHECK(code.enums.size() == 0);
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation.empty());
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.size() == 0);
+
+    std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
