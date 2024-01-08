@@ -207,6 +207,15 @@ else ()
   target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
 endif ()
 
+target_precompile_headers(codegentest PRIVATE
+  <openspace/documentation/documentation.h>
+  <openspace/documentation/verifier.h>
+  [["ghoul/fmt.h"]]
+  [["ghoul/glm.h"]]
+  <catch2/catch_test_macros.hpp>
+)
+
+
 if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
   # wanted by CEF
   set(PROJECT_ARCH "x86_64")
