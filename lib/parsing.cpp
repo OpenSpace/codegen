@@ -38,6 +38,7 @@ namespace {
     constexpr std::string_view AttributeStringify = "[[codegen::stringify";
     constexpr std::string_view AttributeMap = "[[codegen::map";
     constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap";
+    constexpr std::string_view AttributeArrayify = "[[codegen::arrayify";
 } // namespace
 
 /**
@@ -459,6 +460,9 @@ Enum* parseEnum(std::string_view line) {
             if (a.key == attributes::Stringify) {
                 e->attributes.stringify = true;
             }
+            if (a.key == attributes::Arrayify) {
+                e->attributes.arrayify = true;
+            }
         }
         cursor = endAttr + 1;
     }
@@ -651,7 +655,8 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     const size_t locEnum = code.find(AttributeEnum);
     const size_t locStringify = code.find(AttributeStringify);
     const size_t locMap = code.find(AttributeMap);
-    const size_t loc = std::min({ locEnum, locStringify, locMap });
+    const size_t locArray = code.find(AttributeArrayify);
+    const size_t loc = std::min({ locEnum, locStringify, locMap, locArray });
     if (loc == std::string_view::npos) {
         // We didn't find the attribute
         return { std::string_view::npos, std::string_view::npos };

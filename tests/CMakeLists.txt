@@ -29,6 +29,7 @@ target_sources(
   PRIVATE
     main.cpp
 
+    execution_enums/execution_enums_arrayify.cpp
     execution_enums/execution_enums_basic.cpp
     execution_enums/execution_enums_keys.cpp
     execution_enums/execution_enums_mapping.cpp
@@ -94,6 +95,7 @@ target_sources(
     execution_structs/execution_structs_substructs.cpp
     execution_structs/execution_structs_variant.cpp
 
+    parsing_enums/parsing_enums_arrayify.cpp
     parsing_enums/parsing_enums_basic.cpp
     parsing_enums/parsing_enums_keys.cpp
     parsing_enums/parsing_enums_mapping.cpp

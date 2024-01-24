@@ -236,3 +236,27 @@ template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
 
     return result;
 }
+
+std::string enumArrayify(Enum* e) {
+    assert(e);
+    assert(e->attributes.arrayify);
+    assert(!e->elements.empty());
+
+    std::string fullyQualifiedName = fqn(e, "::");
+    std::string result = fmt::format(R"(
+template<> [[maybe_unused]] std::vector<{0}> arrayify() {{
+    return {{
+)", fullyQualifiedName);
+
+    for (EnumElement* elem : e->elements) {
+        result += fmt::format("        {0}::{1},\n", fullyQualifiedName, elem->name);
+    }
+
+    // Remove the terminating ,  We first remove the \n, but have to put it back after
+    result.pop_back();
+    result.pop_back();
+    result += '\n';
+    result += "    };\n}";
+
+    return result;
+}

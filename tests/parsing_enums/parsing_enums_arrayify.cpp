@@ -28,36 +28,27 @@
 #include "parsing.h"
 #include "types.h"
 
-TEST_CASE("Parsing/Enums/Multiple:  Multiple", "[Parsing][Enums]") {
+TEST_CASE("Parsing/Enums/Arrayify:  Basic", "[Parsing][Enums]") {
     constexpr const char Source[] = R"(
-    enum class [[codegen::stringify()]] Enum1 {
+    enum class [[codegen::arrayify()]] Enum1 {
         Value1,
         value2,
         Value3
-    };
-
-    enum class [[codegen::stringify()]] Enum2 {
-        Val4,
-        Val5
-    };
-
-    enum class [[codegen::stringify()]] Enum3 {
-        Val6
     };
 )";
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 0);
     CHECK(code.luaWrapperFunctions.size() == 0);
-    REQUIRE(code.enums.size() == 3);
+    REQUIRE(code.enums.size() == 1);
 
     {
         Enum* e = code.enums[0];
         REQUIRE(e);
         CHECK(e->parent == nullptr);
         CHECK(e->attributes.mappedTo.empty());
-        CHECK(e->attributes.stringify);
-        CHECK(!e->attributes.arrayify);
+        CHECK(!e->attributes.stringify);
+        CHECK(e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         {
             EnumElement* ee = e->elements[0];
@@ -73,40 +64,6 @@ TEST_CASE("Parsing/Enums/Multiple:  Multiple", "[Parsing][Enums]") {
             EnumElement* ee = e->elements[2];
             REQUIRE(ee);
             CHECK(ee->name == "Value3");
-        }
-    }
-
-    {
-        Enum* e = code.enums[1];
-        REQUIRE(e);
-        CHECK(e->parent == nullptr);
-        CHECK(e->attributes.mappedTo.empty());
-        CHECK(e->attributes.stringify);
-        CHECK(!e->attributes.arrayify);
-        REQUIRE(e->elements.size() == 2);
-        {
-            EnumElement* ee = e->elements[0];
-            REQUIRE(ee);
-            CHECK(ee->name == "Val4");
-        }
-        {
-            EnumElement* ee = e->elements[1];
-            REQUIRE(ee);
-            CHECK(ee->name == "Val5");
-        }
-    }
-
-    {
-        Enum* e = code.enums[2];
-        CHECK(e->parent == nullptr);
-        CHECK(e->attributes.mappedTo.empty());
-        CHECK(e->attributes.stringify);
-        CHECK(!e->attributes.arrayify);
-        REQUIRE(e->elements.size() == 1);
-        {
-            EnumElement* ee = e->elements[0];
-            REQUIRE(ee);
-            CHECK(ee->name == "Val6");
         }
     }
 

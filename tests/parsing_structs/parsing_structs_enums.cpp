@@ -183,6 +183,12 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         Value3,
         Value4
     };
+
+    enum class [[codegen::arrayify()]] P {
+        Value1,
+        value2,
+        Value3
+    };
 };
 )";
 
@@ -193,7 +199,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
-    REQUIRE(s->children.size() == 15);
+    REQUIRE(s->children.size() == 16);
     {
         StackElement* se = s->children[0];
         REQUIRE(se);
@@ -202,6 +208,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "A");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -216,6 +223,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "B");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -230,6 +238,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "C");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -244,6 +253,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "D");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "VeryLongValueThatIsSoLongWithAnEvenLongerKeyWhichNeedsToBe");
         CHECK(e->elements[1]->name == "ValueB");
@@ -258,6 +268,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "E");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "value2");
@@ -272,6 +283,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "F");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -286,6 +298,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "G");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -300,6 +313,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "H");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -314,6 +328,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "I");
         CHECK(e->attributes.mappedTo.empty());
         CHECK(e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -328,6 +343,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "J");
         CHECK(e->attributes.mappedTo == "Base");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -342,6 +358,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "K");
         CHECK(e->attributes.mappedTo == "Base");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -356,6 +373,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "L");
         CHECK(e->attributes.mappedTo == "Base");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -370,6 +388,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "M");
         CHECK(e->attributes.mappedTo == "Base");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -384,6 +403,7 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "N");
         CHECK(e->attributes.mappedTo == "Base");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 3);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
@@ -398,11 +418,27 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->name == "O2");
         CHECK(e->attributes.mappedTo == "abc::def::ghi::OtherBase");
         CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
         REQUIRE(e->elements.size() == 4);
         CHECK(e->elements[0]->name == "Value1");
         CHECK(e->elements[1]->name == "Value2");
         CHECK(e->elements[2]->name == "Value3");
         CHECK(e->elements[3]->name == "Value4");
+    }
+
+    {
+        StackElement* se = s->children[15];
+        REQUIRE(se);
+        REQUIRE(se->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(se);
+        CHECK(e->name == "P");
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
+        CHECK(e->attributes.arrayify);
+        REQUIRE(e->elements.size() == 3);
+        CHECK(e->elements[0]->name == "Value1");
+        CHECK(e->elements[1]->name == "value2");
+        CHECK(e->elements[2]->name == "Value3");
     }
 
     std::string r = generateResult(code);

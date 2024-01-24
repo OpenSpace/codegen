@@ -24,48 +24,49 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "codegen.h"
-#include "parsing.h"
-#include "types.h"
+#include <openspace/documentation/documentation.h>
+#include <openspace/documentation/verifier.h>
+#include <ghoul/misc/dictionary.h>
+#include <optional>
+#include <variant>
+#include <vector>
 
-TEST_CASE("Parsing/Enums/Keys:  Keys", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
-    enum class [[codegen::stringify()]] Enum1 {
-        Value1 [[codegen::key("KeyForValue1")]],
-        value2,
-        Value3 [[codegen::key("KeyForValue3")]]
+namespace {
+    enum class [[codegen::arrayify()]] Enum1 {
+        Val1
     };
-)";
 
-    Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    REQUIRE(code.enums.size() == 1);
-    Enum* e = code.enums.front();
-    REQUIRE(e);
+    enum class [[codegen::arrayify()]] Enum2 {
+        Val2,
+        Val3
+    };
 
-    CHECK(e->parent == nullptr);
-    CHECK(e->attributes.mappedTo.empty());
-    CHECK(e->attributes.stringify);
-    CHECK(!e->attributes.arrayify);
-    REQUIRE(e->elements.size() == 3);
-    {
-        EnumElement* ee = e->elements[0];
-        REQUIRE(ee);
-        CHECK(ee->name == "Value1");
-        CHECK(ee->attributes.key == "\"KeyForValue1\"");
-    }
-    {
-        EnumElement* ee = e->elements[1];
-        REQUIRE(ee);
-        CHECK(ee->name == "value2");
-    }
-    {
-        EnumElement* ee = e->elements[2];
-        REQUIRE(ee);
-        CHECK(ee->name == "Value3");
-        CHECK(ee->attributes.key == "\"KeyForValue3\"");
-    }
+    enum class [[codegen::arrayify()]] Enum3 {
+        Val4,
+        val5,
+        Val6
+    };
 
-    std::string r = generateResult(code);
-    CHECK(!r.empty());
+#include "execution_enums_arrayify_codegen.cpp"
+} // namespace
+
+TEST_CASE("Execution/Enums/Arrayify 1", "[Execution][Enums]") {
+    std::vector<Enum1> arr = codegen::arrayify<Enum1>();
+    REQUIRE(arr.size() == 1);
+    CHECK(arr[0] == Enum1::Val1);
+}
+
+TEST_CASE("Execution/Enums/Arrayify 2", "[Execution][Enums]") {
+    std::vector<Enum2> arr = codegen::arrayify<Enum2>();
+    REQUIRE(arr.size() == 2);
+    CHECK(arr[0] == Enum2::Val2);
+    CHECK(arr[1] == Enum2::Val3);
+}
+
+TEST_CASE("Execution/Enums/Arrayify 3", "[Execution][Enums]") {
+    std::vector<Enum3> arr = codegen::arrayify<Enum3>();
+    REQUIRE(arr.size() == 3);
+    CHECK(arr[0] == Enum3::Val4);
+    CHECK(arr[1] == Enum3::val5);
+    CHECK(arr[2] == Enum3::Val6);
 }

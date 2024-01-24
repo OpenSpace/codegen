@@ -47,6 +47,8 @@ namespace {
 
     constexpr std::string_view BakeEnumFallback = "template<typename T> [[maybe_unused]] T bake(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
 
+    constexpr std::string_view ArrayifyFallback = "template<typename T> [[maybe_unused]] std::vector<T> arrayify() { return {}; }";
+
     constexpr std::string_view BakeStructPreamble = R"(
 template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
@@ -237,5 +239,6 @@ std::string enumBakeFunctionForType(std::string_view type);
 std::string_view variantConversionFunctionForType(std::string_view type);
 
 std::string enumToEnumMapping(Enum* e);
+std::string enumArrayify(Enum* e);
 
 #endif // __OPENSPACE_CODEGEN___SNIPPETS___H__

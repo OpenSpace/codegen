@@ -72,6 +72,7 @@ namespace attributes {
 
     constexpr std::string_view Map = "map";
     constexpr std::string_view Stringify = "stringify";
+    constexpr std::string_view Arrayify = "arrayify";
 } // namespace attributes
 
 
@@ -258,6 +259,7 @@ struct Enum : public StackElement {
 
     struct Attributes {
         bool stringify = false;
+        bool arrayify = false;
         std::string mappedTo; // another FQ enum that values of this should be mapped to
     };
     Attributes attributes;

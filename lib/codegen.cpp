@@ -667,7 +667,9 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     return result;
 }
 
-std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback) {
+std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback,
+                               bool& hasWrittenArrayFallback)
+{
     std::vector<Enum*> enums = collectEnums(code);
 
     // If there are no enums, we can bail out
@@ -695,6 +697,15 @@ std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback
                 hasWrittenMappingFallback = true;
             }
             result += enumToEnumMapping(e);
+        }
+
+        if (e->attributes.arrayify) {
+            if (!hasWrittenArrayFallback) {
+                result += ArrayifyFallback;
+                result += '\n';
+                hasWrittenArrayFallback = true;
+            }
+            result += enumArrayify(e);
         }
     }
 
@@ -1030,12 +1041,17 @@ std::string generateResult(const Code& code) {
     std::string result = std::string(FileHeader);
 
     bool hasWrittenMappingFallback = false;
+    bool hasWrittenArrayifyFallback = false;
     if (!code.structs.empty()) {
         result += generateStructsResult(code, hasWrittenMappingFallback);
     }
 
     // We can't just check on empty code.enum since there might be enums hiding in structs
-    result += generateEnumResult(code, hasWrittenMappingFallback);
+    result += generateEnumResult(
+        code,
+        hasWrittenMappingFallback,
+        hasWrittenArrayifyFallback
+    );
 
     if (!code.luaWrapperFunctions.empty()) {
         result += generateLuaWrapperResult(code);
