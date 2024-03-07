@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 
     std::cout << "codegen";
     std::vector<std::string_view> srcs;
-    for (int i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; i++) {
         std::string_view src = argv[i];
         if (src == "--verbose") {
             isVerbose = true;

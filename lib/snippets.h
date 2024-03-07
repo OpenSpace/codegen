@@ -203,14 +203,14 @@ template<typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, st
     // from 1 - dict.size()  [1 because Lua for some strange reason wants to start at the
     // wrong number]
 
-    for (size_t i = 1; i <= dict.size(); ++i) {
+    for (size_t i = 1; i <= dict.size(); i++) {
         std::string k = std::to_string(i);
         if (!dict.hasKey(k)) {
             throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
         }
     }
 
-    for (size_t i = 1; i <= dict.size(); ++i) {
+    for (size_t i = 1; i <= dict.size(); i++) {
         T v;
         bakeTo(dict, std::to_string(i), &v);
         val->push_back(std::move(v));

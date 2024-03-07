@@ -144,8 +144,8 @@ namespace {
         }
 
         // Remove duplicates
-        for (int i = 0; i < static_cast<int>(res.size()); ++i) {
-            for (int j = i + 1; j < static_cast<int>(res.size()); ++j) {
+        for (int i = 0; i < static_cast<int>(res.size()); i++) {
+            for (int j = i + 1; j < static_cast<int>(res.size()); j++) {
                 if (*res[i] == *res[j]) {
                     res.erase(res.begin() + j);
                     i--;
@@ -1061,7 +1061,7 @@ std::string generateResult(const Code& code) {
 }
 
 std::string createClickableFileName(std::string filename) {
-    for (size_t i = 0; i < filename.size(); ++i) {
+    for (size_t i = 0; i < filename.size(); i++) {
         if (filename[i] == '\\') {
             filename.insert(filename.begin() + i, '\\');
             i += 1;

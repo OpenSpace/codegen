@@ -52,7 +52,7 @@ namespace {
             res.append(sep.data(), sep.size());
         }
         // Remove the last separator
-        for (size_t i = 0; i < sep.size(); ++i) {
+        for (size_t i = 0; i < sep.size(); i++) {
             res.pop_back();
         }
         return res;
@@ -172,7 +172,7 @@ bool operator==(const VariantType& lhs, const VariantType& rhs) {
         return false;
     }
 
-    for (size_t i = 0; i < lhs.types.size(); ++i) {
+    for (size_t i = 0; i < lhs.types.size(); i++) {
         if (!(*lhs.types[i] == *rhs.types[i])) {
             return false;
         }
@@ -185,7 +185,7 @@ bool operator==(const TupleType& lhs, const TupleType& rhs) {
         return false;
     }
 
-    for (size_t i = 0; i < lhs.types.size(); ++i) {
+    for (size_t i = 0; i < lhs.types.size(); i++) {
         if (!(*lhs.types[i] == *rhs.types[i])) {
             return false;
         }
