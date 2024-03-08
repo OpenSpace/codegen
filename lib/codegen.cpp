@@ -1103,7 +1103,7 @@ Result handleFile(std::filesystem::path path) {
     }
 
     if (PreventFileChange && shouldWriteFile) {
-        throw CodegenError(fmt::format("File {} changed", path.filename().string()));
+        throw CodegenError(fmt::format("File '{}' changed", path.filename().string()));
     }
 
     std::filesystem::path debugDest = destination;
