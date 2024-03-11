@@ -448,9 +448,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4 optional", "[Parsing][LuaWrapper]")
     CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::OptionalType);
-    auto* ot = static_cast<OptionalType*>(rt);
+    OptionalType* ot = static_cast<OptionalType*>(rt);
     REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(ot->type);
+    BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Dvec4);
 
     std::string r = generateResult(code);
@@ -476,9 +476,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dvec4 vector", "[Parsing][LuaWrapper]") {
     CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::VectorType);
-    auto* vt = static_cast<VectorType*>(rt);
+    VectorType* vt = static_cast<VectorType*>(rt);
     REQUIRE(vt->type->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(vt->type);
+    BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Dvec4);
 
     std::string r = generateResult(code);

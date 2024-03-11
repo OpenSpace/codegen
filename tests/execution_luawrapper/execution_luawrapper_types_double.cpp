@@ -462,7 +462,8 @@ TEST_CASE("Execution/LuaWrapper/Return:  doubleMap", "[Execution][LuaWrapper]") 
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    auto val = ghoul::lua::value<std::map<std::string, double>>(state);
+    const std::map<std::string, double>& val =
+        ghoul::lua::value<std::map<std::string, double>>(state);
     CHECK(val.size() == 3);
     REQUIRE(val.find("key1") != val.end());
     CHECK(val.find("key1")->second == 1.1);

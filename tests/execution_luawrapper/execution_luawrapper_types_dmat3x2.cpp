@@ -568,7 +568,8 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat3x2Map", "[Execution][LuaWrapper]")
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    auto val = ghoul::lua::value<std::map<std::string, glm::dmat3x2>>(state);
+    std::map<std::string, glm::dmat3x2> val =
+        ghoul::lua::value<std::map<std::string, glm::dmat3x2>>(state);
     CHECK(val.size() == 3);
     REQUIRE(val.find("key1") != val.end());
     CHECK(

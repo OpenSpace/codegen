@@ -2065,7 +2065,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "keyValueVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
@@ -2078,7 +2078,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
+        InRangeVerifier<IntVerifier>* v =
+            dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == -2);
         CHECK(v->upper == 8);
@@ -2089,7 +2090,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
+        InRangeVerifier<IntVerifier>* v =
+            dynamic_cast<InRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == -2);
         CHECK(v->upper == 8);
@@ -2100,12 +2102,12 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<InRangeVerifier<IntVerifier>*>(
+        InRangeVerifier<IntVerifier>* w = dynamic_cast<InRangeVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
@@ -2118,7 +2120,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVerifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == 8.0);
         CHECK(v->upper == 9.0);
@@ -2129,7 +2132,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVerifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == 8.0);
         CHECK(v->upper == 9.0);
@@ -2140,14 +2144,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<InRangeVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<DoubleVerifier>* w =
+            dynamic_cast<InRangeVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == 8.0);
         CHECK(w->upper == 9.0);
@@ -2158,7 +2163,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec2(1.f));
         CHECK(v->upper == glm::dvec2(2.f));
@@ -2169,7 +2175,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec2(1.0));
         CHECK(v->upper == glm::dvec2(2.0));
@@ -2180,14 +2187,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<InRangeVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec2(1.0));
         CHECK(w->upper == glm::dvec2(2.0));
@@ -2198,7 +2206,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec3(1.f));
         CHECK(v->upper == glm::dvec3(2.f));
@@ -2209,7 +2218,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec3(1.0));
         CHECK(v->upper == glm::dvec3(2.0));
@@ -2220,14 +2230,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<InRangeVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec3(1.0));
         CHECK(w->upper == glm::dvec3(2.0));
@@ -2238,7 +2249,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec4(1.f));
         CHECK(v->upper == glm::dvec4(2.f));
@@ -2249,7 +2261,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        InRangeVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec4(1.0));
         CHECK(v->upper == glm::dvec4(2.0));
@@ -2260,14 +2273,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<InRangeVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec4(1.0));
         CHECK(w->upper == glm::dvec4(2.0));
@@ -2278,7 +2292,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector2Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec2(1));
         CHECK(v->upper == glm::ivec2(3));
@@ -2289,7 +2304,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector2Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec2(1));
         CHECK(v->upper == glm::ivec2(3));
@@ -2300,14 +2316,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<IntVector2Verifier>* w =
+            dynamic_cast<InRangeVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec2(1));
         CHECK(w->upper == glm::ivec2(3));
@@ -2318,7 +2335,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector3Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec3(1));
         CHECK(v->upper == glm::ivec3(3));
@@ -2329,7 +2347,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector3Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec3(1));
         CHECK(v->upper == glm::ivec3(3));
@@ -2340,14 +2359,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<IntVector3Verifier>* w =
+            dynamic_cast<InRangeVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec3(1));
         CHECK(w->upper == glm::ivec3(3));
@@ -2358,7 +2378,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector4Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec4(1));
         CHECK(v->upper == glm::ivec4(3));
@@ -2369,7 +2390,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inRangeValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
+        InRangeVerifier<IntVector4Verifier>* v =
+            dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec4(1));
         CHECK(v->upper == glm::ivec4(3));
@@ -2380,14 +2402,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inRangeValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        InRangeVerifier<IntVector4Verifier>* w =
+            dynamic_cast<InRangeVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec4(1));
         CHECK(w->upper == glm::ivec4(3));
@@ -2398,7 +2421,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVerifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == 5);
         CHECK(v->upper == 7);
@@ -2409,7 +2433,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVerifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == 5);
         CHECK(v->upper == 7);
@@ -2420,14 +2445,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<NotInRangeVerifier<IntVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<IntVerifier>* w =
+            dynamic_cast<NotInRangeVerifier<IntVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->lower == 5);
         CHECK(w->upper == 7);
@@ -2438,7 +2464,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
+        NotInRangeVerifier<DoubleVerifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == -0.5);
         CHECK(v->upper == 0.5);
@@ -2449,7 +2476,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
+        NotInRangeVerifier<DoubleVerifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == -0.5);
         CHECK(v->upper == 0.5);
@@ -2460,14 +2488,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<DoubleVerifier>* w =
+            dynamic_cast<NotInRangeVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->lower == -0.5);
         CHECK(w->upper == 0.5);
@@ -2478,9 +2507,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec2(1.f));
         CHECK(v->upper == glm::dvec2(2.f));
@@ -2491,9 +2519,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec2(1.0));
         CHECK(v->upper == glm::dvec2(2.0));
@@ -2504,14 +2531,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec2(1.0));
         CHECK(w->upper == glm::dvec2(2.0));
@@ -2522,9 +2550,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec3(1.f));
         CHECK(v->upper == glm::dvec3(2.f));
@@ -2535,9 +2562,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec3(1.0));
         CHECK(v->upper == glm::dvec3(2.0));
@@ -2548,14 +2574,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec3(1.0));
         CHECK(w->upper == glm::dvec3(2.0));
@@ -2566,9 +2593,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec4(1.f));
         CHECK(v->upper == glm::dvec4(2.f));
@@ -2579,9 +2605,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::dvec4(1.0));
         CHECK(v->upper == glm::dvec4(2.0));
@@ -2592,14 +2617,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::dvec4(1.0));
         CHECK(w->upper == glm::dvec4(2.0));
@@ -2610,7 +2636,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector2Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec2(1));
         CHECK(v->upper == glm::ivec2(3));
@@ -2621,7 +2648,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector2Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec2(1));
         CHECK(v->upper == glm::ivec2(3));
@@ -2632,14 +2660,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<IntVector2Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec2(1));
         CHECK(w->upper == glm::ivec2(3));
@@ -2650,7 +2679,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector3Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec3(1));
         CHECK(v->upper == glm::ivec3(3));
@@ -2661,7 +2691,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector3Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec3(1));
         CHECK(v->upper == glm::ivec3(3));
@@ -2672,14 +2703,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<IntVector3Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec3(1));
         CHECK(w->upper == glm::ivec3(3));
@@ -2690,7 +2722,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector4Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec4(1));
         CHECK(v->upper == glm::ivec4(3));
@@ -2701,7 +2734,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
+        NotInRangeVerifier<IntVector4Verifier>* v =
+            dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->lower == glm::ivec4(1));
         CHECK(v->upper == glm::ivec4(3));
@@ -2712,14 +2746,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "notInRangeValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        NotInRangeVerifier<IntVector4Verifier>* w =
+            dynamic_cast<NotInRangeVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->lower == glm::ivec4(1));
         CHECK(w->upper == glm::ivec4(3));
@@ -2730,7 +2765,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
+        LessVerifier<IntVerifier>* v =
+            dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 20);
     }
@@ -2740,7 +2776,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
+        LessVerifier<IntVerifier>* v =
+            dynamic_cast<LessVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 20);
     }
@@ -2750,14 +2787,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<LessVerifier<IntVerifier>*>(
+        LessVerifier<IntVerifier>* w = dynamic_cast<LessVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->value == 20);
     }
@@ -2767,7 +2804,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
+        LessVerifier<DoubleVerifier>* v =
+            dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 21.0);
     }
@@ -2777,7 +2815,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
+        LessVerifier<DoubleVerifier>* v =
+            dynamic_cast<LessVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 22.0);
     }
@@ -2787,14 +2826,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<LessVerifier<DoubleVerifier>*>(
+        LessVerifier<DoubleVerifier>* w = dynamic_cast<LessVerifier<DoubleVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->value == 23.0);
     }
@@ -2804,7 +2843,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -2814,7 +2854,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -2824,14 +2865,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<LessVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -2841,7 +2883,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -2851,7 +2894,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -2861,14 +2905,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<LessVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -2878,7 +2923,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -2888,7 +2934,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        LessVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -2898,14 +2945,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<LessVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -2915,7 +2963,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector2Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector2Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -2925,7 +2974,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector2Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector2Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -2935,14 +2985,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<LessVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<IntVector2Verifier>* w =
+            dynamic_cast<LessVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -2952,7 +3003,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector3Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector3Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -2962,7 +3014,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector3Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector3Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -2972,14 +3025,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<LessVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<IntVector3Verifier>* w =
+            dynamic_cast<LessVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -2989,7 +3043,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector4Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector4Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -2999,7 +3054,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<LessVerifier<IntVector4Verifier>*>(e.verifier.get());
+        LessVerifier<IntVector4Verifier>* v =
+            dynamic_cast<LessVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3009,14 +3065,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<LessVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessVerifier<IntVector4Verifier>* w =
+            dynamic_cast<LessVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -3026,7 +3083,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVerifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 25);
     }
@@ -3036,7 +3094,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVerifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 25);
     }
@@ -3046,14 +3105,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<LessEqualVerifier<IntVerifier>*>(
+        LessEqualVerifier<IntVerifier>* w = dynamic_cast<LessEqualVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->value == 25);
     }
@@ -3063,7 +3122,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
+        LessEqualVerifier<DoubleVerifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 27.0);
     }
@@ -3073,7 +3133,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
+        LessEqualVerifier<DoubleVerifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 27.0);
     }
@@ -3083,14 +3144,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<DoubleVerifier>* w =
+            dynamic_cast<LessEqualVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->value == 27.0);
     }
@@ -3100,9 +3162,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3112,9 +3173,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3124,14 +3184,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<LessEqualVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -3141,9 +3202,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3153,9 +3213,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3165,14 +3224,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<LessEqualVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -3182,9 +3242,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3194,9 +3253,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        LessEqualVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3206,14 +3264,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<LessEqualVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -3223,7 +3282,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector2Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3233,7 +3293,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector2Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3243,14 +3304,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<IntVector2Verifier>* w =
+            dynamic_cast<LessEqualVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -3260,7 +3322,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector3Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3270,7 +3333,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector3Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3280,14 +3344,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<IntVector3Verifier>* w =
+            dynamic_cast<LessEqualVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -3297,7 +3362,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector4Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3307,7 +3373,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
+        LessEqualVerifier<IntVector4Verifier>* v =
+            dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3317,14 +3384,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "lessEqualValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        LessEqualVerifier<IntVector4Verifier>* w =
+            dynamic_cast<LessEqualVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -3334,7 +3402,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         REQUIRE(!e.optional);
         REQUIRE(e.documentation == "greaterValueInt documentation");
         REQUIRE(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<GreaterVerifier<IntVerifier>*>(e.verifier.get());
+        GreaterVerifier<IntVerifier>* v =
+            dynamic_cast<GreaterVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->value == 25);
     }
@@ -3344,7 +3413,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<GreaterVerifier<IntVerifier>*>(e.verifier.get());
+        GreaterVerifier<IntVerifier>* v =
+            dynamic_cast<GreaterVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 25);
     }
@@ -3354,14 +3424,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<GreaterVerifier<IntVerifier>*>(
+        GreaterVerifier<IntVerifier>* w = dynamic_cast<GreaterVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->value == 25);
     }
@@ -3371,7 +3441,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVerifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == -5.0);
     }
@@ -3381,7 +3452,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVerifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == -5.0);
     }
@@ -3391,14 +3463,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<GreaterVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<DoubleVerifier>* w =
+            dynamic_cast<GreaterVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->value == -5.0);
     }
@@ -3408,7 +3481,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3418,7 +3492,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3428,14 +3503,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<GreaterVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -3445,7 +3521,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3455,7 +3532,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3465,14 +3543,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<GreaterVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -3482,7 +3561,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3492,7 +3572,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        GreaterVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3502,14 +3583,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<GreaterVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -3519,7 +3601,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector2Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3529,7 +3612,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector2Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3539,14 +3623,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<IntVector2Verifier>* w =
+            dynamic_cast<GreaterVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -3556,7 +3641,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector3Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3566,7 +3652,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector3Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3576,14 +3663,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<IntVector3Verifier>* w =
+            dynamic_cast<GreaterVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -3593,7 +3681,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector4Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3603,7 +3692,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(e.verifier.get());
+        GreaterVerifier<IntVector4Verifier>* v =
+            dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3613,14 +3703,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterVerifier<IntVector4Verifier>* w =
+            dynamic_cast<GreaterVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -3630,7 +3721,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
+        GreaterEqualVerifier<IntVerifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 33);
     }
@@ -3640,7 +3732,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
+        GreaterEqualVerifier<IntVerifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 33);
     }
@@ -3650,14 +3743,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<IntVerifier>* w =
+            dynamic_cast<GreaterEqualVerifier<IntVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->value == 33);
     }
@@ -3667,7 +3761,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
+        GreaterEqualVerifier<DoubleVerifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == -25.0);
     }
@@ -3677,7 +3772,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
+        GreaterEqualVerifier<DoubleVerifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == -25.0);
     }
@@ -3687,14 +3783,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVerifier>* w =
+            dynamic_cast<GreaterEqualVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->value == -25.0);
     }
@@ -3704,9 +3801,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3716,9 +3812,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -3728,14 +3823,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -3745,9 +3841,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3757,9 +3852,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -3769,14 +3863,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -3786,9 +3881,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3798,9 +3892,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -3810,14 +3903,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -3827,9 +3921,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector2Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3839,9 +3932,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector2Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -3851,14 +3943,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<IntVector2Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -3868,9 +3961,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector3Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3880,9 +3972,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector3Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -3892,14 +3983,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<IntVector3Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -3909,9 +4001,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector4Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3921,9 +4012,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(
-            e.verifier.get()
-        );
+        GreaterEqualVerifier<IntVector4Verifier>* v =
+            dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -3933,14 +4023,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "greaterEqualValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        GreaterEqualVerifier<IntVector4Verifier>* w =
+            dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -3950,7 +4041,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
+        UnequalVerifier<IntVerifier>* v =
+            dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 1);
     }
@@ -3960,7 +4052,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
-        auto* v = dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
+        UnequalVerifier<IntVerifier>* v =
+            dynamic_cast<UnequalVerifier<IntVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 1);
     }
@@ -3970,14 +4063,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Integer");
-        auto* w = dynamic_cast<UnequalVerifier<IntVerifier>*>(
+        UnequalVerifier<IntVerifier>* w = dynamic_cast<UnequalVerifier<IntVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->value == 1);
     }
@@ -3987,7 +4080,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVerifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 123.0);
     }
@@ -3997,7 +4091,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVerifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == 123.0);
     }
@@ -4007,14 +4102,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Double");
-        auto* w = dynamic_cast<UnequalVerifier<DoubleVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<DoubleVerifier>* w =
+            dynamic_cast<UnequalVerifier<DoubleVerifier>*>(
+                v->documentations[0].verifier.get()
+                );
         REQUIRE(w);
         CHECK(w->value == 123.0);
     }
@@ -4024,7 +4120,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -4034,7 +4131,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector2Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec2(1.f));
     }
@@ -4044,14 +4142,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<double>");
-        auto* w = dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<DoubleVector2Verifier>* w =
+            dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -4061,7 +4160,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -4071,7 +4171,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector3Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec3(1.f));
     }
@@ -4081,14 +4182,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<double>");
-        auto* w = dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<DoubleVector3Verifier>* w =
+            dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -4098,7 +4200,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -4108,7 +4211,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
-        auto* v = dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(e.verifier.get());
+        UnequalVerifier<DoubleVector4Verifier>* v =
+            dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
@@ -4118,14 +4222,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<double>");
-        auto* w = dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<DoubleVector4Verifier>* w =
+            dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -4135,7 +4240,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector2Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -4145,7 +4251,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector2Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec2(1));
     }
@@ -4155,14 +4262,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector2<int>");
-        auto* w = dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<IntVector2Verifier>* w =
+            dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -4172,7 +4280,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector3Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -4182,7 +4291,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector3Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec3(1));
     }
@@ -4192,14 +4302,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector3<int>");
-        auto* w = dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<IntVector3Verifier>* w =
+            dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -4209,7 +4320,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector4Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -4219,7 +4331,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
-        auto* v = dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(e.verifier.get());
+        UnequalVerifier<IntVector4Verifier>* v =
+            dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == glm::ivec4(1));
     }
@@ -4229,14 +4342,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Vector4<int>");
-        auto* w = dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<IntVector4Verifier>* w =
+            dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -4254,7 +4368,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue1 documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
+        InListVerifier<StringVerifier>* v =
+            dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
@@ -4264,7 +4379,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inListValue1Optional documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
+        InListVerifier<StringVerifier>* v =
+            dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
@@ -4274,12 +4390,12 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue1Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w = dynamic_cast<InListVerifier<StringVerifier>*>(
+        InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
@@ -4291,7 +4407,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue2 documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
+        InListVerifier<StringVerifier>* v =
+            dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
@@ -4301,7 +4418,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "inListValue2Optional documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
+        InListVerifier<StringVerifier>* v =
+            dynamic_cast<InListVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
@@ -4311,12 +4429,12 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "inListValue2Vector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w = dynamic_cast<InListVerifier<StringVerifier>*>(
+        InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
         );
         REQUIRE(w);
@@ -4328,7 +4446,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueString documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
+        UnequalVerifier<StringVerifier>* v =
+            dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == "abcdef");
     }
@@ -4338,7 +4457,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueStringOptional documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
+        UnequalVerifier<StringVerifier>* v =
+            dynamic_cast<UnequalVerifier<StringVerifier>*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->value == "abcdef");
     }
@@ -4348,14 +4468,15 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueStringVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w = dynamic_cast<UnequalVerifier<StringVerifier>*>(
-            v->documentations[0].verifier.get()
-        );
+        UnequalVerifier<StringVerifier>* w =
+            dynamic_cast<UnequalVerifier<StringVerifier>*>(
+                v->documentations[0].verifier.get()
+            );
         REQUIRE(w);
         CHECK(w->value == "abcdef");
     }
@@ -4365,7 +4486,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<StringVerifier*>(e.verifier.get());
+        StringVerifier* v = dynamic_cast<StringVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->mustBeNotEmpty() == true);
     }
@@ -4375,7 +4496,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional value documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<StringVerifier*>(e.verifier.get());
+        StringVerifier* v = dynamic_cast<StringVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->mustBeNotEmpty() == true);
     }
@@ -4385,12 +4506,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty vector value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w = dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         CHECK(w->mustBeNotEmpty() == true);
     }
@@ -4400,12 +4523,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional vector value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w =dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
+
+        StringVerifier* w =
+            dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         CHECK(w->mustBeNotEmpty() == true);
     }
@@ -4415,7 +4540,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueOptional documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
+        ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->identifier == "abc");
     }
@@ -4425,12 +4550,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<ReferencingVerifier*>(v->documentations[0].verifier.get());
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -4440,7 +4567,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValue documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
+        ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->identifier == "abc");
     }
@@ -4450,12 +4577,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<ReferencingVerifier*>(v->documentations[0].verifier.get());
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -4465,7 +4594,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "dictValueOptional documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
+        ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->identifier == "abc");
     }
@@ -4475,12 +4604,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<ReferencingVerifier*>(v->documentations[0].verifier.get());
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -4490,17 +4621,21 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get());
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
         CHECK(w->documentations[0].verifier->type() == "Table");
-        auto* u = dynamic_cast<ReferencingVerifier*>(w->documentations[0].verifier.get());
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+        );
         REQUIRE(u);
         CHECK(u->identifier == "abc");
     }
@@ -4510,12 +4645,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<ReferencingVerifier*>(v->documentations[0].verifier.get());
+        ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -4525,17 +4662,21 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "optionalVectorDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Table");
-        auto* w = dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get());
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
         CHECK(w->documentations[0].verifier->type() == "Table");
-        auto* u = dynamic_cast<ReferencingVerifier*>(w->documentations[0].verifier.get());
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+        );
         REQUIRE(u);
         CHECK(u->identifier == "abc");
     }
@@ -4545,7 +4686,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "annotation documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v = dynamic_cast<StringAnnotationVerifier*>(e.verifier.get());
+        StringAnnotationVerifier* v =
+            dynamic_cast<StringAnnotationVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->annotation == "abc");
     }
@@ -4555,7 +4697,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "annotationOptional documentation");
         CHECK(e.verifier->type() == "String");
-        auto* v =
+        StringAnnotationVerifier* v =
             dynamic_cast<StringAnnotationVerifier*>(e.verifier.get());
         REQUIRE(v);
         CHECK(v->annotation == "def");
@@ -4566,13 +4708,12 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "annotationVector documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "String");
-        auto* w = dynamic_cast<StringAnnotationVerifier*>(
-            v->documentations[0].verifier.get()
-        );
+        StringAnnotationVerifier* w =
+            dynamic_cast<StringAnnotationVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         CHECK(w->annotation == "ghi");
     }
@@ -4598,7 +4739,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor3Value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Color3");
@@ -4626,7 +4767,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor3Value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Color3");
@@ -4654,7 +4795,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor4Value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Color4");
@@ -4682,7 +4823,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor4Value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Color4");
@@ -4710,7 +4851,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vector dateTime value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Date and time");
@@ -4722,7 +4863,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector dateTime value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");
@@ -4751,7 +4892,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(!e.optional);
         CHECK(e.documentation == "vector identifier value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "Identifier");
@@ -4763,7 +4904,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector identifier value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");

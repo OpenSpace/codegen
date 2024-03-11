@@ -51,7 +51,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4", "[Parsing][LuaWrapper]") {
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::BasicType);
-        auto* bt = static_cast<BasicType*>(v->type);
+        BasicType* bt = static_cast<BasicType*>(v->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
 
         CHECK(v->attributes.annotation.empty());
@@ -94,9 +94,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 defaulted", "[Parsing][LuaWrapp
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        auto* ot = static_cast<OptionalType*>(v->type);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
         REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        auto* bt = static_cast<BasicType*>(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
 
         CHECK(v->attributes.annotation.empty());
@@ -139,11 +139,11 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 map", "[Parsing][LuaWrapper]") 
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::MapType);
-        auto* mt = static_cast<MapType*>(v->type);
+        MapType* mt = static_cast<MapType*>(v->type);
         REQUIRE(mt->keyType->tag == VariableType::Tag::BasicType);
         CHECK(static_cast<BasicType*>(mt->keyType)->type == BasicType::Type::String);
         REQUIRE(mt->valueType->tag == VariableType::Tag::BasicType);
-        auto* bt = static_cast<BasicType*>(mt->valueType);
+        BasicType* bt = static_cast<BasicType*>(mt->valueType);
         CHECK(bt->type == BasicType::Type::Mat2x4);
 
         CHECK(v->attributes.annotation.empty());
@@ -186,9 +186,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 optional", "[Parsing][LuaWrappe
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::OptionalType);
-        auto* ot = static_cast<OptionalType*>(v->type);
+        OptionalType* ot = static_cast<OptionalType*>(v->type);
         REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-        auto* bt = static_cast<BasicType*>(ot->type);
+        BasicType* bt = static_cast<BasicType*>(ot->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
 
         CHECK(v->attributes.annotation.empty());
@@ -231,9 +231,9 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 vector", "[Parsing][LuaWrapper]
         CHECK(v->name == "arg");
         REQUIRE(v->type);
         REQUIRE(v->type->tag == VariableType::Tag::VectorType);
-        auto* vt = static_cast<VectorType*>(v->type);
+        VectorType* vt = static_cast<VectorType*>(v->type);
         REQUIRE(vt->type->tag == VariableType::Tag::BasicType);
-        auto* bt = static_cast<BasicType*>(vt->type);
+        BasicType* bt = static_cast<BasicType*>(vt->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
 
         CHECK(v->attributes.annotation.empty());
@@ -283,10 +283,10 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 array", "[Parsing][LuaWrapper]"
             CHECK(v->name == "arg");
             REQUIRE(v->type);
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
-            auto* at = static_cast<ArrayType*>(v->type);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
             CHECK(at->size == 1);
-            auto* bt = static_cast<BasicType*>(at->type);
+            BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Mat2x4);
 
             CHECK(v->attributes.annotation.empty());
@@ -316,10 +316,10 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 array", "[Parsing][LuaWrapper]"
             CHECK(v->name == "arg");
             REQUIRE(v->type);
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
-            auto* at = static_cast<ArrayType*>(v->type);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
             CHECK(at->size == 5);
-            auto* bt = static_cast<BasicType*>(at->type);
+            BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Mat2x4);
 
             CHECK(v->attributes.annotation.empty());
@@ -349,10 +349,10 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x4 array", "[Parsing][LuaWrapper]"
             CHECK(v->name == "arg");
             REQUIRE(v->type);
             REQUIRE(v->type->tag == VariableType::Tag::ArrayType);
-            auto* at = static_cast<ArrayType*>(v->type);
+            ArrayType* at = static_cast<ArrayType*>(v->type);
             REQUIRE(at->type->tag == VariableType::Tag::BasicType);
             CHECK(at->size == 10);
-            auto* bt = static_cast<BasicType*>(at->type);
+            BasicType* bt = static_cast<BasicType*>(at->type);
             CHECK(bt->type == BasicType::Type::Mat2x4);
 
             CHECK(v->attributes.annotation.empty());
@@ -390,9 +390,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4", "[Parsing][LuaWrapper]") {
     CHECK(f->functionName == "foo");
     CHECK(f->documentation.empty());
     CHECK(f->arguments.empty());
-    auto* rt = f->returnValue;
+    VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(rt);
+    BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Mat2x4);
 
     std::string r = generateResult(code);
@@ -418,11 +418,11 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 map", "[Parsing][LuaWrapper]") {
     CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::MapType);
-    auto* mt = static_cast<MapType*>(rt);
+    MapType* mt = static_cast<MapType*>(rt);
     REQUIRE(mt->keyType->tag == VariableType::Tag::BasicType);
     CHECK(static_cast<BasicType*>(mt->keyType)->type == BasicType::Type::String);
     CHECK(mt->valueType->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(mt->valueType);
+    BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Mat2x4);
 
     std::string r = generateResult(code);
@@ -448,9 +448,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 optional", "[Parsing][LuaWrapper]"
     CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::OptionalType);
-    auto* ot = static_cast<OptionalType*>(rt);
+    OptionalType* ot = static_cast<OptionalType*>(rt);
     REQUIRE(ot->type->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(ot->type);
+    BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Mat2x4);
 
     std::string r = generateResult(code);
@@ -476,9 +476,9 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 vector", "[Parsing][LuaWrapper]") 
     CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::VectorType);
-    auto* vt = static_cast<VectorType*>(rt);
+    VectorType* vt = static_cast<VectorType*>(rt);
     REQUIRE(vt->type->tag == VariableType::Tag::BasicType);
-    auto* bt = static_cast<BasicType*>(vt->type);
+    BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Mat2x4);
 
     std::string r = generateResult(code);
@@ -513,10 +513,10 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 array", "[Parsing][LuaWrapper]") {
         CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
-        auto* at = static_cast<ArrayType*>(rt);
+        ArrayType* at = static_cast<ArrayType*>(rt);
         REQUIRE(at->type->tag == VariableType::Tag::BasicType);
         CHECK(at->size == 1);
-        auto* bt = static_cast<BasicType*>(at->type);
+        BasicType* bt = static_cast<BasicType*>(at->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
     }
     {
@@ -528,10 +528,10 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 array", "[Parsing][LuaWrapper]") {
         CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
-        auto* at = static_cast<ArrayType*>(rt);
+        ArrayType* at = static_cast<ArrayType*>(rt);
         REQUIRE(at->type->tag == VariableType::Tag::BasicType);
         CHECK(at->size == 5);
-        auto* bt = static_cast<BasicType*>(at->type);
+        BasicType* bt = static_cast<BasicType*>(at->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
     }
     {
@@ -543,10 +543,10 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x4 array", "[Parsing][LuaWrapper]") {
         CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
-        auto* at = static_cast<ArrayType*>(rt);
+        ArrayType* at = static_cast<ArrayType*>(rt);
         REQUIRE(at->type->tag == VariableType::Tag::BasicType);
         CHECK(at->size == 10);
-        auto* bt = static_cast<BasicType*>(at->type);
+        BasicType* bt = static_cast<BasicType*>(at->type);
         CHECK(bt->type == BasicType::Type::Mat2x4);
     }
 

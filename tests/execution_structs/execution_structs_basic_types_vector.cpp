@@ -1049,7 +1049,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "bool value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Boolean");
@@ -1061,7 +1061,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "int value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Integer");
@@ -1073,7 +1073,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "double value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Double");
@@ -1085,7 +1085,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "float value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Double");
@@ -1097,7 +1097,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "string value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "String");
@@ -1111,11 +1111,13 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "String");
-        auto* v = dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get());
+        StringVerifier* v = dynamic_cast<StringVerifier*>(
+            t->documentations[0].verifier.get()
+        );
         REQUIRE(v);
         CHECK(v->mustBeNotEmpty() == true);
     }
@@ -1125,7 +1127,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "path value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "File");
@@ -1137,7 +1139,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "directory value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Directory");
@@ -1149,7 +1151,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector2<int>");
@@ -1161,7 +1163,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector3<int>");
@@ -1173,7 +1175,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "ivec4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector4<int>");
@@ -1185,7 +1187,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector2<double>");
@@ -1197,7 +1199,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector3<double>");
@@ -1209,7 +1211,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dvec4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector4<double>");
@@ -1221,7 +1223,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "vec2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector2<double>");
@@ -1233,7 +1235,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "vec3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector3<double>");
@@ -1245,7 +1247,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "vec4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         CHECK(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Vector4<double>");
@@ -1257,7 +1259,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x2<double>");
@@ -1271,7 +1273,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x2<double>");
@@ -1283,7 +1285,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         CHECK(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x3<double>");
@@ -1297,7 +1299,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat2x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x4<double>");
@@ -1311,7 +1313,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x2<double>");
@@ -1325,7 +1327,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x3<double>");
@@ -1339,7 +1341,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x3<double>");
@@ -1351,7 +1353,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat3x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x4<double>");
@@ -1365,7 +1367,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         CHECK(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x2<double>");
@@ -1379,7 +1381,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x3<double>");
@@ -1393,7 +1395,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x4<double>");
@@ -1407,7 +1409,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "mat4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x4<double>");
@@ -1419,7 +1421,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x2<double>");
@@ -1433,7 +1435,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x2<double>");
@@ -1445,7 +1447,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x3<double>");
@@ -1459,7 +1461,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat2x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix2x4<double>");
@@ -1473,7 +1475,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x2<double>");
@@ -1487,7 +1489,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x3<double>");
@@ -1501,7 +1503,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x3<double>");
@@ -1515,7 +1517,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat3x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix3x4<double>");
@@ -1529,7 +1531,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x2 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x2<double>");
@@ -1543,7 +1545,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x3 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x3<double>");
@@ -1557,7 +1559,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4x4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x4<double>");
@@ -1571,7 +1573,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dmat4 value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Matrix4x4<double>");
@@ -1583,7 +1585,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(e.documentation == "dict value documentation");
         CHECK(e.verifier->type() == "Table");
-        auto* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "Table");
