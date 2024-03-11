@@ -469,7 +469,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dvec2", "[Execution][LuaWrapper]") {
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    glm::dvec2 val = ghoul::lua::value<glm::dvec2>(state);
+    ghoul::lua::value<glm::dvec2>(state);
     lua_close(state);
 }
 

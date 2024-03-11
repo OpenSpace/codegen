@@ -37,6 +37,10 @@ namespace {
 
     std::vector<std::string> List = { "F", "G", "H", "I", "J" };
 
+    // We have a lot of padding bytes in this struct (>200 which many static code
+    // analyzers don't like. If we align our struct on 4-byte boundaries we get rid of
+    // most of them and since this is just a test we don't really pay for it either
+#pragma pack (4)
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // keyValue documentation
         float keyValue [[codegen::key("KeyKey")]];
@@ -46,7 +50,6 @@ namespace {
 
         // keyValueVector documentation
         std::vector<float> keyValueVector [[codegen::key("KeyKeyVector")]];
-
 
         // inRangeValueInt documentation
         int inRangeValueInt [[codegen::inrange(-2, 8)]];
