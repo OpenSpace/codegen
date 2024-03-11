@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -113,7 +113,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  glm::mat2x3 defaulted", "[Parsing][Lua
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -160,7 +160,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 map", "[Parsing][LuaWrapper]") 
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -205,7 +205,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 optional", "[Parsing][LuaWrappe
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -250,7 +250,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 vector", "[Parsing][LuaWrapper]
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -370,7 +370,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  mat2x3 array", "[Parsing][LuaWrapper]"
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -396,7 +396,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Mat2x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -426,7 +426,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 map", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Mat2x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -454,7 +454,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 optional", "[Parsing][LuaWrapper]"
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Mat2x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -482,7 +482,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 vector", "[Parsing][LuaWrapper]") 
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Mat2x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -551,6 +551,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  mat2x3 array", "[Parsing][LuaWrapper]") {
         CHECK(bt->type == BasicType::Type::Mat2x3);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

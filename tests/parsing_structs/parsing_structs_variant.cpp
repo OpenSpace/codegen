@@ -65,7 +65,7 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(var->comment == "b comment");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -91,7 +91,7 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(var->comment == "a comment");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -107,6 +107,7 @@ struct [[codegen::Dictionary(D)]] P {
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
     CHECK(code.structs.front()->variables.size() == 3);
-    std::string r = generateResult(code);
+
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

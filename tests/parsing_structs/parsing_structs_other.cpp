@@ -163,7 +163,7 @@ Lines, With, Weird,
         CHECK(var->comment == "This value has a \" in the comment which might cause it to break?");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -215,7 +215,7 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         CHECK(s->variables[0]->name == "jkl");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
