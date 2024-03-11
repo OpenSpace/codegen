@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(MultipleAttributes)]] Parameters {
         // keyInRangeValue documentation
         float keyInRangeValue [[codegen::key(KeyKey), codegen::inrange(-2, 2)]];
@@ -41,7 +41,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s->variables.size() == 2);
 
@@ -89,7 +89,7 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute empty noexhaustive", "[structs][parsing]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
     int value;
 };
@@ -97,7 +97,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
@@ -110,7 +110,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[structs][parsing]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
     int value;
 };
@@ -118,7 +118,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");
@@ -131,7 +131,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[structs][parsing]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
     int value;
 };
@@ -139,7 +139,7 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
     CHECK(s->attributes.dictionary == "Par");

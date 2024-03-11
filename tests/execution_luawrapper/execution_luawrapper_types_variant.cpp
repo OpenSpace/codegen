@@ -92,8 +92,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Boolean | Integer");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -114,8 +114,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Boolean | Integer");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -136,8 +136,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Number | vec3 | String");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -158,8 +158,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Number | vec3 | String");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -182,8 +182,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Number | vec3 | String");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -203,7 +203,7 @@ TEST_CASE(
     CHECK(func.name == "returnVariantBoolIntBool");
     CHECK(func.arguments.empty());
     CHECK(func.returnType == "Boolean | Integer");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -225,7 +225,7 @@ TEST_CASE(
     CHECK(func.name == "returnVariantBoolIntInt");
     CHECK(func.arguments.empty());
     CHECK(func.returnType == "Boolean | Integer");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -247,7 +247,7 @@ TEST_CASE(
     CHECK(func.name == "returnVariantDvec3FloatStringDouble");
     CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -270,7 +270,7 @@ TEST_CASE(
     CHECK(func.name == "returnVariantDvec3FloatStringDvec3");
     CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -293,7 +293,7 @@ TEST_CASE(
     CHECK(func.name == "returnVariantDvec3FloatStringString");
     CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

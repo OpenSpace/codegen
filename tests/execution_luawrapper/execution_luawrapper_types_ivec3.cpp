@@ -139,8 +139,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -162,8 +162,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -185,8 +185,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3?");
     CHECK(func.arguments[0].defaultValue == "glm::ivec3(1, 2, 3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -209,8 +209,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec3?");
     CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -234,8 +234,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "ivec3?");
     CHECK(func.arguments[1].defaultValue == "glm::ivec3(1, 2, 3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -252,8 +252,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Map", "[Execution][LuaWrapper]"
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> ivec3");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -276,8 +276,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Optional", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -298,8 +298,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -315,8 +315,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Vector", "[Execution][LuaWrappe
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -339,8 +339,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array1", "[Execution][LuaWrappe
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -364,8 +364,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array2", "[Execution][LuaWrappe
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -406,8 +406,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array3", "[Execution][LuaWrappe
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "ivec3[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -460,9 +460,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3Array3", "[Execution][LuaWrappe
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIvec3;
     CHECK(func.name == "returnIvec3");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "ivec3");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -477,9 +477,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  ivec3", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIvec3Map;
     CHECK(func.name == "returnIvec3Map");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> ivec3");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -505,9 +505,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnIvec3Optional;
     CHECK(func.name == "returnIvec3Optional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "ivec3?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -526,9 +526,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnIvec3OptionalNullopt;
     CHECK(func.name == "returnIvec3OptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "ivec3?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -541,9 +541,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  ivec3Vector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIvec3Vector;
     CHECK(func.name == "returnIvec3Vector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "ivec3[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // [[codegen::verbatim(description)]]
         bool descValue;
@@ -37,8 +37,8 @@ TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
 )";
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 

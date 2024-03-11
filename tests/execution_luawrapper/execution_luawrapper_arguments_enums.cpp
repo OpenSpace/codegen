@@ -70,7 +70,7 @@ namespace {
         assert(n == 0 || n == 1 || n == 3);
 
         if (n == 0) {
-            CHECK(es.size() == 0);
+            CHECK(es.empty());
         }
         else if (n == 1) {
             REQUIRE(es.size() == 1);
@@ -149,9 +149,9 @@ namespace {
 TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
-    CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.arguments.empty());
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -171,8 +171,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "e");
     CHECK(func.arguments[0].type == "Enum");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -195,8 +195,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Enum");
     CHECK(func.arguments[1].name == "f");
     CHECK(func.arguments[1].type == "Enum");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -221,8 +221,8 @@ TEST_CASE(
     CHECK(func.arguments[1].type == "Enum");
     CHECK(func.arguments[2].name == "f");
     CHECK(func.arguments[2].type == "Enum?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -249,8 +249,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Integer");
     CHECK(func.arguments[1].name == "es");
     CHECK(func.arguments[1].type == "Enum[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     std::vector<std::string> es;
@@ -290,8 +290,8 @@ TEST_CASE(
     CHECK(func.arguments[1].type == "Integer?");
     CHECK(func.arguments[2].name == "es");
     CHECK(func.arguments[2].type == "Enum[]?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     std::vector<std::string> es;
@@ -329,8 +329,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "es");
     CHECK(func.arguments[0].type == "String -> Enum");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -357,7 +357,7 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "v");
     CHECK(func.arguments[0].type == "Integer");
     CHECK(func.returnType == "Enum");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

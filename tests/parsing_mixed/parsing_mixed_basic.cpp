@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(MixedStruct)]] Struct {
         int value;
         double value2;
@@ -113,7 +113,7 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
 }
 
 TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::stringify()]] Enum {
         Value1,
         value2,
@@ -197,7 +197,7 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") 
 }
 
 TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class Enum1 {
         Value1,
         Value2,

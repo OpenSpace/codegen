@@ -33,7 +33,7 @@
 namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -43,7 +43,7 @@ int v [[codegen::annotation(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -53,7 +53,7 @@ std::vector<int> v [[codegen::annotation(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::annotation(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -63,7 +63,7 @@ std::optional<int> v [[codegen::annotation(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -73,7 +73,7 @@ int v [[codegen::inlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -83,7 +83,7 @@ std::vector<int> v [[codegen::inlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::inlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -93,7 +93,7 @@ std::optional<int> v [[codegen::inlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int notinlist [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -103,7 +103,7 @@ int notinlist [[codegen::notinlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -113,7 +113,7 @@ std::vector<int> v [[codegen::notinlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::notinlist(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -123,7 +123,7 @@ std::optional<int> v [[codegen::notinlist(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -133,7 +133,7 @@ int v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -143,7 +143,7 @@ std::vector<int> v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::reference(1)]];
 };)";
 CHECK_THROWS_MATCHES(
@@ -153,7 +153,7 @@ CHECK_THROWS_MATCHES(
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -163,7 +163,7 @@ int v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -173,7 +173,7 @@ std::vector<int> v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -183,7 +183,7 @@ std::optional<int> v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 int v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -193,7 +193,7 @@ int v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  vector directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<int> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -203,7 +203,7 @@ std::vector<int> v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Int:  optional directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<int> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(

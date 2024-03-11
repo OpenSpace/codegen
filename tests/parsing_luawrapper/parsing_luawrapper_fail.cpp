@@ -34,7 +34,7 @@ namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided", "[Parsing][LuaWrapper]")
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(int) {
     }
 )";
@@ -46,7 +46,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No variable name provided", "[Parsing][Lua
 }
 
 TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type", "[Parsing][LuaWrapper]") {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] std::chrono::time_point foo() {
     }
 )";
@@ -65,7 +65,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(std::list<int> abc) {
     }
 )";
@@ -84,7 +84,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(float abc, std::list<int> def) {
     }
 )";
@@ -103,7 +103,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(float& abc) {
     }
 )";
@@ -120,7 +120,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(const float& abc) {
     }
 )";
@@ -137,7 +137,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(const float* abc) {
     }
 )";
@@ -154,7 +154,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void Foo(const float* abc) {
     }
 )";
@@ -171,7 +171,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(std::variant<unsigned int, float> arg) {
     }
 )";
@@ -188,7 +188,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(std::variant<float, unsigned int> arg) {
     }
 )";
@@ -201,7 +201,7 @@ TEST_CASE(
 }
 
 TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1", "[Parsing][LuaWrapper]") {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap()]] void foo(std::variant<float, unsigned int> arg) {
     }
 )";
@@ -214,7 +214,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/1", "[Parsing][LuaWrappe
 }
 
 TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2", "[Parsing][LuaWrapper]") {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap("")]] void foo(std::variant<float, unsigned int> arg) {
     }
 )";
@@ -228,7 +228,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Empty custom name/2", "[Parsing][LuaWrappe
 
 TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name", "[Parsing][LuaWrapper]")
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap(abc)]] void foo(std::variant<float, int> arg) {
     }
 )";
@@ -247,7 +247,7 @@ TEST_CASE(
     "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap]] void foo(std::optional<float> arg1, std::optional<int> arg2, int arg3, std::optional<std::string> arg4) {
     }
 )";
@@ -266,7 +266,7 @@ TEST_CASE(
     "Parsing/LuaWrapper/Error:  Unterminated luawrap marker", "[Parsing][LuaWrapper]"
 )
 {
-    constexpr const char S[] = R"(
+    constexpr std::string_view S = R"(
     [[codegen::luawrap] void foo() {
     }
 )";

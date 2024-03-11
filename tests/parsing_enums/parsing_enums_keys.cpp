@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Enums/Keys:  Keys", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::stringify()]] Enum1 {
         Value1 [[codegen::key("KeyForValue1")]],
         value2,
@@ -38,7 +38,7 @@ TEST_CASE("Parsing/Enums/Keys:  Keys", "[Parsing][Enums]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
+    CHECK(code.structs.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);

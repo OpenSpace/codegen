@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Attributes/Vec2") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // inRangeValueVec2 documentation
         glm::vec2 inRangeValueVec2 [[codegen::inrange(glm::vec2(1.f), glm::vec2(2.f))]];
@@ -110,8 +110,8 @@ TEST_CASE("Parsing/Structs/Attributes/Vec2") {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 

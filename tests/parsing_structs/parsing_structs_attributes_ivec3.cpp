@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Attributes/IVec3") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // inRangeValueIVec3 documentation
         glm::ivec3 inRangeValueIVec3 [[codegen::inrange(glm::ivec3(1), glm::ivec3(2))]];
@@ -110,8 +110,8 @@ TEST_CASE("Parsing/Structs/Attributes/IVec3") {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 

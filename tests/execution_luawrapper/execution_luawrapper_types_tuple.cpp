@@ -482,8 +482,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments: tuple(vec3)", "[Execution][LuaWrapper
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -500,8 +500,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments: tuple(bool, int)", "[Execution][LuaWr
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -522,8 +522,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -544,8 +544,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -566,8 +566,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -588,8 +588,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -612,8 +612,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "(vec3)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -640,8 +640,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "(Boolean, Integer)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -669,8 +669,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "(Number, Number, String, Number)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -691,8 +691,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments: tuple(vec3) map", "[Execution][LuaWra
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> (vec3)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -719,8 +719,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> (Boolean, Integer)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -746,8 +746,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> (Number, Number, String, Number)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -773,8 +773,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -795,8 +795,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -817,8 +817,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -839,8 +839,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -866,8 +866,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -893,8 +893,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -920,8 +920,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -945,8 +945,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -970,8 +970,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -995,8 +995,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1024,8 +1024,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1053,8 +1053,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1082,8 +1082,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(vec3)[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1116,8 +1116,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Boolean, Integer)[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1150,8 +1150,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "(Number, Number, String, Number)[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1177,9 +1177,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnTupleVec3;
     CHECK(func.name == "returnTupleVec3");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(vec3)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1194,9 +1194,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)", "[Execution][LuaWrapper]"
 TEST_CASE("Execution/LuaWrapper/Return:  tuple(bool,int)", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnTupleBoolInt;
     CHECK(func.name == "returnTupleBoolInt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Boolean, Integer)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1216,9 +1216,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleDoubleFloatStringDouble;
     CHECK(func.name == "returnTupleDoubleFloatStringDouble");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Number, Number, String, Number)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1241,9 +1241,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleVec3Map;
     CHECK(func.name == "returnTupleVec3Map");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> (vec3)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1275,9 +1275,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleBoolIntMap;
     CHECK(func.name == "returnTupleBoolIntMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> (Boolean, Integer)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1306,9 +1306,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleDoubleFloatStringDoubleMap;
     CHECK(func.name == "returnTupleDoubleFloatStringDoubleMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> (Number, Number, String, Number)");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1345,9 +1345,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleVec3Vector;
     CHECK(func.name == "returnTupleVec3Vector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(vec3)[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1376,9 +1376,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleBoolIntVector;
     CHECK(func.name == "returnTupleBoolIntVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Boolean, Integer)[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1404,9 +1404,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleDoubleFloatStringDoubleVector;
     CHECK(func.name == "returnTupleDoubleFloatStringDoubleVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Number, Number, String, Number)[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1440,9 +1440,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleVec3Optional;
     CHECK(func.name == "returnTupleVec3Optional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(vec3)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1465,9 +1465,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleBoolIntOptional;
     CHECK(func.name == "returnTupleBoolIntOptional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Boolean, Integer)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1489,9 +1489,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleDoubleFloatStringDoubleOptional;
     CHECK(func.name == "returnTupleDoubleFloatStringDoubleOptional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Number, Number, String, Number)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1517,9 +1517,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleVec3OptionalNullopt;
     CHECK(func.name == "returnTupleVec3OptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(vec3)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1539,9 +1539,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleBoolIntOptionalNullopt;
     CHECK(func.name == "returnTupleBoolIntOptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Boolean, Integer)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1561,9 +1561,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnTupleDoubleFloatStringDoubleOptionalNullopt;
     CHECK(func.name == "returnTupleDoubleFloatStringDoubleOptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "(Number, Number, String, Number)?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

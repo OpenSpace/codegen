@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void funcVoid(void* arg) {
@@ -49,15 +49,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -87,7 +87,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -117,7 +117,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -147,7 +147,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -177,7 +177,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -208,7 +208,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void funcVoid(void* arg = nullptr) {
@@ -228,15 +228,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -268,7 +268,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -300,7 +300,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -332,7 +332,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -364,7 +364,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -397,7 +397,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void funcVoid(std::map<std::string, void*> arg) {
@@ -417,15 +417,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -459,7 +459,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -493,7 +493,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -527,7 +527,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -561,7 +561,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -596,7 +596,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void funcVoid(std::optional<void*> arg) {
@@ -616,15 +616,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -656,7 +656,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -688,7 +688,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -720,7 +720,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -752,7 +752,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -785,7 +785,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void funcVoid(std::vector<void*> arg) {
@@ -805,15 +805,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -845,7 +845,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -877,7 +877,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -909,7 +909,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -941,7 +941,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -974,7 +974,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
     
     [[codegen::luawrap]] void funcVoid1(std::array<void*, 1> arg) {
@@ -1024,15 +1024,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 15);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1065,7 +1065,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1098,7 +1098,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1131,7 +1131,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1164,7 +1164,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1197,7 +1197,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1230,7 +1230,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1263,7 +1263,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1296,7 +1296,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1329,7 +1329,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1362,7 +1362,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1395,7 +1395,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1428,7 +1428,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1461,7 +1461,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1494,7 +1494,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -1528,7 +1528,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] void* funcVoid() {
@@ -1548,16 +1548,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(rt);
@@ -1568,8 +1568,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(rt);
@@ -1580,8 +1580,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(rt);
@@ -1592,8 +1592,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(rt);
@@ -1604,8 +1604,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::PointerType);
         PointerType* pt = static_cast<PointerType*>(rt);
@@ -1617,7 +1617,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] std::map<std::string, void*> funcVoid() {
@@ -1637,16 +1637,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::MapType);
         MapType* mt = static_cast<MapType*>(rt);
@@ -1661,8 +1661,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::MapType);
         MapType* mt = static_cast<MapType*>(rt);
@@ -1677,8 +1677,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::MapType);
         MapType* mt = static_cast<MapType*>(rt);
@@ -1693,8 +1693,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::MapType);
         MapType* mt = static_cast<MapType*>(rt);
@@ -1709,8 +1709,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::MapType);
         MapType* mt = static_cast<MapType*>(rt);
@@ -1726,7 +1726,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] std::optional<void*> funcVoid() {
@@ -1746,16 +1746,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::OptionalType);
         OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -1768,8 +1768,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::OptionalType);
         OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -1782,8 +1782,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::OptionalType);
         OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -1796,8 +1796,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::OptionalType);
         OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -1810,8 +1810,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::OptionalType);
         OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -1825,7 +1825,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct Foo {};
 
     [[codegen::luawrap]] std::vector<void*> funcVoid() {
@@ -1845,16 +1845,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 5);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::VectorType);
         VectorType* vt = static_cast<VectorType*>(rt);
@@ -1867,8 +1867,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::VectorType);
         VectorType* vt = static_cast<VectorType*>(rt);
@@ -1881,8 +1881,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::VectorType);
         VectorType* vt = static_cast<VectorType*>(rt);
@@ -1895,8 +1895,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::VectorType);
         VectorType* vt = static_cast<VectorType*>(rt);
@@ -1909,8 +1909,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         REQUIRE(f);
 
         CHECK(f->functionName == "funcStruct2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         REQUIRE(rt->tag == VariableType::Tag::VectorType);
         VectorType* vt = static_cast<VectorType*>(rt);
@@ -1924,7 +1924,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::array<void*, 1> funcVoid1() {
         return {};
     }
@@ -1987,16 +1987,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 15);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2010,8 +2010,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2025,8 +2025,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcVoid3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2040,8 +2040,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2055,8 +2055,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2070,8 +2070,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcInt3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2085,8 +2085,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2100,8 +2100,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2115,8 +2115,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcString3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2130,8 +2130,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2145,8 +2145,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2160,8 +2160,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFoo3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2175,8 +2175,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2190,8 +2190,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -2205,8 +2205,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         REQUIRE(f);
 
         CHECK(f->functionName == "funcFooS3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);

@@ -194,9 +194,9 @@ namespace {
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
-    CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.arguments.empty());
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -218,8 +218,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "p");
     CHECK(func.arguments[0].type == "Parameter");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -248,8 +248,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "p");
     CHECK(func.arguments[1].type == "Parameter?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -282,8 +282,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Parameter");
     CHECK(func.arguments[1].name == "q");
     CHECK(func.arguments[1].type == "Parameter");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -314,8 +314,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  Two Parameters w/optional") 
     CHECK(func.arguments[1].type == "Parameter");
     CHECK(func.arguments[2].name == "q");
     CHECK(func.arguments[2].type == "Parameter?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -352,8 +352,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Integer");
     CHECK(func.arguments[1].name == "ps");
     CHECK(func.arguments[1].type == "Parameter[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -409,8 +409,8 @@ TEST_CASE(
     CHECK(func.arguments[1].type == "Integer?");
     CHECK(func.arguments[2].name == "ps");
     CHECK(func.arguments[2].type == "Parameter[]?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -466,8 +466,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "ps");
     CHECK(func.arguments[0].type == "String -> Parameter");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -515,7 +515,7 @@ TEST_CASE(
     CHECK(func.arguments[2].name == "c");
     CHECK(func.arguments[2].type == "String");
     CHECK(func.returnType == "Parameter");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

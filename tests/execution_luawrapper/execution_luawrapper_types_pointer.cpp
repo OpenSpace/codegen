@@ -696,8 +696,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  void*", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "void*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -714,8 +714,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  int*", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "int*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -733,8 +733,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  std::string*", "[Execution][LuaWrapp
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "std::string*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -752,8 +752,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo*", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -771,8 +771,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo**", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo**");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -813,8 +813,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "void*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -836,8 +836,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "void*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -859,8 +859,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "int*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -883,8 +883,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "int*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -906,8 +906,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "std::string*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -930,8 +930,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "std::string*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -953,8 +953,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Foo*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -981,8 +981,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Foo*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1004,8 +1004,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Foo**?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1045,8 +1045,8 @@ TEST_CASE(
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Foo**?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1066,8 +1066,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> void*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1092,8 +1092,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> int*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1121,8 +1121,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> std::string*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1150,8 +1150,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> Foo*");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1179,8 +1179,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> Foo**");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1216,8 +1216,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  void* optional", "[Execution][LuaWra
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "void*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1234,8 +1234,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  int* optional", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "int*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1256,8 +1256,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "std::string*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1275,8 +1275,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo* optional", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo*?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1294,8 +1294,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  Foo** optional", "[Execution][LuaWra
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo**?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1334,8 +1334,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "void*[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1360,8 +1360,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "int*[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1385,8 +1385,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "std::string*[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1410,8 +1410,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo*[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1435,8 +1435,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Foo**[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1465,9 +1465,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  void*", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnVoid;
     CHECK(func.name == "returnVoid");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "void*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1482,9 +1482,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  void*", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  int*", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnInt;
     CHECK(func.name == "returnInt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "int*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1499,9 +1499,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  int*", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  std::string*", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnString;
     CHECK(func.name == "returnString");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "std::string*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1516,9 +1516,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  std::string*", "[Execution][LuaWrapper]
 TEST_CASE("Execution/LuaWrapper/Return:  Foo*", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnStruct;
     CHECK(func.name == "returnStruct");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Foo*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1535,9 +1535,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  Foo*", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  Foo**", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnStruct2;
     CHECK(func.name == "returnStruct2");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Foo**");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1560,9 +1560,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  Foo**", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  void* map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnVoidMap;
     CHECK(func.name == "returnVoidMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> void*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1584,9 +1584,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  void* map", "[Execution][LuaWrapper]") 
 TEST_CASE("Execution/LuaWrapper/Return:  int* map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIntMap;
     CHECK(func.name == "returnIntMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> int*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1608,9 +1608,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  int* map", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  std::string* map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnStringMap;
     CHECK(func.name == "returnStringMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> std::string*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1632,9 +1632,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  std::string* map", "[Execution][LuaWrap
 TEST_CASE("Execution/LuaWrapper/Return:  Foo* map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnStructMap;
     CHECK(func.name == "returnStructMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> Foo*");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1662,9 +1662,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  Foo* map", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  Foo** map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnStruct2Map;
     CHECK(func.name == "returnStruct2Map");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> Foo**");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1714,7 +1714,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  void* optional", "[Execution][LuaWrappe
     CHECK(func.arguments[0].name == "shouldReturn");
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "void*?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1741,7 +1741,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  int* optional", "[Execution][LuaWrapper
     CHECK(func.arguments[0].name == "shouldReturn");
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "int*?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1773,7 +1773,7 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "shouldReturn");
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "std::string*?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1806,7 +1806,7 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "shouldReturn");
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "Foo*?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1840,7 +1840,7 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "shouldReturn");
     CHECK(func.arguments[0].type == "Boolean");
     CHECK(func.returnType == "Foo**?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1872,9 +1872,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  void* vector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnVoidVector;
     CHECK(func.name == "returnVoidVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "void*[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1892,9 +1892,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  void* vector", "[Execution][LuaWrapper]
 TEST_CASE("Execution/LuaWrapper/Return:  int* vector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIntVector;
     CHECK(func.name == "returnIntVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "int*[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1916,9 +1916,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnStringVector;
     CHECK(func.name == "returnStringVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "std::string*[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1940,9 +1940,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnStructVector;
     CHECK(func.name == "returnStructVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Foo*[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -1971,9 +1971,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnStruct2Vector;
     CHECK(func.name == "returnStruct2Vector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Foo**[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

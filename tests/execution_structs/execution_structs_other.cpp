@@ -41,7 +41,7 @@ namespace {
 TEST_CASE("Execution/Structs/Other:  Documentation Id", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc1 = codegen::doc<Parameters>("");
-    CHECK(doc1.id == "");
+    CHECK(doc1.id.empty());
 
     Documentation doc2 = codegen::doc<Parameters>("abc");
     CHECK(doc2.id == "abc");

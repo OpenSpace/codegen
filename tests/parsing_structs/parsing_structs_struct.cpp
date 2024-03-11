@@ -326,7 +326,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute", "[Parsing][Structs]") {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);

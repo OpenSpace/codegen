@@ -29,22 +29,22 @@
 #include "types.h"
 
 TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::tuple<bool> foo() {
         return true;
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::TupleType);
     TupleType* vt = static_cast<TupleType*>(rt);
@@ -60,22 +60,22 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool", "[Parsing][LuaWrapper]") {
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::tuple<int, double> foo() {
         return 1;
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::TupleType);
     TupleType* vt = static_cast<TupleType*>(rt);
@@ -101,22 +101,22 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double", "[Parsing][LuaWrapper]
 
 TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path", "[Parsing][LuaWrapper]")
 {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::tuple<float, std::string, std::filesystem::path> foo() {
         return 1.f;
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::TupleType);
     TupleType* vt = static_cast<TupleType*>(rt);

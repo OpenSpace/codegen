@@ -135,9 +135,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("TestFunc") {
         Function func = codegen::lua::TestFunc;
         CHECK(func.name == "testFunc");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -154,8 +154,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         REQUIRE(func.arguments.size() == 1);
         CHECK(func.arguments[0].name == "arg");
         CHECK(func.arguments[0].type == "Integer");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -176,8 +176,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "String");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -199,8 +199,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -222,8 +222,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -240,9 +240,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc5") {
         Function func = codegen::lua::TestFunc5;
         CHECK(func.name == "testFunc5");
-        CHECK(func.arguments.size() == 0);
+        CHECK(func.arguments.empty());
         CHECK(func.returnType == "Integer");
-        CHECK(func.helpText == "");
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -259,9 +259,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc6") {
         Function func = codegen::lua::TestFunc6;
         CHECK(func.name == "testFunc6");
-        CHECK(func.arguments.size() == 0);
+        CHECK(func.arguments.empty());
         CHECK(func.returnType == "(Integer, Number)");
-        CHECK(func.helpText == "");
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -288,9 +288,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
 
         Function func = codegen::lua::TestFunc7;
         CHECK(func.name == "testFunc7");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -306,9 +306,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc8") {
         Function func = codegen::lua::TestFunc8;
         CHECK(func.name == "abcFunc");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -329,8 +329,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[1].type == "String");
         CHECK(func.arguments[2].name == "arg3");
         CHECK(func.arguments[2].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
 
         {
             lua_State* state = luaL_newstate();

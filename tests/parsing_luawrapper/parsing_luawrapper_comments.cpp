@@ -29,29 +29,29 @@
 #include "types.h"
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void foo() {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     /*
      * Some example documentation
      * that covers a few lines.
@@ -62,8 +62,8 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1", "[Parsing][LuaWrapp
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -75,14 +75,14 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1", "[Parsing][LuaWrapp
         "And another one for good measure"
     );
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     // Some example documentation
     // that covers a few lines.
     // And another one for good measure
@@ -91,8 +91,8 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2", "[Parsing][LuaWrapp
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -104,14 +104,14 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2", "[Parsing][LuaWrapp
         "And another one for good measure"
     );
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     /*
      * Some example documentation
      * that covers a few lines.
@@ -124,23 +124,23 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1", "[Parsing][LuaWra
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     // First lines that shouldn't be included
     // in the documentation
 
@@ -152,8 +152,8 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWra
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -165,7 +165,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWra
         "And another one for good measure"
     );
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
@@ -173,15 +173,15 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWra
 
 // Only // in the line
 TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     //
     [[codegen::luawrap]] void foo() {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -189,7 +189,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment", "[Parsing][LuaWrapper]"
     CHECK(f->functionName == "foo");
     CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
@@ -197,15 +197,15 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment", "[Parsing][LuaWrapper]"
 
 // The line has a space after the //
 TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/2", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     // 
     [[codegen::luawrap]] void foo() {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -213,14 +213,14 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/2", "[Parsing][LuaWrapper
     CHECK(f->functionName == "foo");
     CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     //
     //
     [[codegen::luawrap]] void foo() {
@@ -228,8 +228,8 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
@@ -237,7 +237,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper
     CHECK(f->functionName == "foo");
     CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->arguments.empty());
 
     std::string r = generateResult(code);
     CHECK(!r.empty());

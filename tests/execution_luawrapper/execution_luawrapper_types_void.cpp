@@ -43,9 +43,9 @@ namespace {
 TEST_CASE("Execution/LuaWrapper/Arguments:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;
     CHECK(func.name == "funcVoid");
-    CHECK(func.arguments.size() == 0);
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.arguments.empty());
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

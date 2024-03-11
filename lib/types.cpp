@@ -473,7 +473,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         // visible in the variable's context
         if (!context) {
             throw CodegenError(fmt::format(
-                "Type detected that codegen doesn't know how to handle: {}", type
+                "Type detected that codegen doesn't know how to handle: '{}'", type
             ));
         }
 
@@ -483,7 +483,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         const StackElement* el = resolveType(context, type);
         if (!el) {
             throw CodegenError(fmt::format(
-                "Type detected that codegen doesn't know how to handle: {}", type
+                "Type detected that codegen doesn't know how to handle: '{}'", type
             ));
         }
         ct->type = el;

@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Enums/Arrayify:  Basic", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::arrayify()]] Enum1 {
         Value1,
         value2,
@@ -38,8 +38,8 @@ TEST_CASE("Parsing/Enums/Arrayify:  Basic", "[Parsing][Enums]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
 
     {
