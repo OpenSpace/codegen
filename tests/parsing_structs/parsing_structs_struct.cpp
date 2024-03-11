@@ -29,13 +29,13 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Struct:  Minimal", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 };)";
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -50,12 +50,12 @@ TEST_CASE("Parsing/Structs/Struct:  Minimal", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive()]] Parameters {
 };)";
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -70,11 +70,11 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter", "[Parsing][Struc
 }
 
 TEST_CASE("Parsing/Structs/Struct:  NoExhaustive true parameter", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(true)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(true)]] Parameters {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -89,11 +89,11 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive true parameter", "[Parsing][Str
 }
 
 TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(false)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name), codegen::noexhaustive(false)]] Parameters {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -108,13 +108,13 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter", "[Parsing][St
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Substruct", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
 struct A {
 };
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -140,7 +140,7 @@ struct A {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Double Substruct", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     struct A {
     };
     struct B {
@@ -148,7 +148,7 @@ TEST_CASE("Parsing/Structs/Struct:  Double Substruct", "[Parsing][Structs]") {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -186,13 +186,13 @@ TEST_CASE("Parsing/Structs/Struct:  Double Substruct", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Variable", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // variable documentation
     int variable;
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -215,7 +215,7 @@ TEST_CASE("Parsing/Structs/Struct:  Variable", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Double Variable", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // variable1 documentation
     int variable;
 
@@ -224,7 +224,7 @@ TEST_CASE("Parsing/Structs/Struct:  Double Variable", "[Parsing][Structs]") {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -253,14 +253,14 @@ TEST_CASE("Parsing/Structs/Struct:  Double Variable", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Empty Enum", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
     };
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -282,7 +282,7 @@ TEST_CASE("Parsing/Structs/Struct:  Empty Enum", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Enum", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
         Value,
@@ -291,7 +291,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum", "[Parsing][Structs]") {
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -317,7 +317,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct [[codegen::Dictionary(Name)]] Parameters {
+    constexpr std::string_view Source = R"(struct [[codegen::Dictionary(Name)]] Parameters {
     // enum documentation
     enum class Name {
         Value [[codegen::key(VK)]],
@@ -354,7 +354,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute", "[Parsing][Structs]") {
 }
 
 TEST_CASE("Parsing/Structs/Struct:  New lines", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(struct
+    constexpr std::string_view Source = R"(struct
 [[codegen::Dictionary(Dictionary),
 codegen::noexhaustive(false)]]
 Parameters
@@ -363,7 +363,7 @@ Parameters
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -384,7 +384,7 @@ Parameters
 }
 
 TEST_CASE("Parsing/Structs/Struct:  New lines go nuts", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 
 struct
 
@@ -407,7 +407,7 @@ Parameters
 };)";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s);
@@ -429,7 +429,7 @@ Parameters
 
 TEST_CASE("Parsing/Structs/Struct:  Substruct vector documentation", "[Parsing][Structs]")
 {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     // struct a documentation
     struct A {
@@ -442,7 +442,7 @@ struct [[codegen::Dictionary(D)]] P {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
 
     REQUIRE(s->children.size() == 1);

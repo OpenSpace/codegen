@@ -201,7 +201,7 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnVariantBoolIntBool;
     CHECK(func.name == "returnVariantBoolIntBool");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Boolean | Integer");
     CHECK(func.helpText == "");
     REQUIRE(func.function);
@@ -223,7 +223,7 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnVariantBoolIntInt;
     CHECK(func.name == "returnVariantBoolIntInt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Boolean | Integer");
     CHECK(func.helpText == "");
     REQUIRE(func.function);
@@ -245,7 +245,7 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnVariantDvec3FloatStringDouble;
     CHECK(func.name == "returnVariantDvec3FloatStringDouble");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
     CHECK(func.helpText == "");
     REQUIRE(func.function);
@@ -268,7 +268,7 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnVariantDvec3FloatStringDvec3;
     CHECK(func.name == "returnVariantDvec3FloatStringDvec3");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
     CHECK(func.helpText == "");
     REQUIRE(func.function);
@@ -291,7 +291,7 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnVariantDvec3FloatStringString;
     CHECK(func.name == "returnVariantDvec3FloatStringString");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Number | vec3 | String");
     CHECK(func.helpText == "");
     REQUIRE(func.function);

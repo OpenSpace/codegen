@@ -1476,12 +1476,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     return f;
 }
 
-[[nodiscard]] Code parse(std::string codeStr, std::string fileName) {
+[[nodiscard]] Code parse(std::string_view code, std::string fileName) {
+    std::string codeStr = std::string(code);
     // When trying to generate code checked out on a Windows machine on a Linux virtual
     // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
-    std::string_view code = codeStr;
+    code = codeStr;
 
     // We want to keep track of the line number where we find different parts. Since we
     // remove the code parts that we have successfully dealt with, we need to manually
