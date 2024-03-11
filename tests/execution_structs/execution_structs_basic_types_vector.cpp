@@ -1101,7 +1101,9 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "String");
-        auto* v = dynamic_cast<StringVerifier*>(t->documentations[0].verifier.get());
+        StringVerifier* v = dynamic_cast<StringVerifier*>(
+            t->documentations[0].verifier.get()
+        );
         REQUIRE(v);
         CHECK(v->mustBeNotEmpty() == false);
     }
