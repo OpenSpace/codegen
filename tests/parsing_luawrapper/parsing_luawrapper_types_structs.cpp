@@ -70,7 +70,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  void", "[Parsing][LuaWrapper]")
         CHECK(f->arguments.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -140,7 +140,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -214,7 +214,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -309,7 +309,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -409,7 +409,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -481,7 +481,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -555,7 +555,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -624,7 +624,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as map", "[Parsing][LuaWrapper]
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -763,7 +763,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Struct:  as array", "[Parsing][LuaWrappe
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -867,6 +867,6 @@ TEST_CASE(
         REQUIRE(f->arguments.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

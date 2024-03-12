@@ -62,7 +62,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  void", "[Parsing][LuaWrapper]") 
         CHECK(f->arguments.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -122,7 +122,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -204,7 +204,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -266,7 +266,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -328,7 +328,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -465,7 +465,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -507,7 +507,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enums:  as return value", "[Parsing][Lua
         CHECK(f->arguments.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -592,6 +592,6 @@ TEST_CASE("Parsing/LuaWrapper/Arguments-Enum:  array return", "[Parsing][LuaWrap
         REQUIRE(t->type->type == StackElement::Type::Enum);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

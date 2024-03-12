@@ -111,6 +111,6 @@ TEST_CASE("Parsing/Enums/Mapping:  Mapping", "[Parsing][Enums]") {
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

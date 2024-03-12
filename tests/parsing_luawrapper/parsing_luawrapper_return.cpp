@@ -55,7 +55,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple bool", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(v);
     CHECK(bt->type == BasicType::Type::Bool);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -95,7 +95,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple int double", "[Parsing][LuaWrapper]
         CHECK(bt->type == BasicType::Type::Double);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -143,6 +143,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  tuple float string path", "[Parsing][LuaW
         CHECK(bt->type == BasicType::Type::Path);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

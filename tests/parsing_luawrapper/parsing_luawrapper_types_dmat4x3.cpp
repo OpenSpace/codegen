@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -112,7 +112,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 defaulted", "[Parsing][LuaWrap
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -159,7 +159,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 map", "[Parsing][LuaWrapper]")
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -204,7 +204,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 optional", "[Parsing][LuaWrapp
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -249,7 +249,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 vector", "[Parsing][LuaWrapper
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -369,7 +369,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dmat4x3 array", "[Parsing][LuaWrapper]
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -395,7 +395,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::DMat4x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -425,7 +425,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 map", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::DMat4x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -453,7 +453,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 optional", "[Parsing][LuaWrapper]
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::DMat4x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -481,7 +481,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 vector", "[Parsing][LuaWrapper]")
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::DMat4x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -550,6 +550,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat4x3 array", "[Parsing][LuaWrapper]") 
         CHECK(bt->type == BasicType::Type::DMat4x3);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

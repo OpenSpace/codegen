@@ -48,7 +48,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(s->variables[0]->name == "p");
     CHECK(s->variables[0]->key == "\"P\"");
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
-

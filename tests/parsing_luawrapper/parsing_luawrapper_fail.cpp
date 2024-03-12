@@ -54,9 +54,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  Unhandled return type", "[Parsing][LuaWrap
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::StartsWith(
-            "Type detected that codegen doesn't know how to handle: 'std::chrono::time_point'"
-        )
+        CM::StartsWith("Type detected that codegen doesn't know how to handle: 'std::chrono::time_point'")
     );
 }
 
@@ -73,9 +71,7 @@ TEST_CASE(
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::StartsWith(
-            "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
-        )
+        CM::StartsWith("Type detected that codegen doesn't know how to handle: 'std::list<int>'")
     );
 }
 
@@ -92,9 +88,7 @@ TEST_CASE(
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::StartsWith(
-            "Type detected that codegen doesn't know how to handle: 'std::list<int>'"
-        )
+        CM::StartsWith("Type detected that codegen doesn't know how to handle: 'std::list<int>'")
     );
 }
 
@@ -236,9 +230,7 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name", "[Parsing][LuaW
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::StartsWith(
-            "Error in custom name for luawrap function. Provided name must be enclosed"
-        )
+        CM::StartsWith("Error in custom name for luawrap function. Provided name must be enclosed")
     );
 }
 
@@ -273,8 +265,6 @@ TEST_CASE(
     CHECK_THROWS_MATCHES(
         generateResult(parse(S)),
         CodegenError,
-        CM::StartsWith(
-            "Error parsing root function, unterminated codegen marker. Missing ']'"
-        )
+        CM::StartsWith("Error parsing root function, unterminated codegen marker. Missing ']'")
     );
 }

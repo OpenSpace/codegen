@@ -447,7 +447,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]
     REQUIRE(p.dictValue->hasValue<double>("b"));
     CHECK(p.dictValue->value<double>("b") == 2.0);
 
-    ghoul::Dictionary e;
+    const ghoul::Dictionary e;
     const Parameters p2 = codegen::bake<Parameters>(e);
     CHECK(!p2.boolValue.has_value());
     CHECK(!p2.intValue.has_value());

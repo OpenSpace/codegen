@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -112,7 +112,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double defaulted", "[Parsing][LuaWrapp
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -159,7 +159,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double map", "[Parsing][LuaWrapper]") 
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -204,7 +204,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double optional", "[Parsing][LuaWrappe
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -249,7 +249,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double vector", "[Parsing][LuaWrapper]
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -369,7 +369,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  double array", "[Parsing][LuaWrapper]"
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -395,7 +395,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Double);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -425,7 +425,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double map", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Double);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -453,7 +453,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double optional", "[Parsing][LuaWrapper]"
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Double);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -481,7 +481,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double vector", "[Parsing][LuaWrapper]") 
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Double);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -550,6 +550,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  double array", "[Parsing][LuaWrapper]") {
         CHECK(bt->type == BasicType::Type::Double);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

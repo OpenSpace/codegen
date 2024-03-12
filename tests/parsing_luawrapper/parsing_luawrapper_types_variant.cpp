@@ -79,7 +79,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Variant<bool, int>", "[Parsing][LuaWra
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -144,7 +144,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -294,7 +294,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  variant array", "[Parsing][LuaWrapper]
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -325,7 +325,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant bool", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(v);
     CHECK(bt->type == BasicType::Type::Bool);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -365,7 +365,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant int double", "[Parsing][LuaWrappe
         CHECK(bt->type == BasicType::Type::Double);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -416,7 +416,7 @@ TEST_CASE(
         CHECK(bt->type == BasicType::Type::Path);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -548,6 +548,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  variant array", "[Parsing][LuaWrapper]") 
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

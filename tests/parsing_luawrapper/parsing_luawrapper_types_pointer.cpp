@@ -203,7 +203,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer", "[Parsing][LuaWrapper]") {
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -392,7 +392,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer defaulted", "[Parsing][LuaWrap
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -591,7 +591,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer map", "[Parsing][LuaWrapper]")
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -780,7 +780,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer optional", "[Parsing][LuaWrapp
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -969,7 +969,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer vector", "[Parsing][LuaWrapper
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1523,7 +1523,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  Pointer array", "[Parsing][LuaWrapper]
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1612,7 +1612,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer", "[Parsing][LuaWrapper]") {
         CHECK(generateTypename(pt) == "Foo**");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1721,7 +1721,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer map", "[Parsing][LuaWrapper]") {
         CHECK(generateTypename(pt) == "Foo**");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1820,7 +1820,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer optional", "[Parsing][LuaWrapper]
         CHECK(generateTypename(pt) == "Foo**");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1919,7 +1919,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer vector", "[Parsing][LuaWrapper]")
         CHECK(generateTypename(pt) == "Foo**");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -2216,6 +2216,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  pointer array", "[Parsing][LuaWrapper]") 
         CHECK(pt->type == "Foo*");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

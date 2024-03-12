@@ -664,6 +664,6 @@ TEST_CASE("Parsing/Structs/Attributes/Vec2") {
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

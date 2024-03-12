@@ -67,6 +67,6 @@ TEST_CASE("Parsing/Enums/Arrayify:  Basic", "[Parsing][Enums]") {
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

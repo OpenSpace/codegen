@@ -45,7 +45,7 @@ TEST_CASE("Parsing/Structs/Struct:  Minimal", "[Parsing][Structs]") {
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -84,7 +84,7 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive true parameter", "[Parsing][Str
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -103,7 +103,7 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter", "[Parsing][St
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -135,7 +135,7 @@ struct A {
         CHECK(a->attributes.noExhaustive);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     REQUIRE(!r.empty());
 }
 
@@ -181,7 +181,7 @@ TEST_CASE("Parsing/Structs/Struct:  Double Substruct", "[Parsing][Structs]") {
         CHECK(b->variables.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -210,7 +210,7 @@ TEST_CASE("Parsing/Structs/Struct:  Variable", "[Parsing][Structs]") {
         CHECK(var->comment == "variable documentation");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -248,7 +248,7 @@ TEST_CASE("Parsing/Structs/Struct:  Double Variable", "[Parsing][Structs]") {
         CHECK(var->comment == "variable2 documentation");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -277,7 +277,7 @@ TEST_CASE("Parsing/Structs/Struct:  Empty Enum", "[Parsing][Structs]") {
         CHECK(e->comment == "enum documentation");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -312,7 +312,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum", "[Parsing][Structs]") {
         CHECK(ee->elements[1]->name == "Value2");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -349,7 +349,7 @@ TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute", "[Parsing][Structs]") {
         CHECK(ee->elements[1]->attributes.key == "\"Value2\"");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -379,7 +379,7 @@ Parameters
         CHECK(generateTypename(var->type) == "int");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -423,7 +423,7 @@ Parameters
         CHECK(generateTypename(var->type) == "int");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -459,6 +459,6 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(s->variables[0]->name == "aa");
     CHECK(s->variables[0]->comment == "vector documentation");
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

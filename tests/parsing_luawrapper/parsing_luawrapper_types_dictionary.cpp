@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary", "[Parsing][LuaWrapper]") 
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -113,7 +113,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted", "[Parsing][LuaW
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -160,7 +160,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map", "[Parsing][LuaWrapper
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -205,7 +205,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional", "[Parsing][LuaWr
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -250,7 +250,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector", "[Parsing][LuaWrap
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -370,7 +370,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapp
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -396,7 +396,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -426,7 +426,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map", "[Parsing][LuaWrapper]")
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -454,7 +454,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional", "[Parsing][LuaWrapp
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -482,7 +482,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector", "[Parsing][LuaWrapper
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -551,6 +551,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]
         CHECK(bt->type == BasicType::Type::Dictionary);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

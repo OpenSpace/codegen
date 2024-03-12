@@ -441,6 +441,6 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
         CHECK(e->elements[2]->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

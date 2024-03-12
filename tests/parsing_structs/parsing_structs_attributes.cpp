@@ -86,6 +86,9 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
     }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute empty noexhaustive", "[structs][parsing]") {
@@ -107,6 +110,8 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive()]] Parameters {
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
     CHECK(generateTypename(s->variables[0]->type) == "int");
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute true noexhaustive", "[structs][parsing]") {
@@ -128,6 +133,8 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
     CHECK(generateTypename(s->variables[0]->type) == "int");
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[structs][parsing]") {
@@ -149,4 +156,6 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {
     CHECK(s->variables[0]->name == "value");
     CHECK(s->variables[0]->key == "\"Value\"");
     CHECK(generateTypename(s->variables[0]->type) == "int");
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }

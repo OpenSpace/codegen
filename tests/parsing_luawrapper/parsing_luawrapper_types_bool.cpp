@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -112,7 +112,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool defaulted", "[Parsing][LuaWrapper
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -159,7 +159,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool map", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -204,7 +204,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool optional", "[Parsing][LuaWrapper]
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -249,7 +249,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool vector", "[Parsing][LuaWrapper]")
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -369,6 +369,6 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  bool array", "[Parsing][LuaWrapper]") 
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

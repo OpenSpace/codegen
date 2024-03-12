@@ -46,7 +46,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  void", "[Parsing][LuaWrapper]") {
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -68,6 +68,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  void", "[Parsing][LuaWrapper]") {
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

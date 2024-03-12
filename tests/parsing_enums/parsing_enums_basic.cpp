@@ -65,7 +65,7 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -105,7 +105,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/1", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -146,7 +146,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/2", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -188,7 +188,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/3", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -229,7 +229,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -272,7 +272,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/5", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -318,7 +318,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -365,7 +365,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/2", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -413,7 +413,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/3", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -460,7 +460,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -509,7 +509,7 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/5", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -568,6 +568,6 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/6", "[Parsing][Enums]") {
         CHECK(ee->name == "Value4");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

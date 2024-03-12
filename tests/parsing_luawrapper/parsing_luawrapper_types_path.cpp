@@ -67,7 +67,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -112,7 +112,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path defaulted", "[Parsing][LuaWrapper
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -159,7 +159,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path map", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -204,7 +204,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path optional", "[Parsing][LuaWrapper]
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -249,7 +249,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path vector", "[Parsing][LuaWrapper]")
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -369,7 +369,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  path array", "[Parsing][LuaWrapper]") 
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -395,7 +395,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Path);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -425,7 +425,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path map", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Path);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -453,7 +453,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path optional", "[Parsing][LuaWrapper]") 
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Path);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -481,7 +481,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path vector", "[Parsing][LuaWrapper]") {
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Path);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -550,6 +550,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  path array", "[Parsing][LuaWrapper]") {
         CHECK(bt->type == BasicType::Type::Path);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

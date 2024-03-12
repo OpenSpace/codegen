@@ -653,6 +653,6 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

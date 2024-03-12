@@ -46,7 +46,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  No Comments", "[Parsing][LuaWrapper]") 
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -77,7 +77,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/1", "[Parsing][LuaWrapp
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -106,7 +106,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Direct Comments/2", "[Parsing][LuaWrapp
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -135,7 +135,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/1", "[Parsing][LuaWra
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -167,7 +167,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Comment Separated/2", "[Parsing][LuaWra
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -191,7 +191,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment", "[Parsing][LuaWrapper]"
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -215,7 +215,7 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/2", "[Parsing][LuaWrapper
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -239,6 +239,6 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

@@ -131,6 +131,9 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.unequal.empty());
         }
     }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 

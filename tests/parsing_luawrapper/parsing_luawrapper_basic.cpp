@@ -46,7 +46,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  No Arguments", "[Parsing][LuaWrapper]") {
     CHECK(f->returnValue == nullptr);
     CHECK(f->arguments.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -88,7 +88,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Argument", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -131,7 +131,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  1 Defaulted Argument", "[Parsing][LuaWrapp
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -193,7 +193,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments", "[Parsing][LuaWrapper]") {
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -258,7 +258,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/1)", "[Parsing][LuaW
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -323,7 +323,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  2 Arguments (optional/2)", "[Parsing][LuaW
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -406,7 +406,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Optional first argument", "[Parsing][LuaWr
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -496,7 +496,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -586,7 +586,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -614,7 +614,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Return value", "[Parsing][LuaWrapper]") {
         CHECK(bt->type == BasicType::Type::Int);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -657,7 +657,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -697,7 +697,7 @@ TEST_CASE("Parsing/LuaWrapper/Basic:  Custom name", "[Parsing][LuaWrapper]") {
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -743,7 +743,7 @@ foo()
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -793,7 +793,7 @@ foo
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -842,7 +842,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -884,7 +884,7 @@ TEST_CASE(
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -995,7 +995,7 @@ float arg2,
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1126,7 +1126,7 @@ TEST_CASE(
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 

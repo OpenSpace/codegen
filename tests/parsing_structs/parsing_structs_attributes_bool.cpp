@@ -69,6 +69,6 @@ TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
     CHECK(!var->attributes.isIdentifier);
     CHECK(!var->attributes.mustBeNotEmpty);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
