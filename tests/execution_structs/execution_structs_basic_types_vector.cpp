@@ -172,12 +172,14 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake", "[Execution][Structs]")
         std::ofstream f = std::ofstream(tmpFile1);
         f << "unit test";
     }
-    std::filesystem::path tmpFile2 = (path / "codegen_exec_basic_types_vector_2.txt");
+    const std::filesystem::path tmpFile2 =
+        (path / "codegen_exec_basic_types_vector_2.txt");
     {
         std::ofstream f = std::ofstream(tmpFile2);
         f << "unit test";
     }
-    std::filesystem::path tmpFile3 = (path / "codegen_exec_basic_types_vector_3.txt");
+    const std::filesystem::path tmpFile3 =
+        (path / "codegen_exec_basic_types_vector_3.txt");
     {
         std::ofstream f = std::ofstream(tmpFile3);
         f << "unit test";
