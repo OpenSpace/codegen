@@ -697,7 +697,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments: tuple(vec3) map", "[Execution][LuaWra
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::map<std::string, std::tuple<glm::dvec3>> m = {
+    const std::map<std::string, std::tuple<glm::dvec3>> m = {
         { "key1", std::tuple(glm::dvec3(1.1, 2.2, 3.3)) },
         { "key2", std::tuple(glm::dvec3(4.4, 5.5, 6.6)) },
         { "key3", std::tuple(glm::dvec3(7.7, 8.8, 9.9)) }
@@ -725,7 +725,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::map<std::string, std::tuple<bool, int>> m = {
+    const std::map<std::string, std::tuple<bool, int>> m = {
         { "key1", std::tuple(true, 1) },
         { "key2", std::tuple(false, 2) },
         { "key3", std::tuple(true, 3) }
@@ -752,7 +752,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::map<std::string, std::tuple<double, float, std::string, double>> m = {
+    const std::map<std::string, std::tuple<double, float, std::string, double>> m = {
         { "key1", std::tuple(1.1, 2.2f, "abc", 3.3) },
         { "key2", std::tuple(4.4, 5.5f, "def", 6.6) },
         { "key3", std::tuple(7.7, 8.8f, "ghi", 9.9) }
@@ -845,7 +845,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::vector<std::tuple<glm::dvec3>> vec = {
+    const std::vector<std::tuple<glm::dvec3>> vec = {
         std::tuple(glm::dvec3(1.1, 2.2, 3.3)),
         std::tuple(glm::dvec3(4.4, 5.5, 6.6)),
         std::tuple(glm::dvec3(7.7, 8.8, 9.9))
@@ -872,7 +872,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::vector<std::tuple<bool, int>> vec = {
+    const std::vector<std::tuple<bool, int>> vec = {
         std::tuple(true, 1),
         std::tuple(false, 2),
         std::tuple(true, 3)
@@ -899,7 +899,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::vector<std::tuple<double, float, std::string, double>> vec = {
+    const std::vector<std::tuple<double, float, std::string, double>> vec = {
         std::tuple(1.1, 2.2f, "abc", 3.3),
         std::tuple(4.4, 5.5f, "def", 6.6),
         std::tuple(7.7, 8.8f, "ghi", 9.9)
@@ -926,7 +926,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<glm::dvec3>, 1> arr = {
+    const std::array<std::tuple<glm::dvec3>, 1> arr = {
         std::tuple(glm::dvec3(1.1, 2.2, 3.3))
     };
     ghoul::lua::push(state, arr);
@@ -951,7 +951,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<bool, int>, 1> arr = {
+    const std::array<std::tuple<bool, int>, 1> arr = {
         std::tuple(true, 1)
     };
     ghoul::lua::push(state, arr);
@@ -976,7 +976,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<double, float, std::string, double>, 1> arr = {
+    const std::array<std::tuple<double, float, std::string, double>, 1> arr = {
         std::tuple(1.1, 2.2f, "abc", 3.3)
     };
     ghoul::lua::push(state, arr);
@@ -1001,7 +1001,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<glm::dvec3>, 5> arr = {
+    const std::array<std::tuple<glm::dvec3>, 5> arr = {
         std::tuple(glm::dvec3(1.1, 2.2, 3.3)),
         std::tuple(glm::dvec3(4.4, 5.5, 6.6)),
         std::tuple(glm::dvec3(7.7, 8.8, 9.9)),
@@ -1030,7 +1030,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<bool, int>, 5> arr = {
+    const std::array<std::tuple<bool, int>, 5> arr = {
         std::tuple(true, 1),
         std::tuple(false, 2),
         std::tuple(true, 3),
@@ -1059,7 +1059,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<double, float, std::string, double>, 5> arr = {
+    const std::array<std::tuple<double, float, std::string, double>, 5> arr = {
         std::tuple(1.1, 2.2f, "abc", 3.3),
         std::tuple(4.4, 5.5f, "def", 6.6),
         std::tuple(7.7, 8.8f, "ghi", 9.9),
@@ -1088,7 +1088,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<glm::dvec3>, 10> arr = {
+    const std::array<std::tuple<glm::dvec3>, 10> arr = {
         std::tuple(glm::dvec3(1.1, 2.2, 3.3)),
         std::tuple(glm::dvec3(4.4, 5.5, 6.6)),
         std::tuple(glm::dvec3(7.7, 8.8, 9.9)),
@@ -1122,7 +1122,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<bool, int>, 10> arr = {
+    const std::array<std::tuple<bool, int>, 10> arr = {
         std::tuple(true, 1),
         std::tuple(false, 2),
         std::tuple(true, 3),
@@ -1156,7 +1156,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::array<std::tuple<double, float, std::string, double>, 10> arr = {
+    const std::array<std::tuple<double, float, std::string, double>, 10> arr = {
         std::tuple(1.1, 2.2f, "abc", 3.3),
         std::tuple(4.4, 5.5f, "def", 6.6),
         std::tuple(7.7, 8.8f, "ghi", 9.9),
@@ -1186,7 +1186,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)", "[Execution][LuaWrapper]"
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::tuple<glm::dvec3> val = ghoul::lua::values<glm::dvec3>(state);
+    const std::tuple<glm::dvec3> val = ghoul::lua::values<glm::dvec3>(state);
     CHECK(std::get<0>(val) == glm::dvec3(1.1, 2.2, 3.3));
     lua_close(state);
 }
@@ -1203,7 +1203,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(bool,int)", "[Execution][LuaWrapp
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 2);
-    std::tuple<bool, int> val = ghoul::lua::values<bool, int>(state);
+    const std::tuple<bool, int> val = ghoul::lua::values<bool, int>(state);
     CHECK(std::get<0>(val) == true);
     CHECK(std::get<1>(val) == 1);
     lua_close(state);
@@ -1225,7 +1225,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 4);
-    std::tuple<double, float, std::string, double> val =
+    const std::tuple<double, float, std::string, double> val =
         ghoul::lua::values<double, float, std::string, double>(state);
     CHECK(std::get<0>(val) == 1.1);
     CHECK(std::get<1>(val) == 2.2f);
@@ -1250,7 +1250,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::map<std::string, std::tuple<glm::dvec3>> val =
+    const std::map<std::string, std::tuple<glm::dvec3>> val =
         ghoul::lua::value<std::map<std::string, std::tuple<glm::dvec3>>>(state);
     REQUIRE(val.size() == 3);
     CHECK(val.find("key1") != val.end());
@@ -1284,7 +1284,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::map<std::string, std::tuple<bool, int>> val =
+    const std::map<std::string, std::tuple<bool, int>> val =
         ghoul::lua::value<std::map<std::string, std::tuple<bool, int>>>(state);
     REQUIRE(val.size() == 3);
     CHECK(val.find("key1") != val.end());
@@ -1315,7 +1315,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::map<std::string, std::tuple<double, float, std::string, double>> val =
+    const std::map<std::string, std::tuple<double, float, std::string, double>> val =
         ghoul::lua::value<
             std::map<std::string, std::tuple<double, float, std::string, double>>
         >(state);
@@ -1354,7 +1354,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::vector<std::tuple<glm::dvec3>> val =
+    const std::vector<std::tuple<glm::dvec3>> val =
         ghoul::lua::value<std::vector<std::tuple<glm::dvec3>>>(state);
     REQUIRE(val.size() == 3);
     CHECK(std::get<0>(val[0]).x == 1.1);
@@ -1385,7 +1385,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::vector<std::tuple<bool, int>> val =
+    const std::vector<std::tuple<bool, int>> val =
         ghoul::lua::value<std::vector<std::tuple<bool, int>>>(state);
     REQUIRE(val.size() == 3);
     CHECK(std::get<0>(val[0]) == true);
@@ -1413,7 +1413,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::vector<std::tuple<double, float, std::string, double>> val =
+    const std::vector<std::tuple<double, float, std::string, double>> val =
         ghoul::lua::value<std::vector<std::tuple<double, float, std::string, double>>>(
             state
         );
@@ -1449,7 +1449,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::optional<std::tuple<glm::dvec3>> val =
+    const std::optional<std::tuple<glm::dvec3>> val =
         ghoul::lua::value<std::optional<std::tuple<glm::dvec3>>>(state);
     REQUIRE(val.has_value());
     CHECK(std::get<0>(*val).x == 1.1);
@@ -1474,7 +1474,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::optional<std::tuple<bool, int>> val =
+    const std::optional<std::tuple<bool, int>> val =
         ghoul::lua::value<std::optional<std::tuple<bool, int>>>(state);
     REQUIRE(val.has_value());
     CHECK(std::get<0>(*val) == true);
@@ -1498,7 +1498,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    std::optional<std::tuple<double, float, std::string, double>> val =
+    const std::optional<std::tuple<double, float, std::string, double>> val =
         ghoul::lua::value<std::optional<std::tuple<double, float, std::string, double>>>(
             state
         );
@@ -1526,7 +1526,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 0);
-    std::optional<std::tuple<glm::dvec3>> val =
+    const std::optional<std::tuple<glm::dvec3>> val =
         ghoul::lua::value<std::optional<std::tuple<glm::dvec3>>>(state);
     CHECK(!val.has_value());
     lua_close(state);
@@ -1548,7 +1548,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 0);
-    std::optional<std::tuple<bool, int>> val =
+    const std::optional<std::tuple<bool, int>> val =
         ghoul::lua::value<std::optional<std::tuple<bool, int>>>(state);
     CHECK(!val.has_value());
     lua_close(state);
@@ -1570,7 +1570,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 0);
-    std::optional<std::tuple<double, float, std::string, double>> val =
+    const std::optional<std::tuple<double, float, std::string, double>> val =
         ghoul::lua::value<std::optional<std::tuple<double, float, std::string, double>>>(
             state
         );
