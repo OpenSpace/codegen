@@ -453,7 +453,7 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dmat2x3 optional", "[Parsing][LuaWrapper]
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::DMat2x3);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
