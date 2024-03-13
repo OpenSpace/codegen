@@ -346,7 +346,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "glm::dmat4x4");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -667,7 +667,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -988,7 +988,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
@@ -1009,6 +1009,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->key == "Var");
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

@@ -703,7 +703,7 @@ TEST_CASE("Execution/LuaWrapper/Arguments: tuple(vec3) map", "[Execution][LuaWra
         { "key3", std::tuple(glm::dvec3(7.7, 8.8, 9.9)) }
     };
     ghoul::lua::push(state, m);
-    std::string s = ghoul::lua::stackInformation(state);
+    const std::string s = ghoul::lua::stackInformation(state);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
