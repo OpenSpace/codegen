@@ -52,7 +52,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     int error;
 };
 )";
-    Code code = parse(Source);
+    const Code code = parse(Source);
     CHECK_THROWS_MATCHES(
         generateResult(code),
         CodegenError, CM::StartsWith("Malformed codegen::verbatim")
@@ -77,7 +77,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
 )";
     CHECK_THROWS_MATCHES(
         [Source](){
-            Code code = parse(Source);
+            const Code code = parse(Source);
             generateResult(code);
         }(),
         CodegenError, CM::StartsWith("Unbalanced number of < > brackets")
