@@ -32,6 +32,6 @@ int main(int argc, char** argv) {
     LogManager::initialize(LogLevel::Error);
     LogMgr.addLog(std::make_unique<ConsoleLog>());
 
-    int result = Catch::Session().run(argc, argv);
+    const int result = Catch::Session().run(argc, argv);
     return result;
 }

@@ -444,7 +444,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  int", "[Execution][LuaWrapper]") {
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    int val = ghoul::lua::value<int>(state);
+    const int val = ghoul::lua::value<int>(state);
     CHECK(val == 1);
     lua_close(state);
 }
@@ -488,7 +488,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    int val = ghoul::lua::value<int>(state);
+    const int val = ghoul::lua::value<int>(state);
     CHECK(val == 1);
     lua_close(state);
 }

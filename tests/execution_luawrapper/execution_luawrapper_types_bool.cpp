@@ -447,7 +447,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  bool", "[Execution][LuaWrapper]") {
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    bool val = ghoul::lua::value<bool>(state);
+    const bool val = ghoul::lua::value<bool>(state);
     CHECK(val == true);
     lua_close(state);
 }
@@ -492,7 +492,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    bool val = ghoul::lua::value<bool>(state);
+    const bool val = ghoul::lua::value<bool>(state);
     CHECK(val == true);
     lua_close(state);
 }

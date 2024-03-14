@@ -65,7 +65,7 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter", "[Parsing][Struc
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
