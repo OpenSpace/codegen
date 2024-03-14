@@ -82,18 +82,18 @@ int main(int argc, char** argv) {
     auto beg = std::chrono::high_resolution_clock::now();
 
     std::vector<fs::path> entries;
-    std::string extFolder = fmt::format(
+    const std::string extFolder = fmt::format(
         "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
     );
-    for (std::string_view src : srcs) {
+    for (const std::string_view src : srcs) {
         if (fs::is_regular_file(src)) {
-            entries.push_back(src);
+            entries.emplace_back(src);
             continue;
         }
 
         // It's a folder then
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
-            std::filesystem::path path = p.path();
+            const std::filesystem::path path = p.path();
 
             if ((path.extension() == ".cpp" || path.extension() == ".inl") &&
                 path.string().find("_codegen.cpp") == std::string::npos &&
@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
                 }
 
                 auto begin = std::chrono::high_resolution_clock::now();
-                Result res = handleFile(p);
+                const Result res = handleFile(p);
                 auto end = std::chrono::high_resolution_clock::now();
                 if (res == Result::Processed) {
                     ChangedFiles++;

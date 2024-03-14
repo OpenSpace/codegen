@@ -447,7 +447,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  float", "[Execution][LuaWrapper]") {
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    float val = ghoul::lua::value<float>(state);
+    const float val = ghoul::lua::value<float>(state);
     CHECK(val == 1.1f);
     lua_close(state);
 }
@@ -492,7 +492,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    float val = ghoul::lua::value<float>(state);
+    const float val = ghoul::lua::value<float>(state);
     CHECK(val == 1.1f);
     lua_close(state);
 }
