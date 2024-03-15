@@ -159,6 +159,7 @@ namespace {
         REQUIRE(ps.size() == 3);
 
         std::vector<std::string> keys;
+        keys.reserve(ps.size());
         for (const std::pair<const std::string, Parameter>& p : ps) {
             keys.push_back(p.first);
         }
@@ -183,7 +184,7 @@ namespace {
         Parameter p = {
             .a = a,
             .b = b,
-            .c = c
+            .c = std::move(c)
         };
         return p;
     }
@@ -524,7 +525,7 @@ TEST_CASE(
     func.function(state);
     CHECK(lua_gettop(state) == 1);
 
-    ghoul::Dictionary d = ghoul::lua::value<ghoul::Dictionary>(state);
+    const ghoul::Dictionary d = ghoul::lua::value<ghoul::Dictionary>(state);
     REQUIRE(d.hasValue<double>("a"));
     CHECK(d.value<double>("a") == 1);
     REQUIRE(d.hasValue<double>("b"));

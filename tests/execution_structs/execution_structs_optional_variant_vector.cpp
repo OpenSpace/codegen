@@ -43,7 +43,7 @@ TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake", "[Execution][Struc
     using namespace std::string_literals;
 
     {
-        ghoul::Dictionary d;
+        const ghoul::Dictionary d;
         const Parameters p = codegen::bake<Parameters>(d);
         CHECK(!p.ovv.has_value());
     }

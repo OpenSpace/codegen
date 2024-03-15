@@ -135,7 +135,7 @@ namespace {
         return res;
     }
 
-    std::vector<const VariableType*> usedTypes(const std::vector<Struct*> structs) {
+    std::vector<const VariableType*> usedTypes(const std::vector<Struct*>& structs) {
         std::vector<const VariableType*> res;
 
         for (Struct* s : structs) {
@@ -188,11 +188,11 @@ namespace {
             }
             it++;
             const size_t end = comment.find(')', it);
-            std::string argument = comment.substr(it, end - it);
+            const std::string argument = comment.substr(it, end - it);
             comment = argument;
         }
         else {
-            if (size_t jt = comment.find('"');
+            if (const size_t jt = comment.find('"');
                 jt != std::string::npos && comment[jt - 1] != '\\')
             {
                 comment.insert(jt, "\\");
@@ -244,7 +244,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 
     if (type->tag == VariableType::Tag::BasicType) {
         BasicType* bt = static_cast<BasicType*>(type);
-        std::string v = verifierForType(bt->type, var.attributes);
+        const std::string v = verifierForType(bt->type, var.attributes);
         return "new " + v;
     }
     else if (type->tag == VariableType::Tag::OptionalType) {
@@ -400,24 +400,24 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     );
 
     for (VariableType* t : variantType->types) {
-        std::string typeName = generateTypename(t);
+        const std::string typeName = generateTypename(t);
 
         const bool isEnumType =
             t->isCustomType() &&
             static_cast<CustomType*>(t)->type->type == StackElement::Type::Enum;
         if (t->isVectorType()) {
-            std::string bakeFunction = vectorBakeFunctionForType(typeName);
+            const std::string bakeFunction = vectorBakeFunctionForType(typeName);
             result += bakeFunction;
         }
         else if (isEnumType) {
-            std::string fqnType = fqn(static_cast<CustomType*>(t)->type, "::");
-            std::string bakeFunction = enumBakeFunctionForType(fqnType);
+            const std::string fqnType = fqn(static_cast<CustomType*>(t)->type, "::");
+            const std::string bakeFunction = enumBakeFunctionForType(fqnType);
             result += bakeFunction;
         }
         else {
-            std::string_view conversionFunc = variantConversionFunctionForType(typeName);
-            assert(!conversionFunc.empty());
-            result += conversionFunc;
+            const std::string_view convFunc = variantConversionFunctionForType(typeName);
+            assert(!convFunc.empty());
+            result += convFunc;
         }
     }
 
@@ -595,7 +595,7 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     result += BakeToFunctionFallback;
     result += "\n\n";
 
-    std::vector<const VariableType*> types = usedTypes(code.structs);
+    const std::vector<const VariableType*> types = usedTypes(code.structs);
     bool hasOptionalType = false;
     bool hasVectorType = false;
     bool hasMapType = false;
@@ -651,7 +651,7 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
 
         result += "    return res;\n}\n";
 
-        std::vector<Enum*> enums = mappedEnums(*s);
+        const std::vector<Enum*> enums = mappedEnums(*s);
         if (!enums.empty() && !hasWrittenMappingFallback) {
             result += MapFunctionFallback;
             result += '\n';
@@ -670,7 +670,7 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
 std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback,
                                bool& hasWrittenArrayFallback)
 {
-    std::vector<Enum*> enums = collectEnums(code);
+    const std::vector<Enum*> enums = collectEnums(code);
 
     // If there are no enums, we can bail out
     if (enums.empty()) {
@@ -922,7 +922,7 @@ std::string generateLuaFunction(Function* f) {
     std::string argumentsDesc = "{\n";
     for (Variable* var : f->arguments) {
         argumentsDesc += fmt::format(
-            "        {{ \"{}\", \"{}\"", var->name, generateDescriptiveTypename(var->type)
+            R"("        {{ "{}", "{}")", var->name, generateDescriptiveTypename(var->type)
         );
 
         if (var->type->isOptionalType() &&
@@ -1076,7 +1076,7 @@ Result handleFile(std::filesystem::path path) {
     file.close();
 
 
-    std::string p = path.string();
+    const std::string p = path.string();
     Code code = parse(std::move(res), p);
     if (code.structs.empty() && code.enums.empty() && code.luaWrapperFunctions.empty()) {
         return Result::NotProcessed;
@@ -1092,14 +1092,11 @@ Result handleFile(std::filesystem::path path) {
     destination.replace_extension();
     destination.replace_filename(destination.filename().string() + "_codegen.cpp");
 
-    bool shouldWriteFile;
+    bool shouldWriteFile = true;
     if (std::filesystem::exists(destination)) {
-        std::ifstream f(destination);
-        std::string prev = std::string(std::istreambuf_iterator<char>{f}, {});
+        std::ifstream f = std::ifstream(destination);
+        const std::string prev = std::string(std::istreambuf_iterator<char>{f}, {});
         shouldWriteFile = (prev != content);
-    }
-    else {
-        shouldWriteFile = true;
     }
 
     if (PreventFileChange && shouldWriteFile) {

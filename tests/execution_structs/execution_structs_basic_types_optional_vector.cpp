@@ -169,36 +169,36 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake", "[Execution][S
 {
     using namespace std::string_literals;
 
-    std::filesystem::path path = std::filesystem::temp_directory_path();
-    std::string tmpFile1 =
-        (path / "codegen_execution_basic_types_optional_vector_1.txt").string();
+    const std::filesystem::path path = std::filesystem::temp_directory_path();
+    const std::filesystem::path tmpFile1 =
+        (path / "codegen_execution_basic_types_optional_vector_1.txt");
     {
         std::ofstream f(tmpFile1);
         f << "unit test";
     }
-    std::string tmpFile2 =
-        (path / "codegen_execution_basic_types_optional_vector_2.txt").string();
+    const std::filesystem::path tmpFile2 =
+        (path / "codegen_execution_basic_types_optional_vector_2.txt");
     {
         std::ofstream f(tmpFile2);
         f << "unit test";
     }
-    std::string tmpFile3 =
-        (path / "codegen_execution_basic_types_optional_vector_3.txt").string();
+    const std::filesystem::path tmpFile3 =
+        (path / "codegen_execution_basic_types_optional_vector_3.txt");
     {
         std::ofstream f(tmpFile3);
         f << "unit test";
     }
 
-    std::string tmpFolder1 =
-        (path / "codegen_execution_basic_types_optional_vector_1").string();
+    const std::filesystem::path tmpFolder1 =
+        (path / "codegen_execution_basic_types_optional_vector_1");
     std::filesystem::create_directories(tmpFolder1);
 
-    std::string tmpFolder2 =
-        (path / "codegen_execution_basic_types_optional_vector_2").string();
+    const std::filesystem::path tmpFolder2 =
+        (path / "codegen_execution_basic_types_optional_vector_2");
     std::filesystem::create_directories(tmpFolder2);
 
-    std::string tmpFolder3 =
-        (path / "codegen_execution_basic_types_optional_vector_3").string();
+    const std::filesystem::path tmpFolder3 =
+        (path / "codegen_execution_basic_types_optional_vector_3");
     std::filesystem::create_directories(tmpFolder3);
 
     ghoul::Dictionary d;
@@ -1061,7 +1061,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake", "[Execution][S
     CHECK(p.dictValue->at(2).value<double>("b") == 6.0);
 
 
-    ghoul::Dictionary e;
+    const ghoul::Dictionary e;
     const Parameters p2 = codegen::bake<Parameters>(e);
     CHECK(!p2.boolValue.has_value());
     CHECK(!p2.intValue.has_value());
