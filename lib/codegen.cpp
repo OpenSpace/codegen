@@ -922,7 +922,7 @@ std::string generateLuaFunction(Function* f) {
     std::string argumentsDesc = "{\n";
     for (Variable* var : f->arguments) {
         argumentsDesc += fmt::format(
-            R"("        {{ "{}", "{}")", var->name, generateDescriptiveTypename(var->type)
+            R"(        {{ "{}", "{}")", var->name, generateDescriptiveTypename(var->type)
         );
 
         if (var->type->isOptionalType() &&
