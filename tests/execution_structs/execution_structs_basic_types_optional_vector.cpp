@@ -246,16 +246,16 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake", "[Execution][S
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", tmpFile1);
-        v.setValue("2", tmpFile2);
-        v.setValue("3", tmpFile3);
+        v.setValue("1", tmpFile1.string());
+        v.setValue("2", tmpFile2.string());
+        v.setValue("3", tmpFile3.string());
         d.setValue("PathValue", v);
     }
     {
         ghoul::Dictionary v;
-        v.setValue("1", tmpFolder1);
-        v.setValue("2", tmpFolder2);
-        v.setValue("3", tmpFolder3);
+        v.setValue("1", tmpFolder1.string());
+        v.setValue("2", tmpFolder2.string());
+        v.setValue("3", tmpFolder3.string());
         d.setValue("DirectoryValue", v);
     }
     {
