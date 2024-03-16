@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 
         // It's a folder then
         for (const fs::directory_entry& p : fs::recursive_directory_iterator(src)) {
-            const std::filesystem::path path = p.path();
+            const std::filesystem::path& path = p.path();
 
             if ((path.extension() == ".cpp" || path.extension() == ".inl") &&
                 path.string().find("_codegen.cpp") == std::string::npos &&

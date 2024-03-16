@@ -1072,7 +1072,7 @@ std::string createClickableFileName(std::string filename) {
 
 Result handleFile(std::filesystem::path path) {
     std::ifstream file(path);
-    std::string res = std::string(std::istreambuf_iterator<char>(file), {});
+    const std::string res = std::string(std::istreambuf_iterator<char>(file), {});
     file.close();
 
 

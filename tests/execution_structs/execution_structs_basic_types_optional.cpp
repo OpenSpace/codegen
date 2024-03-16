@@ -165,7 +165,7 @@ namespace {
 TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
-    std::filesystem::path path = std::filesystem::temp_directory_path();
+    const std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types_optional.txt").string();
     {
         std::ofstream f(tmpFile);
