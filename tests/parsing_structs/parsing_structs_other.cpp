@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing: Comments", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Comments)]] Parameters {
     // multi
     // line
@@ -85,8 +85,8 @@ Lines, With, Weird,
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -163,12 +163,12 @@ Lines, With, Weird,
         CHECK(var->comment == "This value has a \" in the comment which might cause it to break?");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing: Multiple", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(P1)]] Param1 {
     int abc;
 };
@@ -185,7 +185,7 @@ struct [[codegen::Dictionary(P4)]] Param4 {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 4);
-    REQUIRE(code.enums.size() == 0);
+    REQUIRE(code.enums.empty());
 
     {
         Struct* s = code.structs[0];
@@ -215,12 +215,12 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         CHECK(s->variables[0]->name == "jkl");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing: Struct Comments", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 // Some documentation for the first struct
 struct [[codegen::Dictionary(P1)]] Param1 {
     int abc;
@@ -255,7 +255,7 @@ struct [[codegen::Dictionary(P2)]] Param2 {
 }
 
 TEST_CASE("Parsing: Struct Comments With Multiple Paragraphs", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 // Some brief documentation for the struct
 //
 // Some more details for the struct
@@ -281,7 +281,7 @@ Some more details for the struct)";
 }
 
 TEST_CASE("Parsing: Struct Comments With Multiple Paragraphs - Block comments", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 /*
  * Some brief documentation for the struct.
  *

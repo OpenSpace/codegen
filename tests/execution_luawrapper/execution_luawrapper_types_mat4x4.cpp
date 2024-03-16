@@ -318,8 +318,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4", "[Execution][LuaWrapper]") 
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -351,8 +351,8 @@ TEST_CASE(
         "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, "
         "10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)"
     );
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -384,8 +384,8 @@ TEST_CASE(
         "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, "
         "10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)"
     );
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -412,8 +412,8 @@ TEST_CASE(
         "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, "
         "10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)"
     );
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -448,8 +448,8 @@ TEST_CASE(
         "glm::mat4x4(1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.7f, 8.8f, 9.9f, "
         "10.10f, 11.11f, 12.12f, 13.13f, 14.14f, 15.15f, 16.16f)"
     );
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -466,8 +466,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Map", "[Execution][LuaWrapper]
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> mat4x4");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -511,8 +511,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Optional", "[Execution][LuaWra
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -539,8 +539,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -556,8 +556,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Vector", "[Execution][LuaWrapp
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -601,8 +601,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array1", "[Execution][LuaWrapp
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -630,8 +630,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array2", "[Execution][LuaWrapp
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -703,8 +703,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array3", "[Execution][LuaWrapp
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat4x4[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -828,9 +828,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x4Array3", "[Execution][LuaWrapp
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnMat4x4;
     CHECK(func.name == "returnMat4x4");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat4x4");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -851,9 +851,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  mat4x4", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnMat4x4Map;
     CHECK(func.name == "returnMat4x4Map");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> mat4x4");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -897,9 +897,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnMat4x4Optional;
     CHECK(func.name == "returnMat4x4Optional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat4x4?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -924,9 +924,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnMat4x4OptionalNullopt;
     CHECK(func.name == "returnMat4x4OptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat4x4?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -939,9 +939,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  mat4x4Vector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnMat4x4Vector;
     CHECK(func.name == "returnMat4x4Vector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat4x4[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

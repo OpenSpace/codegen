@@ -165,7 +165,7 @@ namespace {
 TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
-    std::filesystem::path path = std::filesystem::temp_directory_path();
+    const std::filesystem::path path = std::filesystem::temp_directory_path();
     std::string tmpFile = (path / "codegen_execution_basic_types_optional.txt").string();
     {
         std::ofstream f(tmpFile);
@@ -447,7 +447,7 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]
     REQUIRE(p.dictValue->hasValue<double>("b"));
     CHECK(p.dictValue->value<double>("b") == 2.0);
 
-    ghoul::Dictionary e;
+    const ghoul::Dictionary e;
     const Parameters p2 = codegen::bake<Parameters>(e);
     CHECK(!p2.boolValue.has_value());
     CHECK(!p2.intValue.has_value());

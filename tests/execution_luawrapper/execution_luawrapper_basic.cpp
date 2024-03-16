@@ -49,7 +49,7 @@ namespace {
 
     bool ranTestFunc3 = false;
     int testFunc3Value1 = -1;
-    std::string testFunc3Value2 = "";
+    std::string testFunc3Value2;
     [[codegen::luawrap]] void testFunc3(int arg1, std::string arg2) {
         testFunc3Value1 = arg1;
         testFunc3Value2 = std::move(arg2);
@@ -90,7 +90,7 @@ namespace {
 
     bool ranTestFunc9 = false;
     int testFunc9Value1 = -1;
-    std::string testFunc9Value2 = "";
+    std::string testFunc9Value2;
     double testFunc9Value3 = -1.1;
     [[codegen::luawrap]] void testFunc9(std::optional<int> arg1, std::string arg2, double arg3 = 1.0) {
         if (arg1.has_value()) {
@@ -135,9 +135,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("TestFunc") {
         Function func = codegen::lua::TestFunc;
         CHECK(func.name == "testFunc");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -154,8 +154,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         REQUIRE(func.arguments.size() == 1);
         CHECK(func.arguments[0].name == "arg");
         CHECK(func.arguments[0].type == "Integer");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -176,8 +176,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "String");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -199,8 +199,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -222,8 +222,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[0].type == "Integer");
         CHECK(func.arguments[1].name == "arg2");
         CHECK(func.arguments[1].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -240,9 +240,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc5") {
         Function func = codegen::lua::TestFunc5;
         CHECK(func.name == "testFunc5");
-        CHECK(func.arguments.size() == 0);
+        CHECK(func.arguments.empty());
         CHECK(func.returnType == "Integer");
-        CHECK(func.helpText == "");
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -259,9 +259,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc6") {
         Function func = codegen::lua::TestFunc6;
         CHECK(func.name == "testFunc6");
-        CHECK(func.arguments.size() == 0);
+        CHECK(func.arguments.empty());
         CHECK(func.returnType == "(Integer, Number)");
-        CHECK(func.helpText == "");
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -279,8 +279,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc7") {
         auto panicFunc = [](lua_State* L) -> int {
             CHECK(ranTestFunc7);
-            int n = lua_gettop(L);
-            std::string msg = lua_tostring(L, -1);
+            const int n = lua_gettop(L);
+            const std::string msg = lua_tostring(L, -1);
             CHECK(msg == "Thrown Lua error message");
             lua_close(L);
             throw std::runtime_error("excepted exception");
@@ -288,9 +288,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
 
         Function func = codegen::lua::TestFunc7;
         CHECK(func.name == "testFunc7");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -306,9 +306,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc8") {
         Function func = codegen::lua::TestFunc8;
         CHECK(func.name == "abcFunc");
-        CHECK(func.arguments.size() == 0);
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.arguments.empty());
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
         REQUIRE(func.function);
 
         lua_State* state = luaL_newstate();
@@ -329,8 +329,8 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         CHECK(func.arguments[1].type == "String");
         CHECK(func.arguments[2].name == "arg3");
         CHECK(func.arguments[2].type == "Number?");
-        CHECK(func.returnType == "");
-        CHECK(func.helpText == "");
+        CHECK(func.returnType.empty());
+        CHECK(func.helpText.empty());
 
         {
             lua_State* state = luaL_newstate();

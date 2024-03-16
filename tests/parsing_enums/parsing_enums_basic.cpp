@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::stringify()]] Enum {
         Value1,
         value2,
@@ -38,8 +38,8 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -65,12 +65,12 @@ TEST_CASE("Parsing/Enums/Basic:  Basic setup", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/1", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::stringify()]] Enum {
         Value1,
         Value2,
@@ -79,8 +79,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/1", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -105,12 +105,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/1", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/2", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class
     [[codegen::stringify()]] Enum {
         Value1,
@@ -120,8 +120,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/2", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -146,12 +146,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/2", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/3", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class
     [[codegen::stringify()]]
     Enum {
@@ -162,8 +162,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/3", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -188,12 +188,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/3", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class
     [[codegen::stringify()]] Enum {
         Value1,
@@ -203,8 +203,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -229,12 +229,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/4", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/5", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class
     [[codegen::stringify()]]
     Enum
@@ -246,8 +246,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/5", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -272,12 +272,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Stringify/5", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class E {
         Value1,
         Value2,
@@ -292,8 +292,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -318,12 +318,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/1", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/2", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class E {
         Value1,
         Value2,
@@ -339,8 +339,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/2", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -365,12 +365,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/2", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/3", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class E {
         Value1,
         Value2,
@@ -387,8 +387,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/3", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -413,12 +413,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/3", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class E {
         Value1,
         Value2,
@@ -434,8 +434,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -460,12 +460,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/4", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/5", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class E {
         Value1,
         Value2,
@@ -483,8 +483,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/5", "[Parsing][Enums]") {
     )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -509,12 +509,12 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/5", "[Parsing][Enums]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/6", "[Parsing][Enums]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     namespace abc::def::ghi {
         enum class E {
             Value5,
@@ -537,8 +537,8 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/6", "[Parsing][Enums]") {
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     REQUIRE(code.enums.size() == 1);
     Enum* e = code.enums.front();
     REQUIRE(e);
@@ -568,6 +568,6 @@ TEST_CASE("Parsing/Enums/Basic:  Line breaks/Map/6", "[Parsing][Enums]") {
         CHECK(ee->name == "Value4");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

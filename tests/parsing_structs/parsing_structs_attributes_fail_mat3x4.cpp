@@ -33,7 +33,7 @@
 namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -43,7 +43,7 @@ glm::mat3x4 v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -53,7 +53,7 @@ std::vector<glm::mat3x4> v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -63,7 +63,7 @@ std::optional<glm::mat3x4> v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -73,7 +73,7 @@ glm::mat3x4 v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -83,7 +83,7 @@ std::vector<glm::mat3x4> v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -93,7 +93,7 @@ std::optional<glm::mat3x4> v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  inrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -103,7 +103,7 @@ glm::mat3x4 v [[codegen::inrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector inrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -113,7 +113,7 @@ std::vector<glm::mat3x4> v [[codegen::inrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional inrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::inrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -123,7 +123,7 @@ std::optional<glm::mat3x4> v [[codegen::inrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  less") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -133,7 +133,7 @@ glm::mat3x4 v [[codegen::less(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector less") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -143,7 +143,7 @@ std::vector<glm::mat3x4> v [[codegen::less(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional less") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::less(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -153,7 +153,7 @@ std::optional<glm::mat3x4> v [[codegen::less(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  lessequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -163,7 +163,7 @@ glm::mat3x4 v [[codegen::lessequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector lessequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -173,7 +173,7 @@ std::vector<glm::mat3x4> v [[codegen::lessequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional lessequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::lessequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -183,7 +183,7 @@ std::optional<glm::mat3x4> v [[codegen::lessequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  greater") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -193,7 +193,7 @@ glm::mat3x4 v [[codegen::greater(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector greater") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -203,7 +203,7 @@ std::vector<glm::mat3x4> v [[codegen::greater(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional greater") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::greater(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -213,7 +213,7 @@ std::optional<glm::mat3x4> v [[codegen::greater(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  greaterequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -223,7 +223,7 @@ glm::mat3x4 v [[codegen::greaterequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector greaterequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -233,7 +233,7 @@ std::vector<glm::mat3x4> v [[codegen::greaterequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional greaterequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::greaterequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -243,7 +243,7 @@ std::optional<glm::mat3x4> v [[codegen::greaterequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -253,7 +253,7 @@ glm::mat3x4 v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -263,7 +263,7 @@ std::vector<glm::mat3x4> v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -273,7 +273,7 @@ std::optional<glm::mat3x4> v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  notinrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -283,7 +283,7 @@ glm::mat3x4 v [[codegen::notinrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector notinrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -293,7 +293,7 @@ std::vector<glm::mat3x4> v [[codegen::notinrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional notinrange") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::notinrange(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -303,7 +303,7 @@ std::optional<glm::mat3x4> v [[codegen::notinrange(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -313,7 +313,7 @@ glm::mat3x4 v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -323,7 +323,7 @@ std::vector<glm::mat3x4> v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -333,7 +333,7 @@ std::optional<glm::mat3x4> v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  unequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -343,7 +343,7 @@ glm::mat3x4 v [[codegen::unequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector unequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -353,7 +353,7 @@ std::vector<glm::mat3x4> v [[codegen::unequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional unequal") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::unequal(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -363,7 +363,7 @@ std::optional<glm::mat3x4> v [[codegen::unequal(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -373,7 +373,7 @@ glm::mat3x4 v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -383,7 +383,7 @@ std::vector<glm::mat3x4> v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional color") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::color()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -393,7 +393,7 @@ std::optional<glm::mat3x4> v [[codegen::color()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::mat3x4 v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -403,7 +403,7 @@ glm::mat3x4 v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  vector directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::mat3x4> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -413,7 +413,7 @@ std::vector<glm::mat3x4> v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Mat3x4:  optional directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::mat3x4> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(

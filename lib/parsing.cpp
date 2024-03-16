@@ -61,14 +61,14 @@ std::string_view extractLine(std::string_view sv, size_t* cursor) {
     if (p != std::string_view::npos) {
         // If there was a newline character, extract everything until then and update the
         // cursor to the following character
-        std::string_view line = sv.substr(*cursor, p - *cursor);
+        const std::string_view line = sv.substr(*cursor, p - *cursor);
         *cursor = p + 1;
         return strip(line);
     }
     else {
         // If there was no newline character, extract the remainder of the string and set
         // the cursor to the npos position
-        std::string_view line = sv.substr(*cursor);
+        const std::string_view line = sv.substr(*cursor);
         *cursor = std::string_view::npos;
         return strip(line);
     }
@@ -98,7 +98,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
     // Check that there are only empty character between the end of the block and the
     // beginning of the function
-    size_t firstRealCharAfterBlock = code.find_first_not_of(" \n", endBlockComment);
+    const size_t firstRealCharAfterBlock = code.find_first_not_of(" \n", endBlockComment);
     hasValidBlockComment &= (firstRealCharAfterBlock >= cursor);
 
 
@@ -111,8 +111,8 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
     // Check that there are only empty character between the end of the block and the
     // beginning of the function
-    size_t regularCursor = code.find('\n', endRegularComment);
-    size_t firstRealCharAfterRegular = code.find_first_not_of(" \n", regularCursor);
+    const size_t regularCursor = code.find('\n', endRegularComment);
+    const size_t firstRealCharAfterRegular = code.find_first_not_of(" \n", regularCursor);
     hasValidRegularComment &= (firstRealCharAfterRegular >= cursor);
 
     // There should only be at most one of them
@@ -122,7 +122,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
     std::vector<std::string_view> lines;
     if (hasValidBlockComment) {
         // Find the beginning /* for that comment
-        size_t beginBlockComment = code.rfind("/*", endBlockComment);
+        const size_t beginBlockComment = code.rfind("/*", endBlockComment);
 
         std::string_view cmnt = code.substr(
             beginBlockComment,
@@ -135,7 +135,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
         size_t p = cmnt.find('\n', 1);
         bool isFirst = true;
         while (p != std::string_view::npos) {
-            std::string_view line = cmnt.substr(c, p - c);
+            const std::string_view line = cmnt.substr(c, p - c);
             std::string_view stripLine = strip(line);
 
             if (stripLine[0] == '*') {
@@ -144,7 +144,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
             if (!isFirst && isEmptyLine(stripLine)) {
                 // No words on this line => add a new empty line to the comment
-                lines.push_back("\n\n");
+                lines.emplace_back("\n\n");
             }
             else {
                 stripLine = strip(stripLine);
@@ -172,7 +172,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
                 lineBegin = 0;
             }
 
-            std::string_view line = code.substr(lineBegin, c - lineBegin);
+            const std::string_view line = code.substr(lineBegin, c - lineBegin);
             std::string_view stripLine = strip(line);
             if (stripLine.substr(0, 2) != "//") {
                 // The line did not start with a comment, therefore we have reached
@@ -184,7 +184,7 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
             if (isEmptyLine(stripLine)) {
                 // No words on this line => add a new empty line to the comment
-                lines.push_back("\n\n");
+                lines.emplace_back("\n\n");
             }
             else {
                 stripLine = strip(stripLine);
@@ -245,7 +245,7 @@ struct ParseResult {
 std::vector<ParseResult> parseAttribute(std::string_view block) {
     assert(!block.empty());
 
-    std::string_view key = "codegen::";
+    const std::string_view key = "codegen::";
     const size_t p = block.find(key);
     if (p == std::string::npos) {
         return {};
@@ -266,7 +266,10 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
     }
 
     // If there is a ( then there has to be a ) as well
-    std::string_view name = block.substr(p + key.size(), beg - (p + key.size()) - 1);
+    const std::string_view name = block.substr(
+        p + key.size(),
+        beg - (p + key.size()) - 1
+    );
     if (const size_t end = block.find(')', beg);  end == std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Attribute parameter has unterminated parameter list\n{}", block
@@ -286,7 +289,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
         cursor++;
     }
 
-    std::string_view content = block.substr(beg, cursor - beg - 1);
+    const std::string_view content = block.substr(beg, cursor - beg - 1);
     std::vector<ParseResult> res;
     res.push_back({ name, strip(content) });
 
@@ -314,7 +317,7 @@ std::string_view parseCommentLine(std::string_view line) {
     assert(line.size() >= 2);
 
     // Remove the starting // characters
-    std::string_view comment = strip(line.substr(2));
+    const std::string_view comment = strip(line.substr(2));
     return comment;
 }
 
@@ -332,7 +335,7 @@ Variable::Attributes parseAttributes(std::string_view line) {
 
     Variable::Attributes res;
 
-    std::vector<ParseResult> attributes = parseAttribute(line);
+    const std::vector<ParseResult> attributes = parseAttribute(line);
     for (const ParseResult& p : attributes) {
         if (p.key == attributes::Key)               { res.key = p.value; }
         else if (p.key == attributes::Reference)    { res.reference = p.value; }
@@ -396,8 +399,8 @@ Struct* parseStruct(std::string_view line) {
 
     if (const size_t begin = line.find("[[", cursor);  begin != std::string_view::npos) {
         const size_t endAttr = line.find("]]", begin) + 2;
-        std::string_view block = line.substr(begin, endAttr - begin);
-        std::vector<ParseResult> attrs = parseAttribute(block);
+        const std::string_view block = line.substr(begin, endAttr - begin);
+        const std::vector<ParseResult> attrs = parseAttribute(block);
         for (const ParseResult& a : attrs) {
             if (a.key == attributes::Dictionary) {
                 s->attributes.dictionary = a.value;
@@ -416,8 +419,9 @@ Struct* parseStruct(std::string_view line) {
                 "No name specified for root struct\n{}", line
             ));
         }
-        char firstChar = s->attributes.dictionary[0];
-        char lastChar = s->attributes.dictionary[s->attributes.dictionary.size() - 1];
+        const char firstChar = s->attributes.dictionary[0];
+        const char lastChar =
+            s->attributes.dictionary[s->attributes.dictionary.size() - 1];
         if (firstChar == '"' && lastChar == '"') {
             throw CodegenError(fmt::format(
                 "Root struct name must not be enclosed by \"\n{}", line
@@ -447,8 +451,8 @@ Enum* parseEnum(std::string_view line) {
 
     if (const size_t begin = line.find("[[", cursor);  begin != std::string_view::npos) {
         const size_t endAttr = line.find("]]", begin) + 2;
-        std::string_view block = line.substr(begin, endAttr - begin);
-        std::vector<ParseResult> attrs = parseAttribute(block);
+        const std::string_view block = line.substr(begin, endAttr - begin);
+        const std::vector<ParseResult> attrs = parseAttribute(block);
 
         for (const ParseResult& a : attrs) {
             if (a.key == attributes::Map) {
@@ -488,8 +492,8 @@ EnumElement* parseEnumElement(std::string_view line) {
     const size_t i = line.find(' ');
     e->name = line.substr(0, i);
     if (i != std::string_view::npos) {
-        std::string_view attributes = line.substr(i + 1);
-        std::vector<ParseResult> attr = parseAttribute(attributes);
+        const std::string_view attributes = line.substr(i + 1);
+        const std::vector<ParseResult> attr = parseAttribute(attributes);
         for (const ParseResult& a : attr) {
             if (a.key == "key") {
                 e->attributes.key = a.value;
@@ -560,7 +564,7 @@ Variable* parseVariable(std::string_view line, Struct* s) {
 
     Variable* res = new Variable;
 
-    std::string_view typeString = line.substr(0, p1);
+    const std::string_view typeString = line.substr(0, p1);
     res->type = parseType(typeString, s);
 
     if (res->type->isPointerType()) {
@@ -571,8 +575,8 @@ Variable* parseVariable(std::string_view line, Struct* s) {
 
     res->name = line.substr(p1 + 1, p2 - p1 - 1);
     if (p2 != std::string_view::npos) {
-        std::string_view attributes = line.substr(p2 + 1);
-        std::string_view attr = strip(attributes);
+        const std::string_view attributes = line.substr(p2 + 1);
+        const std::string_view attr = strip(attributes);
         if (!attr.empty()) {
             res->attributes = parseAttributes(attributes);
         }
@@ -620,7 +624,7 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
 
     using namespace std::literals;
     nameCheck.remove_prefix("struct"sv.size());
-    for (char c : nameCheck) {
+    for (const char c : nameCheck) {
         if (::isspace(c) == 0) {
             throw CodegenError(fmt::format(
                 "Only 'struct' can appear directly before [[codegen::Dictionary\n{}",
@@ -685,7 +689,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
 
     using namespace std::literals;
     nameCheck.remove_prefix("enum class"sv.size());
-    for (char c : nameCheck) {
+    for (const char c : nameCheck) {
         if (::isspace(c) == 0) {
             throw CodegenError(fmt::format(
                 "Only 'enum class' can appear directly before [[codegen::stringify\n{}",
@@ -757,9 +761,9 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 }
 
 [[nodiscard]] Struct* parseRootStruct(std::string_view code, size_t begin, size_t end) {
-    std::string_view content = strip(code.substr(begin, end));
+    const std::string_view content = strip(code.substr(begin, end));
 
-    if (size_t p = content.find("/*"); p != std::string_view::npos) {
+    if (const size_t p = content.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
@@ -789,7 +793,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         // If the buffer is filled, then we are in a continuation of a variable definition
         if (variableBuffer.empty()) {
             if (startsWith(line, "//")) {
-                std::string_view cmnt = parseCommentLine(line);
+                const std::string_view cmnt = parseCommentLine(line);
                 commentBuffer += cmnt;
                 commentBuffer += " ";
                 continue;
@@ -937,7 +941,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                 }
                 Struct* s = static_cast<Struct*>(e);
 
-                Variable* var;
+                Variable* var = nullptr;
                 if (variableBuffer.empty()) {
                     var = parseVariable(line, s);
                 }
@@ -965,7 +969,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                     continue;
                 }
 
-                EnumElement* el;
+                EnumElement* el = nullptr;
                 if (enumBuffer.empty()) {
                     el = parseEnumElement(line);
                 }
@@ -993,10 +997,10 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 }
 
 [[nodiscard]] Enum* parseRootEnum(std::string_view code, size_t begin, size_t end) {
-    std::string_view content = strip(code.substr(begin, end));
+    const std::string_view content = strip(code.substr(begin, end));
     assert(!content.empty());
 
-    if (size_t p = content.find("/*"); p != std::string_view::npos) {
+    if (const size_t p = content.find("/*"); p != std::string_view::npos) {
         throw CodegenError(fmt::format(
             "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
@@ -1013,7 +1017,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
     size_t cursor = 0;
     while (cursor != std::string_view::npos) {
-        std::string_view line = extractLine(content, &cursor);
+        const std::string_view line = extractLine(content, &cursor);
         if (line.empty()) {
             continue;
         }
@@ -1079,7 +1083,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
             continue;
         }
 
-        EnumElement* el;
+        EnumElement* el = nullptr;
         if (enumBuffer.empty()) {
             el = parseEnumElement(line);
         }
@@ -1090,7 +1094,6 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         }
         assert(el);
         rootEnum->elements.push_back(el);
-        continue;
     }
 
     return rootEnum;
@@ -1130,7 +1133,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 nOpenBrackets -= 1;
             }
 
-            bool isEndCharacter =
+            const bool isEndCharacter =
                 content[cursor] == ' ' || content[cursor] == '\n' ||
                 content[cursor] == ')' || content[cursor] == ',';
 
@@ -1235,8 +1238,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
 
     // Find and parse the return value
-    std::pair<size_t, size_t> retValueLoc = eatType(cursor);
-    std::string_view returnValueStr = content.substr(
+    const std::pair<size_t, size_t> retValueLoc = eatType(cursor);
+    const std::string_view returnValueStr = content.substr(
         retValueLoc.first,
         retValueLoc.second
     );
@@ -1255,7 +1258,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
         cursor += 1;
 
-        std::string_view name = content.substr(loc.first, loc.second - loc.first);
+        const std::string_view name = content.substr(loc.first, loc.second - loc.first);
         f->functionName = std::string(strip(name));
         if (::isupper(f->functionName[0])) {
             throw CodegenError(fmt::format(
@@ -1280,13 +1283,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             break;
         }
 
-        std::pair<size_t, size_t> locType = eatType(cursor);
+        const std::pair<size_t, size_t> locType = eatType(cursor);
         std::string_view typeStr =
             content.substr(locType.first, locType.second - locType.first);
 
         if (strip(typeStr) == "const") {
             cursor += 1;
-            std::pair<size_t, size_t> l = eatType(cursor);
+            const std::pair<size_t, size_t> l = eatType(cursor);
             std::string_view typeStr2 = content.substr(l.first, l.second - l.first);
             assert(!typeStr2.empty());
             if (typeStr2[typeStr2.size() - 1] == '*') {
@@ -1307,17 +1310,17 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         v->type = parseType(typeStr, root);
 
         cursor = content.find_first_not_of(' ', cursor);
-        if (size_t beg = content.substr(cursor).find("[[codegen::");
+        if (const size_t beg = content.substr(cursor).find("[[codegen::");
             beg != std::string_view::npos)
         {
-            Variable::Attributes attr = parseAttributes(content.substr(cursor));
-            size_t e = content.substr(cursor).find("]]");
+            const Variable::Attributes attr = parseAttributes(content.substr(cursor));
+            const size_t e = content.substr(cursor).find("]]");
             cursor += (e - beg) + 3;  // 2 -> ]]
             cursor = content.find_first_not_of(' ', cursor);
         }
 
         {
-            std::pair<size_t, size_t> l = eatName(cursor);
+            const std::pair<size_t, size_t> l = eatName(cursor);
             v->name = std::string(content.substr(l.first, l.second - l.first));
 
             if (v->name.empty()) {
@@ -1342,8 +1345,8 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         // third case are handled at the top of this loop, so we only need to care about
         // the = case
         size_t equalLoc = content.find('=', cursor);
-        size_t commaLoc = content.find(',', cursor);
-        size_t paranLoc = content.find(')', cursor);
+        const size_t commaLoc = content.find(',', cursor);
+        const size_t paranLoc = content.find(')', cursor);
 
         if (equalLoc != std::string_view::npos &&  // -> there is an equal sign
             equalLoc < commaLoc && equalLoc < paranLoc) // -> it comes before the next , )
@@ -1407,7 +1410,10 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 equalLoc += 1;
             }
 
-            std::string_view defaultValue = content.substr(equalLoc, cursor - equalLoc);
+            const std::string_view defaultValue = content.substr(
+                equalLoc,
+                cursor - equalLoc
+            );
             ot->defaultArgument = std::string(defaultValue);
             v->type = ot;
         }
@@ -1428,7 +1434,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     Phase phase = Phase::Initial;
     for (size_t i = 0; i < f->arguments.size(); i +=1) {
         Variable* var = f->arguments[i];
-        bool isOptional = var->type->isOptionalType();
+        const bool isOptional = var->type->isOptionalType();
         switch (phase) {
             case Phase::Initial:
                 phase = isOptional ? Phase::FirstOptional : Phase::Required;
@@ -1476,12 +1482,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     return f;
 }
 
-[[nodiscard]] Code parse(std::string codeStr, std::string fileName) {
+[[nodiscard]] Code parse(std::string_view code, const std::string& fileName) {
+    std::string codeStr = std::string(code);
     // When trying to generate code checked out on a Windows machine on a Linux virtual
     // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
-    std::string_view code = codeStr;
+    code = codeStr;
 
     // We want to keep track of the line number where we find different parts. Since we
     // remove the code parts that we have successfully dealt with, we need to manually
@@ -1516,7 +1523,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             }
         );
 
-        NextCode next = nextCodes.front();
+        const NextCode next = nextCodes.front();
         if (next.cursors.first == std::string_view::npos) {
             // If the closest cursor is already the npos, then there is no more code left
             break;
@@ -1551,7 +1558,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
                 // Count the number of \n between the beginning and 'begin' to get the
                 // line number. Since we do line numbers 1-based, we have to add 1
-                int nLines = static_cast<int>(
+                const int nLines = static_cast<int>(
                     std::count(code.begin(), code.begin() + next.cursors.first, '\n')
                 ) + 1;
 

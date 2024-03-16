@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(MixedStruct)]] Struct {
         int value;
         double value2;
@@ -108,12 +108,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class [[codegen::stringify()]] Enum {
         Value1,
         value2,
@@ -192,12 +192,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") 
         CHECK(ee->name == "Value3");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     enum class Enum1 {
         Value1,
         Value2,
@@ -508,6 +508,6 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             }
         }
     }
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

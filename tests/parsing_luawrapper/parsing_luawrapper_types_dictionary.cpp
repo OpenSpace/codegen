@@ -29,20 +29,20 @@
 #include "types.h"
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func(ghoul::Dictionary arg) {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->functionName == "func");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
     {
@@ -67,26 +67,26 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary", "[Parsing][LuaWrapper]") 
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted", "[Parsing][LuaWrapper]")
 {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func(ghoul::Dictionary arg = ghoul::Dictionary()) {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->functionName == "func");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
     {
@@ -113,25 +113,25 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary defaulted", "[Parsing][LuaW
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func(std::map<std::string, ghoul::Dictionary> arg) {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->functionName == "func");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
     {
@@ -160,25 +160,25 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary map", "[Parsing][LuaWrapper
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func(std::optional<ghoul::Dictionary> arg) {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->functionName == "func");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
     {
@@ -205,25 +205,25 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary optional", "[Parsing][LuaWr
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func(std::vector<ghoul::Dictionary> arg) {
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions.front();
     REQUIRE(f);
 
     CHECK(f->functionName == "func");
-    CHECK(f->documentation == "");
+    CHECK(f->documentation.empty());
     CHECK(f->returnValue == nullptr);
     REQUIRE(f->arguments.size() == 1);
     {
@@ -250,12 +250,12 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary vector", "[Parsing][LuaWrap
         CHECK(v->attributes.unequal.empty());
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] void func1(std::array<ghoul::Dictionary, 1> arg) {
     }
 
@@ -267,15 +267,15 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapp
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 3);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "func1");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -308,7 +308,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "func2");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -341,7 +341,7 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapp
         REQUIRE(f);
 
         CHECK(f->functionName == "func3");
-        CHECK(f->documentation == "");
+        CHECK(f->documentation.empty());
         CHECK(f->returnValue == nullptr);
         REQUIRE(f->arguments.size() == 1);
         {
@@ -370,53 +370,53 @@ TEST_CASE("Parsing/LuaWrapper/Arguments:  dictionary array", "[Parsing][LuaWrapp
         }
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  dictionary", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] ghoul::Dictionary foo() {
         return ghoul::Dictionary();
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::BasicType);
     BasicType* bt = static_cast<BasicType*>(rt);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::map<std::string, ghoul::Dictionary> foo() {
         return { "test", ghoul::Dictionary() };
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::MapType);
     MapType* mt = static_cast<MapType*>(rt);
@@ -426,27 +426,27 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary map", "[Parsing][LuaWrapper]")
     BasicType* bt = static_cast<BasicType*>(mt->valueType);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::optional<ghoul::Dictionary> foo() {
         return ghoul::Dictionary();
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::OptionalType);
     OptionalType* ot = static_cast<OptionalType*>(rt);
@@ -454,27 +454,27 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary optional", "[Parsing][LuaWrapp
     BasicType* bt = static_cast<BasicType*>(ot->type);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::vector<ghoul::Dictionary> foo() {
         return { ghoul::Dictionary() };
     }
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 1);
     Function* f = code.luaWrapperFunctions[0];
     REQUIRE(f);
 
     CHECK(f->functionName == "foo");
-    CHECK(f->documentation == "");
-    CHECK(f->arguments.size() == 0);
+    CHECK(f->documentation.empty());
+    CHECK(f->arguments.empty());
     VariableType* rt = f->returnValue;
     CHECK(rt->tag == VariableType::Tag::VectorType);
     VectorType* vt = static_cast<VectorType*>(rt);
@@ -482,12 +482,12 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary vector", "[Parsing][LuaWrapper
     BasicType* bt = static_cast<BasicType*>(vt->type);
     CHECK(bt->type == BasicType::Type::Dictionary);
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     [[codegen::luawrap]] std::array<ghoul::Dictionary, 1> foo1() {
         return {};
     }
@@ -502,16 +502,16 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]
 )";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 0);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
     REQUIRE(code.luaWrapperFunctions.size() == 3);
     {
         Function* f = code.luaWrapperFunctions[0];
         REQUIRE(f);
 
         CHECK(f->functionName == "foo1");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -525,8 +525,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "foo2");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -540,8 +540,8 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]
         REQUIRE(f);
 
         CHECK(f->functionName == "foo3");
-        CHECK(f->documentation == "");
-        CHECK(f->arguments.size() == 0);
+        CHECK(f->documentation.empty());
+        CHECK(f->arguments.empty());
         VariableType* rt = f->returnValue;
         CHECK(rt->tag == VariableType::Tag::ArrayType);
         ArrayType* at = static_cast<ArrayType*>(rt);
@@ -551,6 +551,6 @@ TEST_CASE("Parsing/LuaWrapper/Return:  dictionary array", "[Parsing][LuaWrapper]
         CHECK(bt->type == BasicType::Type::Dictionary);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

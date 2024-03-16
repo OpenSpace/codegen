@@ -33,7 +33,7 @@
 namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::vec4 v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -43,7 +43,7 @@ glm::vec4 v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  vector annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::vec4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -53,7 +53,7 @@ std::vector<glm::vec4> v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  optional annotation") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::vec4> v [[codegen::annotation(ABC)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -63,7 +63,7 @@ std::optional<glm::vec4> v [[codegen::annotation(ABC)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::vec4 v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -73,7 +73,7 @@ glm::vec4 v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  vector inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::vec4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -83,7 +83,7 @@ std::vector<glm::vec4> v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  optional inlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::vec4> v [[codegen::inlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -93,7 +93,7 @@ std::optional<glm::vec4> v [[codegen::inlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::vec4 v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -103,7 +103,7 @@ glm::vec4 v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  vector notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::vec4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -113,7 +113,7 @@ std::vector<glm::vec4> v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  optional notinlist") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::vec4> v [[codegen::notinlist(1, 2)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -123,7 +123,7 @@ std::optional<glm::vec4> v [[codegen::notinlist(1, 2)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::vec4 v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -133,7 +133,7 @@ glm::vec4 v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  vector reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::vec4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -143,7 +143,7 @@ std::vector<glm::vec4> v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  optional reference") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::vec4> v [[codegen::reference(1)]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -153,7 +153,7 @@ std::optional<glm::vec4> v [[codegen::reference(1)]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 glm::vec4 v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -163,7 +163,7 @@ glm::vec4 v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  vector directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::vector<glm::vec4> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(
@@ -173,7 +173,7 @@ std::vector<glm::vec4> v [[codegen::directory()]];
 }
 
 TEST_CASE("Parsing/Structs/Attributes/Error/Vec4:  optional directory") {
-    constexpr const char S[] = R"(struct [[codegen::Dictionary(D)]] P {
+    constexpr std::string_view S = R"(struct [[codegen::Dictionary(D)]] P {
 std::optional<glm::vec4> v [[codegen::directory()]];
 };)";
     CHECK_THROWS_MATCHES(

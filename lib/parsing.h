@@ -27,7 +27,8 @@
 
 #include "types.h"
 #include <string>
+#include <string_view>
 
-[[nodiscard]] Code parse(std::string codeStr, std::string fileName = "");
+[[nodiscard]] Code parse(std::string_view code, const std::string& fileName = "");
 
 #endif // __OPENSPACE_CODEGEN___PARSING___H__

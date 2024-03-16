@@ -33,7 +33,7 @@
 namespace CM = Catch::Matchers;
 
 TEST_CASE("Parsing/Structs/Variant/Error:  Multiple Vectors", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
     std::variant<std::vector<int>, std::vector<float>> a;
@@ -48,7 +48,7 @@ struct [[codegen::Dictionary(D)]] P {
 }
 
 TEST_CASE("Parsing/Structs/Variant/Error:  Custom substruct", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     struct A {
         int a;
@@ -65,7 +65,7 @@ struct [[codegen::Dictionary(D)]] P {
 }
 
 TEST_CASE("Parsing/Structs/Variant/Error:  Internal optional", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::optional<int>, float> v;
 };
@@ -79,7 +79,7 @@ struct [[codegen::Dictionary(D)]] P {
 }
 
 TEST_CASE("Parsing/Structs/Variant/Error:  Nested variants", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<std::variant<int, float>, float> v;
 };

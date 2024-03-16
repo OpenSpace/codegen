@@ -41,7 +41,7 @@
 //#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
-    CodegenError(std::string e);
+    CodegenError(const std::string& e);
 
     // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept;
@@ -124,7 +124,7 @@ struct VariableType {
 };
 bool operator==(const VariableType& lhs, const VariableType& rhs);
 
-VariableType* parseType(std::string_view type, Struct* s);
+VariableType* parseType(std::string_view type, Struct* context);
 std::string generateTypename(const VariableType* type, bool fullyQualified = false);
 std::string generateLuaExtractionTypename(const VariableType* type);
 std::string generateDescriptiveTypename(const VariableType* type);

@@ -145,8 +145,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3", "[Execution][LuaWrapper]")
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -168,8 +168,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -191,8 +191,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
     CHECK(func.arguments[0].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -215,8 +215,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -240,8 +240,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "mat2x3?");
     CHECK(func.arguments[1].defaultValue == "glm::dmat2x3(1.1, 2.2, 3.3, 4.4, 5.5, 6.6)");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -258,8 +258,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Map", "[Execution][LuaWrapper
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> mat2x3");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -286,8 +286,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Optional", "[Execution][LuaWr
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -308,8 +308,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -325,8 +325,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Vector", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -349,8 +349,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array1", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -379,8 +379,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array2", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -433,8 +433,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array3", "[Execution][LuaWrap
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "mat2x3[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -519,9 +519,9 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x3Array3", "[Execution][LuaWrap
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnDMat2x3;
     CHECK(func.name == "returnDMat2x3");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat2x3");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -536,9 +536,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Map", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnDMat2x3Map;
     CHECK(func.name == "returnDMat2x3Map");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> mat2x3");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -567,9 +567,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnDMat2x3Optional;
     CHECK(func.name == "returnDMat2x3Optional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat2x3?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -588,9 +588,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnDMat2x3OptionalNullopt;
     CHECK(func.name == "returnDMat2x3OptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat2x3?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -603,9 +603,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  dmat2x3Vector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnDMat2x3Vector;
     CHECK(func.name == "returnDMat2x3Vector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "mat2x3[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

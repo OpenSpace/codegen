@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Variable:  Basic Types", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     bool boolVariable;
     int intVariable;
@@ -73,8 +73,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )";
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -346,12 +346,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "glm::dmat4x4");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing Variable: Vector Base Types", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::vector<bool> boolVariable;
     std::vector<int> intVariable;
@@ -395,7 +395,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -667,12 +667,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Structs/Variable:  Optional Base Types", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::optional<bool> boolVariable;
     std::optional<int> intVariable;
@@ -716,7 +716,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -988,12 +988,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Structs/Variable:  Variable attributes", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     int variable1 [[codegen::key(Var)]];
 
@@ -1001,7 +1001,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 )";
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -1009,6 +1009,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->key == "Var");
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

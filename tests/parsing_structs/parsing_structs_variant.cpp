@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Variant:  Variant", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
     std::variant<int, float> a;
@@ -41,8 +41,8 @@ struct [[codegen::Dictionary(D)]] P {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -65,12 +65,12 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(var->comment == "b comment");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Structs/Variant:  Optional Variant", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     // a comment
     std::optional<std::variant<bool, int>> ov;
@@ -78,7 +78,7 @@ struct [[codegen::Dictionary(D)]] P {
 
     Code code = parse(Source);
     CHECK(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
+    CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -91,12 +91,12 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(var->comment == "a comment");
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
 
 TEST_CASE("Parsing/Structs/Variant:  Multiple instances variant", "[Parsing][Structs]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(D)]] P {
     std::variant<int, float> a;
     std::variant<float, int> b;
@@ -107,6 +107,7 @@ struct [[codegen::Dictionary(D)]] P {
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
     CHECK(code.structs.front()->variables.size() == 3);
-    std::string r = generateResult(code);
+
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

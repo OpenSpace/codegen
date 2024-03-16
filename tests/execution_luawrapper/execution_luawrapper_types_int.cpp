@@ -135,8 +135,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  int", "[Execution][LuaWrapper]") {
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -158,8 +158,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.arguments[0].defaultValue == "2");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -181,8 +181,8 @@ TEST_CASE(
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer?");
     CHECK(func.arguments[0].defaultValue == "2");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -205,8 +205,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Integer?");
     CHECK(func.arguments[1].defaultValue == "2");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -230,8 +230,8 @@ TEST_CASE(
     CHECK(func.arguments[1].name == "arg");
     CHECK(func.arguments[1].type == "Integer?");
     CHECK(func.arguments[1].defaultValue == "2");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -250,8 +250,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intMap", "[Execution][LuaWrapper]") 
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "String -> Integer");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -274,8 +274,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intOptional", "[Execution][LuaWrappe
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -296,8 +296,8 @@ TEST_CASE(
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer?");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -313,8 +313,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intVector", "[Execution][LuaWrapper]
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer[]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -337,8 +337,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray1", "[Execution][LuaWrapper]
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer[1]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -362,8 +362,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray2", "[Execution][LuaWrapper]
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer[5]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -395,8 +395,8 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray3", "[Execution][LuaWrapper]
     REQUIRE(func.arguments.size() == 1);
     CHECK(func.arguments[0].name == "arg");
     CHECK(func.arguments[0].type == "Integer[10]");
-    CHECK(func.returnType == "");
-    CHECK(func.helpText == "");
+    CHECK(func.returnType.empty());
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -435,16 +435,16 @@ TEST_CASE("Execution/LuaWrapper/Arguments:  intArray3", "[Execution][LuaWrapper]
 TEST_CASE("Execution/LuaWrapper/Return:  int", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnInt;
     CHECK(func.name == "returnInt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Integer");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    int val = ghoul::lua::value<int>(state);
+    const int val = ghoul::lua::value<int>(state);
     CHECK(val == 1);
     lua_close(state);
 }
@@ -452,9 +452,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  int", "[Execution][LuaWrapper]") {
 TEST_CASE("Execution/LuaWrapper/Return:  intMap", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIntMap;
     CHECK(func.name == "returnIntMap");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "String -> Integer");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -479,16 +479,16 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnIntOptional;
     CHECK(func.name == "returnIntOptional");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Integer?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    int val = ghoul::lua::value<int>(state);
+    const int val = ghoul::lua::value<int>(state);
     CHECK(val == 1);
     lua_close(state);
 }
@@ -500,9 +500,9 @@ TEST_CASE(
 {
     Function func = codegen::lua::ReturnIntOptionalNullopt;
     CHECK(func.name == "returnIntOptionalNullopt");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Integer?");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();
@@ -515,9 +515,9 @@ TEST_CASE(
 TEST_CASE("Execution/LuaWrapper/Return:  intVector", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::ReturnIntVector;
     CHECK(func.name == "returnIntVector");
-    CHECK(func.arguments.size() == 0);
+    CHECK(func.arguments.empty());
     CHECK(func.returnType == "Integer[]");
-    CHECK(func.helpText == "");
+    CHECK(func.helpText.empty());
     REQUIRE(func.function);
 
     lua_State* state = luaL_newstate();

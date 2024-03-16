@@ -30,13 +30,12 @@
 #include <functional>
 
 bool isEmptyLine(std::string_view sv) {
-    size_t b = sv.find_first_not_of(" \t\n");
+    const size_t b = sv.find_first_not_of(" \t\n");
     return b == std::string_view::npos;
 }
 
 std::string_view strip(std::string_view sv) {
-    size_t b = sv.find_first_not_of(" \t\n");
-    if (b != std::string_view::npos) {
+    if (const size_t b = sv.find_first_not_of(" \t\n");  b != std::string_view::npos) {
         sv.remove_prefix(b);
     }
 
@@ -76,7 +75,7 @@ std::vector<std::string_view> extractTemplateTypeList(std::string_view types) {
         const bool isExternalSeparator = (types[cursor] == ',') && (nBrackets == 1);
         const bool isFinalizingBracket = (types[cursor] == '>') && (nBrackets == 0);
         if (isExternalSeparator || isFinalizingBracket) {
-            std::string_view subtype = types.substr(base, cursor - base);
+            const std::string_view subtype = types.substr(base, cursor - base);
             res.push_back(strip(subtype));
             base = cursor + 1;
         }

@@ -226,7 +226,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         case Type::String:
             res = "StringVerifier";
             if (!attr.inlist.empty()) {
-                std::string param = '{' + std::string(attr.inlist) + '}';
+                const std::string param = '{' + std::string(attr.inlist) + '}';
                 res = addQualifier(res, "InListVerifier", param);
             }
             if (!attr.unequal.empty()) {

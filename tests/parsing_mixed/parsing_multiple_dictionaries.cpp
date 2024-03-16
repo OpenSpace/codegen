@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(StructA)]] StructA {
         int value;
         double value2;
@@ -131,11 +131,14 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.unequal.empty());
         }
     }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
 }
 
 
 //TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Misc]") {
-//    constexpr const char Source[] = R"(
+//    constexpr std::string_view Source = R"(
 //    struct [[codegen::Dictionary(MixedStruct)]] Struct {
 //        int value;
 //        double value2;

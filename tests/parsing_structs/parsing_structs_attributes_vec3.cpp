@@ -29,7 +29,7 @@
 #include "types.h"
 
 TEST_CASE("Parsing/Structs/Attributes/Vec3") {
-    constexpr const char Source[] = R"(
+    constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // inRangeValueVec3 documentation
         glm::vec3 inRangeValueVec3 [[codegen::inrange(glm::vec3(1.f), glm::vec3(2.f))]];
@@ -150,8 +150,8 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.size() == 0);
-    CHECK(code.luaWrapperFunctions.size() == 0);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
 
@@ -1016,6 +1016,6 @@ TEST_CASE("Parsing/Structs/Attributes/Vec3") {
         CHECK(!var->attributes.mustBeNotEmpty);
     }
 
-    std::string r = generateResult(code);
+    const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
