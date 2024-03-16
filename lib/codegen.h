@@ -35,7 +35,7 @@ enum class Result {
 
 struct Code;
 
-Result handleFile(std::filesystem::path path);
+Result handleFile(const std::filesystem::path& path);
 std::string generateResult(const Code& code);
 
 #endif // __OPENSPACE_CODEGEN___CODEGEN___H__

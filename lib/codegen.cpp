@@ -1070,14 +1070,14 @@ std::string createClickableFileName(std::string filename) {
     return filename;
 }
 
-Result handleFile(std::filesystem::path path) {
+Result handleFile(const std::filesystem::path& path) {
     std::ifstream file(path);
     const std::string res = std::string(std::istreambuf_iterator<char>(file), {});
     file.close();
 
 
     const std::string p = path.string();
-    Code code = parse(std::move(res), p);
+    Code code = parse(res, p);
     if (code.structs.empty() && code.enums.empty() && code.luaWrapperFunctions.empty()) {
         return Result::NotProcessed;
     }
