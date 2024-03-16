@@ -1072,7 +1072,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::map<std::string, void*> v = {
+    const std::map<std::string, void*> v = {
         { "key1", reinterpret_cast<void*>(1) },
         { "key2", reinterpret_cast<void*>(2) },
         { "key3", reinterpret_cast<void*>(3) }
@@ -1101,7 +1101,7 @@ TEST_CASE(
     int v1 = 1;
     int v2 = 2;
     int v3 = 3;
-    std::map<std::string, void*> v = {
+    const std::map<std::string, void*> v = {
         { "key1", &v1 },
         { "key2", &v2 },
         { "key3", &v3 }
@@ -1130,7 +1130,7 @@ TEST_CASE(
     std::string v1 = "abc";
     std::string v2 = "def";
     std::string v3 = "ghi";
-    std::map<std::string, std::string*> v = {
+    const std::map<std::string, std::string*> v = {
         { "key1", &v1 },
         { "key2", &v2 },
         { "key3", &v3 }
@@ -1159,7 +1159,7 @@ TEST_CASE(
     Foo v1 = Foo { .a = 1, .b = 2.f, .c = "abc" };
     Foo v2 = Foo { .a = 3, .b = 4.f, .c = "def" };
     Foo v3 = Foo { .a = 5, .b = 6.f, .c = "ghi" };
-    std::map<std::string, Foo*> v = {
+    const std::map<std::string, Foo*> v = {
         { "key1", &v1 },
         { "key2", &v2 },
         { "key3", &v3 }
@@ -1199,7 +1199,7 @@ TEST_CASE(
     Foo v32 = Foo { .a = 15, .b = 16.f, .c = "vwx" };
     Foo v33 = Foo { .a = 17, .b = 18.f, .c = "yzz" };
     Foo* v3[3] = { &v31, &v32, &v33 };
-    std::map<std::string, Foo**> v = {
+    const std::map<std::string, Foo**> v = {
         { "key1", v1 },
         { "key2", v2 },
         { "key3", v3 }
@@ -1419,7 +1419,7 @@ TEST_CASE(
     Foo v1 = Foo { .a = 1, .b = 2.f, .c = "abc" };
     Foo v2 = Foo { .a = 3, .b = 4.f, .c = "def" };
     Foo v3 = Foo { .a = 5, .b = 6.f, .c = "ghi" };
-    std::vector<Foo*> v = { &v1, &v2, &v3 };
+    const std::vector<Foo*> v = { &v1, &v2, &v3 };
     ghoul::lua::push(state, v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);

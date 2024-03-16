@@ -445,7 +445,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  double", "[Execution][LuaWrapper]") {
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    double val = ghoul::lua::value<double>(state);
+    const double val = ghoul::lua::value<double>(state);
     CHECK(val == 1.1);
     lua_close(state);
 }
