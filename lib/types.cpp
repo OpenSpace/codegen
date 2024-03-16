@@ -39,7 +39,7 @@ namespace {
         assert(!sep.empty());
 
         size_t size = 0;
-        for (std::string_view l : list) {
+        for (const std::string_view l : list) {
             size += l.size();
         }
         // this allocates space for one sep more than needed, but it simplifies the loop
@@ -47,7 +47,7 @@ namespace {
 
         std::string res;
         res.reserve(size);
-        for (std::string_view l : list) {
+        for (const std::string_view l : list) {
             res.append(l.data(), l.size());
             res.append(sep.data(), sep.size());
         }
@@ -59,7 +59,7 @@ namespace {
     }
 } // namespace
 
-CodegenError::CodegenError(std::string e) : std::runtime_error(std::move(e)) {}
+CodegenError::CodegenError(const std::string& e) : std::runtime_error(e) {}
 CodegenError::operator std::string() const noexcept { return what(); }
 
 bool operator==(const StackElement& lhs, const StackElement& rhs) {
@@ -337,7 +337,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         type.remove_prefix("std::array<"sv.size());
         type.remove_suffix(">"sv.size());
 
-        size_t separator = type.rfind(',');
+        const size_t separator = type.rfind(',');
         if (separator == std::string_view::npos) {
             throw CodegenError(fmt::format(
                 "Invalid array specification, missing comma: {}", type
@@ -403,12 +403,12 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (startsWith(type, "std::variant<")) {
         type.remove_prefix("std::variant<"sv.size());
 
-        std::vector<std::string_view> list = extractTemplateTypeList(type);
+        const std::vector<std::string_view> list = extractTemplateTypeList(type);
 
         VariantType* vt = new VariantType;
         vt->tag = VariableType::Tag::VariantType;
 
-        for (std::string_view elem : list) {
+        for (const std::string_view elem : list) {
             VariableType* listType = parseType(elem, context);
             assert(listType);
             vt->types.push_back(listType);
@@ -446,12 +446,12 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (startsWith(type, "std::tuple<")) {
         type.remove_prefix("std::tuple<"sv.size());
 
-        std::vector<std::string_view> list = extractTemplateTypeList(type);
+        const std::vector<std::string_view> list = extractTemplateTypeList(type);
 
         TupleType* tt = new TupleType;
         tt->tag = VariableType::Tag::TupleType;
 
-        for (std::string_view elem : list) {
+        for (const std::string_view elem : list) {
             VariableType* listType = parseType(elem, context);
             assert(listType);
             tt->types.push_back(listType);
