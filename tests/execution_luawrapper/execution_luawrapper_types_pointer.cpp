@@ -1340,7 +1340,7 @@ TEST_CASE(
 
     lua_State* state = luaL_newstate();
     REQUIRE(state);
-    std::vector<void*> v = {
+    const std::vector<void*> v = {
         reinterpret_cast<void*>(1),
         reinterpret_cast<void*>(2),
         reinterpret_cast<void*>(3)
@@ -1369,7 +1369,7 @@ TEST_CASE(
     int v1 = 1;
     int v2 = 2;
     int v3 = 3;
-    std::vector<void*> v = { &v1, &v2, &v3 };
+    const std::vector<void*> v = { &v1, &v2, &v3 };
     ghoul::lua::push(state, v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1394,7 +1394,7 @@ TEST_CASE(
     std::string v1 = "abc";
     std::string v2 = "def";
     std::string v3 = "ghi";
-    std::vector<std::string*> v = { &v1, &v2, &v3 };
+    const std::vector<std::string*> v = { &v1, &v2, &v3 };
     ghoul::lua::push(state, v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
@@ -1455,7 +1455,7 @@ TEST_CASE(
     Foo v32 = Foo { .a = 15, .b = 16.f, .c = "vwx" };
     Foo v33 = Foo { .a = 17, .b = 18.f, .c = "yzz" };
     Foo* v3[3] = { &v31, &v32, &v33 };
-    std::vector<Foo**> v = { v1, v2, v3 };
+    const std::vector<Foo**> v = { v1, v2, v3 };
     ghoul::lua::push(state, v);
     func.function(state);
     CHECK(lua_gettop(state) == 0);
