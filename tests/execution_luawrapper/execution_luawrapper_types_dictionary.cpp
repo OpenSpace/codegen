@@ -928,7 +928,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  dictionary", "[Execution][LuaWrapper]")
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    ghoul::Dictionary val = ghoul::lua::value<ghoul::Dictionary>(state);
+    const ghoul::Dictionary val = ghoul::lua::value<ghoul::Dictionary>(state);
     REQUIRE(val.hasValue<double>("a"));
     CHECK(val.value<double>("a") == 1.1);
     REQUIRE(val.hasValue<std::string>("b"));
@@ -1002,7 +1002,7 @@ TEST_CASE(
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    ghoul::Dictionary val = ghoul::lua::value<ghoul::Dictionary>(state);
+    const ghoul::Dictionary val = ghoul::lua::value<ghoul::Dictionary>(state);
     REQUIRE(val.hasValue<double>("a"));
     CHECK(val.value<double>("a") == 1.1);
     REQUIRE(val.hasValue<std::string>("b"));
