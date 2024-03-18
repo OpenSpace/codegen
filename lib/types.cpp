@@ -283,6 +283,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     };
 
     VariableType* t = nullptr;
+    // NOLINTBEGIN(bugprone-branch-clone)
     if (type == "bool")                       { t = newType(BasicType::Type::Bool); }
     else if (type == "int")                   { t = newType(BasicType::Type::Int); }
     else if (type == "double")                { t = newType(BasicType::Type::Double); }
@@ -323,6 +324,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (type == "glm::dmat4x4")          { t = newType(BasicType::Type::DMat4x4); }
     else if (type == "glm::dmat4")            { t = newType(BasicType::Type::DMat4x4); }
     else if (type == "ghoul::Dictionary")    { t = newType(BasicType::Type::Dictionary); }
+    // NOLINTEND(bugprone-branch-clone)
     else if (startsWith(type, "std::vector<")) {
         type.remove_prefix("std::vector<"sv.size());
         type.remove_suffix(">"sv.size());
