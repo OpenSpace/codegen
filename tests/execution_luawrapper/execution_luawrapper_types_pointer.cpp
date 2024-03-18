@@ -1174,6 +1174,7 @@ TEST_CASE(
     "Execution/LuaWrapper/Arguments:  Foo** map",
     "[Execution][LuaWrapper]")
 {
+    // NOLINTBEGIN(cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays)
     Function func = codegen::lua::FuncStruct2Map;
     CHECK(func.name == "funcStruct2Map");
     REQUIRE(func.arguments.size() == 1);
@@ -1208,6 +1209,7 @@ TEST_CASE(
     func.function(state);
     CHECK(lua_gettop(state) == 0);
     lua_close(state);
+    // NOLINTEND(cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays)
 }
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  void* optional", "[Execution][LuaWrapper]") {

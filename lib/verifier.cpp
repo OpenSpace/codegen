@@ -165,76 +165,77 @@ namespace {
     }
 } // namespace
 
-std::string verifierForType(BasicType::Type type, const Variable::Attributes& attr) {
+std::string verifierForType(BasicType::Type type, const Variable::Attributes& attributes)
+{
     using Type = BasicType::Type;
 
     // @TODO (abock, 2021-02-12) Really the check for unsupported attributes should be
     // done directly after parsing and not when we are trying to generate the verifiers
-    reportUnsupportedAttribute(type, attr);
+    reportUnsupportedAttribute(type, attributes);
     std::string res;
     switch (type) {
         case Type::Bool: return "BoolVerifier";
         case Type::Int:
             res = "IntVerifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Double:
         case Type::Float:
             res = "DoubleVerifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::String:
             res = "StringVerifier";
-            if (!attr.inlist.empty()) {
-                const std::string param = '{' + std::string(attr.inlist) + '}';
+            if (!attributes.inlist.empty()) {
+                const std::string param = '{' + std::string(attributes.inlist) + '}';
                 res = addQualifier(res, "InListVerifier", param);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
-            if (attr.mustBeNotEmpty) {
-                if (!attr.inlist.empty() || !attr.unequal.empty() ||
-                    !attr.annotation.empty())
+            if (attributes.mustBeNotEmpty) {
+                if (!attributes.inlist.empty() || !attributes.unequal.empty() ||
+                    !attributes.annotation.empty())
                 {
                     throw CodegenError(fmt::format(
                         "With the notempty attribute, no other attribute can be used:\n{}",
@@ -244,181 +245,183 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
 
                 res = "StringVerifier(true)";
             }
-            if (!attr.annotation.empty()) {
-                if (!attr.inlist.empty() || !attr.unequal.empty() || attr.mustBeNotEmpty) {
+            if (!attributes.annotation.empty()) {
+                if (!attributes.inlist.empty() || !attributes.unequal.empty() ||
+                    attributes.mustBeNotEmpty)
+                {
                     throw CodegenError(fmt::format(
                         "With the annotation attribute, no other attribute can be used:\n{}",
                         generateTypename(type)
                     ));
                 }
-                res = addQualifier(res, "AnnotationVerifier", attr.annotation);
+                res = addQualifier(res, "AnnotationVerifier", attributes.annotation);
             }
-            if (attr.isDateTime) {
+            if (attributes.isDateTime) {
                 return "DateTimeVerifier";
             }
-            if (attr.isIdentifier) {
+            if (attributes.isIdentifier) {
                 return "IdentifierVerifier";
             }
             return res;
         case Type::Path:
-            return attr.isDirectory ? "DirectoryVerifier" : "FileVerifier";
+            return attributes.isDirectory ? "DirectoryVerifier" : "FileVerifier";
         case Type::Ivec2:
             res = "IntVector2Verifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Ivec3:
             res = "IntVector3Verifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Ivec4:
             res = "IntVector4Verifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Dvec2:
         case Type::Vec2:
             res = "DoubleVector2Verifier";
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Dvec3:
         case Type::Vec3:
-            if (attr.isColor) {
+            if (attributes.isColor) {
                 res = "Color3Verifier";
             }
             else {
                 res = "DoubleVector3Verifier";
             }
 
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::Dvec4:
         case Type::Vec4:
-            if (attr.isColor) {
+            if (attributes.isColor) {
                 res = "Color4Verifier";
             }
             else {
                 res = "DoubleVector4Verifier";
             }
 
-            if (!attr.inrange.empty()) {
-                res = addQualifier(res, "InRangeVerifier", attr.inrange);
+            if (!attributes.inrange.empty()) {
+                res = addQualifier(res, "InRangeVerifier", attributes.inrange);
             }
-            if (!attr.notinrange.empty()) {
-                res = addQualifier(res, "NotInRangeVerifier", attr.notinrange);
+            if (!attributes.notinrange.empty()) {
+                res = addQualifier(res, "NotInRangeVerifier", attributes.notinrange);
             }
-            if (!attr.less.empty()) {
-                res = addQualifier(res, "LessVerifier", attr.less);
+            if (!attributes.less.empty()) {
+                res = addQualifier(res, "LessVerifier", attributes.less);
             }
-            if (!attr.lessequal.empty()) {
-                res = addQualifier(res, "LessEqualVerifier", attr.lessequal);
+            if (!attributes.lessequal.empty()) {
+                res = addQualifier(res, "LessEqualVerifier", attributes.lessequal);
             }
-            if (!attr.greater.empty()) {
-                res = addQualifier(res, "GreaterVerifier", attr.greater);
+            if (!attributes.greater.empty()) {
+                res = addQualifier(res, "GreaterVerifier", attributes.greater);
             }
-            if (!attr.greaterequal.empty()) {
-                res = addQualifier(res, "GreaterEqualVerifier", attr.greaterequal);
+            if (!attributes.greaterequal.empty()) {
+                res = addQualifier(res, "GreaterEqualVerifier", attributes.greaterequal);
             }
-            if (!attr.unequal.empty()) {
-                res = addQualifier(res, "UnequalVerifier", attr.unequal);
+            if (!attributes.unequal.empty()) {
+                res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }
             return res;
         case Type::DMat2x2: return "DoubleMatrix2x2Verifier";
@@ -440,11 +443,11 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
         case Type::Mat4x3: return "DoubleMatrix4x3Verifier";
         case Type::Mat4x4: return "DoubleMatrix4x4Verifier";
         case Type::Dictionary:
-            if (attr.reference.empty()) {
+            if (attributes.reference.empty()) {
                 return "TableVerifier";
             }
             else {
-                return fmt::format("ReferencingVerifier({})", attr.reference);
+                return fmt::format("ReferencingVerifier({})", attributes.reference);
             }
         default: throw std::logic_error("Missing case label");
     }
