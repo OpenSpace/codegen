@@ -24,11 +24,11 @@
 
 #include "types.h"
 
-#include <fmt/format.h>
 #include "util.h"
 #include <algorithm>
 #include <cassert>
 #include <charconv>
+#include <format>
 #include <functional>
 
 namespace {
@@ -272,7 +272,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     assert(!type.empty());
 
     if (type[type.size() - 1] == '&') {
-        throw CodegenError(fmt::format("Illegal reference type found: {}", type));
+        throw CodegenError(std::format("Illegal reference type found: {}", type));
     }
 
     auto newType = [](BasicType::Type t) -> BasicType* {
@@ -341,7 +341,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
 
         const size_t separator = type.rfind(',');
         if (separator == std::string_view::npos) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Invalid array specification, missing comma: {}", type
             ));
 
@@ -359,7 +359,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         int size = -1;
         auto result = std::from_chars(count.data(), count.data() + count.size(), size);
         if (result.ec == std::errc::invalid_argument) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Invalid array specification, could not convert size to integer: {}", type
             ));
         }
@@ -395,7 +395,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
             (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
 
         if (!isValidKey) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Currently only std::string as key is supported\n{}", type
             ));
         }
@@ -424,7 +424,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
             }
         }
         if (nVectorTypes > 1) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "We can't have a variant containing multiple vector types, try a "
                 "vector of variants instead\n{}", type
             ));
@@ -436,7 +436,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
                 lt->isCustomType() && static_cast<CustomType*>(lt)->type &&
                 static_cast<CustomType*>(lt)->type->type == StackElement::Type::Enum;
             if (!lt->isBasicType() && !lt->isVectorType() && !isEnum) {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Unsupported type '{}' found in variant list\n{}",
                     generateTypename(lt), type
                 ));
@@ -474,7 +474,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         // We don't have a standard type, so 'type' must now be a struct or an enum
         // visible in the variable's context
         if (!context) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Type detected that codegen doesn't know how to handle: '{}'", type
             ));
         }
@@ -484,7 +484,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
         ct->name = std::string(type);
         const StackElement* el = resolveType(context, type);
         if (!el) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Type detected that codegen doesn't know how to handle: '{}'", type
             ));
         }
@@ -592,48 +592,48 @@ std::string generateDescriptiveTypename(const BasicType* type) {
 }
 
 std::string generateTypename(const PointerType* type) {
-    return fmt::format("{}*", type->type);
+    return std::format("{}*", type->type);
 }
 
 std::string generateLuaExtractionTypename(const PointerType* type) {
-    return fmt::format("{}*", type->type);
+    return std::format("{}*", type->type);
 }
 
 std::string generateDescriptiveTypename(const PointerType* type) {
-    return fmt::format("{}*", type->type);
+    return std::format("{}*", type->type);
 }
 
 std::string generateTypename(const MapType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->keyType, fullyQualified);
     std::string t2 = generateTypename(type->valueType, fullyQualified);
-    return fmt::format("std::map<{}, {}>", t1, t2);
+    return std::format("std::map<{}, {}>", t1, t2);
 }
 
 std::string generateLuaExtractionTypename(const MapType* type) {
     std::string t1 = generateLuaExtractionTypename(type->keyType);
     std::string t2 = generateLuaExtractionTypename(type->valueType);
-    return fmt::format("std::map<{}, {}>", t1, t2);
+    return std::format("std::map<{}, {}>", t1, t2);
 }
 
 std::string generateDescriptiveTypename(const MapType* type) {
     std::string t1 = generateDescriptiveTypename(type->keyType);
     std::string t2 = generateDescriptiveTypename(type->valueType);
-    return fmt::format("{} -> {}", t1, t2);
+    return std::format("{} -> {}", t1, t2);
 }
 
 std::string generateTypename(const OptionalType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
-    return fmt::format("std::optional<{}>", t1);
+    return std::format("std::optional<{}>", t1);
 }
 
 std::string generateLuaExtractionTypename(const OptionalType* type) {
     std::string t1 = generateLuaExtractionTypename(type->type);
-    return fmt::format("std::optional<{}>", t1);
+    return std::format("std::optional<{}>", t1);
 }
 
 std::string generateDescriptiveTypename(const OptionalType* type) {
     std::string t1 = generateDescriptiveTypename(type->type);
-    return fmt::format("{}?", t1);
+    return std::format("{}?", t1);
 }
 
 std::string generateTypename(const VariantType* type, bool fullyQualified) {
@@ -709,31 +709,31 @@ std::string generateDescriptiveTypename(const TupleType* type) {
             res += ", ";
         }
     }
-    return fmt::format("({})", res);
+    return std::format("({})", res);
 }
 
 std::string generateTypename(const ArrayType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
-    return fmt::format("std::array<{}, {}>", t1, type->size);
+    return std::format("std::array<{}, {}>", t1, type->size);
 }
 
 std::string generateLuaExtractionTypename(const ArrayType* type) {
     std::string t1 = generateLuaExtractionTypename(type->type);
-    return fmt::format("std::array<{}, {}>", t1, type->size);
+    return std::format("std::array<{}, {}>", t1, type->size);
 }
 
 std::string generateDescriptiveTypename(const ArrayType* type) {
-    return fmt::format("{}[{}]", generateDescriptiveTypename(type->type), type->size);
+    return std::format("{}[{}]", generateDescriptiveTypename(type->type), type->size);
 }
 
 std::string generateTypename(const VectorType* type, bool fullyQualified) {
     std::string t1 = generateTypename(type->type, fullyQualified);
-    return fmt::format("std::vector<{}>", t1);
+    return std::format("std::vector<{}>", t1);
 }
 
 std::string generateLuaExtractionTypename(const VectorType* type) {
     std::string t1 = generateLuaExtractionTypename(type->type);
-    return fmt::format("std::vector<{}>", t1);
+    return std::format("std::vector<{}>", t1);
 }
 
 std::string generateDescriptiveTypename(const VectorType* type) {

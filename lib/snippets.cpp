@@ -24,15 +24,15 @@
 
 #include "snippets.h"
 
-#include <fmt/format.h>
 #include <cassert>
+#include <format>
 #include <unordered_map>
 
 // This file is full of line length violations, but f*ck it;  the generated code would look
 // a lot worse if we would break these everywhere or it would be unreadable
 
 namespace {
-    // All of these snippets can probably replaced by a fmt::format expression that takes
+    // All of these snippets can probably replaced by a std::format expression that takes
     // two parameters;  one for the "internal" type and one for the baked-to type
 
     constexpr std::string_view BakeFunctionBool = "[[maybe_unused]] void bakeTo(const ghoul::Dictionary& d, std::string_view key, bool* val) { *val = d.value<bool>(key); }\n";
@@ -146,14 +146,14 @@ std::string_view bakeFunctionForType(BasicType::Type type) {
 }
 
 std::string vectorBakeFunctionForType(std::string_view type) {
-    return fmt::format(
+    return std::format(
         "   if (d.hasValue<ghoul::Dictionary>(key)) {{ {} v; bakeTo(d, key, &v); *val = std::move(v); return; }}\n",
         type
     );
 }
 
 std::string enumBakeFunctionForType(std::string_view type) {
-    return fmt::format(
+    return std::format(
         "   if (d.hasValue<std::string>(key)) {{ {} v; bakeTo(d, key, &v); *val = std::move(v); return; }}\n",
         type
     );
@@ -206,7 +206,7 @@ std::string enumToEnumMapping(Enum* e) {
     assert(!e->attributes.mappedTo.empty());
     std::string mappedTo = e->attributes.mappedTo;
     std::string fullyQualifiedName = fqn(e, "::");
-    std::string result = fmt::format(R"(
+    std::string result = std::format(R"(
 template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
     switch (value) {{
         // If you end up here following a compiler error saying something about
@@ -219,13 +219,13 @@ template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
     );
 
     for (EnumElement* ee : e->elements) {
-        result += fmt::format(R"(
+        result += std::format(R"(
         case {0}::{2}:  return {1}::{2};)",
             fullyQualifiedName, e->attributes.mappedTo, ee->name
         );
     }
 
-    result += fmt::format(R"(
+    result += std::format(R"(
         default:
             throw "This default label is not necessary since the case labels are "
                   "exhaustive, but not having it makes Visual Studio cranky";
@@ -243,13 +243,13 @@ std::string enumArrayify(Enum* e) {
     assert(!e->elements.empty());
 
     std::string fullyQualifiedName = fqn(e, "::");
-    std::string result = fmt::format(R"(
+    std::string result = std::format(R"(
 template<> [[maybe_unused]] std::vector<{0}> arrayify() {{
     return {{
 )", fullyQualifiedName);
 
     for (EnumElement* elem : e->elements) {
-        result += fmt::format("        {0}::{1},\n", fullyQualifiedName, elem->name);
+        result += std::format("        {0}::{1},\n", fullyQualifiedName, elem->name);
     }
 
     // Remove the terminating ,  We first remove the \n, but have to put it back after

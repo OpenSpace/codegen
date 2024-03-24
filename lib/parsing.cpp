@@ -26,10 +26,10 @@
 
 #include "types.h"
 #include "util.h"
-#include <fmt/format.h>
 #include <algorithm>
 #include <cassert>
 #include <filesystem>
+#include <format>
 #include <numeric>
 
 namespace {
@@ -257,7 +257,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
 
         // No parameters are needed, but if there's a ) without a corresponding ( it's bad
         if (const size_t end = block.find(')');  end != std::string_view::npos) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Attribute parameter parantheses unbalanced\n{}", block
             ));
         }
@@ -271,7 +271,7 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
         beg - (p + key.size()) - 1
     );
     if (const size_t end = block.find(')', beg);  end == std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Attribute parameter has unterminated parameter list\n{}", block
         ));
     }
@@ -298,14 +298,14 @@ std::vector<ParseResult> parseAttribute(std::string_view block) {
         cursor++;
     }
     if (cursor == block.size()) {
-        throw CodegenError(fmt::format("Unterminated attribute brackets\n{}", block));
+        throw CodegenError(std::format("Unterminated attribute brackets\n{}", block));
     }
     else if (block[cursor] == ',') {
         std::vector<ParseResult> recRes = parseAttribute(block.substr(cursor));
         res.insert(res.end(), recRes.begin(), recRes.end());
     }
     else if (block[cursor] != ']') {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Parameter attribute was not terminated\n{}", block
         ));
     }
@@ -323,7 +323,7 @@ std::string_view parseCommentLine(std::string_view line) {
 
 bool booleanValue(std::string_view v) {
     if (v != "true" && v != "false" && !v.empty()) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Boolean attribute needs to be empty, 'true', or 'false'. Got {}", v
         ));
     }
@@ -379,7 +379,7 @@ Variable::Attributes parseAttributes(std::string_view line) {
             res.mustBeNotEmpty = booleanValue(p.value);
         }
         else {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line
             ));
         }
@@ -409,13 +409,13 @@ Struct* parseStruct(std::string_view line) {
                 s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
             }
             else {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Unknown attribute '{}' in struct definition found\n{}", a.key, line
                 ));
             }
         }
         if (s->attributes.dictionary.empty()) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "No name specified for root struct\n{}", line
             ));
         }
@@ -423,7 +423,7 @@ Struct* parseStruct(std::string_view line) {
         const char lastChar =
             s->attributes.dictionary[s->attributes.dictionary.size() - 1];
         if (firstChar == '"' && lastChar == '"') {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Root struct name must not be enclosed by \"\n{}", line
             ));
         }
@@ -432,7 +432,7 @@ Struct* parseStruct(std::string_view line) {
 
     const size_t endStruct = line.find(' ', cursor);
     if ((endStruct == std::string_view::npos) || (endStruct == line.size() - 1)) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Missing space or struct name before the opening {{ of a struct\n{}", line
         ));
     }
@@ -472,7 +472,7 @@ Enum* parseEnum(std::string_view line) {
     }
     const size_t endEnum = line.find(' ', cursor);
     if (endEnum == std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Missing space before the opening {{ of an enum\n{}", line
         ));
     }
@@ -499,7 +499,7 @@ EnumElement* parseEnumElement(std::string_view line) {
                 e->attributes.key = a.value;
             }
             else {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Unrecognized attribute '{}' found when parsing enum value\n{}",
                     a.key, line
                 ));
@@ -507,7 +507,7 @@ EnumElement* parseEnumElement(std::string_view line) {
         }
     }
     if (e->attributes.key.empty()) {
-        e->attributes.key = fmt::format("\"{}\"", e->name);
+        e->attributes.key = std::format("\"{}\"", e->name);
     }
     return e;
 }
@@ -519,14 +519,14 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     line.remove_suffix(1);
 
     if (line.find('=') != std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Found '=' in variable definition but default parameters are not allowed\n{}",
             line
         ));
     }
 
     if (line.find(' ') == std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Variable definition does not contain any empty character\n{}", line
         ));
     }
@@ -551,13 +551,13 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     }
 
     if (nBrackets != 0) {
-        throw CodegenError(fmt::format("Unbalanced number of < > brackets\n{}", line));
+        throw CodegenError(std::format("Unbalanced number of < > brackets\n{}", line));
     }
 
     const size_t p1 = cursor;
     const size_t p2 = line.find(' ', p1 + 1);
     if (p1 == std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Too few spaces in variable definition\n{}", line
         ));
     }
@@ -568,7 +568,7 @@ Variable* parseVariable(std::string_view line, Struct* s) {
     res->type = parseType(typeString, s);
 
     if (res->type->isPointerType()) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Illegal pointer type in struct definition\n{}", line
         ));
     }
@@ -586,7 +586,7 @@ Variable* parseVariable(std::string_view line, Struct* s) {
         res->key = res->attributes.key;
     }
     else {
-        res->key = fmt::format("\"{}\"", res->name);
+        res->key = std::format("\"{}\"", res->name);
         res->key[1] = static_cast<char>(::toupper(res->name[0]));
     }
 
@@ -611,7 +611,7 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
                 static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
                 std::min<size_t>(50, code.size() - 1)
             );
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Could not find 'struct' before '[[codegen::Dictionary' before reaching "
                 "the end of the file\n{}",
                 sb
@@ -626,7 +626,7 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
     nameCheck.remove_prefix("struct"sv.size());
     for (const char c : nameCheck) {
         if (::isspace(c) == 0) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Only 'struct' can appear directly before [[codegen::Dictionary\n{}",
                 code.substr(0, std::min<size_t>(code.size(), 50))
             ));
@@ -637,7 +637,7 @@ std::pair<size_t, size_t> validStructCode(std::string_view code) {
     cursor = code.find('{', lastNewLine) + 1;
     for (int counter = 1; counter > 0; cursor++) {
         if (cursor >= static_cast<int64_t>(code.size())) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Could not find closing }} of root struct\n{}", code
             ));
         }
@@ -676,7 +676,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
                 static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
                 std::min<size_t>(50, code.size() - 1)
             );
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Could not find 'enum class' before '[[codegen::stringify' before "
                 "reaching the end of the file\n{}",
                 sb
@@ -691,7 +691,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     nameCheck.remove_prefix("enum class"sv.size());
     for (const char c : nameCheck) {
         if (::isspace(c) == 0) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Only 'enum class' can appear directly before [[codegen::stringify\n{}",
                 code.substr(0, std::min<size_t>(code.size(), 50))
             ));
@@ -702,7 +702,7 @@ std::pair<size_t, size_t> validEnumCode(std::string_view code) {
     cursor = code.find('{', lastNewLine) + 1;
     for (int counter = 1; counter > 0; cursor++) {
         if (cursor >= static_cast<int64_t>(code.size())) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Could not find closing }} of root enum\n{}", code
             ));
         }
@@ -738,7 +738,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     int nParantheses = 0;
     while (true) {
         if (cursor >= code.size()) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Illformed function definition at {}", code.substr(start, 50)
             ));
         }
@@ -764,7 +764,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     const std::string_view content = strip(code.substr(begin, end));
 
     if (const size_t p = content.find("/*"); p != std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
@@ -808,7 +808,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                 }
 
                 if (!stack.empty() && stack.back()->type != StackElement::Type::Struct) {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "Struct definition found outside a parent struct\n{}",
                         structBuffer
                     ));
@@ -831,7 +831,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
                 if (!s->attributes.dictionary.empty()) {
                     if (rootStruct) {
-                        throw CodegenError(fmt::format(
+                        throw CodegenError(std::format(
                             "Found nested structs annotated with the Dictionary "
                             "attribute. It is not allowed to nest these top level "
                             "structs\n\n{} -> {}",
@@ -876,7 +876,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
 
                 assert(e);
                 if (stack.back()->type != StackElement::Type::Struct) {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "Enum class definition found inside another enum definition\n{}",
                         line
                     ));
@@ -1001,7 +1001,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
     assert(!content.empty());
 
     if (const size_t p = content.find("/*"); p != std::string_view::npos) {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Block comments are not allowed\n{}", content.substr(p, 50)
         ));
     }
@@ -1112,7 +1112,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         std::pair<size_t, size_t> loc = std::pair(0, 0);
         while (true) {
             if (cursor == content.size()) {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Error detecting end of return value\n{}", content.substr(cursor, 50)
                 ));
             }
@@ -1187,7 +1187,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     }
 
     if (content.substr(precursor, 2) != "]]") {
-        throw CodegenError(fmt::format(
+        throw CodegenError(std::format(
             "Error parsing root function, unterminated codegen marker. Missing ']'\n{}",
             content
         ));
@@ -1200,13 +1200,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         std::string_view luaName = content.substr(beginName, endName - beginName);
 
         if (luaName.empty() || luaName.size() == 2) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Error in custom name for luawrap function. Provided name was empty\n{}",
                 content
             ));
         }
         if (luaName[0] != '"' || luaName[luaName.size() - 1] != '"') {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Error in custom name for luawrap function. Provided name must be "
                 "enclosed by \"\n{}", content
             ));
@@ -1261,7 +1261,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
         const std::string_view name = content.substr(loc.first, loc.second - loc.first);
         f->functionName = std::string(strip(name));
         if (::isupper(f->functionName[0])) {
-            throw CodegenError(fmt::format(
+            throw CodegenError(std::format(
                 "Marked functions must not start with an uppercase letter\n{}", content
             ));
         }
@@ -1293,13 +1293,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             std::string_view typeStr2 = content.substr(l.first, l.second - l.first);
             assert(!typeStr2.empty());
             if (typeStr2[typeStr2.size() - 1] == '*') {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Illegal pointer type '{} {}' found in function '{}'\n{}",
                     typeStr, typeStr2, f->functionName, content
                 ));
             }
             else if (typeStr2[typeStr2.size() - 1] == '&') {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Illegal reference type '{} {}' found in function '{}'\n{}",
                     typeStr, typeStr2, f->functionName, content
                 ));
@@ -1324,7 +1324,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             v->name = std::string(content.substr(l.first, l.second - l.first));
 
             if (v->name.empty()) {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Parameter {} of function '{}' has no name, which is not allowed",
                     f->arguments.size(), f->functionName
                 ));
@@ -1368,13 +1368,13 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
             cursor = equalLoc;
             while (true) {
                 if (cursor >= content.size()) {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "Illformed function definition at {}", content
                     ));
                 }
 
                 if (content[cursor] == '{' || content[cursor] == '}') {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "Default initialization of function parameters using the "
                         "initializer list syntax is not supported", content
                     ));
@@ -1455,7 +1455,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                         assert(lastVar->type->isOptionalType());
                         OptionalType* ot = static_cast<OptionalType*>(lastVar->type);
                         if (*var->type == *ot->type) {
-                            throw CodegenError(fmt::format(
+                            throw CodegenError(std::format(
                                 "When using optional arguments in the beginning of the "
                                 "argument list, the last optional argument must not have "
                                 "the same type as the first required argument or we "
@@ -1470,7 +1470,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
                 if (!isOptional) {
                     // We have seen the first optional parameter but now there is a
                     // not-optional one, so we have a wrong ordering of parameters
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "It is not supported to have non-optional parameters after "
                         "optional ones\n{}", content.substr(cursor, 50)
                     ));
@@ -1576,7 +1576,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
                 for (Function* func : res.luaWrapperFunctions) {
                     if (f->functionName == func->functionName) {
-                        throw CodegenError(fmt::format(
+                        throw CodegenError(std::format(
                             "Cannot define multiple functions with the same name\n{}",
                             code.substr(next.cursors.first, 50)
                         ));

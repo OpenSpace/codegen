@@ -24,9 +24,9 @@
 
 #include "util.h"
 
-#include <fmt/format.h>
 #include <algorithm>
 #include <cassert>
+#include <cctype>
 #include <functional>
 
 bool isEmptyLine(std::string_view sv) {

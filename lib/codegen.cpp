@@ -30,10 +30,10 @@
 #include "types.h"
 #include "util.h"
 #include "verifier.h"
-#include <fmt/format.h>
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <format>
 #include <fstream>
 #include <iostream>
 #include <numeric>
@@ -182,7 +182,7 @@ namespace {
             const size_t l = "codegen::verbatim"sv.size();
             it += l;
             if (comment[it] != '(') {
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Malformed codegen::verbatim. Expected ( after token\n{}", comment
                 ));
             }
@@ -203,7 +203,7 @@ namespace {
             if (!comment.empty() && comment.back() == ' ') {
                 comment.pop_back();
             }
-            comment = fmt::format("\"{}\"", comment);
+            comment = std::format("\"{}\"", comment);
         }
         return comment;
     }
@@ -261,7 +261,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         }
 
         std::string ver = verifier(vt->type, var, currentStruct);
-        return fmt::format(
+        return std::format(
             "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n", ver, comments
         );
     }
@@ -285,14 +285,14 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         assert(mt->valueType->tag == VariableType::Tag::BasicType);
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
         std::string valueVerifier = verifierForType(valueType->type, var.attributes);
-        return fmt::format(
+        return std::format(
             "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})\n", valueVerifier
         );
     }
     else if (type->tag == VariableType::Tag::CustomType) {
         CustomType* ct = static_cast<CustomType*>(type);
         assert(ct->type);
-        return fmt::format("codegen_{}_{}", fqn(currentStruct, "_"), ct->type->name);
+        return std::format("codegen_{}_{}", fqn(currentStruct, "_"), ct->type->name);
     }
     else {
         throw std::logic_error("Missing case label");
@@ -300,7 +300,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 }
 
 std::string writeEnumDocumentation(Enum* e) {
-    std::string result = fmt::format(
+    std::string result = std::format(
         "    std::shared_ptr<StringInListVerifier> codegen_{} = std::make_shared<StringInListVerifier>(std::vector<std::string>{{",
         fqn(e, "_")
     );
@@ -309,9 +309,9 @@ std::string writeEnumDocumentation(Enum* e) {
         // If no key attribute is specified, we use the name instead
         std::string key =
             em->attributes.key.empty() ?
-            fmt::format("\"{}\"", em->name) :
+            std::format("\"{}\"", em->name) :
             em->attributes.key;
-        result += fmt::format("{},", key);
+        result += std::format("{},", key);
     }
     // The last element has a , at the end that we can overwrite
     result.pop_back();
@@ -327,7 +327,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
 
     std::string ver = fqn(s, "_");
     std::string v = verifier(var->type, *var, s);
-    std::string result = fmt::format(
+    std::string result = std::format(
         "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
         ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
     );
@@ -338,13 +338,13 @@ std::string writeStructDocumentation(Struct* s) {
     std::string name = fqn(s, "_");
     std::string result;
     if (s->parent) {
-        result = fmt::format(
+        result = std::format(
             "    std::shared_ptr<TableVerifier> codegen_{} = std::make_shared<TableVerifier>();\n", name
         );
     }
     else {
         // root struct
-        result = fmt::format(
+        result = std::format(
             "    TableVerifier codegen_{0}_content;\n"
             "    TableVerifier* codegen_{0} = &codegen_{0}_content;\n"
             , name
@@ -393,7 +393,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
     }
     converters.push_back(typeString);
 
-    std::string result = fmt::format(
+    std::string result = std::format(
         "[[maybe_unused]] "
         "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n",
         typeString
@@ -430,7 +430,7 @@ std::string writeVariantConverter(Variable* var, std::vector<std::string>& conve
 
 std::string writeInnerEnumConverter(Enum* e) {
     std::string type = fqn(e, "::");
-    std::string result = fmt::format(
+    std::string result = std::format(
         "[[maybe_unused]] "
         "void bakeTo(const ghoul::Dictionary & d, std::string_view key, {}*val) {{\n"
         "    std::string v = d.value<std::string>(key);\n",
@@ -441,7 +441,7 @@ std::string writeInnerEnumConverter(Enum* e) {
         assert(elem);
         std::string typeStr = fqn(e, "::");
         assert(!elem->attributes.key.empty());
-        result += fmt::format(
+        result += std::format(
             "    if (v == {}) {{ *val = {}::{}; }}\n",
             elem->attributes.key, typeStr, elem->name
         );
@@ -477,7 +477,7 @@ std::string writeStructConverter(Struct* s) {
     }
 
     std::string name = fqn(s, "::");
-    result += fmt::format(R"(template <> [[maybe_unused]] void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
+    result += std::format(R"(template <> [[maybe_unused]] void bakeTo<{0}>(const ghoul::Dictionary& d, std::string_view key, {0}* val) {{
     {0}& res = *val;
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
 )",
@@ -485,7 +485,7 @@ std::string writeStructConverter(Struct* s) {
     );
 
     for (Variable* var : s->variables) {
-        result += fmt::format(
+        result += std::format(
             "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
         );
     }
@@ -502,14 +502,14 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s, std::string_view so
     for (Variable* var : s->variables) {
         assert(var);
         if (var->comment.empty()) {
-            std::string identifier = fmt::format("{}.{}", fqn(s, "."), var->name);
-            std::string message = fmt::format(
+            std::string identifier = std::format("{}.{}", fqn(s, "."), var->name);
+            std::string message = std::format(
                 "\"{}: [CODEGEN] {} is not documented\"", sourceFile, identifier
             );
 #ifdef WIN32
-            res += fmt::format("#pragma message({})\n", message);
+            res += std::format("#pragma message({})\n", message);
 #else
-            res += fmt::format("#warning {}\n", message);
+            res += std::format("#warning {}\n", message);
 #endif // WIN32
         }
     }
@@ -522,14 +522,14 @@ std::string writeRootEnumConverter(Enum* e) {
     std::string res;
 
     // toString
-    res += fmt::format(R"(
+    res += std::format(R"(
 template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     switch (t) {{
 )",
         fqn(e, "::")
     );
     for (EnumElement* elem : e->elements) {
-        res += fmt::format(
+        res += std::format(
             "        case {0}::{1}: return {2};\n",
             fqn(e, "::"), elem->name, elem->attributes.key
         );
@@ -539,19 +539,19 @@ template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
     res += "\n    }\n}\n";
 
     // fromString
-    res += fmt::format(
+    res += std::format(
         "template <> [[maybe_unused]] {0} fromString<{0}>(std::string_view sv) {{\n",
         fqn(e, "::")
     );
     for (EnumElement* elem : e->elements) {
-        res += fmt::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
+        res += std::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
             elem->attributes.key, fqn(e, "::"), elem->name
         );
     }
     res += "    throw std::runtime_error(\"Could not find value in enum\");\n";
     res += "}\n";
 
-    res += fmt::format(BakeEnum, fqn(e, "::"));
+    res += std::format(BakeEnum, fqn(e, "::"));
 
     return res;
 }
@@ -578,14 +578,14 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     result += DocumentationFallback;
 
     for (Struct* s : code.structs) {
-        result += fmt::format(DocumentationPreamble, s->name);
+        result += std::format(DocumentationPreamble, s->name);
 
         if (GenerateWarningsForDocumentationLessTypes) {
             result += emitWarningsForDocumentationLessTypes(s, code.sourceFile);
         }
 
         result += writeStructDocumentation(s);
-        result += fmt::format(
+        result += std::format(
             DocumentationEpilog,
             s->attributes.dictionary, s->name, s->comment
         );
@@ -641,10 +641,10 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     result += '\n';
 
     for (Struct* s : code.structs) {
-        result += fmt::format(BakeStructPreamble, s->name, s->attributes.dictionary);
+        result += std::format(BakeStructPreamble, s->name, s->attributes.dictionary);
 
         for (Variable* var : s->variables) {
-            result += fmt::format(
+            result += std::format(
                 "    internal::bakeTo(dict, {}, &res.{});\n", var->key, var->name
             );
         }
@@ -720,8 +720,8 @@ std::string generateLuaFunction(Function* f) {
     std::string capitalizedName = f->functionName;
     capitalizedName[0] = static_cast<char>(::toupper(capitalizedName[0]));
 
-    result += fmt::format(LuaWrapperPreamble, capitalizedName);
-    result += fmt::format("    \"{}\",\n", f->luaName);
+    result += std::format(LuaWrapperPreamble, capitalizedName);
+    result += std::format("    \"{}\",\n", f->luaName);
 
     // The lambda that is executed
     result += "    [](lua_State* L) -> int {\n";
@@ -736,13 +736,13 @@ std::string generateLuaFunction(Function* f) {
     // Adding the check for number of variables
     int nTotalArguments = static_cast<int>(f->arguments.size());
     if (nRequiredArguments == nTotalArguments) {
-        result += fmt::format(
+        result += std::format(
             "        ghoul::lua::checkArgumentsAndThrow(L, {}, \"{}\");\n",
             nTotalArguments, f->luaName
         );
     }
     else {
-        result += fmt::format(
+        result += std::format(
             "        ghoul::lua::checkArgumentsAndThrow(L, {{ {}, {} }}, \"{}\");\n",
             nRequiredArguments, nTotalArguments, f->luaName
         );
@@ -767,7 +767,7 @@ std::string generateLuaFunction(Function* f) {
         Variable* var = arguments.front();
         OptionalType* ot = static_cast<OptionalType*>(var->type);
 
-        result += fmt::format(
+        result += std::format(
             LuaWrapperOptionalTypeExtraction,
             generateTypename(ot), var->name, generateLuaExtractionTypename(ot->type)
         );
@@ -786,7 +786,7 @@ std::string generateLuaFunction(Function* f) {
         names = names.substr(0, names.size() - 2);
         types = types.substr(0, types.size() - 2);
 
-        result += fmt::format(
+        result += std::format(
             "        auto [{}] = ghoul::lua::values<{}>(L);\n", names, types
         );
     }
@@ -796,18 +796,18 @@ std::string generateLuaFunction(Function* f) {
     // Depending on if we have a return value, we want to be able to capture that value
     result += "            ";
     if (f->returnValue) {
-        result += fmt::format("{} res = ", generateTypename(f->returnValue));
+        result += std::format("{} res = ", generateTypename(f->returnValue));
     }
 
     if (f->arguments.empty()) {
         // If there are no arguments to the function, it's pretty simple to just
         // call it
-        result += fmt::format("{}();\n", f->functionName);
+        result += std::format("{}();\n", f->functionName);
     }
     else {
         // If there are arguments it might get a bit more complicated since we
         // want to support default initialized arguments.
-        result += fmt::format("{}(\n", f->functionName);
+        result += std::format("{}(\n", f->functionName);
 
         for (size_t i = 0; i < f->arguments.size(); i += 1) {
             Variable* var = f->arguments[i];
@@ -825,7 +825,7 @@ std::string generateLuaFunction(Function* f) {
                 // An alternative way would be to not provide the optional argument at
                 // all, but that turned out to be much more code and more complicated than
                 // just storing the default value
-                result += fmt::format(
+                result += std::format(
                     "{0}.has_value() ? std::move(*{0}) : {1}",
                     var->name, *ot->defaultArgument
                 );
@@ -833,13 +833,13 @@ std::string generateLuaFunction(Function* f) {
             else if (var->type->containsCustomType()) {
                 // We have extracted this type as a ghoul::Dictionary previously, and need
                 // to bake it into the correct type here instead
-                result += fmt::format(
+                result += std::format(
                     "codegen::bake<{0}>({1})",
                     generateTypename(var->type), var->name
                 );
             }
             else {
-                result += fmt::format("std::move({})", var->name);
+                result += std::format("std::move({})", var->name);
             }
 
             if (i != f->arguments.size() - 1) {
@@ -857,10 +857,10 @@ std::string generateLuaFunction(Function* f) {
             assert(!tt->types.empty());
             for (size_t i = 0; i < tt->types.size(); i += 1) {
                 if (tt->types[i]->isOptionalType()) {
-                    result += fmt::format(LuaWrapperPushTupleOptional, i);
+                    result += std::format(LuaWrapperPushTupleOptional, i);
                 }
                 else {
-                    result += fmt::format(LuaWrapperPushTupleRegular, i);
+                    result += std::format(LuaWrapperPushTupleRegular, i);
                 }
             }
             result += "            return nArguments;\n";
@@ -871,7 +871,7 @@ std::string generateLuaFunction(Function* f) {
         else if (f->returnValue->isVariantType()) {
             VariantType* vt = static_cast<VariantType*>(f->returnValue);
             for (VariableType* v : vt->types) {
-                result += fmt::format(LuaWrapperPushVariant, generateTypename(v));
+                result += std::format(LuaWrapperPushVariant, generateTypename(v));
             }
             result += "            return 1;\n";
         }
@@ -884,7 +884,7 @@ std::string generateLuaFunction(Function* f) {
 
                     result += "            lua_newtable(L);\n";
                     for (Variable* var : s->variables) {
-                        result += fmt::format(
+                        result += std::format(
                             "            ghoul::lua::push(L, \"{0}\", std::move(res.{0}));\n",
                             var->name
                         );
@@ -921,7 +921,7 @@ std::string generateLuaFunction(Function* f) {
     // Argument description
     std::string argumentsDesc = "{\n";
     for (Variable* var : f->arguments) {
-        argumentsDesc += fmt::format(
+        argumentsDesc += std::format(
             R"(        {{ "{}", "{}")", var->name, generateDescriptiveTypename(var->type)
         );
 
@@ -940,7 +940,7 @@ std::string generateLuaFunction(Function* f) {
                     i -= 1;
                 }
             }
-            argumentsDesc += fmt::format(", \"{}\"", defaultArgument);
+            argumentsDesc += std::format(", \"{}\"", defaultArgument);
         }
 
         argumentsDesc += " },\n";
@@ -953,23 +953,23 @@ std::string generateLuaFunction(Function* f) {
 
     result += "    " + argumentsDesc + "\n    },\n";
 
-    result += fmt::format(
+    result += std::format(
         "    \"{}\",\n", f->returnValue ? generateDescriptiveTypename(f->returnValue) : ""
     );
 
     // Documentation
-    result += fmt::format(R"(    R"[({})[")", f->documentation) + ",\n";
+    result += std::format(R"(    R"[({})[")", f->documentation) + ",\n";
 
     // Source location
     if (f->sourceLocation.file.empty()) {
         // The `sourceLocation.file` is empty for all of the unit tests where we call the
         // `parse` function manually, so that not filename exists
-        result += fmt::format("    {{ \"<null>\", {} }}\n", f->sourceLocation.line);
+        result += std::format("    {{ \"<null>\", {} }}\n", f->sourceLocation.line);
     }
     else {
         // `sourceLocation.file` is the full path to the file, but we only want to store
         // the path relative to the working directory
-        result += fmt::format(
+        result += std::format(
             "    {{ \"{}\", {} }}\n",
             f->sourceLocation.file,
             f->sourceLocation.line
@@ -1100,7 +1100,7 @@ Result handleFile(const std::filesystem::path& path) {
     }
 
     if (PreventFileChange && shouldWriteFile) {
-        throw CodegenError(fmt::format("File '{}' changed", path.filename().string()));
+        throw CodegenError(std::format("File '{}' changed", path.filename().string()));
     }
 
     std::filesystem::path debugDest = destination;
@@ -1108,7 +1108,7 @@ Result handleFile(const std::filesystem::path& path) {
     debugDest.replace_filename(debugDest.filename().string() + "_debug.cpp");
 
     if (shouldWriteFile || ShouldAlwaysWriteFiles) {
-        std::cout << fmt::format("Processed file '{}'\n", path.filename().string());
+        std::cout << std::format("Processed file '{}'\n", path.filename().string());
 
         std::ofstream r(destination);
         r.write(content.data(), content.size());

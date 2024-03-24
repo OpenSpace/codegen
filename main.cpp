@@ -30,10 +30,10 @@
 #include "util.h"
 #include "verifier.h"
 
-#include <fmt/format.h>
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#include <format>
 #include <iostream>
 
 // TODO
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
         std::cout << " " << src;
 
         if (!fs::is_directory(src) && !fs::is_regular_file(src)) {
-            std::cerr << fmt::format(
+            std::cerr << std::format(
                 "All non-dashed parameters have to be files or folders. '{}' is not\n",
                 src
             );
@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
     auto beg = std::chrono::high_resolution_clock::now();
 
     std::vector<fs::path> entries;
-    const std::string extFolder = fmt::format(
+    const std::string extFolder = std::format(
         "{0}ext{0}", static_cast<char>(std::filesystem::path::preferred_separator)
     );
     for (const std::string_view src : srcs) {
@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
             }
             else {
                 if (isVerbose) {
-                    std::cout << fmt::format(
+                    std::cout << std::format(
                         "Rejecting {}. Extension: {}; Codegen-ness: {}; Ext-ness: {}\n",
                         path.string(),
                         path.extension().string(),
@@ -135,7 +135,7 @@ int main(int argc, char** argv) {
                 }
             }
             catch (const std::runtime_error& e) {
-                std::cerr << fmt::format(
+                std::cerr << std::format(
                     "\n\n{}: error: {}\n\n\n", p.string(), e.what()
                 );
                 exit(EXIT_FAILURE);
@@ -147,12 +147,12 @@ int main(int argc, char** argv) {
     const double ms = (end - beg).count() / 1000000.0;
 
     if (PrintTiming) {
-        std::cout << fmt::format(
+        std::cout << std::format(
             "{}/{} files changed in {} ms.  Pure time in codegen: {} ms\n",
             ChangedFiles, AllFiles, ms, totalTime / 1000000.0
         );
     }
     else {
-        std::cout << fmt::format("{}/{} files changed\n", ChangedFiles, AllFiles);
+        std::cout << std::format("{}/{} files changed\n", ChangedFiles, AllFiles);
     }
 }

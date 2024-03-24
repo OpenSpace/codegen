@@ -24,8 +24,8 @@
 
 #include "verifier.h"
 
-#include <fmt/format.h>
 #include <cassert>
+#include <format>
 
 namespace {
     void reportUnsupportedAttribute(BasicType::Type type,
@@ -34,7 +34,7 @@ namespace {
         auto report = [type](std::string_view attr, std::string_view name) {
             if (!attr.empty()) {
                 std::string t = generateTypename(type);
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Type '{}' does not support attribute '{}'", t, name
                 ));
             }
@@ -42,7 +42,7 @@ namespace {
         auto reportBool = [type](bool attr, std::string_view name) {
             if (attr) {
                 std::string t = generateTypename(type);
-                throw CodegenError(fmt::format(
+                throw CodegenError(std::format(
                     "Type '{}' does not support attribute '{}'", t, name
                 ));
             }
@@ -161,7 +161,7 @@ namespace {
     std::string addQualifier(std::string ver, std::string qual, std::string_view param) {
         assert(!ver.empty());
         assert(!qual.empty());
-        return fmt::format("{}<{}>({})", std::move(qual), std::move(ver), param);
+        return std::format("{}<{}>({})", std::move(qual), std::move(ver), param);
     }
 } // namespace
 
@@ -237,7 +237,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 if (!attributes.inlist.empty() || !attributes.unequal.empty() ||
                     !attributes.annotation.empty())
                 {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "With the notempty attribute, no other attribute can be used:\n{}",
                         generateTypename(type)
                     ));
@@ -249,7 +249,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 if (!attributes.inlist.empty() || !attributes.unequal.empty() ||
                     attributes.mustBeNotEmpty)
                 {
-                    throw CodegenError(fmt::format(
+                    throw CodegenError(std::format(
                         "With the annotation attribute, no other attribute can be used:\n{}",
                         generateTypename(type)
                     ));
@@ -447,7 +447,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 return "TableVerifier";
             }
             else {
-                return fmt::format("ReferencingVerifier({})", attributes.reference);
+                return std::format("ReferencingVerifier({})", attributes.reference);
             }
         default: throw std::logic_error("Missing case label");
     }
