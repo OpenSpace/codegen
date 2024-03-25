@@ -212,7 +212,7 @@ endif ()
 target_precompile_headers(codegentest PRIVATE
   <openspace/documentation/documentation.h>
   <openspace/documentation/verifier.h>
-  [["ghoul/fmt.h"]]
+  [["ghoul/format.h"]]
   [["ghoul/glm.h"]]
   <catch2/catch_test_macros.hpp>
 )
