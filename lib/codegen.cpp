@@ -725,6 +725,7 @@ std::string generateLuaFunction(Function* f) {
 
     // The lambda that is executed
     result += "    [](lua_State* L) -> int {\n";
+    result += std::format("        ZoneScopedN(\"[Lua] {}\");\n", f->functionName);
 
     int nRequiredArguments = 0;
     for (Variable* var : f->arguments) {
