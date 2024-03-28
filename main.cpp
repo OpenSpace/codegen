@@ -29,7 +29,6 @@
 #include "types.h"
 #include "util.h"
 #include "verifier.h"
-
 #include <algorithm>
 #include <array>
 #include <filesystem>

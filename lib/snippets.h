@@ -178,6 +178,12 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 // "codegen::Dictionary" or an enum class tagged with "codegen::stringify" was changed
 // without the codegen tool being run again.
 
+// We are inserting Tracy's ZoneScopedN into the Lua functions, but the macro might not be
+// defined in all cases, so as a fallback we do it here
+#ifndef ZoneScopedN
+#define ZoneScopedN(name)
+#endif // ZoneScopedN
+
 )";
 
     constexpr std::string_view BakeFunctionOptional = R"(

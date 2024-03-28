@@ -217,7 +217,6 @@ target_precompile_headers(codegentest PRIVATE
   <catch2/catch_test_macros.hpp>
 )
 
-
 if (OPENSPACE_MODULE_WEBBROWSER AND CEF_ROOT)
   # wanted by CEF
   set(PROJECT_ARCH "x86_64")
