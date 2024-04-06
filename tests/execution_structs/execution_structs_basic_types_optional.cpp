@@ -166,13 +166,13 @@ TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]
     using namespace std::string_literals;
 
     const std::filesystem::path path = std::filesystem::temp_directory_path();
-    std::string tmpFile = (path / "codegen_execution_basic_types_optional.txt").string();
+    std::filesystem::path tmpFile = (path / "codegen_execution_basic_types_optional.txt");
     {
         std::ofstream f(tmpFile);
         f << "unit test";
     }
 
-    std::string tmpFolder = (path / "codegen_execution_basic_optional").string();
+    std::filesystem::path tmpFolder = (path / "codegen_execution_basic_optional");
     std::filesystem::create_directories(tmpFolder);
 
     ghoul::Dictionary d;

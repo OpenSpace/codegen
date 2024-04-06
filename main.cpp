@@ -134,9 +134,7 @@ int main(int argc, char** argv) {
                 }
             }
             catch (const std::runtime_error& e) {
-                std::cerr << std::format(
-                    "\n\n{}: error: {}\n\n\n", p.string(), e.what()
-                );
+                std::cerr << std::format("\n\n{}: error: {}\n\n\n", p.string(), e.what());
                 exit(EXIT_FAILURE);
             }
         }

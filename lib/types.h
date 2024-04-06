@@ -25,6 +25,7 @@
 #ifndef __OPENSPACE_CODEGEN___TYPES___H__
 #define __OPENSPACE_CODEGEN___TYPES___H__
 
+#include <filesystem>
 #include <map>
 #include <optional>
 #include <stdexcept>
@@ -279,7 +280,7 @@ struct Function {
     std::vector<Variable*> arguments;
 
     struct {
-        std::string file;
+        std::filesystem::path file;
         int line = 0;
     } sourceLocation;
 };

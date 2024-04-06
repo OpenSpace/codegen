@@ -1482,7 +1482,7 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     return f;
 }
 
-[[nodiscard]] Code parse(std::string_view code, const std::string& fileName) {
+[[nodiscard]] Code parse(std::string_view code, const std::filesystem::path& fileName) {
     std::string codeStr = std::string(code);
     // When trying to generate code checked out on a Windows machine on a Linux virtual
     // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
@@ -1566,13 +1566,9 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
 
                 // There is probably something smarter that we can do here, but if we use
                 // the `fileName` as is we are going to end up with the
-                f->sourceLocation.file = fileName;
-                std::replace(
-                    f->sourceLocation.file.begin(),
-                    f->sourceLocation.file.end(),
-                    '\\',
-                    '/'
-                );
+                std::string file = fileName.string();
+                std::replace(file.begin(), file.end(), '\\', '/');
+                f->sourceLocation.file = file;
 
                 for (Function* func : res.luaWrapperFunctions) {
                     if (f->functionName == func->functionName) {
