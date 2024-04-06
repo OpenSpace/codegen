@@ -78,6 +78,7 @@ target_sources(
     execution_luawrapper/execution_luawrapper_types_void.cpp
     execution_misc/execution_misc_parentdoc.cpp
     execution_misc/execution_misc_multiple.cpp
+    execution_structs/execution_structs_array.cpp
     execution_structs/execution_structs_attributes.cpp
     execution_structs/execution_structs_basic_types.cpp
     execution_structs/execution_structs_basic_types_optional.cpp
@@ -93,6 +94,7 @@ target_sources(
     execution_structs/execution_structs_shadowing.cpp
     execution_structs/execution_structs_simple.cpp
     execution_structs/execution_structs_substructs.cpp
+    execution_structs/execution_structs_tuple.cpp
     execution_structs/execution_structs_variant.cpp
 
     parsing_enums/parsing_enums_arrayify.cpp

@@ -328,6 +328,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (startsWith(type, "std::vector<")) {
         type.remove_prefix("std::vector<"sv.size());
         type.remove_suffix(">"sv.size());
+        type = strip(type);
 
         VectorType* vt = new VectorType;
         vt->tag = VariableType::Tag::VectorType;
@@ -369,6 +370,7 @@ VariableType* parseType(std::string_view type, Struct* context) {
     else if (startsWith(type, "std::optional<")) {
         type.remove_prefix("std::optional<"sv.size());
         type.remove_suffix(">"sv.size());
+        type = strip(type);
 
         OptionalType* op = new OptionalType;
         op->tag = VariableType::Tag::OptionalType;

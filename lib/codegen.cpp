@@ -262,7 +262,22 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 
         std::string ver = verifier(vt->type, var, currentStruct);
         return std::format(
-            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})\n", ver, comments
+            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})", ver, comments
+        );
+    }
+    else if (type->tag == VariableType::Tag::ArrayType) {
+        ArrayType* at = static_cast<ArrayType*>(type);
+        const StackElement* e = resolveType(currentStruct, generateTypename(at->type));
+        std::string comments;
+        if (e) {
+            // e is false for subtypes that are not our own structs
+            comments = resolveComment(e->comment);
+        }
+
+        std::string ver = verifier(at->type, var, currentStruct);
+        return std::format(
+            "new TableVerifier({{{{\"*\",{},Optional::No, {}}}}}, {})",
+            ver, comments, at->size
         );
     }
     else if (type->tag == VariableType::Tag::VariantType) {
@@ -286,8 +301,21 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
         std::string valueVerifier = verifierForType(valueType->type, var.attributes);
         return std::format(
-            "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})\n", valueVerifier
+            "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})", valueVerifier
         );
+    }
+    else if (type->tag == VariableType::Tag::TupleType) {
+        TupleType* tt = static_cast<TupleType*>(type);
+        std::string res = "new TableVerifier({";
+        for (size_t i = 0; i < tt->types.size(); i++) {
+            VariableType* v = tt->types[i];
+            std::string ver = verifier(v, var, currentStruct);
+            // +1 to accommodate 1-based counting for Lua
+            res += std::format("{{\"{}\", {}, Optional::No }},", i + 1, ver);
+        }
+
+        res += std::format("}}, {})", tt->types.size());
+        return res;
     }
     else if (type->tag == VariableType::Tag::CustomType) {
         CustomType* ct = static_cast<CustomType*>(type);
@@ -432,7 +460,7 @@ std::string writeInnerEnumConverter(Enum* e) {
     std::string type = fqn(e, "::");
     std::string result = std::format(
         "[[maybe_unused]] "
-        "void bakeTo(const ghoul::Dictionary & d, std::string_view key, {}*val) {{\n"
+        "void bakeTo(const ghoul::Dictionary& d, std::string_view key, {}* val) {{\n"
         "    std::string v = d.value<std::string>(key);\n",
         type
     );
@@ -598,12 +626,16 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     const std::vector<const VariableType*> types = usedTypes(code.structs);
     bool hasOptionalType = false;
     bool hasVectorType = false;
+    bool hasArrayType = false;
     bool hasMapType = false;
+    bool hasTupleType = false;
     for (const VariableType* t : types) {
         assert(t);
         hasOptionalType |= t->isOptionalType();
         hasVectorType |= t->isVectorType();
+        hasArrayType |= t->isArrayType();
         hasMapType |= t->isMapType();
+        hasTupleType |= t->isTupleType();
     }
 
     if (hasOptionalType) {
@@ -612,8 +644,14 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     if (hasVectorType) {
         result += BakeFunctionVectorDeclaration;
     }
+    if (hasArrayType) {
+        result += BakeFunctionArrayDeclaration;
+    }
     if (hasMapType) {
         result += BakeFunctionMapDeclaration;
+    }
+    if (hasTupleType) {
+        result += BakeFunctionTupleDeclaration;
     }
     for (const VariableType* t : types) {
         if (t->isBasicType()) {
@@ -632,8 +670,14 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     if (hasVectorType) {
         result += BakeFunctionVector;
     }
+    if (hasArrayType) {
+        result += BakeFunctionArray;
+    }
     if (hasMapType) {
         result += BakeFunctionMap;
+    }
+    if (hasTupleType) {
+        result += BakeFunctionTuple;
     }
 
     result += "\n} // namespace internal\n\n";

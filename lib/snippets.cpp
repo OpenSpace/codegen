@@ -75,6 +75,7 @@ namespace {
     constexpr std::string_view VariantConverterDouble = "   if (d.hasValue<double>(key)) { double v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterFloat = "   if (d.hasValue<double>(key)) { float v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterString = "   if (d.hasValue<std::string>(key)) { std::string v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
+    constexpr std::string_view VariantConverterPath = "   if (d.hasValue<std::string>(key)) { std::string v; bakeTo(d, key, &v); *val = std::filesystem::path(v); return; }\n";
     constexpr std::string_view VariantConverterIVec2 = "   if (d.hasValue<glm::dvec2>(key)) { glm::ivec2 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterIVec3 = "   if (d.hasValue<glm::dvec3>(key)) { glm::ivec3 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterIVec4 = "   if (d.hasValue<glm::dvec4>(key)) { glm::ivec4 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
@@ -162,43 +163,45 @@ std::string enumBakeFunctionForType(std::string_view type) {
 std::string_view variantConversionFunctionForType(std::string_view type) {
     assert(!type.empty());
     static std::unordered_map<std::string_view, std::string_view> ConvertFunctions = {
-        { "bool",              VariantConverterBool },
-        { "int",               VariantConverterInt },
-        { "double",            VariantConverterDouble },
-        { "float",             VariantConverterFloat },
-        { "std::string",       VariantConverterString },
-        { "glm::ivec2",        VariantConverterIVec2 },
-        { "glm::ivec3",        VariantConverterIVec3 },
-        { "glm::ivec4",        VariantConverterIVec4 },
-        { "glm::dvec2",        VariantConverterDVec2 },
-        { "glm::dvec3",        VariantConverterDVec3 },
-        { "glm::dvec4",        VariantConverterDVec4 },
-        { "glm::vec2",         VariantConverterVec2 },
-        { "glm::vec3",         VariantConverterVec3 },
-        { "glm::vec4",         VariantConverterVec4 },
-        { "glm::mat2x2",       VariantConverterMat2x2 },
-        { "glm::mat2x3",       VariantConverterMat2x3 },
-        { "glm::mat2x4",       VariantConverterMat2x4 },
-        { "glm::mat3x2",       VariantConverterMat3x2 },
-        { "glm::mat3x3",       VariantConverterMat3x3 },
-        { "glm::mat3x4",       VariantConverterMat3x4 },
-        { "glm::mat4x2",       VariantConverterMat4x2 },
-        { "glm::mat4x3",       VariantConverterMat4x3 },
-        { "glm::mat4x4",       VariantConverterMat4x4 },
-        { "glm::dmat2x2",      VariantConverterDMat2x2 },
-        { "glm::dmat2x3",      VariantConverterDMat2x3 },
-        { "glm::dmat2x4",      VariantConverterDMat2x4 },
-        { "glm::dmat3x2",      VariantConverterDMat3x2 },
-        { "glm::dmat3x3",      VariantConverterDMat3x3 },
-        { "glm::dmat3x4",      VariantConverterDMat3x4 },
-        { "glm::dmat4x2",      VariantConverterDMat4x2 },
-        { "glm::dmat4x3",      VariantConverterDMat4x3 },
-        { "glm::dmat4x4",      VariantConverterDMat4x4 },
-        { "ghoul::Dictionary", VariantConverterDictionary }
+        { "bool",                  VariantConverterBool },
+        { "int",                   VariantConverterInt },
+        { "double",                VariantConverterDouble },
+        { "float",                 VariantConverterFloat },
+        { "std::string",           VariantConverterString },
+        { "std::filesystem::path", VariantConverterPath },
+        { "glm::ivec2",            VariantConverterIVec2 },
+        { "glm::ivec3",            VariantConverterIVec3 },
+        { "glm::ivec4",            VariantConverterIVec4 },
+        { "glm::dvec2",            VariantConverterDVec2 },
+        { "glm::dvec3",            VariantConverterDVec3 },
+        { "glm::dvec4",            VariantConverterDVec4 },
+        { "glm::vec2",             VariantConverterVec2 },
+        { "glm::vec3",             VariantConverterVec3 },
+        { "glm::vec4",             VariantConverterVec4 },
+        { "glm::mat2x2",           VariantConverterMat2x2 },
+        { "glm::mat2x3",           VariantConverterMat2x3 },
+        { "glm::mat2x4",           VariantConverterMat2x4 },
+        { "glm::mat3x2",           VariantConverterMat3x2 },
+        { "glm::mat3x3",           VariantConverterMat3x3 },
+        { "glm::mat3x4",           VariantConverterMat3x4 },
+        { "glm::mat4x2",           VariantConverterMat4x2 },
+        { "glm::mat4x3",           VariantConverterMat4x3 },
+        { "glm::mat4x4",           VariantConverterMat4x4 },
+        { "glm::dmat2x2",          VariantConverterDMat2x2 },
+        { "glm::dmat2x3",          VariantConverterDMat2x3 },
+        { "glm::dmat2x4",          VariantConverterDMat2x4 },
+        { "glm::dmat3x2",          VariantConverterDMat3x2 },
+        { "glm::dmat3x3",          VariantConverterDMat3x3 },
+        { "glm::dmat3x4",          VariantConverterDMat3x4 },
+        { "glm::dmat4x2",          VariantConverterDMat4x2 },
+        { "glm::dmat4x3",          VariantConverterDMat4x3 },
+        { "glm::dmat4x4",          VariantConverterDMat4x4 },
+        { "ghoul::Dictionary",     VariantConverterDictionary }
     };
 
     const auto it = ConvertFunctions.find(type);
-    return it != ConvertFunctions.end() ? it->second : std::string_view();
+    assert(it != ConvertFunctions.end());
+    return it->second;
 }
 
 std::string enumToEnumMapping(Enum* e) {

@@ -925,7 +925,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
             }
         }
 
-        // If we got this far, we must be in a variable definition or an enum defintion
+        // If we got this far, we must be in a variable definition or an enum definition
         // if the highest stack element is a struct, we are in a variable definition, if
         // the highest stack element is an enum, we are in an enum definition
         StackElement* e = stack.back();

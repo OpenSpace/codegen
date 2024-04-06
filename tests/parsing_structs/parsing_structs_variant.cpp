@@ -77,7 +77,7 @@ struct [[codegen::Dictionary(D)]] P {
 })";
 
     Code code = parse(Source);
-    CHECK(code.structs.size() == 1);
+    REQUIRE(code.structs.size() == 1);
     CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
@@ -106,8 +106,142 @@ struct [[codegen::Dictionary(D)]] P {
 
     Code code = parse(Source);
     REQUIRE(code.structs.size() == 1);
-    CHECK(code.structs.front()->variables.size() == 3);
+    CHECK(code.enums.empty());
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->variables.size() == 3);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(generateTypename(var->type) == "std::variant<int, float>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var);
+        CHECK(var->name == "b");
+        CHECK(generateTypename(var->type) == "std::variant<float, int>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var);
+        CHECK(var->name == "c");
+        CHECK(generateTypename(var->type) == "std::variant<int, float>");
+        CHECK(var->comment.empty());
+    }
 
     const std::string r = generateResult(code);
     CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Structs/Variant:  Types and vectors", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::variant<std::string, std::vector<std::string>> string;
+    std::variant<std::filesystem::path, std::vector<std::filesystem::path>> path;
+    std::variant<int, std::vector<int>> integer;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    CHECK(code.enums.empty());
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->variables.size() == 3);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "string");
+        CHECK(generateTypename(var->type) == "std::variant<std::string, std::vector<std::string>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var);
+        CHECK(var->name == "path");
+        CHECK(generateTypename(var->type) == "std::variant<std::filesystem::path, std::vector<std::filesystem::path>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var);
+        CHECK(var->name == "integer");
+        CHECK(generateTypename(var->type) == "std::variant<int, std::vector<int>>");
+        CHECK(var->comment.empty());
+    }
+}
+
+TEST_CASE("Parsing/Structs/Variant:  Optional types and vectors", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(D)]] P {
+    std::optional<std::variant<std::string, std::vector<std::string>>> string;
+    std::optional<std::variant<std::filesystem::path, std::vector<std::filesystem::path>>> path;
+    std::optional<std::variant<int, std::vector<int>>> integer;
+
+    std::optional<
+        std::variant<std::string, std::vector<std::string>>
+    > stringWithLineBreak;
+    std::optional<
+        std::variant<std::filesystem::path, std::vector<std::filesystem::path>>
+    > pathWithLineBreak;
+    std::optional<
+        std::variant<int, std::vector<int>>
+    > integerWithLineBreak;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    CHECK(code.enums.empty());
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->variables.size() == 6);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "string");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<std::string, std::vector<std::string>>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var);
+        CHECK(var->name == "path");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<std::filesystem::path, std::vector<std::filesystem::path>>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var);
+        CHECK(var->name == "integer");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<int, std::vector<int>>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[3];
+        REQUIRE(var);
+        CHECK(var->name == "stringWithLineBreak");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<std::string, std::vector<std::string>>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[4];
+        REQUIRE(var);
+        CHECK(var->name == "pathWithLineBreak");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<std::filesystem::path, std::vector<std::filesystem::path>>>");
+        CHECK(var->comment.empty());
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var);
+        CHECK(var->name == "integerWithLineBreak");
+        CHECK(generateTypename(var->type) == "std::optional<std::variant<int, std::vector<int>>>");
+        CHECK(var->comment.empty());
+    }
 }

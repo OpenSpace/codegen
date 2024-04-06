@@ -80,6 +80,100 @@ Lines, With, Weird,
 
     // This value has a " in the comment which might cause it to break?
     std::vector<std::string> quoteInComment;
+
+    std::vector<
+        int
+    > vectorWithLineBreak1;
+    std::vector<int
+    > vectorWithLineBreak2;
+    std::vector<
+        int> vectorWithLineBreak3;
+
+    std::array<
+        std::string,
+        5
+    > arrayWithLineBreak1;
+    std::array<
+        std::string, 5
+    > arrayWithLineBreak2;
+    std::array<
+        std::string, 5> arrayWithLineBreak3;
+    std::array<std::string, 5
+    > arrayWithLineBreak4;
+    std::array<std::string,
+        5
+    > arrayWithLineBreak5;
+    std::array<std::string,
+        5> arrayWithLineBreak6;
+
+    std::optional<
+        double
+    > optionalWithLineBreak1;
+    std::optional<double
+    > optionalWithLineBreak2;
+    std::optional<
+        double> optionalWithLineBreak3;
+
+    std::map<
+        std::string,
+        bool
+    > mapWithLineBreak1;
+    std::map<
+        std::string, bool
+    > mapWithLineBreak2;
+    std::map<
+        std::string, bool> mapWithLineBreak3;
+    std::map<std::string, bool
+    > mapWithLineBreak4;
+    std::map<std::string,
+        bool
+    > mapWithLineBreak5;
+    std::map<std::string,
+        bool> mapWithLineBreak6;
+
+    std::variant<
+        glm::vec2,
+        std::filesystem::path
+    > variantWithLineBreak1;
+    std::variant<
+        glm::vec2, std::filesystem::path
+    > variantWithLineBreak2;
+    std::variant<
+        glm::vec2, std::filesystem::path> variantWithLineBreak3;
+    std::variant<glm::vec2, std::filesystem::path
+    > variantWithLineBreak4;
+    std::variant<glm::vec2,
+        std::filesystem::path
+    > variantWithLineBreak5;
+    std::variant<glm::vec2,
+        std::filesystem::path> variantWithLineBreak6;
+
+    std::tuple<
+        glm::mat2x2,
+        glm::dmat4x4,
+        std::string
+    > tupleWithLineBreak1;
+    std::tuple<
+        glm::mat2x2, glm::dmat4x4, std::string
+    > tupleWithLineBreak2;
+    std::tuple<
+        glm::mat2x2, glm::dmat4x4, std::string> tupleWithLineBreak3;
+    std::tuple<glm::mat2x2,
+        glm::dmat4x4,
+        std::string
+    > tupleWithLineBreak4;
+    std::tuple<glm::mat2x2, glm::dmat4x4,
+        std::string
+    > tupleWithLineBreak5;
+    std::tuple<glm::mat2x2, glm::dmat4x4,
+    std::string> tupleWithLineBreak6;
+    std::tuple<glm::mat2x2,
+        glm::dmat4x4,
+        std::string> tupleWithLineBreak7;
+    std::tuple<glm::mat2x2,
+        glm::dmat4x4,
+        std::string
+    > tupleWithLineBreak8;
 };
 )";
 
@@ -90,7 +184,7 @@ Lines, With, Weird,
     Struct* s = code.structs.front();
     REQUIRE(s);
 
-    REQUIRE(s->variables.size() == 9);
+    REQUIRE(s->variables.size() == 41);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -161,6 +255,198 @@ Lines, With, Weird,
         CHECK(var->name == "quoteInComment");
         CHECK(generateTypename(var->type) == "std::vector<std::string>");
         CHECK(var->comment == "This value has a \" in the comment which might cause it to break?");
+    }
+    {
+        Variable* var = s->variables[9];
+        REQUIRE(var);
+        CHECK(var->name == "vectorWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+    }
+    {
+        Variable* var = s->variables[10];
+        REQUIRE(var);
+        CHECK(var->name == "vectorWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+    }
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var);
+        CHECK(var->name == "vectorWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+    }
+    {
+        Variable* var = s->variables[12];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[13];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[14];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[15];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak4");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak5");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[17];
+        REQUIRE(var);
+        CHECK(var->name == "arrayWithLineBreak6");
+        CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+    }
+    {
+        Variable* var = s->variables[18];
+        REQUIRE(var);
+        CHECK(var->name == "optionalWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::optional<double>");
+    }
+    {
+        Variable* var = s->variables[19];
+        REQUIRE(var);
+        CHECK(var->name == "optionalWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::optional<double>");
+    }
+    {
+        Variable* var = s->variables[20];
+        REQUIRE(var);
+        CHECK(var->name == "optionalWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::optional<double>");
+    }
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak4");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak5");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "mapWithLineBreak6");
+        CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+    }
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak4");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak5");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "variantWithLineBreak6");
+        CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+    }
+    {
+        Variable* var = s->variables[33];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak1");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[34];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak2");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[35];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak3");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[36];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak4");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak5");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[38];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak6");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[39];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak7");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+    }
+    {
+        Variable* var = s->variables[40];
+        REQUIRE(var);
+        CHECK(var->name == "tupleWithLineBreak8");
+        CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
     }
 
     const std::string r = generateResult(code);

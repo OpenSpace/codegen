@@ -128,6 +128,7 @@ TEST_CASE("Execution/Structs/Enums:  Bake", "[Execution][Structs]") {
 
 TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
+    using namespace std::string_literals;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 5);
@@ -137,7 +138,9 @@ TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
         CHECK(!e.optional);
         CHECK(e.documentation == "variable enumAValue documentation");
         CHECK(e.verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
+        StringInListVerifier* v = dynamic_cast<StringInListVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector{ "Value1"s, "value2"s, "Value3"s });
     }
     {
         const DocumentationEntry& e = doc.entries[1];
@@ -145,7 +148,9 @@ TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
         CHECK(e.optional);
         CHECK(e.documentation == "variable enumBValue documentation");
         CHECK(e.verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
+        StringInListVerifier* v = dynamic_cast<StringInListVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector{ "Value1"s, "value2"s, "Value3"s });
     }
     {
         const DocumentationEntry& e = doc.entries[2];
@@ -159,8 +164,11 @@ TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].optional);
         CHECK(v->documentations[0].documentation == "enum C documentation");
-        CHECK(v->documentations[0].verifier->type() == "String");
-        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+        StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->values == std::vector{ "Value1"s, "value2"s, "Value3"s });
     }
     {
         const DocumentationEntry& e = doc.entries[3];
