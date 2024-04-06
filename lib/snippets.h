@@ -30,7 +30,7 @@
 
 namespace {
     constexpr std::string_view BakeFunctionVectorDeclaration = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
-    constexpr std::string_view BakeFunctionArrayDeclaration = "template<typename T, int N> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::array<T, N>* val);\n";
+    constexpr std::string_view BakeFunctionArrayDeclaration = "template<typename T, size_t N> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::array<T, N>* val);\n";
     constexpr std::string_view BakeFunctionMapDeclaration = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, T>* val);\n";
     constexpr std::string_view BakeFunctionOptionalDeclaration = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
     constexpr std::string_view BakeFunctionTupleDeclaration = "template<typename... Ts> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::tuple<Ts...>* val);\n";
@@ -231,7 +231,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     // This code is also used in the BakeFunctionVector. If you change anything in this
     // function, it should also be changed there
     constexpr std::string_view BakeFunctionArray = R"(
-template <typename T, int N> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::array<T, N>* val) {
+template <typename T, size_t N> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::array<T, N>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
     // For the moment we need to make sure in here that all of the keys are sequential
     // since our TableVerifier doesn't really do that and we don't have a VectorVerifier
