@@ -1422,51 +1422,24 @@ Function* parseRootFunction(std::string_view code, size_t begin, size_t end,
     }
 
     // Verify that the arguments are ordered correctly. The correct order is that there
-    // can be optional arguments in the beginning, then required arguments in the middle,
-    // followed by more optional arguments at the end. Only the ending optional arguments
-    // may have default values or else the originating C function was illformed
+    // can only be required arguments first, followed by only optional arguments. Only the
+    // ending optional arguments may have default values or else the originating C
+    // function was illformed
     enum class Phase {
-        Initial,
-        FirstOptional,
         Required,
-        SecondOptional
+        Optional
     };
-    Phase phase = Phase::Initial;
+    Phase phase = Phase::Required;
     for (size_t i = 0; i < f->arguments.size(); i +=1) {
         Variable* var = f->arguments[i];
         const bool isOptional = var->type->isOptionalType();
         switch (phase) {
-            case Phase::Initial:
-                phase = isOptional ? Phase::FirstOptional : Phase::Required;
-                break;
             case Phase::Required:
                 if (isOptional) {
-                    phase = Phase::SecondOptional;
+                    phase = Phase::Optional;
                 }
                 break;
-            case Phase::FirstOptional:
-                if (!isOptional) {
-                    phase = Phase::Required;
-
-                    // Make sure that the last optional and the first required are not the
-                    // same type or there might be confusion in the end
-                    if (i > 0) {
-                        Variable* lastVar = f->arguments[i - 1];
-                        assert(lastVar->type->isOptionalType());
-                        OptionalType* ot = static_cast<OptionalType*>(lastVar->type);
-                        if (*var->type == *ot->type) {
-                            throw CodegenError(std::format(
-                                "When using optional arguments in the beginning of the "
-                                "argument list, the last optional argument must not have "
-                                "the same type as the first required argument or we "
-                                "can't distinguish whether the parameter is the last "
-                                "optional or the first required one"
-                            ));
-                        }
-                    }
-                }
-                break;
-            case Phase::SecondOptional:
+            case Phase::Optional:
                 if (!isOptional) {
                     // We have seen the first optional parameter but now there is a
                     // not-optional one, so we have a wrong ordering of parameters

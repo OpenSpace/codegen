@@ -235,26 +235,6 @@ TEST_CASE("Parsing/LuaWrapper/Error:  No \" around custom name", "[Parsing][LuaW
 }
 
 TEST_CASE(
-    "Parsing/LuaWrapper/Error:  Same argument for last optional and first required",
-    "[Parsing][LuaWrapper]"
-)
-{
-    constexpr std::string_view S = R"(
-    [[codegen::luawrap]] void foo(std::optional<float> arg1, std::optional<int> arg2, int arg3, std::optional<std::string> arg4) {
-    }
-)";
-
-    CHECK_THROWS_MATCHES(
-        generateResult(parse(S)),
-        CodegenError,
-        CM::StartsWith(
-            "When using optional arguments in the beginning of the argument list, the "
-            "last optional argument must not have"
-        )
-    );
-}
-
-TEST_CASE(
     "Parsing/LuaWrapper/Error:  Unterminated luawrap marker", "[Parsing][LuaWrapper]"
 )
 {
