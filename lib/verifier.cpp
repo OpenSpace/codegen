@@ -230,6 +230,10 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 const std::string param = '{' + std::string(attributes.inlist) + '}';
                 res = addQualifier(res, "InListVerifier", param);
             }
+            if (!attributes.notinlist.empty()) {
+                const std::string param = '{' + std::string(attributes.notinlist) + '}';
+                res = addQualifier(res, "NotInListVerifier", param);
+            }
             if (!attributes.unequal.empty()) {
                 res = addQualifier(res, "UnequalVerifier", attributes.unequal);
             }

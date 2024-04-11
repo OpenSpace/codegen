@@ -669,6 +669,27 @@ namespace {
         std::vector<std::string> inListValue2Vector [[codegen::inlist(List)]];
 
 
+        // notInListValue1 documentation
+        std::string notInListValue1 [[codegen::notinlist("A", "B", "C", "D", "E")]];
+
+        // notInListValue1Optional documentation
+        std::optional<std::string> notInListValue1Optional
+            [[codegen::notinlist("A", "B", "C", "D", "E")]];
+
+        // notInListValue1Vector documentation
+        std::vector<std::string> notInListValue1Vector
+            [[codegen::notinlist("A", "B", "C", "D", "E")]];
+
+        // notInListValue2 documentation
+        std::string notInListValue2 [[codegen::notinlist(List)]];
+
+        // notInListValue2Optional documentation
+        std::optional<std::string> notInListValue2Optional [[codegen::notinlist(List)]];
+
+        // notInListValue2Vector documentation
+        std::vector<std::string> notInListValue2Vector [[codegen::notinlist(List)]];
+
+
         // unequalValueString documentation
         std::string unequalValueString [[codegen::unequal("abcdef")]];
 
@@ -1341,6 +1362,8 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
 
 
     d.setValue("DescValue", true);
+
+
     d.setValue("InListValue1", "A"s);
     d.setValue("InListValue1Optional", "B"s);
     {
@@ -1359,6 +1382,28 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
         e.setValue("3", "J"s);
         d.setValue("InListValue2Vector", e);
     }
+
+
+    d.setValue("NotInListValue1", "F"s);
+    d.setValue("NotInListValue1Optional", "G"s);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "H"s);
+        e.setValue("2", "I"s);
+        e.setValue("3", "J"s);
+        d.setValue("NotInListValue1Vector", e);
+    }
+    d.setValue("NotInListValue2", "K"s);
+    d.setValue("NotInListValue2Optional", "L"s);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "M"s);
+        e.setValue("2", "N"s);
+        e.setValue("3", "O"s);
+        d.setValue("NotInListValue2Vector", e);
+    }
+
+
     d.setValue("UnequalValueString", "zyxwv"s);
     d.setValue("UnequalValueStringOptional", "zyxwv"s);
     {
@@ -2042,7 +2087,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 217);
+    REQUIRE(doc.entries.size() == 223);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -4442,6 +4487,86 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
     }
     {
         const DocumentationEntry& e = doc.entries[178];
+        CHECK(e.key == "NotInListValue1");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInListValue1 documentation");
+        CHECK(e.verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* v =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[179];
+        CHECK(e.key == "NotInListValue1Optional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "notInListValue1Optional documentation");
+        CHECK(e.verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* v =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[180];
+        CHECK(e.key == "NotInListValue1Vector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInListValue1Vector documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* w =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(
+                v->documentations[0].verifier.get()
+            );
+        REQUIRE(w);
+        CHECK(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[181];
+        CHECK(e.key == "NotInListValue2");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInListValue2 documentation");
+        CHECK(e.verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* v =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[182];
+        CHECK(e.key == "NotInListValue2Optional");
+        CHECK(e.optional);
+        CHECK(e.documentation == "notInListValue2Optional documentation");
+        CHECK(e.verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* v =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[183];
+        CHECK(e.key == "NotInListValue2Vector");
+        CHECK(!e.optional);
+        CHECK(e.documentation == "notInListValue2Vector documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        NotInListVerifier<StringVerifier>* w =
+            dynamic_cast<NotInListVerifier<StringVerifier>*>(
+                v->documentations[0].verifier.get()
+            );
+        REQUIRE(w);
+        CHECK(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
+    }
+    {
+        const DocumentationEntry& e = doc.entries[184];
         CHECK(e.key == "UnequalValueString");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueString documentation");
@@ -4452,7 +4577,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->value == "abcdef");
     }
     {
-        const DocumentationEntry& e = doc.entries[179];
+        const DocumentationEntry& e = doc.entries[185];
         CHECK(e.key == "UnequalValueStringOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "unequalValueStringOptional documentation");
@@ -4463,7 +4588,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->value == "abcdef");
     }
     {
-        const DocumentationEntry& e = doc.entries[180];
+        const DocumentationEntry& e = doc.entries[186];
         CHECK(e.key == "UnequalValueStringVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "unequalValueStringVector documentation");
@@ -4481,7 +4606,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->value == "abcdef");
     }
     {
-        const DocumentationEntry& e = doc.entries[181];
+        const DocumentationEntry& e = doc.entries[187];
         CHECK(e.key == "NotEmptyString");
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty value documentation");
@@ -4491,7 +4616,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->mustBeNotEmpty() == true);
     }
     {
-        const DocumentationEntry& e = doc.entries[182];
+        const DocumentationEntry& e = doc.entries[188];
         CHECK(e.key == "NotEmptyStringOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional value documentation");
@@ -4501,7 +4626,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->mustBeNotEmpty() == true);
     }
     {
-        const DocumentationEntry& e = doc.entries[183];
+        const DocumentationEntry& e = doc.entries[189];
         CHECK(e.key == "NotEmptyStringVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "string not empty vector value documentation");
@@ -4518,7 +4643,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->mustBeNotEmpty() == true);
     }
     {
-        const DocumentationEntry& e = doc.entries[184];
+        const DocumentationEntry& e = doc.entries[190];
         CHECK(e.key == "NotEmptyStringOptionalVector");
         CHECK(e.optional);
         CHECK(e.documentation == "string not empty optional vector value documentation");
@@ -4535,7 +4660,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->mustBeNotEmpty() == true);
     }
     {
-        const DocumentationEntry& e = doc.entries[185];
+        const DocumentationEntry& e = doc.entries[191];
         CHECK(e.key == "ReferenceValueOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueOptional documentation");
@@ -4545,7 +4670,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[186];
+        const DocumentationEntry& e = doc.entries[192];
         CHECK(e.key == "ReferenceValueVector");
         CHECK(e.optional);
         CHECK(e.documentation == "referenceValueVector documentation");
@@ -4562,7 +4687,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[187];
+        const DocumentationEntry& e = doc.entries[193];
         CHECK(e.key == "DictValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValue documentation");
@@ -4572,7 +4697,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[188];
+        const DocumentationEntry& e = doc.entries[194];
         CHECK(e.key == "DictValueVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueVector documentation");
@@ -4589,7 +4714,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[189];
+        const DocumentationEntry& e = doc.entries[195];
         CHECK(e.key == "DictValueOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "dictValueOptional documentation");
@@ -4599,7 +4724,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[190];
+        const DocumentationEntry& e = doc.entries[196];
         CHECK(e.key == "DictValueMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "dictValueMap documentation");
@@ -4616,7 +4741,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[191];
+        const DocumentationEntry& e = doc.entries[197];
         CHECK(e.key == "VectorDictValueMap");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDictValueMap documentation");
@@ -4640,7 +4765,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(u->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[192];
+        const DocumentationEntry& e = doc.entries[198];
         CHECK(e.key == "OptionalDictValueMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDictValueMap documentation");
@@ -4657,7 +4782,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[193];
+        const DocumentationEntry& e = doc.entries[199];
         CHECK(e.key == "OptionalVectorDictValueMap");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalVectorDictValueMap documentation");
@@ -4681,7 +4806,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(u->identifier == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[194];
+        const DocumentationEntry& e = doc.entries[200];
         CHECK(e.key == "Annotation");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotation documentation");
@@ -4692,7 +4817,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->annotation == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[195];
+        const DocumentationEntry& e = doc.entries[201];
         CHECK(e.key == "AnnotationOptional");
         CHECK(e.optional);
         CHECK(e.documentation == "annotationOptional documentation");
@@ -4703,7 +4828,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->annotation == "def");
     }
     {
-        const DocumentationEntry& e = doc.entries[196];
+        const DocumentationEntry& e = doc.entries[202];
         CHECK(e.key == "AnnotationVector");
         CHECK(!e.optional);
         CHECK(e.documentation == "annotationVector documentation");
@@ -4718,7 +4843,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->annotation == "ghi");
     }
     {
-        const DocumentationEntry& e = doc.entries[197];
+        const DocumentationEntry& e = doc.entries[203];
         CHECK(e.key == "Dcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor3Value documentation");
@@ -4726,7 +4851,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[198];
+        const DocumentationEntry& e = doc.entries[204];
         CHECK(e.key == "OptionalDcolor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor3Value documentation");
@@ -4734,7 +4859,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[199];
+        const DocumentationEntry& e = doc.entries[205];
         CHECK(e.key == "VectorDcolor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor3Value documentation");
@@ -4746,7 +4871,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[200];
+        const DocumentationEntry& e = doc.entries[206];
         CHECK(e.key == "Color3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color3Value documentation");
@@ -4754,7 +4879,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[201];
+        const DocumentationEntry& e = doc.entries[207];
         CHECK(e.key == "OptionalColor3Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor3Value documentation");
@@ -4762,7 +4887,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[202];
+        const DocumentationEntry& e = doc.entries[208];
         CHECK(e.key == "VectorColor3Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor3Value documentation");
@@ -4774,7 +4899,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[203];
+        const DocumentationEntry& e = doc.entries[209];
         CHECK(e.key == "Dcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "dcolor4Value documentation");
@@ -4782,7 +4907,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[204];
+        const DocumentationEntry& e = doc.entries[210];
         CHECK(e.key == "OptionalDcolor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalDcolor4Value documentation");
@@ -4790,7 +4915,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[205];
+        const DocumentationEntry& e = doc.entries[211];
         CHECK(e.key == "VectorDcolor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorDcolor4Value documentation");
@@ -4802,7 +4927,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[206];
+        const DocumentationEntry& e = doc.entries[212];
         CHECK(e.key == "Color4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "color4Value documentation");
@@ -4810,7 +4935,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[207];
+        const DocumentationEntry& e = doc.entries[213];
         CHECK(e.key == "OptionalColor4Value");
         CHECK(e.optional);
         CHECK(e.documentation == "optionalColor4Value documentation");
@@ -4818,7 +4943,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[208];
+        const DocumentationEntry& e = doc.entries[214];
         CHECK(e.key == "VectorColor4Value");
         CHECK(!e.optional);
         CHECK(e.documentation == "vectorColor4Value documentation");
@@ -4830,7 +4955,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[209];
+        const DocumentationEntry& e = doc.entries[215];
         CHECK(e.key == "DateTimeValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "dateTime value documentation");
@@ -4838,7 +4963,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[210];
+        const DocumentationEntry& e = doc.entries[216];
         CHECK(e.key == "OptionalDateTimeValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional dateTime value documentation");
@@ -4846,7 +4971,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[211];
+        const DocumentationEntry& e = doc.entries[217];
         CHECK(e.key == "VectorDateTimeValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "vector dateTime value documentation");
@@ -4858,7 +4983,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[212];
+        const DocumentationEntry& e = doc.entries[218];
         CHECK(e.key == "OptionalVectorDateTimeValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector dateTime value documentation");
@@ -4871,7 +4996,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[213];
+        const DocumentationEntry& e = doc.entries[219];
         CHECK(e.key == "IdentifierValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "identifier value documentation");
@@ -4879,7 +5004,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[214];
+        const DocumentationEntry& e = doc.entries[220];
         CHECK(e.key == "OptionalIdentifierValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional identifier value documentation");
@@ -4887,7 +5012,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[215];
+        const DocumentationEntry& e = doc.entries[221];
         CHECK(e.key == "VectorIdentifierValue");
         CHECK(!e.optional);
         CHECK(e.documentation == "vector identifier value documentation");
@@ -4899,7 +5024,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[216];
+        const DocumentationEntry& e = doc.entries[222];
         CHECK(e.key == "OptionalVectorIdentifierValue");
         CHECK(e.optional);
         CHECK(e.documentation == "optional vector identifier value documentation");
