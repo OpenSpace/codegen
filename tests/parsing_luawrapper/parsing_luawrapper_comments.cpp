@@ -242,3 +242,214 @@ TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/3", "[Parsing][LuaWrapper
     const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/4", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    /**
+     */
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation.empty());
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty comment/5", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    /**
+     *
+     */
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation.empty());
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line block/1", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    /**
+     * First line of comment
+     *
+     * Second after an empty line
+     */
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line block/2", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    /**
+     *
+     * First line of comment
+     *
+     * Second after an empty line
+     */
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line block/3", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    /**
+     *
+     * First line of comment
+     *
+     * Second after an empty line
+     *
+     */
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line regular/1", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    // First line of comment
+    //
+    // Second after an empty line
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line regular/2", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    //
+    // First line of comment
+    //
+    // Second after an empty line
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/LuaWrapper/Comments:  Empty line regular/3", "[Parsing][LuaWrapper]") {
+    constexpr std::string_view Source = R"(
+    //
+    // First line of comment
+    //
+    // Second after an empty line
+    //
+    [[codegen::luawrap]] void foo() {
+    }
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.empty());
+    CHECK(code.enums.empty());
+    REQUIRE(code.luaWrapperFunctions.size() == 1);
+    Function* f = code.luaWrapperFunctions[0];
+    REQUIRE(f);
+
+    CHECK(f->functionName == "foo");
+    CHECK(f->documentation == "First line of comment\n\nSecond after an empty line");
+    CHECK(f->returnValue == nullptr);
+    CHECK(f->arguments.empty());
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}

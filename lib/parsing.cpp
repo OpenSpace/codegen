@@ -133,18 +133,20 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
         size_t c = 0;
         size_t p = cmnt.find('\n', 1);
-        bool isFirst = true;
         while (p != std::string_view::npos) {
             const std::string_view line = cmnt.substr(c, p - c);
             std::string_view stripLine = strip(line);
 
-            if (stripLine[0] == '*') {
+            if (!stripLine.empty() && stripLine[0] == '*') {
                 stripLine.remove_prefix(1);
             }
 
-            if (!isFirst && isEmptyLine(stripLine)) {
-                // No words on this line => add a new empty line to the comment
-                lines.emplace_back("\n\n");
+            if (isEmptyLine(stripLine)) {
+                // We don't want to add the \n\n if this is the first line
+                if (!lines.empty()) {
+                    // No words on this line => add a new empty line to the comment
+                    lines.emplace_back("\n\n");
+                }
             }
             else {
                 stripLine = strip(stripLine);
@@ -153,8 +155,6 @@ std::string precedingComment(std::string_view code, size_t cursor) {
 
             c = p;
             p = cmnt.find('\n', c + 1);
-
-            isFirst = false;
         }
     }
 
@@ -193,13 +193,24 @@ std::string precedingComment(std::string_view code, size_t cursor) {
             c = lineBegin;
         }
 
+        // There might be totally empty lines at the beginning or in the end that we
+        // have to remove.
+        // First from the front
+        while (!lines.empty() && isEmptyLine(lines[0])) {
+            lines.erase(lines.begin());
+        }
+        // Then from the back
+        while (!lines.empty() && isEmptyLine(lines.back())) {
+            lines.pop_back();
+        }
+
         std::reverse(lines.begin(), lines.end());
     }
 
     const bool onlyEmpty = std::all_of(
         lines.begin(),
         lines.end(),
-        [](std::string_view v) { return v == "\n\n"; }
+        [](std::string_view v) { return v.empty() || v == "\n\n"; }
     );
     if (onlyEmpty) {
         // If this is true, we encountered an empty comment block that we want to ignore
@@ -228,7 +239,8 @@ std::string precedingComment(std::string_view code, size_t cursor) {
         }
     );
     // There is an empty character at the end which we should remove
-    comment = comment.substr(0, comment.size() - 1);
+    size_t lastCharacter = comment.find_last_not_of(" \n");
+    comment = comment.substr(0, lastCharacter + 1);
 
     // People might be using \ in the documentation which we should escape. Similarly
     // we want to replace " with \"
