@@ -85,6 +85,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "bool");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -92,6 +109,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "int");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -99,6 +133,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "double");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -106,6 +157,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "float");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -113,6 +181,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::string");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -120,6 +205,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "glm::ivec2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -127,6 +229,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "glm::ivec3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -134,6 +253,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "glm::ivec4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -141,6 +277,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "glm::dvec2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -148,6 +301,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "glm::dvec3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -155,6 +325,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "glm::dvec4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -162,6 +349,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "glm::vec2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -169,6 +373,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "glm::vec3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -176,6 +397,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "glm::vec4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -183,6 +421,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -190,6 +445,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -197,6 +469,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -204,6 +493,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat2x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -211,6 +517,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -218,6 +541,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -225,6 +565,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -232,6 +589,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat3x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -239,6 +613,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -246,6 +637,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -253,6 +661,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -260,6 +685,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "glm::mat4x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -267,6 +709,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -274,6 +733,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -281,6 +757,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -288,6 +781,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat2x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -295,6 +805,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -302,6 +829,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -309,6 +853,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -316,6 +877,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat3x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -323,6 +901,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -330,6 +925,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -337,6 +949,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -344,6 +973,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "glm::dmat4x4");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -406,6 +1052,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "std::vector<bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -413,6 +1076,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "std::vector<int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -420,6 +1100,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "std::vector<double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -427,6 +1124,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "std::vector<float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -434,6 +1148,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::vector<std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -441,6 +1172,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -448,6 +1196,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::ivec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -455,6 +1220,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::ivec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -462,6 +1244,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dvec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -469,6 +1268,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dvec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -476,6 +1292,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dvec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -483,6 +1316,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::vec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -490,6 +1340,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::vec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -497,6 +1364,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::vec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -504,6 +1388,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -511,6 +1412,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -518,6 +1436,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -525,6 +1460,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -532,6 +1484,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -539,6 +1508,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -546,6 +1532,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -553,6 +1556,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -560,6 +1580,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -567,6 +1604,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -574,6 +1628,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -581,6 +1652,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -588,6 +1676,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -595,6 +1700,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -602,6 +1724,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -609,6 +1748,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -616,6 +1772,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -623,6 +1796,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -630,6 +1820,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -637,6 +1844,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -644,6 +1868,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -651,6 +1892,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -658,6 +1916,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -665,6 +1940,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::vector<glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -727,6 +2019,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "std::optional<bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -734,6 +2043,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "std::optional<int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -741,6 +2067,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "std::optional<double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -748,6 +2091,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "std::optional<float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -755,6 +2115,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::optional<std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -762,6 +2139,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -769,6 +2163,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::ivec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -776,6 +2187,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::ivec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -783,6 +2211,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dvec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -790,6 +2235,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dvec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -797,6 +2259,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dvec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -804,6 +2283,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::vec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -811,6 +2307,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::vec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -818,6 +2331,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::vec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -825,6 +2355,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -832,6 +2379,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -839,6 +2403,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -846,6 +2427,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -853,6 +2451,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -860,6 +2475,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -867,6 +2499,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -874,6 +2523,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -881,6 +2547,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -888,6 +2571,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -895,6 +2595,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -902,6 +2619,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -909,6 +2643,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -916,6 +2667,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -923,6 +2691,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -930,6 +2715,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -937,6 +2739,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -944,6 +2763,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -951,6 +2787,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -958,6 +2811,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -965,6 +2835,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -972,6 +2859,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -979,6 +2883,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -986,6 +2907,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::optional<glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -1049,6 +2987,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "std::array<bool, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -1056,6 +3011,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "std::array<int, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -1063,6 +3035,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "std::array<double, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -1070,6 +3059,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "std::array<float, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -1077,6 +3083,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::array<std::string, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -1084,6 +3107,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::ivec2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -1091,6 +3131,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::ivec3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -1098,6 +3155,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::ivec4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -1105,6 +3179,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dvec2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -1112,6 +3203,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dvec3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -1119,6 +3227,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dvec4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -1126,6 +3251,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::vec2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -1133,6 +3275,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::vec3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -1140,6 +3299,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::vec4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -1147,6 +3323,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat2x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -1154,6 +3347,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat2x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -1161,6 +3371,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat2x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -1168,6 +3395,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat2x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -1175,6 +3419,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat3x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -1182,6 +3443,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat3x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -1189,6 +3467,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat3x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -1196,6 +3491,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat3x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -1203,6 +3515,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat4x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -1210,6 +3539,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat4x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -1217,6 +3563,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat4x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -1224,6 +3587,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::mat4x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -1231,6 +3611,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat2x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -1238,6 +3635,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat2x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -1245,6 +3659,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat2x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -1252,6 +3683,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat2x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -1259,6 +3707,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat3x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -1266,6 +3731,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat3x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -1273,6 +3755,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat3x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -1280,6 +3779,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat3x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -1287,6 +3803,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat4x2, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -1294,6 +3827,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat4x3, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -1301,6 +3851,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat4x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -1308,6 +3875,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::array<glm::dmat4x4, 3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -1410,6 +3994,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -1417,6 +4018,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -1424,6 +4042,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -1431,6 +4066,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, double, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -1438,6 +4090,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::variant<int, float, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -1445,6 +4114,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::ivec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -1452,6 +4138,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::ivec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -1459,6 +4162,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::ivec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -1466,6 +4186,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dvec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -1473,6 +4210,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dvec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -1480,6 +4234,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dvec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -1487,6 +4258,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::vec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -1494,6 +4282,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::vec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -1501,6 +4306,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::vec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -1508,6 +4330,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -1515,6 +4354,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -1522,6 +4378,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -1529,6 +4402,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -1536,6 +4426,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -1543,6 +4450,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -1550,6 +4474,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -1557,6 +4498,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -1564,6 +4522,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -1571,6 +4546,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -1578,6 +4570,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -1585,6 +4594,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -1592,6 +4618,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -1599,6 +4642,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -1606,6 +4666,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -1613,6 +4690,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -1620,6 +4714,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -1627,6 +4738,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -1634,6 +4762,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -1641,6 +4786,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -1648,6 +4810,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -1655,6 +4834,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -1662,6 +4858,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -1669,6 +4882,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, float, glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[38];
@@ -1676,6 +4906,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariableInvert");
         CHECK(var->key == "\"BoolVariableInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<bool, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[39];
@@ -1683,6 +4930,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariableInvert");
         CHECK(var->key == "\"IntVariableInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<int, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[40];
@@ -1690,6 +4954,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValueInvert");
         CHECK(var->key == "\"DoubleValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<double, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[41];
@@ -1697,6 +4978,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValueInvert");
         CHECK(var->key == "\"FloatValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<float, std::string, double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[42];
@@ -1704,6 +5002,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValueInvert");
         CHECK(var->key == "\"StringValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<std::string, int, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[43];
@@ -1711,6 +5026,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2ValueInvert");
         CHECK(var->key == "\"Ivec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::ivec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[44];
@@ -1718,6 +5050,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3ValueInvert");
         CHECK(var->key == "\"Ivec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::ivec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[45];
@@ -1725,6 +5074,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4ValueInvert");
         CHECK(var->key == "\"Ivec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::ivec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[46];
@@ -1732,6 +5098,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2ValueInvert");
         CHECK(var->key == "\"Dvec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dvec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[47];
@@ -1739,6 +5122,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3ValueInvert");
         CHECK(var->key == "\"Dvec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dvec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[48];
@@ -1746,6 +5146,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4ValueInvert");
         CHECK(var->key == "\"Dvec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dvec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[49];
@@ -1753,6 +5170,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2ValueInvert");
         CHECK(var->key == "\"Vec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[50];
@@ -1760,6 +5194,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3ValueInvert");
         CHECK(var->key == "\"Vec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[51];
@@ -1767,6 +5218,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4ValueInvert");
         CHECK(var->key == "\"Vec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[52];
@@ -1774,6 +5242,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2ValueInvert");
         CHECK(var->key == "\"Mat2x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[53];
@@ -1781,6 +5266,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2ValueInvert");
         CHECK(var->key == "\"Mat2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[54];
@@ -1788,6 +5290,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3ValueInvert");
         CHECK(var->key == "\"Mat2x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat2x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[55];
@@ -1795,6 +5314,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4ValueInvert");
         CHECK(var->key == "\"Mat2x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat2x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[56];
@@ -1802,6 +5338,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2ValueInvert");
         CHECK(var->key == "\"Mat3x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat3x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[57];
@@ -1809,6 +5362,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3ValueInvert");
         CHECK(var->key == "\"Mat3x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[58];
@@ -1816,6 +5386,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3ValueInvert");
         CHECK(var->key == "\"Mat3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[59];
@@ -1823,6 +5410,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4ValueInvert");
         CHECK(var->key == "\"Mat3x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat3x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[60];
@@ -1830,6 +5434,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2ValueInvert");
         CHECK(var->key == "\"Mat4x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat4x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[61];
@@ -1837,6 +5458,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3ValueInvert");
         CHECK(var->key == "\"Mat4x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat4x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[62];
@@ -1844,6 +5482,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4ValueInvert");
         CHECK(var->key == "\"Mat4x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[63];
@@ -1851,6 +5506,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4ValueInvert");
         CHECK(var->key == "\"Mat4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::mat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[64];
@@ -1858,6 +5530,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2ValueInvert");
         CHECK(var->key == "\"Dmat2x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[65];
@@ -1865,6 +5554,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2ValueInvert");
         CHECK(var->key == "\"Dmat2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[66];
@@ -1872,6 +5578,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3ValueInvert");
         CHECK(var->key == "\"Dmat2x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat2x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[67];
@@ -1879,6 +5602,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4ValueInvert");
         CHECK(var->key == "\"Dmat2x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat2x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[68];
@@ -1886,6 +5626,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2ValueInvert");
         CHECK(var->key == "\"Dmat3x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat3x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[69];
@@ -1893,6 +5650,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3ValueInvert");
         CHECK(var->key == "\"Dmat3x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[70];
@@ -1900,6 +5674,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3ValueInvert");
         CHECK(var->key == "\"Dmat3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[71];
@@ -1907,6 +5698,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4ValueInvert");
         CHECK(var->key == "\"Dmat3x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat3x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[72];
@@ -1914,6 +5722,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2ValueInvert");
         CHECK(var->key == "\"Dmat4x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat4x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[73];
@@ -1921,6 +5746,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3ValueInvert");
         CHECK(var->key == "\"Dmat4x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat4x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[74];
@@ -1928,6 +5770,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4ValueInvert");
         CHECK(var->key == "\"Dmat4x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[75];
@@ -1935,6 +5794,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4ValueInvert");
         CHECK(var->key == "\"Dmat4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::variant<glm::dmat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -2037,6 +5913,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariable");
         CHECK(var->key == "\"BoolVariable\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -2044,6 +5937,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariable");
         CHECK(var->key == "\"IntVariable\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -2051,6 +5961,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValue");
         CHECK(var->key == "\"DoubleValue\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -2058,6 +5985,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValue");
         CHECK(var->key == "\"FloatValue\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -2065,6 +6009,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValue");
         CHECK(var->key == "\"StringValue\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -2072,6 +6033,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2Value");
         CHECK(var->key == "\"Ivec2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::ivec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -2079,6 +6057,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3Value");
         CHECK(var->key == "\"Ivec3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::ivec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -2086,6 +6081,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4Value");
         CHECK(var->key == "\"Ivec4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::ivec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -2093,6 +6105,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2Value");
         CHECK(var->key == "\"Dvec2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dvec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
@@ -2100,6 +6129,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3Value");
         CHECK(var->key == "\"Dvec3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dvec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
@@ -2107,6 +6153,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4Value");
         CHECK(var->key == "\"Dvec4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dvec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
@@ -2114,6 +6177,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2Value");
         CHECK(var->key == "\"Vec2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::vec2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
@@ -2121,6 +6201,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3Value");
         CHECK(var->key == "\"Vec3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::vec3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
@@ -2128,6 +6225,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4Value");
         CHECK(var->key == "\"Vec4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::vec4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
@@ -2135,6 +6249,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2Value");
         CHECK(var->key == "\"Mat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
@@ -2142,6 +6273,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2Value");
         CHECK(var->key == "\"Mat2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
@@ -2149,6 +6297,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3Value");
         CHECK(var->key == "\"Mat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
@@ -2156,6 +6321,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4Value");
         CHECK(var->key == "\"Mat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
@@ -2163,6 +6345,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2Value");
         CHECK(var->key == "\"Mat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
@@ -2170,6 +6369,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3Value");
         CHECK(var->key == "\"Mat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
@@ -2177,6 +6393,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3Value");
         CHECK(var->key == "\"Mat3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
@@ -2184,6 +6417,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4Value");
         CHECK(var->key == "\"Mat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
@@ -2191,6 +6441,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2Value");
         CHECK(var->key == "\"Mat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
@@ -2198,6 +6465,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3Value");
         CHECK(var->key == "\"Mat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
@@ -2205,6 +6489,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4Value");
         CHECK(var->key == "\"Mat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
@@ -2212,6 +6513,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4Value");
         CHECK(var->key == "\"Mat4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::mat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
@@ -2219,6 +6537,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2Value");
         CHECK(var->key == "\"Dmat2x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
@@ -2226,6 +6561,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2Value");
         CHECK(var->key == "\"Dmat2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat2x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
@@ -2233,6 +6585,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3Value");
         CHECK(var->key == "\"Dmat2x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat2x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
@@ -2240,6 +6609,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4Value");
         CHECK(var->key == "\"Dmat2x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat2x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
@@ -2247,6 +6633,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2Value");
         CHECK(var->key == "\"Dmat3x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat3x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
@@ -2254,6 +6657,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3Value");
         CHECK(var->key == "\"Dmat3x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
@@ -2261,6 +6681,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3Value");
         CHECK(var->key == "\"Dmat3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat3x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
@@ -2268,6 +6705,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4Value");
         CHECK(var->key == "\"Dmat3x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat3x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
@@ -2275,6 +6729,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2Value");
         CHECK(var->key == "\"Dmat4x2Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat4x2>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
@@ -2282,6 +6753,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3Value");
         CHECK(var->key == "\"Dmat4x3Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat4x3>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
@@ -2289,6 +6777,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4Value");
         CHECK(var->key == "\"Dmat4x4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
@@ -2296,6 +6801,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4Value");
         CHECK(var->key == "\"Dmat4Value\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, float, glm::dmat4x4>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[38];
@@ -2303,6 +6825,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "boolVariableInvert");
         CHECK(var->key == "\"BoolVariableInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<bool, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[39];
@@ -2310,6 +6849,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "intVariableInvert");
         CHECK(var->key == "\"IntVariableInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<int, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[40];
@@ -2317,6 +6873,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "doubleValueInvert");
         CHECK(var->key == "\"DoubleValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<double, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[41];
@@ -2324,6 +6897,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "floatValueInvert");
         CHECK(var->key == "\"FloatValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<float, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[42];
@@ -2331,6 +6921,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "stringValueInvert");
         CHECK(var->key == "\"StringValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<std::string, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[43];
@@ -2338,6 +6945,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec2ValueInvert");
         CHECK(var->key == "\"Ivec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::ivec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[44];
@@ -2345,6 +6969,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec3ValueInvert");
         CHECK(var->key == "\"Ivec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::ivec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[45];
@@ -2352,6 +6993,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "ivec4ValueInvert");
         CHECK(var->key == "\"Ivec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::ivec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[46];
@@ -2359,6 +7017,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec2ValueInvert");
         CHECK(var->key == "\"Dvec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dvec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[47];
@@ -2366,6 +7041,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec3ValueInvert");
         CHECK(var->key == "\"Dvec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dvec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[48];
@@ -2373,6 +7065,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dvec4ValueInvert");
         CHECK(var->key == "\"Dvec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dvec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[49];
@@ -2380,6 +7089,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec2ValueInvert");
         CHECK(var->key == "\"Vec2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::vec2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[50];
@@ -2387,6 +7113,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec3ValueInvert");
         CHECK(var->key == "\"Vec3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::vec3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[51];
@@ -2394,6 +7137,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "vec4ValueInvert");
         CHECK(var->key == "\"Vec4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::vec4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[52];
@@ -2401,6 +7161,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x2ValueInvert");
         CHECK(var->key == "\"Mat2x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[53];
@@ -2408,6 +7185,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2ValueInvert");
         CHECK(var->key == "\"Mat2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[54];
@@ -2415,6 +7209,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x3ValueInvert");
         CHECK(var->key == "\"Mat2x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[55];
@@ -2422,6 +7233,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat2x4ValueInvert");
         CHECK(var->key == "\"Mat2x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[56];
@@ -2429,6 +7257,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x2ValueInvert");
         CHECK(var->key == "\"Mat3x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat3x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[57];
@@ -2436,6 +7281,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x3ValueInvert");
         CHECK(var->key == "\"Mat3x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[58];
@@ -2443,6 +7305,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3ValueInvert");
         CHECK(var->key == "\"Mat3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[59];
@@ -2450,6 +7329,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat3x4ValueInvert");
         CHECK(var->key == "\"Mat3x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat3x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[60];
@@ -2457,6 +7353,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x2ValueInvert");
         CHECK(var->key == "\"Mat4x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat4x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[61];
@@ -2464,6 +7377,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x3ValueInvert");
         CHECK(var->key == "\"Mat4x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat4x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[62];
@@ -2471,6 +7401,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4x4ValueInvert");
         CHECK(var->key == "\"Mat4x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[63];
@@ -2478,6 +7425,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "mat4ValueInvert");
         CHECK(var->key == "\"Mat4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[64];
@@ -2485,6 +7449,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x2ValueInvert");
         CHECK(var->key == "\"Dmat2x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[65];
@@ -2492,6 +7473,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2ValueInvert");
         CHECK(var->key == "\"Dmat2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat2x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[66];
@@ -2499,6 +7497,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x3ValueInvert");
         CHECK(var->key == "\"Dmat2x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat2x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[67];
@@ -2506,6 +7521,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat2x4ValueInvert");
         CHECK(var->key == "\"Dmat2x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat2x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[68];
@@ -2513,6 +7545,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x2ValueInvert");
         CHECK(var->key == "\"Dmat3x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat3x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[69];
@@ -2520,6 +7569,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x3ValueInvert");
         CHECK(var->key == "\"Dmat3x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[70];
@@ -2527,6 +7593,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3ValueInvert");
         CHECK(var->key == "\"Dmat3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat3x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[71];
@@ -2534,6 +7617,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat3x4ValueInvert");
         CHECK(var->key == "\"Dmat3x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat3x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[72];
@@ -2541,6 +7641,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x2ValueInvert");
         CHECK(var->key == "\"Dmat4x2ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat4x2, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[73];
@@ -2548,6 +7665,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x3ValueInvert");
         CHECK(var->key == "\"Dmat4x3ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat4x3, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[74];
@@ -2555,6 +7689,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4x4ValueInvert");
         CHECK(var->key == "\"Dmat4x4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[75];
@@ -2562,6 +7713,23 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(var->name == "dmat4ValueInvert");
         CHECK(var->key == "\"Dmat4ValueInvert\"");
         CHECK(generateTypename(var->type) == "std::tuple<glm::dmat4x4, std::string, float>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -2585,6 +7753,22 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);
     CHECK(s->variables[0]->key == "Var");
+
+    CHECK(s->variables[0]->attributes.annotation.empty());
+    CHECK(s->variables[0]->attributes.greater.empty());
+    CHECK(s->variables[0]->attributes.greaterequal.empty());
+    CHECK(s->variables[0]->attributes.inlist.empty());
+    CHECK(s->variables[0]->attributes.inrange.empty());
+    CHECK(s->variables[0]->attributes.less.empty());
+    CHECK(s->variables[0]->attributes.lessequal.empty());
+    CHECK(s->variables[0]->attributes.reference.empty());
+    CHECK(s->variables[0]->attributes.unequal.empty());
+    CHECK(!s->variables[0]->attributes.isColor);
+    CHECK(!s->variables[0]->attributes.isDirectory);
+    CHECK(!s->variables[0]->attributes.isDateTime);
+    CHECK(!s->variables[0]->attributes.isIdentifier);
+    CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+    CHECK(!s->variables[0]->attributes.isPrivate);
 
     const std::string r = generateResult(code);
     CHECK(!r.empty());

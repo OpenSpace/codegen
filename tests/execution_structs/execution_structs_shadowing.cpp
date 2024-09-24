@@ -117,6 +117,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "A");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation.empty());
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -135,6 +136,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "B");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation.empty());
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -153,6 +155,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "T");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation.empty());
         CHECK(e.verifier->type() == "String");
         StringInListVerifier* sil =
@@ -164,6 +167,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "C");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation.empty());
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());

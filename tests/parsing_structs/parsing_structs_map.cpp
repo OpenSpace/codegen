@@ -48,6 +48,22 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(s->variables[0]->name == "p");
     CHECK(s->variables[0]->key == "\"P\"");
 
+    CHECK(s->variables[0]->attributes.annotation.empty());
+    CHECK(s->variables[0]->attributes.greater.empty());
+    CHECK(s->variables[0]->attributes.greaterequal.empty());
+    CHECK(s->variables[0]->attributes.inlist.empty());
+    CHECK(s->variables[0]->attributes.less.empty());
+    CHECK(s->variables[0]->attributes.lessequal.empty());
+    CHECK(s->variables[0]->attributes.notinrange.empty());
+    CHECK(s->variables[0]->attributes.reference.empty());
+    CHECK(s->variables[0]->attributes.unequal.empty());
+    CHECK(!s->variables[0]->attributes.isColor);
+    CHECK(!s->variables[0]->attributes.isDirectory);
+    CHECK(!s->variables[0]->attributes.isDateTime);
+    CHECK(!s->variables[0]->attributes.isIdentifier);
+    CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+    CHECK(!s->variables[0]->attributes.isPrivate);
+
     const std::string r = generateResult(code);
     CHECK(!r.empty());
 }

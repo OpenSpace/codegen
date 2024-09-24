@@ -31,8 +31,11 @@
 TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
     constexpr std::string_view Source = R"(
     struct [[codegen::Dictionary(Attributes)]] Parameters {
-        // [[codegen::verbatim(description)]]
+        // description
         bool descValue;
+
+        // descriptionPrivate
+        bool descValuePrivate [[codegen::private()]];
     };
 )";
     Code code = parse(Source);
@@ -43,31 +46,61 @@ TEST_CASE("Parsing/Structs/Attribute/Bool", "[Parsing][Structs]") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 1);
+    REQUIRE(s->variables.size() == 2);
 
-    Variable* var = s->variables[0];
-    REQUIRE(var);
-    CHECK(var->name == "descValue");
-    CHECK(var->key == "\"DescValue\"");
-    CHECK(generateTypename(var->type) == "bool");
-    CHECK(var->comment == "[[codegen::verbatim(description)]]");
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "descValue");
+        CHECK(var->key == "\"DescValue\"");
+        CHECK(generateTypename(var->type) == "bool");
+        CHECK(var->comment == "description");
 
-    CHECK(var->attributes.annotation.empty());
-    CHECK(var->attributes.greater.empty());
-    CHECK(var->attributes.greaterequal.empty());
-    CHECK(var->attributes.inlist.empty());
-    CHECK(var->attributes.inrange.empty());
-    CHECK(var->attributes.key.empty());
-    CHECK(var->attributes.less.empty());
-    CHECK(var->attributes.lessequal.empty());
-    CHECK(var->attributes.notinrange.empty());
-    CHECK(var->attributes.reference.empty());
-    CHECK(var->attributes.unequal.empty());
-    CHECK(!var->attributes.isColor);
-    CHECK(!var->attributes.isDirectory);
-    CHECK(!var->attributes.isDateTime);
-    CHECK(!var->attributes.isIdentifier);
-    CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var);
+        CHECK(var->name == "descValuePrivate");
+        CHECK(var->key == "\"DescValuePrivate\"");
+        CHECK(generateTypename(var->type) == "bool");
+        CHECK(var->comment == "descriptionPrivate");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
 
     const std::string r = generateResult(code);
     CHECK(!r.empty());

@@ -262,7 +262,8 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 
         std::string ver = verifier(vt->type, var, currentStruct);
         return std::format(
-            "new TableVerifier({{{{\"*\",{},Optional::Yes, {}}}}})", ver, comments
+            "new TableVerifier({{{{\"*\",{},Optional::Yes,Private::No,{}}}}})",
+            ver, comments
         );
     }
     else if (type->tag == VariableType::Tag::ArrayType) {
@@ -276,7 +277,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
 
         std::string ver = verifier(at->type, var, currentStruct);
         return std::format(
-            "new TableVerifier({{{{\"*\",{},Optional::No, {}}}}}, {})",
+            "new TableVerifier({{{{\"*\",{},Optional::No,Private::No,{}}}}}, {})",
             ver, comments, at->size
         );
     }
@@ -301,7 +302,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
         BasicType* valueType = static_cast<BasicType*>(mt->valueType);
         std::string valueVerifier = verifierForType(valueType->type, var.attributes);
         return std::format(
-            "new TableVerifier({{{{\"*\", new {}, Optional::No }}}})", valueVerifier
+            "new TableVerifier({{{{\"*\",new {}}}}})", valueVerifier
         );
     }
     else if (type->tag == VariableType::Tag::TupleType) {
@@ -311,7 +312,7 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
             VariableType* v = tt->types[i];
             std::string ver = verifier(v, var, currentStruct);
             // +1 to accommodate 1-based counting for Lua
-            res += std::format("{{\"{}\", {}, Optional::No }},", i + 1, ver);
+            res += std::format("{{\"{}\",{} }},", i + 1, ver);
         }
 
         res += std::format("}}, {})", tt->types.size());
@@ -356,8 +357,13 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     std::string ver = fqn(s, "_");
     std::string v = verifier(var->type, *var, s);
     std::string result = std::format(
-        "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
-        ver, var->key, v, isOptional ? "Optional::Yes" : "Optional::No", var->comment
+        "    codegen_{}->documentations.push_back({{{},{},{},{},{}}});\n",
+        ver,
+        var->key,
+        v,
+        isOptional ? "Optional::Yes" : "Optional::No",
+        var->attributes.isPrivate ? "Private::Yes" : "Private::No",
+        var->comment
     );
     return result;
 }

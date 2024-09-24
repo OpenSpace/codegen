@@ -160,6 +160,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "StructAValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structAValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -175,6 +176,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "StructBValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structBValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -190,6 +192,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "StructCValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structCValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -223,6 +226,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "StructDValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structDValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -247,6 +251,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "StructDVectorValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structDVectorValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -281,6 +286,7 @@ TEST_CASE("Execution/Structs/Substruct:  Documentation", "[Execution][Structs]")
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "StructDOptionalValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variable structDOptionalValue documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());

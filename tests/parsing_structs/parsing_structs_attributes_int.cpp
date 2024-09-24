@@ -94,6 +94,68 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         // unequalValueIntVector documentation
         std::vector<int> unequalValueIntVector [[codegen::unequal(1)]];
 
+        // inRangeValueIntPrivate documentation
+        int inRangeValueIntPrivate [[codegen::inrange(-2, 2), codegen::private()]];
+
+        // inRangeValueIntOptionalPrivate documentation
+        std::optional<int> inRangeValueIntOptionalPrivate [[codegen::inrange(-2, 2), codegen::private()]];
+
+        // inRangeValueIntVectorPrivate documentation
+        std::vector<int> inRangeValueIntVectorPrivate [[codegen::inrange(-2, 2), codegen::private()]];
+
+        // notInRangeValueIntPrivate documentation
+        int notInRangeValueIntPrivate [[codegen::notinrange(5, 7), codegen::private()]];
+
+        // notInRangeValueIntOptionalPrivate documentation
+        std::optional<int> notInRangeValueIntOptionalPrivate [[codegen::notinrange(5, 7), codegen::private()]];
+
+        // notInRangeValueIntVectorPrivate documentation
+        std::vector<int> notInRangeValueIntVectorPrivate [[codegen::notinrange(5, 7), codegen::private()]];
+
+        // lessValueIntPrivate documentation
+        int lessValueIntPrivate [[codegen::less(-5), codegen::private()]];
+
+        // lessValueIntOptionalPrivate documentation
+        std::optional<int> lessValueIntOptionalPrivate [[codegen::less(-5), codegen::private()]];
+
+        // lessValueIntVectorPrivate documentation
+        std::vector<int> lessValueIntVectorPrivate [[codegen::less(-5), codegen::private()]];
+
+        // lessEqualValueIntPrivate documentation
+        int lessEqualValueIntPrivate [[codegen::lessequal(25), codegen::private()]];
+
+        // lessEqualValueIntOptionalPrivate documentation
+        std::optional<int> lessEqualValueIntOptionalPrivate [[codegen::lessequal(25), codegen::private()]];
+
+        // lessEqualValueIntVectorPrivate documentation
+        std::vector<int> lessEqualValueIntVectorPrivate [[codegen::lessequal(25), codegen::private()]];
+
+        // greaterValueIntPrivate documentation
+        int greaterValueIntPrivate [[codegen::greater(45), codegen::private()]];
+
+        // greaterValueIntOptionalPrivate documentation
+        std::optional<int> greaterValueIntOptionalPrivate [[codegen::greater(45), codegen::private()]];
+
+        // greaterValueIntVectorPrivate documentation
+        std::vector<int> greaterValueIntVectorPrivate [[codegen::greater(45), codegen::private()]];
+
+        // greaterEqualValueIntPrivate documentation
+        int greaterEqualValueIntPrivate [[codegen::greaterequal(2), codegen::private()]];
+
+        // greaterEqualValueIntOptionalPrivate documentation
+        std::optional<int> greaterEqualValueIntOptionalPrivate [[codegen::greaterequal(2), codegen::private()]];
+
+        // greaterEqualValueIntVectorPrivate documentation
+        std::vector<int> greaterEqualValueIntVectorPrivate [[codegen::greaterequal(2), codegen::private()]];
+
+        // unequalValueIntPrivate documentation
+        int unequalValueIntPrivate [[codegen::unequal(1), codegen::private()]];
+
+        // unequalValueIntOptionalPrivate documentation
+        std::optional<int> unequalValueIntOptionalPrivate [[codegen::unequal(1), codegen::private()]];
+
+        // unequalValueIntVectorPrivate documentation
+        std::vector<int> unequalValueIntVectorPrivate [[codegen::unequal(1), codegen::private()]];
 })";
 
     Code code = parse(Source);
@@ -104,7 +166,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 21);
+    REQUIRE(s->variables.size() == 42);
 
     {
         Variable* var = s->variables[0];
@@ -130,6 +192,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -156,6 +219,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -182,6 +246,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
 
@@ -209,6 +274,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -235,6 +301,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -261,6 +328,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -287,6 +355,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -313,6 +382,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -339,6 +409,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -365,6 +436,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -391,6 +463,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -417,6 +490,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -443,6 +517,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -469,6 +544,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -495,6 +571,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -521,6 +598,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -547,6 +625,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -573,6 +652,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -599,6 +679,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -625,6 +706,7 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -651,7 +733,578 @@ TEST_CASE("Parsing/Structs/Attributes/Int") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
+
+    {
+        Variable* var = s->variables[21];
+        CHECK(var->name == "inRangeValueIntPrivate");
+        CHECK(var->key == "\"InRangeValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "inRangeValueIntPrivate documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIntOptionalPrivate");
+        CHECK(var->key == "\"InRangeValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "inRangeValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIntVectorPrivate");
+        CHECK(var->key == "\"InRangeValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "inRangeValueIntVectorPrivate documentation");
+        CHECK(var->attributes.inrange == "-2, 2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIntPrivate");
+        CHECK(var->key == "\"NotInRangeValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "notInRangeValueIntPrivate documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIntOptionalPrivate");
+        CHECK(var->key == "\"NotInRangeValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "notInRangeValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIntVectorPrivate");
+        CHECK(var->key == "\"NotInRangeValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "notInRangeValueIntVectorPrivate documentation");
+        CHECK(var->attributes.notinrange == "5, 7");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIntPrivate");
+        CHECK(var->key == "\"LessValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "lessValueIntPrivate documentation");
+        CHECK(var->attributes.less == "-5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIntOptionalPrivate");
+        CHECK(var->key == "\"LessValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "lessValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.less == "-5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIntVectorPrivate");
+        CHECK(var->key == "\"LessValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "lessValueIntVectorPrivate documentation");
+        CHECK(var->attributes.less == "-5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIntPrivate");
+        CHECK(var->key == "\"LessEqualValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "lessEqualValueIntPrivate documentation");
+        CHECK(var->attributes.lessequal == "25");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIntOptionalPrivate");
+        CHECK(var->key == "\"LessEqualValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "lessEqualValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.lessequal == "25");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIntVectorPrivate");
+        CHECK(var->key == "\"LessEqualValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "lessEqualValueIntVectorPrivate documentation");
+        CHECK(var->attributes.lessequal == "25");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[33];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIntPrivate");
+        CHECK(var->key == "\"GreaterValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "greaterValueIntPrivate documentation");
+        CHECK(var->attributes.greater == "45");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[34];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIntOptionalPrivate");
+        CHECK(var->key == "\"GreaterValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "greaterValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.greater == "45");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[35];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIntVectorPrivate");
+        CHECK(var->key == "\"GreaterValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "greaterValueIntVectorPrivate documentation");
+        CHECK(var->attributes.greater == "45");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[36];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIntPrivate");
+        CHECK(var->key == "\"GreaterEqualValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "greaterEqualValueIntPrivate documentation");
+        CHECK(var->attributes.greaterequal == "2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIntOptionalPrivate");
+        CHECK(var->key == "\"GreaterEqualValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "greaterEqualValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.greaterequal == "2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[38];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIntVectorPrivate");
+        CHECK(var->key == "\"GreaterEqualValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "greaterEqualValueIntVectorPrivate documentation");
+        CHECK(var->attributes.greaterequal == "2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[39];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIntPrivate");
+        CHECK(var->key == "\"UnequalValueIntPrivate\"");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "unequalValueIntPrivate documentation");
+        CHECK(var->attributes.unequal == "1");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[40];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIntOptionalPrivate");
+        CHECK(var->key == "\"UnequalValueIntOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<int>");
+        CHECK(var->comment == "unequalValueIntOptionalPrivate documentation");
+        CHECK(var->attributes.unequal == "1");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[41];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIntVectorPrivate");
+        CHECK(var->key == "\"UnequalValueIntVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<int>");
+        CHECK(var->comment == "unequalValueIntVectorPrivate documentation");
+        CHECK(var->attributes.unequal == "1");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+
 
     const std::string r = generateResult(code);
     CHECK(!r.empty());

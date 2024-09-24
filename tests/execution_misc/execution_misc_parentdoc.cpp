@@ -39,16 +39,8 @@ TEST_CASE("Execution/Misc:  Parenting", "[Execution][Misc]") {
     using namespace openspace::documentation;
 
     Documentation parent;
-    parent.entries.emplace_back(
-        "key",
-        std::make_shared<IntVerifier>(),
-        Optional::No
-    );
-    parent.entries.emplace_back(
-        "key2",
-        std::make_shared<Vector2Verifier<int>>(),
-        Optional::No
-    );
+    parent.entries.emplace_back("key", std::make_shared<IntVerifier>());
+    parent.entries.emplace_back("key2", std::make_shared<Vector2Verifier<int>>());
 
     const Documentation d = codegen::doc<Parameters>("abc", parent);
 

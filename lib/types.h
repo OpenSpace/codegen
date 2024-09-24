@@ -67,6 +67,8 @@ namespace attributes {
 
     constexpr std::string_view Key = "key";
 
+    constexpr std::string_view Private = "private";
+
     constexpr std::string_view Dictionary = "Dictionary";
     constexpr std::string_view NoExhaustive = "noexhaustive";
     constexpr std::string_view MustBeNotEmpty = "notempty";
@@ -226,6 +228,7 @@ struct Variable {
         bool isDateTime = false;
         bool isIdentifier = false;
         bool mustBeNotEmpty = false;
+        bool isPrivate = false;
     };
     Attributes attributes;
 };

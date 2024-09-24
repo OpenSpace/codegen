@@ -173,7 +173,7 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 //
 // Under **no** circumstances change this file manually as any change will be
 // automatically overwritten. Instead change the struct tagged with "codegen::Dictionary"
-// or the enum class tagged with "codegen::stringify" in the main file from which he code
+// or the enum class tagged with "codegen::stringify" in the main file from which the code
 // in this file was generated.
 //
 // If a compiler error brought you into this file, a struct tagged with

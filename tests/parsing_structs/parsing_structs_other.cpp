@@ -191,6 +191,23 @@ Lines, With, Weird,
         CHECK(var->name == "multiLineCommenting");
         CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "multi line commenting");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -198,6 +215,23 @@ Lines, With, Weird,
         CHECK(var->name == "multiLineSimpleVariableDef");
         CHECK(generateTypename(var->type) == "float");
         CHECK(var->comment == "multi line simple variable def");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[2];
@@ -205,6 +239,23 @@ Lines, With, Weird,
         CHECK(var->name == "multiLineCommentAndDef");
         CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "multi line commenting and multi line variable def");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[3];
@@ -212,6 +263,23 @@ Lines, With, Weird,
         CHECK(var->name == "misalignedIndent");
         CHECK(generateTypename(var->type) == "bool");
         CHECK(var->comment == "misaligned commenting all over the place");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[4];
@@ -220,6 +288,22 @@ Lines, With, Weird,
         CHECK(generateTypename(var->type) == "int");
         CHECK(var->comment == "multiline comment with attribute");
         CHECK(var->attributes.inrange == "2, 3");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[5];
@@ -232,6 +316,22 @@ Lines, With, Weird,
             "A, \"Very\", Long, \"List\", Of, Variables, \"And\", \"String Literals\", "
             "That, Will, Cover, And, Span, Multiple, Lines, With, Weird, Indentations"
         );
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[6];
@@ -240,6 +340,22 @@ Lines, With, Weird,
         CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment.empty());
         CHECK(var->attributes.annotation == "\"some-annotation-that-is-very-long\"");
+
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[7];
@@ -248,6 +364,22 @@ Lines, With, Weird,
         CHECK(generateTypename(var->type) == "std::string");
         CHECK(var->comment == "newLine2Annotation documentation");
         CHECK(var->attributes.annotation == "\"A long string that starts here and covers multiple lines breaks, because someone really has a lot to say\"");
+
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[8];
@@ -255,198 +387,776 @@ Lines, With, Weird,
         CHECK(var->name == "quoteInComment");
         CHECK(generateTypename(var->type) == "std::vector<std::string>");
         CHECK(var->comment == "This value has a \" in the comment which might cause it to break?");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[9];
         REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::vector<int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[10];
         REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::vector<int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[11];
         REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::vector<int>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[12];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[13];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[14];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[15];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[16];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[17];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[18];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::optional<double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[19];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::optional<double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[20];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::optional<double>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[21];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[22];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[23];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[24];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[25];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[26];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[27];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[28];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[29];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[30];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[31];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[32];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[33];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[34];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[35];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[36];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[37];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[38];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[39];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak7");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[40];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak8");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -478,6 +1188,23 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "abc");
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 
     {
@@ -485,6 +1212,23 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "def");
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 
     {
@@ -492,6 +1236,23 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "ghi");
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 
     {
@@ -499,6 +1260,23 @@ struct [[codegen::Dictionary(P4)]] Param4 {
         REQUIRE(s);
         REQUIRE(s->variables.size() == 1);
         CHECK(s->variables[0]->name == "jkl");
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);
@@ -528,6 +1306,23 @@ struct [[codegen::Dictionary(P2)]] Param2 {
         CHECK(s->variables[0]->name == "abc");
 
         CHECK(s->comment == "Some documentation for the first struct");
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 
     {
@@ -563,6 +1358,23 @@ struct [[codegen::Dictionary(P)]] Param {
 
 Some more details for the struct)";
         CHECK(s->comment == expected);
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 }
 
@@ -592,5 +1404,22 @@ struct [[codegen::Dictionary(P)]] Param {
 
 Some more details for the struct)";
         CHECK(s->comment == expected);
+
+        CHECK(s->variables[0]->attributes.annotation.empty());
+        CHECK(s->variables[0]->attributes.greater.empty());
+        CHECK(s->variables[0]->attributes.greaterequal.empty());
+        CHECK(s->variables[0]->attributes.inlist.empty());
+        CHECK(s->variables[0]->attributes.less.empty());
+        CHECK(s->variables[0]->attributes.lessequal.empty());
+        CHECK(s->variables[0]->attributes.inrange.empty());
+        CHECK(s->variables[0]->attributes.notinrange.empty());
+        CHECK(s->variables[0]->attributes.reference.empty());
+        CHECK(s->variables[0]->attributes.unequal.empty());
+        CHECK(!s->variables[0]->attributes.isColor);
+        CHECK(!s->variables[0]->attributes.isDirectory);
+        CHECK(!s->variables[0]->attributes.isDateTime);
+        CHECK(!s->variables[0]->attributes.isIdentifier);
+        CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!s->variables[0]->attributes.isPrivate);
     }
 }

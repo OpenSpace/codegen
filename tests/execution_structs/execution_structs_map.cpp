@@ -656,6 +656,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "SimpleMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "simpleMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -674,6 +675,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "OptionalMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -692,6 +694,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "VectorMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -719,6 +722,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "OptionalVectorMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalVectorMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -746,6 +750,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "DictMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -761,6 +766,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "OptionalDictMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalDictMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -776,6 +782,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "VectorDictMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorDictMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -800,6 +807,7 @@ TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "OptionalVectorDictMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalVectorDictMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());

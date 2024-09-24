@@ -311,6 +311,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "boolDouble value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -320,6 +321,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             BoolVerifier* w = dynamic_cast<BoolVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -329,6 +331,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVerifier* w = dynamic_cast<DoubleVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -339,6 +342,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "FloatStringValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "floatString value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -348,6 +352,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVerifier* w = dynamic_cast<DoubleVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -357,6 +362,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -367,6 +373,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "IvecsValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "ivecs value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -376,6 +383,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVector2Verifier* w = dynamic_cast<IntVector2Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -385,6 +393,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVector3Verifier* w = dynamic_cast<IntVector3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -394,6 +403,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[2];
             CHECK(f.key == "3");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVector4Verifier* w = dynamic_cast<IntVector4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -404,6 +414,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "Vecmat1");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vecmat1 value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -413,6 +424,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector2Verifier* w = dynamic_cast<DoubleVector2Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -422,6 +434,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector3Verifier* w = dynamic_cast<DoubleVector3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -431,6 +444,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[2];
             CHECK(f.key == "3");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector4Verifier* w = dynamic_cast<DoubleVector4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -440,6 +454,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[3];
             CHECK(f.key == "4");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix2x3Verifier* w = dynamic_cast<DoubleMatrix2x3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -449,6 +464,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[4];
             CHECK(f.key == "5");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix4x2Verifier* w = dynamic_cast<DoubleMatrix4x2Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -458,6 +474,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[5];
             CHECK(f.key == "6");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix4x4Verifier* w = dynamic_cast<DoubleMatrix4x4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -468,6 +485,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "Vecmat2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vecmat2 value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -477,6 +495,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix2Verifier* w = dynamic_cast<DoubleMatrix2Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -486,6 +505,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix3Verifier* w = dynamic_cast<DoubleMatrix3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -495,6 +515,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[2];
             CHECK(f.key == "3");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix2x4Verifier* w = dynamic_cast<DoubleMatrix2x4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -505,6 +526,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "RestValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "rest value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -514,6 +536,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector2Verifier* w = dynamic_cast<DoubleVector2Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -523,6 +546,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector3Verifier* w = dynamic_cast<DoubleVector3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -532,6 +556,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[2];
             CHECK(f.key == "3");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVector4Verifier* w = dynamic_cast<DoubleVector4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -541,6 +566,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[3];
             CHECK(f.key == "4");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix2x3Verifier* w = dynamic_cast<DoubleMatrix2x3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -550,6 +576,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[4];
             CHECK(f.key == "5");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix2x4Verifier* w = dynamic_cast<DoubleMatrix2x4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -559,6 +586,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[5];
             CHECK(f.key == "6");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix3Verifier* w = dynamic_cast<DoubleMatrix3Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -568,6 +596,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[6];
             CHECK(f.key == "7");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix3x4Verifier* w = dynamic_cast<DoubleMatrix3x4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -577,6 +606,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[7];
             CHECK(f.key == "8");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleMatrix4x4Verifier* w = dynamic_cast<DoubleMatrix4x4Verifier*>(f.verifier.get());
             REQUIRE(w);
@@ -587,6 +617,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "OptionalValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -596,6 +627,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             BoolVerifier* w = dynamic_cast<BoolVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -605,6 +637,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVerifier* w = dynamic_cast<IntVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -615,6 +648,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "TupleVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "tuple vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -624,6 +658,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             TableVerifier* t = dynamic_cast<TableVerifier*>(f.verifier.get());
             REQUIRE(t);
@@ -640,6 +675,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -650,6 +686,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "TupleVector2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "tuple vector 2 documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -659,6 +696,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -668,6 +706,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             TableVerifier* t = dynamic_cast<TableVerifier*>(f.verifier.get());
             REQUIRE(t);
@@ -685,6 +724,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "MultipleTupleA");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple tuple a documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -694,6 +734,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVerifier* w = dynamic_cast<IntVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -703,6 +744,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -713,6 +755,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "MultipleTupleB");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple tuple b documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -722,6 +765,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -731,6 +775,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVerifier* w = dynamic_cast<IntVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -741,6 +786,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "MultipleTupleA2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple tuple a2 documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -750,6 +796,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVerifier* w = dynamic_cast<IntVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -759,6 +806,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -769,6 +817,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "MultipleTupleB2");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple tuple b2 documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -778,6 +827,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringVerifier* w = dynamic_cast<StringVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -787,6 +837,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             IntVerifier* w = dynamic_cast<IntVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -797,6 +848,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "TupleEnumFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "tuple enum float documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -808,6 +860,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -818,6 +871,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVerifier* w = dynamic_cast<DoubleVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -828,6 +882,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "OptionalTupleEnumFloat");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional tuple enum float documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -839,6 +894,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[0];
             CHECK(f.key == "1");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             StringInListVerifier* w = dynamic_cast<StringInListVerifier*>(f.verifier.get());
             REQUIRE(w);
@@ -849,6 +905,7 @@ TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
             const DocumentationEntry& f = v->documentations[1];
             CHECK(f.key == "2");
             CHECK(!f.optional);
+            CHECK(!f.isPrivate);
             CHECK(f.documentation.empty());
             DoubleVerifier* w = dynamic_cast<DoubleVerifier*>(f.verifier.get());
             REQUIRE(w);

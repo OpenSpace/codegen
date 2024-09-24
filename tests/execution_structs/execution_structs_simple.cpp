@@ -52,6 +52,7 @@ TEST_CASE("Execution/Structs/Simple:  Documentation", "[Execution][Structs]") {
     const DocumentationEntry& e = doc.entries[0];
     CHECK(e.key == "Value");
     CHECK(!e.optional);
+    CHECK(!e.isPrivate);
     CHECK(e.documentation == "value documentation");
     CHECK(e.verifier->type() == "Double");
     CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));

@@ -662,6 +662,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "SimpleArray");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "simpleArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -681,6 +682,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "OptionalArray");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -700,6 +702,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "VectorArray");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -728,6 +731,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "OptionalVectorArray");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalVectorArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -756,6 +760,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "DictArray");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -772,6 +777,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "OptionalDictArray");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalDictArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -788,6 +794,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "VectorDictArray");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorDictArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -813,6 +820,7 @@ TEST_CASE("Execution/Structs/Array:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "OptionalVectorDictArray");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalVectorDictArray documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());

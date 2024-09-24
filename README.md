@@ -59,6 +59,7 @@ The variable's name will be used to get a value out of the dictionary in the bak
  - `[[codegen::notempty()]]`: Checks that a `std::string` that this attribute is attached to is not empty
  - `[[codegen::identifier()]]`: Checks that a `std::string` that this attribute is attached to fulfills the requirements of an identifier, meaning that is doesn't contain any whitespaces or dots
  - `[[codegen::datetime()]]`: Checks that a `std::string` is a valid ISO 8601 date string of the form `YYYY-MM-DD HH:MM:SS.uuu`
+ - `[[codegen::private()]]`: This is value is specified, the value will be checked in the `bake` function, but not reported on in the `docs` function
 
 ## Enum class
 `enum class` value are looked up through string matching against the enum value when baking.  For example:

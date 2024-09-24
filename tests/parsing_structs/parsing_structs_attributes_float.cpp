@@ -104,6 +104,81 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
 
         // unequalValueFloatVector documentation
         std::vector<float> unequalValueFloatVector [[codegen::unequal(123.0)]];
+
+        // keyValuePrivate documentation
+        float keyValuePrivate [[codegen::key("KeyKeyPrivate"), codegen::private()]];
+
+        // keyValueOptionalPrivate documentation
+        std::optional<float> keyValueOptionalPrivate [[codegen::key("KeyKeyOptionalPrivate"), codegen::private()]];
+
+        // keyValueVectorPrivate documentation
+        std::vector<float> keyValueVectorPrivate [[codegen::key("KeyKeyVectorPrivate"), codegen::private()]];
+
+        // inRangeValueFloatPrivate documentation
+        float inRangeValueFloatPrivate [[codegen::inrange(-0.5, 0.75), codegen::private()]];
+
+        // inRangeValueFloatOptionalPrivate documentation
+        std::optional<float> inRangeValueFloatOptionalPrivate [[codegen::inrange(-0.5, 0.75), codegen::private()]];
+
+        // inRangeValueFloatVectorPrivate documentation
+        std::vector<float> inRangeValueFloatVectorPrivate [[codegen::inrange(-0.5, 0.75), codegen::private()]];
+
+        // notInRangeValueFloatPrivate documentation
+        float notInRangeValueFloatPrivate [[codegen::notinrange(-0.5, 0.5), codegen::private()]];
+
+        // notInRangeValueFloatOptionalPrivate documentation
+        std::optional<float> notInRangeValueFloatOptionalPrivate
+            [[codegen::notinrange(-0.5, 0.5), codegen::private()]];
+
+        // notInRangeValueFloatVectorPrivate documentation
+        std::vector<float> notInRangeValueFloatVectorPrivate [[codegen::notinrange(-0.5, 0.5), codegen::private()]];
+
+        // lessValueFloatPrivate documentation
+        float lessValueFloatPrivate [[codegen::less(15.0), codegen::private()]];
+
+        // lessValueFloatOptionalPrivate documentation
+        std::optional<float> lessValueFloatOptionalPrivate [[codegen::less(15.0), codegen::private()]];
+
+        // lessValueFloatVectorPrivate documentation
+        std::vector<float> lessValueFloatVectorPrivate [[codegen::less(15.0), codegen::private()]];
+
+        // lessEqualValueFloatPrivate documentation
+        float lessEqualValueFloatPrivate [[codegen::lessequal(12.0), codegen::private()]];
+
+        // lessEqualValueFloatOptionalPrivate documentation
+        std::optional<float> lessEqualValueFloatOptionalPrivate [[codegen::lessequal(12.0), codegen::private()]];
+
+        // lessEqualValueFloatVectorPrivate documentation
+        std::vector<float> lessEqualValueFloatVectorPrivate [[codegen::lessequal(12.0), codegen::private()]];
+
+        // greaterValueFloatPrivate documentation
+        float greaterValueFloatPrivate [[codegen::greater(-5.0), codegen::private()]];
+
+        // greaterValueFloatOptionalPrivate documentation
+        std::optional<float> greaterValueFloatOptionalPrivate [[codegen::greater(-5.0), codegen::private()]];
+
+        // greaterValueFloatVectorPrivate documentation
+        std::vector<float> greaterValueFloatVectorPrivate [[codegen::greater(-5.0), codegen::private()]];
+
+        // greaterEqualValueFloatPrivate documentation
+        float greaterEqualValueFloatPrivate [[codegen::greaterequal(-25.0), codegen::private()]];
+
+        // greaterEqualValueFloatOptionalPrivate documentation
+        std::optional<float> greaterEqualValueFloatOptionalPrivate
+            [[codegen::greaterequal(-25.0), codegen::private()]];
+
+        // greaterEqualValueFloatVectorPrivate documentation
+        std::vector<float> greaterEqualValueFloatVectorPrivate [[codegen::greaterequal(-25.0), codegen::private()]];
+
+        // unequalValueFloatPrivate documentation
+        float unequalValueFloatPrivate [[codegen::unequal(123.0), codegen::private()]];
+
+        // unequalValueFloatOptionalPrivate documentation
+        std::optional<float> unequalValueFloatOptionalPrivate [[codegen::unequal(123.0), codegen::private()]];
+
+        // unequalValueFloatVectorPrivate documentation
+        std::vector<float> unequalValueFloatVectorPrivate [[codegen::unequal(123.0), codegen::private()]];
+
 })";
 
     Code code = parse(Source);
@@ -114,7 +189,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 24);
+    REQUIRE(s->variables.size() == 48);
 
     {
         Variable* var = s->variables[0];
@@ -141,6 +216,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -168,6 +244,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -195,6 +272,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -221,6 +299,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -247,6 +326,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -273,6 +353,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -299,6 +380,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -325,6 +407,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -351,6 +434,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -377,6 +461,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -403,6 +488,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -429,6 +515,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -455,6 +542,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -481,6 +569,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -507,6 +596,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -533,6 +623,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -559,6 +650,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -585,6 +677,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -611,6 +704,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -637,6 +731,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -663,6 +758,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -689,6 +785,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -715,6 +812,7 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -741,6 +839,658 @@ TEST_CASE("Parsing/Structs/Attributes/Float") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var);
+        CHECK(var->name == "keyValuePrivate");
+        CHECK(var->key == "\"KeyKeyPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "keyValuePrivate documentation");
+        CHECK(var->attributes.key == "\"KeyKeyPrivate\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "keyValueOptionalPrivate");
+        CHECK(var->key == "\"KeyKeyOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "keyValueOptionalPrivate documentation");
+        CHECK(var->attributes.key == "\"KeyKeyOptionalPrivate\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "keyValueVectorPrivate");
+        CHECK(var->key == "\"KeyKeyVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "keyValueVectorPrivate documentation");
+        CHECK(var->attributes.key == "\"KeyKeyVectorPrivate\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinlist.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloatPrivate");
+        CHECK(var->key == "\"InRangeValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "inRangeValueFloatPrivate documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloatOptionalPrivate");
+        CHECK(var->key == "\"InRangeValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "inRangeValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueFloatVectorPrivate");
+        CHECK(var->key == "\"InRangeValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "inRangeValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.inrange == "-0.5, 0.75");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloatPrivate");
+        CHECK(var->key == "\"NotInRangeValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "notInRangeValueFloatPrivate documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloatOptionalPrivate");
+        CHECK(var->key == "\"NotInRangeValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "notInRangeValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueFloatVectorPrivate");
+        CHECK(var->key == "\"NotInRangeValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "notInRangeValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.notinrange == "-0.5, 0.5");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[33];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloatPrivate");
+        CHECK(var->key == "\"LessValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "lessValueFloatPrivate documentation");
+        CHECK(var->attributes.less == "15.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[34];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloatOptionalPrivate");
+        CHECK(var->key == "\"LessValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "lessValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.less == "15.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[35];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueFloatVectorPrivate");
+        CHECK(var->key == "\"LessValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "lessValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.less == "15.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[36];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloatPrivate");
+        CHECK(var->key == "\"LessEqualValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "lessEqualValueFloatPrivate documentation");
+        CHECK(var->attributes.lessequal == "12.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloatOptionalPrivate");
+        CHECK(var->key == "\"LessEqualValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "lessEqualValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.lessequal == "12.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[38];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueFloatVectorPrivate");
+        CHECK(var->key == "\"LessEqualValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "lessEqualValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.lessequal == "12.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[39];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloatPrivate");
+        CHECK(var->key == "\"GreaterValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "greaterValueFloatPrivate documentation");
+        CHECK(var->attributes.greater == "-5.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[40];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloatOptionalPrivate");
+        CHECK(var->key == "\"GreaterValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "greaterValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.greater == "-5.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[41];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueFloatVectorPrivate");
+        CHECK(var->key == "\"GreaterValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "greaterValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.greater == "-5.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[42];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloatPrivate");
+        CHECK(var->key == "\"GreaterEqualValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "greaterEqualValueFloatPrivate documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[43];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloatOptionalPrivate");
+        CHECK(var->key == "\"GreaterEqualValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "greaterEqualValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[44];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueFloatVectorPrivate");
+        CHECK(var->key == "\"GreaterEqualValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "greaterEqualValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.greaterequal == "-25.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[45];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloatPrivate");
+        CHECK(var->key == "\"UnequalValueFloatPrivate\"");
+        CHECK(generateTypename(var->type) == "float");
+        CHECK(var->comment == "unequalValueFloatPrivate documentation");
+        CHECK(var->attributes.unequal == "123.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[46];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloatOptionalPrivate");
+        CHECK(var->key == "\"UnequalValueFloatOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<float>");
+        CHECK(var->comment == "unequalValueFloatOptionalPrivate documentation");
+        CHECK(var->attributes.unequal == "123.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[47];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueFloatVectorPrivate");
+        CHECK(var->key == "\"UnequalValueFloatVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<float>");
+        CHECK(var->comment == "unequalValueFloatVectorPrivate documentation");
+        CHECK(var->attributes.unequal == "123.0");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);

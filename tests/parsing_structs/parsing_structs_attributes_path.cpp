@@ -86,6 +86,62 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         // yes optional vector directory value documentation
         std::optional<std::vector<std::filesystem::path>> yesOptionalVectorDirectoryValue
             [[codegen::directory(true)]];
+
+        // file value Private documentation
+        std::filesystem::path fileValuePrivate [[codegen::private()]];
+
+        // optional file value Private documentation
+        std::optional<std::filesystem::path> optionalFileValuePrivate [[codegen::private()]];
+
+        // vector file value Private documentation
+        std::vector<std::filesystem::path> vectorFileValuePrivate [[codegen::private()]];
+
+        // optional vector file value Private documentation
+        std::optional<std::vector<std::filesystem::path>> optionalVectorFileValuePrivate [[codegen::private()]];
+
+        // directory value Private documentation
+        std::filesystem::path directoryValuePrivate [[codegen::directory(), codegen::private()]];
+
+        // optional directory value Private documentation
+        std::optional<std::filesystem::path> optionalDirectoryValuePrivate
+            [[codegen::directory(), codegen::private()]];
+
+        // vector directory value Private documentation
+        std::vector<std::filesystem::path> vectorDirectoryValuePrivate [[codegen::directory(), codegen::private()]];
+
+        // optional vector directory value Private documentation
+        std::optional<std::vector<std::filesystem::path>> optionalVectorDirectoryValuePrivate
+            [[codegen::directory(), codegen::private()]];
+
+        // not directory value Private documentation
+        std::filesystem::path notDirectoryValuePrivate [[codegen::directory(false), codegen::private()]];
+
+        // not optional directory value Private documentation
+        std::optional<std::filesystem::path> notOptionalDirectoryValuePrivate
+            [[codegen::directory(false), codegen::private()]];
+
+        // not vector directory value Private documentation
+        std::vector<std::filesystem::path> notVectorDirectoryValuePrivate
+            [[codegen::directory(false), codegen::private()]];
+
+        // not optional vector directory value Private documentation
+        std::optional<std::vector<std::filesystem::path>> notOptionalVectorDirectoryValuePrivate 
+            [[codegen::directory(false), codegen::private()]];
+
+        // yes directory value Private documentation
+        std::filesystem::path yesDirectoryValuePrivate  [[codegen::directory(true), codegen::private()]];
+
+        // yes optional directory value Private documentation
+        std::optional<std::filesystem::path> yesOptionalDirectoryValuePrivate
+            [[codegen::directory(true), codegen::private()]];
+
+        // yes vector directory value Private documentation
+        std::vector<std::filesystem::path> yesVectorDirectoryValuePrivate
+            [[codegen::directory(true), codegen::private()]];
+
+        // yes optional vector directory value Private documentation
+        std::optional<std::vector<std::filesystem::path>> yesOptionalVectorDirectoryValuePrivate
+            [[codegen::directory(true), codegen::private()]];
 })";
 
     Code code = parse(Source);
@@ -96,8 +152,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 16);
-
+    REQUIRE(s->variables.size() == 32);
 
     {
         Variable* var = s->variables[0];
@@ -123,6 +178,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -149,6 +205,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -175,6 +232,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -201,6 +259,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -227,6 +286,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -253,6 +313,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -279,6 +340,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -305,6 +367,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -331,6 +394,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -357,6 +421,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -383,6 +448,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -409,6 +475,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -435,6 +502,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -461,6 +529,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -487,6 +556,7 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -513,6 +583,439 @@ TEST_CASE("Parsing/Structs/Attributes/Path") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[16];
+        REQUIRE(var);
+        CHECK(var->name == "fileValuePrivate");
+        CHECK(var->key == "\"FileValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "file value Private documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[17];
+        REQUIRE(var);
+        CHECK(var->name == "optionalFileValuePrivate");
+        CHECK(var->key == "\"OptionalFileValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "optional file value Private documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[18];
+        REQUIRE(var);
+        CHECK(var->name == "vectorFileValuePrivate");
+        CHECK(var->key == "\"VectorFileValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "vector file value Private documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[19];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorFileValuePrivate");
+        CHECK(var->key == "\"OptionalVectorFileValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "optional vector file value Private documentation");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[20];
+        REQUIRE(var);
+        CHECK(var->name == "directoryValuePrivate");
+        CHECK(var->key == "\"DirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var);
+        CHECK(var->name == "optionalDirectoryValuePrivate");
+        CHECK(var->key == "\"OptionalDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "optional directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var);
+        CHECK(var->name == "vectorDirectoryValuePrivate");
+        CHECK(var->key == "\"VectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "vector directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var);
+        CHECK(var->name == "optionalVectorDirectoryValuePrivate");
+        CHECK(var->key == "\"OptionalVectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "optional vector directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var);
+        CHECK(var->name == "notDirectoryValuePrivate");
+        CHECK(var->key == "\"NotDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "not directory value Private documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalDirectoryValuePrivate");
+        CHECK(var->key == "\"NotOptionalDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "not optional directory value Private documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "notVectorDirectoryValuePrivate");
+        CHECK(var->key == "\"NotVectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "not vector directory value Private documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "notOptionalVectorDirectoryValuePrivate");
+        CHECK(var->key == "\"NotOptionalVectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "not optional vector directory value Private documentation");
+        CHECK(!var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "yesDirectoryValuePrivate");
+        CHECK(var->key == "\"YesDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::filesystem::path");
+        CHECK(var->comment == "yes directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalDirectoryValuePrivate");
+        CHECK(var->key == "\"YesOptionalDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::filesystem::path>");
+        CHECK(var->comment == "yes optional directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var);
+        CHECK(var->name == "yesVectorDirectoryValuePrivate");
+        CHECK(var->key == "\"YesVectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<std::filesystem::path>");
+        CHECK(var->comment == "yes vector directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var);
+        CHECK(var->name == "yesOptionalVectorDirectoryValuePrivate");
+        CHECK(var->key == "\"YesOptionalVectorDirectoryValuePrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<std::filesystem::path>>");
+        CHECK(var->comment == "yes optional vector directory value Private documentation");
+        CHECK(var->attributes.isDirectory);
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);

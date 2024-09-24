@@ -28,6 +28,7 @@
 #include <openspace/documentation/documentationengine.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <filesystem>
 #include <optional>
 #include <variant>
 #include <vector>
@@ -823,6 +824,18 @@ namespace {
         // optional vector identifier value documentation
         std::optional<std::vector<std::string>> optionalVectorIdentifierValue
             [[codegen::identifier()]];
+
+        // private value documentation
+        std::string privateValue [[codegen::private()]];
+
+        // optional private value documentation
+        std::optional<std::string> optionalPrivateValue [[codegen::private()]];
+
+        // vector private value documentation
+        std::vector<std::string> vectorPrivateValue [[codegen::private()]];
+
+        // optional vector private value documentation
+        std::optional<std::vector<std::string>> optionalVectorPrivateValue [[codegen::private()]];
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
@@ -1583,6 +1596,22 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
         d.setValue("OptionalVectorIdentifierValue", e);
     }
 
+    d.setValue("PrivateValue", "abcdef"s);
+    d.setValue("OptionalPrivateValue", "defghi"s);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "ghijkl"s);
+        e.setValue("2", "jklomn"s);
+        e.setValue("3", "omnpqr"s);
+        d.setValue("VectorPrivateValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", "pqrstu"s);
+        e.setValue("2", "stuvwx"s);
+        e.setValue("3", "vwxyzz"s);
+        d.setValue("OptionalVectorPrivateValue", e);
+    }
     const Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
@@ -2081,17 +2110,32 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     CHECK((*p.optionalVectorDateTimeValue)[0] == "1995 03 11 12:40:53");
     CHECK((*p.optionalVectorDateTimeValue)[1] == "1996 03 11 12:40:53");
     CHECK((*p.optionalVectorDateTimeValue)[2] == "1997 03 11 12:40:53");
+
+    CHECK(p.privateValue == "abcdef"s);
+    REQUIRE(p.optionalPrivateValue.has_value());
+    CHECK(*p.optionalPrivateValue == "defghi"s);
+    REQUIRE(p.vectorPrivateValue.size() == 3);
+    CHECK(p.vectorPrivateValue[0] == "ghijkl");
+    CHECK(p.vectorPrivateValue[1] == "jklomn");
+    CHECK(p.vectorPrivateValue[2] == "omnpqr");
+    REQUIRE(p.optionalVectorPrivateValue.has_value());
+    REQUIRE(p.optionalVectorPrivateValue->size() == 3);
+    CHECK((*p.optionalVectorPrivateValue)[0] == "pqrstu");
+    CHECK((*p.optionalVectorPrivateValue)[1] == "stuvwx");
+    CHECK((*p.optionalVectorPrivateValue)[2] == "vwxyzz");
+
 }
 
 TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 223);
+    REQUIRE(doc.entries.size() == 227);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "KeyKey");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "keyValue documentation");
         CHECK(e.verifier->type() == "Double");
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
@@ -2100,6 +2144,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "KeyKeyOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "keyValueOptional documentation");
         CHECK(e.verifier->type() == "Double");
         CHECK(dynamic_cast<DoubleVerifier*>(e.verifier.get()));
@@ -2108,6 +2153,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "KeyKeyVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "keyValueVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2121,6 +2167,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "InRangeValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         InRangeVerifier<IntVerifier>* v =
@@ -2133,6 +2180,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "InRangeValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         InRangeVerifier<IntVerifier>* v =
@@ -2145,6 +2193,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "InRangeValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2163,6 +2212,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "InRangeValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         InRangeVerifier<DoubleVerifier>* v =
@@ -2175,6 +2225,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "InRangeValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         InRangeVerifier<DoubleVerifier>* v =
@@ -2187,6 +2238,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "InRangeValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2206,6 +2258,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "InRangeValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         InRangeVerifier<DoubleVector2Verifier>* v =
@@ -2218,6 +2271,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "InRangeValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         InRangeVerifier<DoubleVector2Verifier>* v =
@@ -2230,6 +2284,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "InRangeValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2249,6 +2304,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "InRangeValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         InRangeVerifier<DoubleVector3Verifier>* v =
@@ -2261,6 +2317,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "InRangeValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         InRangeVerifier<DoubleVector3Verifier>* v =
@@ -2273,6 +2330,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "InRangeValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2292,6 +2350,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[15];
         CHECK(e.key == "InRangeValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         InRangeVerifier<DoubleVector4Verifier>* v =
@@ -2304,6 +2363,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[16];
         CHECK(e.key == "InRangeValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         InRangeVerifier<DoubleVector4Verifier>* v =
@@ -2316,6 +2376,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[17];
         CHECK(e.key == "InRangeValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2335,6 +2396,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[18];
         CHECK(e.key == "InRangeValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         InRangeVerifier<IntVector2Verifier>* v =
@@ -2347,6 +2409,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[19];
         CHECK(e.key == "InRangeValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         InRangeVerifier<IntVector2Verifier>* v =
@@ -2359,6 +2422,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[20];
         CHECK(e.key == "InRangeValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2378,6 +2442,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[21];
         CHECK(e.key == "InRangeValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         InRangeVerifier<IntVector3Verifier>* v =
@@ -2390,6 +2455,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[22];
         CHECK(e.key == "InRangeValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         InRangeVerifier<IntVector3Verifier>* v =
@@ -2402,6 +2468,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[23];
         CHECK(e.key == "InRangeValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2421,6 +2488,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[24];
         CHECK(e.key == "InRangeValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         InRangeVerifier<IntVector4Verifier>* v =
@@ -2433,6 +2501,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[25];
         CHECK(e.key == "InRangeValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         InRangeVerifier<IntVector4Verifier>* v =
@@ -2445,6 +2514,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[26];
         CHECK(e.key == "InRangeValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inRangeValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2464,6 +2534,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[27];
         CHECK(e.key == "NotInRangeValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         NotInRangeVerifier<IntVerifier>* v =
@@ -2476,6 +2547,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[28];
         CHECK(e.key == "NotInRangeValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         NotInRangeVerifier<IntVerifier>* v =
@@ -2488,6 +2560,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[29];
         CHECK(e.key == "NotInRangeValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2507,6 +2580,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[30];
         CHECK(e.key == "NotInRangeValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         NotInRangeVerifier<DoubleVerifier>* v =
@@ -2519,6 +2593,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[31];
         CHECK(e.key == "NotInRangeValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         NotInRangeVerifier<DoubleVerifier>* v =
@@ -2531,6 +2606,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[32];
         CHECK(e.key == "NotInRangeValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2550,6 +2626,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[33];
         CHECK(e.key == "NotInRangeValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         NotInRangeVerifier<DoubleVector2Verifier>* v =
@@ -2562,6 +2639,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[34];
         CHECK(e.key == "NotInRangeValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         NotInRangeVerifier<DoubleVector2Verifier>* v =
@@ -2574,6 +2652,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[35];
         CHECK(e.key == "NotInRangeValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2593,6 +2672,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[36];
         CHECK(e.key == "NotInRangeValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         NotInRangeVerifier<DoubleVector3Verifier>* v =
@@ -2605,6 +2685,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[37];
         CHECK(e.key == "NotInRangeValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         NotInRangeVerifier<DoubleVector3Verifier>* v =
@@ -2617,6 +2698,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[38];
         CHECK(e.key == "NotInRangeValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2636,6 +2718,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[39];
         CHECK(e.key == "NotInRangeValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         NotInRangeVerifier<DoubleVector4Verifier>* v =
@@ -2648,6 +2731,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[40];
         CHECK(e.key == "NotInRangeValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         NotInRangeVerifier<DoubleVector4Verifier>* v =
@@ -2660,6 +2744,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[41];
         CHECK(e.key == "NotInRangeValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2679,6 +2764,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[42];
         CHECK(e.key == "NotInRangeValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         NotInRangeVerifier<IntVector2Verifier>* v =
@@ -2691,6 +2777,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[43];
         CHECK(e.key == "NotInRangeValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         NotInRangeVerifier<IntVector2Verifier>* v =
@@ -2703,6 +2790,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[44];
         CHECK(e.key == "NotInRangeValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2722,6 +2810,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[45];
         CHECK(e.key == "NotInRangeValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         NotInRangeVerifier<IntVector3Verifier>* v =
@@ -2734,6 +2823,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[46];
         CHECK(e.key == "NotInRangeValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         NotInRangeVerifier<IntVector3Verifier>* v =
@@ -2746,6 +2836,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[47];
         CHECK(e.key == "NotInRangeValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2765,6 +2856,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[48];
         CHECK(e.key == "NotInRangeValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         NotInRangeVerifier<IntVector4Verifier>* v =
@@ -2777,6 +2869,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[49];
         CHECK(e.key == "NotInRangeValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         NotInRangeVerifier<IntVector4Verifier>* v =
@@ -2789,6 +2882,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[50];
         CHECK(e.key == "NotInRangeValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInRangeValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2808,6 +2902,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[51];
         CHECK(e.key == "LessValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         LessVerifier<IntVerifier>* v =
@@ -2819,6 +2914,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[52];
         CHECK(e.key == "LessValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         LessVerifier<IntVerifier>* v =
@@ -2830,6 +2926,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[53];
         CHECK(e.key == "LessValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2847,6 +2944,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[54];
         CHECK(e.key == "LessValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         LessVerifier<DoubleVerifier>* v =
@@ -2858,6 +2956,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[55];
         CHECK(e.key == "LessValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         LessVerifier<DoubleVerifier>* v =
@@ -2869,6 +2968,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[56];
         CHECK(e.key == "LessValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2886,6 +2986,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[57];
         CHECK(e.key == "LessValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         LessVerifier<DoubleVector2Verifier>* v =
@@ -2897,6 +2998,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[58];
         CHECK(e.key == "LessValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         LessVerifier<DoubleVector2Verifier>* v =
@@ -2908,6 +3010,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[59];
         CHECK(e.key == "LessValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2926,6 +3029,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[60];
         CHECK(e.key == "LessValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         LessVerifier<DoubleVector3Verifier>* v =
@@ -2937,6 +3041,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[61];
         CHECK(e.key == "LessValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         LessVerifier<DoubleVector3Verifier>* v =
@@ -2948,6 +3053,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[62];
         CHECK(e.key == "LessValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -2966,6 +3072,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[63];
         CHECK(e.key == "LessValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         LessVerifier<DoubleVector4Verifier>* v =
@@ -2977,6 +3084,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[64];
         CHECK(e.key == "LessValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         LessVerifier<DoubleVector4Verifier>* v =
@@ -2988,6 +3096,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[65];
         CHECK(e.key == "LessValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3006,6 +3115,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[66];
         CHECK(e.key == "LessValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         LessVerifier<IntVector2Verifier>* v =
@@ -3017,6 +3127,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[67];
         CHECK(e.key == "LessValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         LessVerifier<IntVector2Verifier>* v =
@@ -3028,6 +3139,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[68];
         CHECK(e.key == "LessValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3046,6 +3158,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[69];
         CHECK(e.key == "LessValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         LessVerifier<IntVector3Verifier>* v =
@@ -3057,6 +3170,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[70];
         CHECK(e.key == "LessValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         LessVerifier<IntVector3Verifier>* v =
@@ -3068,6 +3182,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[71];
         CHECK(e.key == "LessValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3086,6 +3201,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[72];
         CHECK(e.key == "LessValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         LessVerifier<IntVector4Verifier>* v =
@@ -3097,6 +3213,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[73];
         CHECK(e.key == "LessValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         LessVerifier<IntVector4Verifier>* v =
@@ -3108,6 +3225,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[74];
         CHECK(e.key == "LessValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3126,6 +3244,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[75];
         CHECK(e.key == "LessEqualValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         LessEqualVerifier<IntVerifier>* v =
@@ -3137,6 +3256,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[76];
         CHECK(e.key == "LessEqualValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         LessEqualVerifier<IntVerifier>* v =
@@ -3148,6 +3268,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[77];
         CHECK(e.key == "LessEqualValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3165,6 +3286,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[78];
         CHECK(e.key == "LessEqualValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         LessEqualVerifier<DoubleVerifier>* v =
@@ -3176,6 +3298,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[79];
         CHECK(e.key == "LessEqualValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         LessEqualVerifier<DoubleVerifier>* v =
@@ -3187,6 +3310,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[80];
         CHECK(e.key == "LessEqualValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3205,6 +3329,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[81];
         CHECK(e.key == "LessEqualValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         LessEqualVerifier<DoubleVector2Verifier>* v =
@@ -3216,6 +3341,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[82];
         CHECK(e.key == "LessEqualValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         LessEqualVerifier<DoubleVector2Verifier>* v =
@@ -3227,6 +3353,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[83];
         CHECK(e.key == "LessEqualValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3245,6 +3372,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[84];
         CHECK(e.key == "LessEqualValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         LessEqualVerifier<DoubleVector3Verifier>* v =
@@ -3256,6 +3384,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[85];
         CHECK(e.key == "LessEqualValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         LessEqualVerifier<DoubleVector3Verifier>* v =
@@ -3267,6 +3396,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[86];
         CHECK(e.key == "LessEqualValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3285,6 +3415,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[87];
         CHECK(e.key == "LessEqualValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         LessEqualVerifier<DoubleVector4Verifier>* v =
@@ -3296,6 +3427,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[88];
         CHECK(e.key == "LessEqualValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         LessEqualVerifier<DoubleVector4Verifier>* v =
@@ -3307,6 +3439,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[89];
         CHECK(e.key == "LessEqualValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3325,6 +3458,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[90];
         CHECK(e.key == "LessEqualValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         LessEqualVerifier<IntVector2Verifier>* v =
@@ -3336,6 +3470,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[91];
         CHECK(e.key == "LessEqualValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         LessEqualVerifier<IntVector2Verifier>* v =
@@ -3347,6 +3482,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[92];
         CHECK(e.key == "LessEqualValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3365,6 +3501,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[93];
         CHECK(e.key == "LessEqualValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         LessEqualVerifier<IntVector3Verifier>* v =
@@ -3376,6 +3513,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[94];
         CHECK(e.key == "LessEqualValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         LessEqualVerifier<IntVector3Verifier>* v =
@@ -3387,6 +3525,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[95];
         CHECK(e.key == "LessEqualValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3405,6 +3544,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[96];
         CHECK(e.key == "LessEqualValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         LessEqualVerifier<IntVector4Verifier>* v =
@@ -3416,6 +3556,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[97];
         CHECK(e.key == "LessEqualValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         LessEqualVerifier<IntVector4Verifier>* v =
@@ -3427,6 +3568,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[98];
         CHECK(e.key == "LessEqualValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "lessEqualValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3445,6 +3587,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[99];
         REQUIRE(e.key == "GreaterValueInt");
         REQUIRE(!e.optional);
+        CHECK(!e.isPrivate);
         REQUIRE(e.documentation == "greaterValueInt documentation");
         REQUIRE(e.verifier->type() == "Integer");
         GreaterVerifier<IntVerifier>* v =
@@ -3456,6 +3599,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[100];
         CHECK(e.key == "GreaterValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         GreaterVerifier<IntVerifier>* v =
@@ -3467,6 +3611,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[101];
         CHECK(e.key == "GreaterValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3484,6 +3629,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[102];
         CHECK(e.key == "GreaterValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         GreaterVerifier<DoubleVerifier>* v =
@@ -3495,6 +3641,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[103];
         CHECK(e.key == "GreaterValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         GreaterVerifier<DoubleVerifier>* v =
@@ -3506,6 +3653,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[104];
         CHECK(e.key == "GreaterValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3524,6 +3672,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[105];
         CHECK(e.key == "GreaterValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         GreaterVerifier<DoubleVector2Verifier>* v =
@@ -3535,6 +3684,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[106];
         CHECK(e.key == "GreaterValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         GreaterVerifier<DoubleVector2Verifier>* v =
@@ -3546,6 +3696,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[107];
         CHECK(e.key == "GreaterValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3564,6 +3715,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[108];
         CHECK(e.key == "GreaterValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         GreaterVerifier<DoubleVector3Verifier>* v =
@@ -3575,6 +3727,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[109];
         CHECK(e.key == "GreaterValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         GreaterVerifier<DoubleVector3Verifier>* v =
@@ -3586,6 +3739,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[110];
         CHECK(e.key == "GreaterValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3604,6 +3758,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[111];
         CHECK(e.key == "GreaterValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         GreaterVerifier<DoubleVector4Verifier>* v =
@@ -3615,6 +3770,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[112];
         CHECK(e.key == "GreaterValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         GreaterVerifier<DoubleVector4Verifier>* v =
@@ -3626,6 +3782,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[113];
         CHECK(e.key == "GreaterValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3644,6 +3801,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[114];
         CHECK(e.key == "GreaterValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         GreaterVerifier<IntVector2Verifier>* v =
@@ -3655,6 +3813,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[115];
         CHECK(e.key == "GreaterValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         GreaterVerifier<IntVector2Verifier>* v =
@@ -3666,6 +3825,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[116];
         CHECK(e.key == "GreaterValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3684,6 +3844,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[117];
         CHECK(e.key == "GreaterValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         GreaterVerifier<IntVector3Verifier>* v =
@@ -3695,6 +3856,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[118];
         CHECK(e.key == "GreaterValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         GreaterVerifier<IntVector3Verifier>* v =
@@ -3706,6 +3868,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[119];
         CHECK(e.key == "GreaterValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3724,6 +3887,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[120];
         CHECK(e.key == "GreaterValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         GreaterVerifier<IntVector4Verifier>* v =
@@ -3735,6 +3899,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[121];
         CHECK(e.key == "GreaterValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         GreaterVerifier<IntVector4Verifier>* v =
@@ -3746,6 +3911,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[122];
         CHECK(e.key == "GreaterValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3764,6 +3930,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[123];
         CHECK(e.key == "GreaterEqualValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         GreaterEqualVerifier<IntVerifier>* v =
@@ -3775,6 +3942,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[124];
         CHECK(e.key == "GreaterEqualValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         GreaterEqualVerifier<IntVerifier>* v =
@@ -3786,6 +3954,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[125];
         CHECK(e.key == "GreaterEqualValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3804,6 +3973,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[126];
         CHECK(e.key == "GreaterEqualValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         GreaterEqualVerifier<DoubleVerifier>* v =
@@ -3815,6 +3985,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[127];
         CHECK(e.key == "GreaterEqualValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         GreaterEqualVerifier<DoubleVerifier>* v =
@@ -3826,6 +3997,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[128];
         CHECK(e.key == "GreaterEqualValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3844,6 +4016,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[129];
         CHECK(e.key == "GreaterEqualValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         GreaterEqualVerifier<DoubleVector2Verifier>* v =
@@ -3855,6 +4028,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[130];
         CHECK(e.key == "GreaterEqualValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         GreaterEqualVerifier<DoubleVector2Verifier>* v =
@@ -3866,6 +4040,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[131];
         CHECK(e.key == "GreaterEqualValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3884,6 +4059,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[132];
         CHECK(e.key == "GreaterEqualValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         GreaterEqualVerifier<DoubleVector3Verifier>* v =
@@ -3895,6 +4071,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[133];
         CHECK(e.key == "GreaterEqualValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         GreaterEqualVerifier<DoubleVector3Verifier>* v =
@@ -3906,6 +4083,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[134];
         CHECK(e.key == "GreaterEqualValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3924,6 +4102,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[135];
         CHECK(e.key == "GreaterEqualValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         GreaterEqualVerifier<DoubleVector4Verifier>* v =
@@ -3935,6 +4114,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[136];
         CHECK(e.key == "GreaterEqualValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         GreaterEqualVerifier<DoubleVector4Verifier>* v =
@@ -3946,6 +4126,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[137];
         CHECK(e.key == "GreaterEqualValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -3964,6 +4145,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[138];
         CHECK(e.key == "GreaterEqualValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         GreaterEqualVerifier<IntVector2Verifier>* v =
@@ -3975,6 +4157,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[139];
         CHECK(e.key == "GreaterEqualValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         GreaterEqualVerifier<IntVector2Verifier>* v =
@@ -3986,6 +4169,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[140];
         CHECK(e.key == "GreaterEqualValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4004,6 +4188,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[141];
         CHECK(e.key == "GreaterEqualValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         GreaterEqualVerifier<IntVector3Verifier>* v =
@@ -4015,6 +4200,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[142];
         CHECK(e.key == "GreaterEqualValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         GreaterEqualVerifier<IntVector3Verifier>* v =
@@ -4026,6 +4212,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[143];
         CHECK(e.key == "GreaterEqualValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4044,6 +4231,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[144];
         CHECK(e.key == "GreaterEqualValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         GreaterEqualVerifier<IntVector4Verifier>* v =
@@ -4055,6 +4243,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[145];
         CHECK(e.key == "GreaterEqualValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         GreaterEqualVerifier<IntVector4Verifier>* v =
@@ -4066,6 +4255,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[146];
         CHECK(e.key == "GreaterEqualValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "greaterEqualValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4084,6 +4274,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[147];
         CHECK(e.key == "UnequalValueInt");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueInt documentation");
         CHECK(e.verifier->type() == "Integer");
         UnequalVerifier<IntVerifier>* v =
@@ -4095,6 +4286,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[148];
         CHECK(e.key == "UnequalValueIntOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIntOptional documentation");
         CHECK(e.verifier->type() == "Integer");
         UnequalVerifier<IntVerifier>* v =
@@ -4106,6 +4298,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[149];
         CHECK(e.key == "UnequalValueIntVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIntVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4123,6 +4316,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[150];
         CHECK(e.key == "UnequalValueFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueFloat documentation");
         CHECK(e.verifier->type() == "Double");
         UnequalVerifier<DoubleVerifier>* v =
@@ -4134,6 +4328,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[151];
         CHECK(e.key == "UnequalValueFloatOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueFloatOptional documentation");
         CHECK(e.verifier->type() == "Double");
         UnequalVerifier<DoubleVerifier>* v =
@@ -4145,6 +4340,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[152];
         CHECK(e.key == "UnequalValueFloatVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueFloatVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4163,6 +4359,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[153];
         CHECK(e.key == "UnequalValueVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         UnequalVerifier<DoubleVector2Verifier>* v =
@@ -4174,6 +4371,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[154];
         CHECK(e.key == "UnequalValueVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<double>");
         UnequalVerifier<DoubleVector2Verifier>* v =
@@ -4185,6 +4383,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[155];
         CHECK(e.key == "UnequalValueVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4203,6 +4402,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[156];
         CHECK(e.key == "UnequalValueVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         UnequalVerifier<DoubleVector3Verifier>* v =
@@ -4214,6 +4414,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[157];
         CHECK(e.key == "UnequalValueVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<double>");
         UnequalVerifier<DoubleVector3Verifier>* v =
@@ -4225,6 +4426,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[158];
         CHECK(e.key == "UnequalValueVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4243,6 +4445,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[159];
         CHECK(e.key == "UnequalValueVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         UnequalVerifier<DoubleVector4Verifier>* v =
@@ -4254,6 +4457,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[160];
         CHECK(e.key == "UnequalValueVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<double>");
         UnequalVerifier<DoubleVector4Verifier>* v =
@@ -4265,6 +4469,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[161];
         CHECK(e.key == "UnequalValueVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4283,6 +4488,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[162];
         CHECK(e.key == "UnequalValueIVec2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec2 documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         UnequalVerifier<IntVector2Verifier>* v =
@@ -4294,6 +4500,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[163];
         CHECK(e.key == "UnequalValueIVec2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec2Optional documentation");
         CHECK(e.verifier->type() == "Vector2<int>");
         UnequalVerifier<IntVector2Verifier>* v =
@@ -4305,6 +4512,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[164];
         CHECK(e.key == "UnequalValueIVec2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4323,6 +4531,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[165];
         CHECK(e.key == "UnequalValueIVec3");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec3 documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         UnequalVerifier<IntVector3Verifier>* v =
@@ -4334,6 +4543,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[166];
         CHECK(e.key == "UnequalValueIVec3Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec3Optional documentation");
         CHECK(e.verifier->type() == "Vector3<int>");
         UnequalVerifier<IntVector3Verifier>* v =
@@ -4345,6 +4555,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[167];
         CHECK(e.key == "UnequalValueIVec3Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec3Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4363,6 +4574,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[168];
         CHECK(e.key == "UnequalValueIVec4");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec4 documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         UnequalVerifier<IntVector4Verifier>* v =
@@ -4374,6 +4586,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[169];
         CHECK(e.key == "UnequalValueIVec4Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec4Optional documentation");
         CHECK(e.verifier->type() == "Vector4<int>");
         UnequalVerifier<IntVector4Verifier>* v =
@@ -4385,6 +4598,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[170];
         CHECK(e.key == "UnequalValueIVec4Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueIVec4Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4403,6 +4617,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[171];
         CHECK(e.key == "DescValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == description);
         CHECK(e.verifier->type() == "Boolean");
         CHECK(dynamic_cast<BoolVerifier*>(e.verifier.get()));
@@ -4411,6 +4626,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[172];
         CHECK(e.key == "InListValue1");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue1 documentation");
         CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
@@ -4422,6 +4638,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[173];
         CHECK(e.key == "InListValue1Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue1Optional documentation");
         CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
@@ -4433,6 +4650,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[174];
         CHECK(e.key == "InListValue1Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue1Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4450,6 +4668,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[175];
         CHECK(e.key == "InListValue2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue2 documentation");
         CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
@@ -4461,6 +4680,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[176];
         CHECK(e.key == "InListValue2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue2Optional documentation");
         CHECK(e.verifier->type() == "String");
         InListVerifier<StringVerifier>* v =
@@ -4472,6 +4692,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[177];
         CHECK(e.key == "InListValue2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "inListValue2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4489,6 +4710,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[178];
         CHECK(e.key == "NotInListValue1");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue1 documentation");
         CHECK(e.verifier->type() == "String");
         NotInListVerifier<StringVerifier>* v =
@@ -4500,6 +4722,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[179];
         CHECK(e.key == "NotInListValue1Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue1Optional documentation");
         CHECK(e.verifier->type() == "String");
         NotInListVerifier<StringVerifier>* v =
@@ -4511,6 +4734,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[180];
         CHECK(e.key == "NotInListValue1Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue1Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4529,6 +4753,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[181];
         CHECK(e.key == "NotInListValue2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue2 documentation");
         CHECK(e.verifier->type() == "String");
         NotInListVerifier<StringVerifier>* v =
@@ -4540,6 +4765,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[182];
         CHECK(e.key == "NotInListValue2Optional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue2Optional documentation");
         CHECK(e.verifier->type() == "String");
         NotInListVerifier<StringVerifier>* v =
@@ -4551,6 +4777,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[183];
         CHECK(e.key == "NotInListValue2Vector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "notInListValue2Vector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4569,6 +4796,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[184];
         CHECK(e.key == "UnequalValueString");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueString documentation");
         CHECK(e.verifier->type() == "String");
         UnequalVerifier<StringVerifier>* v =
@@ -4580,6 +4808,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[185];
         CHECK(e.key == "UnequalValueStringOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueStringOptional documentation");
         CHECK(e.verifier->type() == "String");
         UnequalVerifier<StringVerifier>* v =
@@ -4591,6 +4820,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[186];
         CHECK(e.key == "UnequalValueStringVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "unequalValueStringVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4609,6 +4839,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[187];
         CHECK(e.key == "NotEmptyString");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "string not empty value documentation");
         CHECK(e.verifier->type() == "String");
         StringVerifier* v = dynamic_cast<StringVerifier*>(e.verifier.get());
@@ -4619,6 +4850,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[188];
         CHECK(e.key == "NotEmptyStringOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "string not empty optional value documentation");
         CHECK(e.verifier->type() == "String");
         StringVerifier* v = dynamic_cast<StringVerifier*>(e.verifier.get());
@@ -4629,6 +4861,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[189];
         CHECK(e.key == "NotEmptyStringVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "string not empty vector value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4646,6 +4879,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[190];
         CHECK(e.key == "NotEmptyStringOptionalVector");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "string not empty optional vector value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4663,6 +4897,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[191];
         CHECK(e.key == "ReferenceValueOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "referenceValueOptional documentation");
         CHECK(e.verifier->type() == "Table");
         ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
@@ -4673,6 +4908,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[192];
         CHECK(e.key == "ReferenceValueVector");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "referenceValueVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4690,6 +4926,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[193];
         CHECK(e.key == "DictValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictValue documentation");
         CHECK(e.verifier->type() == "Table");
         ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
@@ -4700,6 +4937,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[194];
         CHECK(e.key == "DictValueVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictValueVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4717,6 +4955,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[195];
         CHECK(e.key == "DictValueOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictValueOptional documentation");
         CHECK(e.verifier->type() == "Table");
         ReferencingVerifier* v = dynamic_cast<ReferencingVerifier*>(e.verifier.get());
@@ -4727,6 +4966,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[196];
         CHECK(e.key == "DictValueMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4744,6 +4984,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[197];
         CHECK(e.key == "VectorDictValueMap");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4768,6 +5009,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[198];
         CHECK(e.key == "OptionalDictValueMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4785,6 +5027,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[199];
         CHECK(e.key == "OptionalVectorDictValueMap");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalVectorDictValueMap documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4809,6 +5052,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[200];
         CHECK(e.key == "Annotation");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "annotation documentation");
         CHECK(e.verifier->type() == "String");
         StringAnnotationVerifier* v =
@@ -4820,6 +5064,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[201];
         CHECK(e.key == "AnnotationOptional");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "annotationOptional documentation");
         CHECK(e.verifier->type() == "String");
         StringAnnotationVerifier* v =
@@ -4831,6 +5076,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[202];
         CHECK(e.key == "AnnotationVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "annotationVector documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4846,6 +5092,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[203];
         CHECK(e.key == "Dcolor3Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dcolor3Value documentation");
         CHECK(e.verifier->type() == "Color3");
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
@@ -4854,6 +5101,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[204];
         CHECK(e.key == "OptionalDcolor3Value");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalDcolor3Value documentation");
         CHECK(e.verifier->type() == "Color3");
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
@@ -4862,6 +5110,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[205];
         CHECK(e.key == "VectorDcolor3Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorDcolor3Value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4874,6 +5123,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[206];
         CHECK(e.key == "Color3Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "color3Value documentation");
         CHECK(e.verifier->type() == "Color3");
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
@@ -4882,6 +5132,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[207];
         CHECK(e.key == "OptionalColor3Value");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalColor3Value documentation");
         CHECK(e.verifier->type() == "Color3");
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
@@ -4890,6 +5141,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[208];
         CHECK(e.key == "VectorColor3Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorColor3Value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4902,6 +5154,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[209];
         CHECK(e.key == "Dcolor4Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dcolor4Value documentation");
         CHECK(e.verifier->type() == "Color4");
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
@@ -4910,6 +5163,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[210];
         CHECK(e.key == "OptionalDcolor4Value");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalDcolor4Value documentation");
         CHECK(e.verifier->type() == "Color4");
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
@@ -4918,6 +5172,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[211];
         CHECK(e.key == "VectorDcolor4Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorDcolor4Value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4930,6 +5185,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[212];
         CHECK(e.key == "Color4Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "color4Value documentation");
         CHECK(e.verifier->type() == "Color4");
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
@@ -4938,6 +5194,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[213];
         CHECK(e.key == "OptionalColor4Value");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optionalColor4Value documentation");
         CHECK(e.verifier->type() == "Color4");
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
@@ -4946,6 +5203,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[214];
         CHECK(e.key == "VectorColor4Value");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vectorColor4Value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4958,6 +5216,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[215];
         CHECK(e.key == "DateTimeValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "dateTime value documentation");
         CHECK(e.verifier->type() == "Date and time");
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
@@ -4966,6 +5225,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[216];
         CHECK(e.key == "OptionalDateTimeValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional dateTime value documentation");
         CHECK(e.verifier->type() == "Date and time");
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
@@ -4974,6 +5234,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[217];
         CHECK(e.key == "VectorDateTimeValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vector dateTime value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4986,6 +5247,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[218];
         CHECK(e.key == "OptionalVectorDateTimeValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional vector dateTime value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -4999,6 +5261,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[219];
         CHECK(e.key == "IdentifierValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "identifier value documentation");
         CHECK(e.verifier->type() == "Identifier");
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
@@ -5007,6 +5270,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[220];
         CHECK(e.key == "OptionalIdentifierValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional identifier value documentation");
         CHECK(e.verifier->type() == "Identifier");
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
@@ -5015,6 +5279,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[221];
         CHECK(e.key == "VectorIdentifierValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vector identifier value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -5027,6 +5292,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         const DocumentationEntry& e = doc.entries[222];
         CHECK(e.key == "OptionalVectorIdentifierValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional vector identifier value documentation");
         CHECK(e.verifier->type() == "Table");
         TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
@@ -5035,5 +5301,50 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "Identifier");
         CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[223];
+        CHECK(e.key == "PrivateValue");
+        CHECK(!e.optional);
+        CHECK(e.isPrivate);
+        CHECK(e.documentation == "private value documentation");
+        CHECK(e.verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[224];
+        CHECK(e.key == "OptionalPrivateValue");
+        CHECK(e.optional);
+        CHECK(e.isPrivate);
+        CHECK(e.documentation == "optional private value documentation");
+        CHECK(e.verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[225];
+        CHECK(e.key == "VectorPrivateValue");
+        CHECK(!e.optional);
+        CHECK(e.isPrivate);
+        CHECK(e.documentation == "vector private value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[226];
+        CHECK(e.key == "OptionalVectorPrivateValue");
+        CHECK(e.optional);
+        CHECK(e.isPrivate);
+        CHECK(e.documentation == "optional vector private value documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "String");
+        CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
     }
 }

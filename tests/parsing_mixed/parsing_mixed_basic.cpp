@@ -65,6 +65,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -84,6 +90,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing structs and enum", "[Parsing][Mixed]") {
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     REQUIRE(code.enums.size() == 1);
@@ -149,6 +161,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") 
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
     {
         Variable* var = s->variables[1];
@@ -168,6 +186,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Mixing enums and structs", "[Parsing][Mixed]") 
         CHECK(var->attributes.notinrange.empty());
         CHECK(var->attributes.reference.empty());
         CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     REQUIRE(code.enums.size() == 1);
@@ -284,6 +308,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[1];
@@ -303,6 +333,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[2];
@@ -322,6 +358,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[3];
@@ -341,6 +383,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[4];
@@ -360,6 +408,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[5];
@@ -379,6 +433,12 @@ TEST_CASE("Parsing/Mixed/Basic:  Enums in Structs", "[Parsing][Mixed]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
 
         REQUIRE(s->children.size() == 4);

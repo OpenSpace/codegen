@@ -390,6 +390,9 @@ Variable::Attributes parseAttributes(std::string_view line) {
         else if (p.key == attributes::MustBeNotEmpty) {
             res.mustBeNotEmpty = booleanValue(p.value);
         }
+        else if (p.key == attributes::Private) {
+            res.isPrivate = booleanValue(p.value);
+        }
         else {
             throw CodegenError(std::format(
                 "Unknown attribute '{}' in attribute found\n{}", p.key, line

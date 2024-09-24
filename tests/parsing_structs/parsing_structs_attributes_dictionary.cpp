@@ -49,6 +49,25 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         std::map<std::string, ghoul::Dictionary> referenceValueMap
             [[codegen::reference("abc")]];
 
+        // referenceValuePrivate documentation
+        ghoul::Dictionary referenceValuePrivate
+            [[codegen::reference("abc"), codegen::private()]];
+
+        // referenceValueOptionalPrivate documentation
+        std::optional<ghoul::Dictionary> referenceValueOptionalPrivate
+            [[codegen::reference("abc"), codegen::private()]];
+
+        // referenceValueVectorPrivate documentation
+        std::vector<ghoul::Dictionary> referenceValueVectorPrivate
+            [[codegen::reference("abc"), codegen::private()]];
+
+        // referenceValueOptionalVectorPrivate documentation
+        std::optional<std::vector<ghoul::Dictionary>> referenceValueOptionalVectorPrivate
+            [[codegen::reference("abc"), codegen::private()]];
+
+        // referenceValueMapPrivate documentation
+        std::map<std::string, ghoul::Dictionary> referenceValueMapPrivate
+            [[codegen::reference("abc"), codegen::private()]];
 })";
 
     Code code = parse(Source);
@@ -59,7 +78,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 5);
+    REQUIRE(s->variables.size() == 10);
 
     {
         Variable* var = s->variables[0];
@@ -85,6 +104,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -111,6 +131,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -137,6 +158,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -163,6 +185,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -188,6 +211,140 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.isColor);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[5];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValuePrivate");
+        CHECK(var->key == "\"ReferenceValuePrivate\"");
+        CHECK(generateTypename(var->type) == "ghoul::Dictionary");
+        CHECK(var->comment == "referenceValuePrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[6];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueOptionalPrivate");
+        CHECK(var->key == "\"ReferenceValueOptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<ghoul::Dictionary>");
+        CHECK(var->comment == "referenceValueOptionalPrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[7];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueVectorPrivate");
+        CHECK(var->key == "\"ReferenceValueVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<ghoul::Dictionary>");
+        CHECK(var->comment == "referenceValueVectorPrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[8];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueOptionalVectorPrivate");
+        CHECK(var->key == "\"ReferenceValueOptionalVectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<std::vector<ghoul::Dictionary>>");
+        CHECK(var->comment == "referenceValueOptionalVectorPrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[9];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueMapPrivate");
+        CHECK(var->key == "\"ReferenceValueMapPrivate\"");
+        CHECK(generateTypename(var->type) == "std::map<std::string, ghoul::Dictionary>");
+        CHECK(var->comment == "referenceValueMapPrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);

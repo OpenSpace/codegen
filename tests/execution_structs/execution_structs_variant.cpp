@@ -362,6 +362,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "boolDouble value documentation");
         CHECK(e.verifier->type() == "Boolean, or Double");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -376,6 +377,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[1];
         CHECK(e.key == "FloatStringValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "floatString value documentation");
         CHECK(e.verifier->type() == "Double, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -392,6 +394,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[2];
         CHECK(e.key == "IvecsValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "ivecs value documentation");
         CHECK(e.verifier->type() == "Vector2<int>, Vector3<int>, or Vector4<int>");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -408,6 +411,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[3];
         CHECK(e.key == "Vecmat1");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vecmat1 value documentation");
         CHECK(
             e.verifier->type() ==
@@ -434,6 +438,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[4];
         CHECK(e.key == "Vecmat2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "vecmat2 value documentation");
         CHECK(
             e.verifier->type() ==
@@ -453,6 +458,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[5];
         CHECK(e.key == "RestValue");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "rest value documentation");
         CHECK(
             e.verifier->type() ==
@@ -484,6 +490,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[6];
         CHECK(e.key == "OptionalValue");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional documentation");
         CHECK(e.verifier->type() == "Boolean, or Integer");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -498,6 +505,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[7];
         CHECK(e.key == "VariantVector");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variant vector documentation");
         CHECK(e.verifier->type() == "Table, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -523,6 +531,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[8];
         CHECK(e.key == "VariantVector2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variant vector 2 documentation");
         CHECK(e.verifier->type() == "String, or Table");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -548,6 +557,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[9];
         CHECK(e.key == "MultipleVariantA");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple variant a documentation");
         CHECK(e.verifier->type() == "Integer, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -564,6 +574,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[10];
         CHECK(e.key == "MultipleVariantB");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple variant b documentation");
         CHECK(e.verifier->type() == "String, or Integer");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -580,6 +591,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[11];
         CHECK(e.key == "MultipleVariantA2");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple variant a2 documentation");
         CHECK(e.verifier->type() == "Integer, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -596,6 +608,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[12];
         CHECK(e.key == "MultipleVariantB2");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "multiple variant b2 documentation");
         CHECK(e.verifier->type() == "String, or Integer");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -612,6 +625,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[13];
         CHECK(e.key == "VariantEnumFloat");
         CHECK(!e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "variant enum float documentation");
         CHECK(e.verifier->type() == "String, or Double");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
@@ -628,6 +642,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         const DocumentationEntry& e = doc.entries[14];
         CHECK(e.key == "OptionalVariantEnumFloat");
         CHECK(e.optional);
+        CHECK(!e.isPrivate);
         CHECK(e.documentation == "optional variant enum float documentation");
         CHECK(e.verifier->type() == "String, or Double");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());

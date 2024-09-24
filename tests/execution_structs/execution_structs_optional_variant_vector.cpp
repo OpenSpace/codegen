@@ -84,6 +84,7 @@ TEST_CASE(
     const DocumentationEntry& e = doc.entries[0];
     CHECK(e.key == "Ovv");
     CHECK(e.optional);
+    CHECK(!e.isPrivate);
     CHECK(e.documentation == "optional variant vector documentation");
     CHECK(e.verifier->type() == "String, or Table");
     OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());

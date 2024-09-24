@@ -107,6 +107,83 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         // unequalValueIVec2Vector documentation
         std::vector<glm::ivec2> unequalValueIVec2Vector
             [[codegen::unequal(glm::ivec2(1))]];
+
+        // inRangeValueIVec2Private documentation
+        glm::ivec2 inRangeValueIVec2Private [[codegen::inrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // inRangeValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> inRangeValueIVec2OptionalPrivate
+            [[codegen::inrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // inRangeValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> inRangeValueIVec2VectorPrivate
+            [[codegen::inrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // notInRangeValueIVec2Private documentation
+        glm::ivec2 notInRangeValueIVec2Private
+            [[codegen::notinrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // notInRangeValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> notInRangeValueIVec2OptionalPrivate
+            [[codegen::notinrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // notInRangeValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> notInRangeValueIVec2VectorPrivate
+            [[codegen::notinrange(glm::ivec2(1), glm::ivec2(2)), codegen::private()]];
+
+        // lessValueIVec2Private documentation
+        glm::ivec2 lessValueIVec2Private [[codegen::less(glm::ivec2(1)), codegen::private()]];
+
+        // lessValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> lessValueIVec2OptionalPrivate
+            [[codegen::less(glm::ivec2(1)), codegen::private()]];
+
+        // lessValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> lessValueIVec2VectorPrivate [[codegen::less(glm::ivec2(1)), codegen::private()]];
+
+        // lessEqualValueIVec2Private documentation
+        glm::ivec2 lessEqualValueIVec2Private [[codegen::lessequal(glm::ivec2(1)), codegen::private()]];
+
+        // lessEqualValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> lessEqualValueIVec2OptionalPrivate
+            [[codegen::lessequal(glm::ivec2(1)), codegen::private()]];
+
+        // lessEqualValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> lessEqualValueIVec2VectorPrivate
+            [[codegen::lessequal(glm::ivec2(1)), codegen::private()]];
+
+        // greaterValueIVec2Private documentation
+        glm::ivec2 greaterValueIVec2Private [[codegen::greater(glm::ivec2(1)), codegen::private()]];
+
+        // greaterValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> greaterValueIVec2OptionalPrivate
+            [[codegen::greater(glm::ivec2(1)), codegen::private()]];
+
+        // greaterValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> greaterValueIVec2VectorPrivate
+            [[codegen::greater(glm::ivec2(1)), codegen::private()]];
+
+        // greaterEqualValueIVec2Private documentation
+        glm::ivec2 greaterEqualValueIVec2Private [[codegen::greaterequal(glm::ivec2(1)), codegen::private()]];
+
+        // greaterEqualValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> greaterEqualValueIVec2OptionalPrivate
+            [[codegen::greaterequal(glm::ivec2(1)), codegen::private()]];
+
+        // greaterEqualValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> greaterEqualValueIVec2VectorPrivate
+            [[codegen::greaterequal(glm::ivec2(1)), codegen::private()]];
+
+        // unequalValueIVec2Private documentation
+        glm::ivec2 unequalValueIVec2Private [[codegen::unequal(glm::ivec2(1)), codegen::private()]];
+
+        // unequalValueIVec2OptionalPrivate documentation
+        std::optional<glm::ivec2> unequalValueIVec2OptionalPrivate
+            [[codegen::unequal(glm::ivec2(1)), codegen::private()]];
+
+        // unequalValueIVec2VectorPrivate documentation
+        std::vector<glm::ivec2> unequalValueIVec2VectorPrivate
+            [[codegen::unequal(glm::ivec2(1)), codegen::private()]];
 })";
 
     Code code = parse(Source);
@@ -117,7 +194,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 21);
+    REQUIRE(s->variables.size() == 42);
 
     {
         Variable* var = s->variables[0];
@@ -143,6 +220,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -169,6 +247,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -195,6 +274,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -221,6 +301,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -247,6 +328,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -273,6 +355,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -299,6 +382,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -325,6 +409,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -351,6 +436,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -377,6 +463,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -403,6 +490,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -429,6 +517,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -455,6 +544,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -481,6 +571,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -507,6 +598,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -533,6 +625,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -559,6 +652,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -585,6 +679,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -611,6 +706,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -637,6 +733,7 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
 
     {
@@ -663,7 +760,576 @@ TEST_CASE("Parsing/Structs/Attributes/IVec2") {
         CHECK(!var->attributes.isDateTime);
         CHECK(!var->attributes.isIdentifier);
         CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
     }
+
+    {
+        Variable* var = s->variables[21];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIVec2Private");
+        CHECK(var->key == "\"InRangeValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "inRangeValueIVec2Private documentation");
+        CHECK(var->attributes.inrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[22];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"InRangeValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "inRangeValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.inrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[23];
+        REQUIRE(var);
+        CHECK(var->name == "inRangeValueIVec2VectorPrivate");
+        CHECK(var->key == "\"InRangeValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "inRangeValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.inrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[24];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIVec2Private");
+        CHECK(var->key == "\"NotInRangeValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "notInRangeValueIVec2Private documentation");
+        CHECK(var->attributes.notinrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[25];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"NotInRangeValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "notInRangeValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.notinrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[26];
+        REQUIRE(var);
+        CHECK(var->name == "notInRangeValueIVec2VectorPrivate");
+        CHECK(var->key == "\"NotInRangeValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "notInRangeValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.notinrange == "glm::ivec2(1), glm::ivec2(2)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[27];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIVec2Private");
+        CHECK(var->key == "\"LessValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "lessValueIVec2Private documentation");
+        CHECK(var->attributes.less == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[28];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"LessValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "lessValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.less == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[29];
+        REQUIRE(var);
+        CHECK(var->name == "lessValueIVec2VectorPrivate");
+        CHECK(var->key == "\"LessValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "lessValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.less == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[30];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIVec2Private");
+        CHECK(var->key == "\"LessEqualValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "lessEqualValueIVec2Private documentation");
+        CHECK(var->attributes.lessequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[31];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"LessEqualValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "lessEqualValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.lessequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[32];
+        REQUIRE(var);
+        CHECK(var->name == "lessEqualValueIVec2VectorPrivate");
+        CHECK(var->key == "\"LessEqualValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "lessEqualValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.lessequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[33];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIVec2Private");
+        CHECK(var->key == "\"GreaterValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "greaterValueIVec2Private documentation");
+        CHECK(var->attributes.greater == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[34];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"GreaterValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "greaterValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.greater == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[35];
+        REQUIRE(var);
+        CHECK(var->name == "greaterValueIVec2VectorPrivate");
+        CHECK(var->key == "\"GreaterValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "greaterValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.greater == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[36];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIVec2Private");
+        CHECK(var->key == "\"GreaterEqualValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "greaterEqualValueIVec2Private documentation");
+        CHECK(var->attributes.greaterequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[37];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"GreaterEqualValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "greaterEqualValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.greaterequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[38];
+        REQUIRE(var);
+        CHECK(var->name == "greaterEqualValueIVec2VectorPrivate");
+        CHECK(var->key == "\"GreaterEqualValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "greaterEqualValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.greaterequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[39];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIVec2Private");
+        CHECK(var->key == "\"UnequalValueIVec2Private\"");
+        CHECK(generateTypename(var->type) == "glm::ivec2");
+        CHECK(var->comment == "unequalValueIVec2Private documentation");
+        CHECK(var->attributes.unequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[40];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIVec2OptionalPrivate");
+        CHECK(var->key == "\"UnequalValueIVec2OptionalPrivate\"");
+        CHECK(generateTypename(var->type) == "std::optional<glm::ivec2>");
+        CHECK(var->comment == "unequalValueIVec2OptionalPrivate documentation");
+        CHECK(var->attributes.unequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[41];
+        REQUIRE(var);
+        CHECK(var->name == "unequalValueIVec2VectorPrivate");
+        CHECK(var->key == "\"UnequalValueIVec2VectorPrivate\"");
+        CHECK(generateTypename(var->type) == "std::vector<glm::ivec2>");
+        CHECK(var->comment == "unequalValueIVec2VectorPrivate documentation");
+        CHECK(var->attributes.unequal == "glm::ivec2(1)");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
 
     const std::string r = generateResult(code);
     CHECK(!r.empty());

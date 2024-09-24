@@ -66,6 +66,12 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[1];
@@ -85,6 +91,12 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
     }
 
@@ -110,6 +122,12 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
         {
             Variable* var = s->variables[1];
@@ -129,6 +147,12 @@ TEST_CASE("Parsing/MultipleDictionaries", "[Parsing][Misc]") {
             CHECK(var->attributes.notinrange.empty());
             CHECK(var->attributes.reference.empty());
             CHECK(var->attributes.unequal.empty());
+            CHECK(!var->attributes.isColor);
+            CHECK(!var->attributes.isDirectory);
+            CHECK(!var->attributes.isDateTime);
+            CHECK(!var->attributes.isIdentifier);
+            CHECK(!var->attributes.mustBeNotEmpty);
+            CHECK(!var->attributes.isPrivate);
         }
     }
 
