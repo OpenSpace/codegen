@@ -392,9 +392,17 @@ VariableType* parseType(std::string_view type, Struct* context) {
         assert(mp->valueType);
 
         // only strings are allowed for keys in maps right now
-        const bool isValidKey =
+        const bool isStringKey =
             (mp->keyType->tag == VariableType::Tag::BasicType) &&
             (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
+
+        const bool isEnumKey =
+            (mp->keyType->tag == VariableType::Tag::CustomType) &&
+            (
+                static_cast<CustomType*>(mp->keyType)->type->type ==
+                StackElement::Type::Enum
+            );
+        const bool isValidKey = isStringKey || isEnumKey;
 
         if (!isValidKey) {
             throw CodegenError(std::format(
