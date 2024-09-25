@@ -391,22 +391,10 @@ VariableType* parseType(std::string_view type, Struct* context) {
         mp->valueType = parseType(list[1], context);
         assert(mp->valueType);
 
-        // only strings are allowed for keys in maps right now
-        const bool isStringKey =
-            (mp->keyType->tag == VariableType::Tag::BasicType) &&
-            (static_cast<BasicType*>(mp->keyType)->type == BasicType::Type::String);
-
-        const bool isEnumKey =
-            (mp->keyType->tag == VariableType::Tag::CustomType) &&
-            (
-                static_cast<CustomType*>(mp->keyType)->type->type ==
-                StackElement::Type::Enum
-            );
-        const bool isValidKey = isStringKey || isEnumKey;
-
+        const bool isValidKey = mp->hasStringKey() || mp->hasEnumKey();
         if (!isValidKey) {
             throw CodegenError(std::format(
-                "Currently only std::string as key is supported\n{}", type
+                "Currently only std::string or enums as key is supported\n{}", type
             ));
         }
 
@@ -503,6 +491,18 @@ VariableType* parseType(std::string_view type, Struct* context) {
     }
     assert(t);
     return t;
+}
+
+bool MapType::hasStringKey() const {
+    return (keyType->tag == VariableType::Tag::BasicType) &&
+           (static_cast<BasicType*>(keyType)->type == BasicType::Type::String);
+
+
+}
+
+bool MapType::hasEnumKey() const {
+    return (keyType->tag == VariableType::Tag::CustomType) &&
+           (static_cast<CustomType*>(keyType)->type->type == StackElement::Type::Enum);
 }
 
 std::string generateTypename(BasicType::Type type) {

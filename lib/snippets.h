@@ -31,7 +31,8 @@
 namespace {
     constexpr std::string_view BakeFunctionVectorDeclaration = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::vector<T>* val);\n";
     constexpr std::string_view BakeFunctionArrayDeclaration = "template<typename T, size_t N> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::array<T, N>* val);\n";
-    constexpr std::string_view BakeFunctionMapDeclaration = "template<typename K, typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<K, V>* val);\n";
+    constexpr std::string_view BakeFunctionMapStringKeyDeclaration = "template<typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, V>* val);\n";
+    constexpr std::string_view BakeFunctionMapEnumKeyDeclaration = "template<typename K, typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<K, V>* val);\n";
     constexpr std::string_view BakeFunctionOptionalDeclaration = "template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::optional<T>* val);\n";
     constexpr std::string_view BakeFunctionTupleDeclaration = "template<typename... Ts> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::tuple<Ts...>* val);\n";
 
@@ -284,14 +285,25 @@ template <typename... Ts> void bakeTo(const ghoul::Dictionary& d, std::string_vi
 }
 )";
 
-    constexpr std::string_view BakeFunctionMap = R"(
-template<typename K, typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<K, V>* val) {
+    constexpr std::string_view BakeFunctionMapStringKey = R"(
+template <typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<std::string, V>* val) {
     ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
 
     for (std::string_view k : dict.keys()) {
         V v;
         bakeTo(dict, k, &v);
         val->insert({ std::string(k), v });
+    }
+}
+)";
+    constexpr std::string_view BakeFunctionMapEnumKey = R"(
+template <typename K, typename V> void bakeTo(const ghoul::Dictionary& d, std::string_view key, std::map<K, V>* val) {
+    ghoul::Dictionary dict = d.value<ghoul::Dictionary>(key);
+
+    for (std::string_view k : dict.keys()) {
+        V v;
+        bakeTo(dict, k, &v);
+        val->insert({ codegen::fromString<K>(k), v });
     }
 }
 )";

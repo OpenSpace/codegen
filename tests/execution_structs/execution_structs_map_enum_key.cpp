@@ -40,6 +40,27 @@ namespace {
         };
 
         std::map<KeyType, std::string> simpleMap;
+
+        // optionalMap documentation
+        std::optional<std::map<KeyType, std::string>> optionalMap;
+
+        // vectorMap documentation
+        std::vector<std::map<KeyType, std::string>> vectorMap;
+
+        // optionalVectorMap documentation
+        std::optional<std::vector<std::map<KeyType, std::string>>> optionalVectorMap;
+
+        // dictMap documentation
+        std::map<KeyType, ghoul::Dictionary> dictMap;
+
+        // optionalDictMap documentation
+        std::optional<std::map<KeyType, ghoul::Dictionary>> optionalDictMap;
+
+        // vectorDictMap documentation
+        std::vector<std::map<KeyType, ghoul::Dictionary>> vectorDictMap;
+
+        // optionalVectorDictMap documentation
+        std::optional<std::vector<std::map<KeyType, ghoul::Dictionary>>> optionalVectorDictMap;
     };
 #include "execution_structs_map_enum_key_codegen.cpp"
 } // namespace
@@ -57,29 +78,29 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
     }
     {
         ghoul::Dictionary e;
-        e.setValue("d", "4"s);
-        e.setValue("e", "5"s);
-        e.setValue("f", "6"s);
+        e.setValue("Key1", "4"s);
+        e.setValue("Key2", "5"s);
+        e.setValue("Key3", "6"s);
         d.setValue("OptionalMap", e);
     }
     {
         ghoul::Dictionary e;
         {
             ghoul::Dictionary f;
-            f.setValue("g", "7"s);
-            f.setValue("h", "8"s);
+            f.setValue("Key1", "7"s);
+            f.setValue("Key2", "8"s);
             e.setValue("1", f);
         }
         {
             ghoul::Dictionary f;
-            f.setValue("i", "9"s);
-            f.setValue("j", "10"s);
+            f.setValue("Key1", "9"s);
+            f.setValue("Key2", "10"s);
             e.setValue("2", f);
         }
         {
             ghoul::Dictionary f;
-            f.setValue("k", "11"s);
-            f.setValue("l", "12"s);
+            f.setValue("Key1", "11"s);
+            f.setValue("Key2", "12"s);
             e.setValue("3", f);
         }
         d.setValue("VectorMap", e);
@@ -88,20 +109,20 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
         ghoul::Dictionary e;
         {
             ghoul::Dictionary f;
-            f.setValue("m", "13"s);
-            f.setValue("n", "14"s);
+            f.setValue("Key1", "13"s);
+            f.setValue("Key2", "14"s);
             e.setValue("1", f);
         }
         {
             ghoul::Dictionary f;
-            f.setValue("o", "15"s);
-            f.setValue("p", "16"s);
+            f.setValue("Key1", "15"s);
+            f.setValue("Key2", "16"s);
             e.setValue("2", f);
         }
         {
             ghoul::Dictionary f;
-            f.setValue("q", "17"s);
-            f.setValue("r", "18"s);
+            f.setValue("Key1", "17"s);
+            f.setValue("Key2", "18"s);
             e.setValue("3", f);
         }
         d.setValue("OptionalVectorMap", e);
@@ -113,21 +134,21 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             f.setValue("A", "1"s);
             f.setValue("B", "2"s);
             f.setValue("C", "3"s);
-            e.setValue("a", f);
+            e.setValue("Key1", f);
         }
         {
             ghoul::Dictionary f;
             f.setValue("D", "4"s);
             f.setValue("E", "5"s);
             f.setValue("F", "6"s);
-            e.setValue("b", f);
+            e.setValue("Key2", f);
         }
         {
             ghoul::Dictionary f;
             f.setValue("G", "7"s);
             f.setValue("H", "8"s);
             f.setValue("I", "9"s);
-            e.setValue("c", f);
+            e.setValue("Key3", f);
         }
         d.setValue("DictMap", e);
     }
@@ -138,21 +159,21 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             f.setValue("A", "1"s);
             f.setValue("B", "2"s);
             f.setValue("C", "3"s);
-            e.setValue("a", f);
+            e.setValue("Key1", f);
         }
         {
             ghoul::Dictionary f;
             f.setValue("D", "4"s);
             f.setValue("E", "5"s);
             f.setValue("F", "6"s);
-            e.setValue("b", f);
+            e.setValue("Key2", f);
         }
         {
             ghoul::Dictionary f;
             f.setValue("G", "7"s);
             f.setValue("H", "8"s);
             f.setValue("I", "9"s);
-            e.setValue("c", f);
+            e.setValue("Key3", f);
         }
         d.setValue("OptionalDictMap", e);
     }
@@ -165,21 +186,21 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
                 g.setValue("A", "1"s);
                 g.setValue("B", "2"s);
                 g.setValue("C", "3"s);
-                f.setValue("a", g);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
                 g.setValue("D", "4"s);
                 g.setValue("E", "5"s);
                 g.setValue("F", "6"s);
-                f.setValue("b", g);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
                 g.setValue("G", "7"s);
                 g.setValue("H", "8"s);
                 g.setValue("I", "9"s);
-                f.setValue("c", g);
+                f.setValue("Key3", g);
             }
             e.setValue("1", f);
         }
@@ -187,24 +208,24 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             ghoul::Dictionary f;
             {
                 ghoul::Dictionary g;
-                g.setValue("A", "1"s);
-                g.setValue("B", "2"s);
-                g.setValue("C", "3"s);
-                f.setValue("a", g);
+                g.setValue("A2", "1"s);
+                g.setValue("B2", "2"s);
+                g.setValue("C2", "3"s);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("D", "4"s);
-                g.setValue("E", "5"s);
-                g.setValue("F", "6"s);
-                f.setValue("b", g);
+                g.setValue("D2", "4"s);
+                g.setValue("E2", "5"s);
+                g.setValue("F2", "6"s);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("G", "7"s);
-                g.setValue("H", "8"s);
-                g.setValue("I", "9"s);
-                f.setValue("c", g);
+                g.setValue("G2", "7"s);
+                g.setValue("H2", "8"s);
+                g.setValue("I2", "9"s);
+                f.setValue("Key3", g);
             }
             e.setValue("2", f);
         }
@@ -212,24 +233,24 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             ghoul::Dictionary f;
             {
                 ghoul::Dictionary g;
-                g.setValue("A", "1"s);
-                g.setValue("B", "2"s);
-                g.setValue("C", "3"s);
-                f.setValue("a", g);
+                g.setValue("A3", "1"s);
+                g.setValue("B3", "2"s);
+                g.setValue("C3", "3"s);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("D", "4"s);
-                g.setValue("E", "5"s);
-                g.setValue("F", "6"s);
-                f.setValue("b", g);
+                g.setValue("D3", "4"s);
+                g.setValue("E3", "5"s);
+                g.setValue("F3", "6"s);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("G", "7"s);
-                g.setValue("H", "8"s);
-                g.setValue("I", "9"s);
-                f.setValue("c", g);
+                g.setValue("G3", "7"s);
+                g.setValue("H3", "8"s);
+                g.setValue("I3", "9"s);
+                f.setValue("Key3", g);
             }
             e.setValue("3", f);
         }
@@ -244,21 +265,21 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
                 g.setValue("A", "1"s);
                 g.setValue("B", "2"s);
                 g.setValue("C", "3"s);
-                f.setValue("a", g);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
                 g.setValue("D", "4"s);
                 g.setValue("E", "5"s);
                 g.setValue("F", "6"s);
-                f.setValue("b", g);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
                 g.setValue("G", "7"s);
                 g.setValue("H", "8"s);
                 g.setValue("I", "9"s);
-                f.setValue("c", g);
+                f.setValue("Key3", g);
             }
             e.setValue("1", f);
         }
@@ -266,24 +287,24 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             ghoul::Dictionary f;
             {
                 ghoul::Dictionary g;
-                g.setValue("A", "1"s);
-                g.setValue("B", "2"s);
-                g.setValue("C", "3"s);
-                f.setValue("a", g);
+                g.setValue("A2", "1"s);
+                g.setValue("B2", "2"s);
+                g.setValue("C2", "3"s);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("D", "4"s);
-                g.setValue("E", "5"s);
-                g.setValue("F", "6"s);
-                f.setValue("b", g);
+                g.setValue("D2", "4"s);
+                g.setValue("E2", "5"s);
+                g.setValue("F2", "6"s);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("G", "7"s);
-                g.setValue("H", "8"s);
-                g.setValue("I", "9"s);
-                f.setValue("c", g);
+                g.setValue("G2", "7"s);
+                g.setValue("H2", "8"s);
+                g.setValue("I2", "9"s);
+                f.setValue("Key3", g);
             }
             e.setValue("2", f);
         }
@@ -291,24 +312,24 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
             ghoul::Dictionary f;
             {
                 ghoul::Dictionary g;
-                g.setValue("A", "1"s);
-                g.setValue("B", "2"s);
-                g.setValue("C", "3"s);
-                f.setValue("a", g);
+                g.setValue("A3", "1"s);
+                g.setValue("B3", "2"s);
+                g.setValue("C3", "3"s);
+                f.setValue("Key1", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("D", "4"s);
-                g.setValue("E", "5"s);
-                g.setValue("F", "6"s);
-                f.setValue("b", g);
+                g.setValue("D3", "4"s);
+                g.setValue("E3", "5"s);
+                g.setValue("F3", "6"s);
+                f.setValue("Key2", g);
             }
             {
                 ghoul::Dictionary g;
-                g.setValue("G", "7"s);
-                g.setValue("H", "8"s);
-                g.setValue("I", "9"s);
-                f.setValue("c", g);
+                g.setValue("G3", "7"s);
+                g.setValue("H3", "8"s);
+                g.setValue("I3", "9"s);
+                f.setValue("Key3", g);
             }
             e.setValue("3", f);
         }
@@ -324,314 +345,314 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
     REQUIRE(p.simpleMap.find(Parameters::KeyType::Key3) != p.simpleMap.end());
     CHECK(p.simpleMap.at(Parameters::KeyType::Key3) == "3");
 
-    //REQUIRE(p.optionalMap.has_value());
-    //REQUIRE(p.optionalMap->size() == 3);
-    //REQUIRE(p.optionalMap->find("d") != p.optionalMap->end());
-    //CHECK(p.optionalMap->at("d") == "4");
-    //REQUIRE(p.optionalMap->find("e") != p.optionalMap->end());
-    //CHECK(p.optionalMap->at("e") == "5");
-    //REQUIRE(p.optionalMap->find("f") != p.optionalMap->end());
-    //CHECK(p.optionalMap->at("f") == "6");
+    REQUIRE(p.optionalMap.has_value());
+    REQUIRE(p.optionalMap->size() == 3);
+    REQUIRE(p.optionalMap->find(Parameters::KeyType::Key1) != p.optionalMap->end());
+    CHECK(p.optionalMap->at(Parameters::KeyType::Key1) == "4");
+    REQUIRE(p.optionalMap->find(Parameters::KeyType::Key2) != p.optionalMap->end());
+    CHECK(p.optionalMap->at(Parameters::KeyType::Key2) == "5");
+    REQUIRE(p.optionalMap->find(Parameters::KeyType::Key3) != p.optionalMap->end());
+    CHECK(p.optionalMap->at(Parameters::KeyType::Key3) == "6");
 
-    //REQUIRE(p.vectorMap.size() == 3);
-    //REQUIRE(p.vectorMap[0].find("g") != p.vectorMap[0].end());
-    //CHECK(p.vectorMap[0].at("g") == "7");
-    //REQUIRE(p.vectorMap[0].find("h") != p.vectorMap[0].end());
-    //CHECK(p.vectorMap[0].at("h") == "8");
+    REQUIRE(p.vectorMap.size() == 3);
+    REQUIRE(p.vectorMap[0].find(Parameters::KeyType::Key1) != p.vectorMap[0].end());
+    CHECK(p.vectorMap[0].at(Parameters::KeyType::Key1) == "7");
+    REQUIRE(p.vectorMap[0].find(Parameters::KeyType::Key2) != p.vectorMap[0].end());
+    CHECK(p.vectorMap[0].at(Parameters::KeyType::Key2) == "8");
 
-    //REQUIRE(p.vectorMap[1].find("i") != p.vectorMap[1].end());
-    //CHECK(p.vectorMap[1].at("i") == "9");
-    //REQUIRE(p.vectorMap[1].find("j") != p.vectorMap[1].end());
-    //CHECK(p.vectorMap[1].at("j") == "10");
+    REQUIRE(p.vectorMap[1].find(Parameters::KeyType::Key1) != p.vectorMap[1].end());
+    CHECK(p.vectorMap[1].at(Parameters::KeyType::Key1) == "9");
+    REQUIRE(p.vectorMap[1].find(Parameters::KeyType::Key2) != p.vectorMap[1].end());
+    CHECK(p.vectorMap[1].at(Parameters::KeyType::Key2) == "10");
 
-    //REQUIRE(p.vectorMap[2].find("k") != p.vectorMap[2].end());
-    //CHECK(p.vectorMap[2].at("k") == "11");
-    //REQUIRE(p.vectorMap[2].find("l") != p.vectorMap[2].end());
-    //CHECK(p.vectorMap[2].at("l") == "12");
+    REQUIRE(p.vectorMap[2].find(Parameters::KeyType::Key1) != p.vectorMap[2].end());
+    CHECK(p.vectorMap[2].at(Parameters::KeyType::Key1) == "11");
+    REQUIRE(p.vectorMap[2].find(Parameters::KeyType::Key2) != p.vectorMap[2].end());
+    CHECK(p.vectorMap[2].at(Parameters::KeyType::Key2) == "12");
 
-    //REQUIRE(p.optionalVectorMap.has_value());
-    //REQUIRE(p.optionalVectorMap->size() == 3);
-    //REQUIRE(p.optionalVectorMap->at(0).find("m") != p.optionalVectorMap->at(0).end());
-    //CHECK(p.optionalVectorMap->at(0).at("m") == "13");
-    //REQUIRE(p.optionalVectorMap->at(0).find("n") != p.optionalVectorMap->at(0).end());
-    //CHECK(p.optionalVectorMap->at(0).at("n") == "14");
+    REQUIRE(p.optionalVectorMap.has_value());
+    REQUIRE(p.optionalVectorMap->size() == 3);
+    REQUIRE(p.optionalVectorMap->at(0).find(Parameters::KeyType::Key1) != p.optionalVectorMap->at(0).end());
+    CHECK(p.optionalVectorMap->at(0).at(Parameters::KeyType::Key1) == "13");
+    REQUIRE(p.optionalVectorMap->at(0).find(Parameters::KeyType::Key2) != p.optionalVectorMap->at(0).end());
+    CHECK(p.optionalVectorMap->at(0).at(Parameters::KeyType::Key2) == "14");
 
-    //REQUIRE(p.optionalVectorMap->at(1).find("o") != p.optionalVectorMap->at(1).end());
-    //CHECK(p.optionalVectorMap->at(1).at("o") == "15");
-    //REQUIRE(p.optionalVectorMap->at(1).find("p") != p.optionalVectorMap->at(1).end());
-    //CHECK(p.optionalVectorMap->at(1).at("p") == "16");
+    REQUIRE(p.optionalVectorMap->at(1).find(Parameters::KeyType::Key1) != p.optionalVectorMap->at(1).end());
+    CHECK(p.optionalVectorMap->at(1).at(Parameters::KeyType::Key1) == "15");
+    REQUIRE(p.optionalVectorMap->at(1).find(Parameters::KeyType::Key2) != p.optionalVectorMap->at(1).end());
+    CHECK(p.optionalVectorMap->at(1).at(Parameters::KeyType::Key2) == "16");
 
-    //REQUIRE(p.optionalVectorMap->at(2).find("q") != p.optionalVectorMap->at(2).end());
-    //CHECK(p.optionalVectorMap->at(2).at("q") == "17");
-    //REQUIRE(p.optionalVectorMap->at(2).find("r") != p.optionalVectorMap->at(2).end());
-    //CHECK(p.optionalVectorMap->at(2).at("r") == "18");
+    REQUIRE(p.optionalVectorMap->at(2).find(Parameters::KeyType::Key1) != p.optionalVectorMap->at(2).end());
+    CHECK(p.optionalVectorMap->at(2).at(Parameters::KeyType::Key1) == "17");
+    REQUIRE(p.optionalVectorMap->at(2).find(Parameters::KeyType::Key2) != p.optionalVectorMap->at(2).end());
+    CHECK(p.optionalVectorMap->at(2).at(Parameters::KeyType::Key2) == "18");
 
-    //REQUIRE(p.dictMap.size() == 3);
-    //REQUIRE(p.dictMap.find("a") != p.dictMap.end());
-    //REQUIRE(p.dictMap.at("a").size() == 3);
-    //REQUIRE(p.dictMap.at("a").hasKey("A"));
-    //REQUIRE(p.dictMap.at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.dictMap.at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.dictMap.at("a").hasKey("B"));
-    //REQUIRE(p.dictMap.at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.dictMap.at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.dictMap.at("a").hasKey("C"));
-    //REQUIRE(p.dictMap.at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.dictMap.at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.dictMap.at("b").size() == 3);
-    //REQUIRE(p.dictMap.at("b").hasKey("D"));
-    //REQUIRE(p.dictMap.at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.dictMap.at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.dictMap.at("b").hasKey("E"));
-    //REQUIRE(p.dictMap.at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.dictMap.at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.dictMap.at("b").hasKey("F"));
-    //REQUIRE(p.dictMap.at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.dictMap.at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.dictMap.at("c").size() == 3);
-    //REQUIRE(p.dictMap.at("c").hasKey("G"));
-    //REQUIRE(p.dictMap.at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.dictMap.at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.dictMap.at("c").hasKey("H"));
-    //REQUIRE(p.dictMap.at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.dictMap.at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.dictMap.at("c").hasKey("I"));
-    //REQUIRE(p.dictMap.at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.dictMap.at("c").value<std::string>("I") == "9"s);
+    REQUIRE(p.dictMap.size() == 3);
+    REQUIRE(p.dictMap.find(Parameters::KeyType::Key1) != p.dictMap.end());
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasKey("A"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasValue<std::string>("A"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).value<std::string>("A") == "1"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasKey("B"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasValue<std::string>("B"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).value<std::string>("B") == "2"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasKey("C"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).hasValue<std::string>("C"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key1).value<std::string>("C") == "3"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasKey("D"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasValue<std::string>("D"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).value<std::string>("D") == "4"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasKey("E"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasValue<std::string>("E"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).value<std::string>("E") == "5"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasKey("F"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).hasValue<std::string>("F"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key2).value<std::string>("F") == "6"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasKey("G"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasValue<std::string>("G"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).value<std::string>("G") == "7"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasKey("H"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasValue<std::string>("H"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).value<std::string>("H") == "8"s);
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasKey("I"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).hasValue<std::string>("I"));
+    REQUIRE(p.dictMap.at(Parameters::KeyType::Key3).value<std::string>("I") == "9"s);
 
-    //REQUIRE(p.optionalDictMap.has_value());
-    //REQUIRE(p.optionalDictMap->size() == 3);
-    //REQUIRE(p.optionalDictMap->find("a") != p.optionalDictMap->end());
-    //REQUIRE(p.optionalDictMap->at("a").size() == 3);
-    //REQUIRE(p.optionalDictMap->at("a").hasKey("A"));
-    //REQUIRE(p.optionalDictMap->at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.optionalDictMap->at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.optionalDictMap->at("a").hasKey("B"));
-    //REQUIRE(p.optionalDictMap->at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.optionalDictMap->at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.optionalDictMap->at("a").hasKey("C"));
-    //REQUIRE(p.optionalDictMap->at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.optionalDictMap->at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.optionalDictMap->at("b").size() == 3);
-    //REQUIRE(p.optionalDictMap->at("b").hasKey("D"));
-    //REQUIRE(p.optionalDictMap->at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.optionalDictMap->at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.optionalDictMap->at("b").hasKey("E"));
-    //REQUIRE(p.optionalDictMap->at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.optionalDictMap->at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.optionalDictMap->at("b").hasKey("F"));
-    //REQUIRE(p.optionalDictMap->at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.optionalDictMap->at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.optionalDictMap->at("c").size() == 3);
-    //REQUIRE(p.optionalDictMap->at("c").hasKey("G"));
-    //REQUIRE(p.optionalDictMap->at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.optionalDictMap->at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.optionalDictMap->at("c").hasKey("H"));
-    //REQUIRE(p.optionalDictMap->at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.optionalDictMap->at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.optionalDictMap->at("c").hasKey("I"));
-    //REQUIRE(p.optionalDictMap->at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.optionalDictMap->at("c").value<std::string>("I") == "9"s);
+    REQUIRE(p.optionalDictMap.has_value());
+    REQUIRE(p.optionalDictMap->size() == 3);
+    REQUIRE(p.optionalDictMap->find(Parameters::KeyType::Key1) != p.optionalDictMap->end());
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasKey("A"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasValue<std::string>("A"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).value<std::string>("A") == "1"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasKey("B"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasValue<std::string>("B"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).value<std::string>("B") == "2"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasKey("C"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).hasValue<std::string>("C"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key1).value<std::string>("C") == "3"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasKey("D"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasValue<std::string>("D"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).value<std::string>("D") == "4"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasKey("E"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasValue<std::string>("E"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).value<std::string>("E") == "5"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasKey("F"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).hasValue<std::string>("F"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key2).value<std::string>("F") == "6"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasKey("G"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasValue<std::string>("G"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).value<std::string>("G") == "7"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasKey("H"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasValue<std::string>("H"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).value<std::string>("H") == "8"s);
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasKey("I"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).hasValue<std::string>("I"));
+    REQUIRE(p.optionalDictMap->at(Parameters::KeyType::Key3).value<std::string>("I") == "9"s);
 
-    //REQUIRE(p.vectorDictMap.size() == 3);
-    //REQUIRE(p.vectorDictMap[0].size() == 3);
-    //REQUIRE(p.vectorDictMap[0].find("a") != p.vectorDictMap[0].end());
-    //REQUIRE(p.vectorDictMap[0].at("a").size() == 3);
-    //REQUIRE(p.vectorDictMap[0].at("a").hasKey("A"));
-    //REQUIRE(p.vectorDictMap[0].at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.vectorDictMap[0].at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.vectorDictMap[0].at("a").hasKey("B"));
-    //REQUIRE(p.vectorDictMap[0].at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.vectorDictMap[0].at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.vectorDictMap[0].at("a").hasKey("C"));
-    //REQUIRE(p.vectorDictMap[0].at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.vectorDictMap[0].at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.vectorDictMap[0].at("b").size() == 3);
-    //REQUIRE(p.vectorDictMap[0].at("b").hasKey("D"));
-    //REQUIRE(p.vectorDictMap[0].at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.vectorDictMap[0].at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.vectorDictMap[0].at("b").hasKey("E"));
-    //REQUIRE(p.vectorDictMap[0].at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.vectorDictMap[0].at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.vectorDictMap[0].at("b").hasKey("F"));
-    //REQUIRE(p.vectorDictMap[0].at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.vectorDictMap[0].at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.vectorDictMap[0].at("c").size() == 3);
-    //REQUIRE(p.vectorDictMap[0].at("c").hasKey("G"));
-    //REQUIRE(p.vectorDictMap[0].at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.vectorDictMap[0].at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.vectorDictMap[0].at("c").hasKey("H"));
-    //REQUIRE(p.vectorDictMap[0].at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.vectorDictMap[0].at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.vectorDictMap[0].at("c").hasKey("I"));
-    //REQUIRE(p.vectorDictMap[0].at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.vectorDictMap[0].at("c").value<std::string>("I") == "9"s);
-    //REQUIRE(p.vectorDictMap[1].size() == 3);
-    //REQUIRE(p.vectorDictMap[1].find("a") != p.vectorDictMap[1].end());
-    //REQUIRE(p.vectorDictMap[1].at("a").size() == 3);
-    //REQUIRE(p.vectorDictMap[1].at("a").hasKey("A"));
-    //REQUIRE(p.vectorDictMap[1].at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.vectorDictMap[1].at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.vectorDictMap[1].at("a").hasKey("B"));
-    //REQUIRE(p.vectorDictMap[1].at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.vectorDictMap[1].at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.vectorDictMap[1].at("a").hasKey("C"));
-    //REQUIRE(p.vectorDictMap[1].at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.vectorDictMap[1].at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.vectorDictMap[1].at("b").size() == 3);
-    //REQUIRE(p.vectorDictMap[1].at("b").hasKey("D"));
-    //REQUIRE(p.vectorDictMap[1].at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.vectorDictMap[1].at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.vectorDictMap[1].at("b").hasKey("E"));
-    //REQUIRE(p.vectorDictMap[1].at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.vectorDictMap[1].at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.vectorDictMap[1].at("b").hasKey("F"));
-    //REQUIRE(p.vectorDictMap[1].at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.vectorDictMap[1].at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.vectorDictMap[1].at("c").size() == 3);
-    //REQUIRE(p.vectorDictMap[1].at("c").hasKey("G"));
-    //REQUIRE(p.vectorDictMap[1].at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.vectorDictMap[1].at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.vectorDictMap[1].at("c").hasKey("H"));
-    //REQUIRE(p.vectorDictMap[1].at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.vectorDictMap[1].at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.vectorDictMap[1].at("c").hasKey("I"));
-    //REQUIRE(p.vectorDictMap[1].at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.vectorDictMap[1].at("c").value<std::string>("I") == "9"s);
-    //REQUIRE(p.vectorDictMap[2].size() == 3);
-    //REQUIRE(p.vectorDictMap[2].find("a") != p.vectorDictMap[2].end());
-    //REQUIRE(p.vectorDictMap[2].at("a").size() == 3);
-    //REQUIRE(p.vectorDictMap[2].at("a").hasKey("A"));
-    //REQUIRE(p.vectorDictMap[2].at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.vectorDictMap[2].at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.vectorDictMap[2].at("a").hasKey("B"));
-    //REQUIRE(p.vectorDictMap[2].at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.vectorDictMap[2].at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.vectorDictMap[2].at("a").hasKey("C"));
-    //REQUIRE(p.vectorDictMap[2].at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.vectorDictMap[2].at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.vectorDictMap[2].at("b").size() == 3);
-    //REQUIRE(p.vectorDictMap[2].at("b").hasKey("D"));
-    //REQUIRE(p.vectorDictMap[2].at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.vectorDictMap[2].at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.vectorDictMap[2].at("b").hasKey("E"));
-    //REQUIRE(p.vectorDictMap[2].at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.vectorDictMap[2].at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.vectorDictMap[2].at("b").hasKey("F"));
-    //REQUIRE(p.vectorDictMap[2].at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.vectorDictMap[2].at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.vectorDictMap[2].at("c").size() == 3);
-    //REQUIRE(p.vectorDictMap[2].at("c").hasKey("G"));
-    //REQUIRE(p.vectorDictMap[2].at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.vectorDictMap[2].at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.vectorDictMap[2].at("c").hasKey("H"));
-    //REQUIRE(p.vectorDictMap[2].at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.vectorDictMap[2].at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.vectorDictMap[2].at("c").hasKey("I"));
-    //REQUIRE(p.vectorDictMap[2].at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.vectorDictMap[2].at("c").value<std::string>("I") == "9"s);
+    REQUIRE(p.vectorDictMap.size() == 3);
+    REQUIRE(p.vectorDictMap[0].size() == 3);
+    REQUIRE(p.vectorDictMap[0].find(Parameters::KeyType::Key1) != p.vectorDictMap[0].end());
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasKey("A"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasValue<std::string>("A"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).value<std::string>("A") == "1"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasKey("B"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasValue<std::string>("B"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).value<std::string>("B") == "2"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasKey("C"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).hasValue<std::string>("C"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key1).value<std::string>("C") == "3"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasKey("D"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasValue<std::string>("D"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).value<std::string>("D") == "4"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasKey("E"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasValue<std::string>("E"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).value<std::string>("E") == "5"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasKey("F"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).hasValue<std::string>("F"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key2).value<std::string>("F") == "6"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasKey("G"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasValue<std::string>("G"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).value<std::string>("G") == "7"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasKey("H"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasValue<std::string>("H"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).value<std::string>("H") == "8"s);
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasKey("I"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).hasValue<std::string>("I"));
+    REQUIRE(p.vectorDictMap[0].at(Parameters::KeyType::Key3).value<std::string>("I") == "9"s);
+    REQUIRE(p.vectorDictMap[1].size() == 3);
+    REQUIRE(p.vectorDictMap[1].find(Parameters::KeyType::Key1) != p.vectorDictMap[1].end());
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasKey("A2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasValue<std::string>("A2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).value<std::string>("A2") == "1"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasKey("B2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasValue<std::string>("B2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).value<std::string>("B2") == "2"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasKey("C2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).hasValue<std::string>("C2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key1).value<std::string>("C2") == "3"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasKey("D2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasValue<std::string>("D2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).value<std::string>("D2") == "4"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasKey("E2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasValue<std::string>("E2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).value<std::string>("E2") == "5"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasKey("F2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).hasValue<std::string>("F2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key2).value<std::string>("F2") == "6"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasKey("G2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasValue<std::string>("G2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).value<std::string>("G2") == "7"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasKey("H2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasValue<std::string>("H2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).value<std::string>("H2") == "8"s);
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasKey("I2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).hasValue<std::string>("I2"));
+    REQUIRE(p.vectorDictMap[1].at(Parameters::KeyType::Key3).value<std::string>("I2") == "9"s);
+    REQUIRE(p.vectorDictMap[2].size() == 3);
+    REQUIRE(p.vectorDictMap[2].find(Parameters::KeyType::Key1) != p.vectorDictMap[2].end());
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasKey("A3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasValue<std::string>("A3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).value<std::string>("A3") == "1"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasKey("B3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasValue<std::string>("B3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).value<std::string>("B3") == "2"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasKey("C3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).hasValue<std::string>("C3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key1).value<std::string>("C3") == "3"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasKey("D3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasValue<std::string>("D3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).value<std::string>("D3") == "4"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasKey("E3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasValue<std::string>("E3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).value<std::string>("E3") == "5"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasKey("F3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).hasValue<std::string>("F3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key2).value<std::string>("F3") == "6"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasKey("G3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasValue<std::string>("G3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).value<std::string>("G3") == "7"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasKey("H3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasValue<std::string>("H3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).value<std::string>("H3") == "8"s);
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasKey("I3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).hasValue<std::string>("I3"));
+    REQUIRE(p.vectorDictMap[2].at(Parameters::KeyType::Key3).value<std::string>("I3") == "9"s);
 
-    //REQUIRE(p.optionalVectorDictMap.has_value());
-    //REQUIRE(p.optionalVectorDictMap->size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(0).size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(0).find("a") != p.optionalVectorDictMap->at(0).end());
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasKey("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasKey("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasKey("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasKey("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasKey("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasKey("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasKey("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasKey("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasKey("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(0).at("c").value<std::string>("I") == "9"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(1).find("a") != p.optionalVectorDictMap->at(1).end());
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasKey("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasKey("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasKey("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasKey("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasKey("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasKey("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasKey("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasKey("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasKey("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(1).at("c").value<std::string>("I") == "9"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(2).find("a") != p.optionalVectorDictMap->at(2).end());
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasKey("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasValue<std::string>("A"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").value<std::string>("A") == "1"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasKey("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasValue<std::string>("B"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").value<std::string>("B") == "2"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasKey("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").hasValue<std::string>("C"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("a").value<std::string>("C") == "3"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasKey("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasValue<std::string>("D"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").value<std::string>("D") == "4"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasKey("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasValue<std::string>("E"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").value<std::string>("E") == "5"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasKey("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").hasValue<std::string>("F"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("b").value<std::string>("F") == "6"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").size() == 3);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasKey("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasValue<std::string>("G"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").value<std::string>("G") == "7"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasKey("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasValue<std::string>("H"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").value<std::string>("H") == "8"s);
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasKey("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").hasValue<std::string>("I"));
-    //REQUIRE(p.optionalVectorDictMap->at(2).at("c").value<std::string>("I") == "9"s);
+    REQUIRE(p.optionalVectorDictMap.has_value());
+    REQUIRE(p.optionalVectorDictMap->size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(0).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(0).find(Parameters::KeyType::Key1) != p.optionalVectorDictMap->at(0).end());
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasKey("A"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasValue<std::string>("A"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).value<std::string>("A") == "1"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasKey("B"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasValue<std::string>("B"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).value<std::string>("B") == "2"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasKey("C"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).hasValue<std::string>("C"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key1).value<std::string>("C") == "3"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasKey("D"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasValue<std::string>("D"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).value<std::string>("D") == "4"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasKey("E"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasValue<std::string>("E"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).value<std::string>("E") == "5"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasKey("F"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).hasValue<std::string>("F"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key2).value<std::string>("F") == "6"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasKey("G"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasValue<std::string>("G"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).value<std::string>("G") == "7"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasKey("H"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasValue<std::string>("H"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).value<std::string>("H") == "8"s);
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasKey("I"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).hasValue<std::string>("I"));
+    REQUIRE(p.optionalVectorDictMap->at(0).at(Parameters::KeyType::Key3).value<std::string>("I") == "9"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(1).find(Parameters::KeyType::Key1) != p.optionalVectorDictMap->at(1).end());
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasKey("A2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasValue<std::string>("A2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).value<std::string>("A2") == "1"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasKey("B2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasValue<std::string>("B2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).value<std::string>("B2") == "2"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasKey("C2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).hasValue<std::string>("C2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key1).value<std::string>("C2") == "3"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasKey("D2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasValue<std::string>("D2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).value<std::string>("D2") == "4"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasKey("E2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasValue<std::string>("E2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).value<std::string>("E2") == "5"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasKey("F2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).hasValue<std::string>("F2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key2).value<std::string>("F2") == "6"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasKey("G2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasValue<std::string>("G2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).value<std::string>("G2") == "7"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasKey("H2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasValue<std::string>("H2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).value<std::string>("H2") == "8"s);
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasKey("I2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).hasValue<std::string>("I2"));
+    REQUIRE(p.optionalVectorDictMap->at(1).at(Parameters::KeyType::Key3).value<std::string>("I2") == "9"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(2).find(Parameters::KeyType::Key1) != p.optionalVectorDictMap->at(2).end());
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasKey("A3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasValue<std::string>("A3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).value<std::string>("A3") == "1"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasKey("B3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasValue<std::string>("B3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).value<std::string>("B3") == "2"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasKey("C3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).hasValue<std::string>("C3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key1).value<std::string>("C3") == "3"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasKey("D3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasValue<std::string>("D3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).value<std::string>("D3") == "4"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasKey("E3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasValue<std::string>("E3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).value<std::string>("E3") == "5"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasKey("F3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).hasValue<std::string>("F3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key2).value<std::string>("F3") == "6"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).size() == 3);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasKey("G3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasValue<std::string>("G3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).value<std::string>("G3") == "7"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasKey("H3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasValue<std::string>("H3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).value<std::string>("H3") == "8"s);
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasKey("I3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).hasValue<std::string>("I3"));
+    REQUIRE(p.optionalVectorDictMap->at(2).at(Parameters::KeyType::Key3).value<std::string>("I3") == "9"s);
 }
 
-TEST_CASE("Execution/Structs/Map:  Documentation", "[Execution][Structs]") {
+TEST_CASE("Execution/Structs/Map Enum Key:  Documentation", "[Execution][Structs]") {
     return;
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");

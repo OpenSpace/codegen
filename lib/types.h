@@ -162,6 +162,9 @@ bool operator==(const PointerType& lhs, const PointerType& rhs);
 struct MapType : public VariableType {
     VariableType* keyType = nullptr;
     VariableType* valueType = nullptr;
+
+    bool hasStringKey() const;
+    bool hasEnumKey() const;
 };
 bool operator==(const MapType& lhs, const MapType& rhs);
 
