@@ -67,3 +67,320 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/Structs/Map: Enum Key", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(Name)]] Parameters {
+    enum class KeyType {
+        Key1,
+        Key2,
+        Key3
+    };
+
+    std::map<KeyType, std::string> p;
+};)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    REQUIRE(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
+
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->children.size() == 1);
+    REQUIRE(s->children.front()->type == StackElement::Type::Enum);
+    Enum* e = static_cast<Enum*>(s->children.front());
+    REQUIRE(e);
+
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(!e->attributes.stringify);
+    CHECK(!e->attributes.arrayify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key3");
+    }
+
+
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    REQUIRE(s->variables.size() == 1);
+    CHECK(s->variables[0]->name == "p");
+    CHECK(s->variables[0]->key == "\"P\"");
+
+    CHECK(s->variables[0]->attributes.annotation.empty());
+    CHECK(s->variables[0]->attributes.greater.empty());
+    CHECK(s->variables[0]->attributes.greaterequal.empty());
+    CHECK(s->variables[0]->attributes.inlist.empty());
+    CHECK(s->variables[0]->attributes.less.empty());
+    CHECK(s->variables[0]->attributes.lessequal.empty());
+    CHECK(s->variables[0]->attributes.notinrange.empty());
+    CHECK(s->variables[0]->attributes.reference.empty());
+    CHECK(s->variables[0]->attributes.unequal.empty());
+    CHECK(!s->variables[0]->attributes.isColor);
+    CHECK(!s->variables[0]->attributes.isDirectory);
+    CHECK(!s->variables[0]->attributes.isDateTime);
+    CHECK(!s->variables[0]->attributes.isIdentifier);
+    CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+    CHECK(!s->variables[0]->attributes.isPrivate);
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Structs/Map: Enum Key", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(Name)]] Parameters {
+    enum class KeyType {
+        Key1,
+        Key2,
+        Key3
+    };
+
+    std::map<KeyType, std::string> p;
+};)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    REQUIRE(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
+
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->children.size() == 1);
+    REQUIRE(s->children.front()->type == StackElement::Type::Enum);
+    Enum* e = static_cast<Enum*>(s->children.front());
+    REQUIRE(e);
+
+    CHECK(e->attributes.mappedTo.empty());
+    CHECK(!e->attributes.stringify);
+    CHECK(!e->attributes.arrayify);
+    REQUIRE(e->elements.size() == 3);
+    {
+        EnumElement* ee = e->elements[0];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key1");
+    }
+    {
+        EnumElement* ee = e->elements[1];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key2");
+    }
+    {
+        EnumElement* ee = e->elements[2];
+        REQUIRE(ee);
+        CHECK(ee->name == "Key3");
+    }
+
+
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    REQUIRE(s->variables.size() == 1);
+    CHECK(s->variables[0]->name == "p");
+    CHECK(s->variables[0]->key == "\"P\"");
+
+    CHECK(s->variables[0]->attributes.annotation.empty());
+    CHECK(s->variables[0]->attributes.greater.empty());
+    CHECK(s->variables[0]->attributes.greaterequal.empty());
+    CHECK(s->variables[0]->attributes.inlist.empty());
+    CHECK(s->variables[0]->attributes.less.empty());
+    CHECK(s->variables[0]->attributes.lessequal.empty());
+    CHECK(s->variables[0]->attributes.notinrange.empty());
+    CHECK(s->variables[0]->attributes.reference.empty());
+    CHECK(s->variables[0]->attributes.unequal.empty());
+    CHECK(!s->variables[0]->attributes.isColor);
+    CHECK(!s->variables[0]->attributes.isDirectory);
+    CHECK(!s->variables[0]->attributes.isDateTime);
+    CHECK(!s->variables[0]->attributes.isIdentifier);
+    CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
+    CHECK(!s->variables[0]->attributes.isPrivate);
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Structs/Map: Enum Key Multiple", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(Name)]] Parameters {
+    enum class KeyType {
+        Key1,
+        Key2,
+        Key3
+    };
+
+    enum class KeyType2 {
+        Key21,
+        Key22,
+        Key23
+    };
+
+    std::map<KeyType, std::string> p;
+    std::map<KeyType, std::string> p2;
+    std::map<KeyType, std::string> q;
+    std::map<KeyType, std::string> q2;
+};)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    REQUIRE(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
+
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->children.size() == 2);
+    {
+        REQUIRE(s->children[0]->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(s->children[0]);
+        REQUIRE(e);
+
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
+        REQUIRE(e->elements.size() == 3);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key1");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key2");
+        }
+        {
+            EnumElement* ee = e->elements[2];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key3");
+        }
+    }
+    {
+        REQUIRE(s->children[1]->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(s->children[1]);
+        REQUIRE(e);
+
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
+        REQUIRE(e->elements.size() == 3);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key21");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key22");
+        }
+        {
+            EnumElement* ee = e->elements[2];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key23");
+        }
+    }
+
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+    REQUIRE(s->variables.size() == 4);
+    {
+        Variable* v = s->variables[0];
+        CHECK(v->name == "p");
+        CHECK(v->key == "\"P\"");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.notinrange.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+        CHECK(!v->attributes.isColor);
+        CHECK(!v->attributes.isDirectory);
+        CHECK(!v->attributes.isDateTime);
+        CHECK(!v->attributes.isIdentifier);
+        CHECK(!v->attributes.mustBeNotEmpty);
+        CHECK(!v->attributes.isPrivate);
+    }
+    {
+        Variable* v = s->variables[1];
+        CHECK(v->name == "p2");
+        CHECK(v->key == "\"P2\"");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.notinrange.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+        CHECK(!v->attributes.isColor);
+        CHECK(!v->attributes.isDirectory);
+        CHECK(!v->attributes.isDateTime);
+        CHECK(!v->attributes.isIdentifier);
+        CHECK(!v->attributes.mustBeNotEmpty);
+        CHECK(!v->attributes.isPrivate);
+    }
+    {
+        Variable* v = s->variables[2];
+        CHECK(v->name == "q");
+        CHECK(v->key == "\"Q\"");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.notinrange.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+        CHECK(!v->attributes.isColor);
+        CHECK(!v->attributes.isDirectory);
+        CHECK(!v->attributes.isDateTime);
+        CHECK(!v->attributes.isIdentifier);
+        CHECK(!v->attributes.mustBeNotEmpty);
+        CHECK(!v->attributes.isPrivate);
+    }
+    {
+        Variable* v = s->variables[3];
+        CHECK(v->name == "q2");
+        CHECK(v->key == "\"Q2\"");
+
+        CHECK(v->attributes.annotation.empty());
+        CHECK(v->attributes.greater.empty());
+        CHECK(v->attributes.greaterequal.empty());
+        CHECK(v->attributes.inlist.empty());
+        CHECK(v->attributes.less.empty());
+        CHECK(v->attributes.lessequal.empty());
+        CHECK(v->attributes.notinrange.empty());
+        CHECK(v->attributes.reference.empty());
+        CHECK(v->attributes.unequal.empty());
+        CHECK(!v->attributes.isColor);
+        CHECK(!v->attributes.isDirectory);
+        CHECK(!v->attributes.isDateTime);
+        CHECK(!v->attributes.isIdentifier);
+        CHECK(!v->attributes.mustBeNotEmpty);
+        CHECK(!v->attributes.isPrivate);
+    }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}

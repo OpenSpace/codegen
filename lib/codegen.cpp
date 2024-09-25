@@ -177,6 +177,40 @@ namespace {
         return res;
     }
 
+    bool anyMapUsesEnumAsKey(Struct* s, const Enum* e) {
+        assert(s);
+        assert(e);
+
+        // First check our own variables
+        const std::vector<const VariableType*> types = usedTypes(*s);
+        for (const VariableType* t : types) {
+            if (!t->isMapType()) {
+                continue;
+            }
+
+            const MapType* mt = static_cast<const MapType*>(t);
+            if (!mt->hasEnumKey()) {
+                continue;
+            }
+
+            assert(mt->keyType->isCustomType());
+            CustomType* ct = static_cast<CustomType*>(mt->keyType);
+            assert(ct->type->type == StackElement::Type::Enum);
+            const Enum* ee = static_cast<const Enum*>(ct->type);
+            if (ee == e) {
+                return true;
+            }
+        }
+
+        // Then iterate up to the parent if it exists
+        if (s->parent) {
+            return anyMapUsesEnumAsKey(s->parent, e);
+        }
+
+        // If we got this far, the enum is not used
+        return false;
+    }
+
     std::string resolveComment(std::string comment) {
         if (size_t it = comment.find("codegen::verbatim"); it != std::string::npos) {
             const size_t l = "codegen::verbatim"sv.size();
@@ -236,6 +270,20 @@ namespace {
 
         return res;
     }
+
+    struct HeaderInfo {
+        bool needsArrayifyFallback = false;
+        bool needsMappingFallback = false;
+        bool needsBakeEnumFallback = false;
+        bool needsToStringFallback = false;
+        bool needsFromStringFallback = false;
+
+        bool needsAny() const {
+            return needsArrayifyFallback || needsMappingFallback ||
+                   needsBakeEnumFallback || needsToStringFallback ||
+                   needsFromStringFallback;
+        }
+    };
 } // namespace
 
 std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
@@ -485,19 +533,61 @@ std::string writeInnerEnumConverter(Enum* e) {
     return result;
 }
 
+std::string writeEnumConverterToString(const Enum* e) {
+    assert(e);
+    std::string res = std::format(R"(
+template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
+    switch (t) {{
+)",
+fqn(e, "::")
+);
+    for (EnumElement* elem : e->elements) {
+        res += std::format(
+            "        case {0}::{1}: return {2};\n",
+            fqn(e, "::"), elem->name, elem->attributes.key
+        );
+    }
+    res += R"(        default: throw "This default label is not necessary since the case labels are "
+                       "exhaustive, but not having it makes Visual Studio cranky";)";
+    res += "\n    }\n}\n";
+    return res;
+}
+
+std::string writeEnumConverterFromString(const Enum* e) {
+    assert(e);
+
+    std::string res = std::format(
+        "template <> [[maybe_unused]] {0} fromString<{0}>(std::string_view sv) {{\n",
+        fqn(e, "::")
+    );
+    for (EnumElement* elem : e->elements) {
+        res += std::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
+            elem->attributes.key, fqn(e, "::"), elem->name
+        );
+    }
+    res += "    throw std::runtime_error(std::format(\"Could not find value '{}' in enum\", sv));\n";
+    res += "}\n";
+    return res;
+}
+
+std::string writeEnumConverterBake(const Enum* e) {
+    return std::format(BakeEnum, fqn(e, "::"));
+}
+
 std::string writeStructConverter(Struct* s) {
     assert(s);
     std::string result;
     std::vector<std::string> writtenVariantConverters;
 
-    for (StackElement* e : s->children) {
-        assert(e);
-        if (e->type == StackElement::Type::Struct) {
-            result += writeStructConverter(static_cast<Struct*>(e));
+    for (StackElement* el : s->children) {
+        assert(el);
+        if (el->type == StackElement::Type::Struct) {
+            result += writeStructConverter(static_cast<Struct*>(el));
         }
 
-        if (e->type == StackElement::Type::Enum) {
-            result += writeInnerEnumConverter(static_cast<Enum*>(e));
+        if (el->type == StackElement::Type::Enum) {
+            Enum* e = static_cast<Enum*>(el);
+            result += writeInnerEnumConverter(e);
         }
     }
 
@@ -550,47 +640,8 @@ std::string emitWarningsForDocumentationLessTypes(Struct* s, std::string_view so
     return res;
 }
 
-std::string writeRootEnumConverter(Enum* e) {
-    assert(e);
 
-    std::string res;
-
-    // toString
-    res += std::format(R"(
-template <> [[maybe_unused]] std::string_view toString<{0}>({0} t) {{
-    switch (t) {{
-)",
-        fqn(e, "::")
-    );
-    for (EnumElement* elem : e->elements) {
-        res += std::format(
-            "        case {0}::{1}: return {2};\n",
-            fqn(e, "::"), elem->name, elem->attributes.key
-        );
-    }
-    res += R"(        default: throw "This default label is not necessary since the case labels are "
-                       "exhaustive, but not having it makes Visual Studio cranky";)";
-    res += "\n    }\n}\n";
-
-    // fromString
-    res += std::format(
-        "template <> [[maybe_unused]] {0} fromString<{0}>(std::string_view sv) {{\n",
-        fqn(e, "::")
-    );
-    for (EnumElement* elem : e->elements) {
-        res += std::format("    if (sv == {0}) {{ return {1}::{2}; }}\n",
-            elem->attributes.key, fqn(e, "::"), elem->name
-        );
-    }
-    res += "    throw std::runtime_error(\"Could not find value in enum\");\n";
-    res += "}\n";
-
-    res += std::format(BakeEnum, fqn(e, "::"));
-
-    return res;
-}
-
-std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallback) {
+std::string generateStructsResult(const Code& code, HeaderInfo& info) {
     // For Linux, we need to declare the functions in the following order or the overload
     // resolution picks the top fall back implentation and triggers a static_assert:
     // 1. <typename T> bakeTo(..., T*) { static_assert(false); } // fallback
@@ -606,6 +657,10 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     // the fall back.  However, the actual implementation needs to know about the custom
     // struct one or else *they* will trip the fall back in the implementation.
     // For ease of implementation, we are putting 3&4 before 2 instead
+
+    if (code.structs.empty()) {
+        return "";
+    }
 
     std::string result;
     result += "namespace codegen {\n\n";
@@ -633,15 +688,21 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     bool hasOptionalType = false;
     bool hasVectorType = false;
     bool hasArrayType = false;
-    bool hasMapType = false;
+    bool hasMapStringKeyType = false;
+    bool hasMapEnumKeyType = false;
     bool hasTupleType = false;
     for (const VariableType* t : types) {
         assert(t);
         hasOptionalType |= t->isOptionalType();
         hasVectorType |= t->isVectorType();
         hasArrayType |= t->isArrayType();
-        hasMapType |= t->isMapType();
         hasTupleType |= t->isTupleType();
+
+        if (t->isMapType()) {
+            const MapType* mt = static_cast<const MapType*>(t);
+            hasMapStringKeyType |= mt->hasStringKey();
+            hasMapEnumKeyType |= mt->hasEnumKey();
+        }
     }
 
     if (hasOptionalType) {
@@ -653,8 +714,12 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     if (hasArrayType) {
         result += BakeFunctionArrayDeclaration;
     }
-    if (hasMapType) {
-        result += BakeFunctionMapDeclaration;
+    if (hasMapStringKeyType) {
+        result += BakeFunctionMapStringKeyDeclaration;
+    }
+    if (hasMapEnumKeyType) {
+        info.needsFromStringFallback = true;
+        result += BakeFunctionMapEnumKeyDeclaration;
     }
     if (hasTupleType) {
         result += BakeFunctionTupleDeclaration;
@@ -679,8 +744,11 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     if (hasArrayType) {
         result += BakeFunctionArray;
     }
-    if (hasMapType) {
-        result += BakeFunctionMap;
+    if (hasMapStringKeyType) {
+        result += BakeFunctionMapStringKey;
+    }
+    if (hasMapEnumKeyType) {
+        result += BakeFunctionMapEnumKey;
     }
     if (hasTupleType) {
         result += BakeFunctionTuple;
@@ -702,10 +770,8 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
         result += "    return res;\n}\n";
 
         const std::vector<Enum*> enums = mappedEnums(*s);
-        if (!enums.empty() && !hasWrittenMappingFallback) {
-            result += MapFunctionFallback;
-            result += '\n';
-            hasWrittenMappingFallback = true;
+        if (!enums.empty()) {
+            info.needsMappingFallback = true;
         }
 
         for (Enum* e : enums) {
@@ -717,45 +783,62 @@ std::string generateStructsResult(const Code& code, bool& hasWrittenMappingFallb
     return result;
 }
 
-std::string generateEnumResult(const Code& code, bool& hasWrittenMappingFallback,
-                               bool& hasWrittenArrayFallback)
-{
+std::string generateEnumResult(const Code& code, HeaderInfo& info) {
     const std::vector<Enum*> enums = collectEnums(code);
 
-    // If there are no enums, we can bail out
-    if (enums.empty()) {
-        return "";
-    }
 
     std::string result;
     result += "namespace codegen {\n";
-    result += BakeEnumFallback;
-    result += '\n';
-    result += ToStringFallback;
-    result += '\n';
-    result += FromStringFallback;
-    result += '\n';
 
-
+    // First writing out the the enums defined at the root
     for (Enum* e : code.enums) {
-        result += writeRootEnumConverter(e);
+        result += writeEnumConverterToString(e);
+        info.needsToStringFallback = true;
+        result += writeEnumConverterFromString(e);
+        info.needsFromStringFallback = true;
+        result += writeEnumConverterBake(e);
+        info.needsBakeEnumFallback = true;
 
         if (!e->attributes.mappedTo.empty()) {
-            if (!hasWrittenMappingFallback) {
-                result += MapFunctionFallback;
-                result += '\n';
-                hasWrittenMappingFallback = true;
-            }
+            info.needsMappingFallback = true;
             result += enumToEnumMapping(e);
         }
 
         if (e->attributes.arrayify) {
-            if (!hasWrittenArrayFallback) {
-                result += ArrayifyFallback;
-                result += '\n';
-                hasWrittenArrayFallback = true;
-            }
+            info.needsArrayifyFallback = true;
             result += enumArrayify(e);
+        }
+    }
+
+    // Then there might be enums that are defined inside structs that are used as keys in
+    // maps. If that is the case, we also need to write out the fromString function for
+    // these; but _only_ if they are not also included in the list above so that we don't
+    // write out the fromString method twice
+    std::vector<const Enum*> writtenEnums;
+    for (Struct* s : code.structs) {
+        std::vector<const VariableType*> variables = usedTypes(*s);
+        for (const VariableType* vt : variables) {
+            if (!vt->isMapType()) {
+                continue;
+            }
+
+            const MapType* mt = static_cast<const MapType*>(vt);
+            if (!mt->hasEnumKey()) {
+                continue;
+            }
+
+            assert(mt->keyType->isCustomType());
+            CustomType* ct = static_cast<CustomType*>(mt->keyType);
+            assert(ct->type->type == StackElement::Type::Enum);
+            const Enum* e = static_cast<const Enum*>(ct->type);
+
+            auto it = std::find(code.enums.begin(), code.enums.end(), e);
+            auto it2 = std::find(writtenEnums.begin(), writtenEnums.end(), e);
+            if (it == code.enums.end() && it2 == writtenEnums.end()) {
+                result += writeEnumConverterFromString(e);
+                info.needsFromStringFallback = true;
+                writtenEnums.push_back(e);
+            }
         }
     }
 
@@ -1032,7 +1115,11 @@ std::string generateLuaFunction(Function* f) {
     return result;
 }
 
-std::string generateLuaWrapperResult(const Code& code) {
+std::string generateLuaWrapperResult(const Code& code, HeaderInfo&) {
+    if (code.luaWrapperFunctions.empty()) {
+        return "";
+    }
+
     std::string result;
 
     result += "namespace codegen {\n";
@@ -1089,26 +1176,40 @@ std::string generateResult(const Code& code) {
         !code.luaWrapperFunctions.empty()
     );
 
-    std::string result = std::string(FileHeader);
+    HeaderInfo info;
+    std::string structs = generateStructsResult(code, info);
+    std::string enums = generateEnumResult(code, info);
+    std::string luaWrapper = generateLuaWrapperResult(code, info);
 
-    bool hasWrittenMappingFallback = false;
-    bool hasWrittenArrayifyFallback = false;
-    if (!code.structs.empty()) {
-        result += generateStructsResult(code, hasWrittenMappingFallback);
+    std::string header;
+    if (info.needsAny()) {
+        header += "namespace codegen {\n";
+
+        if (info.needsArrayifyFallback) {
+            header += std::format("{}\n", ArrayifyFallback);
+        }
+        if (info.needsMappingFallback) {
+            header += std::format("{}\n", MapFunctionFallback);
+        }
+        if (info.needsBakeEnumFallback) {
+            header += std::format("{}\n", BakeEnumFallback);
+        }
+        if (info.needsToStringFallback) {
+            header += std::format("{}\n", ToStringFallback);
+        }
+        if (info.needsFromStringFallback) {
+            header += std::format("{}\n", FromStringFallback);
+        }
+        header += "} // namespace codegen\n";
     }
 
-    // We can't just check on empty code.enum since there might be enums hiding in structs
-    result += generateEnumResult(
-        code,
-        hasWrittenMappingFallback,
-        hasWrittenArrayifyFallback
+    // The reversal in the arguments here is on purpose. The alternative to this would be
+    // to first figure out whether we need to write the headers or not and that became
+    // quite cumbersome. So instead we now mark whenever someone needs it and we prepend
+    // it in this step
+    return std::format(
+        "{}{}{}{}{}", FileHeader, header, enums, structs, luaWrapper
     );
-
-    if (!code.luaWrapperFunctions.empty()) {
-        result += generateLuaWrapperResult(code);
-    }
-
-    return result;
 }
 
 std::string createClickableFileName(std::string filename) {

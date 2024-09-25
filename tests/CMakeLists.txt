@@ -88,6 +88,7 @@ target_sources(
     execution_structs/execution_structs_enummapping.cpp
     execution_structs/execution_structs_enums.cpp
     execution_structs/execution_structs_map.cpp
+    execution_structs/execution_structs_map_enum_key.cpp
     execution_structs/execution_structs_multiple.cpp
     execution_structs/execution_structs_optional_variant_vector.cpp
     execution_structs/execution_structs_other.cpp
