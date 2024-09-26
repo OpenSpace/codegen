@@ -87,6 +87,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 
     Struct* s = code.structs.front();
     REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
 
     REQUIRE(s->children.size() == 1);
     REQUIRE(s->children.front()->type == StackElement::Type::Enum);
@@ -114,80 +116,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     }
 
 
-    CHECK(s->name == "Parameters");
-    CHECK(s->attributes.dictionary == "Name");
-    REQUIRE(s->variables.size() == 1);
-    CHECK(s->variables[0]->name == "p");
-    CHECK(s->variables[0]->key == "\"P\"");
-
-    CHECK(s->variables[0]->attributes.annotation.empty());
-    CHECK(s->variables[0]->attributes.greater.empty());
-    CHECK(s->variables[0]->attributes.greaterequal.empty());
-    CHECK(s->variables[0]->attributes.inlist.empty());
-    CHECK(s->variables[0]->attributes.less.empty());
-    CHECK(s->variables[0]->attributes.lessequal.empty());
-    CHECK(s->variables[0]->attributes.notinrange.empty());
-    CHECK(s->variables[0]->attributes.reference.empty());
-    CHECK(s->variables[0]->attributes.unequal.empty());
-    CHECK(!s->variables[0]->attributes.isColor);
-    CHECK(!s->variables[0]->attributes.isDirectory);
-    CHECK(!s->variables[0]->attributes.isDateTime);
-    CHECK(!s->variables[0]->attributes.isIdentifier);
-    CHECK(!s->variables[0]->attributes.mustBeNotEmpty);
-    CHECK(!s->variables[0]->attributes.isPrivate);
-
-    const std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/Structs/Map: Enum Key", "[Parsing][Structs]") {
-    constexpr std::string_view Source = R"(
-struct [[codegen::Dictionary(Name)]] Parameters {
-    enum class KeyType {
-        Key1,
-        Key2,
-        Key3
-    };
-
-    std::map<KeyType, std::string> p;
-};)";
-
-    Code code = parse(Source);
-    REQUIRE(code.structs.size() == 1);
-    REQUIRE(code.enums.empty());
-    CHECK(code.luaWrapperFunctions.empty());
-
-    Struct* s = code.structs.front();
-    REQUIRE(s);
-
-    REQUIRE(s->children.size() == 1);
-    REQUIRE(s->children.front()->type == StackElement::Type::Enum);
-    Enum* e = static_cast<Enum*>(s->children.front());
-    REQUIRE(e);
-
-    CHECK(e->attributes.mappedTo.empty());
-    CHECK(!e->attributes.stringify);
-    CHECK(!e->attributes.arrayify);
-    REQUIRE(e->elements.size() == 3);
-    {
-        EnumElement* ee = e->elements[0];
-        REQUIRE(ee);
-        CHECK(ee->name == "Key1");
-    }
-    {
-        EnumElement* ee = e->elements[1];
-        REQUIRE(ee);
-        CHECK(ee->name == "Key2");
-    }
-    {
-        EnumElement* ee = e->elements[2];
-        REQUIRE(ee);
-        CHECK(ee->name == "Key3");
-    }
-
-
-    CHECK(s->name == "Parameters");
-    CHECK(s->attributes.dictionary == "Name");
     REQUIRE(s->variables.size() == 1);
     CHECK(s->variables[0]->name == "p");
     CHECK(s->variables[0]->key == "\"P\"");
@@ -240,6 +168,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
 
     Struct* s = code.structs.front();
     REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
 
     REQUIRE(s->children.size() == 2);
     {
@@ -293,8 +223,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         }
     }
 
-    CHECK(s->name == "Parameters");
-    CHECK(s->attributes.dictionary == "Name");
     REQUIRE(s->variables.size() == 4);
     {
         Variable* v = s->variables[0];
@@ -379,6 +307,86 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(!v->attributes.isIdentifier);
         CHECK(!v->attributes.mustBeNotEmpty);
         CHECK(!v->attributes.isPrivate);
+    }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
+
+TEST_CASE("Parsing/Structs/Map: Enum Key (Outer)", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(Name)]] Parameters {
+    enum class KeyType {
+        Key1,
+        Key2,
+        Key3
+    };
+
+    struct Inner {
+        std::map<KeyType, std::string> p;
+    };
+};)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    REQUIRE(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
+
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+    CHECK(s->name == "Parameters");
+    CHECK(s->attributes.dictionary == "Name");
+
+    REQUIRE(s->children.size() == 2);
+    {
+        REQUIRE(s->children[0]->type == StackElement::Type::Enum);
+        Enum* e = static_cast<Enum*>(s->children[0]);
+        REQUIRE(e);
+
+        CHECK(e->attributes.mappedTo.empty());
+        CHECK(!e->attributes.stringify);
+        CHECK(!e->attributes.arrayify);
+        REQUIRE(e->elements.size() == 3);
+        {
+            EnumElement* ee = e->elements[0];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key1");
+        }
+        {
+            EnumElement* ee = e->elements[1];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key2");
+        }
+        {
+            EnumElement* ee = e->elements[2];
+            REQUIRE(ee);
+            CHECK(ee->name == "Key3");
+        }
+    }
+    {
+        REQUIRE(s->children[1]->type == StackElement::Type::Struct);
+        Struct* ss = static_cast<Struct*>(s->children[1]);
+        REQUIRE(ss);
+
+        REQUIRE(ss->variables.size() == 1);
+        CHECK(ss->variables[0]->name == "p");
+        CHECK(ss->variables[0]->key == "\"P\"");
+
+        CHECK(ss->variables[0]->attributes.annotation.empty());
+        CHECK(ss->variables[0]->attributes.greater.empty());
+        CHECK(ss->variables[0]->attributes.greaterequal.empty());
+        CHECK(ss->variables[0]->attributes.inlist.empty());
+        CHECK(ss->variables[0]->attributes.less.empty());
+        CHECK(ss->variables[0]->attributes.lessequal.empty());
+        CHECK(ss->variables[0]->attributes.notinrange.empty());
+        CHECK(ss->variables[0]->attributes.reference.empty());
+        CHECK(ss->variables[0]->attributes.unequal.empty());
+        CHECK(!ss->variables[0]->attributes.isColor);
+        CHECK(!ss->variables[0]->attributes.isDirectory);
+        CHECK(!ss->variables[0]->attributes.isDateTime);
+        CHECK(!ss->variables[0]->attributes.isIdentifier);
+        CHECK(!ss->variables[0]->attributes.mustBeNotEmpty);
+        CHECK(!ss->variables[0]->attributes.isPrivate);
     }
 
     const std::string r = generateResult(code);

@@ -256,7 +256,7 @@ std::string fqn(const StackElement* s, std::string_view separator) {
     std::reverse(names.begin(), names.end());
 
     assert(
-        std::none_of(names.begin(), names.end(), std::mem_fn(&std::string_view::empty))
+        std::none_of(names.cbegin(), names.cend(), std::mem_fn(&std::string_view::empty))
     );
 
     return join(names, separator);
@@ -496,8 +496,6 @@ VariableType* parseType(std::string_view type, Struct* context) {
 bool MapType::hasStringKey() const {
     return (keyType->tag == VariableType::Tag::BasicType) &&
            (static_cast<BasicType*>(keyType)->type == BasicType::Type::String);
-
-
 }
 
 bool MapType::hasEnumKey() const {
