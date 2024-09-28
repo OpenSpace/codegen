@@ -589,7 +589,7 @@ TEST_CASE(
 )
 {
     constexpr std::string_view Source = R"(
-[[codegen::luawrap]] std::tuple<int, double> foo(){}
+[[codegen::luawrap]] std::tuple<int, double> foo() {}
 )";
 
     Code code = parse(Source);
