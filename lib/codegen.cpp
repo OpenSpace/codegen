@@ -346,12 +346,21 @@ std::string verifier(VariableType* type, const Variable& var, Struct* currentStr
     }
     else if (type->tag == VariableType::Tag::MapType) {
         MapType* mt = static_cast<MapType*>(type);
-        assert(mt->valueType->tag == VariableType::Tag::BasicType);
-        BasicType* valueType = static_cast<BasicType*>(mt->valueType);
-        std::string valueVerifier = verifierForType(valueType->type, var.attributes);
-        return std::format(
-            "new TableVerifier({{{{\"*\",new {}}}}})", valueVerifier
-        );
+        if (mt->valueType->tag == VariableType::Tag::BasicType) {
+            BasicType* valueType = static_cast<BasicType*>(mt->valueType);
+            std::string valueVerifier = verifierForType(valueType->type, var.attributes);
+            return std::format(
+                "new TableVerifier({{{{\"*\",new {}}}}})", valueVerifier
+            );
+        }
+        else {
+            std::string valueVerifier = verifier(mt->valueType, var, currentStruct);
+            // No `new` in this format string as the `verifier` function above will
+            // already have added that part
+            return std::format(
+                "new TableVerifier({{{{\"*\", {}}}}})", valueVerifier
+            );
+        }
     }
     else if (type->tag == VariableType::Tag::TupleType) {
         TupleType* tt = static_cast<TupleType*>(type);

@@ -49,6 +49,10 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         std::map<std::string, ghoul::Dictionary> referenceValueMap
             [[codegen::reference("abc")]];
 
+        // referenceValueVectorMap documentation
+        std::map<std::string, std::vector<ghoul::Dictionary>> referenceValueVectorMap
+            [[codegen::reference("abc")]];
+
         // referenceValuePrivate documentation
         ghoul::Dictionary referenceValuePrivate
             [[codegen::reference("abc"), codegen::private()]];
@@ -68,6 +72,11 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         // referenceValueMapPrivate documentation
         std::map<std::string, ghoul::Dictionary> referenceValueMapPrivate
             [[codegen::reference("abc"), codegen::private()]];
+
+        // referenceValueVectorMapPrivate documentation
+        std::map<std::string, std::vector<ghoul::Dictionary>> referenceValueVectorMapPrivate
+            [[codegen::reference("abc"), codegen::private()]];
+
 })";
 
     Code code = parse(Source);
@@ -78,7 +87,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     REQUIRE(s);
 
     CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 10);
+    REQUIRE(s->variables.size() == 12);
 
     {
         Variable* var = s->variables[0];
@@ -213,8 +222,35 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
         CHECK(!var->attributes.mustBeNotEmpty);
         CHECK(!var->attributes.isPrivate);
     }
+
     {
         Variable* var = s->variables[5];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueVectorMap");
+        CHECK(var->key == "\"ReferenceValueVectorMap\"");
+        CHECK(generateTypename(var->type) == "std::map<std::string, std::vector<ghoul::Dictionary>>");
+        CHECK(var->comment == "referenceValueVectorMap documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[6];
         REQUIRE(var);
         CHECK(var->name == "referenceValuePrivate");
         CHECK(var->key == "\"ReferenceValuePrivate\"");
@@ -241,7 +277,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     }
 
     {
-        Variable* var = s->variables[6];
+        Variable* var = s->variables[7];
         REQUIRE(var);
         CHECK(var->name == "referenceValueOptionalPrivate");
         CHECK(var->key == "\"ReferenceValueOptionalPrivate\"");
@@ -268,7 +304,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     }
 
     {
-        Variable* var = s->variables[7];
+        Variable* var = s->variables[8];
         REQUIRE(var);
         CHECK(var->name == "referenceValueVectorPrivate");
         CHECK(var->key == "\"ReferenceValueVectorPrivate\"");
@@ -295,7 +331,7 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     }
 
     {
-        Variable* var = s->variables[8];
+        Variable* var = s->variables[9];
         REQUIRE(var);
         CHECK(var->name == "referenceValueOptionalVectorPrivate");
         CHECK(var->key == "\"ReferenceValueOptionalVectorPrivate\"");
@@ -322,12 +358,38 @@ TEST_CASE("Parsing/Structs/Attribute/Dictionary", "[Parsing][Structs]") {
     }
 
     {
-        Variable* var = s->variables[9];
+        Variable* var = s->variables[10];
         REQUIRE(var);
         CHECK(var->name == "referenceValueMapPrivate");
         CHECK(var->key == "\"ReferenceValueMapPrivate\"");
         CHECK(generateTypename(var->type) == "std::map<std::string, ghoul::Dictionary>");
         CHECK(var->comment == "referenceValueMapPrivate documentation");
+        CHECK(var->attributes.reference == "\"abc\"");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var);
+        CHECK(var->name == "referenceValueVectorMapPrivate");
+        CHECK(var->key == "\"ReferenceValueVectorMapPrivate\"");
+        CHECK(generateTypename(var->type) == "std::map<std::string, std::vector<ghoul::Dictionary>>");
+        CHECK(var->comment == "referenceValueVectorMapPrivate documentation");
         CHECK(var->attributes.reference == "\"abc\"");
 
         CHECK(var->attributes.annotation.empty());

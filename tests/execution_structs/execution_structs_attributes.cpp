@@ -750,6 +750,21 @@ namespace {
         std::optional<std::vector<std::map<std::string, ghoul::Dictionary>>>
             optionalVectorDictValueMap [[codegen::reference("abc")]];
 
+        // dictValueVectorMap documentation
+        std::map<std::string, std::vector<ghoul::Dictionary>> dictValueVectorMap
+            [[codegen::reference("abc")]];
+
+        // vectorDictValueVectorMap documentation
+        std::vector<std::map<std::string, std::vector<ghoul::Dictionary>>> vectorDictValueVectorMap
+            [[codegen::reference("abc")]];
+
+        // optionalDictValueVectorMap documentation
+        std::optional<std::map<std::string, std::vector<ghoul::Dictionary>>> optionalDictValueVectorMap
+            [[codegen::reference("abc")]];
+
+        // optionalVectorDictValueVectorMap documentation
+        std::optional<std::vector<std::map<std::string, std::vector<ghoul::Dictionary>>>>
+            optionalVectorDictValueVectorMap [[codegen::reference("abc")]];
 
         // annotation documentation
         std::string annotation [[codegen::annotation("abc")]];
@@ -1515,6 +1530,71 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
         }
         d.setValue("OptionalVectorDictValueMap", e);
     }
+    {
+        ghoul::Dictionary e;
+        e.setValue("a", ghoul::Dictionary());
+        e.setValue("b", ghoul::Dictionary());
+        e.setValue("c", ghoul::Dictionary());
+        d.setValue("DictValueVectorMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("1", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("2", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("3", f);
+        }
+        d.setValue("VectorDictValueVectorMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("a", ghoul::Dictionary());
+        e.setValue("b", ghoul::Dictionary());
+        e.setValue("c", ghoul::Dictionary());
+        d.setValue("OptionalDictValueVectorMap", e);
+    }
+    {
+        ghoul::Dictionary e;
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("1", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("2", f);
+        }
+        {
+            ghoul::Dictionary f;
+            f.setValue("a", ghoul::Dictionary());
+            f.setValue("b", ghoul::Dictionary());
+            f.setValue("c", ghoul::Dictionary());
+            e.setValue("3", f);
+        }
+        d.setValue("OptionalVectorDictValueVectorMap", e);
+    }
+
 
     d.setValue("Annotation", "annotation_abc"s);
     d.setValue("AnnotationOptional", "annotation_def"s);
@@ -2130,7 +2210,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 227);
+    REQUIRE(doc.entries.size() == 231);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -5050,6 +5130,113 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
     }
     {
         const DocumentationEntry& e = doc.entries[200];
+        CHECK(e.key == "DictValueVectorMap");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "dictValueVectorMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+        );
+        REQUIRE(u);
+        CHECK(u->identifier == "abc");
+    }
+    {
+        const DocumentationEntry& e = doc.entries[201];
+        CHECK(e.key == "VectorDictValueVectorMap");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "vectorDictValueVectorMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        TableVerifier* u = dynamic_cast<TableVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        REQUIRE(u->documentations.size() == 1);
+        CHECK(u->documentations[0].key == "*");
+        CHECK(u->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* x = dynamic_cast<ReferencingVerifier*>(
+            u->documentations[0].verifier.get()
+        );
+        REQUIRE(x);
+        CHECK(x->identifier == "abc");
+    }
+    {
+        const DocumentationEntry& e = doc.entries[202];
+        CHECK(e.key == "OptionalDictValueVectorMap");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "optionalDictValueVectorMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
+            w->documentations[0].verifier.get()
+            );
+        REQUIRE(u);
+        CHECK(u->identifier == "abc");
+    }
+    {
+        const DocumentationEntry& e = doc.entries[203];
+        CHECK(e.key == "OptionalVectorDictValueVectorMap");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "optionalVectorDictValueVectorMap documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "*");
+        CHECK(v->documentations[0].verifier->type() == "Table");
+        TableVerifier* w = dynamic_cast<TableVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        REQUIRE(w->documentations.size() == 1);
+        CHECK(w->documentations[0].key == "*");
+        CHECK(w->documentations[0].verifier->type() == "Table");
+        TableVerifier* u = dynamic_cast<TableVerifier*>(w->documentations[0].verifier.get());
+        REQUIRE(u);
+        REQUIRE(u->documentations.size() == 1);
+        CHECK(u->documentations[0].key == "*");
+        CHECK(u->documentations[0].verifier->type() == "Table");
+        ReferencingVerifier* x = dynamic_cast<ReferencingVerifier*>(
+            u->documentations[0].verifier.get()
+        );
+        REQUIRE(x);
+        CHECK(x->identifier == "abc");
+    }
+
+    {
+        const DocumentationEntry& e = doc.entries[204];
         CHECK(e.key == "Annotation");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5061,7 +5248,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->annotation == "abc");
     }
     {
-        const DocumentationEntry& e = doc.entries[201];
+        const DocumentationEntry& e = doc.entries[205];
         CHECK(e.key == "AnnotationOptional");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5073,7 +5260,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->annotation == "def");
     }
     {
-        const DocumentationEntry& e = doc.entries[202];
+        const DocumentationEntry& e = doc.entries[206];
         CHECK(e.key == "AnnotationVector");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5089,7 +5276,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->annotation == "ghi");
     }
     {
-        const DocumentationEntry& e = doc.entries[203];
+        const DocumentationEntry& e = doc.entries[207];
         CHECK(e.key == "Dcolor3Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5098,7 +5285,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[204];
+        const DocumentationEntry& e = doc.entries[208];
         CHECK(e.key == "OptionalDcolor3Value");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5107,7 +5294,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[205];
+        const DocumentationEntry& e = doc.entries[209];
         CHECK(e.key == "VectorDcolor3Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5120,7 +5307,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[206];
+        const DocumentationEntry& e = doc.entries[210];
         CHECK(e.key == "Color3Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5129,7 +5316,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[207];
+        const DocumentationEntry& e = doc.entries[211];
         CHECK(e.key == "OptionalColor3Value");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5138,7 +5325,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[208];
+        const DocumentationEntry& e = doc.entries[212];
         CHECK(e.key == "VectorColor3Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5151,7 +5338,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color3Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[209];
+        const DocumentationEntry& e = doc.entries[213];
         CHECK(e.key == "Dcolor4Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5160,7 +5347,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[210];
+        const DocumentationEntry& e = doc.entries[214];
         CHECK(e.key == "OptionalDcolor4Value");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5169,7 +5356,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[211];
+        const DocumentationEntry& e = doc.entries[215];
         CHECK(e.key == "VectorDcolor4Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5182,7 +5369,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[212];
+        const DocumentationEntry& e = doc.entries[216];
         CHECK(e.key == "Color4Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5191,7 +5378,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[213];
+        const DocumentationEntry& e = doc.entries[217];
         CHECK(e.key == "OptionalColor4Value");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5200,7 +5387,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[214];
+        const DocumentationEntry& e = doc.entries[218];
         CHECK(e.key == "VectorColor4Value");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5213,7 +5400,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<Color4Verifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[215];
+        const DocumentationEntry& e = doc.entries[219];
         CHECK(e.key == "DateTimeValue");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5222,7 +5409,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[216];
+        const DocumentationEntry& e = doc.entries[220];
         CHECK(e.key == "OptionalDateTimeValue");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5231,7 +5418,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[217];
+        const DocumentationEntry& e = doc.entries[221];
         CHECK(e.key == "VectorDateTimeValue");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5244,7 +5431,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[218];
+        const DocumentationEntry& e = doc.entries[222];
         CHECK(e.key == "OptionalVectorDateTimeValue");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5258,7 +5445,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<DateTimeVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[219];
+        const DocumentationEntry& e = doc.entries[223];
         CHECK(e.key == "IdentifierValue");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5267,7 +5454,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[220];
+        const DocumentationEntry& e = doc.entries[224];
         CHECK(e.key == "OptionalIdentifierValue");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5276,7 +5463,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[221];
+        const DocumentationEntry& e = doc.entries[225];
         CHECK(e.key == "VectorIdentifierValue");
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
@@ -5289,7 +5476,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[222];
+        const DocumentationEntry& e = doc.entries[226];
         CHECK(e.key == "OptionalVectorIdentifierValue");
         CHECK(e.optional);
         CHECK(!e.isPrivate);
@@ -5303,7 +5490,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<IdentifierVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[223];
+        const DocumentationEntry& e = doc.entries[227];
         CHECK(e.key == "PrivateValue");
         CHECK(!e.optional);
         CHECK(e.isPrivate);
@@ -5312,7 +5499,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[224];
+        const DocumentationEntry& e = doc.entries[228];
         CHECK(e.key == "OptionalPrivateValue");
         CHECK(e.optional);
         CHECK(e.isPrivate);
@@ -5321,7 +5508,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<StringVerifier*>(e.verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[225];
+        const DocumentationEntry& e = doc.entries[229];
         CHECK(e.key == "VectorPrivateValue");
         CHECK(!e.optional);
         CHECK(e.isPrivate);
@@ -5334,7 +5521,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
     }
     {
-        const DocumentationEntry& e = doc.entries[226];
+        const DocumentationEntry& e = doc.entries[230];
         CHECK(e.key == "OptionalVectorPrivateValue");
         CHECK(e.optional);
         CHECK(e.isPrivate);
