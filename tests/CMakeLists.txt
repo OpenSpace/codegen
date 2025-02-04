@@ -97,6 +97,7 @@ target_sources(
     execution_structs/execution_structs_substructs.cpp
     execution_structs/execution_structs_tuple.cpp
     execution_structs/execution_structs_variant.cpp
+    execution_structs/execution_structs_variant_filesystem.cpp
 
     parsing_enums/parsing_enums_arrayify.cpp
     parsing_enums/parsing_enums_basic.cpp

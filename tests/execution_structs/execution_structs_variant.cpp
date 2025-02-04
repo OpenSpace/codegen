@@ -27,6 +27,8 @@
 #include <openspace/documentation/documentation.h>
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
+#include <filesystem>
+#include <fstream>
 #include <optional>
 #include <variant>
 #include <vector>
@@ -89,12 +91,35 @@ namespace {
         };
         // optional variant enum float documentation
         std::optional<std::variant<B, float>> optionalVariantEnumFloat;
+
+        // variant path vector path documentation
+        std::variant<
+            std::filesystem::path, std::vector<std::filesystem::path>
+        > variantPath;
+
+        // variant vector path path documentation
+        std::variant<
+            std::vector<std::filesystem::path>, std::filesystem::path
+        > variantPath2;
     };
 #include "execution_structs_variant_codegen.cpp"
 } // namespace
 
 TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
+
+    const std::filesystem::path path = std::filesystem::temp_directory_path();
+    std::filesystem::path tmpFile = (path / "codegen_execution_variants.txt");
+    {
+        std::ofstream f(tmpFile);
+        f << "unit test";
+    }
+
+    std::filesystem::path tmpFile2 = (path / "codegen_execution_variants_2.txt");
+    {
+        std::ofstream f(tmpFile2);
+        f << "unit test";
+    }
 
     {
         ghoul::Dictionary d1;
@@ -115,6 +140,13 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         d1.setValue("MultipleVariantA2", 2.0);
         d1.setValue("VariantEnumFloat", "Value2"s);
         d1.setValue("OptionalVariantEnumFloat", "Value2"s);
+        d1.setValue("VariantPath", tmpFile);
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", tmpFile);
+            e.setValue("2", tmpFile2);
+            d1.setValue("VariantPath2", e);
+        }
 
         const Parameters p1 = codegen::bake<Parameters>(d1);
         CHECK(std::get<bool>(p1.boolDoubleValue) == false);
@@ -148,6 +180,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         CHECK(
             std::get<Parameters::B>(*p1.optionalVariantEnumFloat) ==
             Parameters::B::Value2
+        );
+        REQUIRE(std::holds_alternative<std::filesystem::path>(p1.variantPath));
+        CHECK(std::get<std::filesystem::path>(p1.variantPath) == tmpFile);
+        REQUIRE(
+            std::holds_alternative<std::vector<std::filesystem::path>>(p1.variantPath2)
+        );
+        REQUIRE(
+            std::get<std::vector<std::filesystem::path>>(p1.variantPath2).size() == 2
+        );
+        CHECK(
+            std::get<std::vector<std::filesystem::path>>(p1.variantPath2)[0] == tmpFile
+        );
+        CHECK(
+            std::get<std::vector<std::filesystem::path>>(p1.variantPath2)[1] == tmpFile2
         );
     }
 
@@ -189,6 +235,13 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         d2.setValue("MultipleVariantA2", "a"s);
         d2.setValue("VariantEnumFloat", 2.0);
         d2.setValue("OptionalVariantEnumFloat", 2.0);
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", tmpFile);
+            e.setValue("2", tmpFile2);
+            d2.setValue("VariantPath", e);
+        }
+        d2.setValue("VariantPath2", tmpFile);
 
         const Parameters p2 = codegen::bake<Parameters>(d2);
         CHECK(std::get<double>(p2.boolDoubleValue) == 6.0);
@@ -228,6 +281,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         REQUIRE(p2.optionalVariantEnumFloat.has_value());
         REQUIRE(std::holds_alternative<float>(*p2.optionalVariantEnumFloat));
         CHECK(std::get<float>(*p2.optionalVariantEnumFloat) == 2.f);
+        REQUIRE(
+            std::holds_alternative<std::vector<std::filesystem::path>>(p2.variantPath)
+        );
+        REQUIRE(
+            std::get<std::vector<std::filesystem::path>>(p2.variantPath).size() == 2
+        );
+        CHECK(
+            std::get<std::vector<std::filesystem::path>>(p2.variantPath)[0] == tmpFile
+        );
+        CHECK(
+            std::get<std::vector<std::filesystem::path>>(p2.variantPath)[1] == tmpFile2
+        );
+        REQUIRE(std::holds_alternative<std::filesystem::path>(p2.variantPath2));
+        CHECK(std::get<std::filesystem::path>(p2.variantPath2) == tmpFile);
     }
 
     {
@@ -249,6 +316,13 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         d3.setValue("MultipleVariantA2", 1.0);
         d3.setValue("VariantEnumFloat", "Value1"s);
         d3.setValue("OptionalVariantEnumFloat", "Value1"s);
+        d3.setValue("VariantPath", tmpFile);
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", tmpFile);
+            e.setValue("2", tmpFile2);
+            d3.setValue("VariantPath2", e);
+        }
 
         const Parameters p3 = codegen::bake<Parameters>(d3);
         CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
@@ -311,7 +385,13 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         d4.setValue("MultipleVariantA2", "ghi"s);
         d4.setValue("VariantEnumFloat", 5.0);
         d4.setValue("OptionalVariantEnumFloat", 5.0);
-
+        d4.setValue("VariantPath", tmpFile);
+        {
+            ghoul::Dictionary e;
+            e.setValue("1", tmpFile);
+            e.setValue("2", tmpFile2);
+            d4.setValue("VariantPath2", e);
+        }
 
         const Parameters p4 = codegen::bake<Parameters>(d4);
         CHECK(std::get<double>(p4.boolDoubleValue) == 20);
@@ -357,7 +437,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 15);
+    REQUIRE(doc.entries.size() == 17);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
@@ -654,5 +734,45 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(w->values == std::vector<std::string>{ "Value1", "Value2", "Value3" });
         CHECK(v->values[1]->type() == "Double");
         CHECK(dynamic_cast<DoubleVerifier*>(v->values[1].get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[15];
+        CHECK(e.key == "VariantPath");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "variant path vector path documentation");
+        CHECK(e.verifier->type() == "File, or Table");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(v->values[0].get());
+        REQUIRE(w);
+        CHECK(v->values[1]->type() == "Table");
+        TableVerifier* w2 = dynamic_cast<TableVerifier*>(v->values[1].get());
+        REQUIRE(w2->documentations.size() == 1);
+        CHECK(w2->documentations[0].key == "*");
+        CHECK(w2->documentations[0].verifier->type() == "File");
+        CHECK(dynamic_cast<FileVerifier*>(w2->documentations[0].verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[16];
+        CHECK(e.key == "VariantPath2");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "variant vector path path documentation");
+        CHECK(e.verifier->type() == "Table, or File");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "Table");
+        TableVerifier* w2 = dynamic_cast<TableVerifier*>(v->values[0].get());
+        REQUIRE(w2->documentations.size() == 1);
+        CHECK(w2->documentations[0].key == "*");
+        CHECK(w2->documentations[0].verifier->type() == "File");
+        CHECK(dynamic_cast<FileVerifier*>(w2->documentations[0].verifier.get()));
+        CHECK(v->values[1]->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(v->values[1].get());
+        REQUIRE(w);
     }
 }

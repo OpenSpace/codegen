@@ -75,7 +75,7 @@ namespace {
     constexpr std::string_view VariantConverterDouble = "   if (d.hasValue<double>(key)) { double v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterFloat = "   if (d.hasValue<double>(key)) { float v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterString = "   if (d.hasValue<std::string>(key)) { std::string v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
-    constexpr std::string_view VariantConverterPath = "   if (d.hasValue<std::string>(key)) { std::string v; bakeTo(d, key, &v); *val = std::filesystem::path(v); return; }\n";
+    constexpr std::string_view VariantConverterPath = "   if (d.hasValue<std::string>(key)) { std::filesystem::path v; bakeTo(d, key, &v); *val = v; return; }\n";
     constexpr std::string_view VariantConverterIVec2 = "   if (d.hasValue<glm::dvec2>(key)) { glm::ivec2 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterIVec3 = "   if (d.hasValue<glm::dvec3>(key)) { glm::ivec3 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";
     constexpr std::string_view VariantConverterIVec4 = "   if (d.hasValue<glm::dvec4>(key)) { glm::ivec4 v; bakeTo(d, key, &v); *val = std::move(v); return; }\n";

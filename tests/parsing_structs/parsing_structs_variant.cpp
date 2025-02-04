@@ -500,3 +500,51 @@ struct [[codegen::Dictionary(D)]] P {
         CHECK(!var->attributes.isPrivate);
     }
 }
+
+TEST_CASE("Parsing/Structs/Variant:  Variant Path and Paths", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(D)]] P {
+    // comment
+    std::variant<std::filesystem::path, std::vector<std::filesystem::path>> a;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    CHECK(code.enums.empty());
+    CHECK(code.luaWrapperFunctions.empty());
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    REQUIRE(s->variables.size() == 1);
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(
+            generateTypename(var->type) ==
+            "std::variant<std::filesystem::path, std::vector<std::filesystem::path>>"
+        );
+        CHECK(var->comment == "comment");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    const std::string r = generateResult(code);
+    CHECK(!r.empty());
+}
