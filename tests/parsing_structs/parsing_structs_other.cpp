@@ -1423,3 +1423,56 @@ Some more details for the struct)";
         CHECK(!s->variables[0]->attributes.isPrivate);
     }
 }
+
+TEST_CASE("Parsing: Empty Struct", "[Parsing][Misc]") {
+    constexpr std::string_view Source = R"(
+// Struct A with empty line
+struct [[codegen::Dictionary(A)]] ParamA {
+
+};
+
+// Struct B without empty line
+struct [[codegen::Dictionary(B)]] ParamB {
+};
+
+// Struct C on same line
+struct [[codegen::Dictionary(C)]] ParamC {};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 3);
+
+    {
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+        CHECK(s->name == "ParamA");
+        CHECK(s->comment == "Struct A with empty line");
+        CHECK(s->attributes.dictionary == "A");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        CHECK(s->variables.empty());
+    }
+    {
+        Struct* s = code.structs[1];
+        REQUIRE(s);
+        CHECK(s->name == "ParamB");
+        CHECK(s->comment == "Struct B without empty line");
+        CHECK(s->attributes.dictionary == "B");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        CHECK(s->variables.empty());
+    }
+    {
+        Struct* s = code.structs[2];
+        REQUIRE(s);
+        CHECK(s->name == "ParamC");
+        CHECK(s->comment == "Struct C on same line");
+        CHECK(s->attributes.dictionary == "C");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        CHECK(s->variables.empty());
+    }
+}

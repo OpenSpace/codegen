@@ -78,6 +78,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -1045,6 +1051,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -2012,6 +2024,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -2980,6 +2998,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 38);
     {
         Variable* var = s->variables[0];
@@ -3987,6 +4011,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 76);
     {
         Variable* var = s->variables[0];
@@ -5906,6 +5936,12 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 76);
     {
         Variable* var = s->variables[0];
@@ -7749,6 +7785,13 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(code.enums.empty());
     Struct* s = code.structs.front();
     REQUIRE(s);
+
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
 
     REQUIRE(s->variables.size() == 1);
     REQUIRE(s->variables[0]);

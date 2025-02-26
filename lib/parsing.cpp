@@ -818,7 +818,7 @@ std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
                 structBuffer += line;
                 structBuffer += " ";
                 // Check if we have a continuation going on
-                if (line.back() != '{') {
+                if (line.find('{') == std::string_view::npos) {
                     continue;
                 }
 

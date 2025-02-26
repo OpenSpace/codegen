@@ -46,6 +46,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 2);
     {
         Variable* var = s->variables[0];
@@ -116,6 +122,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];
@@ -161,6 +173,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 3);
     {
         Variable* var = s->variables[0];
@@ -254,6 +272,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 3);
     {
         Variable* var = s->variables[0];
@@ -354,6 +378,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 6);
     {
         Variable* var = s->variables[0];
@@ -516,6 +546,12 @@ struct [[codegen::Dictionary(D)]] P {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];

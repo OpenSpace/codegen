@@ -107,9 +107,6 @@ TEST_CASE("Parsing/Structs/Attributes/Vec4") {
         std::vector<glm::vec4> unequalValueVec4Vector
             [[codegen::unequal(glm::vec4(1.f))]];
 
-
-
-
         // inRangeValueVec4Private documentation
         glm::vec4 inRangeValueVec4Private [[codegen::inrange(glm::vec4(1.f), glm::vec4(2.f)), codegen::private()]];
 
@@ -194,6 +191,11 @@ TEST_CASE("Parsing/Structs/Attributes/Vec4") {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Attributes");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
     CHECK(s->children.empty());
     REQUIRE(s->variables.size() == 42);
 

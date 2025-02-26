@@ -43,6 +43,14 @@ TEST_CASE("Parsing Attribute: Multiple Attributes (success)", "[structs][parsing
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.empty());
     Struct* s = code.structs.front();
+
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "MultipleAttributes");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
+
     REQUIRE(s->variables.size() == 2);
 
     {

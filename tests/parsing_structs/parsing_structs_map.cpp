@@ -43,7 +43,11 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->children.empty());
+    CHECK(s->parent == nullptr);
+    CHECK(s->children.empty());
+
     REQUIRE(s->variables.size() == 1);
     CHECK(s->variables[0]->name == "p");
     CHECK(s->variables[0]->key == "\"P\"");
@@ -89,6 +93,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
 
     REQUIRE(s->children.size() == 1);
     REQUIRE(s->children.front()->type == StackElement::Type::Enum);
@@ -170,6 +176,8 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
 
     REQUIRE(s->children.size() == 2);
     {
@@ -336,6 +344,9 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    CHECK(s->variables.empty());
 
     REQUIRE(s->children.size() == 2);
     {

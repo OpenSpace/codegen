@@ -199,6 +199,12 @@ struct [[codegen::Dictionary(Multiline)]] Parameters {
     Struct* s = code.structs.front();
     REQUIRE(s);
 
+    CHECK(s->name == "Parameters");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "Multiline");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->children.size() == 16);
     {
         StackElement* se = s->children[0];

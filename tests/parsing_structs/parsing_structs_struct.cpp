@@ -41,7 +41,9 @@ TEST_CASE("Parsing/Structs/Struct:  Minimal", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
@@ -62,6 +64,8 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive no parameter", "[Parsing][Struc
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
     CHECK(s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
@@ -81,6 +85,8 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive true parameter", "[Parsing][Str
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
     CHECK(s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
@@ -100,6 +106,8 @@ TEST_CASE("Parsing/Structs/Struct:  NoExhaustive false parameter", "[Parsing][St
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
     CHECK(!s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
     CHECK(s->children.empty());
     CHECK(s->variables.empty());
 
@@ -120,8 +128,11 @@ struct A {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->variables.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
 
     REQUIRE(s->children.size() == 1);
     {
@@ -154,8 +165,10 @@ TEST_CASE("Parsing/Structs/Struct:  Double Substruct", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->variables.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
 
     REQUIRE(s->children.size() == 2);
     {
@@ -198,8 +211,11 @@ TEST_CASE("Parsing/Structs/Struct:  Variable", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->children.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->variables.size() == 1);
     {
 
@@ -230,8 +246,11 @@ TEST_CASE("Parsing/Structs/Struct:  Double Variable", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->children.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->variables.size() == 2);
     {
         Variable* var = s->variables[0];
@@ -266,8 +285,11 @@ TEST_CASE("Parsing/Structs/Struct:  Empty Enum", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->variables.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
@@ -297,8 +319,11 @@ TEST_CASE("Parsing/Structs/Struct:  Enum", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->variables.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
@@ -332,8 +357,11 @@ TEST_CASE("Parsing/Structs/Struct:  Enum Key Attribute", "[Parsing][Structs]") {
     REQUIRE(s);
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Name");
-    //CHECK(!s->attributes.noExhaustive);
+    CHECK(s->attributes.noExhaustive);
     CHECK(s->variables.empty());
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->children.size() == 1);
     {
         StackElement* e = s->children[0];
@@ -370,6 +398,9 @@ Parameters
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Dictionary");
     CHECK(!s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];
@@ -414,6 +445,9 @@ Parameters
     CHECK(s->name == "Parameters");
     CHECK(s->attributes.dictionary == "Dictionary");
     CHECK(!s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
+
     REQUIRE(s->variables.size() == 1);
     {
         Variable* var = s->variables[0];
@@ -444,6 +478,12 @@ struct [[codegen::Dictionary(D)]] P {
     CHECK(code.structs.size() == 1);
     CHECK(code.enums.empty());
     Struct* s = code.structs.front();
+
+    CHECK(s->name == "P");
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->comment.empty());
+    CHECK(s->parent == nullptr);
 
     REQUIRE(s->children.size() == 1);
     CHECK(s->children[0]->type == StackElement::Type::Struct);

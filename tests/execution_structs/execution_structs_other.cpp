@@ -195,6 +195,19 @@ namespace {
             std::string
         > tupleWithLineBreak8;
     };
+
+    // Struct A with empty line
+    struct [[codegen::Dictionary(A)]] ParamA {
+
+    };
+
+    // Struct B without empty line
+    struct [[codegen::Dictionary(B)]] ParamB {
+    };
+
+    // Struct C on same line
+    struct [[codegen::Dictionary(C)]] ParamC {};
+
 #include "execution_structs_other_codegen.cpp"
 } // namespace
 
