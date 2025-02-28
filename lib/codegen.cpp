@@ -177,40 +177,6 @@ namespace {
         return res;
     }
 
-    bool anyMapUsesEnumAsKey(Struct* s, const Enum* e) {
-        assert(s);
-        assert(e);
-
-        // First check our own variables
-        const std::vector<const VariableType*> types = usedTypes(*s);
-        for (const VariableType* t : types) {
-            if (!t->isMapType()) {
-                continue;
-            }
-
-            const MapType* mt = static_cast<const MapType*>(t);
-            if (!mt->hasEnumKey()) {
-                continue;
-            }
-
-            assert(mt->keyType->isCustomType());
-            CustomType* ct = static_cast<CustomType*>(mt->keyType);
-            assert(ct->type->type == StackElement::Type::Enum);
-            const Enum* ee = static_cast<const Enum*>(ct->type);
-            if (ee == e) {
-                return true;
-            }
-        }
-
-        // Then iterate up to the parent if it exists
-        if (s->parent) {
-            return anyMapUsesEnumAsKey(s->parent, e);
-        }
-
-        // If we got this far, the enum is not used
-        return false;
-    }
-
     std::string resolveComment(std::string comment) {
         if (size_t it = comment.find("codegen::verbatim"); it != std::string::npos) {
             const size_t l = "codegen::verbatim"sv.size();
