@@ -42,7 +42,9 @@ target_sources(
 )
 
 target_include_directories(codegen-lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_features(codegen-lib PUBLIC cxx_std_23)
+# Switching to cxx_std_23 triggers a bug in Clang17
+# https://github.com/llvm/llvm-project/issues/61415
+target_compile_features(codegen-lib PUBLIC cxx_std_20)
 
 set(MSVC_WARNINGS
   "/MP"       # Multi-threading support
