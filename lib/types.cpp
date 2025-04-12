@@ -57,15 +57,15 @@ namespace {
         }
         return res;
     }
+
+    bool operator==(const StackElement& lhs, const StackElement& rhs) {
+        return lhs.type == rhs.type && lhs.name == rhs.name &&
+            lhs.comment == rhs.comment && lhs.parent == rhs.parent;
+    }
 } // namespace
 
 CodegenError::CodegenError(const std::string& e) : std::runtime_error(e) {}
 CodegenError::operator std::string() const noexcept { return what(); }
-
-bool operator==(const StackElement& lhs, const StackElement& rhs) {
-    return lhs.type == rhs.type && lhs.name == rhs.name &&
-           lhs.comment == rhs.comment && lhs.parent == rhs.parent;
-}
 
 bool VariableType::isBasicType() const { return tag == Tag::BasicType; }
 bool VariableType::isPointerType() const { return tag == Tag::PointerType; }
@@ -543,236 +543,240 @@ std::string generateTypename(BasicType::Type type) {
     }
 }
 
-std::string generateLuaExtractionTypename(BasicType::Type type) {
-    return generateTypename(type);
-}
+namespace {
 
-std::string generateDescriptiveTypename(BasicType::Type type) {
-    switch (type) {
-        case BasicType::Type::Bool:       return "Boolean";
-        case BasicType::Type::Int:        return "Integer";
-        case BasicType::Type::Double:     return "Number";
-        case BasicType::Type::Float:      return "Number";
-        case BasicType::Type::String:     return "String";
-        case BasicType::Type::Path:       return "Path";
-        case BasicType::Type::Ivec2:      return "ivec2";
-        case BasicType::Type::Ivec3:      return "ivec3";
-        case BasicType::Type::Ivec4:      return "ivec4";
-        case BasicType::Type::Dvec2:      return "vec2";
-        case BasicType::Type::Dvec3:      return "vec3";
-        case BasicType::Type::Dvec4:      return "vec4";
-        case BasicType::Type::Vec2:       return "vec2";
-        case BasicType::Type::Vec3:       return "vec3";
-        case BasicType::Type::Vec4:       return "vec4";
-        case BasicType::Type::Mat2x2:     return "mat2x2";
-        case BasicType::Type::Mat2x3:     return "mat2x3";
-        case BasicType::Type::Mat2x4:     return "mat2x4";
-        case BasicType::Type::Mat3x2:     return "mat3x2";
-        case BasicType::Type::Mat3x3:     return "mat3x3";
-        case BasicType::Type::Mat3x4:     return "mat3x4";
-        case BasicType::Type::Mat4x2:     return "mat4x2";
-        case BasicType::Type::Mat4x3:     return "mat4x3";
-        case BasicType::Type::Mat4x4:     return "mat4x4";
-        case BasicType::Type::DMat2x2:    return "mat2x2";
-        case BasicType::Type::DMat2x3:    return "mat2x3";
-        case BasicType::Type::DMat2x4:    return "mat2x4";
-        case BasicType::Type::DMat3x2:    return "mat3x2";
-        case BasicType::Type::DMat3x3:    return "mat3x3";
-        case BasicType::Type::DMat3x4:    return "mat3x4";
-        case BasicType::Type::DMat4x2:    return "mat4x2";
-        case BasicType::Type::DMat4x3:    return "mat4x3";
-        case BasicType::Type::DMat4x4:    return "mat4x4";
-        case BasicType::Type::Dictionary: return "Table";
-        default:                          throw std::logic_error("Missing case label");
-    }
-}
-
-std::string generateTypename(const BasicType* type) {
-    return generateTypename(type->type);
-}
-
-std::string generateLuaExtractionTypename(const BasicType* type) {
-    return generateLuaExtractionTypename(type->type);
-}
-
-std::string generateDescriptiveTypename(const BasicType* type) {
-    return generateDescriptiveTypename(type->type);
-}
-
-std::string generateTypename(const PointerType* type) {
-    return std::format("{}*", type->type);
-}
-
-std::string generateLuaExtractionTypename(const PointerType* type) {
-    return std::format("{}*", type->type);
-}
-
-std::string generateDescriptiveTypename(const PointerType* type) {
-    return std::format("{}*", type->type);
-}
-
-std::string generateTypename(const MapType* type, bool fullyQualified) {
-    std::string t1 = generateTypename(type->keyType, fullyQualified);
-    std::string t2 = generateTypename(type->valueType, fullyQualified);
-    return std::format("std::map<{}, {}>", t1, t2);
-}
-
-std::string generateLuaExtractionTypename(const MapType* type) {
-    std::string t1 = generateLuaExtractionTypename(type->keyType);
-    std::string t2 = generateLuaExtractionTypename(type->valueType);
-    return std::format("std::map<{}, {}>", t1, t2);
-}
-
-std::string generateDescriptiveTypename(const MapType* type) {
-    std::string t1 = generateDescriptiveTypename(type->keyType);
-    std::string t2 = generateDescriptiveTypename(type->valueType);
-    return std::format("{} -> {}", t1, t2);
-}
-
-std::string generateTypename(const OptionalType* type, bool fullyQualified) {
-    std::string t1 = generateTypename(type->type, fullyQualified);
-    return std::format("std::optional<{}>", t1);
-}
-
-std::string generateLuaExtractionTypename(const OptionalType* type) {
-    std::string t1 = generateLuaExtractionTypename(type->type);
-    return std::format("std::optional<{}>", t1);
-}
-
-std::string generateDescriptiveTypename(const OptionalType* type) {
-    std::string t1 = generateDescriptiveTypename(type->type);
-    return std::format("{}?", t1);
-}
-
-std::string generateTypename(const VariantType* type, bool fullyQualified) {
-    std::string res = "std::variant<";
-    for (VariableType* v : type->types) {
-        res += generateTypename(v, fullyQualified);
-        res += ", ";
+    std::string generateLuaExtractionTypename(BasicType::Type type) {
+        return generateTypename(type);
     }
 
-    res.pop_back();   // Remove the final ' '
-    res.back() = '>'; // Replace the final , with the >
-
-    return res;
-}
-
-std::string generateLuaExtractionTypename(const VariantType* type) {
-    std::string res = "std::variant<";
-    for (VariableType* v : type->types) {
-        res += generateLuaExtractionTypename(v);
-        res += ", ";
-    }
-
-    res.pop_back();   // Remove the final ' '
-    res.back() = '>'; // Replace the final , with the >
-
-    return res;
-}
-
-std::string generateDescriptiveTypename(const VariantType* type) {
-    std::string res;
-    for (size_t i = 0; i < type->types.size(); i += 1) {
-        res += generateDescriptiveTypename(type->types[i]);
-
-        if (i != type->types.size() - 1) {
-            res += " | ";
+    std::string generateDescriptiveTypename(BasicType::Type type) {
+        switch (type) {
+            case BasicType::Type::Bool:       return "Boolean";
+            case BasicType::Type::Int:        return "Integer";
+            case BasicType::Type::Double:     return "Number";
+            case BasicType::Type::Float:      return "Number";
+            case BasicType::Type::String:     return "String";
+            case BasicType::Type::Path:       return "Path";
+            case BasicType::Type::Ivec2:      return "ivec2";
+            case BasicType::Type::Ivec3:      return "ivec3";
+            case BasicType::Type::Ivec4:      return "ivec4";
+            case BasicType::Type::Dvec2:      return "vec2";
+            case BasicType::Type::Dvec3:      return "vec3";
+            case BasicType::Type::Dvec4:      return "vec4";
+            case BasicType::Type::Vec2:       return "vec2";
+            case BasicType::Type::Vec3:       return "vec3";
+            case BasicType::Type::Vec4:       return "vec4";
+            case BasicType::Type::Mat2x2:     return "mat2x2";
+            case BasicType::Type::Mat2x3:     return "mat2x3";
+            case BasicType::Type::Mat2x4:     return "mat2x4";
+            case BasicType::Type::Mat3x2:     return "mat3x2";
+            case BasicType::Type::Mat3x3:     return "mat3x3";
+            case BasicType::Type::Mat3x4:     return "mat3x4";
+            case BasicType::Type::Mat4x2:     return "mat4x2";
+            case BasicType::Type::Mat4x3:     return "mat4x3";
+            case BasicType::Type::Mat4x4:     return "mat4x4";
+            case BasicType::Type::DMat2x2:    return "mat2x2";
+            case BasicType::Type::DMat2x3:    return "mat2x3";
+            case BasicType::Type::DMat2x4:    return "mat2x4";
+            case BasicType::Type::DMat3x2:    return "mat3x2";
+            case BasicType::Type::DMat3x3:    return "mat3x3";
+            case BasicType::Type::DMat3x4:    return "mat3x4";
+            case BasicType::Type::DMat4x2:    return "mat4x2";
+            case BasicType::Type::DMat4x3:    return "mat4x3";
+            case BasicType::Type::DMat4x4:    return "mat4x4";
+            case BasicType::Type::Dictionary: return "Table";
+            default:                         throw std::logic_error("Missing case label");
         }
     }
-    return res;
-}
 
-std::string generateTypename(const TupleType* type, bool fullyQualified) {
-    std::string res = "std::tuple<";
-    for (VariableType* v : type->types) {
-        res += generateTypename(v, fullyQualified);
-        res += ", ";
+    std::string generateTypename(const BasicType* type) {
+        return generateTypename(type->type);
     }
 
-    res.pop_back();   // Remove the final ' '
-    res.back() = '>'; // Replace the final , with the >
-
-    return res;
-}
-
-std::string generateLuaExtractionTypename(const TupleType* type) {
-    std::string res = "std::tuple<";
-    for (VariableType* v : type->types) {
-        res += generateLuaExtractionTypename(v);
-        res += ", ";
+    std::string generateLuaExtractionTypename(const BasicType* type) {
+        return generateLuaExtractionTypename(type->type);
     }
 
-    res.pop_back();   // Remove the final ' '
-    res.back() = '>'; // Replace the final , with the >
+    std::string generateDescriptiveTypename(const BasicType* type) {
+        return generateDescriptiveTypename(type->type);
+    }
 
-    return res;
-}
+    std::string generateTypename(const PointerType* type) {
+        return std::format("{}*", type->type);
+    }
 
-std::string generateDescriptiveTypename(const TupleType* type) {
-    std::string res;
-    for (size_t i = 0; i < type->types.size(); i += 1) {
-        res += generateDescriptiveTypename(type->types[i]);
+    std::string generateLuaExtractionTypename(const PointerType* type) {
+        return std::format("{}*", type->type);
+    }
 
-        if (i != type->types.size() - 1) {
+    std::string generateDescriptiveTypename(const PointerType* type) {
+        return std::format("{}*", type->type);
+    }
+
+    std::string generateTypename(const MapType* type, bool fullyQualified) {
+        std::string t1 = generateTypename(type->keyType, fullyQualified);
+        std::string t2 = generateTypename(type->valueType, fullyQualified);
+        return std::format("std::map<{}, {}>", t1, t2);
+    }
+
+    std::string generateLuaExtractionTypename(const MapType* type) {
+        std::string t1 = generateLuaExtractionTypename(type->keyType);
+        std::string t2 = generateLuaExtractionTypename(type->valueType);
+        return std::format("std::map<{}, {}>", t1, t2);
+    }
+
+    std::string generateDescriptiveTypename(const MapType* type) {
+        std::string t1 = generateDescriptiveTypename(type->keyType);
+        std::string t2 = generateDescriptiveTypename(type->valueType);
+        return std::format("{} -> {}", t1, t2);
+    }
+
+    std::string generateTypename(const OptionalType* type, bool fullyQualified) {
+        std::string t1 = generateTypename(type->type, fullyQualified);
+        return std::format("std::optional<{}>", t1);
+    }
+
+    std::string generateLuaExtractionTypename(const OptionalType* type) {
+        std::string t1 = generateLuaExtractionTypename(type->type);
+        return std::format("std::optional<{}>", t1);
+    }
+
+    std::string generateDescriptiveTypename(const OptionalType* type) {
+        std::string t1 = generateDescriptiveTypename(type->type);
+        return std::format("{}?", t1);
+    }
+
+    std::string generateTypename(const VariantType* type, bool fullyQualified) {
+        std::string res = "std::variant<";
+        for (VariableType* v : type->types) {
+            res += generateTypename(v, fullyQualified);
             res += ", ";
         }
+
+        res.pop_back();   // Remove the final ' '
+        res.back() = '>'; // Replace the final , with the >
+
+        return res;
     }
-    return std::format("({})", res);
-}
 
-std::string generateTypename(const ArrayType* type, bool fullyQualified) {
-    std::string t1 = generateTypename(type->type, fullyQualified);
-    return std::format("std::array<{}, {}>", t1, type->size);
-}
+    std::string generateLuaExtractionTypename(const VariantType* type) {
+        std::string res = "std::variant<";
+        for (VariableType* v : type->types) {
+            res += generateLuaExtractionTypename(v);
+            res += ", ";
+        }
 
-std::string generateLuaExtractionTypename(const ArrayType* type) {
-    std::string t1 = generateLuaExtractionTypename(type->type);
-    return std::format("std::array<{}, {}>", t1, type->size);
-}
+        res.pop_back();   // Remove the final ' '
+        res.back() = '>'; // Replace the final , with the >
 
-std::string generateDescriptiveTypename(const ArrayType* type) {
-    return std::format("{}[{}]", generateDescriptiveTypename(type->type), type->size);
-}
-
-std::string generateTypename(const VectorType* type, bool fullyQualified) {
-    std::string t1 = generateTypename(type->type, fullyQualified);
-    return std::format("std::vector<{}>", t1);
-}
-
-std::string generateLuaExtractionTypename(const VectorType* type) {
-    std::string t1 = generateLuaExtractionTypename(type->type);
-    return std::format("std::vector<{}>", t1);
-}
-
-std::string generateDescriptiveTypename(const VectorType* type) {
-    return generateDescriptiveTypename(type->type) + "[]";
-}
-
-std::string generateTypename(const CustomType* type, bool fullyQualified) {
-    if (fullyQualified) {
-        return fqn(type->type, "::");
+        return res;
     }
-    else {
-        return
-            type->type ?
-            type->type->name : // If we have a type, we can return its proper name
-            type->name;        // If we don't have a type, we failed where no context for
-                               // this custom type was available
-    }
-}
 
-std::string generateLuaExtractionTypename(const CustomType* type) {
-    // Yo dawg, I heard you like types
-    switch (type->type->type) {
-        case StackElement::Type::Enum:   return "std::string";
-        case StackElement::Type::Struct: return "ghoul::Dictionary";
-        default:                         throw std::logic_error("Missing case label");
-    }
-}
+    std::string generateDescriptiveTypename(const VariantType* type) {
+        std::string res;
+        for (size_t i = 0; i < type->types.size(); i += 1) {
+            res += generateDescriptiveTypename(type->types[i]);
 
-std::string generateDescriptiveTypename(const CustomType* type) {
-    return type->type->name;
-}
+            if (i != type->types.size() - 1) {
+                res += " | ";
+            }
+        }
+        return res;
+    }
+
+    std::string generateTypename(const TupleType* type, bool fullyQualified) {
+        std::string res = "std::tuple<";
+        for (VariableType* v : type->types) {
+            res += generateTypename(v, fullyQualified);
+            res += ", ";
+        }
+
+        res.pop_back();   // Remove the final ' '
+        res.back() = '>'; // Replace the final , with the >
+
+        return res;
+    }
+
+    std::string generateLuaExtractionTypename(const TupleType* type) {
+        std::string res = "std::tuple<";
+        for (VariableType* v : type->types) {
+            res += generateLuaExtractionTypename(v);
+            res += ", ";
+        }
+
+        res.pop_back();   // Remove the final ' '
+        res.back() = '>'; // Replace the final , with the >
+
+        return res;
+    }
+
+    std::string generateDescriptiveTypename(const TupleType* type) {
+        std::string res;
+        for (size_t i = 0; i < type->types.size(); i += 1) {
+            res += generateDescriptiveTypename(type->types[i]);
+
+            if (i != type->types.size() - 1) {
+                res += ", ";
+            }
+        }
+        return std::format("({})", res);
+    }
+
+    std::string generateTypename(const ArrayType* type, bool fullyQualified) {
+        std::string t1 = generateTypename(type->type, fullyQualified);
+        return std::format("std::array<{}, {}>", t1, type->size);
+    }
+
+    std::string generateLuaExtractionTypename(const ArrayType* type) {
+        std::string t1 = generateLuaExtractionTypename(type->type);
+        return std::format("std::array<{}, {}>", t1, type->size);
+    }
+
+    std::string generateDescriptiveTypename(const ArrayType* type) {
+        return std::format("{}[{}]", generateDescriptiveTypename(type->type), type->size);
+    }
+
+    std::string generateTypename(const VectorType* type, bool fullyQualified) {
+        std::string t1 = generateTypename(type->type, fullyQualified);
+        return std::format("std::vector<{}>", t1);
+    }
+
+    std::string generateLuaExtractionTypename(const VectorType* type) {
+        std::string t1 = generateLuaExtractionTypename(type->type);
+        return std::format("std::vector<{}>", t1);
+    }
+
+    std::string generateDescriptiveTypename(const VectorType* type) {
+        return generateDescriptiveTypename(type->type) + "[]";
+    }
+
+    std::string generateTypename(const CustomType* type, bool fullyQualified) {
+        if (fullyQualified) {
+            return fqn(type->type, "::");
+        }
+        else {
+            return
+                type->type ?
+                type->type->name : // If we have a type, we can return its proper name
+                type->name;        // If we don't have a type, we failed where no context
+                                   // for this custom type was available
+        }
+    }
+
+    std::string generateLuaExtractionTypename(const CustomType* type) {
+        // Yo dawg, I heard you like types
+        switch (type->type->type) {
+            case StackElement::Type::Enum:   return "std::string";
+            case StackElement::Type::Struct: return "ghoul::Dictionary";
+            default:                         throw std::logic_error("Missing case label");
+        }
+    }
+
+    std::string generateDescriptiveTypename(const CustomType* type) {
+        return type->type->name;
+    }
+
+} // namespace
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {
     assert(type);
