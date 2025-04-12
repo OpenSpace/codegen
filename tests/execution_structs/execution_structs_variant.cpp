@@ -101,6 +101,25 @@ namespace {
         std::variant<
             std::vector<std::filesystem::path>, std::filesystem::path
         > variantPath2;
+
+        // variantStringVectorC struct
+        struct C {
+            // variantStringVectorC inner
+            std::variant<std::string, std::vector<std::string>> var;
+        };
+        // variantStringVectorC variable
+        C variantStringVectorC;
+
+        // variantStringVectorC struct
+        struct D {
+            // variantStringVectorD inner
+            std::variant<std::string, std::vector<std::string>> var;
+        };
+        // variantStringVectorD variable
+        D variantStringVectorD;
+
+        // variantStringVector
+        std::variant<std::string, std::vector<std::string>> variantStringVector;
     };
 #include "execution_structs_variant_codegen.cpp"
 } // namespace
@@ -147,6 +166,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
             e.setValue("2", tmpFile2);
             d1.setValue("VariantPath2", e);
         }
+        {
+            ghoul::Dictionary e;
+            e.setValue("Var", "Value"s);
+            d1.setValue("VariantStringVectorC", e);
+        }
+        {
+            ghoul::Dictionary e;
+            ghoul::Dictionary f;
+            f.setValue("1", "Abc"s);
+            f.setValue("2", "Def"s);
+            e.setValue("Var", f);
+            d1.setValue("VariantStringVectorD", e);
+        }
+        d1.setValue("VariantStringVector", "ghi"s);
 
         const Parameters p1 = codegen::bake<Parameters>(d1);
         CHECK(std::get<bool>(p1.boolDoubleValue) == false);
@@ -195,6 +228,22 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
         CHECK(
             std::get<std::vector<std::filesystem::path>>(p1.variantPath2)[1] == tmpFile2
         );
+        REQUIRE(std::holds_alternative<std::string>(p1.variantStringVectorC.var));
+        CHECK(
+            std::get<std::string>(p1.variantStringVectorC.var) == "Value"
+        );
+        REQUIRE(std::holds_alternative<std::vector<std::string>>(p1.variantStringVectorD.var));
+        REQUIRE(
+            std::get<std::vector<std::string>>(p1.variantStringVectorD.var).size() == 2
+        );
+        CHECK(
+            std::get<std::vector<std::string>>(p1.variantStringVectorD.var)[0] == "Abc"
+        );
+        CHECK(
+            std::get<std::vector<std::string>>(p1.variantStringVectorD.var)[1] == "Def"
+        );
+        REQUIRE(std::holds_alternative<std::string>(p1.variantStringVector));
+        CHECK(std::get<std::string>(p1.variantStringVector) == "ghi");
     }
 
     {
@@ -242,6 +291,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
             d2.setValue("VariantPath", e);
         }
         d2.setValue("VariantPath2", tmpFile);
+        {
+            ghoul::Dictionary e;
+            e.setValue("Var", "Value"s);
+            d2.setValue("VariantStringVectorC", e);
+        }
+        {
+            ghoul::Dictionary e;
+            ghoul::Dictionary f;
+            f.setValue("1", "Abc"s);
+            f.setValue("2", "Def"s);
+            e.setValue("Var", f);
+            d2.setValue("VariantStringVectorD", e);
+        }
+        d2.setValue("VariantStringVector", "ghi"s);
 
         const Parameters p2 = codegen::bake<Parameters>(d2);
         CHECK(std::get<double>(p2.boolDoubleValue) == 6.0);
@@ -323,6 +386,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
             e.setValue("2", tmpFile2);
             d3.setValue("VariantPath2", e);
         }
+        {
+            ghoul::Dictionary e;
+            e.setValue("Var", "Value"s);
+            d3.setValue("VariantStringVectorC", e);
+        }
+        {
+            ghoul::Dictionary e;
+            ghoul::Dictionary f;
+            f.setValue("1", "Abc"s);
+            f.setValue("2", "Def"s);
+            e.setValue("Var", f);
+            d3.setValue("VariantStringVectorD", e);
+        }
+        d3.setValue("VariantStringVector", "ghi"s);
 
         const Parameters p3 = codegen::bake<Parameters>(d3);
         CHECK(std::get<double>(p3.boolDoubleValue) == 13.1);
@@ -392,6 +469,20 @@ TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
             e.setValue("2", tmpFile2);
             d4.setValue("VariantPath2", e);
         }
+        {
+            ghoul::Dictionary e;
+            e.setValue("Var", "Value"s);
+            d4.setValue("VariantStringVectorC", e);
+        }
+        {
+            ghoul::Dictionary e;
+            ghoul::Dictionary f;
+            f.setValue("1", "Abc"s);
+            f.setValue("2", "Def"s);
+            e.setValue("Var", f);
+            d4.setValue("VariantStringVectorD", e);
+        }
+        d4.setValue("VariantStringVector", "ghi"s);
 
         const Parameters p4 = codegen::bake<Parameters>(d4);
         CHECK(std::get<double>(p4.boolDoubleValue) == 20);
@@ -437,7 +528,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 17);
+    REQUIRE(doc.entries.size() == 20);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "BoolDoubleValue");
@@ -774,5 +865,80 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(v->values[1]->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(v->values[1].get());
         REQUIRE(w);
+    }
+    {
+        const DocumentationEntry& e = doc.entries[17];
+        CHECK(e.key == "VariantStringVectorC");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "variantStringVectorC variable");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "Var");
+        CHECK(!v->documentations[0].isPrivate);
+        CHECK(v->documentations[0].verifier->type() == "String, or Table");
+        OrVerifier* w = dynamic_cast<OrVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        REQUIRE(w->values.size() == 2);
+        CHECK(w->values[0]->type() == "String");
+        StringVerifier* u = dynamic_cast<StringVerifier*>(w->values[0].get());
+        REQUIRE(u);
+        CHECK(w->values[1]->type() == "Table");
+        TableVerifier* x = dynamic_cast<TableVerifier*>(w->values[1].get());
+        REQUIRE(x);
+        REQUIRE(x->documentations.size() == 1);
+        CHECK(x->documentations[0].key == "*");
+        CHECK(x->documentations[0].optional);
+        CHECK(x->documentations[0].verifier->type() == "String");
+    }
+    {
+        const DocumentationEntry& e = doc.entries[18];
+        CHECK(e.key == "VariantStringVectorD");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "variantStringVectorD variable");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].key == "Var");
+        CHECK(!v->documentations[0].isPrivate);
+        CHECK(v->documentations[0].verifier->type() == "String, or Table");
+        OrVerifier* w = dynamic_cast<OrVerifier*>(v->documentations[0].verifier.get());
+        REQUIRE(w);
+        REQUIRE(w->values.size() == 2);
+        CHECK(w->values[0]->type() == "String");
+        StringVerifier* u = dynamic_cast<StringVerifier*>(w->values[0].get());
+        REQUIRE(u);
+        CHECK(w->values[1]->type() == "Table");
+        TableVerifier* x = dynamic_cast<TableVerifier*>(w->values[1].get());
+        REQUIRE(x);
+        REQUIRE(x->documentations.size() == 1);
+        CHECK(x->documentations[0].key == "*");
+        CHECK(x->documentations[0].optional);
+        CHECK(x->documentations[0].verifier->type() == "String");
+    }
+    {
+        const DocumentationEntry& e = doc.entries[19];
+        CHECK(e.key == "VariantStringVector");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "variantStringVector");
+        CHECK(e.verifier->type() == "String, or Table");
+        OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->values.size() == 2);
+        CHECK(v->values[0]->type() == "String");
+        StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
+        REQUIRE(w);
+        CHECK(v->values[1]->type() == "Table");
+        TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
+        REQUIRE(u);
+        REQUIRE(u->documentations.size() == 1);
+        CHECK(u->documentations[0].key == "*");
+        CHECK(u->documentations[0].optional);
+        CHECK(u->documentations[0].verifier->type() == "String");
     }
 }

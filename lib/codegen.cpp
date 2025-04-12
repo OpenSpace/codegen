@@ -549,15 +549,17 @@ std::string writeEnumConverterBake(const Enum* e) {
     return std::format(BakeEnum, fqn(e, "::"));
 }
 
-std::string writeStructConverter(Struct* s) {
+std::string writeStructConverter(Struct* s,
+                                 std::vector<std::string>& writtenVariantConverters)
+{
     assert(s);
     std::string result;
-    std::vector<std::string> writtenVariantConverters;
 
     for (StackElement* el : s->children) {
         assert(el);
         if (el->type == StackElement::Type::Struct) {
-            result += writeStructConverter(static_cast<Struct*>(el));
+            Struct* sl = static_cast<Struct*>(el);
+            result += writeStructConverter(sl, writtenVariantConverters);
         }
 
         if (el->type == StackElement::Type::Enum) {
@@ -706,8 +708,9 @@ std::string generateStructsResult(const Code& code, HeaderInfo& info) {
         }
     }
 
+    std::vector<std::string> writtenVariantConverters;
     for (Struct* s : code.structs) {
-        result += writeStructConverter(s);
+        result += writeStructConverter(s, writtenVariantConverters);
     }
 
     if (hasOptionalType) {

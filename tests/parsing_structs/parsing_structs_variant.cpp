@@ -584,3 +584,187 @@ struct [[codegen::Dictionary(D)]] P {
     const std::string r = generateResult(code);
     CHECK(!r.empty());
 }
+
+TEST_CASE("Parsing/Structs/Variant: Multiple variants", "[Parsing][Structs]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(D)]] P {
+  struct A {
+    std::variant<std::string, std::vector<std::string>> a;
+  };
+  A a;
+
+  struct B {
+    std::variant<std::string, std::vector<std::string>> a;
+  };
+  B b;
+
+  std::variant<std::string, std::vector<std::string>> c;
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+    CHECK(code.enums.empty());
+
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+
+    CHECK(s->name == "P");
+    CHECK(s->comment.empty());
+    CHECK(s->attributes.dictionary == "D");
+    CHECK(s->attributes.noExhaustive);
+    CHECK(s->parent == nullptr);
+    REQUIRE(s->children.size() == 2);
+    REQUIRE(s->variables.size() == 3);
+
+    {
+        StackElement* el = s->children[0];
+        REQUIRE(el);
+        REQUIRE(el->type == StackElement::Type::Struct);
+        Struct* t = static_cast<Struct*>(el);
+        REQUIRE(t);
+        CHECK(t->name == "A");
+        CHECK(t->comment.empty());
+        CHECK(t->attributes.dictionary.empty());
+        CHECK(t->attributes.noExhaustive);
+        CHECK(t->parent == s);
+        CHECK(t->children.empty());
+        REQUIRE(t->variables.size() == 1);
+
+        Variable* var = t->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(generateTypename(var->type) == "std::variant<std::string, std::vector<std::string>>");
+        CHECK(var->comment.empty());
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        StackElement* el = s->children[1];
+        REQUIRE(el);
+        REQUIRE(el->type == StackElement::Type::Struct);
+        Struct* t = static_cast<Struct*>(el);
+        REQUIRE(t);
+        CHECK(t->name == "B");
+        CHECK(t->comment.empty());
+        CHECK(t->attributes.dictionary.empty());
+        CHECK(t->attributes.noExhaustive);
+        CHECK(t->parent == s);
+        CHECK(t->children.empty());
+        REQUIRE(t->variables.size() == 1);
+
+        Variable* var = t->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(generateTypename(var->type) == "std::variant<std::string, std::vector<std::string>>");
+        CHECK(var->comment.empty());
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[0];
+        REQUIRE(var);
+        CHECK(var->name == "a");
+        CHECK(generateTypename(var->type) == "A");
+        CHECK(var->comment.empty());
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[1];
+        REQUIRE(var);
+        CHECK(var->name == "b");
+        CHECK(generateTypename(var->type) == "B");
+        CHECK(var->comment.empty());
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+
+    {
+        Variable* var = s->variables[2];
+        REQUIRE(var);
+        CHECK(var->name == "c");
+        CHECK(generateTypename(var->type) == "std::variant<std::string, std::vector<std::string>>");
+        CHECK(var->comment.empty());
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.key.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+}
