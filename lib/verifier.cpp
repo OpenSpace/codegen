@@ -72,7 +72,7 @@ namespace {
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
         else if (
             type == Type::Ivec2 || type == Type::Ivec3 || type == Type::Ivec4 ||
@@ -86,7 +86,7 @@ namespace {
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
         else if (
             type == Type::Dvec3 || type == Type::Dvec4 ||
@@ -99,7 +99,7 @@ namespace {
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
             report(attributes.annotation, attributes::Annotation);
@@ -110,7 +110,7 @@ namespace {
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
         else if (type == Type::String) {
             report(attributes.inrange, attributes::InRange);
@@ -137,7 +137,7 @@ namespace {
             reportBool(attributes.isColor, attributes::Color);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
         else if (type == Type::Dictionary) {
             report(attributes.annotation, attributes::Annotation);
@@ -154,7 +154,7 @@ namespace {
             reportBool(attributes.isDirectory, attributes::Directory);
             reportBool(attributes.isDateTime, attributes::DateTime);
             reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::Directory);
+            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
         }
     }
 
@@ -268,7 +268,22 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
             }
             return res;
         case Type::Path:
-            return attributes.isDirectory ? "DirectoryVerifier" : "FileVerifier";
+            if (attributes.isDirectory) {
+                if (attributes.mustExist) {
+                    return "DirectoryVerifier(true)";
+                }
+                else {
+                    return "DirectoryVerifier(false)";
+                }
+            }
+            else {
+                if (attributes.mustExist) {
+                    return "FileVerifier(true)";
+                }
+                else {
+                    return "FileVerifier(false)";
+                }
+            };
         case Type::Ivec2:
             res = "IntVector2Verifier";
             if (!attributes.inrange.empty()) {

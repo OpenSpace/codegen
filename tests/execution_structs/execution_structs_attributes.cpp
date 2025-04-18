@@ -29,6 +29,7 @@
 #include <openspace/documentation/verifier.h>
 #include <ghoul/misc/dictionary.h>
 #include <filesystem>
+#include <fstream>
 #include <optional>
 #include <variant>
 #include <vector>
@@ -851,6 +852,84 @@ namespace {
 
         // optional vector private value documentation
         std::optional<std::vector<std::string>> optionalVectorPrivateValue [[codegen::private()]];
+
+
+        // default mustexist documentation
+        std::filesystem::path defaultMustExistValue;
+
+        // default optional mustexist documentation
+        std::optional<std::filesystem::path> defaultOptionalMustExistValue;
+
+        // default vector mustexist documentation
+        std::vector<std::filesystem::path> defaultVectorMustExistValue;
+
+        // default optionalvector mustexist documentation
+        std::optional<std::vector<std::filesystem::path>> defaultOptionalVectorMustExistValue;
+
+
+        // yes mustexist documentation
+        std::filesystem::path yesMustExistValue [[codegen::mustexist(true)]];
+
+        // yes optional mustexist documentation
+        std::optional<std::filesystem::path> yesOptionalMustExistValue [[codegen::mustexist(true)]];
+
+        // yes vector mustexist documentation
+        std::vector<std::filesystem::path> yesVectorMustExistValue [[codegen::mustexist(true)]];
+
+        // yes optionalvector mustexist documentation
+        std::optional<std::vector<std::filesystem::path>> yesOptionalVectorMustExistValue [[codegen::mustexist(true)]];
+
+
+        // no mustexist documentation
+        std::filesystem::path noMustExistValue [[codegen::mustexist(false)]];
+
+        // no optional mustexist documentation
+        std::optional<std::filesystem::path> noOptionalMustExistValue [[codegen::mustexist(false)]];
+
+        // no vector mustexist documentation
+        std::vector<std::filesystem::path> noVectorMustExistValue [[codegen::mustexist(false)]];
+
+        // no optionalvector mustexist documentation
+        std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistValue [[codegen::mustexist(false)]];
+
+
+        // default mustexist directory documentation
+        std::filesystem::path defaultMustExistDirectoryValue [[codegen::directory()]];
+
+        // default optional mustexist directory documentation
+        std::optional<std::filesystem::path> defaultOptionalMustExistDirectoryValue [[codegen::directory()]];
+
+        // default vector mustexist directory documentation
+        std::vector<std::filesystem::path> defaultVectorMustExistDirectoryValue [[codegen::directory()]];
+
+        // default optionalvector mustexist directory documentation
+        std::optional<std::vector<std::filesystem::path>> defaultOptionalVectorMustExistDirectoryValue [[codegen::directory()]];
+
+
+        // yes mustexist directory documentation
+        std::filesystem::path yesMustExistDirectoryValue [[codegen::mustexist(true), codegen::directory()]];
+
+        // yes optional mustexist directory documentation
+        std::optional<std::filesystem::path> yesOptionalMustExistDirectoryValue [[codegen::mustexist(true), codegen::directory()]];
+
+        // yes vector mustexist directory documentation
+        std::vector<std::filesystem::path> yesVectorMustExistDirectoryValue [[codegen::mustexist(true), codegen::directory()]];
+
+        // yes optionalvector mustexist directory documentation
+        std::optional<std::vector<std::filesystem::path>> yesOptionalVectorMustExistDirectoryValue [[codegen::mustexist(true), codegen::directory()]];
+
+
+        // no mustexist directory documentation
+        std::filesystem::path noMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
+
+        // no optional mustexist directory documentation
+        std::optional<std::filesystem::path> noOptionalMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
+
+        // no vector mustexist directory documentation
+        std::vector<std::filesystem::path> noVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
+
+        // no optionalvector mustexist directory documentation
+        std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
@@ -1692,6 +1771,124 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
         e.setValue("3", "vwxyzz"s);
         d.setValue("OptionalVectorPrivateValue", e);
     }
+
+    const std::filesystem::path path = std::filesystem::temp_directory_path();
+    std::filesystem::path tmpFile = (path / "codegen_execution_structs_attributes.txt");
+    {
+        std::ofstream f(tmpFile);
+        f << "unit test";
+    }
+
+    std::filesystem::path noTmpFile = (path / "codegen_execution_structs_attributes_no_exist.txt");
+
+
+    d.setValue("DefaultMustExistValue", tmpFile);
+    d.setValue("DefaultOptionalMustExistValue", tmpFile);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFile);
+        e.setValue("2", tmpFile);
+        e.setValue("3", tmpFile);
+        d.setValue("DefaultVectorMustExistValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFile);
+        e.setValue("2", tmpFile);
+        e.setValue("3", tmpFile);
+        d.setValue("DefaultOptionalVectorMustExistValue", e);
+    }
+
+    d.setValue("YesMustExistValue", tmpFile);
+    d.setValue("YesOptionalMustExistValue", tmpFile);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFile);
+        e.setValue("2", tmpFile);
+        e.setValue("3", tmpFile);
+        d.setValue("YesVectorMustExistValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFile);
+        e.setValue("2", tmpFile);
+        e.setValue("3", tmpFile);
+        d.setValue("YesOptionalVectorMustExistValue", e);
+    }
+
+    d.setValue("NoMustExistValue", noTmpFile);
+    d.setValue("NoOptionalMustExistValue", noTmpFile);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", noTmpFile);
+        e.setValue("2", noTmpFile);
+        e.setValue("3", noTmpFile);
+        d.setValue("NoVectorMustExistValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", noTmpFile);
+        e.setValue("2", noTmpFile);
+        e.setValue("3", noTmpFile);
+        d.setValue("NoOptionalVectorMustExistValue", e);
+    }
+
+    std::filesystem::path tmpFolder = (path / "codegen_execution_structs_attributes");
+    std::filesystem::create_directories(tmpFolder);
+    std::filesystem::path noTmpFolder = (path / "codegen_execution_structs_attributes_no_exist");
+
+    d.setValue("DefaultMustExistDirectoryValue", tmpFolder);
+    d.setValue("DefaultOptionalMustExistDirectoryValue", tmpFolder);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFolder);
+        e.setValue("2", tmpFolder);
+        e.setValue("3", tmpFolder);
+        d.setValue("DefaultVectorMustExistDirectoryValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFolder);
+        e.setValue("2", tmpFolder);
+        e.setValue("3", tmpFolder);
+        d.setValue("DefaultOptionalVectorMustExistDirectoryValue", e);
+    }
+
+    d.setValue("YesMustExistDirectoryValue", tmpFolder);
+    d.setValue("YesOptionalMustExistDirectoryValue", tmpFolder);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFolder);
+        e.setValue("2", tmpFolder);
+        e.setValue("3", tmpFolder);
+        d.setValue("YesVectorMustExistDirectoryValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", tmpFolder);
+        e.setValue("2", tmpFolder);
+        e.setValue("3", tmpFolder);
+        d.setValue("YesOptionalVectorMustExistDirectoryValue", e);
+    }
+
+    d.setValue("NoMustExistDirectoryValue", noTmpFolder);
+    d.setValue("NoOptionalMustExistDirectoryValue", noTmpFolder);
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", noTmpFolder);
+        e.setValue("2", noTmpFolder);
+        e.setValue("3", noTmpFolder);
+        d.setValue("NoVectorMustExistDirectoryValue", e);
+    }
+    {
+        ghoul::Dictionary e;
+        e.setValue("1", noTmpFolder);
+        e.setValue("2", noTmpFolder);
+        e.setValue("3", noTmpFolder);
+        d.setValue("NoOptionalVectorMustExistDirectoryValue", e);
+    }
+
+
     const Parameters p = codegen::bake<Parameters>(d);
 
     CHECK(p.keyValue == 2.1f);
@@ -2203,14 +2400,13 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     CHECK((*p.optionalVectorPrivateValue)[0] == "pqrstu");
     CHECK((*p.optionalVectorPrivateValue)[1] == "stuvwx");
     CHECK((*p.optionalVectorPrivateValue)[2] == "vwxyzz");
-
 }
 
 TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
-    REQUIRE(doc.entries.size() == 231);
+    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[0];
         CHECK(e.key == "KeyKey");
@@ -5533,5 +5729,341 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].key == "*");
         CHECK(v->documentations[0].verifier->type() == "String");
         CHECK(dynamic_cast<StringVerifier*>(v->documentations[0].verifier.get()));
+    }
+    {
+        const DocumentationEntry& e = doc.entries[231];
+        CHECK(e.key == "DefaultMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[232];
+        CHECK(e.key == "DefaultOptionalMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default optional mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[233];
+        CHECK(e.key == "DefaultVectorMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default vector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[234];
+        CHECK(e.key == "DefaultOptionalVectorMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default optionalvector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[235];
+        CHECK(e.key == "YesMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[236];
+        CHECK(e.key == "YesOptionalMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes optional mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[237];
+        CHECK(e.key == "YesVectorMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes vector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+            );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[238];
+        CHECK(e.key == "YesOptionalVectorMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes optionalvector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[239];
+        CHECK(e.key == "NoMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(!v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[240];
+        CHECK(e.key == "NoOptionalMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no optional mustexist documentation");
+        CHECK(e.verifier->type() == "File");
+        FileVerifier* v = dynamic_cast<FileVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(!v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[241];
+        CHECK(e.key == "NoVectorMustExistValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no vector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(!w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[242];
+        CHECK(e.key == "NoOptionalVectorMustExistValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no optionalvector mustexist documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "File");
+        FileVerifier* w = dynamic_cast<FileVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(!w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[243];
+        CHECK(e.key == "DefaultMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[244];
+        CHECK(e.key == "DefaultOptionalMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default optional mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[245];
+        CHECK(e.key == "DefaultVectorMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default vector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[246];
+        CHECK(e.key == "DefaultOptionalVectorMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "default optionalvector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[247];
+        CHECK(e.key == "YesMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[248];
+        CHECK(e.key == "YesOptionalMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes optional mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[249];
+        CHECK(e.key == "YesVectorMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes vector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[250];
+        CHECK(e.key == "YesOptionalVectorMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "yes optionalvector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[251];
+        CHECK(e.key == "NoMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(!v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[252];
+        CHECK(e.key == "NoOptionalMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no optional mustexist directory documentation");
+        CHECK(e.verifier->type() == "Directory");
+        DirectoryVerifier* v = dynamic_cast<DirectoryVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        CHECK(!v->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[253];
+        CHECK(e.key == "NoVectorMustExistDirectoryValue");
+        CHECK(!e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no vector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(!w->mustExist());
+    }
+    {
+        const DocumentationEntry& e = doc.entries[254];
+        CHECK(e.key == "NoOptionalVectorMustExistDirectoryValue");
+        CHECK(e.optional);
+        CHECK(!e.isPrivate);
+        CHECK(e.documentation == "no optionalvector mustexist directory documentation");
+        CHECK(e.verifier->type() == "Table");
+        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        REQUIRE(v);
+        REQUIRE(v->documentations.size() == 1);
+        CHECK(v->documentations[0].verifier->type() == "Directory");
+        DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
+            v->documentations[0].verifier.get()
+        );
+        REQUIRE(w);
+        CHECK(!w->mustExist());
     }
 }

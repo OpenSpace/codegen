@@ -382,6 +382,9 @@ namespace {
             else if (p.key == attributes::Directory) {
                 res.isDirectory = booleanValue(p.value);
             }
+            else if (p.key == attributes::MustExist) {
+                res.mustExist = booleanValue(p.value);
+            }
             else if (p.key == attributes::DateTime) {
                 res.isDateTime = booleanValue(p.value);
             }

@@ -60,6 +60,7 @@ namespace attributes {
     constexpr std::string_view LessEqual = "lessequal";
     constexpr std::string_view Greater = "greater";
     constexpr std::string_view GreaterEqual = "greaterequal";
+    constexpr std::string_view MustExist = "mustexist";
     constexpr std::string_view NotInList = "notinlist";
     constexpr std::string_view NotInRange = "notinrange";
     constexpr std::string_view Reference = "reference";
@@ -227,6 +228,7 @@ struct Variable {
         std::string unequal;
 
         bool isDirectory = false;
+        bool mustExist = true;
         bool isColor = false;
         bool isDateTime = false;
         bool isIdentifier = false;
