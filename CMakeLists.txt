@@ -24,10 +24,10 @@
 
 cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 cmake_policy(VERSION 3.25)
-project(Codegen VERSION 1.0)
+project(Codegen-Tool VERSION 1.0)
 
 add_subdirectory(lib)
 
-add_executable(codegen main.cpp)
-target_link_libraries(codegen PUBLIC codegen-lib)
+add_executable(codegen-tool main.cpp)
+target_link_libraries(codegen-tool PUBLIC codegen-lib)
 
