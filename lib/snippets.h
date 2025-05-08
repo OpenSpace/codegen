@@ -225,7 +225,7 @@ template<typename T> void bakeTo(const ghoul::Dictionary& d, std::string_view ke
     for (size_t i = 1; i <= dict.size(); i++) {
         std::string k = std::to_string(i);
         if (!dict.hasKey(k)) {
-            throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
+            throw ghoul::RuntimeError("Could not find key '" + k + "' in the dictionary");
         }
     }
 
@@ -252,7 +252,7 @@ template <typename T, size_t N> void bakeTo(const ghoul::Dictionary& d, std::str
     for (size_t i = 1; i <= dict.size(); i++) {
         std::string k = std::to_string(i);
         if (!dict.hasKey(k)) {
-            throw std::runtime_error("Could not find key '" + k + "' in the dictionary");
+            throw ghoul::RuntimeError("Could not find key '" + k + "' in the dictionary");
         }
     }
 
