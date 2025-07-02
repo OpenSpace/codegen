@@ -48,38 +48,6 @@ struct CodegenError : public std::runtime_error {
     operator std::string() const noexcept;
 };
 
-namespace attributes {
-    constexpr std::string_view Annotation = "annotation";
-    constexpr std::string_view Color = "color";
-    constexpr std::string_view DateTime = "datetime";
-    constexpr std::string_view Directory = "directory";
-    constexpr std::string_view Identifier = "identifier";
-    constexpr std::string_view InList = "inlist";
-    constexpr std::string_view InRange = "inrange";
-    constexpr std::string_view Less = "less";
-    constexpr std::string_view LessEqual = "lessequal";
-    constexpr std::string_view Greater = "greater";
-    constexpr std::string_view GreaterEqual = "greaterequal";
-    constexpr std::string_view MustExist = "mustexist";
-    constexpr std::string_view NotInList = "notinlist";
-    constexpr std::string_view NotInRange = "notinrange";
-    constexpr std::string_view Reference = "reference";
-    constexpr std::string_view Unequal = "unequal";
-
-    constexpr std::string_view Key = "key";
-
-    constexpr std::string_view Private = "private";
-
-    constexpr std::string_view Dictionary = "Dictionary";
-    constexpr std::string_view NoExhaustive = "noexhaustive";
-    constexpr std::string_view MustBeNotEmpty = "notempty";
-
-    constexpr std::string_view Map = "map";
-    constexpr std::string_view Stringify = "stringify";
-    constexpr std::string_view Arrayify = "arrayify";
-} // namespace attributes
-
-
 struct Struct;
 
 struct StackElement {

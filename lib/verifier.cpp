@@ -24,6 +24,7 @@
 
 #include "verifier.h"
 
+#include "keywords.h"
 #include <cassert>
 #include <format>
 
@@ -57,104 +58,104 @@ namespace {
             type == Type::DMat3x2 || type == Type::DMat3x3 || type == Type::DMat3x4 ||
             type == Type::DMat4x2 || type == Type::DMat4x3 || type == Type::DMat4x4)
         {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.inrange, attributes::InRange);
-            report(attributes.less, attributes::Less);
-            report(attributes.lessequal, attributes::LessEqual);
-            report(attributes.greater, attributes::Greater);
-            report(attributes.greaterequal, attributes::GreaterEqual);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.notinrange, attributes::NotInRange);
-            report(attributes.reference, attributes::Reference);
-            report(attributes.unequal, attributes::Unequal);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDirectory, attributes::Directory);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.inrange, keywords::InRange);
+            report(attributes.less, keywords::Less);
+            report(attributes.lessequal, keywords::LessEqual);
+            report(attributes.greater, keywords::Greater);
+            report(attributes.greaterequal, keywords::GreaterEqual);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.notinrange, keywords::NotInRange);
+            report(attributes.reference, keywords::Reference);
+            report(attributes.unequal, keywords::Unequal);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDirectory, keywords::Directory);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
         else if (
             type == Type::Ivec2 || type == Type::Ivec3 || type == Type::Ivec4 ||
             type == Type::Dvec2 || type == Type::Vec2)
         {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.reference, attributes::Reference);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDirectory, attributes::Directory);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.reference, keywords::Reference);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDirectory, keywords::Directory);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
         else if (
             type == Type::Dvec3 || type == Type::Dvec4 ||
             type == Type::Vec3 || type == Type::Vec4)
         {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.reference, attributes::Reference);
-            reportBool(attributes.isDirectory, attributes::Directory);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.reference, keywords::Reference);
+            reportBool(attributes.isDirectory, keywords::Directory);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
         else if (type == Type::Int || type == Type::Double || type == Type::Float) {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.reference, attributes::Reference);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDirectory, attributes::Directory);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.reference, keywords::Reference);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDirectory, keywords::Directory);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
         else if (type == Type::String) {
-            report(attributes.inrange, attributes::InRange);
-            report(attributes.less, attributes::Less);
-            report(attributes.lessequal, attributes::LessEqual);
-            report(attributes.greater, attributes::Greater);
-            report(attributes.greaterequal, attributes::GreaterEqual);
-            report(attributes.notinrange, attributes::NotInRange);
-            report(attributes.reference, attributes::Reference);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDirectory, attributes::Directory);
+            report(attributes.inrange, keywords::InRange);
+            report(attributes.less, keywords::Less);
+            report(attributes.lessequal, keywords::LessEqual);
+            report(attributes.greater, keywords::Greater);
+            report(attributes.greaterequal, keywords::GreaterEqual);
+            report(attributes.notinrange, keywords::NotInRange);
+            report(attributes.reference, keywords::Reference);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDirectory, keywords::Directory);
         }
         else if (type == Type::Path) {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.inrange, attributes::InRange);
-            report(attributes.less, attributes::Less);
-            report(attributes.lessequal, attributes::LessEqual);
-            report(attributes.greater, attributes::Greater);
-            report(attributes.greaterequal, attributes::GreaterEqual);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.notinrange, attributes::NotInRange);
-            report(attributes.unequal, attributes::Unequal);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.inrange, keywords::InRange);
+            report(attributes.less, keywords::Less);
+            report(attributes.lessequal, keywords::LessEqual);
+            report(attributes.greater, keywords::Greater);
+            report(attributes.greaterequal, keywords::GreaterEqual);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.notinrange, keywords::NotInRange);
+            report(attributes.unequal, keywords::Unequal);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
         else if (type == Type::Dictionary) {
-            report(attributes.annotation, attributes::Annotation);
-            report(attributes.inlist, attributes::InList);
-            report(attributes.inrange, attributes::InRange);
-            report(attributes.less, attributes::Less);
-            report(attributes.lessequal, attributes::LessEqual);
-            report(attributes.greater, attributes::Greater);
-            report(attributes.greaterequal, attributes::GreaterEqual);
-            report(attributes.notinlist, attributes::NotInList);
-            report(attributes.notinrange, attributes::NotInRange);
-            report(attributes.unequal, attributes::Unequal);
-            reportBool(attributes.isColor, attributes::Color);
-            reportBool(attributes.isDirectory, attributes::Directory);
-            reportBool(attributes.isDateTime, attributes::DateTime);
-            reportBool(attributes.isIdentifier, attributes::Identifier);
-            reportBool(attributes.mustBeNotEmpty, attributes::MustBeNotEmpty);
+            report(attributes.annotation, keywords::Annotation);
+            report(attributes.inlist, keywords::InList);
+            report(attributes.inrange, keywords::InRange);
+            report(attributes.less, keywords::Less);
+            report(attributes.lessequal, keywords::LessEqual);
+            report(attributes.greater, keywords::Greater);
+            report(attributes.greaterequal, keywords::GreaterEqual);
+            report(attributes.notinlist, keywords::NotInList);
+            report(attributes.notinrange, keywords::NotInRange);
+            report(attributes.unequal, keywords::Unequal);
+            reportBool(attributes.isColor, keywords::Color);
+            reportBool(attributes.isDirectory, keywords::Directory);
+            reportBool(attributes.isDateTime, keywords::DateTime);
+            reportBool(attributes.isIdentifier, keywords::Identifier);
+            reportBool(attributes.mustBeNotEmpty, keywords::MustBeNotEmpty);
         }
     }
 

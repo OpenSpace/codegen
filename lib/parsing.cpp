@@ -349,18 +349,18 @@ namespace {
 
         const std::vector<ParseResult> attributes = parseAttribute(line);
         for (const ParseResult& p : attributes) {
-            if (p.key == attributes::Key)               { res.key = p.value; }
-            else if (p.key == attributes::Reference)    { res.reference = p.value; }
-            else if (p.key == attributes::InRange)      { res.inrange = p.value; }
-            else if (p.key == attributes::NotInRange)   { res.notinrange = p.value; }
-            else if (p.key == attributes::Less)         { res.less = p.value; }
-            else if (p.key == attributes::LessEqual)    { res.lessequal = p.value; }
-            else if (p.key == attributes::Greater)      { res.greater = p.value; }
-            else if (p.key == attributes::GreaterEqual) { res.greaterequal = p.value; }
-            else if (p.key == attributes::Unequal)      { res.unequal = p.value; }
-            else if (p.key == attributes::InList)       { res.inlist = p.value; }
-            else if (p.key == attributes::NotInList)    { res.notinlist = p.value; }
-            else if (p.key == attributes::Annotation)   {
+            if (p.key == keywords::Key)               { res.key = p.value; }
+            else if (p.key == keywords::Reference)    { res.reference = p.value; }
+            else if (p.key == keywords::InRange)      { res.inrange = p.value; }
+            else if (p.key == keywords::NotInRange)   { res.notinrange = p.value; }
+            else if (p.key == keywords::Less)         { res.less = p.value; }
+            else if (p.key == keywords::LessEqual)    { res.lessequal = p.value; }
+            else if (p.key == keywords::Greater)      { res.greater = p.value; }
+            else if (p.key == keywords::GreaterEqual) { res.greaterequal = p.value; }
+            else if (p.key == keywords::Unequal)      { res.unequal = p.value; }
+            else if (p.key == keywords::InList)       { res.inlist = p.value; }
+            else if (p.key == keywords::NotInList)    { res.notinlist = p.value; }
+            else if (p.key == keywords::Annotation)   {
                 // Remove \" characters in the middle of the string that users will have
                 // added to make it possible to have an annotation span multiple lines. We
                 // want to maintain the ones in the beginning and the end, so we don't
@@ -375,25 +375,25 @@ namespace {
 
                 res.annotation = v;
             }
-            else if (p.key == attributes::Directory) {
+            else if (p.key == keywords::Directory) {
                 res.isDirectory = booleanValue(p.value);
             }
-            else if (p.key == attributes::MustExist) {
+            else if (p.key == keywords::MustExist) {
                 res.mustExist = booleanValue(p.value);
             }
-            else if (p.key == attributes::DateTime) {
+            else if (p.key == keywords::DateTime) {
                 res.isDateTime = booleanValue(p.value);
             }
-            else if (p.key == attributes::Color) {
+            else if (p.key == keywords::Color) {
                 res.isColor = booleanValue(p.value);
             }
-            else if (p.key == attributes::Identifier) {
+            else if (p.key == keywords::Identifier) {
                 res.isIdentifier = booleanValue(p.value);
             }
-            else if (p.key == attributes::MustBeNotEmpty) {
+            else if (p.key == keywords::MustBeNotEmpty) {
                 res.mustBeNotEmpty = booleanValue(p.value);
             }
-            else if (p.key == attributes::Private) {
+            else if (p.key == keywords::Private) {
                 res.isPrivate = booleanValue(p.value);
             }
             else {
@@ -422,10 +422,10 @@ namespace {
             const std::string_view block = line.substr(begin, endAttr - begin);
             const std::vector<ParseResult> attrs = parseAttribute(block);
             for (const ParseResult& a : attrs) {
-                if (a.key == attributes::Dictionary) {
+                if (a.key == keywords::Dictionary) {
                     s->attributes.dictionary = a.value;
                 }
-                else if (a.key == attributes::NoExhaustive) {
+                else if (a.key == keywords::NoExhaustive) {
                     s->attributes.noExhaustive = (a.value == "true" || a.value.empty());
                 }
                 else {
@@ -478,7 +478,7 @@ namespace {
             const std::vector<ParseResult> attrs = parseAttribute(block);
 
             for (const ParseResult& a : attrs) {
-                if (a.key == attributes::Map) {
+                if (a.key == keywords::Map) {
                     if (a.value.empty()) {
                         throw CodegenError(
                             "The `map` attribute must have a string argument"
@@ -486,10 +486,10 @@ namespace {
                     }
                     e->attributes.mappedTo = a.value;
                 }
-                else if (a.key == attributes::Stringify) {
+                else if (a.key == keywords::Stringify) {
                     e->attributes.stringify = true;
                 }
-                else if (a.key == attributes::Arrayify) {
+                else if (a.key == keywords::Arrayify) {
                     e->attributes.arrayify = true;
                 }
                 else {
