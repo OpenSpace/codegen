@@ -630,7 +630,7 @@ namespace {
     std::pair<size_t, size_t> validStructCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t loc = findKeyword(code, keywords::Dictionary);
+        const size_t loc = findKeyword(code, keywords::Dictionary).first;
         if (loc == std::string_view::npos) {
             // We did't find the attribute
             return { std::string_view::npos, std::string_view::npos };
@@ -691,10 +691,10 @@ namespace {
     std::pair<size_t, size_t> validEnumCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t locEnum = code.find(keywords::Enum);
-        const size_t locStringify = code.find(keywords::Stringify);
-        const size_t locMap = code.find(keywords::Map);
-        const size_t locArray = code.find(keywords::Arrayify);
+        const size_t locEnum = findKeyword(code, keywords::Enum).first;
+        const size_t locStringify = findKeyword(code, keywords::Stringify).first;
+        const size_t locMap = findKeyword(code, keywords::Map).first;
+        const size_t locArray = findKeyword(code, keywords::Arrayify).first;
         const size_t loc = std::min({ locEnum, locStringify, locMap, locArray });
         if (loc == std::string_view::npos) {
             // We didn't find the attribute
@@ -758,13 +758,13 @@ namespace {
     std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t locWrapLua = code.find(keywords::LuaWrap);
-        if (locWrapLua == std::string_view::npos) {
+        const auto [beg, end] = findKeyword(code, keywords::LuaWrap);
+        if (beg == std::string_view::npos) {
             // We didn't find the attribute
             return { std::string_view::npos, std::string_view::npos };
         }
 
-        const size_t start = locWrapLua + keywords::LuaWrap.size();
+        const size_t start = beg;
 
         // Find the end of the attribute
         size_t cursor = code.find(']', start) + 1;
@@ -1214,7 +1214,7 @@ namespace {
         Function* f = new Function;
 
         // Let's see if there is a documentation entry just preceding this function. 
-        f->documentation = precedingComment(code, begin - keywords::LuaWrap.size());
+        f->documentation = precedingComment(code, begin);
 
         // Check if there are any arguments to the luawrap attribute, which would be the
         // custom name that we should use

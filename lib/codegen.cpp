@@ -179,10 +179,10 @@ namespace {
     }
 
     std::string resolveComment(std::string comment) {
-        if (size_t it = findKeyword(comment, keywords::Verbatim); it != std::string::npos)
+        if (auto [b, e] = findKeyword(comment, keywords::Verbatim);
+            b != std::string::npos)
         {
-            const size_t l = keywords::Verbatim.size() + strlen("[[codegen::");
-            it += l;
+            size_t it = e;
             if (comment[it] != '(') {
                 throw CodegenError(std::format(
                     "Malformed codegen::verbatim. Expected ( after token\n{}", comment

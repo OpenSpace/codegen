@@ -31,28 +31,42 @@ namespace keywords {
 
 constexpr std::string_view Verbatim = "verbatim";
 constexpr std::string_view Dictionary = "Dictionary";
-constexpr std::string_view Enum = "[[codegen::enum";
-constexpr std::string_view Stringify = "[[codegen::stringify";
-constexpr std::string_view Map = "[[codegen::map";
-constexpr std::string_view LuaWrap = "[[codegen::luawrap";
-constexpr std::string_view Arrayify = "[[codegen::arrayify";
+constexpr std::string_view Enum = "enum";
+constexpr std::string_view Stringify = "stringify";
+constexpr std::string_view Map = "map";
+constexpr std::string_view LuaWrap = "luawrap";
+constexpr std::string_view Arrayify = "arrayify";
 
 } // namespace keywords
 
-constexpr size_t findKeyword(std::string_view text, std::string_view keyword) {
+/**
+ * Looks for the occurance of a keyword in the provided text. If the full keyword,
+ * including the prefix `[[codegen::` exists, the beginning and last is returned as
+ * indices. If the keyword was not found two `std::string_view::npos` values are returned.
+ */
+constexpr std::pair<size_t, size_t> findKeyword(std::string_view text,
+                                                std::string_view keyword)
+{
     constexpr std::string_view Prefix = "[[codegen::";
+    constexpr std::string_view Postfix = "]]";
 
     const size_t prefixIdx = text.find(Prefix);
     const size_t kwdIdx = text.find(keyword, prefixIdx);
 
     if (prefixIdx == std::string_view::npos || kwdIdx == std::string_view::npos) {
         // One of the components was not found
-        return std::string_view::npos;
+        return { std::string_view::npos, std::string_view::npos };
     }
 
     // We found the keyword if the prefix and the keyword follow each other directly
     const bool found = kwdIdx == (prefixIdx + Prefix.length());
-    return found ? prefixIdx : std::string_view::npos;
+    if (!found) {
+        return { std::string_view::npos, std::string_view::npos };
+    }
+
+    const size_t begin = prefixIdx;
+    const size_t end = kwdIdx + keyword.size();
+    return { begin, end };
 }
 
 #endif // __OPENSPACE_CODEGEN___KEYWORDS___H__
