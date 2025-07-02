@@ -42,7 +42,7 @@
 //#define TYPES_ADD_DEBUG_INFORMATION
 
 struct CodegenError : public std::runtime_error {
-    CodegenError(const std::string& e);
+    explicit CodegenError(const std::string& e);
 
     // We don't really need this operator, but catch2 wants it for a string matcher -.-
     operator std::string() const noexcept;

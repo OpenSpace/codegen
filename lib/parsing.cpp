@@ -486,11 +486,17 @@ namespace {
                     }
                     e->attributes.mappedTo = a.value;
                 }
-                if (a.key == attributes::Stringify) {
+                else if (a.key == attributes::Stringify) {
                     e->attributes.stringify = true;
                 }
-                if (a.key == attributes::Arrayify) {
+                else if (a.key == attributes::Arrayify) {
                     e->attributes.arrayify = true;
+                }
+                else {
+                    throw CodegenError(std::format(
+                        "Unknown attribute '{}' in enum definition found\n{}",
+                        a.key, line
+                    ));
                 }
             }
             cursor = endAttr + 1;
@@ -624,7 +630,7 @@ namespace {
     std::pair<size_t, size_t> validStructCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t loc = code.find(keywords::Dictionary);
+        const size_t loc = findKeyword(code, keywords::Dictionary);
         if (loc == std::string_view::npos) {
             // We did't find the attribute
             return { std::string_view::npos, std::string_view::npos };
@@ -1508,39 +1514,6 @@ namespace {
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
     code = codeStr;
-
-    // Make sure that no unknown keywords are used as that might lead to some confusion
-    {
-        size_t loc = code.find(keywords::Base);
-        while (loc != std::string_view::npos) {
-            // We have found the base and need to check if it matches any known keyword.
-            // We get the location of the next base and look in the substring within.
-            const size_t nextLoc = code.find(keywords::Base, loc + 1);
-            const size_t len =
-                nextLoc != std::string_view::npos ?
-                nextLoc - loc :
-                std::string_view::npos;
-            std::string_view substr = code.substr(loc, len);
-
-            const bool knownKeyword = std::any_of(
-                keywords::AllKeywords.begin(),
-                keywords::AllKeywords.end(),
-                [substr](std::string_view kwd) {
-                    return substr.find(kwd) != std::string_view::npos;
-                }
-            );
-
-            if (!knownKeyword) {
-                throw CodegenError(std::format(
-                    "Found unknown keyword: {}",
-                    substr.substr(0, std::min<size_t>(50, substr.size()))
-                ));
-            }
-
-            // Continue looking
-            loc = nextLoc;
-        }
-    }
 
     // We want to keep track of the line number where we find different parts. Since we
     // remove the code parts that we have successfully dealt with, we need to manually

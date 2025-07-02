@@ -179,8 +179,9 @@ namespace {
     }
 
     std::string resolveComment(std::string comment) {
-        if (size_t it = comment.find(keywords::Verbatim); it != std::string::npos) {
-            const size_t l = keywords::Verbatim.size();
+        if (size_t it = findKeyword(comment, keywords::Verbatim); it != std::string::npos)
+        {
+            const size_t l = keywords::Verbatim.size() + strlen("[[codegen::");
             it += l;
             if (comment[it] != '(') {
                 throw CodegenError(std::format(

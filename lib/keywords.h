@@ -25,31 +25,34 @@
 #ifndef __OPENSPACE_CODEGEN___KEYWORDS___H__
 #define __OPENSPACE_CODEGEN___KEYWORDS___H__
 
-#include <array>
 #include <string_view>
 
 namespace keywords {
 
-constexpr std::string_view Base = "[[codegen::";
-
-constexpr std::string_view Verbatim = "[[codegen::verbatim";
-constexpr std::string_view Dictionary = "[[codegen::Dictionary";
+constexpr std::string_view Verbatim = "verbatim";
+constexpr std::string_view Dictionary = "Dictionary";
 constexpr std::string_view Enum = "[[codegen::enum";
 constexpr std::string_view Stringify = "[[codegen::stringify";
 constexpr std::string_view Map = "[[codegen::map";
 constexpr std::string_view LuaWrap = "[[codegen::luawrap";
 constexpr std::string_view Arrayify = "[[codegen::arrayify";
 
-constexpr std::array AllKeywords = {
-    Verbatim,
-    Dictionary,
-    Enum,
-    Stringify,
-    Map,
-    LuaWrap,
-    Arrayify
-};
-
 } // namespace keywords
+
+constexpr size_t findKeyword(std::string_view text, std::string_view keyword) {
+    constexpr std::string_view Prefix = "[[codegen::";
+
+    const size_t prefixIdx = text.find(Prefix);
+    const size_t kwdIdx = text.find(keyword, prefixIdx);
+
+    if (prefixIdx == std::string_view::npos || kwdIdx == std::string_view::npos) {
+        // One of the components was not found
+        return std::string_view::npos;
+    }
+
+    // We found the keyword if the prefix and the keyword follow each other directly
+    const bool found = kwdIdx == (prefixIdx + Prefix.length());
+    return found ? prefixIdx : std::string_view::npos;
+}
 
 #endif // __OPENSPACE_CODEGEN___KEYWORDS___H__
