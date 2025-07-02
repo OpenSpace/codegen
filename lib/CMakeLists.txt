@@ -28,6 +28,7 @@ target_sources(
   PRIVATE
     codegen.h
     codegen.cpp
+    keywords.h
     parsing.h
     parsing.cpp
     settings.h

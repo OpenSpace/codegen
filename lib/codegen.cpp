@@ -24,6 +24,7 @@
 
 #include "codegen.h"
 
+#include "keywords.h"
 #include "parsing.h"
 #include "settings.h"
 #include "snippets.h"
@@ -178,8 +179,8 @@ namespace {
     }
 
     std::string resolveComment(std::string comment) {
-        if (size_t it = comment.find("codegen::verbatim"); it != std::string::npos) {
-            const size_t l = "codegen::verbatim"sv.size();
+        if (size_t it = comment.find(keywords::Verbatim); it != std::string::npos) {
+            const size_t l = keywords::Verbatim.size();
             it += l;
             if (comment[it] != '(') {
                 throw CodegenError(std::format(

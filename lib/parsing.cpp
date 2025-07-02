@@ -24,6 +24,7 @@
 
 #include "parsing.h"
 
+#include "keywords.h"
 #include "types.h"
 #include "util.h"
 #include <algorithm>
@@ -32,14 +33,9 @@
 #include <format>
 #include <numeric>
 
-namespace {
-    constexpr std::string_view AttributeDictionary = "[[codegen::Dictionary";
-    constexpr std::string_view AttributeEnum = "[[codegen::enum";
-    constexpr std::string_view AttributeStringify = "[[codegen::stringify";
-    constexpr std::string_view AttributeMap = "[[codegen::map";
-    constexpr std::string_view AttributeLuaWrap = "[[codegen::luawrap";
-    constexpr std::string_view AttributeArrayify = "[[codegen::arrayify";
+using namespace std::literals;
 
+namespace {
     /**
      * Extracts everything until the next newline character and updates the \param cursor
      * to the following character. Any whitespaces from the extracted line are trimmed
@@ -628,7 +624,7 @@ namespace {
     std::pair<size_t, size_t> validStructCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t loc = code.find(AttributeDictionary);
+        const size_t loc = code.find(keywords::Dictionary);
         if (loc == std::string_view::npos) {
             // We did't find the attribute
             return { std::string_view::npos, std::string_view::npos };
@@ -689,10 +685,10 @@ namespace {
     std::pair<size_t, size_t> validEnumCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t locEnum = code.find(AttributeEnum);
-        const size_t locStringify = code.find(AttributeStringify);
-        const size_t locMap = code.find(AttributeMap);
-        const size_t locArray = code.find(AttributeArrayify);
+        const size_t locEnum = code.find(keywords::Enum);
+        const size_t locStringify = code.find(keywords::Stringify);
+        const size_t locMap = code.find(keywords::Map);
+        const size_t locArray = code.find(keywords::Arrayify);
         const size_t loc = std::min({ locEnum, locStringify, locMap, locArray });
         if (loc == std::string_view::npos) {
             // We didn't find the attribute
@@ -756,13 +752,13 @@ namespace {
     std::pair<size_t, size_t> validFunctionCode(std::string_view code) {
         assert(!code.empty());
 
-        const size_t locWrapLua = code.find(AttributeLuaWrap);
+        const size_t locWrapLua = code.find(keywords::LuaWrap);
         if (locWrapLua == std::string_view::npos) {
             // We didn't find the attribute
             return { std::string_view::npos, std::string_view::npos };
         }
 
-        const size_t start = locWrapLua + AttributeLuaWrap.size();
+        const size_t start = locWrapLua + keywords::LuaWrap.size();
 
         // Find the end of the attribute
         size_t cursor = code.find(']', start) + 1;
@@ -1212,7 +1208,7 @@ namespace {
         Function* f = new Function;
 
         // Let's see if there is a documentation entry just preceding this function. 
-        f->documentation = precedingComment(code, begin - AttributeLuaWrap.size());
+        f->documentation = precedingComment(code, begin - keywords::LuaWrap.size());
 
         // Check if there are any arguments to the luawrap attribute, which would be the
         // custom name that we should use
@@ -1512,6 +1508,39 @@ namespace {
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
     code = codeStr;
+
+    // Make sure that no unknown keywords are used as that might lead to some confusion
+    {
+        size_t loc = code.find(keywords::Base);
+        while (loc != std::string_view::npos) {
+            // We have found the base and need to check if it matches any known keyword.
+            // We get the location of the next base and look in the substring within.
+            const size_t nextLoc = code.find(keywords::Base, loc + 1);
+            const size_t len =
+                nextLoc != std::string_view::npos ?
+                nextLoc - loc :
+                std::string_view::npos;
+            std::string_view substr = code.substr(loc, len);
+
+            const bool knownKeyword = std::any_of(
+                keywords::AllKeywords.begin(),
+                keywords::AllKeywords.end(),
+                [substr](std::string_view kwd) {
+                    return substr.find(kwd) != std::string_view::npos;
+                }
+            );
+
+            if (!knownKeyword) {
+                throw CodegenError(std::format(
+                    "Found unknown keyword: {}",
+                    substr.substr(0, std::min<size_t>(50, substr.size()))
+                ));
+            }
+
+            // Continue looking
+            loc = nextLoc;
+        }
+    }
 
     // We want to keep track of the line number where we find different parts. Since we
     // remove the code parts that we have successfully dealt with, we need to manually

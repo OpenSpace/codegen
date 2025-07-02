@@ -1,0 +1,55 @@
+/*****************************************************************************************
+ *                                                                                       *
+ * OpenSpace Codegen                                                                     *
+ *                                                                                       *
+ * Copyright (c) 2021-2025                                                               *
+ *                                                                                       *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this  *
+ * software and associated documentation files (the "Software"), to deal in the Software *
+ * without restriction, including without limitation the rights to use, copy, modify,    *
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to    *
+ * permit persons to whom the Software is furnished to do so, subject to the following   *
+ * conditions:                                                                           *
+ *                                                                                       *
+ * The above copyright notice and this permission notice shall be included in all copies *
+ * or substantial portions of the Software.                                              *
+ *                                                                                       *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,   *
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A         *
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT    *
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF  *
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE  *
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                         *
+ ****************************************************************************************/
+
+#ifndef __OPENSPACE_CODEGEN___KEYWORDS___H__
+#define __OPENSPACE_CODEGEN___KEYWORDS___H__
+
+#include <array>
+#include <string_view>
+
+namespace keywords {
+
+constexpr std::string_view Base = "[[codegen::";
+
+constexpr std::string_view Verbatim = "[[codegen::verbatim";
+constexpr std::string_view Dictionary = "[[codegen::Dictionary";
+constexpr std::string_view Enum = "[[codegen::enum";
+constexpr std::string_view Stringify = "[[codegen::stringify";
+constexpr std::string_view Map = "[[codegen::map";
+constexpr std::string_view LuaWrap = "[[codegen::luawrap";
+constexpr std::string_view Arrayify = "[[codegen::arrayify";
+
+constexpr std::array AllKeywords = {
+    Verbatim,
+    Dictionary,
+    Enum,
+    Stringify,
+    Map,
+    LuaWrap,
+    Arrayify
+};
+
+} // namespace keywords
+
+#endif // __OPENSPACE_CODEGEN___KEYWORDS___H__
