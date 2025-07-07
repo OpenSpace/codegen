@@ -81,6 +81,25 @@ Lines, With, Weird,
     // This value has a " in the comment which might cause it to break?
     std::vector<std::string> quoteInComment;
 
+    // What about " second quote " though?
+    int twoQuotesInComment;
+
+    // [[codegen::verbatim(ABC)]]
+    int verbatimComment;
+
+    // [[codegen::verbatim(ABC)]]
+    // direct comment
+    int verbatimAndDirectComment;
+
+    // direct comment
+    // [[codegen::verbatim(ABC)]]
+    int directAndVerbatimComment;
+
+    // direct comment 1
+    // [[codegen::verbatim(ABC)]]
+    // direct comment 2
+    int sandwichedComment;
+
     std::vector<
         int
     > vectorWithLineBreak1;
@@ -184,7 +203,7 @@ Lines, With, Weird,
     Struct* s = code.structs.front();
     REQUIRE(s);
 
-    REQUIRE(s->variables.size() == 41);
+    REQUIRE(s->variables.size() == 46);
     {
         Variable* var = s->variables[0];
         REQUIRE(var);
@@ -408,6 +427,126 @@ Lines, With, Weird,
     {
         Variable* var = s->variables[9];
         REQUIRE(var);
+        CHECK(var->name == "twoQuotesInComment");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "What about \" second quote \" though?");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[10];
+        REQUIRE(var);
+        CHECK(var->name == "verbatimComment");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "[[codegen::verbatim(ABC)]]");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[11];
+        REQUIRE(var);
+        CHECK(var->name == "verbatimAndDirectComment");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "[[codegen::verbatim(ABC)]] direct comment");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[12];
+        REQUIRE(var);
+        CHECK(var->name == "directAndVerbatimComment");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "direct comment [[codegen::verbatim(ABC)]]");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[13];
+        REQUIRE(var);
+        CHECK(var->name == "sandwichedComment");
+        CHECK(generateTypename(var->type) == "int");
+        CHECK(var->comment == "direct comment 1 [[codegen::verbatim(ABC)]] direct comment 2");
+
+        CHECK(var->attributes.annotation.empty());
+        CHECK(var->attributes.greater.empty());
+        CHECK(var->attributes.greaterequal.empty());
+        CHECK(var->attributes.inlist.empty());
+        CHECK(var->attributes.less.empty());
+        CHECK(var->attributes.lessequal.empty());
+        CHECK(var->attributes.inrange.empty());
+        CHECK(var->attributes.notinrange.empty());
+        CHECK(var->attributes.reference.empty());
+        CHECK(var->attributes.unequal.empty());
+        CHECK(!var->attributes.isColor);
+        CHECK(!var->attributes.isDirectory);
+        CHECK(!var->attributes.isDateTime);
+        CHECK(!var->attributes.isIdentifier);
+        CHECK(!var->attributes.mustBeNotEmpty);
+        CHECK(!var->attributes.isPrivate);
+    }
+    {
+        Variable* var = s->variables[14];
+        REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::vector<int>");
 
@@ -429,7 +568,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[10];
+        Variable* var = s->variables[15];
         REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::vector<int>");
@@ -452,7 +591,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[11];
+        Variable* var = s->variables[16];
         REQUIRE(var);
         CHECK(var->name == "vectorWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::vector<int>");
@@ -475,7 +614,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[12];
+        Variable* var = s->variables[17];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -498,7 +637,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[13];
+        Variable* var = s->variables[18];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -521,7 +660,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[14];
+        Variable* var = s->variables[19];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -544,7 +683,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[15];
+        Variable* var = s->variables[20];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -567,7 +706,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[16];
+        Variable* var = s->variables[21];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -590,7 +729,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[17];
+        Variable* var = s->variables[22];
         REQUIRE(var);
         CHECK(var->name == "arrayWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::array<std::string, 5>");
@@ -613,7 +752,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[18];
+        Variable* var = s->variables[23];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::optional<double>");
@@ -636,7 +775,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[19];
+        Variable* var = s->variables[24];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::optional<double>");
@@ -659,7 +798,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[20];
+        Variable* var = s->variables[25];
         REQUIRE(var);
         CHECK(var->name == "optionalWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::optional<double>");
@@ -682,7 +821,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[21];
+        Variable* var = s->variables[26];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -705,7 +844,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[22];
+        Variable* var = s->variables[27];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -728,7 +867,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[23];
+        Variable* var = s->variables[28];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -751,7 +890,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[24];
+        Variable* var = s->variables[29];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -774,7 +913,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[25];
+        Variable* var = s->variables[30];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -797,7 +936,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[26];
+        Variable* var = s->variables[31];
         REQUIRE(var);
         CHECK(var->name == "mapWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::map<std::string, bool>");
@@ -820,7 +959,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[27];
+        Variable* var = s->variables[32];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -843,7 +982,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[28];
+        Variable* var = s->variables[33];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -866,7 +1005,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[29];
+        Variable* var = s->variables[34];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -889,7 +1028,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[30];
+        Variable* var = s->variables[35];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -912,7 +1051,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[31];
+        Variable* var = s->variables[36];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -935,7 +1074,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[32];
+        Variable* var = s->variables[37];
         REQUIRE(var);
         CHECK(var->name == "variantWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::variant<glm::vec2, std::filesystem::path>");
@@ -958,7 +1097,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[33];
+        Variable* var = s->variables[38];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak1");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -981,7 +1120,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[34];
+        Variable* var = s->variables[39];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak2");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1004,7 +1143,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[35];
+        Variable* var = s->variables[40];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak3");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1044,7 +1183,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[36];
+        Variable* var = s->variables[41];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak4");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1067,7 +1206,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[37];
+        Variable* var = s->variables[42];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak5");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1090,7 +1229,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[38];
+        Variable* var = s->variables[43];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak6");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1113,7 +1252,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[39];
+        Variable* var = s->variables[44];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak7");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");
@@ -1136,7 +1275,7 @@ Lines, With, Weird,
         CHECK(!var->attributes.isPrivate);
     }
     {
-        Variable* var = s->variables[40];
+        Variable* var = s->variables[45];
         REQUIRE(var);
         CHECK(var->name == "tupleWithLineBreak8");
         CHECK(generateTypename(var->type) == "std::tuple<glm::mat2x2, glm::dmat4x4, std::string>");

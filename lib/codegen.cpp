@@ -191,13 +191,29 @@ namespace {
             it++;
             const size_t end = comment.find(')', it);
             const std::string argument = comment.substr(it, end - it);
-            comment = argument;
+
+            const size_t endKeyword = end + ")]]"sv.size();
+            if (endKeyword - b == comment.size()) {
+                // If there isn't any other comment, we are done and we emit the argument
+                // to the verbatim function
+                comment = argument;
+            }
+            else {
+                // Otherwise, we need to output code that correctly inserts the verbatim
+                // at the correct position
+                const std::string pre = comment.substr(0, b);
+                const std::string post = comment.substr(endKeyword);
+                comment = std::format(
+                    "std::format(\"{{}}{{}}{{}}\", \"{}\", {}, \"{}\")",
+                    pre, argument, post
+                );
+            }
         }
         else {
-            if (const size_t jt = comment.find('"');
-                jt != std::string::npos && comment[jt - 1] != '\\')
-            {
+            size_t jt = comment.find('"');
+            while (jt != std::string::npos && comment[jt - 1] != '\\') {
                 comment.insert(jt, "\\");
+                jt = comment.find('"', jt + 2); // +1 for \\ and +1 for "
             }
 
             // We add artificial spaces between the multiline comments, which causes there
@@ -375,22 +391,34 @@ std::string writeEnumDocumentation(Enum* e) {
 }
 
 std::string writeVariableDocumentation(Struct* s, Variable* var) {
-    var->comment = resolveComment(var->comment);
-
     const bool isOptional = var->type->tag == VariableType::Tag::OptionalType;
 
     std::string ver = fqn(s, "_");
     std::string v = verifier(var->type, *var, s);
-    std::string result = std::format(
-        "    codegen_{}->documentations.push_back({{{},{},{},{},{}}});\n",
-        ver,
-        var->key,
-        v,
-        isOptional ? "Optional::Yes" : "Optional::No",
-        var->attributes.isPrivate ? "Private::Yes" : "Private::No",
-        var->comment
-    );
-    return result;
+    if (var->comment.empty()) {
+        std::string result = std::format(
+            "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
+            ver,
+            var->key,
+            v,
+            isOptional ? "Optional::Yes" : "Optional::No",
+            var->attributes.isPrivate ? "Private::Yes" : "Private::No"
+        );
+        return result;
+    }
+    else {
+        var->comment = resolveComment(var->comment);
+        std::string result = std::format(
+            "    codegen_{}->documentations.push_back({{{},{},{},{},{}}});\n",
+            ver,
+            var->key,
+            v,
+            isOptional ? "Optional::Yes" : "Optional::No",
+            var->attributes.isPrivate ? "Private::Yes" : "Private::No",
+            var->comment
+        );
+        return result;
+    }
 }
 
 std::string writeStructDocumentation(Struct* s) {
