@@ -72,7 +72,6 @@ constexpr std::pair<size_t, size_t> findKeyword(std::string_view text,
                                                 std::string_view keyword)
 {
     constexpr std::string_view Prefix = "[[codegen::";
-    constexpr std::string_view Postfix = "]]";
 
     const size_t prefixIdx = text.find(Prefix);
     const size_t kwdIdx = text.find(keyword, prefixIdx);
