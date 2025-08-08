@@ -39,10 +39,6 @@ namespace {
 
     std::vector<std::string> List = { "F", "G", "H", "I", "J" };
 
-    // We have a lot of padding bytes in this struct (>200 which many static code
-    // analyzers don't like. If we align our struct on 4-byte boundaries we get rid of
-    // most of them and since this is just a test we don't really pay for it either
-#pragma pack (4)
     struct [[codegen::Dictionary(Attributes)]] Parameters {
         // keyValue documentation
         float keyValue [[codegen::key("KeyKey")]];
@@ -646,10 +642,6 @@ namespace {
             [[codegen::unequal(glm::ivec4(1))]];
 
 
-        // [[codegen::verbatim(description)]]
-        bool descValue;
-
-
         // inListValue1 documentation
         std::string inListValue1 [[codegen::inlist("A", "B", "C", "D", "E")]];
 
@@ -930,6 +922,10 @@ namespace {
 
         // no optionalvector mustexist directory documentation
         std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
+
+
+        // [[codegen::verbatim(description)]]
+        bool descValue;
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace

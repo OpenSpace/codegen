@@ -79,16 +79,8 @@ template <typename T, typename U> [[maybe_unused]] T bake(const std::vector<U>& 
     constexpr std::string_view BakeCustomMap = R"(
 template <typename T, typename K, typename V> [[maybe_unused]] T bake(const std::map<K, V>& v) {
     T res;
-    for (auto [k, v] : v) {
-        std::string key;
-        //if constexpr (std::is_same_v<K, std::string>) {
-            key = std::move(k);
-        //}
-        //else {
-        //    key = codegen::toString(k);
-        //}
-
-        typename T::mapped_type r = bake<typename T::mapped_type>(std::move(v));
+    for (auto [key, value] : v) {
+        typename T::mapped_type r = bake<typename T::mapped_type>(std::move(value));
         res[std::move(key)] = r;
     }
     return res;

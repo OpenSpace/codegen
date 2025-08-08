@@ -653,7 +653,6 @@ TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Map Enum Key:  Documentation", "[Execution][Structs]") {
-    return;
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 

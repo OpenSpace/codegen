@@ -207,11 +207,9 @@ target_sources(
 )
 
 target_link_libraries(codegentest PRIVATE Catch2 codegen-lib openspace-core openspace-module-collection)
-if (MSVC)
-  target_compile_options(codegentest PRIVATE "/MP" "/wd5030")
-else ()
-  target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
-endif ()
+
+set_compile_settings(codegentest)
+
 
 target_precompile_headers(codegentest PRIVATE
   <openspace/documentation/documentation.h>
