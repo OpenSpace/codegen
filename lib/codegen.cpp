@@ -1258,8 +1258,12 @@ Result handleFile(const std::filesystem::path& path) {
         shouldWriteFile = (prev != content);
     }
 
-    if (PreventFileChange && shouldWriteFile) {
-        throw CodegenError(std::format("File '{}' changed", path.filename().string()));
+    if (shouldWriteFile) {
+        if constexpr (PreventFileChange) {
+            throw CodegenError(std::format(
+                "File '{}' changed", path.filename().string()
+            ));
+        }
     }
 
     std::filesystem::path debugDest = destination;
