@@ -253,7 +253,7 @@ std::string fqn(const StackElement* s, std::string_view separator) {
     while (s->parent) {
         s = s->parent;
         names.push_back(s->name);
-    };
+    }
     std::reverse(names.begin(), names.end());
 
     assert(

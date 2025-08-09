@@ -41,10 +41,12 @@
 //     some more information to disambiguate)
 //   - Add support for glm::uvecX
 
-long long totalTime = 0;
-int ChangedFiles = 0;
-int AllFiles = 0;
-bool isVerbose = false;
+namespace {
+    long long totalTime = 0;
+    int ChangedFiles = 0;
+    int AllFiles = 0;
+    bool isVerbose = false;
+} // namespace
 
 namespace fs = std::filesystem;
 
@@ -141,12 +143,12 @@ int main(int argc, char** argv) {
     );
 
     auto end = std::chrono::high_resolution_clock::now();
-    const double ms = (end - beg).count() / 1000000.0;
+    const double ms = static_cast<double>((end - beg).count()) / 1000000.0;
 
     if (PrintTiming) {
         std::cout << std::format(
             "{}/{} files changed in {} ms.  Pure time in codegen: {} ms\n",
-            ChangedFiles, AllFiles, ms, totalTime / 1000000.0
+            ChangedFiles, AllFiles, ms, static_cast<double>(totalTime) / 1000000.0
         );
     }
     else {

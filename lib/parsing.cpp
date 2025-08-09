@@ -671,7 +671,7 @@ namespace {
         const size_t lastNewLine = static_cast<size_t>(cursor);
         cursor = code.find('{', lastNewLine) + 1;
         for (int counter = 1; counter > 0; cursor++) {
-            if (cursor >= static_cast<int64_t>(code.size())) {
+            if (cursor >= code.size()) {
                 throw CodegenError(std::format(
                     "Could not find closing }} of root struct\n{}", code
                 ));
