@@ -65,6 +65,7 @@ namespace {
 } // namespace
 
 CodegenError::CodegenError(const std::string& e) : std::runtime_error(e) {}
+CodegenError::~CodegenError() noexcept = default;
 CodegenError::operator std::string() const noexcept { return what(); }
 
 bool VariableType::isBasicType() const { return tag == Tag::BasicType; }

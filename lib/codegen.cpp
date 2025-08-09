@@ -81,6 +81,15 @@ namespace {
                 }
                 break;
             }
+            case VariableType::Tag::TupleType: {
+                const TupleType* vt = static_cast<const TupleType*>(var);
+                for (VariableType* v : vt->types) {
+                    assert(v);
+                    std::vector<const VariableType*> v1 = usedTypes(v);
+                    res.insert(res.end(), v1.begin(), v1.end());
+                }
+                break;
+            }
             case VariableType::Tag::ArrayType: {
                 const ArrayType* vt = static_cast<const ArrayType*>(var);
                 std::vector<const VariableType*> v1 = usedTypes(vt->type);
@@ -91,15 +100,6 @@ namespace {
                 const VectorType* vt = static_cast<const VectorType*>(var);
                 std::vector<const VariableType*> v1 = usedTypes(vt->type);
                 res.insert(res.end(), v1.begin(), v1.end());
-                break;
-            }
-            case VariableType::Tag::TupleType: {
-                const TupleType* vt = static_cast<const TupleType*>(var);
-                for (VariableType* v : vt->types) {
-                    assert(v);
-                    std::vector<const VariableType*> v1 = usedTypes(v);
-                    res.insert(res.end(), v1.begin(), v1.end());
-                }
                 break;
             }
         }
