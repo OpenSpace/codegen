@@ -642,6 +642,10 @@ namespace {
             [[codegen::unequal(glm::ivec4(1))]];
 
 
+        // [[codegen::verbatim(description)]]
+        bool descValue;
+
+
         // inListValue1 documentation
         std::string inListValue1 [[codegen::inlist("A", "B", "C", "D", "E")]];
 
@@ -922,10 +926,6 @@ namespace {
 
         // no optionalvector mustexist directory documentation
         std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
-
-
-        // [[codegen::verbatim(description)]]
-        bool descValue;
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace

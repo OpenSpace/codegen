@@ -210,6 +210,12 @@ target_link_libraries(codegentest PRIVATE Catch2 codegen-lib openspace-core open
 
 set_compile_settings(codegentest)
 
+if (MSVC)
+  # The unit tests frequently creates stacksizes that are a few hundred kb which can
+  # create stackoverflows. To prevent this, we allocate a larger stack size of 8MB, which
+  # will be good enough to run the existing tests
+  target_link_options(codegentest PRIVATE "/STACK:8388608")
+endif ()
 
 target_precompile_headers(codegentest PRIVATE
   <openspace/documentation/documentation.h>

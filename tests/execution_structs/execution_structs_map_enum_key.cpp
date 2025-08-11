@@ -39,6 +39,7 @@ namespace {
             Key3
         };
 
+        // simpleMap documentation
         std::map<KeyType, std::string> simpleMap;
 
         // optionalMap documentation
