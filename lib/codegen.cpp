@@ -397,7 +397,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     std::string v = verifier(var->type, *var, s);
     if (var->comment.empty()) {
         std::string result = std::format(
-            "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
+            "    codegen_{}->documentations.emplace_back({},{},{},{});\n",
             ver,
             var->key,
             v,
@@ -409,7 +409,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     else {
         var->comment = resolveComment(var->comment);
         std::string result = std::format(
-            "    codegen_{}->documentations.push_back({{{},{},{},{},{}}});\n",
+            "    codegen_{}->documentations.emplace_back({},{},{},{},{});\n",
             ver,
             var->key,
             v,
@@ -1053,8 +1053,8 @@ std::string generateLuaFunction(Function* f) {
     }
 
     result += "        }\n";
-    result += "        catch (const ghoul::lua::LuaError& e) {\n";
-    result += "            return ghoul::lua::luaError(L, e.message);\n";
+    result += "        catch (const ghoul::lua::LuaError& error) {\n";
+    result += "            return ghoul::lua::luaError(L, error.message);\n";
     result += "        }\n";
 
     result += "    },\n";

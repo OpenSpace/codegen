@@ -2398,7 +2398,9 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     CHECK((*p.optionalVectorPrivateValue)[2] == "vwxyzz");
 }
 
-TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]") {
+// This test is split into two parts as both Visual Studio and GCC had issues with the
+// stack size
+TEST_CASE("Execution/Structs/Attributes:  Documentation 1/2", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
@@ -4265,6 +4267,13 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         REQUIRE(v);
         CHECK(v->value == -25.0);
     }
+}
+
+TEST_CASE("Execution/Structs/Attributes:  Documentation 2/2", "[Execution][Structs]") {
+    using namespace openspace::documentation;
+    Documentation doc = codegen::doc<Parameters>("");
+
+    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[128];
         CHECK(e.key == "GreaterEqualValueFloatVector");
@@ -4323,7 +4332,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<DoubleVector2Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<DoubleVector2Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -4366,7 +4375,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<DoubleVector3Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<DoubleVector3Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -4409,7 +4418,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<DoubleVector4Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<DoubleVector4Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -4452,7 +4461,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<IntVector2Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<IntVector2Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -4495,7 +4504,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<IntVector3Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<IntVector3Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -4538,7 +4547,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         GreaterEqualVerifier<IntVector4Verifier>* w =
             dynamic_cast<GreaterEqualVerifier<IntVector4Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -4666,7 +4675,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<DoubleVector2Verifier>* w =
             dynamic_cast<UnequalVerifier<DoubleVector2Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec2(1.f));
     }
@@ -4709,7 +4718,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<DoubleVector3Verifier>* w =
             dynamic_cast<UnequalVerifier<DoubleVector3Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec3(1.f));
     }
@@ -4752,7 +4761,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<DoubleVector4Verifier>* w =
             dynamic_cast<UnequalVerifier<DoubleVector4Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::dvec4(1.f));
     }
@@ -4795,7 +4804,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<IntVector2Verifier>* w =
             dynamic_cast<UnequalVerifier<IntVector2Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec2(1));
     }
@@ -4838,7 +4847,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<IntVector3Verifier>* w =
             dynamic_cast<UnequalVerifier<IntVector3Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
@@ -4881,7 +4890,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<IntVector4Verifier>* w =
             dynamic_cast<UnequalVerifier<IntVector4Verifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == glm::ivec4(1));
     }
@@ -4932,7 +4941,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "String");
         InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
@@ -4974,7 +4983,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "String");
         InListVerifier<StringVerifier>* w = dynamic_cast<InListVerifier<StringVerifier>*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
@@ -5017,7 +5026,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         NotInListVerifier<StringVerifier>* w =
             dynamic_cast<NotInListVerifier<StringVerifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->values == std::vector<std::string>{ "A", "B", "C", "D", "E" });
     }
@@ -5060,7 +5069,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         NotInListVerifier<StringVerifier>* w =
             dynamic_cast<NotInListVerifier<StringVerifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->values == std::vector<std::string>{ "F", "G", "H", "I", "J" });
     }
@@ -5103,7 +5112,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         UnequalVerifier<StringVerifier>* w =
             dynamic_cast<UnequalVerifier<StringVerifier>*>(
                 v->documentations[0].verifier.get()
-            );
+                );
         REQUIRE(w);
         CHECK(w->value == "abcdef");
     }
@@ -5190,7 +5199,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -5219,7 +5228,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -5248,7 +5257,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -5266,14 +5275,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
         CHECK(w->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
             w->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(u);
         CHECK(u->identifier == "abc");
     }
@@ -5291,7 +5300,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* w = dynamic_cast<ReferencingVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->identifier == "abc");
     }
@@ -5309,14 +5318,14 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
         CHECK(w->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
             w->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(u);
         CHECK(u->identifier == "abc");
     }
@@ -5339,7 +5348,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(w->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* u = dynamic_cast<ReferencingVerifier*>(
             w->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(u);
         CHECK(u->identifier == "abc");
     }
@@ -5357,7 +5366,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
@@ -5369,7 +5378,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(u->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* x = dynamic_cast<ReferencingVerifier*>(
             u->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(x);
         CHECK(x->identifier == "abc");
     }
@@ -5410,7 +5419,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Table");
         TableVerifier* w = dynamic_cast<TableVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
@@ -5422,7 +5431,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(u->documentations[0].verifier->type() == "Table");
         ReferencingVerifier* x = dynamic_cast<ReferencingVerifier*>(
             u->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(x);
         CHECK(x->identifier == "abc");
     }
@@ -5761,7 +5770,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -5778,7 +5787,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -5834,7 +5843,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -5873,7 +5882,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(!w->mustExist());
     }
@@ -5890,7 +5899,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "File");
         FileVerifier* w = dynamic_cast<FileVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(!w->mustExist());
     }
@@ -5929,7 +5938,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -5946,7 +5955,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -5985,7 +5994,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -6002,7 +6011,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(w->mustExist());
     }
@@ -6041,7 +6050,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(!w->mustExist());
     }
@@ -6058,7 +6067,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation", "[Execution][Structs]"
         CHECK(v->documentations[0].verifier->type() == "Directory");
         DirectoryVerifier* w = dynamic_cast<DirectoryVerifier*>(
             v->documentations[0].verifier.get()
-        );
+            );
         REQUIRE(w);
         CHECK(!w->mustExist());
     }
