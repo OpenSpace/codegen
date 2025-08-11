@@ -217,8 +217,8 @@ if (MSVC)
   target_link_options(codegentest PRIVATE "/STACK:8388608")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # On GNU, we are running into limits of variable tracking restrictions, so similarly, we
-  # need to increase the limit
-  target_compile_options(codegentest PRIVATE "--param=max-vartrack-size=1000000")
+  # disable that tracking since we don't intend to debug this unit test application anyway
+  target_compile_options(codegentest PRIVATE "-fno-var-tracking-assignments")
 endif ()
 
 target_precompile_headers(codegentest PRIVATE
