@@ -55,7 +55,7 @@ namespace {
     constexpr std::string_view BakeStructPreamble = R"(
 template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
     openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
-    {0} res;
+    {0} res = {{}};
 )";
 
     constexpr std::string_view BakeEnum = R"(
