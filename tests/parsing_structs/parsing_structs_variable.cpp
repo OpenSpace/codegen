@@ -3922,7 +3922,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/Structs/Variable:  Variant Types 1/2", "[Parsing][Structs]") {
+TEST_CASE("Parsing/Structs/Variable:  Variant Types", "[Parsing][Structs]") {
     constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::variant<std::string, float, bool> boolVariable;
@@ -4930,107 +4930,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(!var->attributes.mustBeNotEmpty);
         CHECK(!var->attributes.isPrivate);
     }
-
-    const std::string r = generateResult(code);
-    CHECK(!r.empty());
-}
-
-TEST_CASE("Parsing/Structs/Variable:  Variant Types 2/2", "[Parsing][Structs]") {
-    constexpr std::string_view Source = R"(
-struct [[codegen::Dictionary(Name)]] Parameters {
-    std::variant<std::string, float, bool> boolVariable;
-    std::variant<std::string, float, int> intVariable;
-    std::variant<std::string, float, double> doubleValue;
-    std::variant<std::string, double, float> floatValue;
-    std::variant<int, float, std::string> stringValue;
-    std::variant<std::string, float, glm::ivec2> ivec2Value;
-    std::variant<std::string, float, glm::ivec3> ivec3Value;
-    std::variant<std::string, float, glm::ivec4> ivec4Value;
-    std::variant<std::string, float, glm::dvec2> dvec2Value;
-    std::variant<std::string, float, glm::dvec3> dvec3Value;
-    std::variant<std::string, float, glm::dvec4> dvec4Value;
-    std::variant<std::string, float, glm::vec2> vec2Value;
-    std::variant<std::string, float, glm::vec3> vec3Value;
-    std::variant<std::string, float, glm::vec4> vec4Value;
-    std::variant<std::string, float, glm::mat2x2> mat2x2Value;
-    std::variant<std::string, float, glm::mat2> mat2Value;
-    std::variant<std::string, float, glm::mat2x3> mat2x3Value;
-    std::variant<std::string, float, glm::mat2x4> mat2x4Value;
-    std::variant<std::string, float, glm::mat3x2> mat3x2Value;
-    std::variant<std::string, float, glm::mat3x3> mat3x3Value;
-    std::variant<std::string, float, glm::mat3> mat3Value;
-    std::variant<std::string, float, glm::mat3x4> mat3x4Value;
-    std::variant<std::string, float, glm::mat4x2> mat4x2Value;
-    std::variant<std::string, float, glm::mat4x3> mat4x3Value;
-    std::variant<std::string, float, glm::mat4x4> mat4x4Value;
-    std::variant<std::string, float, glm::mat4> mat4Value;
-    std::variant<std::string, float, glm::dmat2x2> dmat2x2Value;
-    std::variant<std::string, float, glm::dmat2> dmat2Value;
-    std::variant<std::string, float, glm::dmat2x3> dmat2x3Value;
-    std::variant<std::string, float, glm::dmat2x4> dmat2x4Value;
-    std::variant<std::string, float, glm::dmat3x2> dmat3x2Value;
-    std::variant<std::string, float, glm::dmat3x3> dmat3x3Value;
-    std::variant<std::string, float, glm::dmat3> dmat3Value;
-    std::variant<std::string, float, glm::dmat3x4> dmat3x4Value;
-    std::variant<std::string, float, glm::dmat4x2> dmat4x2Value;
-    std::variant<std::string, float, glm::dmat4x3> dmat4x3Value;
-    std::variant<std::string, float, glm::dmat4x4> dmat4x4Value;
-    std::variant<std::string, float, glm::dmat4> dmat4Value;
-
-    std::variant<bool, std::string, float> boolVariableInvert;
-    std::variant<int, std::string, float> intVariableInvert;
-    std::variant<double, std::string, float> doubleValueInvert;
-    std::variant<float, std::string, double> floatValueInvert;
-    std::variant<std::string, int, float> stringValueInvert;
-    std::variant<glm::ivec2, std::string, float> ivec2ValueInvert;
-    std::variant<glm::ivec3, std::string, float> ivec3ValueInvert;
-    std::variant<glm::ivec4, std::string, float> ivec4ValueInvert;
-    std::variant<glm::dvec2, std::string, float> dvec2ValueInvert;
-    std::variant<glm::dvec3, std::string, float> dvec3ValueInvert;
-    std::variant<glm::dvec4, std::string, float> dvec4ValueInvert;
-    std::variant<glm::vec2, std::string, float> vec2ValueInvert;
-    std::variant<glm::vec3, std::string, float> vec3ValueInvert;
-    std::variant<glm::vec4, std::string, float> vec4ValueInvert;
-    std::variant<glm::mat2x2, std::string, float> mat2x2ValueInvert;
-    std::variant<glm::mat2, std::string, float> mat2ValueInvert;
-    std::variant<glm::mat2x3, std::string, float> mat2x3ValueInvert;
-    std::variant<glm::mat2x4, std::string, float> mat2x4ValueInvert;
-    std::variant<glm::mat3x2, std::string, float> mat3x2ValueInvert;
-    std::variant<glm::mat3x3, std::string, float> mat3x3ValueInvert;
-    std::variant<glm::mat3, std::string, float> mat3ValueInvert;
-    std::variant<glm::mat3x4, std::string, float> mat3x4ValueInvert;
-    std::variant<glm::mat4x2, std::string, float> mat4x2ValueInvert;
-    std::variant<glm::mat4x3, std::string, float> mat4x3ValueInvert;
-    std::variant<glm::mat4x4, std::string, float> mat4x4ValueInvert;
-    std::variant<glm::mat4, std::string, float> mat4ValueInvert;
-    std::variant<glm::dmat2x2, std::string, float> dmat2x2ValueInvert;
-    std::variant<glm::dmat2, std::string, float> dmat2ValueInvert;
-    std::variant<glm::dmat2x3, std::string, float> dmat2x3ValueInvert;
-    std::variant<glm::dmat2x4, std::string, float> dmat2x4ValueInvert;
-    std::variant<glm::dmat3x2, std::string, float> dmat3x2ValueInvert;
-    std::variant<glm::dmat3x3, std::string, float> dmat3x3ValueInvert;
-    std::variant<glm::dmat3, std::string, float> dmat3ValueInvert;
-    std::variant<glm::dmat3x4, std::string, float> dmat3x4ValueInvert;
-    std::variant<glm::dmat4x2, std::string, float> dmat4x2ValueInvert;
-    std::variant<glm::dmat4x3, std::string, float> dmat4x3ValueInvert;
-    std::variant<glm::dmat4x4, std::string, float> dmat4x4ValueInvert;
-    std::variant<glm::dmat4, std::string, float> dmat4ValueInvert;
-};
-)";
-    Code code = parse(Source);
-    REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.empty());
-    CHECK(code.luaWrapperFunctions.empty());
-    Struct* s = code.structs.front();
-    REQUIRE(s);
-
-    CHECK(s->name == "Parameters");
-    CHECK(s->comment.empty());
-    CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.noExhaustive);
-    CHECK(s->parent == nullptr);
-    CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 76);
     {
         Variable* var = s->variables[38];
         REQUIRE(var);
@@ -5948,7 +5847,7 @@ struct [[codegen::Dictionary(Name)]] Parameters {
     CHECK(!r.empty());
 }
 
-TEST_CASE("Parsing/Structs/Variable:  Tuple Types 1/2", "[Parsing][Structs]") {
+TEST_CASE("Parsing/Structs/Variable:  Tuple Types", "[Parsing][Structs]") {
     constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Name)]] Parameters {
     std::tuple<std::string, float, bool> boolVariable;
@@ -6956,104 +6855,6 @@ struct [[codegen::Dictionary(Name)]] Parameters {
         CHECK(!var->attributes.mustBeNotEmpty);
         CHECK(!var->attributes.isPrivate);
     }
-}
-
-TEST_CASE("Parsing/Structs/Variable:  Tuple Types 2/2", "[Parsing][Structs]") {
-    constexpr std::string_view Source = R"(
-struct [[codegen::Dictionary(Name)]] Parameters {
-    std::tuple<std::string, float, bool> boolVariable;
-    std::tuple<std::string, float, int> intVariable;
-    std::tuple<std::string, float, double> doubleValue;
-    std::tuple<std::string, float, float> floatValue;
-    std::tuple<std::string, float, std::string> stringValue;
-    std::tuple<std::string, float, glm::ivec2> ivec2Value;
-    std::tuple<std::string, float, glm::ivec3> ivec3Value;
-    std::tuple<std::string, float, glm::ivec4> ivec4Value;
-    std::tuple<std::string, float, glm::dvec2> dvec2Value;
-    std::tuple<std::string, float, glm::dvec3> dvec3Value;
-    std::tuple<std::string, float, glm::dvec4> dvec4Value;
-    std::tuple<std::string, float, glm::vec2> vec2Value;
-    std::tuple<std::string, float, glm::vec3> vec3Value;
-    std::tuple<std::string, float, glm::vec4> vec4Value;
-    std::tuple<std::string, float, glm::mat2x2> mat2x2Value;
-    std::tuple<std::string, float, glm::mat2> mat2Value;
-    std::tuple<std::string, float, glm::mat2x3> mat2x3Value;
-    std::tuple<std::string, float, glm::mat2x4> mat2x4Value;
-    std::tuple<std::string, float, glm::mat3x2> mat3x2Value;
-    std::tuple<std::string, float, glm::mat3x3> mat3x3Value;
-    std::tuple<std::string, float, glm::mat3> mat3Value;
-    std::tuple<std::string, float, glm::mat3x4> mat3x4Value;
-    std::tuple<std::string, float, glm::mat4x2> mat4x2Value;
-    std::tuple<std::string, float, glm::mat4x3> mat4x3Value;
-    std::tuple<std::string, float, glm::mat4x4> mat4x4Value;
-    std::tuple<std::string, float, glm::mat4> mat4Value;
-    std::tuple<std::string, float, glm::dmat2x2> dmat2x2Value;
-    std::tuple<std::string, float, glm::dmat2> dmat2Value;
-    std::tuple<std::string, float, glm::dmat2x3> dmat2x3Value;
-    std::tuple<std::string, float, glm::dmat2x4> dmat2x4Value;
-    std::tuple<std::string, float, glm::dmat3x2> dmat3x2Value;
-    std::tuple<std::string, float, glm::dmat3x3> dmat3x3Value;
-    std::tuple<std::string, float, glm::dmat3> dmat3Value;
-    std::tuple<std::string, float, glm::dmat3x4> dmat3x4Value;
-    std::tuple<std::string, float, glm::dmat4x2> dmat4x2Value;
-    std::tuple<std::string, float, glm::dmat4x3> dmat4x3Value;
-    std::tuple<std::string, float, glm::dmat4x4> dmat4x4Value;
-    std::tuple<std::string, float, glm::dmat4> dmat4Value;
-
-    std::tuple<bool, std::string, float> boolVariableInvert;
-    std::tuple<int, std::string, float> intVariableInvert;
-    std::tuple<double, std::string, float> doubleValueInvert;
-    std::tuple<float, std::string, float> floatValueInvert;
-    std::tuple<std::string, std::string, float> stringValueInvert;
-    std::tuple<glm::ivec2, std::string, float> ivec2ValueInvert;
-    std::tuple<glm::ivec3, std::string, float> ivec3ValueInvert;
-    std::tuple<glm::ivec4, std::string, float> ivec4ValueInvert;
-    std::tuple<glm::dvec2, std::string, float> dvec2ValueInvert;
-    std::tuple<glm::dvec3, std::string, float> dvec3ValueInvert;
-    std::tuple<glm::dvec4, std::string, float> dvec4ValueInvert;
-    std::tuple<glm::vec2, std::string, float> vec2ValueInvert;
-    std::tuple<glm::vec3, std::string, float> vec3ValueInvert;
-    std::tuple<glm::vec4, std::string, float> vec4ValueInvert;
-    std::tuple<glm::mat2x2, std::string, float> mat2x2ValueInvert;
-    std::tuple<glm::mat2, std::string, float> mat2ValueInvert;
-    std::tuple<glm::mat2x3, std::string, float> mat2x3ValueInvert;
-    std::tuple<glm::mat2x4, std::string, float> mat2x4ValueInvert;
-    std::tuple<glm::mat3x2, std::string, float> mat3x2ValueInvert;
-    std::tuple<glm::mat3x3, std::string, float> mat3x3ValueInvert;
-    std::tuple<glm::mat3, std::string, float> mat3ValueInvert;
-    std::tuple<glm::mat3x4, std::string, float> mat3x4ValueInvert;
-    std::tuple<glm::mat4x2, std::string, float> mat4x2ValueInvert;
-    std::tuple<glm::mat4x3, std::string, float> mat4x3ValueInvert;
-    std::tuple<glm::mat4x4, std::string, float> mat4x4ValueInvert;
-    std::tuple<glm::mat4, std::string, float> mat4ValueInvert;
-    std::tuple<glm::dmat2x2, std::string, float> dmat2x2ValueInvert;
-    std::tuple<glm::dmat2, std::string, float> dmat2ValueInvert;
-    std::tuple<glm::dmat2x3, std::string, float> dmat2x3ValueInvert;
-    std::tuple<glm::dmat2x4, std::string, float> dmat2x4ValueInvert;
-    std::tuple<glm::dmat3x2, std::string, float> dmat3x2ValueInvert;
-    std::tuple<glm::dmat3x3, std::string, float> dmat3x3ValueInvert;
-    std::tuple<glm::dmat3, std::string, float> dmat3ValueInvert;
-    std::tuple<glm::dmat3x4, std::string, float> dmat3x4ValueInvert;
-    std::tuple<glm::dmat4x2, std::string, float> dmat4x2ValueInvert;
-    std::tuple<glm::dmat4x3, std::string, float> dmat4x3ValueInvert;
-    std::tuple<glm::dmat4x4, std::string, float> dmat4x4ValueInvert;
-    std::tuple<glm::dmat4, std::string, float> dmat4ValueInvert;
-};
-)";
-    Code code = parse(Source);
-    REQUIRE(code.structs.size() == 1);
-    CHECK(code.enums.empty());
-    CHECK(code.luaWrapperFunctions.empty());
-    Struct* s = code.structs.front();
-    REQUIRE(s);
-
-    CHECK(s->name == "Parameters");
-    CHECK(s->comment.empty());
-    CHECK(s->attributes.dictionary == "Name");
-    CHECK(s->attributes.noExhaustive);
-    CHECK(s->parent == nullptr);
-    CHECK(s->children.empty());
-    REQUIRE(s->variables.size() == 76);
     {
         Variable* var = s->variables[38];
         REQUIRE(var);

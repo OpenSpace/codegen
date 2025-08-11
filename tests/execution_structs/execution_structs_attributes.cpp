@@ -642,10 +642,6 @@ namespace {
             [[codegen::unequal(glm::ivec4(1))]];
 
 
-        // [[codegen::verbatim(description)]]
-        bool descValue;
-
-
         // inListValue1 documentation
         std::string inListValue1 [[codegen::inlist("A", "B", "C", "D", "E")]];
 
@@ -926,6 +922,10 @@ namespace {
 
         // no optionalvector mustexist directory documentation
         std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
+
+
+        // [[codegen::verbatim(description)]]
+        bool descValue;
     };
 #include "execution_structs_attributes_codegen.cpp"
 } // namespace
@@ -2400,7 +2400,7 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
 
 // This test is split into two parts as both Visual Studio and GCC had issues with the
 // stack size
-TEST_CASE("Execution/Structs/Attributes:  Documentation 1/8", "[Execution][Structs]") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation 1/2", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
@@ -2876,13 +2876,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 1/8", "[Execution][Struc
         CHECK(v->lower == -0.5);
         CHECK(v->upper == 0.5);
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 2/8", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[32];
         CHECK(e.key == "NotInRangeValueFloatVector");
@@ -3361,13 +3354,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 2/8", "[Execution][Struc
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 3/4", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[64];
         CHECK(e.key == "LessValueVec4Optional");
@@ -3828,13 +3814,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 3/4", "[Execution][Struc
         REQUIRE(w);
         CHECK(w->value == glm::ivec3(1));
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 4/8", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[96];
         CHECK(e.key == "LessEqualValueIVec4");
@@ -4290,7 +4269,7 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 4/8", "[Execution][Struc
     }
 }
 
-TEST_CASE("Execution/Structs/Attributes:  Documentation 5/8", "[Execution][Structs]") {
+TEST_CASE("Execution/Structs/Attributes:  Documentation 2/2", "[Execution][Structs]") {
     using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
@@ -4755,13 +4734,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 5/8", "[Execution][Struc
         REQUIRE(v);
         CHECK(v->value == glm::dvec4(1.f));
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 6/8", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[160];
         CHECK(e.key == "UnequalValueVec4Optional");
@@ -5213,13 +5185,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 6/8", "[Execution][Struc
         REQUIRE(v);
         CHECK(v->identifier == "abc");
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 7/8", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[192];
         CHECK(e.key == "ReferenceValueVector");
@@ -5689,13 +5654,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 7/8", "[Execution][Struc
         CHECK(e.verifier->type() == "Identifier");
         CHECK(dynamic_cast<IdentifierVerifier*>(e.verifier.get()));
     }
-}
-
-TEST_CASE("Execution/Structs/Attributes:  Documentation 8/8", "[Execution][Structs]") {
-    using namespace openspace::documentation;
-    Documentation doc = codegen::doc<Parameters>("");
-
-    REQUIRE(doc.entries.size() == 255);
     {
         const DocumentationEntry& e = doc.entries[224];
         CHECK(e.key == "OptionalIdentifierValue");
