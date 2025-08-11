@@ -215,6 +215,10 @@ if (MSVC)
   # create stackoverflows. To prevent this, we allocate a larger stack size of 8MB, which
   # will be good enough to run the existing tests
   target_link_options(codegentest PRIVATE "/STACK:8388608")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  # On GNU, we are running into limits of variable tracking restrictions, so similarly, we
+  # need to increase the limit
+  target_compile_options(codegentest PRIVATE "--param=max-vartrack-size=1000000")
 endif ()
 
 target_precompile_headers(codegentest PRIVATE
