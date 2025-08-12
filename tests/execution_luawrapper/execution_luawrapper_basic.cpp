@@ -261,7 +261,6 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     SECTION("Basic/TestFunc7") {
         auto panicFunc = [](lua_State* L) -> int {
             CHECK(ranTestFunc7);
-            const int n = lua_gettop(L);
             const std::string msg = lua_tostring(L, -1);
             CHECK(msg == "Thrown Lua error message");
             lua_close(L);

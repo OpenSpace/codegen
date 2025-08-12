@@ -81,6 +81,15 @@ namespace {
                 }
                 break;
             }
+            case VariableType::Tag::TupleType: {
+                const TupleType* vt = static_cast<const TupleType*>(var);
+                for (VariableType* v : vt->types) {
+                    assert(v);
+                    std::vector<const VariableType*> v1 = usedTypes(v);
+                    res.insert(res.end(), v1.begin(), v1.end());
+                }
+                break;
+            }
             case VariableType::Tag::ArrayType: {
                 const ArrayType* vt = static_cast<const ArrayType*>(var);
                 std::vector<const VariableType*> v1 = usedTypes(vt->type);
@@ -91,15 +100,6 @@ namespace {
                 const VectorType* vt = static_cast<const VectorType*>(var);
                 std::vector<const VariableType*> v1 = usedTypes(vt->type);
                 res.insert(res.end(), v1.begin(), v1.end());
-                break;
-            }
-            case VariableType::Tag::TupleType: {
-                const TupleType* vt = static_cast<const TupleType*>(var);
-                for (VariableType* v : vt->types) {
-                    assert(v);
-                    std::vector<const VariableType*> v1 = usedTypes(v);
-                    res.insert(res.end(), v1.begin(), v1.end());
-                }
                 break;
             }
         }
@@ -397,7 +397,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     std::string v = verifier(var->type, *var, s);
     if (var->comment.empty()) {
         std::string result = std::format(
-            "    codegen_{}->documentations.push_back({{{},{},{},{}}});\n",
+            "    codegen_{}->documentations.emplace_back({},{},{},{});\n",
             ver,
             var->key,
             v,
@@ -409,7 +409,7 @@ std::string writeVariableDocumentation(Struct* s, Variable* var) {
     else {
         var->comment = resolveComment(var->comment);
         std::string result = std::format(
-            "    codegen_{}->documentations.push_back({{{},{},{},{},{}}});\n",
+            "    codegen_{}->documentations.emplace_back({},{},{},{},{});\n",
             ver,
             var->key,
             v,
@@ -1053,8 +1053,8 @@ std::string generateLuaFunction(Function* f) {
     }
 
     result += "        }\n";
-    result += "        catch (const ghoul::lua::LuaError& e) {\n";
-    result += "            return ghoul::lua::luaError(L, e.message);\n";
+    result += "        catch (const ghoul::lua::LuaError& error) {\n";
+    result += "            return ghoul::lua::luaError(L, error.message);\n";
     result += "        }\n";
 
     result += "    },\n";
@@ -1258,8 +1258,12 @@ Result handleFile(const std::filesystem::path& path) {
         shouldWriteFile = (prev != content);
     }
 
-    if (PreventFileChange && shouldWriteFile) {
-        throw CodegenError(std::format("File '{}' changed", path.filename().string()));
+    if (shouldWriteFile) {
+        if constexpr (PreventFileChange) {
+            throw CodegenError(std::format(
+                "File '{}' changed", path.filename().string()
+            ));
+        }
     }
 
     std::filesystem::path debugDest = destination;

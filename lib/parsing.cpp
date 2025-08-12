@@ -37,9 +37,9 @@ using namespace std::literals;
 
 namespace {
     /**
-     * Extracts everything until the next newline character and updates the \param cursor
-     * to the following character. Any whitespaces from the extracted line are trimmed
-     * from either end.
+     * Extracts everything until the next newline character and updates the \p cursor to
+     * the following character. Any whitespaces from the extracted line are trimmed from
+     * either end.
      *
      * \param sv The string from which the line is extracted
      * \param cursor The location inside \p sv that is the beginning of the line
@@ -636,12 +636,10 @@ namespace {
             return { std::string_view::npos, std::string_view::npos };
         }
 
-        int64_t cursor = loc;
+        size_t cursor = loc;
         while (code.substr(cursor, loc - cursor).find("struct") == std::string_view::npos)
         {
-            cursor--;
-
-            if (cursor < 0) {
+            if (cursor == 0) {
                 std::string_view sb = code.substr(
                     static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
                     std::min<size_t>(50, code.size() - 1)
@@ -652,6 +650,8 @@ namespace {
                     sb
                 ));
             }
+
+            cursor--;
         }
 
         std::string_view nameCheck = code.substr(cursor, loc - cursor);
@@ -671,7 +671,7 @@ namespace {
         const size_t lastNewLine = static_cast<size_t>(cursor);
         cursor = code.find('{', lastNewLine) + 1;
         for (int counter = 1; counter > 0; cursor++) {
-            if (cursor >= static_cast<int64_t>(code.size())) {
+            if (cursor >= code.size()) {
                 throw CodegenError(std::format(
                     "Could not find closing }} of root struct\n{}", code
                 ));

@@ -65,6 +65,7 @@ namespace {
 } // namespace
 
 CodegenError::CodegenError(const std::string& e) : std::runtime_error(e) {}
+CodegenError::~CodegenError() noexcept = default;
 CodegenError::operator std::string() const noexcept { return what(); }
 
 bool VariableType::isBasicType() const { return tag == Tag::BasicType; }
@@ -252,7 +253,7 @@ std::string fqn(const StackElement* s, std::string_view separator) {
     while (s->parent) {
         s = s->parent;
         names.push_back(s->name);
-    };
+    }
     std::reverse(names.begin(), names.end());
 
     assert(

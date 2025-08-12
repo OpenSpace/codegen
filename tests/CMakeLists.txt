@@ -207,10 +207,18 @@ target_sources(
 )
 
 target_link_libraries(codegentest PRIVATE Catch2 codegen-lib openspace-core openspace-module-collection)
+
+set_compile_settings(codegentest)
+
 if (MSVC)
-  target_compile_options(codegentest PRIVATE "/MP" "/wd5030")
-else ()
-  target_compile_options(codegentest PRIVATE "-Wno-ignored-attributes" "-Wno-attributes")
+  # The unit tests frequently creates stacksizes that are a few hundred kb which can
+  # create stackoverflows. To prevent this, we allocate a larger stack size of 8MB, which
+  # will be good enough to run the existing tests
+  target_link_options(codegentest PRIVATE "/STACK:8388608")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  # On GNU, we are running into limits of variable tracking restrictions, so similarly, we
+  # disable that tracking since we don't intend to debug this unit test application anyway
+  target_compile_options(codegentest PRIVATE "-fno-var-tracking-assignments")
 endif ()
 
 target_precompile_headers(codegentest PRIVATE

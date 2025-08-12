@@ -108,41 +108,41 @@ namespace {
 
 std::string_view bakeFunctionForType(BasicType::Type type) {
     switch (type) {
-        case BasicType::Type::Bool:      return BakeFunctionBool;
-        case BasicType::Type::Int:       return BakeFunctionInt;
-        case BasicType::Type::Double:    return BakeFunctionDouble;
-        case BasicType::Type::Float:     return BakeFunctionFloat;
-        case BasicType::Type::String:    return BakeFunctionString;
-        case BasicType::Type::Path:      return BakeFunctionPath;
-        case BasicType::Type::Ivec2:     return BakeFunctionIVec2;
-        case BasicType::Type::Ivec3:     return BakeFunctionIVec3;
-        case BasicType::Type::Ivec4:     return BakeFunctionIVec4;
-        case BasicType::Type::Dvec2:     return BakeFunctionDVec2;
-        case BasicType::Type::Dvec3:     return BakeFunctionDVec3;
-        case BasicType::Type::Dvec4:     return BakeFunctionDVec4;
-        case BasicType::Type::Vec2:      return BakeFunctionVec2;
-        case BasicType::Type::Vec3:      return BakeFunctionVec3;
-        case BasicType::Type::Vec4:      return BakeFunctionVec4;
-        case BasicType::Type::Mat2x2:    return BakeFunctionMat2x2;
-        case BasicType::Type::Mat2x3:    return BakeFunctionMat2x3;
-        case BasicType::Type::Mat2x4:    return BakeFunctionMat2x4;
-        case BasicType::Type::Mat3x2:    return BakeFunctionMat3x2;
-        case BasicType::Type::Mat3x3:    return BakeFunctionMat3x3;
-        case BasicType::Type::Mat3x4:    return BakeFunctionMat3x4;
-        case BasicType::Type::Mat4x2:    return BakeFunctionMat4x2;
-        case BasicType::Type::Mat4x3:    return BakeFunctionMat4x3;
-        case BasicType::Type::Mat4x4:    return BakeFunctionMat4x4;
-        case BasicType::Type::DMat2x2:   return BakeFunctionDMat2x2;
-        case BasicType::Type::DMat2x3:   return BakeFunctionDMat2x3;
-        case BasicType::Type::DMat2x4:   return BakeFunctionDMat2x4;
-        case BasicType::Type::DMat3x2:   return BakeFunctionDMat3x2;
-        case BasicType::Type::DMat3x3:   return BakeFunctionDMat3x3;
-        case BasicType::Type::DMat3x4:   return BakeFunctionDMat3x4;
-        case BasicType::Type::DMat4x2:   return BakeFunctionDMat4x2;
-        case BasicType::Type::DMat4x3:   return BakeFunctionDMat4x3;
-        case BasicType::Type::DMat4x4:   return BakeFunctionDMat4x4;
+        case BasicType::Type::Bool:       return BakeFunctionBool;
+        case BasicType::Type::Int:        return BakeFunctionInt;
+        case BasicType::Type::Double:     return BakeFunctionDouble;
+        case BasicType::Type::Float:      return BakeFunctionFloat;
+        case BasicType::Type::String:     return BakeFunctionString;
+        case BasicType::Type::Path:       return BakeFunctionPath;
+        case BasicType::Type::Ivec2:      return BakeFunctionIVec2;
+        case BasicType::Type::Ivec3:      return BakeFunctionIVec3;
+        case BasicType::Type::Ivec4:      return BakeFunctionIVec4;
+        case BasicType::Type::Dvec2:      return BakeFunctionDVec2;
+        case BasicType::Type::Dvec3:      return BakeFunctionDVec3;
+        case BasicType::Type::Dvec4:      return BakeFunctionDVec4;
+        case BasicType::Type::Vec2:       return BakeFunctionVec2;
+        case BasicType::Type::Vec3:       return BakeFunctionVec3;
+        case BasicType::Type::Vec4:       return BakeFunctionVec4;
+        case BasicType::Type::Mat2x2:     return BakeFunctionMat2x2;
+        case BasicType::Type::Mat2x3:     return BakeFunctionMat2x3;
+        case BasicType::Type::Mat2x4:     return BakeFunctionMat2x4;
+        case BasicType::Type::Mat3x2:     return BakeFunctionMat3x2;
+        case BasicType::Type::Mat3x3:     return BakeFunctionMat3x3;
+        case BasicType::Type::Mat3x4:     return BakeFunctionMat3x4;
+        case BasicType::Type::Mat4x2:     return BakeFunctionMat4x2;
+        case BasicType::Type::Mat4x3:     return BakeFunctionMat4x3;
+        case BasicType::Type::Mat4x4:     return BakeFunctionMat4x4;
+        case BasicType::Type::DMat2x2:    return BakeFunctionDMat2x2;
+        case BasicType::Type::DMat2x3:    return BakeFunctionDMat2x3;
+        case BasicType::Type::DMat2x4:    return BakeFunctionDMat2x4;
+        case BasicType::Type::DMat3x2:    return BakeFunctionDMat3x2;
+        case BasicType::Type::DMat3x3:    return BakeFunctionDMat3x3;
+        case BasicType::Type::DMat3x4:    return BakeFunctionDMat3x4;
+        case BasicType::Type::DMat4x2:    return BakeFunctionDMat4x2;
+        case BasicType::Type::DMat4x3:    return BakeFunctionDMat4x3;
+        case BasicType::Type::DMat4x4:    return BakeFunctionDMat4x4;
         case BasicType::Type::Dictionary: return BakeFunctionDictionary;
-        default:                         throw std::logic_error("Missing case label");
+        default:                          throw std::logic_error("Missing case label");
     }
 }
 

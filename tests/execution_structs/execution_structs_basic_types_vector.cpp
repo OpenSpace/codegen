@@ -675,22 +675,22 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake", "[Execution][Structs]")
     {
         ghoul::Dictionary v;
         {
-            ghoul::Dictionary d;
-            d.setValue("a", 1);
-            d.setValue("b", 2.0);
-            v.setValue("1", d);
+            ghoul::Dictionary e;
+            e.setValue("a", 1);
+            e.setValue("b", 2.0);
+            v.setValue("1", e);
         }
         {
-            ghoul::Dictionary d;
-            d.setValue("a", 3);
-            d.setValue("b", 4.0);
-            v.setValue("2", d);
+            ghoul::Dictionary e;
+            e.setValue("a", 3);
+            e.setValue("b", 4.0);
+            v.setValue("2", e);
         }
         {
-            ghoul::Dictionary d;
-            d.setValue("a", 5);
-            d.setValue("b", 6.0);
-            v.setValue("3", d);
+            ghoul::Dictionary e;
+            e.setValue("a", 5);
+            e.setValue("b", 6.0);
+            v.setValue("3", e);
         }
         d.setValue("DictValue", v);
     }

@@ -26,8 +26,12 @@ cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 cmake_policy(VERSION 3.25)
 project(Codegen-Tool VERSION 1.0)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings")
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings/common-compile-settings.cmake)
+
 add_subdirectory(lib)
 
 add_executable(codegen-tool main.cpp)
 target_link_libraries(codegen-tool PUBLIC codegen-lib)
 
+set_compile_settings(codegen-tool)

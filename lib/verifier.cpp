@@ -284,7 +284,7 @@ std::string verifierForType(BasicType::Type type, const Variable::Attributes& at
                 else {
                     return "FileVerifier(false)";
                 }
-            };
+            }
         case Type::Ivec2:
             res = "IntVector2Verifier";
             if (!attributes.inrange.empty()) {
