@@ -24,10 +24,10 @@
 
 #include "util.h"
 
-#include <algorithm>
 #include <cassert>
 #include <cctype>
-#include <functional>
+#include <string_view>
+#include <vector>
 
 bool isEmptyLine(std::string_view sv) {
     if (sv.empty()) {

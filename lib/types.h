@@ -26,13 +26,10 @@
 #define __OPENSPACE_CODEGEN___TYPES___H__
 
 #include <filesystem>
-#include <map>
 #include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include <unordered_map>
-#include <variant>
 #include <vector>
 
 // If this is defined, all types are declared with an empty virtual destructor, meaning

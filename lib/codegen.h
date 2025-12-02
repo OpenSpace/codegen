@@ -26,6 +26,7 @@
 #define __OPENSPACE_CODEGEN___CODEGEN___H__
 
 #include <filesystem>
+#include <string>
 
 enum class Result {
     NotProcessed,

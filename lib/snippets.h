@@ -26,6 +26,7 @@
 #define __OPENSPACE_CODEGEN___SNIPPETS___H__
 
 #include "types.h"
+#include <string>
 #include <string_view>
 
 namespace {

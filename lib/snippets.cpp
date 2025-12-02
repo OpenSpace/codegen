@@ -24,8 +24,12 @@
 
 #include "snippets.h"
 
+#include "types.h"
 #include <cassert>
 #include <format>
+#include <stdexcept>
+#include <string>
+#include <string_view>
 #include <unordered_map>
 
 // This file is full of line length violations, but f*ck it;  the generated code would look

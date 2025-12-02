@@ -30,6 +30,11 @@
 #include <charconv>
 #include <format>
 #include <functional>
+#include <stdexcept>
+#include <string>
+#include <string_view>
+#include <system_error>
+#include <vector>
 
 namespace {
     std::string join(const std::vector<std::string_view>& list, std::string_view sep) {

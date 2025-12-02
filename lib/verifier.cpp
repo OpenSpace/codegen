@@ -25,8 +25,13 @@
 #include "verifier.h"
 
 #include "keywords.h"
+#include "types.h"
 #include <cassert>
 #include <format>
+#include <stdexcept>
+#include <string>
+#include <string_view>
+#include <utility>
 
 namespace {
     void reportUnsupportedAttribute(BasicType::Type type,

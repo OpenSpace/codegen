@@ -31,6 +31,7 @@
 [[nodiscard]] bool isEmptyLine(std::string_view sv);
 [[nodiscard]] std::string_view strip(std::string_view sv);
 [[nodiscard]] bool startsWith(std::string_view base, std::string_view test);
-[[nodiscard]] std::vector<std::string_view> extractTemplateTypeList(std::string_view types);
+[[nodiscard]] std::vector<std::string_view> extractTemplateTypeList(
+    std::string_view types);
 
 #endif // __OPENSPACE_CODEGEN___UTIL___H__
