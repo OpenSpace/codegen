@@ -807,9 +807,7 @@ namespace {
     std::string generateEnumResult(const Code& code, HeaderInfo& info) {
         const std::vector<Enum*> enums = collectEnums(code);
 
-
         std::string result;
-        result += "namespace codegen {\n";
 
         // First writing out the the enums defined at the root
         for (Enum* e : code.enums) {
@@ -863,8 +861,15 @@ namespace {
             }
         }
 
-        result += "\n } // namespace codegen\n\n";
-        return result;
+        if (result.empty()) {
+            return "";
+        }
+        else {
+            return std::format(
+                "namespace codegen {{\n{}\n }} // namespace codegen\n\n",
+                result
+            );
+        }
     }
 
     std::string generateLuaFunction(Function* f) {
@@ -1145,7 +1150,6 @@ namespace {
 
         std::string result;
 
-        result += "namespace codegen {\n";
         // The Lua wrapping functions require a bit more of the conversions, like being
         // able to return them wrapped in an optional, vector, etc, so we need to enhance
         // the `bake` function to be able to take care of those types if they arise
@@ -1170,17 +1174,21 @@ namespace {
             }
         }
 
-        // First, we need to define the declarations to handle all of the cases
-        result += hasCustomInMap ? BakeCustomMapDeclaration : "";
-        result += hasCustomInOptional ? BakeCustomOptionalDeclaration : "";
-        result += hasCustomInVector ? BakeCustomVectorDeclaration : "";
+        if (hasCustomInMap || hasCustomInOptional || hasCustomInVector) {
+            result += "namespace codegen {\n";
 
-        // Then we can define them properly
-        result += hasCustomInMap ? BakeCustomMap : "";
-        result += hasCustomInOptional ? BakeCustomOptional : "";
-        result += hasCustomInVector ? BakeCustomVector : "";
+            // First, we need to define the declarations to handle all of the cases
+            result += hasCustomInMap ? BakeCustomMapDeclaration : "";
+            result += hasCustomInOptional ? BakeCustomOptionalDeclaration : "";
+            result += hasCustomInVector ? BakeCustomVectorDeclaration : "";
 
-        result += "} // namespace codegen\n\n";
+            // Then we can define them properly
+            result += hasCustomInMap ? BakeCustomMap : "";
+            result += hasCustomInOptional ? BakeCustomOptional : "";
+            result += hasCustomInVector ? BakeCustomVector : "";
+
+            result += "} // namespace codegen\n\n";
+        }
 
         result += "namespace codegen::lua {\n\n";
 

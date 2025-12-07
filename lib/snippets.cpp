@@ -214,7 +214,7 @@ std::string enumToEnumMapping(Enum* e) {
     std::string mappedTo = e->attributes.mappedTo;
     std::string fullyQualifiedName = fqn(e, "::");
     std::string result = std::format(R"(
-template<> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
+template <> [[maybe_unused]] {0} map<{0}, {1}>({1} value) {{
     switch (value) {{
         // If you end up here following a compiler error saying something about
         // 'illegal qualified name in member declaration' or such nonsense, then you tried
@@ -251,7 +251,7 @@ std::string enumArrayify(Enum* e) {
 
     std::string fullyQualifiedName = fqn(e, "::");
     std::string result = std::format(R"(
-template<> [[maybe_unused]] std::vector<{0}> arrayify() {{
+template <> [[maybe_unused]] std::vector<{0}> arrayify() {{
     return {{
 )", fullyQualifiedName);
 
