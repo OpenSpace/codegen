@@ -301,7 +301,6 @@ template <typename K, typename V> void bakeTo(const ghoul::Dictionary& d, std::s
 }
 )";
 
-
 } // namespace
 
 std::string_view bakeFunctionForType(BasicType::Type type);

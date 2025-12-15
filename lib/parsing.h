@@ -25,9 +25,10 @@
 #ifndef __OPENSPACE_CODEGEN___PARSING___H__
 #define __OPENSPACE_CODEGEN___PARSING___H__
 
-#include "types.h"
 #include <filesystem>
 #include <string_view>
+
+struct Code;
 
 [[nodiscard]] Code parse(std::string_view code,
     const std::filesystem::path& fileName = "");
