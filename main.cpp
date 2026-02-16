@@ -48,6 +48,17 @@ namespace {
     bool isVerbose = false;
 } // namespace
 
+template <>
+struct std::formatter<std::filesystem::path> {
+    constexpr auto parse(std::format_parse_context& ctx) {
+        return ctx.begin();
+    }
+
+    auto format(const std::filesystem::path& path, std::format_context& ctx) const {
+        return std::format_to(ctx.out(), "{}", path.string());
+    }
+};
+
 namespace fs = std::filesystem;
 
 int main(int argc, char** argv) {
@@ -106,8 +117,8 @@ int main(int argc, char** argv) {
                 if (isVerbose) {
                     std::cout << std::format(
                         "Rejecting {}. Extension: {}; Codegen-ness: {}; Ext-ness: {}\n",
-                        path.string(),
-                        path.extension().string(),
+                        path,
+                        path.extension(),
                         path.string().find("_codegen.cpp") == std::string::npos,
                         path.string().find(extFolder) == std::string::npos
                     );

@@ -48,6 +48,17 @@ using namespace std::literals;
 // Set this value to true if you want to prevent changes to files during code refactoring
 constexpr bool PreventFileChange = false;
 
+template <>
+struct std::formatter<std::filesystem::path> {
+    constexpr auto parse(std::format_parse_context& ctx) {
+        return ctx.begin();
+    }
+
+    auto format(const std::filesystem::path& path, std::format_context& ctx) const {
+        return std::format_to(ctx.out(), "{}", path.string());
+    }
+};
+
 namespace {
     std::vector<const VariableType*> usedTypes(const VariableType* var) {
         assert(var);
@@ -1284,9 +1295,7 @@ Result handleFile(const std::filesystem::path& path) {
 
     if (shouldWriteFile) {
         if constexpr (PreventFileChange) {
-            throw CodegenError(std::format(
-                "File '{}' changed", path.filename().string()
-            ));
+            throw CodegenError(std::format("File '{}' changed", path.filename()));
         }
     }
 
@@ -1295,7 +1304,7 @@ Result handleFile(const std::filesystem::path& path) {
     debugDest.replace_filename(debugDest.filename().string() + "_debug.cpp");
 
     if (shouldWriteFile || ShouldAlwaysWriteFiles) {
-        std::cout << std::format("Processed file '{}'\n", path.filename().string());
+        std::cout << std::format("Processed file '{}'\n", path.filename());
 
         std::ofstream r(destination);
         r.write(content.data(), content.size());
