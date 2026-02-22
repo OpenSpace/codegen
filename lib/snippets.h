@@ -40,9 +40,9 @@ namespace {
     constexpr std::string_view BackFunctionFallback = "template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }";
     constexpr std::string_view BakeToFunctionFallback = "template <typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
     constexpr std::string_view MapFunctionFallback = "template <typename T, typename U> [[maybe_unused]] T map(U) { static_assert(sizeof(T) == 0); }";
-    constexpr std::string_view DocumentationFallback = R"(template <typename T> [[maybe_unused]] openspace::documentation::Documentation doc(std::string, [[maybe_unused]] openspace::documentation::Documentation parentDoc = openspace::documentation::Documentation()) {
+    constexpr std::string_view DocumentationFallback = R"(template <typename T> [[maybe_unused]] openspace::Documentation doc(std::string, [[maybe_unused]] openspace::Documentation parentDoc = openspace::Documentation()) {
     static_assert(sizeof(T) == 0);
-    return openspace::documentation::Documentation();
+    return openspace::Documentation();
 }
 )";
 
@@ -55,7 +55,7 @@ namespace {
 
     constexpr std::string_view BakeStructPreamble = R"(
 template <> [[maybe_unused]] {0} bake<{0}>(const ghoul::Dictionary& dict) {{
-    openspace::documentation::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
+    openspace::testSpecificationAndThrow(codegen::doc<{0}>("{0}"), dict, "{1}");
     {0} res = {{}};
 )";
 
@@ -112,13 +112,13 @@ template <typename T, typename U> [[maybe_unused]] T bake(const std::vector<U>& 
 )";
 
     constexpr std::string_view DocumentationPreamble = R"(
-template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std::string id, openspace::documentation::Documentation parentDoc) {{
-    using namespace openspace::documentation;
+template <> [[maybe_unused]] openspace::Documentation doc<{}>(std::string id, openspace::Documentation parentDoc) {{
+    using namespace openspace;
 
 )";
 
     constexpr std::string_view DocumentationEpilog = R"(
-    openspace::documentation::Documentation d = {{
+    openspace::Documentation d = {{
         .name = "{0}",
         .id = std::move(id),
         .description = R"[({2})[",
@@ -133,7 +133,7 @@ template <> [[maybe_unused]] openspace::documentation::Documentation doc<{}>(std
 
 )";
 
-    constexpr std::string_view LuaWrapperPreamble = "static const openspace::scripting::LuaLibrary::Function {} = {{\n";
+    constexpr std::string_view LuaWrapperPreamble = "static const openspace::LuaLibrary::Function {} = {{\n";
 
     constexpr std::string_view LuaWrapperOptionalTypeExtraction = R"(
         {0} {1};

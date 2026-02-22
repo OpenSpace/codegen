@@ -14,7 +14,7 @@ Running the codegen will create a number of functions in the generated `_codegen
 
 If a struct  was marked with `codegen::Dictionary` the following functions will exist (this example assumes that the name of the marked struct was `P`):
  - `P bake(const ghoul::Dictionary&)`:  Will extract the parameters used to create `P` out of the passed Dictionary and will also verify that all parameters that are non-optional do exist and that all parameters have the correct type
- - `openspace::documentation::Documentation doc(std::string, openspace::documentation::Documentation)`:  Returns the documentation object that describes the parameters that a `Dictionary` need to fulfill to be successfully passed into the `bake` function.  The first parameter is the identifier of the documentation which needs to be unique. The optional second argument is a parent Documentation whose entires will be copied
+ - `openspace::Documentation doc(std::string, openspace::Documentation)`:  Returns the documentation object that describes the parameters that a `Dictionary` need to fulfill to be successfully passed into the `bake` function.  The first parameter is the identifier of the documentation which needs to be unique. The optional second argument is a parent Documentation whose entires will be copied
 
 If any enum in the file was marked with the `codegen::map(abc)` attribute the function `codegen::map<myspace::ABC>` is available that returns the corresponding type to the passed in value.
 
@@ -139,7 +139,7 @@ The `codegen::luawrap` attribute can take an optional argument that overwrites t
 ```
 Will be made available as the `foo` function in the Lua context and will generated the following:
 ```cpp
-static const openspace::scripting::LuaLibrary::Function Bar = {
+static const openspace::LuaLibrary::Function Bar = {
     "foo",
     [](lua_State* L) -> int {
         ghoul::lua::checkArgumentsAndThrow(L, { 1, 2 }, "foo");

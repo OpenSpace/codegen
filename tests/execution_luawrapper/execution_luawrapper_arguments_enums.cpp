@@ -31,7 +31,7 @@
 #include <ghoul/misc/dictionary.h>
 #include <optional>
 
-using Function = openspace::scripting::LuaLibrary::Function;
+using Function = openspace::LuaLibrary::Function;
 
 namespace {
     enum class [[codegen::enum]] Enum {

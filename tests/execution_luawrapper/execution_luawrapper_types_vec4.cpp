@@ -32,7 +32,7 @@
 #include <array>
 #include <optional>
 
-using Function = openspace::scripting::LuaLibrary::Function;
+using Function = openspace::LuaLibrary::Function;
 
 namespace {
     [[codegen::luawrap]] void funcVec4(glm::vec4 arg) {

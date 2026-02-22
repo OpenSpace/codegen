@@ -1261,7 +1261,8 @@ std::string generateResult(const Code& code) {
     // quite cumbersome. So instead we now mark whenever someone needs it and we prepend
     // it in this step
     return std::format(
-        "{}{}{}{}{}", FileHeader, header, enums, structs, luaWrapper
+        "{}\nnamespace {{\n{}{}{}{}\n}} // namespace\n",
+        FileHeader, header, enums, structs, luaWrapper
     );
 }
 

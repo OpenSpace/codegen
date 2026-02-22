@@ -32,7 +32,7 @@
 #include <array>
 #include <optional>
 
-using Function = openspace::scripting::LuaLibrary::Function;
+using Function = openspace::LuaLibrary::Function;
 
 namespace {
     [[codegen::luawrap]] void tupleVec3(std::tuple<glm::dvec3> arg) {

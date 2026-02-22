@@ -933,7 +933,7 @@ namespace {
 TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
-    openspace::documentation::Documentation doc;
+    openspace::Documentation doc;
     doc.id = "abc";
     DocEng.addDocumentation(doc);
 

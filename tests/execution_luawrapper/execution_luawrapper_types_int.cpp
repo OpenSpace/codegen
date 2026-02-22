@@ -32,7 +32,7 @@
 #include <array>
 #include <optional>
 
-using Function = openspace::scripting::LuaLibrary::Function;
+using Function = openspace::LuaLibrary::Function;
 
 namespace {
     [[codegen::luawrap]] void funcInt(int arg) {
