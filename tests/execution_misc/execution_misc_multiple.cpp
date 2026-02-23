@@ -41,7 +41,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Misc:  Multiple", "[Execution][Misc]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
 
     Documentation a = codegen::doc<StructA>("abc");
     REQUIRE(a.entries.size() == 1);

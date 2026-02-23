@@ -212,7 +212,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Other:  Documentation Id", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     const Documentation doc1 = codegen::doc<Parameters>("");
     CHECK(doc1.id.empty());
 

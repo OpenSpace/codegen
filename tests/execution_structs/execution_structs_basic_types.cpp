@@ -418,7 +418,7 @@ TEST_CASE("Execution/Structs/Basic/Types:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Basic/Types:  Documentation", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 43);

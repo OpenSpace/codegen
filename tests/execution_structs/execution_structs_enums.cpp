@@ -127,7 +127,7 @@ TEST_CASE("Execution/Structs/Enums:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Enums:  Documentation", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     using namespace std::string_literals;
     Documentation doc = codegen::doc<Parameters>("");
 

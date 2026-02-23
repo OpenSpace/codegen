@@ -109,7 +109,7 @@ TEST_CASE("Execution/Structs/Shadowing:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Shadowing:  Documentation", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     Documentation doc = codegen::doc<P>("");
 
     REQUIRE(doc.entries.size() == 4);

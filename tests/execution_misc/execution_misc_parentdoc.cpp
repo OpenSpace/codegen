@@ -36,7 +36,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Misc:  Parenting", "[Execution][Misc]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
 
     Documentation parent;
     parent.entries.emplace_back("key", std::make_shared<IntVerifier>());

@@ -303,7 +303,7 @@ TEST_CASE("Execution/Structs/Tuple:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Tuple:  Documentation", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 15);

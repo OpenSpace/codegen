@@ -123,7 +123,7 @@ namespace {
 } // namespace
 
 TEST_CASE("Execution/Structs/Comments", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
 
     Documentation d = codegen::doc<Parameters>("abc");
     REQUIRE(d.entries.size() == 14);

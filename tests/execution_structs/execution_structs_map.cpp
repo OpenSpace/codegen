@@ -648,7 +648,7 @@ TEST_CASE("Execution/Structs/Map String Key:  Bake", "[Execution][Structs]") {
 }
 
 TEST_CASE("Execution/Structs/Map String Key:  Documentation", "[Execution][Structs]") {
-    using namespace openspace::documentation;
+    using namespace openspace;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 8);

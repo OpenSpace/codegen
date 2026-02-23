@@ -34,6 +34,8 @@
 #include <variant>
 #include <vector>
 
+using namespace openspace;
+
 namespace {
     std::string description = "Description";
 
@@ -933,7 +935,7 @@ namespace {
 TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;
 
-    openspace::Documentation doc;
+    Documentation doc;
     doc.id = "abc";
     DocEng.addDocumentation(doc);
 
@@ -2401,7 +2403,6 @@ TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
 // This test is split into two parts as both Visual Studio and GCC had issues with the
 // stack size
 TEST_CASE("Execution/Structs/Attributes:  Documentation 1/2", "[Execution][Structs]") {
-    using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 255);
@@ -4270,7 +4271,6 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 1/2", "[Execution][Struc
 }
 
 TEST_CASE("Execution/Structs/Attributes:  Documentation 2/2", "[Execution][Structs]") {
-    using namespace openspace::documentation;
     Documentation doc = codegen::doc<Parameters>("");
 
     REQUIRE(doc.entries.size() == 255);
