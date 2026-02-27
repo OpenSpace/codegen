@@ -662,7 +662,7 @@ namespace {
                 );
 #ifdef WIN32
                 res += std::format("#pragma message({})\n", message);
-#else
+#else // ^^^^ WIN32 // !WIN32 vvvv
                 res += std::format("#warning {}\n", message);
 #endif // WIN32
             }
