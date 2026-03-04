@@ -108,8 +108,8 @@ int main(int argc, char** argv) {
             const std::filesystem::path& path = p.path();
 
             if ((path.extension() == ".cpp" || path.extension() == ".inl") &&
-                path.string().find("_codegen.cpp") == std::string::npos &&
-                path.string().find(extFolder) == std::string::npos)
+                !path.string().contains("_codegen.cpp") &&
+                !path.string().contains(extFolder))
             {
                 entries.push_back(p);
             }
@@ -119,8 +119,8 @@ int main(int argc, char** argv) {
                         "Rejecting {}. Extension: {}; Codegen-ness: {}; Ext-ness: {}\n",
                         path,
                         path.extension(),
-                        path.string().find("_codegen.cpp") == std::string::npos,
-                        path.string().find(extFolder) == std::string::npos
+                        !path.string().contains("_codegen.cpp"),
+                        !path.string().contains(extFolder)
                     );
                 }
             }

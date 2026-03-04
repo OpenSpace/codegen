@@ -289,7 +289,7 @@ namespace {
             p + key.size(),
             beg - (p + key.size()) - 1
         );
-        if (const size_t end = block.find(')', beg);  end == std::string_view::npos) {
+        if (const size_t end = !block.find(')', beg);  end == std::string_view::npos) {
             throw CodegenError(std::format(
                 "Attribute parameter has unterminated parameter list\n{}", block
             ));
@@ -556,7 +556,7 @@ namespace {
         // Remove the trailing ;
         line.remove_suffix(1);
 
-        if (line.find('=') != std::string_view::npos) {
+        if (line.contains('=')) {
             throw CodegenError(std::format(
                 "Found '=' in variable definition but default parameters are not "
                 "allowed\n{}",
@@ -564,7 +564,7 @@ namespace {
             ));
         }
 
-        if (line.find(' ') == std::string_view::npos) {
+        if (!line.contains(' ')) {
             throw CodegenError(std::format(
                 "Variable definition does not contain any empty character\n{}", line
             ));
@@ -644,8 +644,7 @@ namespace {
         }
 
         size_t cursor = loc;
-        while (code.substr(cursor, loc - cursor).find("struct") == std::string_view::npos)
-        {
+        while (!code.substr(cursor, loc - cursor).contains("struct")) {
             if (cursor == 0) {
                 std::string_view sb = code.substr(
                     static_cast<size_t>(std::max(0, static_cast<int>(loc) - 50)),
@@ -849,7 +848,7 @@ namespace {
                     structBuffer += line;
                     structBuffer += " ";
                     // Check if we have a continuation going on
-                    if (line.find('{') == std::string_view::npos) {
+                    if (!line.contains('{')) {
                         continue;
                     }
 
@@ -894,7 +893,7 @@ namespace {
                 }
 
                 if (startsWith(line, "enum class") || isCollectingHeader) {
-                    if (line.find('{') == std::string_view::npos) {
+                    if (!line.contains('{')) {
                         // We opened the line with enum class, but it is not finished, so
                         // we need to collect multiple lines until we do
                         enumBuffer += line;
@@ -984,7 +983,7 @@ namespace {
             assert(e);
             switch (e->type) {
                 case StackElement::Type::Struct: {
-                    if (line.find(';') == std::string_view::npos) {
+                    if (!line.contains(';')) {
                         // No semicolon on this line but we are looking for a variable, so
                         // we are in a definition line that spans multiple lines
                         variableBuffer += line;
@@ -1075,7 +1074,7 @@ namespace {
             }
 
             if (startsWith(line, "enum class") || isCollectingHeader) {
-                if (line.find('{') == std::string_view::npos) {
+                if (!line.contains('{')) {
                     // We opened the line with enum class, but it is not finished, so we
                     // need to collect multiple lines until we do
                     enumBuffer += line;
