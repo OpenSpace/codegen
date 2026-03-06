@@ -303,7 +303,7 @@ namespace {
             );
             std::string comments;
             if (e) {
-                // e is false for subtypes that are not our own structs
+                // `e` is false for subtypes that are not our own structs
                 comments = resolveComment(e->comment);
             }
 
@@ -321,7 +321,7 @@ namespace {
             );
             std::string comments;
             if (e) {
-                // e is false for subtypes that are not our own structs
+                // `e` is false for subtypes that are not our own structs
                 comments = resolveComment(e->comment);
             }
 
@@ -448,7 +448,7 @@ namespace {
             );
         }
         else {
-            // root struct
+            // Root struct
             result = std::format(
                 "    TableVerifier codegen_{0}_content;\n"
                 "    TableVerifier* codegen_{0} = &codegen_{0}_content;\n"
@@ -477,8 +477,8 @@ namespace {
         VariableType* type = var->type;
         if (var->type->tag == VariableType::Tag::OptionalType) {
             // For this case, we don't care about whether the variant is wrapped in an
-            // optional.  The converter code generated for the optional<T> will call the
-            // code generated here.  So we basically just unwrap the optional type here
+            // optional. The converter code generated for the optional<T> will call the
+            // code generated here. So we basically just unwrap the optional type here
             OptionalType* ot = static_cast<OptionalType*>(var->type);
             type = ot->type;
         }
@@ -494,8 +494,8 @@ namespace {
             it != converters.end())
         {
             // This check will trigger if we are using the same type of variant for
-            // multiple variables in the same struct.  If that is the case, we only want
-            // to emit the conversion code once, or else we would get a multiply defined
+            // multiple variables in the same struct. If that is the case, we only want to
+            // emit the conversion code once, or else we would get a multiply defined
             // function definition compile error
             return "";
         }
@@ -971,13 +971,13 @@ namespace {
         }
 
         if (f->arguments.empty()) {
-            // If there are no arguments to the function, it's pretty simple to just
-            // call it
+            // If there are no arguments to the function, it's pretty simple to just call
+            // it
             result += std::format("{}();\n", f->functionName);
         }
         else {
-            // If there are arguments it might get a bit more complicated since we
-            // want to support default initialized arguments.
+            // If there are arguments it might get a bit more complicated since we want to
+            // support default initialized arguments
             result += std::format("{}(\n", f->functionName);
 
             for (size_t i = 0; i < f->arguments.size(); i += 1) {
@@ -990,8 +990,8 @@ namespace {
                     OptionalType* ot = static_cast<OptionalType*>(var->type);
                     // If there is a default argument, the function actually wants the
                     // underlying value, not the std::optional type. We basically check if
-                    // the original optional value was set; if it was, we derefence it and
-                    // use it.
+                    // the original optional value was set; if it was, we dereference it
+                    // and use it.
                     // Otherwise we paste in the stored default value instead.
                     //
                     // An alternative way would be to not provide the optional argument at

@@ -236,7 +236,7 @@ struct Enum : public StackElement {
     struct Attributes {
         bool stringify = false;
         bool arrayify = false;
-        std::string mappedTo; // another FQ enum that values of this should be mapped to
+        std::string mappedTo; // Another FQ enum that values of this should be mapped to
     };
     Attributes attributes;
 };

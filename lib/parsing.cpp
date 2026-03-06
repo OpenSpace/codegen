@@ -950,9 +950,9 @@ namespace {
                 }
 
                 if (startsWith(line, "};")) {
-                    // A bit of a special case for enums.  Since we want to support
+                    // A bit of a special case for enums. Since we want to support
                     // multiple lines for enum value we have to store the line in a buffer
-                    // to check when we are finished.  We use a finalizing , for it, which
+                    // to check when we are finished. We use a finalizing , for it, which
                     // does not have to exist and it would also be annoying to force
                     // people to enter that for every enum and it is error prone.  So we
                     // need to check here if we still have an enum in the buffer and add
@@ -1108,9 +1108,9 @@ namespace {
             }
 
             if (startsWith(line, "};")) {
-                // A bit of a special case for enums.  Since we want to support multiple
+                // A bit of a special case for enums. Since we want to support multiple
                 // lines for enum value we have to store the line in a buffer to check
-                // when we are finished.  We use a finalizing `,` for it, which does not
+                // when we are finished. We use a finalizing `,` for it, which does not
                 // have to exist and it would also be annoying to force people to enter
                 // that for every enum and it is error prone.  So we need to check here if
                 // we still have an enum in the buffer and add that if it is so
@@ -1126,9 +1126,9 @@ namespace {
             }
 
             if (line.back() != ',') {
-                // No comma at the end means that this line is not finished yet.
-                // Though this means that that the last value will be added to the
-                // buffer since it will not be finished
+                // No comma at the end means that this line is not finished yet. Though
+                // this means that that the last value will be added to the buffer since
+                // it will not be finished
                 enumBuffer += line;
                 enumBuffer += ' ';
                 continue;
@@ -1219,7 +1219,7 @@ namespace {
 
         Function* f = new Function;
 
-        // Let's see if there is a documentation entry just preceding this function. 
+        // Let's see if there is a documentation entry just preceding this function
         f->documentation = precedingComment(code, begin);
 
         // Check if there are any arguments to the luawrap attribute, which would be the
@@ -1395,7 +1395,7 @@ namespace {
             }
 
 
-            // There are a few options for characters that follow the name;  either it can
+            // There are a few options for characters that follow the name; either it can
             // be a , meaning that there are more arguments coming, a = representing a
             // default parameter which we don't want to parse (but mark the type as an
             // optional type) or ) which means that we are done parsing the parameter
@@ -1516,7 +1516,7 @@ namespace {
 [[nodiscard]] Code parse(std::string_view code, const std::filesystem::path& fileName) {
     std::string codeStr = std::string(code);
     // When trying to generate code checked out on a Windows machine on a Linux virtual
-    // machine, codegen gets confused with the \r\n vs \n mess.  In order to prevent that
+    // machine, codegen gets confused with the \r\n vs \n mess. In order to prevent that
     // we just remove all of the \r characters here
     codeStr.erase(std::remove(codeStr.begin(), codeStr.end(), '\r'), codeStr.end());
     code = codeStr;

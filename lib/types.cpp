@@ -47,7 +47,7 @@ namespace {
         for (const std::string_view l : list) {
             size += l.size();
         }
-        // this allocates space for one sep more than needed, but it simplifies the loop
+        // This allocates space for one sep more than needed, but it simplifies the loop
         size += sep.size() * (list.size() - 1);
 
         std::string res;
@@ -781,7 +781,6 @@ namespace {
     std::string generateDescriptiveTypename(const CustomType* type) {
         return type->type->name;
     }
-
 } // namespace
 
 std::string generateTypename(const VariableType* type, bool fullyQualified) {

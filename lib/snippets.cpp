@@ -32,8 +32,8 @@
 #include <string_view>
 #include <unordered_map>
 
-// This file is full of line length violations, but f*ck it;  the generated code would look
-// a lot worse if we would break these everywhere or it would be unreadable
+// This file is full of line length violations, but f*ck it;  the generated code would
+// look a lot worse if we would break these everywhere or it would be unreadable
 
 namespace {
     // All of these snippets can probably replaced by a std::format expression that takes
