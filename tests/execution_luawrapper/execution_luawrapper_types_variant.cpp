@@ -79,8 +79,9 @@ namespace {
     [[codegen::luawrap]] std::variant<double, glm::dvec3, std::string> returnVariantDvec3FloatStringString() {
         return "abc";
     }
-#include "execution_luawrapper_types_variant_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_variant_codegen.cpp"
+
 
 TEST_CASE(
     "Execution/LuaWrapper/Arguments:  variant(bool,int) / bool",

@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<int> returnIntVector() {
         return { 1, 2, 3 };
     }
-#include "execution_luawrapper_types_int_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_int_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  int", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncInt;

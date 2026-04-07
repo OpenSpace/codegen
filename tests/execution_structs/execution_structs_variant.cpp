@@ -121,8 +121,9 @@ namespace {
         // variantStringVector
         std::variant<std::string, std::vector<std::string>> variantStringVector;
     };
-#include "execution_structs_variant_codegen.cpp"
 } // namespace
+#include "execution_structs_variant_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Variant:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

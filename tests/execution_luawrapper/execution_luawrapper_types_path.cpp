@@ -130,8 +130,9 @@ namespace {
             std::filesystem::path("ghi")
         };
     }
-#include "execution_luawrapper_types_path_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_path_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  path", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncPath;

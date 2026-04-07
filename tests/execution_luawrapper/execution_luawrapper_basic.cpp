@@ -107,9 +107,9 @@ namespace {
         ranTestFunc7 = false;
         ranTestFunc8 = false;
     }
-
-#include "execution_luawrapper_basic_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_basic_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
     resetTestRuns();

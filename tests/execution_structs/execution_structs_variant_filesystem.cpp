@@ -44,8 +44,9 @@ namespace {
             std::vector<std::filesystem::path>, std::filesystem::path
         > variantPath2;
     };
-#include "execution_structs_variant_filesystem_codegen.cpp"
 } // namespace
+#include "execution_structs_variant_filesystem_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Variant-Filesystem:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

@@ -57,8 +57,9 @@ namespace {
         // optionalVectorDictMap documentation
         std::optional<std::vector<std::map<std::string, ghoul::Dictionary>>> optionalVectorDictMap;
     };
-#include "execution_structs_map_codegen.cpp"
 } // namespace
+#include "execution_structs_map_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Map String Key:  Bake", "[Execution][Structs]") {
     using namespace std::literals;

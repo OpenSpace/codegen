@@ -119,8 +119,9 @@ namespace {
         // direct comment 2
         int sandwichedComment;
     };
-#include "execution_structs_comments_codegen.cpp"
 } // namespace
+#include "execution_structs_comments_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Comments", "[Execution][Structs]") {
     using namespace openspace;

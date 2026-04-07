@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<double> returnDoubleVector() {
         return { 1.1, 2.2, 3.3 };
     }
-#include "execution_luawrapper_types_double_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_double_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  double", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDouble;

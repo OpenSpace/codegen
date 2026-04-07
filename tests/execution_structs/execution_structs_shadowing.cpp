@@ -70,8 +70,9 @@ namespace {
         };
         C c;
     };
-#include "execution_structs_shadowing_codegen.cpp"
 } // namespace
+#include "execution_structs_shadowing_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Shadowing:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

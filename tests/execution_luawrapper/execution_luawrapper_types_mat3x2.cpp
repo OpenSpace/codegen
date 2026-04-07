@@ -139,8 +139,9 @@ namespace {
             glm::mat3x2(13.13f, 14.14f, 15.15f, 16.16f, 17.17f, 18.18f)
         };
     }
-#include "execution_luawrapper_types_mat3x2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_mat3x2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat3x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat3x2;

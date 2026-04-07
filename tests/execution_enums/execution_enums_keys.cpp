@@ -37,8 +37,9 @@ namespace {
         value2,
         Value3 [[codegen::key("KeyForValue3")]]
     };
-#include "execution_enums_keys_codegen.cpp"
 } // namespace
+#include "execution_enums_keys_codegen.cpp"
+
 
 TEST_CASE("Execution/Enums/Keys:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("KeyForValue1");

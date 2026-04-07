@@ -130,8 +130,9 @@ namespace {
             glm::ivec3(7, 8, 9)
         };
     }
-#include "execution_luawrapper_types_ivec3_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_ivec3_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncIvec3;

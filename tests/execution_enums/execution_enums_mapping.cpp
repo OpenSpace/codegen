@@ -55,9 +55,9 @@ namespace {
     enum class [[codegen::map(Mapped3)]] Enum3 {
         Val6
     };
-
-#include "execution_enums_mapping_codegen.cpp"
 } // namespace
+#include "execution_enums_mapping_codegen.cpp"
+
 
 TEST_CASE("Execution/Enums/Mapping:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");

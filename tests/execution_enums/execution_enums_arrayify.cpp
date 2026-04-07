@@ -46,9 +46,9 @@ namespace {
         val5,
         Val6
     };
-
-#include "execution_enums_arrayify_codegen.cpp"
 } // namespace
+#include "execution_enums_arrayify_codegen.cpp"
+
 
 TEST_CASE("Execution/Enums/Arrayify 1", "[Execution][Enums]") {
     std::vector<Enum1> arr = codegen::arrayify<Enum1>();

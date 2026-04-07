@@ -76,8 +76,9 @@ namespace {
         // variable structDOptionalValue documentation
         std::optional<D> structDOptionalValue;
     };
-#include "execution_structs_substructs_codegen.cpp"
 } // namespace
+#include "execution_structs_substructs_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Substruct:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

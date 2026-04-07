@@ -37,8 +37,9 @@ using Function = openspace::LuaLibrary::Function;
 namespace {
     [[codegen::luawrap]] void funcVoid() {
     }
-#include "execution_luawrapper_types_void_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_void_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;

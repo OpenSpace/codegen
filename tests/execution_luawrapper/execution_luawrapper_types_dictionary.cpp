@@ -316,8 +316,9 @@ namespace {
 
         return { d1, d2, d3 };
     }
-#include "execution_luawrapper_types_dictionary_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dictionary_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dictionary", "[Execution][LuaWrapper]") {
     using namespace std::string_literals;

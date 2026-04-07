@@ -274,8 +274,9 @@ namespace {
             )
         };
     }
-#include "execution_luawrapper_types_dmat3x4_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dmat3x4_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat3x4;

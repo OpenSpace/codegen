@@ -929,8 +929,9 @@ namespace {
         // no optionalvector mustexist directory documentation
         std::optional<std::vector<std::filesystem::path>> noOptionalVectorMustExistDirectoryValue [[codegen::mustexist(false), codegen::directory()]];
     };
-#include "execution_structs_attributes_codegen.cpp"
 } // namespace
+#include "execution_structs_attributes_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Attributes:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

@@ -188,9 +188,9 @@ namespace {
         };
         return p;
     }
-
-#include "execution_luawrapper_arguments_structs_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_arguments_structs_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Structs:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;

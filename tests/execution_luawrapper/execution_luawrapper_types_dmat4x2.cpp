@@ -166,8 +166,9 @@ namespace {
             )
         };
     }
-#include "execution_luawrapper_types_dmat4x2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dmat4x2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat4x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat4x2;

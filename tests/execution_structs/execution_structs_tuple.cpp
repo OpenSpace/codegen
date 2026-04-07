@@ -90,8 +90,9 @@ namespace {
         // optional tuple enum float documentation
         std::optional<std::tuple<B, float>> optionalTupleEnumFloat;
     };
-#include "execution_structs_tuple_codegen.cpp"
 } // namespace
+#include "execution_structs_tuple_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Tuple:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

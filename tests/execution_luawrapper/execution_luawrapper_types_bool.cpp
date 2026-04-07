@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<bool> returnBoolVector() {
         return { false, true, true };
     }
-#include "execution_luawrapper_types_bool_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_bool_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  bool", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncBool;

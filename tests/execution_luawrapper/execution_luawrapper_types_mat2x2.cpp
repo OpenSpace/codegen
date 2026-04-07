@@ -130,8 +130,9 @@ namespace {
             glm::mat2x2(9.9f, 10.10f, 11.11f, 12.12f)
         };
     }
-#include "execution_luawrapper_types_mat2x2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_mat2x2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat2x2;

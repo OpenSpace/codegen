@@ -272,8 +272,9 @@ namespace {
             )
         };
     }
-#include "execution_luawrapper_types_mat4x3_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_mat4x3_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat4x3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat4x3;

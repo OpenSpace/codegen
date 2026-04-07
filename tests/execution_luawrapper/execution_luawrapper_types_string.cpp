@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<std::string> returnStringVector() {
         return { "abc", "def", "ghi" };
     }
-#include "execution_luawrapper_types_string_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_string_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  string", "[Execution][LuaWrapper]") {
     using namespace std::string_literals;

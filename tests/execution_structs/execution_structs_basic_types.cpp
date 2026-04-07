@@ -161,8 +161,9 @@ namespace {
         // dict value documentation
         ghoul::Dictionary dictValue;
     };
-#include "execution_structs_basic_types_codegen.cpp"
 } // namespace
+#include "execution_structs_basic_types_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Basic/Types:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

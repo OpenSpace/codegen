@@ -36,8 +36,9 @@ namespace {
         // optional variant vector documentation
         std::optional<std::variant<std::string, std::vector<std::string>>> ovv;
     };
-#include "execution_structs_optional_variant_vector_codegen.cpp"
 } // namespace
+#include "execution_structs_optional_variant_vector_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Optional/Variant/Vector:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

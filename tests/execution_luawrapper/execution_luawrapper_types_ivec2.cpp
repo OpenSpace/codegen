@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<glm::ivec2> returnIvec2Vector() {
         return { glm::ivec2(1, 2), glm::ivec2(3, 4), glm::ivec2(5, 6) };
     }
-#include "execution_luawrapper_types_ivec2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_ivec2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  ivec2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncIvec2;

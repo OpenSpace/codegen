@@ -159,8 +159,9 @@ namespace {
         // dict value documentation
         std::vector<ghoul::Dictionary> dictValue;
     };
-#include "execution_structs_basic_types_vector_codegen.cpp"
 } // namespace
+#include "execution_structs_basic_types_vector_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Basic/Types/Vector:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

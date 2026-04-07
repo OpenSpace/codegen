@@ -57,8 +57,9 @@ namespace {
         // optionalVectorDictArray documentation
         std::optional<std::vector<std::array<ghoul::Dictionary, 3>>> optionalVectorDictArray;
     };
-#include "execution_structs_array_codegen.cpp"
 } // namespace
+#include "execution_structs_array_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Array:  Bake", "[Execution][Structs]") {
     using namespace std::literals;

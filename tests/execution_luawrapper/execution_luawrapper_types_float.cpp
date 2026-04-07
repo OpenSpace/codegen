@@ -126,8 +126,9 @@ namespace {
     [[codegen::luawrap]] std::vector<float> returnFloatVector() {
         return { 1.1f, 2.2f, 3.3f };
     }
-#include "execution_luawrapper_types_float_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_float_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  float", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncFloat;

@@ -163,8 +163,9 @@ namespace {
             glm::dmat2x4(17.17, 18.18, 19.19, 20.20, 21.21, 22.22, 23.23, 24.24)
         };
     }
-#include "execution_luawrapper_types_dmat2x4_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dmat2x4_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat2x4;

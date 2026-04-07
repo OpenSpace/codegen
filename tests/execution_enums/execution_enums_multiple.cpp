@@ -46,9 +46,9 @@ namespace {
     enum class [[codegen::stringify()]] Enum3 {
         Val6
     };
-
-#include "execution_enums_multiple_codegen.cpp"
 } // namespace
+#include "execution_enums_multiple_codegen.cpp"
+
 
 TEST_CASE("Execution/Enums/Multiple:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");

@@ -36,9 +36,9 @@ namespace {
     struct [[codegen::Dictionary(StructB)]] StructB {
         int test;
     };
-
-#include "execution_misc_multiple_codegen.cpp"
 } // namespace
+#include "execution_misc_multiple_codegen.cpp"
+
 
 TEST_CASE("Execution/Misc:  Multiple", "[Execution][Misc]") {
     using namespace openspace;

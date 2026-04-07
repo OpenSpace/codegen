@@ -207,9 +207,9 @@ namespace {
 
     // Struct C on same line
     struct [[codegen::Dictionary(C)]] ParamC {};
-
-#include "execution_structs_other_codegen.cpp"
 } // namespace
+#include "execution_structs_other_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Other:  Documentation Id", "[Execution][Structs]") {
     using namespace openspace;

@@ -160,8 +160,9 @@ namespace {
             glm::mat2x4(17.17f, 18.18f, 19.19f, 20.20f, 21.21f, 22.22f, 23.23f, 24.24f)
         };
     }
-#include "execution_luawrapper_types_mat2x4_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_mat2x4_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  mat2x4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncMat2x4;

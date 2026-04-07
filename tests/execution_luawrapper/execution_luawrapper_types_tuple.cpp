@@ -472,9 +472,9 @@ namespace {
     [[codegen::luawrap]] std::optional<std::tuple<double, float, std::string, double>> returnTupleDoubleFloatStringDoubleOptionalNullopt() {
         return std::nullopt;
     }
-
-#include "execution_luawrapper_types_tuple_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_tuple_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments: tuple(vec3)", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::TupleVec3;

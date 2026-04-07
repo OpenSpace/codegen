@@ -39,8 +39,9 @@ namespace {
     struct [[codegen::Dictionary(D2)]] Parameters2 {
         int def;
     };
-#include "execution_structs_multiple_codegen.cpp"
 } // namespace
+#include "execution_structs_multiple_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Multiple:  Parameters", "[Execution][Structs]") {
     ghoul::Dictionary d;

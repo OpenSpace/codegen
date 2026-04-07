@@ -130,8 +130,9 @@ namespace {
             glm::dmat2x2(9.9, 10.10, 11.11, 12.12)
         };
     }
-#include "execution_luawrapper_types_dmat2x2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dmat2x2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat2x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat2x2;

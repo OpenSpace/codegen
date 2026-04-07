@@ -32,8 +32,9 @@ namespace {
     struct [[codegen::Dictionary(ABC)]] Parameters {
         float test;
     };
-#include "execution_misc_parentdoc_codegen.cpp"
 } // namespace
+#include "execution_misc_parentdoc_codegen.cpp"
+
 
 TEST_CASE("Execution/Misc:  Parenting", "[Execution][Misc]") {
     using namespace openspace;

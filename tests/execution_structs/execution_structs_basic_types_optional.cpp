@@ -159,8 +159,9 @@ namespace {
         // dict value documentation
         std::optional<ghoul::Dictionary> dictValue;
     };
-#include "execution_structs_basic_types_optional_codegen.cpp"
 } // namespace
+#include "execution_structs_basic_types_optional_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Basic/Types/Optional:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

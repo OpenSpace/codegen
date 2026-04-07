@@ -139,8 +139,9 @@ namespace {
             glm::dmat3x2(13.13, 14.14, 15.15, 16.16, 17.17, 18.18)
         };
     }
-#include "execution_luawrapper_types_dmat3x2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dmat3x2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dmat3x2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDMat3x2;

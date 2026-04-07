@@ -162,8 +162,9 @@ namespace {
         // dict value documentation
         std::optional<std::vector<ghoul::Dictionary>> dictValue;
     };
-#include "execution_structs_basic_types_optional_vector_codegen.cpp"
 } // namespace
+#include "execution_structs_basic_types_optional_vector_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Basic/Types/Optional/Vector:  Bake", "[Execution][Structs]")
 {

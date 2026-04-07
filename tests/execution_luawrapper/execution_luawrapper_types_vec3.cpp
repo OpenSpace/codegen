@@ -130,8 +130,9 @@ namespace {
             glm::vec3(7.7f, 8.8f, 9.9f)
         };
     }
-#include "execution_luawrapper_types_vec3_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_vec3_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVec3;

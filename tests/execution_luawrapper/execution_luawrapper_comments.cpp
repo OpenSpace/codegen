@@ -59,8 +59,9 @@ namespace {
     //
     [[codegen::luawrap]] void foo5() {
     }
-#include "execution_luawrapper_comments_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_comments_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Comments:  Direct Comment/1", "[Execution][LuaWrapper]") {
     CHECK(codegen::lua::Foo.name == "foo");

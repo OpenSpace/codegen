@@ -143,9 +143,9 @@ namespace {
 
         throw std::logic_error("Missing case label");
     }
-
-#include "execution_luawrapper_arguments_enums_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_arguments_enums_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments-Enums:  void", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoid;

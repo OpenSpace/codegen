@@ -130,8 +130,9 @@ namespace {
             glm::dvec3(7.7, 8.8, 9.9)
         };
     }
-#include "execution_luawrapper_types_dvec3_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_dvec3_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  dvec3", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncDvec3;

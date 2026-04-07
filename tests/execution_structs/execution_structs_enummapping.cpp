@@ -45,8 +45,9 @@ namespace {
         // variable enumAValue documentation
         A enumAValue;
     };
-#include "execution_structs_enummapping_codegen.cpp"
 } // namespace
+#include "execution_structs_enummapping_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/EnumMapping:  1", "[Execution][Structs]") {
     using namespace std::string_literals;

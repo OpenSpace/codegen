@@ -37,8 +37,9 @@ namespace {
         value2,
         Value3
     };
-#include "execution_enums_basic_codegen.cpp"
 } // namespace
+#include "execution_enums_basic_codegen.cpp"
+
 
 TEST_CASE("Execution/Enums/Basic:  From String", "[Execution][Enums]") {
     Enum1 v1 = codegen::fromString<Enum1>("Value1");

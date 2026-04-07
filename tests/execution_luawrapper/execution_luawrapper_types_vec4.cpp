@@ -130,8 +130,9 @@ namespace {
             glm::vec4(9.9f, 10.10f, 11.11f, 12.12f)
         };
     }
-#include "execution_luawrapper_types_vec4_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_vec4_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec4", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVec4;

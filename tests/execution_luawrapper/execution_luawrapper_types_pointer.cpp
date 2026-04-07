@@ -686,9 +686,9 @@ namespace {
 
         return { fs1, fs2, fs3 };
     }
-
-#include "execution_luawrapper_types_pointer_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_pointer_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  void*", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVoidArg;

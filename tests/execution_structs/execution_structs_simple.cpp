@@ -35,8 +35,9 @@ namespace {
         // value documentation
         float value;
     };
-#include "execution_structs_simple_codegen.cpp"
 } // namespace
+#include "execution_structs_simple_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Simple:  Bake", "[Execution][Structs]") {
     ghoul::Dictionary d;

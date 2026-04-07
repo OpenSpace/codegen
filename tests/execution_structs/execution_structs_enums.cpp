@@ -78,8 +78,9 @@ namespace {
         // variable enumEValue documentation
         E enumEValue;
     };
-#include "execution_structs_enums_codegen.cpp"
 } // namespace
+#include "execution_structs_enums_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Enums:  Bake", "[Execution][Structs]") {
     using namespace std::string_literals;

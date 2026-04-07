@@ -63,8 +63,9 @@ namespace {
         // optionalVectorDictMap documentation
         std::optional<std::vector<std::map<KeyType, ghoul::Dictionary>>> optionalVectorDictMap;
     };
-#include "execution_structs_map_enum_key_codegen.cpp"
 } // namespace
+#include "execution_structs_map_enum_key_codegen.cpp"
+
 
 TEST_CASE("Execution/Structs/Map Enum Key:  Bake", "[Execution][Structs]") {
     using namespace std::literals;

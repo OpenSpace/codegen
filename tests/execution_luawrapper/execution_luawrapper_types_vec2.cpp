@@ -130,8 +130,9 @@ namespace {
             glm::vec2(5.5f, 6.6f)
         };
     }
-#include "execution_luawrapper_types_vec2_codegen.cpp"
 } // namespace
+#include "execution_luawrapper_types_vec2_codegen.cpp"
+
 
 TEST_CASE("Execution/LuaWrapper/Arguments:  vec2", "[Execution][LuaWrapper]") {
     Function func = codegen::lua::FuncVec2;
