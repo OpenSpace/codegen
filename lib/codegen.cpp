@@ -1256,13 +1256,29 @@ std::string generateResult(const Code& code) {
         header += "} // namespace codegen\n";
     }
 
+    // GCC has an overeager need to report an uninitialized variable when returning
+    // a std::variant<std::string, ghoul::Dictionary> in a Lua function
+    constexpr std::string_view GCCWarningStart =
+#if defined(__GNUC__) && !defined(__clang__)
+        "#pragma GCC diagnostic push\n"
+        "#pragma GCC diagnostic ignored \"-Wmaybe-uninitialized\"\n";
+#else
+        "";
+#endif
+    constexpr std::string_view GCCWarningEnd =
+#if defined(__GNUC__) && !defined(__clang__)
+        "#pragma GCC diagnostic pop\n";
+#else
+        "";
+#endif
+
     // The reversal in the arguments here is on purpose. The alternative to this would be
     // to first figure out whether we need to write the headers or not and that became
     // quite cumbersome. So instead we now mark whenever someone needs it and we prepend
     // it in this step
     return std::format(
-        "{}\nnamespace {{\n{}{}{}{}\n}} // namespace\n",
-        FileHeader, header, enums, structs, luaWrapper
+        "{}{}\nnamespace {{\n{}{}{}{}\n}} // namespace\n{}",
+        FileHeader, GCCWarningStart, header, enums, structs, luaWrapper, GCCWarningEnd
     );
 }
 
