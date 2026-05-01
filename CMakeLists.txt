@@ -22,11 +22,7 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
-cmake_policy(VERSION 3.25)
-project(Codegen-Tool VERSION 1.0)
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings")
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings/common-compile-settings.cmake)
 
 add_subdirectory(lib)

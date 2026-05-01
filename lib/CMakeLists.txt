@@ -22,7 +22,7 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-add_library(codegen-lib ${FILES})
+add_library(codegen-lib)
 target_sources(
   codegen-lib
   PRIVATE
