@@ -40,11 +40,28 @@ namespace {
     constexpr std::string_view BackFunctionFallback = "template <typename T> [[maybe_unused]] T bake(const ghoul::Dictionary&) { static_assert(sizeof(T) == 0); }";
     constexpr std::string_view BakeToFunctionFallback = "template <typename T> [[maybe_unused]] void bakeTo(const ghoul::Dictionary&, std::string_view, T*) { static_assert(sizeof(T) == 0); }";
     constexpr std::string_view MapFunctionFallback = "template <typename T, typename U> [[maybe_unused]] T map(U) { static_assert(sizeof(T) == 0); }";
-    constexpr std::string_view DocumentationFallback = R"(template <typename T> [[maybe_unused]] openspace::Documentation doc(std::string, [[maybe_unused]] openspace::Documentation parentDoc = openspace::Documentation()) {
+    constexpr std::string_view DocumentationFallback = R"(template <typename T> [[maybe_unused]] openspace::Documentation doc(std::string, [[maybe_unused]] std::vector<openspace::Documentation> parentDoc = std::vector<openspace::Documentation>()) {
     static_assert(sizeof(T) == 0);
     return openspace::Documentation();
 }
 )";
+
+    constexpr std::string_view DocumentationPackOverload = R"(template <typename T, typename... Ds>
+    requires (sizeof...(Ds) >= 1) &&
+             (std::same_as<std::decay_t<Ds>, openspace::Documentation> && ...)
+[[maybe_unused]] openspace::Documentation doc(std::string id, Ds&&... parents) {
+    if constexpr (sizeof...(Ds) == 0) {
+        return doc<T>(std::move(id));
+    }
+    else {
+        return doc<T>(
+            std::move(id),
+            std::vector<openspace::Documentation>{ std::forward<Ds>(parents)... }
+        );
+    }
+}
+)";
+
 
     constexpr std::string_view ToStringFallback = "template <typename T> [[maybe_unused]] std::string_view toString(T) { static_assert(sizeof(T) == 0); return \"\"; }";
     constexpr std::string_view FromStringFallback = "template <typename T> [[maybe_unused]] T fromString(std::string_view) { static_assert(sizeof(T) == 0); return T(); }";
@@ -112,7 +129,7 @@ template <typename T, typename U> [[maybe_unused]] T bake(const std::vector<U>& 
 )";
 
     constexpr std::string_view DocumentationPreamble = R"(
-template <> [[maybe_unused]] openspace::Documentation doc<{}>(std::string id, openspace::Documentation parentDoc) {{
+template <> [[maybe_unused]] openspace::Documentation doc<{}>(std::string id, std::vector<openspace::Documentation> parents) {{
     using namespace openspace;
 
 )";
@@ -125,8 +142,10 @@ template <> [[maybe_unused]] openspace::Documentation doc<{}>(std::string id, op
         .entries = std::move(codegen_{1}->documentations)
     }};
 
-    // Move the entries from the parent doc into this one
-    d.entries.insert(d.entries.begin(), parentDoc.entries.begin(), parentDoc.entries.end());
+    // Move the entries from the parent doc/docs into this one
+    for (const openspace::Documentation& parent : parents) {{
+        d.entries.insert(d.entries.begin(), parent.entries.begin(), parent.entries.end());
+    }}
 
     return d;
 }}

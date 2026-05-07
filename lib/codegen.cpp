@@ -696,6 +696,7 @@ namespace {
         std::string result;
         result += "namespace codegen {\n\n";
         result += DocumentationFallback;
+        result += DocumentationPackOverload;
 
         for (Struct* s : code.structs) {
             result += std::format(DocumentationPreamble, s->name);
