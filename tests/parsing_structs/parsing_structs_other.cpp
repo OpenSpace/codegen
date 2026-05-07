@@ -1615,3 +1615,93 @@ struct [[codegen::Dictionary(C)]] ParamC {};
         CHECK(s->variables.empty());
     }
 }
+
+TEST_CASE("Parsing: Multiple attributes", "[Parsing][Misc]") {
+    constexpr std::string_view Source = R"(
+struct [[codegen::Dictionary(A)]] P1 {
+    std::string type
+        [[codegen::annotation("Must name a valid type"), codegen::private()]];
+};
+
+struct [[codegen::Dictionary(A)]] P2 {
+    std::string type
+        [[codegen::annotation("Must name a valid type"),
+          codegen::private()]];
+};
+
+struct [[codegen::Dictionary(A)]] P3 {
+    std::string type
+        [[
+          codegen::annotation("Must name a valid type"),
+          codegen::private()]];
+};
+
+struct [[codegen::Dictionary(A)]] P4 {
+    std::string type
+        [[
+          codegen::annotation("Must name a valid type"),
+          codegen::private()
+        ]];
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 4);
+
+    {
+        Struct* s = code.structs[0];
+        REQUIRE(s);
+        CHECK(s->name == "P1");
+        CHECK(s->comment == "");
+        CHECK(s->attributes.dictionary == "A");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        REQUIRE(s->variables.size() == 1);
+        Variable* v = s->variables.front();
+        CHECK(v->attributes.annotation == "\"Must name a valid type\"");
+        CHECK(v->attributes.isPrivate);
+    }
+    {
+        Struct* s = code.structs[1];
+        REQUIRE(s);
+        CHECK(s->name == "P2");
+        CHECK(s->comment == "");
+        CHECK(s->attributes.dictionary == "A");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        REQUIRE(s->variables.size() == 1);
+        Variable* v = s->variables.front();
+        CHECK(v->attributes.annotation == "\"Must name a valid type\"");
+        CHECK(v->attributes.isPrivate);
+    }
+    {
+        Struct* s = code.structs[2];
+        REQUIRE(s);
+        CHECK(s->name == "P3");
+        CHECK(s->comment == "");
+        CHECK(s->attributes.dictionary == "A");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        REQUIRE(s->variables.size() == 1);
+        Variable* v = s->variables.front();
+        CHECK(v->attributes.annotation == "\"Must name a valid type\"");
+        CHECK(v->attributes.isPrivate);
+    }
+    {
+        Struct* s = code.structs[3];
+        REQUIRE(s);
+        CHECK(s->name == "P4");
+        CHECK(s->comment == "");
+        CHECK(s->attributes.dictionary == "A");
+        CHECK(s->attributes.noExhaustive);
+        CHECK(s->parent == nullptr);
+        CHECK(s->children.empty());
+        REQUIRE(s->variables.size() == 1);
+        Variable* v = s->variables.front();
+        CHECK(v->attributes.annotation == "\"Must name a valid type\"");
+        CHECK(v->attributes.isPrivate);
+    }
+}
