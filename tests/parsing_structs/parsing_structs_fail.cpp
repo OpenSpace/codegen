@@ -120,7 +120,7 @@ struct [[codegen::Dictionary(Error)]] Parameters {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        CM::StartsWith("Attribute parameter has unterminated parameter list")
+        CM::StartsWith("Unterminated attribute brackets")
     );
 }
 
@@ -147,7 +147,7 @@ struct [[codegen::Dictionary(Error]] Parameters {
     CHECK_THROWS_MATCHES(
         parse(Source),
         CodegenError,
-        CM::StartsWith("Attribute parameter has unterminated parameter list")
+        CM::StartsWith("Unterminated attribute brackets")
     );
 }
 
