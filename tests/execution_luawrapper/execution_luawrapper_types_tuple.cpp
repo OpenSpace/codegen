@@ -1186,7 +1186,7 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(vec3)", "[Execution][LuaWrapper]"
     REQUIRE(state);
     func.function(state);
     REQUIRE(lua_gettop(state) == 1);
-    const std::tuple<glm::dvec3> val = ghoul::lua::values<glm::dvec3>(state);
+    const std::tuple<glm::dvec3> val = ghoul::lua::value<std::tuple<glm::dvec3>>(state);
     CHECK(std::get<0>(val) == glm::dvec3(1.1, 2.2, 3.3));
     lua_close(state);
 }
@@ -1202,8 +1202,9 @@ TEST_CASE("Execution/LuaWrapper/Return:  tuple(bool,int)", "[Execution][LuaWrapp
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 2);
-    const std::tuple<bool, int> val = ghoul::lua::values<bool, int>(state);
+    std::string abc = ghoul::lua::stackInformation(state);
+    REQUIRE(lua_gettop(state) == 1);
+    const std::tuple<bool, int> val = ghoul::lua::value<std::tuple<bool, int>>(state);
     CHECK(std::get<0>(val) == true);
     CHECK(std::get<1>(val) == 1);
     lua_close(state);
@@ -1224,9 +1225,9 @@ TEST_CASE(
     lua_State* state = luaL_newstate();
     REQUIRE(state);
     func.function(state);
-    REQUIRE(lua_gettop(state) == 4);
+    REQUIRE(lua_gettop(state) == 1);
     const std::tuple<double, float, std::string, double> val =
-        ghoul::lua::values<double, float, std::string, double>(state);
+        ghoul::lua::value<std::tuple<double, float, std::string, double>>(state);
     CHECK(std::get<0>(val) == 1.1);
     CHECK(std::get<1>(val) == 2.2f);
     CHECK(std::get<2>(val) == "abc");

@@ -1024,21 +1024,7 @@ namespace {
         }
 
         if (f->returnValue) {
-            if (f->returnValue->isTupleType()) {
-                result += "            int nArguments = 0;\n";
-                TupleType* tt = static_cast<TupleType*>(f->returnValue);
-                assert(!tt->types.empty());
-                for (size_t i = 0; i < tt->types.size(); i += 1) {
-                    if (tt->types[i]->isOptionalType()) {
-                        result += std::format(LuaWrapperPushTupleOptional, i);
-                    }
-                    else {
-                        result += std::format(LuaWrapperPushTupleRegular, i);
-                    }
-                }
-                result += "            return nArguments;\n";
-            }
-            else if (f->returnValue->isOptionalType()) {
+            if (f->returnValue->isOptionalType()) {
                 result += LuaWrapperPushOptional;
             }
             else if (f->returnValue->isVariantType()) {

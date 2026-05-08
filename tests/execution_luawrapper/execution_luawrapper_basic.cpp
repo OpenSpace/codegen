@@ -250,9 +250,9 @@ TEST_CASE("Execution/LuaWrapper:  Basic", "[Execution][LuaWrapper]") {
         REQUIRE(state);
         const int nResult = func.function(state);
         CHECK(ranTestFunc6);
-        CHECK(lua_gettop(state) == 2);
-        REQUIRE(nResult == 2);
-        const auto [res1, res2] = ghoul::lua::values<int, double>(state);
+        CHECK(lua_gettop(state) == 1);
+        REQUIRE(nResult == 1);
+        const auto [res1, res2] = ghoul::lua::value<std::tuple<int, double>>(state);
         CHECK(res1 == 5);
         CHECK(res2 == 6.0);
         lua_close(state);
