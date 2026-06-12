@@ -307,6 +307,41 @@ namespace {
                 comments = resolveComment(e->comment);
             }
 
+            // Use dedicated list verifiers for basic scalar/vector types
+            if (vt->type->tag == VariableType::Tag::BasicType) {
+                BasicType* bt = static_cast<BasicType*>(vt->type);
+                using Type = BasicType::Type;
+                switch (bt->type) {
+                    case Type::String:
+                        return std::format("new StringListVerifier({})", comments);
+                    case Type::Int:
+                        return std::format("new IntListVerifier({})", comments);
+                    case Type::Ivec2:
+                        return std::format("new Vector2ListVerifier<int>({})", comments);
+                    case Type::Ivec3:
+                        return std::format("new Vector3ListVerifier<int>({})", comments);
+                    case Type::Ivec4:
+                        return std::format("new Vector4ListVerifier<int>({})", comments);
+                    case Type::Dvec2:
+                    case Type::Vec2:
+                        return std::format(
+                            "new Vector2ListVerifier<double>({})", comments
+                        );
+                    case Type::Dvec3:
+                    case Type::Vec3:
+                        return std::format(
+                            "new Vector3ListVerifier<double>({})", comments
+                        );
+                    case Type::Dvec4:
+                    case Type::Vec4:
+                        return std::format(
+                            "new Vector4ListVerifier<double>({})", comments
+                        );
+                    default:
+                        break;
+                }
+            }
+
             std::string ver = verifier(vt->type, var, currentStruct);
             return std::format(
                 "new TableVerifier({{{{\"*\",{},Optional::Yes,Private::No,{}}}}})",
