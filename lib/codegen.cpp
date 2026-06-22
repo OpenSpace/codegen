@@ -282,6 +282,20 @@ namespace {
         }
     };
 
+    // Returns `true` if the variable has an attribute that the dedicated list verifier
+    // cannot represent. This covers attributes that constrain the element (which the
+    // bare list verifier would silently drop) as well as attributes that are invalid for
+    // the element type (such as `reference` or `directory` on a string), which must still
+    // flow through the normal path so that codegen reports the unsupported-attribute error
+    bool hasElementConstrainingAttribute(const Variable& var) {
+        const Variable::Attributes& a = var.attributes;
+        return !a.annotation.empty() || !a.inlist.empty() || !a.inrange.empty() ||
+            !a.less.empty() || !a.lessequal.empty() || !a.greater.empty() ||
+            !a.greaterequal.empty() || !a.notinlist.empty() || !a.notinrange.empty() ||
+            !a.reference.empty() || !a.unequal.empty() || a.isColor || a.isDateTime ||
+            a.isIdentifier || a.mustBeNotEmpty || a.isDirectory;
+    }
+
     std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
         assert(type);
         assert(currentStruct);
@@ -307,38 +321,16 @@ namespace {
                 comments = resolveComment(e->comment);
             }
 
-            // Use dedicated list verifiers for basic scalar/vector types
-            if (vt->type->tag == VariableType::Tag::BasicType) {
+            // Use a dedicated list verifier for a vector of strings, but only when there
+            // are no attributes constraining the individual elements. The list verifier
+            // cannot express such constraints, so in that case we fall through to the
+            // generic TableVerifier path below, which applies the attributes to each
+            // element
+            bool isBasic = vt->type->tag == VariableType::Tag::BasicType;
+            if (isBasic && !hasElementConstrainingAttribute(var)) {
                 BasicType* bt = static_cast<BasicType*>(vt->type);
-                using Type = BasicType::Type;
-                switch (bt->type) {
-                    case Type::String:
-                        return std::format("new StringListVerifier({})", comments);
-                    case Type::Int:
-                        return std::format("new IntListVerifier({})", comments);
-                    case Type::Ivec2:
-                        return std::format("new Vector2ListVerifier<int>({})", comments);
-                    case Type::Ivec3:
-                        return std::format("new Vector3ListVerifier<int>({})", comments);
-                    case Type::Ivec4:
-                        return std::format("new Vector4ListVerifier<int>({})", comments);
-                    case Type::Dvec2:
-                    case Type::Vec2:
-                        return std::format(
-                            "new Vector2ListVerifier<double>({})", comments
-                        );
-                    case Type::Dvec3:
-                    case Type::Vec3:
-                        return std::format(
-                            "new Vector3ListVerifier<double>({})", comments
-                        );
-                    case Type::Dvec4:
-                    case Type::Vec4:
-                        return std::format(
-                            "new Vector4ListVerifier<double>({})", comments
-                        );
-                    default:
-                        break;
+                if (bt->type == BasicType::Type::String) {
+                    return std::format("new StringListVerifier({})", comments);
                 }
             }
 

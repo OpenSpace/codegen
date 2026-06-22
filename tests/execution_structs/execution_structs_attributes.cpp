@@ -5715,8 +5715,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 2/2", "[Execution][Struc
         CHECK(!e.optional);
         CHECK(e.isPrivate);
         CHECK(e.documentation == "vector private value documentation");
-        CHECK(e.verifier->type() == "Table");
-        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        CHECK(e.verifier->type() == "List of strings");
+        StringListVerifier* v = dynamic_cast<StringListVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].verifier->type() == "String");
@@ -5728,8 +5728,8 @@ TEST_CASE("Execution/Structs/Attributes:  Documentation 2/2", "[Execution][Struc
         CHECK(e.optional);
         CHECK(e.isPrivate);
         CHECK(e.documentation == "optional vector private value documentation");
-        CHECK(e.verifier->type() == "Table");
-        TableVerifier* v = dynamic_cast<TableVerifier*>(e.verifier.get());
+        CHECK(e.verifier->type() == "List of strings");
+        StringListVerifier* v = dynamic_cast<StringListVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "*");

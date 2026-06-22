@@ -87,7 +87,7 @@ TEST_CASE(
     CHECK(e.optional);
     CHECK(!e.isPrivate);
     CHECK(e.documentation == "optional variant vector documentation");
-    CHECK(e.verifier->type() == "String, or Table");
+    CHECK(e.verifier->type() == "String, or List of strings");
     OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
     REQUIRE(v);
     REQUIRE(v->values.size() == 2);
@@ -95,8 +95,8 @@ TEST_CASE(
     StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
     REQUIRE(w);
     CHECK(w->mustBeNotEmpty() == false);
-    CHECK(v->values[1]->type() == "Table");
-    TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
+    CHECK(v->values[1]->type() == "List of strings");
+    StringListVerifier* u = dynamic_cast<StringListVerifier*>(v->values[1].get());
     REQUIRE(u);
     REQUIRE(u->documentations.size() == 1);
     CHECK(u->documentations[0].key == "*");

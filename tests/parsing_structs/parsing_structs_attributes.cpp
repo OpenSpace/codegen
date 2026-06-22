@@ -157,6 +157,56 @@ struct [[codegen::Dictionary(Par), codegen::noexhaustive(true)]] Parameters {
     CHECK(!r.empty());
 }
 
+TEST_CASE(
+    "Parsing Attribute: Vector list verifiers", "[structs][parsing]")
+{
+    constexpr std::string_view Source = R"(
+    struct [[codegen::Dictionary(ListVerifiers)]] Parameters {
+        // stringVectorValue documentation
+        std::vector<std::string> stringVectorValue;
+};
+)";
+
+    Code code = parse(Source);
+    CHECK(code.structs.size() == 1);
+    CHECK(code.enums.empty());
+    Struct* s = code.structs.front();
+    REQUIRE(s);
+    CHECK(s->attributes.dictionary == "ListVerifiers");
+
+    REQUIRE(s->variables.size() == 1);
+    CHECK(generateTypename(s->variables[0]->type) == "std::vector<std::string>");
+
+    // A `std::vector` of `std::string` generates a dedicated list verifier instead of a
+    // generic TableVerifier
+    const std::string r = generateResult(code);
+    REQUIRE(!r.empty());
+    CHECK(r.find("StringListVerifier") != std::string::npos);
+}
+
+TEST_CASE(
+    "Parsing Attribute: Vector list verifiers suppressed by attributes",
+    "[structs][parsing]")
+{
+    constexpr std::string_view Source = R"(
+    struct [[codegen::Dictionary(ListVerifiers)]] Parameters {
+        // listVector documentation
+        std::vector<std::string> listVector [[codegen::inlist("a", "b")]];
+};
+)";
+
+    Code code = parse(Source);
+    REQUIRE(code.structs.size() == 1);
+
+    // When the vector element carries a constraining attribute, the list verifier cannot
+    // express it, so codegen must fall back to a TableVerifier whose element verifier
+    // applies the attribute
+    const std::string r = generateResult(code);
+    REQUIRE(!r.empty());
+    CHECK(r.find("InListVerifier") != std::string::npos);
+    CHECK(r.find("StringListVerifier") == std::string::npos);
+}
+
 TEST_CASE("Parsing Attribute: Struct Attribute false noexhaustive", "[structs][parsing]") {
     constexpr std::string_view Source = R"(
 struct [[codegen::Dictionary(Par), codegen::noexhaustive(false)]] Parameters {

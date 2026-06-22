@@ -1104,8 +1104,9 @@ TEST_CASE("Execution/Structs/Basic/Types/Vector:  Documentation", "[Execution][S
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
         CHECK(e.documentation == "string value documentation");
-        CHECK(e.verifier->type() == "Table");
-        TableVerifier* t = dynamic_cast<TableVerifier*>(e.verifier.get());
+        CHECK(e.verifier->type() == "List of strings");
+        StringListVerifier* t = dynamic_cast<StringListVerifier*>(e.verifier.get());
+        REQUIRE(t);
         REQUIRE(t->documentations.size() == 1);
         CHECK(t->documentations[0].key == "*");
         CHECK(t->documentations[0].verifier->type() == "String");
