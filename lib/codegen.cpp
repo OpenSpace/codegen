@@ -283,10 +283,11 @@ namespace {
     };
 
     // Returns `true` if the variable has an attribute that the dedicated list verifier
-    // cannot represent. This covers attributes that constrain the element (which the
-    // bare list verifier would silently drop) as well as attributes that are invalid for
-    // the element type (such as `reference` or `directory` on a string), which must still
-    // flow through the normal path so that codegen reports the unsupported-attribute error
+    // cannot represent. This covers attributes that constrain the element (which the bare
+    // list verifier would silently drop) as well as attributes that are invalid for the
+    // element type (such as `reference` or `directory` on a string), which must still
+    // flow through the normal path so that codegen reports the unsupported-attribute
+    // error
     bool hasElementConstrainingAttribute(const Variable& var) {
         const Variable::Attributes& a = var.attributes;
         return !a.annotation.empty() || !a.inlist.empty() || !a.inrange.empty() ||
@@ -326,7 +327,7 @@ namespace {
             // cannot express such constraints, so in that case we fall through to the
             // generic TableVerifier path below, which applies the attributes to each
             // element
-            bool isBasic = vt->type->tag == VariableType::Tag::BasicType;
+            const bool isBasic = vt->type->tag == VariableType::Tag::BasicType;
             if (isBasic && !hasElementConstrainingAttribute(var)) {
                 BasicType* bt = static_cast<BasicType*>(vt->type);
                 if (bt->type == BasicType::Type::String) {
