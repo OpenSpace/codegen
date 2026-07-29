@@ -282,6 +282,21 @@ namespace {
         }
     };
 
+    // Returns `true` if the variable has an attribute that the dedicated list verifier
+    // cannot represent. This covers attributes that constrain the element (which the bare
+    // list verifier would silently drop) as well as attributes that are invalid for the
+    // element type (such as `reference` or `directory` on a string), which must still
+    // flow through the normal path so that codegen reports the unsupported-attribute
+    // error
+    bool hasElementConstrainingAttribute(const Variable& var) {
+        const Variable::Attributes& a = var.attributes;
+        return !a.annotation.empty() || !a.inlist.empty() || !a.inrange.empty() ||
+            !a.less.empty() || !a.lessequal.empty() || !a.greater.empty() ||
+            !a.greaterequal.empty() || !a.notinlist.empty() || !a.notinrange.empty() ||
+            !a.reference.empty() || !a.unequal.empty() || a.isColor || a.isDateTime ||
+            a.isIdentifier || a.mustBeNotEmpty || a.isDirectory;
+    }
+
     std::string verifier(VariableType* type, const Variable& var, Struct* currentStruct) {
         assert(type);
         assert(currentStruct);
@@ -305,6 +320,19 @@ namespace {
             if (e) {
                 // `e` is false for subtypes that are not our own structs
                 comments = resolveComment(e->comment);
+            }
+
+            // Use a dedicated list verifier for a vector of strings, but only when there
+            // are no attributes constraining the individual elements. The list verifier
+            // cannot express such constraints, so in that case we fall through to the
+            // generic TableVerifier path below, which applies the attributes to each
+            // element
+            const bool isBasic = vt->type->tag == VariableType::Tag::BasicType;
+            if (isBasic && !hasElementConstrainingAttribute(var)) {
+                BasicType* bt = static_cast<BasicType*>(vt->type);
+                if (bt->type == BasicType::Type::String) {
+                    return std::format("new StringListVerifier({})", comments);
+                }
             }
 
             std::string ver = verifier(vt->type, var, currentStruct);

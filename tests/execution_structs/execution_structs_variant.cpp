@@ -679,16 +679,16 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
         CHECK(e.documentation == "variant vector documentation");
-        CHECK(e.verifier->type() == "Table, or String");
+        CHECK(e.verifier->type() == "List of strings, or String");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
-        CHECK(v->values[0]->type() == "Table");
-        TableVerifier* w = dynamic_cast<TableVerifier*>(v->values[0].get());
+        CHECK(v->values[0]->type() == "List of strings");
+        StringListVerifier* w = dynamic_cast<StringListVerifier*>(v->values[0].get());
         REQUIRE(w);
         REQUIRE(w->documentations.size() == 1);
         CHECK(w->documentations[0].key == "*");
-        CHECK(w->documentations[0].optional);
+        CHECK(!w->documentations[0].optional);
         CHECK(w->documentations[0].verifier->type() == "String");
         StringVerifier* u =
             dynamic_cast<StringVerifier*>(w->documentations[0].verifier.get());
@@ -705,7 +705,7 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
         CHECK(e.documentation == "variant vector 2 documentation");
-        CHECK(e.verifier->type() == "String, or Table");
+        CHECK(e.verifier->type() == "String, or List of strings");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
@@ -713,12 +713,12 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
         REQUIRE(w);
         CHECK(w->mustBeNotEmpty() == false);
-        CHECK(v->values[1]->type() == "Table");
-        TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
+        CHECK(v->values[1]->type() == "List of strings");
+        StringListVerifier* u = dynamic_cast<StringListVerifier*>(v->values[1].get());
         REQUIRE(u);
         REQUIRE(u->documentations.size() == 1);
         CHECK(u->documentations[0].key == "*");
-        CHECK(u->documentations[0].optional);
+        CHECK(!u->documentations[0].optional);
         CHECK(u->documentations[0].verifier->type() == "String");
         StringVerifier* x =
             dynamic_cast<StringVerifier*>(u->documentations[0].verifier.get());
@@ -879,19 +879,19 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "Var");
         CHECK(!v->documentations[0].isPrivate);
-        CHECK(v->documentations[0].verifier->type() == "String, or Table");
+        CHECK(v->documentations[0].verifier->type() == "String, or List of strings");
         OrVerifier* w = dynamic_cast<OrVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         REQUIRE(w->values.size() == 2);
         CHECK(w->values[0]->type() == "String");
         StringVerifier* u = dynamic_cast<StringVerifier*>(w->values[0].get());
         REQUIRE(u);
-        CHECK(w->values[1]->type() == "Table");
-        TableVerifier* x = dynamic_cast<TableVerifier*>(w->values[1].get());
+        CHECK(w->values[1]->type() == "List of strings");
+        StringListVerifier* x = dynamic_cast<StringListVerifier*>(w->values[1].get());
         REQUIRE(x);
         REQUIRE(x->documentations.size() == 1);
         CHECK(x->documentations[0].key == "*");
-        CHECK(x->documentations[0].optional);
+        CHECK(!x->documentations[0].optional);
         CHECK(x->documentations[0].verifier->type() == "String");
     }
     {
@@ -906,19 +906,19 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         REQUIRE(v->documentations.size() == 1);
         CHECK(v->documentations[0].key == "Var");
         CHECK(!v->documentations[0].isPrivate);
-        CHECK(v->documentations[0].verifier->type() == "String, or Table");
+        CHECK(v->documentations[0].verifier->type() == "String, or List of strings");
         OrVerifier* w = dynamic_cast<OrVerifier*>(v->documentations[0].verifier.get());
         REQUIRE(w);
         REQUIRE(w->values.size() == 2);
         CHECK(w->values[0]->type() == "String");
         StringVerifier* u = dynamic_cast<StringVerifier*>(w->values[0].get());
         REQUIRE(u);
-        CHECK(w->values[1]->type() == "Table");
-        TableVerifier* x = dynamic_cast<TableVerifier*>(w->values[1].get());
+        CHECK(w->values[1]->type() == "List of strings");
+        StringListVerifier* x = dynamic_cast<StringListVerifier*>(w->values[1].get());
         REQUIRE(x);
         REQUIRE(x->documentations.size() == 1);
         CHECK(x->documentations[0].key == "*");
-        CHECK(x->documentations[0].optional);
+        CHECK(!x->documentations[0].optional);
         CHECK(x->documentations[0].verifier->type() == "String");
     }
     {
@@ -927,19 +927,19 @@ TEST_CASE("Execution/Structs/Variant:  Documentation", "[Execution][Structs]") {
         CHECK(!e.optional);
         CHECK(!e.isPrivate);
         CHECK(e.documentation == "variantStringVector");
-        CHECK(e.verifier->type() == "String, or Table");
+        CHECK(e.verifier->type() == "String, or List of strings");
         OrVerifier* v = dynamic_cast<OrVerifier*>(e.verifier.get());
         REQUIRE(v);
         REQUIRE(v->values.size() == 2);
         CHECK(v->values[0]->type() == "String");
         StringVerifier* w = dynamic_cast<StringVerifier*>(v->values[0].get());
         REQUIRE(w);
-        CHECK(v->values[1]->type() == "Table");
-        TableVerifier* u = dynamic_cast<TableVerifier*>(v->values[1].get());
+        CHECK(v->values[1]->type() == "List of strings");
+        StringListVerifier* u = dynamic_cast<StringListVerifier*>(v->values[1].get());
         REQUIRE(u);
         REQUIRE(u->documentations.size() == 1);
         CHECK(u->documentations[0].key == "*");
-        CHECK(u->documentations[0].optional);
+        CHECK(!u->documentations[0].optional);
         CHECK(u->documentations[0].verifier->type() == "String");
     }
 }
