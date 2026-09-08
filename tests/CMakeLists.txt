@@ -206,7 +206,8 @@ target_sources(
     parsing_structs/parsing_structs_variant_fail.cpp
 )
 
-target_link_libraries(codegentest PRIVATE Catch2 codegen-lib openspace-core openspace-module-collection)
+find_package(Catch2 CONFIG REQUIRED)
+target_link_libraries(codegentest PRIVATE Catch2::Catch2 codegen-lib openspace-core openspace-module-collection)
 
 set_compile_settings(codegentest)
 
