@@ -22,45 +22,39 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-# codegen-lib carries no symbol-export annotations, so it is always a static library
-# regardless of BUILD_SHARED_LIBS (a vcpkg dynamic triplet would otherwise try to build it
-# as a DLL with an empty export table)
-add_library(codegen-lib STATIC)
-target_sources(
-  codegen-lib
-  PRIVATE
-    codegen.cpp
-    parsing.cpp
-    snippets.cpp
-    types.cpp
-    util.cpp
-    verifier.cpp
-  PUBLIC
-    FILE_SET HEADERS
-    BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}"
-    FILES
-      codegen.h
-      keywords.h
-      parsing.h
-      settings.h
-      snippets.h
-      types.h
-      util.h
-      verifier.h
+# This port lives inside the codegen repository and builds the enclosing checkout. When
+# publishing codegen to a registry, replace this with vcpkg_from_github(REPO OpenSpace/codegen
+# REF <tag> SHA512 <hash>) so that the port is reproducible and content-addressed.
+get_filename_component(SOURCE_PATH "${CMAKE_CURRENT_LIST_DIR}/../../../.." ABSOLUTE)
+
+vcpkg_cmake_configure(
+  SOURCE_PATH "${SOURCE_PATH}"
+  OPTIONS
+    # The tests only exercise this checkout and need the OpenSpace tree, which a consumer
+    # of the port does not have
+    -DCODEGEN_BUILD_TESTS=OFF
 )
 
-target_include_directories(codegen-lib
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>
+vcpkg_cmake_install()
+vcpkg_cmake_config_fixup(CONFIG_PATH share/codegen)
+
+# codegen's public headers (types.h, util.h, ...) install flat into <prefix>/include and
+# have generic names that vcpkg flags as "restricted". codegen is consumed only by
+# OpenSpace through this in-repo overlay port (never the curated registry), and the same
+# flat layout is what the in-tree build uses, so the layout is kept and the check relaxed.
+# If codegen is ever published, move the headers into an include/codegen/ subdirectory
+# instead of enabling this policy.
+set(VCPKG_POLICY_ALLOW_RESTRICTED_HEADERS enabled)
+
+# codegen-tool is a build-time helper: move it out of bin/ into tools/ so it does not land
+# in a consumer's runtime directory
+vcpkg_copy_tools(TOOL_NAMES codegen-tool AUTO_CLEAN)
+vcpkg_copy_pdbs()
+
+file(REMOVE_RECURSE
+  "${CURRENT_PACKAGES_DIR}/debug/include"
+  "${CURRENT_PACKAGES_DIR}/debug/share"
 )
 
-set_compile_settings(codegen-lib)
-# set_compile_settings links the interface-only compile_settings target PRIVATE, which for
-# a static library would otherwise leave a dangling $<LINK_ONLY:compile_settings> in the
-# exported interface. Keep it for the in-tree build only, and carry the language-standard
-# requirement (needed to compile the public headers: std::format, <filesystem>, ...) in
-# the exported interface explicitly.
-set_property(TARGET codegen-lib PROPERTY LINK_LIBRARIES "$<BUILD_INTERFACE:compile_settings>")
-set_property(TARGET codegen-lib PROPERTY INTERFACE_LINK_LIBRARIES "")
-target_compile_features(codegen-lib PUBLIC cxx_std_23)
+file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE.md")

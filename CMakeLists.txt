@@ -22,12 +22,75 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings")
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/common-compile-settings/common-compile-settings.cmake)
+cmake_minimum_required(VERSION 4.0)
+
+# The tests link openspace-core / openspace-module-collection and include
+# <openspace/documentation/verifier.h>, none of which exist outside the OpenSpace tree, so
+# a standalone codegen checkout cannot build them yet. The option is kept (default OFF) for
+# a future decoupling; OpenSpace's own CMakeLists adds support/coding/codegen/tests
+# directly and does not consult this option.
+option(CODEGEN_BUILD_TESTS "Build the codegen unit tests (requires the OpenSpace tree)" OFF)
+
+project(codegen VERSION 1.0.0 LANGUAGES CXX)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/support/cmake/common-compile-settings")
+include(${CMAKE_CURRENT_SOURCE_DIR}/support/cmake/common-compile-settings/common-compile-settings.cmake)
+
+# Redirecting the output would leak into a surrounding project that vendors codegen
+if (PROJECT_IS_TOP_LEVEL)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+endif ()
 
 add_subdirectory(lib)
 
 add_executable(codegen-tool main.cpp)
-target_link_libraries(codegen-tool PUBLIC codegen-lib)
-
+target_link_libraries(codegen-tool PRIVATE codegen-lib)
 set_compile_settings(codegen-tool)
+
+if (CODEGEN_BUILD_TESTS AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  enable_testing()
+  add_subdirectory(tests)
+endif ()
+
+# Install and export rules that make codegen consumable through
+# `find_package(codegen CONFIG REQUIRED)`, both the `codegen::codegen-lib` library and the
+# `codegen::codegen-tool` executable that a consumer runs as a build step
+if (PROJECT_IS_TOP_LEVEL)
+  include(GNUInstallDirs)
+  include(CMakePackageConfigHelpers)
+
+  set(CODEGEN_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/codegen")
+
+  install(TARGETS codegen-lib codegen-tool
+    EXPORT codegenTargets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    FILE_SET HEADERS DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  install(
+    EXPORT codegenTargets
+    FILE codegenTargets.cmake
+    NAMESPACE codegen::
+    DESTINATION ${CODEGEN_INSTALL_CMAKEDIR}
+  )
+
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/support/cmake/codegenConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/codegenConfig.cmake
+    INSTALL_DESTINATION ${CODEGEN_INSTALL_CMAKEDIR}
+  )
+  write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/codegenConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+  )
+  install(
+    FILES
+      ${CMAKE_CURRENT_BINARY_DIR}/codegenConfig.cmake
+      ${CMAKE_CURRENT_BINARY_DIR}/codegenConfigVersion.cmake
+    DESTINATION ${CODEGEN_INSTALL_CMAKEDIR}
+  )
+endif ()

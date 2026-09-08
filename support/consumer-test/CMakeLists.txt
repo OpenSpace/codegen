@@ -22,45 +22,30 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-# codegen-lib carries no symbol-export annotations, so it is always a static library
-# regardless of BUILD_SHARED_LIBS (a vcpkg dynamic triplet would otherwise try to build it
-# as a DLL with an empty export table)
-add_library(codegen-lib STATIC)
-target_sources(
-  codegen-lib
-  PRIVATE
-    codegen.cpp
-    parsing.cpp
-    snippets.cpp
-    types.cpp
-    util.cpp
-    verifier.cpp
-  PUBLIC
-    FILE_SET HEADERS
-    BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}"
-    FILES
-      codegen.h
-      keywords.h
-      parsing.h
-      settings.h
-      snippets.h
-      types.h
-      util.h
-      verifier.h
-)
+# Minimal stand-in for a third-party project. It consumes codegen the same way an external
+# developer would - through the `codegen` overlay port and `find_package` - and therefore
+# catches breakage in the port, the install rules, and the exported targets that building
+# codegen in-tree cannot catch.
+#
+#   cmake -S support/consumer-test -B build/consumer-test
+#     --toolchain $env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+#     -DVCPKG_TARGET_TRIPLET=x64-windows
+#   cmake --build build/consumer-test
+#   ctest --test-dir build/consumer-test
 
-target_include_directories(codegen-lib
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>
-)
+cmake_minimum_required(VERSION 3.25)
+project(CodegenConsumerTest LANGUAGES CXX)
 
-set_compile_settings(codegen-lib)
-# set_compile_settings links the interface-only compile_settings target PRIVATE, which for
-# a static library would otherwise leave a dangling $<LINK_ONLY:compile_settings> in the
-# exported interface. Keep it for the in-tree build only, and carry the language-standard
-# requirement (needed to compile the public headers: std::format, <filesystem>, ...) in
-# the exported interface explicitly.
-set_property(TARGET codegen-lib PROPERTY LINK_LIBRARIES "$<BUILD_INTERFACE:compile_settings>")
-set_property(TARGET codegen-lib PROPERTY INTERFACE_LINK_LIBRARIES "")
-target_compile_features(codegen-lib PUBLIC cxx_std_23)
+find_package(codegen CONFIG REQUIRED)
+
+add_executable(CodegenConsumerTest main.cpp)
+target_compile_features(CodegenConsumerTest PRIVATE cxx_std_23)
+target_link_libraries(CodegenConsumerTest PRIVATE codegen::codegen-lib)
+
+enable_testing()
+add_test(NAME CodegenConsumerTest COMMAND CodegenConsumerTest)
+
+# The exported executable target has to be runnable for a superproject that drives codegen
+# as a build step. Point it at an empty directory so it does a clean no-op run (exit 0)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/emptyscan)
+add_test(NAME CodegenTool COMMAND codegen::codegen-tool ${CMAKE_CURRENT_BINARY_DIR}/emptyscan)

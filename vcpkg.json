@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "codegen",
+  "version": "1.0.0",
+  "description": [
+    "OpenSpace code generator.",
+    "codegen has no third-party runtime dependencies. This manifest exists so the repository configures through the vcpkg toolchain like Ghoul and SGCT, and so support/vcpkg/check-manifest-sync.cmake can verify that the overlay port under support/vcpkg/ports/codegen stays in sync with it. The only intentional difference is that the port depends on the vcpkg-cmake host tools explicitly."
+  ],
+  "homepage": "https://github.com/OpenSpace/codegen",
+  "license": "MIT",
+  "supports": "!(osx | uwp | android)",
+  "vcpkg-configuration": {
+    "default-registry": {
+      "kind": "builtin",
+      "baseline": "04a9d8e5212d01ee1dd9478eadd9caade4f8b0d4"
+    },
+    "overlay-ports": [
+      "./support/vcpkg/ports"
+    ]
+  },
+  "dependencies": []
+}

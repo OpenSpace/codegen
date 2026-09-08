@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+# codegen has no third-party dependencies, so there is nothing to find_dependency() here.
+include("${CMAKE_CURRENT_LIST_DIR}/codegenTargets.cmake")
+
+check_required_components(codegen)

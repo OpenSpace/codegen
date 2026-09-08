@@ -9,6 +9,28 @@ Execution:
 
 Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed.
 
+## Building
+codegen configures through the [vcpkg](https://vcpkg.io) toolchain like Ghoul and SGCT, driven by `CMakePresets.json`. It has no third-party runtime dependencies; the only submodule is the shared `common-compile-settings` CMake helper.
+
+```
+git clone --recursive https://github.com/OpenSpace/codegen
+cd codegen
+cmake --preset windows      # or: linux
+cmake --build --preset windows
+```
+
+The unit tests under `tests/` link `openspace-core` and are only built from within the OpenSpace tree, not by this standalone build (`CODEGEN_BUILD_TESTS` stays `OFF`).
+
+### Consuming codegen
+A superproject can pull codegen in as a vcpkg overlay port (`support/vcpkg/ports`) instead of `add_subdirectory`:
+
+```cmake
+find_package(codegen CONFIG REQUIRED)
+target_link_libraries(main PRIVATE codegen::codegen-lib)   # and run codegen::codegen-tool as a build step
+```
+
+`support/vcpkg/check-manifest-sync.cmake` verifies the port's dependency list stays in sync with the root `vcpkg.json`, and `support/consumer-test/` is a minimal project that builds against the installed port.
+
 ## Generated functions
 Running the codegen will create a number of functions in the generated `_codegen.cpp` file that can be used by including the file in the main `.cpp` file.
 

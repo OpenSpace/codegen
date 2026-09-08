@@ -1,4 +1,14 @@
-build
+build/
+out/
+.vs/
+.cache/
+
+# vcpkg manifest-mode install tree
+vcpkg_installed/
+
+# Per-user CMake presets
+CMakeUserPresets.json
+
 tests/execution/*_codegen.cpp
 tests/execution_enums/*_codegen.cpp
 tests/execution_luawrapper/*_codegen.cpp
