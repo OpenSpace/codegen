@@ -26,8 +26,7 @@ cmake_minimum_required(VERSION 4.0)
 
 project(codegen VERSION 1.0.0 LANGUAGES CXX)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/support/cmake/common-compile-settings")
-include(${CMAKE_CURRENT_SOURCE_DIR}/support/cmake/common-compile-settings/common-compile-settings.cmake)
+find_package(common-compile-settings CONFIG REQUIRED)
 
 # Redirecting the output would leak into a surrounding project that vendors codegen
 if (PROJECT_IS_TOP_LEVEL)
