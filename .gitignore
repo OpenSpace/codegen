@@ -1,4 +1,11 @@
-build
+.vs/
+.cache/
+build/
+out/
+vcpkg_installed/
+
+CMakeUserPresets.json
+
 tests/execution/*_codegen.cpp
 tests/execution_enums/*_codegen.cpp
 tests/execution_luawrapper/*_codegen.cpp

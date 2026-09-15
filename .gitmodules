@@ -1,3 +1,0 @@
-[submodule "cmake/common-compile-settings"]
-	path = cmake/common-compile-settings
-	url = https://github.com/OpenSpace/common-compile-settings

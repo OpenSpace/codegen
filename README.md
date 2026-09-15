@@ -9,6 +9,28 @@ Execution:
 
 Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed.
 
+## Building
+codegen configures through the [vcpkg](https://vcpkg.io) toolchain, which expects the `VCPKG_ROOT` environment variable to point at a vcpkg checkout.  It has no third-party runtime dependencies and no submodules; the shared `common-compile-settings` CMake helper is consumed as a vcpkg overlay port from `support/vcpkg/ports`.
+
+```
+git clone https://github.com/OpenSpace/codegen
+cd codegen
+cmake --preset windows-msvc
+cmake --build --preset windows-msvc
+```
+
+The configure presets are `windows-msvc`, `windows-ninja-debug`, `windows-ninja-release`, `linux-ninja-debug`, `linux-ninja-release`, `linux-makefiles-debug`, and `linux-makefiles-release`.  Each has a build preset of the same name; the multi-config `windows-msvc` preset additionally provides `windows-msvc-debug` and `windows-msvc-relwithdebinfo`.
+
+The unit tests under `tests/` link `openspace-core` and are only built from within the OpenSpace tree, which adds `support/coding/codegen/tests` directly; this standalone build never builds them.
+
+### Consuming codegen
+A superproject can pull codegen in as a vcpkg overlay port (`support/vcpkg/ports`) instead of `add_subdirectory`:
+
+```cmake
+find_package(codegen CONFIG REQUIRED)
+target_link_libraries(main PRIVATE codegen::codegen-lib)   # and run codegen::codegen-tool as a build step
+```
+
 ## Generated functions
 Running the codegen will create a number of functions in the generated `_codegen.cpp` file that can be used by including the file in the main `.cpp` file.
 
