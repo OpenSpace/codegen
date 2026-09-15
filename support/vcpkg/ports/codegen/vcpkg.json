@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": [
     "OpenSpace code generator.",
-    "This port lives inside the codegen repository and builds the enclosing checkout. It ships the codegen::codegen-lib library and the codegen-tool executable that a consumer runs as a build step. The dependency list is kept in sync with the manifest at the root of the repository by support/vcpkg/check-manifest-sync.cmake, except that this port depends on the vcpkg-cmake host tools explicitly."
+    "This port lives inside the codegen repository and builds the enclosing checkout. It ships the codegen::codegen-lib library and the codegen-tool executable that a consumer runs as a build step."
   ],
   "homepage": "https://github.com/OpenSpace/codegen",
   "license": "MIT",

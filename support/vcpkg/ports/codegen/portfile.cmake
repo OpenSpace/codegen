@@ -29,10 +29,6 @@ get_filename_component(SOURCE_PATH "${CMAKE_CURRENT_LIST_DIR}/../../../.." ABSOL
 
 vcpkg_cmake_configure(
   SOURCE_PATH "${SOURCE_PATH}"
-  OPTIONS
-    # The tests only exercise this checkout and need the OpenSpace tree, which a consumer
-    # of the port does not have
-    -DCODEGEN_BUILD_TESTS=OFF
 )
 
 vcpkg_cmake_install()
@@ -56,5 +52,8 @@ file(REMOVE_RECURSE
   "${CURRENT_PACKAGES_DIR}/debug/share"
 )
 
-file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(
+  INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage"
+  DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}"
+)
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE.md")

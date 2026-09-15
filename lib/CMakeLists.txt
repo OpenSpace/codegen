@@ -22,9 +22,6 @@
 # OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          #
 ##########################################################################################
 
-# codegen-lib carries no symbol-export annotations, so it is always a static library
-# regardless of BUILD_SHARED_LIBS (a vcpkg dynamic triplet would otherwise try to build it
-# as a DLL with an empty export table)
 add_library(codegen-lib STATIC)
 target_sources(
   codegen-lib
@@ -49,18 +46,14 @@ target_sources(
       verifier.h
 )
 
-target_include_directories(codegen-lib
+target_include_directories(
+  codegen-lib
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
 )
 
 set_compile_settings(codegen-lib)
-# set_compile_settings links the interface-only compile_settings target PRIVATE, which for
-# a static library would otherwise leave a dangling $<LINK_ONLY:compile_settings> in the
-# exported interface. Keep it for the in-tree build only, and carry the language-standard
-# requirement (needed to compile the public headers: std::format, <filesystem>, ...) in
-# the exported interface explicitly.
 set_property(TARGET codegen-lib PROPERTY LINK_LIBRARIES "$<BUILD_INTERFACE:compile_settings>")
 set_property(TARGET codegen-lib PROPERTY INTERFACE_LINK_LIBRARIES "")
 target_compile_features(codegen-lib PUBLIC cxx_std_23)
