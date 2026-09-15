@@ -10,6 +10,7 @@
   "license": "MIT",
   "supports": "!(osx | uwp | android)",
   "dependencies": [
+    "common-compile-settings",
     {
       "name": "vcpkg-cmake",
       "host": true

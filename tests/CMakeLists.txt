@@ -207,7 +207,7 @@ target_sources(
 )
 
 find_package(Catch2 CONFIG REQUIRED)
-target_link_libraries(codegentest PRIVATE Catch2::Catch2 codegen-lib openspace-core openspace-module-collection)
+target_link_libraries(codegentest PRIVATE Catch2::Catch2 codegen::codegen-lib openspace-core openspace-module-collection)
 
 set_compile_settings(codegentest)
 
@@ -248,10 +248,9 @@ endif ()
 # It is important that the __codegen.h does not actually exist so that this target
 # is never considered as finished
 add_custom_target(run_test_codegen ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h")
-add_dependencies(run_test_codegen codegen-tool)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen-tool ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
+  COMMAND codegen::codegen-tool ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
   VERBATIM
 )

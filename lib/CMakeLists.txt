@@ -54,6 +54,4 @@ target_include_directories(
 )
 
 set_compile_settings(codegen-lib)
-set_property(TARGET codegen-lib PROPERTY LINK_LIBRARIES "$<BUILD_INTERFACE:compile_settings>")
-set_property(TARGET codegen-lib PROPERTY INTERFACE_LINK_LIBRARIES "")
 target_compile_features(codegen-lib PUBLIC cxx_std_23)

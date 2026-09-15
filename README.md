@@ -10,14 +10,16 @@ Execution:
 Additionally, passing the `--verbose` parameter will cause CodeGen to emit extra information, including which files are currently being processed.
 
 ## Building
-codegen configures through the [vcpkg](https://vcpkg.io) toolchain. It has no third-party runtime dependencies; the only submodule is the shared `common-compile-settings` CMake helper.
+codegen configures through the [vcpkg](https://vcpkg.io) toolchain, which expects the `VCPKG_ROOT` environment variable to point at a vcpkg checkout.  It has no third-party runtime dependencies and no submodules; the shared `common-compile-settings` CMake helper is consumed as a vcpkg overlay port from `support/vcpkg/ports`.
 
 ```
-git clone --recursive https://github.com/OpenSpace/codegen
+git clone https://github.com/OpenSpace/codegen
 cd codegen
-cmake --preset windows      # or: linux
-cmake --build --preset windows
+cmake --preset windows-msvc
+cmake --build --preset windows-msvc
 ```
+
+The configure presets are `windows-msvc`, `windows-ninja-debug`, `windows-ninja-release`, `linux-ninja-debug`, `linux-ninja-release`, `linux-makefiles-debug`, and `linux-makefiles-release`.  Each has a build preset of the same name; the multi-config `windows-msvc` preset additionally provides `windows-msvc-debug` and `windows-msvc-relwithdebinfo`.
 
 The unit tests under `tests/` link `openspace-core` and are only built from within the OpenSpace tree, which adds `support/coding/codegen/tests` directly; this standalone build never builds them.
 
