@@ -206,7 +206,14 @@ target_sources(
     parsing_structs/parsing_structs_variant_fail.cpp
 )
 
-target_link_libraries(codegentest PRIVATE Catch2 codegen-lib openspace-core openspace-module-collection)
+find_package(Catch2 CONFIG REQUIRED)
+target_link_libraries(codegentest PRIVATE Catch2::Catch2 codegen::codegen-lib openspace-core openspace-module-collection)
+
+# codegentest only needs the *write* half (stbi_write_*): the *read* half (stbi_load,
+# ...) is already satisfied by assimp, which vendors its own stb_image copy, so linking
+# the stbimage port's read implementation too would be a duplicate-symbol conflict
+find_package(stbimage CONFIG REQUIRED)
+target_link_libraries(codegentest PRIVATE unofficial::stbimage::stbimage-write-impl)
 
 set_compile_settings(codegentest)
 
@@ -247,10 +254,9 @@ endif ()
 # It is important that the __codegen.h does not actually exist so that this target
 # is never considered as finished
 add_custom_target(run_test_codegen ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h")
-add_dependencies(run_test_codegen codegen-tool)
 add_dependencies(codegentest run_test_codegen)
 add_custom_command(
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/__codegen_unittest.h"
-  COMMAND codegen-tool ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
+  COMMAND codegen::codegen-tool ARGS "${CMAKE_CURRENT_SOURCE_DIR}/execution_enums" "${CMAKE_CURRENT_SOURCE_DIR}/execution_luawrapper" "${CMAKE_CURRENT_SOURCE_DIR}/execution_misc" "${CMAKE_CURRENT_SOURCE_DIR}/execution_structs"
   VERBATIM
 )
