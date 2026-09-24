@@ -42,6 +42,9 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
       }
     },
     {
@@ -51,6 +54,9 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-linux"
       }
     },
 
@@ -125,6 +131,12 @@
       "displayName": "Windows MSVC (RelWithDebInfo)",
       "configurePreset": "windows-msvc",
       "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-msvc-release",
+      "displayName": "Windows MSVC (Release)",
+      "configurePreset": "windows-msvc",
+      "configuration": "Release"
     },
     {
       "name": "windows-ninja-debug",
